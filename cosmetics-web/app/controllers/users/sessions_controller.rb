@@ -1,8 +1,6 @@
 module Users
   class SessionsController < Devise::SessionsController
-    skip_before_action :authorize_user!
-    skip_before_action :set_raven_context
-    skip_before_action :require_secondary_authentication
+    skip_before_action :authorize_user!, :require_secondary_authentication
 
     def create
       set_resource_as_new_user_from_params
@@ -14,8 +12,6 @@ module Users
 
       matching_user = User.find_by(email: sign_in_form.email)
 
-      # TODO: devise has hook to make redirection when
-      # resource.active_for_authentication? returns false
       self.resource = warden.authenticate(auth_options)
 
       if resource

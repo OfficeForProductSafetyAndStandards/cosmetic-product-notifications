@@ -61,7 +61,6 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         expect_to_be_on_password_changed_page
 
         click_link "Continue"
-        puts current_url
 
         # User is signed in in the landing page for Submit/Search
         expect(page).to have_css("h1", text: expected_text)

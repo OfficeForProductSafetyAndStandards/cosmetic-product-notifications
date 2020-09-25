@@ -17,10 +17,6 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 
 private
 
-  def authorize_user!
-    raise Pundit::NotAuthorizedError unless poison_centre_or_msa_user?
-  end
-
   def search_notifications(page_size)
     query = ElasticsearchQuery.new(query_params[:q])
     Notification.full_search(query).paginate(page: params[:page], per_page: page_size)

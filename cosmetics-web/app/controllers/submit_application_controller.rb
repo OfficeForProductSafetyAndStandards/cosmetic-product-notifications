@@ -33,12 +33,14 @@ class SubmitApplicationController < ApplicationController
   end
 
   def fully_signed_in_submit_user?
-    return false if poison_centre_or_msa_user?
-
     if Rails.configuration.secondary_authentication_enabled
       user_signed_in? && secondary_authentication_present?
     else
       user_signed_in?
     end
+  end
+
+  def authorize_user!
+    redirect_to invalid_account_path if current_user && !current_user.is_a?(SubmitUser)
   end
 end

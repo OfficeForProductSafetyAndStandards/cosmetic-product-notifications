@@ -69,11 +69,8 @@ private
       end
   end
 
-  def authorize_user!
-    return unless user_signed_in?
-
-    redirect_to invalid_account_path if invalid_account_for_domain?
-  end
+  # needs to be overriden
+  def authorize_user!; end
 
   def has_accepted_declaration
     return unless user_signed_in?
@@ -84,16 +81,8 @@ private
     redirect_to declaration_path(redirect_path: redirect_path) unless current_user.has_accepted_declaration?
   end
 
-  def poison_centre_or_msa_user?
-    current_user&.poison_centre_user? || current_user&.msa_user?
-  end
-
-  def invalid_account_for_domain?
-    (submit_domain? && current_search_user) || (search_domain? && current_submit_user)
-  end
-
   def current_user
-    submit_domain? ? current_submit_user : current_search_user
+    current_submit_user || current_search_user
   end
 
   def user_signed_in?

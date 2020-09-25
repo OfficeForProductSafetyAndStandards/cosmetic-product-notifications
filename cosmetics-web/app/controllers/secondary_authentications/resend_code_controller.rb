@@ -2,7 +2,6 @@ module SecondaryAuthentications
   class ResendCodeController < ApplicationController
     skip_before_action :authenticate_user!,
                        :require_secondary_authentication,
-                       :set_raven_context,
                        :authorize_user!,
                        :set_cache_headers
 
