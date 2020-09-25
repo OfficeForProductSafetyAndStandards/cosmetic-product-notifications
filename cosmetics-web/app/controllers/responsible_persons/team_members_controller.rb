@@ -23,7 +23,7 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
     return render("invitation_expired") if pending_request.expired?
 
     user = SubmitUser.find_by(email: pending_request.email_address)
-    return render("signed_as_another_user", locals: { existing_user: user }) if signed_as_another_user?(pending_request)
+    return render("signed_as_another_user", locals: { user: user }) if signed_as_another_user?(pending_request)
 
     responsible_person = pending_request.responsible_person
     if user&.account_security_completed?
