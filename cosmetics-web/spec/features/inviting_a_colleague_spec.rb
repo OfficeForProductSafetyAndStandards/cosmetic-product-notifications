@@ -147,8 +147,9 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
     visit join_path
 
-    expect(page).to have_current_path(join_path)
-    expect(page).to have_css("h1", text: "Page not found")
+    expect(page).to have_current_path("/")
+    expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
+    expect(page).to have_link("Sign in")
   end
 
   scenario "accepting an invitation for an existing user" do
