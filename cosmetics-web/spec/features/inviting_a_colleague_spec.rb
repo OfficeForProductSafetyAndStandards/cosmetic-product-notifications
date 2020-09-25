@@ -7,7 +7,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
   scenario "sending an invitation to an existing user that does not belong to any team" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
-    visit responsible_person_team_members_path(responsible_person)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds) do
@@ -15,12 +15,12 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
       complete_secondary_authentication_for(user)
 
-      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
       fill_in "Email address", with: invited_user.email
       click_on "Send invitation"
 
-      expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
 
       invitation = PendingResponsiblePersonUser.last
 
@@ -42,7 +42,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     create(:responsible_person_user, user: invited_user, responsible_person: responsible_person)
 
     sign_in_as_member_of_responsible_person(responsible_person, user)
-    visit responsible_person_team_members_path(responsible_person)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds) do
@@ -50,7 +50,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
       complete_secondary_authentication_for(user)
 
-      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
       fill_in "Email address", with: invited_user.email
       click_on "Send invitation"
@@ -66,7 +66,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     create(:responsible_person_user, user: invited_user, responsible_person: team)
 
     sign_in_as_member_of_responsible_person(responsible_person, user)
-    visit responsible_person_team_members_path(responsible_person)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds) do
@@ -74,7 +74,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
       complete_secondary_authentication_for(user)
 
-      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
       fill_in "Email address", with: invited_user.email
       click_on "Send invitation"
@@ -91,7 +91,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
            responsible_person: responsible_person)
 
     sign_in_as_member_of_responsible_person(responsible_person, user)
-    visit responsible_person_team_members_path(responsible_person)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1
     travel_to(Time.now.utc + wait_time.seconds) do
@@ -99,12 +99,12 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
       complete_secondary_authentication_for(user)
 
-      expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
       fill_in "Email address", with: invited_user.email
       click_on "Send invitation"
 
-      expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
 
       expect(delivered_emails.size).to eq 1
       email = delivered_emails.first
@@ -196,7 +196,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     # User invites a new member to the team
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
-    visit responsible_person_team_members_path(responsible_person)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds)
@@ -205,12 +205,12 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
     complete_secondary_authentication_for(user)
 
-    expect(page).to have_current_path(new_responsible_person_team_member_path(responsible_person))
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
     fill_in "Email address", with: "newusertoregister@example.com"
     click_on "Send invitation"
 
-    expect(page).to have_current_path(responsible_person_team_members_path(responsible_person))
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
 
     expect(delivered_emails.size).to eq 1
 
