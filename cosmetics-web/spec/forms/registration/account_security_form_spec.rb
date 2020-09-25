@@ -3,9 +3,10 @@ require "rails_helper"
 RSpec.describe Registration::AccountSecurityForm do
   let(:password) { "foobarbaz" }
   let(:mobile_number) { "07000 000 000" }
+  let(:user) { create(:submit_user) }
 
   let(:form) do
-    described_class.new(password: password, mobile_number: mobile_number)
+    described_class.new(password: password, mobile_number: mobile_number, user: user)
   end
 
   context "when the password is too short" do
@@ -18,6 +19,24 @@ RSpec.describe Registration::AccountSecurityForm do
     it "contains errors" do
       form.valid?
       expect(form.errors.full_messages_for(:password)).to eq ["Password is too short (minimum is 8 characters)"]
+    end
+  end
+
+  describe "#name_required?" do
+    context "when user is created by invitation" do
+      let(:user) { create(:submit_user, created_by_invitation: true) }
+
+      it "returns true" do
+        expect(form).to be_name_required
+      end
+    end
+
+    context "when user is not created by invitation" do
+      let(:user) { create(:submit_user, created_by_invitation: false) }
+
+      it "returns false" do
+        expect(form).not_to be_name_required
+      end
     end
   end
 

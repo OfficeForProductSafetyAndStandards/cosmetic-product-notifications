@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authorize_user!
   before_action :authenticate_user!
+  before_action :try_to_finish_account_setup
   before_action :ensure_secondary_authentication
   before_action :require_secondary_authentication
   before_action :set_raven_context
@@ -27,6 +28,11 @@ class ApplicationController < ActionController::Base
 
   def user_params_key
     submit_domain? ? :submit_user : :search_user
+  end
+
+  # Used by Devise
+  def self.default_url_options
+    Rails.configuration.action_controller.default_url_options
   end
 
 protected
@@ -55,8 +61,13 @@ private
     params.dig(user_param_key, param)
   end
 
-  def after_sign_in_path_for(_resource)
-    submit_domain? ? dashboard_path : poison_centre_notifications_path
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) ||
+      if submit_domain?
+        dashboard_path
+      else
+        poison_centre_notifications_path
+      end
   end
 
   def authorize_user!

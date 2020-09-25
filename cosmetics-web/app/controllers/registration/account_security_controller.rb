@@ -10,7 +10,7 @@ module Registration
     def create
       if account_security_form.update!
         bypass_sign_in(current_user)
-        redirect_to declaration_path
+        redirect_to after_creation_path
       else
         render :new
       end
@@ -23,7 +23,15 @@ module Registration
     end
 
     def account_security_form_params
-      params.require(:registration_account_security_form).permit(:mobile_number, :password)
+      params.require(:registration_account_security_form).permit(:mobile_number, :password, :full_name)
+    end
+
+    def after_creation_path
+      if (rp = current_user.responsible_persons.first)
+        responsible_person_notifications_path(rp)
+      else
+        declaration_path
+      end
     end
   end
 end
