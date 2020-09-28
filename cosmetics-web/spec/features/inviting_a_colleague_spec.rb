@@ -209,10 +209,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
   scenario "following an invitation link with a token that does not match any invitation" do
     configure_requests_for_submit_domain
-    sign_in invited_user
-
     join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=8cfa59f3-6b61-44f9-871b-c471651f234b"
-
     visit join_path
 
     expect(page).to have_current_path("/")
