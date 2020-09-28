@@ -34,7 +34,7 @@ private
   end
 
   def email_address_not_in_other_team?
-    user = User.find_by(email: email_address)
+    user = SubmitUser.find_by(email: email_address)
     if user && user.responsible_persons.any?
       errors.add :email_address, I18n.t(:other_team, scope: EMAIL_ERROR_MESSAGE_SCOPE)
     end
