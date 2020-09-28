@@ -2,8 +2,12 @@ class AddInvitationTokenAndInvitationTokenExpiresAtToPendingResponsiblePersonUse
   disable_ddl_transaction!
 
   def change
-    add_column :pending_responsible_person_users, :invitation_token, :string
-    add_column :pending_responsible_person_users, :invitation_token_expires_at, :datetime
-    add_index :pending_responsible_person_users, :invitation_token, algorithm: :concurrently
+    safety_assured do
+      change_table :pending_responsible_person_users, bulk: true do |t|
+        t.string :invitation_token
+        t.datetime :invitation_token_expires_at
+      end
+      add_index :pending_responsible_person_users, :invitation_token, algorithm: :concurrently
+    end
   end
 end

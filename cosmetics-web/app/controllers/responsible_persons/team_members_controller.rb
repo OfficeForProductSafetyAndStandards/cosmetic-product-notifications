@@ -4,7 +4,9 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   before_action :authorize_responsible_person, only: %i[new create]
   skip_before_action :authenticate_user!, only: :join
   skip_before_action :create_or_join_responsible_person
-  skip_before_action :require_secondary_authentication, only: %i[join]
+  skip_before_action :require_secondary_authentication, only: %i[index join]
+
+  def index; end
 
   def new; end
 
@@ -21,26 +23,25 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     return render("invitation_expired") if pending_request.expired?
 
     user = SubmitUser.find_by(email: pending_request.email_address)
-    return render("signed_as_another_user", locals: { existing_user: user }) if signed_as_another_user?(pending_request)
+    return render("signed_as_another_user", locals: { user: user }) if signed_as_another_user?(pending_request)
 
     responsible_person = pending_request.responsible_person
-    if user
+    if user&.account_security_completed?
       authenticate_user!
-      responsible_person.add_user(current_user)
+      responsible_person.add_user(user)
       PendingResponsiblePersonUser.where(email_address: user.email).delete_all
       redirect_to responsible_person_notifications_path(responsible_person)
     else
-      user = SubmitUser.new(email: pending_request.email_address, created_by_invitation: true)
-      user.dont_send_confirmation_instructions!
-
-      user.save(validate: false)
-      responsible_person.add_user(user)
-      PendingResponsiblePersonUser.where(email_address: user.email).delete_all
-      pending_request.delete
+      user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|
+        u.dont_send_confirmation_instructions!
+        u.save(validate: false)
+      end
       bypass_sign_in(user)
-
       redirect_to registration_new_account_security_path
     end
+  rescue ActiveRecord::RecordNotFound
+    sign_out
+    redirect_to root_path
   end
 
   def sign_out_before_joining

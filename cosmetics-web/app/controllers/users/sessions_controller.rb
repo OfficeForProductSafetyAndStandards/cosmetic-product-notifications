@@ -2,6 +2,8 @@ module Users
   class SessionsController < Devise::SessionsController
     skip_before_action :authorize_user!, :require_secondary_authentication
 
+    def delete; end
+
     def create
       set_resource_as_new_user_from_params
 
