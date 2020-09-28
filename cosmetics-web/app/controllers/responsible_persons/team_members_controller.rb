@@ -40,7 +40,6 @@ class ResponsiblePersons::TeamMembersController < ApplicationController
       redirect_to registration_new_account_security_path
     end
   rescue ActiveRecord::RecordNotFound
-    sign_out
     redirect_to root_path
   end
 
