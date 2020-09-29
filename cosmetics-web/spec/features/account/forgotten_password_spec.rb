@@ -171,6 +171,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
       configure_requests_for_submit_domain
     end
 
+    let(:mailer) { SubmitNotifyMailer }
+
     let(:user) { create(:submit_user) }
     let!(:reset_token)                      { stubbed_devise_generated_token }
     let(:edit_user_password_url_with_token) { "http://#{ENV.fetch('SUBMIT_HOST')}/password/edit?reset_password_token=#{reset_token.first}" }
@@ -183,6 +185,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     before do
       configure_requests_for_search_domain
     end
+
+    let(:mailer) { SearchNotifyMailer }
 
     let(:user) { create(:poison_centre_user) }
     let!(:reset_token)                      { stubbed_devise_generated_token }
@@ -213,7 +217,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
       expect(email.recipient).to eq user.email
       expect(email.reference).to eq "Password reset"
-      expect(email.template).to eq NotifyMailer::TEMPLATES[:reset_password_instruction]
+      expect(email.template).to eq mailer::TEMPLATES[:reset_password_instruction]
       expect(email.personalization).to eq(edit_user_password_url_token: edit_user_password_url_with_token, name: user.name)
 
       expect_to_be_on_check_your_email_page

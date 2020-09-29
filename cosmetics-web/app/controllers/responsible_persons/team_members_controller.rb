@@ -48,7 +48,7 @@ private
   end
 
   def send_invite_email
-    NotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name,
+    SubmitNotifyMailer.send_responsible_person_invite_email(@responsible_person.id, @responsible_person.name,
                                                       @team_member.email_address, current_user.name).deliver_later
   end
 end
