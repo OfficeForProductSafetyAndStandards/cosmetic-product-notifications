@@ -28,7 +28,7 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
              responsible_person: pending_responsible_person.responsible_person)
 
       expect(pending_responsible_person.save).to be false
-      expect(pending_responsible_person.errors[:email_address]).to include("The email address is already a member of this team")
+      expect(pending_responsible_person.errors[:email_address]).to include("This email address already belongs to member of this team")
     end
 
     it "succeeds when the email is already in pending request but does not add a new instance" do
