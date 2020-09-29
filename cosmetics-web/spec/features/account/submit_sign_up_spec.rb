@@ -34,7 +34,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
-    visit verify_url
 
     fill_in "Mobile Number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact

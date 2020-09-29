@@ -27,17 +27,16 @@ class NotifyMailer < GovukNotifyRails::Mailer
     Sidekiq.logger.info "Account creation with existing email send"
   end
 
-  def send_responsible_person_invite_email(responsible_person_id, responsible_person_name, invited_email_address, inviting_user_name)
+  def send_responsible_person_invite_email(responsible_person, invited_team_member, inviting_user_name)
+    @host = submit_host
     set_template(TEMPLATES[:responsible_person_invitation])
     set_reference("Invite user to join responsible person")
-
     set_personalisation(
-      responsible_person_name: responsible_person_name,
-      inviting_user_name: inviting_user_name,
-      invitation_url: join_responsible_person_team_members_url(responsible_person_id),
+      responsible_person: responsible_person.name,
+      invite_sender: inviting_user_name,
+      invitation_url: join_responsible_person_team_members_url(responsible_person.id, invitation_token: invited_team_member.invitation_token),
     )
-
-    mail(to: invited_email_address)
+    mail(to: invited_team_member.email_address)
     Sidekiq.logger.info "Responsible person invite email sent"
   end
 
@@ -90,6 +89,8 @@ class NotifyMailer < GovukNotifyRails::Mailer
       name: user.name,
       verify_email_url: registration_confirm_submit_user_url(confirmation_token: user.confirmation_token, host: @host),
     )
+
+    puts registration_confirm_submit_user_url(confirmation_token: user.confirmation_token, host: @host)
 
     mail(to: user.email)
     Sidekiq.logger.info "Confirmation email send"

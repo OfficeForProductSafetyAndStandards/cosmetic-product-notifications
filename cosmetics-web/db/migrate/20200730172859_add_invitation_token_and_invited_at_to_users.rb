@@ -1,8 +1,10 @@
 class AddInvitationTokenAndInvitedAtToUsers < ActiveRecord::Migration[5.2]
   def change
     safety_assured do
-      add_column :users, :invitation_token, :string
-      add_column :users, :invited_at, :datetime, default: -> { "CURRENT_TIMESTAMP" }, null: false
+      change_table :users, bulk: true do |t|
+        t.string :invitation_token
+        t.datetime :invited_at, default: -> { "CURRENT_TIMESTAMP" }, null: false
+      end
     end
   end
 end

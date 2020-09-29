@@ -7,6 +7,10 @@ module DomainHelpers
     end
     allow_any_instance_of(ActionDispatch::Request)
       .to receive(:host).and_return(ENV.fetch("SUBMIT_HOST"))
+    allow(ApplicationController).to receive(:default_url_options).and_return(
+      host: ENV.fetch("SUBMIT_HOST"),
+      port: 80,
+    )
   end
 
   def configure_requests_for_search_domain

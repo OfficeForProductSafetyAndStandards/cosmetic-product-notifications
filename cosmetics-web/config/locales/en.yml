@@ -81,6 +81,11 @@ en:
           attributes:
             full_name:
               blank: "Enter your full name"
+        pending_responsible_person_user:
+          attributes:
+            email_address:
+              this_team: "This email address already belongs to member of this team"
+              other_team: "This email address already belongs to member of another team"
         trigger_question:
           attributes:
             applicable:
@@ -130,6 +135,8 @@ en:
               blank: "Please enter mobile number"
             password:
               blank: "Please enter password"
+            full_name:
+              blank: "Enter your full name"
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
