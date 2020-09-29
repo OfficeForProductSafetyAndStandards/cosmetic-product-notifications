@@ -85,7 +85,7 @@ en:
           attributes:
             email_address:
               this_team: "This email address already belongs to member of this team"
-              other_team: "The email address is already a member of a team"
+              other_team: "This email address already belongs to member of another team"
         trigger_question:
           attributes:
             applicable:
