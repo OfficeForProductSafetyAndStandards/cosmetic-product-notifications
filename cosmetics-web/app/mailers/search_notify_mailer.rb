@@ -1,5 +1,5 @@
 class SearchNotifyMailer < GovukNotifyRails::Mailer
-  delivery_method :search_govuk_notify
+  default delivery_method: :search_govuk_notify
 
   TEMPLATES =
     # please add email name in Notify as comment
