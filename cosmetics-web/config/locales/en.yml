@@ -85,7 +85,7 @@ en:
           attributes:
             email_address:
               this_team: "This email address already belongs to member of this team"
-              other_team: "This email address already belongs to member of another team"
+              other_team: "You can not invite this email address to join your team"
         trigger_question:
           attributes:
             applicable:
