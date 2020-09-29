@@ -4,7 +4,12 @@ class PendingResponsiblePersonUser < ApplicationRecord
 
   belongs_to :responsible_person
 
-  validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email_address,
+            email: {
+              message: I18n.t(:wrong_format, scope: EMAIL_ERROR_MESSAGE_SCOPE),
+              if: -> { email_address.present? },
+            }
+  validates_presence_of :email_address, message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE)
   validate :email_address_not_in_team?
   validate :email_address_not_in_other_team?
 
