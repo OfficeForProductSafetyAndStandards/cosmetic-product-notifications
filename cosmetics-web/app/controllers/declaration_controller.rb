@@ -8,7 +8,6 @@ class DeclarationController < ApplicationController
 
   def accept
     current_user.update(has_accepted_declaration: true)
-    # return redirect_to root_path
     redirect_to session[:redirect_path] || root_path
   end
 
