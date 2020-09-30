@@ -41,9 +41,3 @@ end
 RSpec.configure do |rspec|
   rspec.include_context "with stubbed mailer", with_stubbed_mailer: true
 end
-
-def stub_notify_mailer
-  result = double
-  allow(result).to receive(:deliver_later)
-  allow(NotifyMailer).to receive(:send_responsible_person_invite_email) { result }
-end
