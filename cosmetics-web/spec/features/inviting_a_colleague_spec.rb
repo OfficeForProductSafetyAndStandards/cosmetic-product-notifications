@@ -6,7 +6,6 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, type: :feature d
   let(:invited_user) { create(:submit_user) }
 
   before do
-    stub_notify_mailer
   end
 
   after do
@@ -16,6 +15,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, type: :feature d
   scenario "sending an invitation" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit responsible_person_team_members_path(responsible_person)
+
 
     click_on "Invite a colleague"
 

@@ -6,7 +6,6 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
     before do
       configure_requests_for_submit_domain
-      stub_notify_mailer
       sign_in user
     end
 

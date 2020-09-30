@@ -39,7 +39,6 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
     end
 
     it "sends responsible person invite email" do
-      stub_notify_mailer
       put(:create, params: params.merge(team_member: { email_address: email_address }))
       expect(NotifyMailer).to have_received(:send_responsible_person_invite_email)
     end
