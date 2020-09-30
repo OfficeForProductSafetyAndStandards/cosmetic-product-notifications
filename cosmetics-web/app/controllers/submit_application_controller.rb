@@ -4,7 +4,7 @@ class SubmitApplicationController < ApplicationController
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person
 
-  private
+private
 
   def allow_only_submit_domain
     raise "Not a submit domain" unless submit_domain?

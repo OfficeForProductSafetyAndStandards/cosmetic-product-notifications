@@ -171,13 +171,13 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
     describe "GET #index" do
       it "redirects to invalid account" do
-        expect(get :index).to redirect_to('/invalid-account')
+        expect(get(:index)).to redirect_to("/invalid-account")
       end
     end
 
     describe "GET #show" do
       it "redirects to invalid account" do
-        expect(get :show, params: { reference_number: rp_1_notifications.first.reference_number }).to redirect_to('/invalid-account')
+        expect(get(:show, params: { reference_number: rp_1_notifications.first.reference_number })).to redirect_to("/invalid-account")
       end
     end
   end

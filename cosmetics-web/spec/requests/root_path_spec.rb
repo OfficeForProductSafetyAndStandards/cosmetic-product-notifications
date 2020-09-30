@@ -143,9 +143,7 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     before { host! "localhost" }
 
     xit "raises error" do
-      expect do
-        get "/"
-      end.to raise_error(RuntimeError)
+      expect(get("/")).to raise_error(RuntimeError)
     end
   end
 end
