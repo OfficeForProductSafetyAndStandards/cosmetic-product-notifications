@@ -9,15 +9,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authorize_user!
   before_action :authenticate_user!
-  before_action :try_to_finish_account_setup
   before_action :ensure_secondary_authentication
   before_action :require_secondary_authentication
   before_action :set_raven_context
   before_action :set_cache_headers
   before_action :set_service_name
-
-  before_action :has_accepted_declaration
-  before_action :create_or_join_responsible_person, if: :submit_domain?
 
   add_flash_types :confirmation
 
@@ -73,11 +69,8 @@ private
       end
   end
 
-  def authorize_user!
-    return unless user_signed_in?
-
-    redirect_to invalid_account_path if invalid_account_for_domain?
-  end
+  # needs to be overriden
+  def authorize_user!; end
 
   def has_accepted_declaration
     return unless user_signed_in?
@@ -88,48 +81,8 @@ private
     redirect_to declaration_path(redirect_path: redirect_path) unless current_user.has_accepted_declaration?
   end
 
-  def try_to_finish_account_setup
-    return unless user_signed_in?
-    return unless submit_domain?
-
-    unless current_user.account_security_completed?
-      redirect_to registration_new_account_security_path
-    end
-  end
-
-  def fully_signed_in_submit_user?
-    return false if poison_centre_or_msa_user?
-
-    if Rails.configuration.secondary_authentication_enabled
-      user_signed_in? && secondary_authentication_present?
-    else
-      user_signed_in?
-    end
-  end
-
-  def create_or_join_responsible_person
-    return unless fully_signed_in_submit_user?
-    return unless current_user.mobile_number_verified?
-
-    responsible_person = current_user.responsible_persons.first
-
-    if responsible_person.blank?
-      redirect_to account_path(:overview)
-    elsif responsible_person.contact_persons.empty?
-      redirect_to new_responsible_person_contact_person_path(responsible_person)
-    end
-  end
-
-  def poison_centre_or_msa_user?
-    current_user&.poison_centre_user? || current_user&.msa_user?
-  end
-
-  def invalid_account_for_domain?
-    (submit_domain? && current_search_user) || (search_domain? && current_submit_user)
-  end
-
   def current_user
-    submit_domain? ? current_submit_user : current_search_user
+    current_submit_user || current_search_user
   end
 
   def user_signed_in?

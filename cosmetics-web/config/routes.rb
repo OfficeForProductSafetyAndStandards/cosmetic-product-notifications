@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
       post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
-    root "landing_page#index"
+    root "search/landing_page#index"
 
     scope module: "poison_centres", as: "poison_centre" do
       resources :notifications, param: :reference_number, only: %i[index show]
@@ -48,6 +48,8 @@ Rails.application.routes.draw do
         post "sign-out-before-accepting-invitation", action: :sign_out_before_accepting_invitation
       end
     end
+
+    resource :dashboard, controller: "search/dashboard", only: %i[show]
   end
 
   # All requests besides "Search" host ones will default to "Submit" pages.
@@ -69,8 +71,7 @@ Rails.application.routes.draw do
     post "account-security", to: "registration/account_security#create", as: :registration_create_account_security
     post "sign-out-before-confirming-email", to: "registration/new_accounts#sign_out_before_confirming_email"
 
-    root "landing_page#index"
-
+    root "submit/landing_page#index"
 
     resources :responsible_persons, only: %i[show] do
       collection do
@@ -132,6 +133,7 @@ Rails.application.routes.draw do
         end
       end
     end
+    resource :dashboard, controller: "submit/dashboard", only: %i[show]
   end
 
   resource :my_account, only: [:show], controller: :my_account do
@@ -149,7 +151,6 @@ Rails.application.routes.draw do
     post :accept
   end
 
-  resource :dashboard, controller: :dashboard, only: %i[show]
 
   namespace :guidance, as: "" do
     get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"

@@ -12,7 +12,7 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :w
   scenario "Creating an account from an invitation" do
     email = delivered_emails.last
     invite_url = email.personalization[:invitation_url]
-    visit invite_url#"/users/#{invited_user.id}/complete-registration?invitation=#{invited_user.invitation_token}"
+    visit invite_url
 
     expect_to_be_on_complete_registration_page
 

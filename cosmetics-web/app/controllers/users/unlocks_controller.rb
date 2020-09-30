@@ -1,8 +1,6 @@
 module Users
   class UnlocksController < Devise::UnlocksController
     skip_before_action :require_no_authentication,
-                       :has_accepted_declaration,
-                       :create_or_join_responsible_person,
                        only: :show
 
     def show

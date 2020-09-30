@@ -2,10 +2,6 @@ module Users
   class PasswordsController < Devise::PasswordsController
     skip_before_action :require_no_authentication, only: %i[edit sign_out_before_resetting_password]
 
-    skip_before_action :has_accepted_declaration,
-                       :create_or_join_responsible_person,
-                       only: %i[edit sign_out_before_resetting_password]
-
     skip_before_action :require_secondary_authentication, except: :update
 
     def edit

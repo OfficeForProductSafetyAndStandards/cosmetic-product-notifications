@@ -20,7 +20,7 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
 
       it "renders the homepage" do
-        expect(response).to render_template("landing_page/submit_landing_page")
+        expect(response).to render_template("submit/landing_page/index")
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
 
       it "renders the homepage" do
-        expect(response).to render_template("landing_page/submit_landing_page")
+        expect(response).to render_template("submit/landing_page/index")
       end
     end
   end
@@ -84,7 +84,7 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
 
       it "renders the homepage" do
-        expect(response).to render_template("landing_page/search_landing_page")
+        expect(response).to render_template("search/landing_page/index")
       end
     end
 
@@ -142,9 +142,8 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
   context "when requested from localhost" do
     before { host! "localhost" }
 
-    it "renders the submit homepage" do
-      get "/"
-      expect(response).to render_template("landing_page/submit_landing_page")
+    xit "raises error" do
+      expect(get("/")).to raise_error(RuntimeError)
     end
   end
 end

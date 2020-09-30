@@ -1,4 +1,4 @@
-class PoisonCentres::NotificationsController < ApplicationController
+class PoisonCentres::NotificationsController < SearchApplicationController
   def index
     result = search_notifications(10)
     @notifications = result.records
@@ -16,10 +16,6 @@ class PoisonCentres::NotificationsController < ApplicationController
   end
 
 private
-
-  def authorize_user!
-    raise Pundit::NotAuthorizedError unless poison_centre_or_msa_user?
-  end
 
   def search_notifications(page_size)
     query = ElasticsearchQuery.new(query_params[:q])

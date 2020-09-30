@@ -2,10 +2,7 @@
 class SecondaryAuthenticationsController < ApplicationController
   skip_before_action :authenticate_user!,
                      :require_secondary_authentication,
-                     :set_raven_context,
                      :authorize_user!,
-                     :has_accepted_declaration,
-                     :create_or_join_responsible_person,
                      :set_cache_headers
 
   def new
