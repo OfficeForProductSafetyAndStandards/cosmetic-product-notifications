@@ -84,8 +84,10 @@ en:
         pending_responsible_person_user:
           attributes:
             email_address:
-              this_team: "The email address is already a member of this team"
-              other_team: "The email address is already a member of a team"
+              wrong_format: "Enter email address in the correct format, like name@example.com"
+              blank: "Enter email address"
+              this_team: "This email address already belongs to member of this team"
+              other_team: "You can not invite this email address to join your team"
         trigger_question:
           attributes:
             applicable:

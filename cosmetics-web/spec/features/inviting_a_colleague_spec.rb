@@ -56,7 +56,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
       click_on "Send invitation"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-      expect(page).to have_css(".govuk-error-message", text: "The email address is already a member of this team")
+      expect(page).to have_css(".govuk-error-message", text: "This email address already belongs to member of this team")
       expect(delivered_emails.size).to eq 0
     end
   end
@@ -80,7 +80,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
       click_on "Send invitation"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-      expect(page).to have_css(".govuk-error-message", text: "The email address is already a member of a team")
+      expect(page).to have_css(".govuk-error-message", text: "You can not invite this email address to join your team")
       expect(delivered_emails.size).to eq 0
     end
   end
@@ -174,7 +174,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
     expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).not_to have_css(".govuk-error-message", text: "The email address is already a member of this team")
+    expect(page).not_to have_css(".govuk-error-message", text: "This email address already belongs to member of this team")
     expect(delivered_emails.size).to eq 2
     second_email = delivered_emails.last
     invitation = PendingResponsiblePersonUser.last
@@ -209,10 +209,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
   scenario "following an invitation link with a token that does not match any invitation" do
     configure_requests_for_submit_domain
-    sign_in invited_user
-
     join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=8cfa59f3-6b61-44f9-871b-c471651f234b"
-
     visit join_path
 
     expect(page).to have_current_path("/")

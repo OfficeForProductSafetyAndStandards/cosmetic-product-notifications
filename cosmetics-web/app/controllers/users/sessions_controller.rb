@@ -4,6 +4,8 @@ module Users
 
     def delete; end
 
+    def delete; end
+
     def create
       set_resource_as_new_user_from_params
 
