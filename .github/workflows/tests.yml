@@ -34,11 +34,11 @@ jobs:
     - name: Set up Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.5.x
+        ruby-version: 2.6.x
     - name: Set up Node
       uses: actions/setup-node@v1
       with:
-        node-version: 10.16.x
+        node-version: 10.20.x
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
@@ -63,7 +63,7 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        gem install bundler -v 1.17.3
+        gem install bundler -v 2.1.4
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Install JavaScript dependencies
       env:
