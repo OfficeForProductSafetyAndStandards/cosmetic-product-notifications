@@ -1,5 +1,10 @@
 class SendSecondaryAuthenticationJob < ApplicationJob
   def perform(user, code)
-    SendSMS.otp_code(mobile_number: user.mobile_number, code: code)
+    if user.is_a? SubmitUser
+      SendSubmitSMS.otp_code(mobile_number: user.mobile_number, code: code)
+    end
+    if user.is_a? SearchUser
+      SendSearchSMS.otp_code(mobile_number: user.mobile_number, code: code)
+    end
   end
 end

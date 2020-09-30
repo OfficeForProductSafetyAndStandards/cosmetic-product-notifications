@@ -43,7 +43,8 @@ module Cosmetics
 
     config.active_record.belongs_to_required_by_default = true
     config.antivirus_url = ENV.fetch("ANTIVIRUS_URL", "http://localhost:3006/safe")
-    config.notify_api_key = ENV.fetch("NOTIFY_API_KEY", "")
+    config.search_notify_api_key = ENV.fetch("SEARCH_NOTIFY_API_KEY", "")
+    config.submit_notify_api_key = ENV.fetch("NOTIFY_API_KEY", "")
     config.secondary_authentication_enabled = ENV.fetch("TWO_FACTOR_AUTHENTICATION_ENABLED", "true") == "true"
     config.two_factor_attempts = 10
     config.whitelisted_2fa_code = ENV["WHITELISTED_2FA_CODE"]
