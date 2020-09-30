@@ -10,7 +10,7 @@ module Registration
     def create
       if account_security_form.update!
         bypass_sign_in(current_user)
-        redirect_to declaration_path
+        redirect_to after_creation_path
       else
         render :new
       end
@@ -23,7 +23,16 @@ module Registration
     end
 
     def account_security_form_params
-      params.require(:registration_account_security_form).permit(:mobile_number, :password)
+      params.require(:registration_account_security_form).permit(:mobile_number, :password, :full_name)
+    end
+
+    def after_creation_path
+      if (pending_team_invitation = PendingResponsiblePersonUser.find_by(email_address: current_user.email))
+        join_responsible_person_team_members_path(pending_team_invitation.responsible_person_id,
+                                                  invitation_token: pending_team_invitation.invitation_token)
+      else
+        declaration_path
+      end
     end
   end
 end

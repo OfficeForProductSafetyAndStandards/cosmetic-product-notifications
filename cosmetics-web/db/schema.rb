@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_15_081651) do
+ActiveRecord::Schema.define(version: 2020_09_28_103334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -179,6 +179,9 @@ ActiveRecord::Schema.define(version: 2020_09_15_081651) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
+    t.string "invitation_token"
+    t.datetime "invitation_token_expires_at"
+    t.index ["invitation_token"], name: "index_pending_responsible_person_users_on_invitation_token"
     t.index ["responsible_person_id"], name: "index_pending_responsible_person_users_on_responsible_person_id"
   end
 
@@ -276,8 +279,8 @@ ActiveRecord::Schema.define(version: 2020_09_15_081651) do
     t.datetime "new_email_confirmation_token_expires_at"
     t.boolean "account_security_completed", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 

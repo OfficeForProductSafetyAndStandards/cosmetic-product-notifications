@@ -1,4 +1,4 @@
-class ResponsiblePersons::ContactPersonsController < ApplicationController
+class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person
   before_action :set_contact_person

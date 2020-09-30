@@ -1,7 +1,5 @@
 class DeclarationController < ApplicationController
   skip_before_action :authorize_user!
-  skip_before_action :has_accepted_declaration
-  skip_before_action :create_or_join_responsible_person
 
   def show
     session[:redirect_path] = params[:redirect_path]
