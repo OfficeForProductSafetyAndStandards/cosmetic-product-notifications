@@ -12,14 +12,14 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
       pending_responsible_person.email_address = nil
 
       expect(pending_responsible_person.save).to be false
-      expect(pending_responsible_person.errors[:email_address]).to include("Email address can not be blank")
+      expect(pending_responsible_person.errors[:email_address]).to include("Enter email address")
     end
 
     it "fails if an invalid email is specified" do
       pending_responsible_person.email_address = "invalid-email"
 
       expect(pending_responsible_person.save).to be false
-      expect(pending_responsible_person.errors[:email_address]).to include("Email address is invalid")
+      expect(pending_responsible_person.errors[:email_address]).to include("Enter email address in the correct format, like name@example.com")
     end
 
     it "fails if the email is already a member of team" do
