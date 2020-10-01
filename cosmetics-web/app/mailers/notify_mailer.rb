@@ -4,7 +4,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     return SubmitNotifyMailer if user.is_a? SubmitUser
     return SearchNotifyMailer if user.is_a? SearchUser
 
-    raise 'No Mailer'
+    raise "No Mailer for #{user.class}"
   end
 
   def reset_password_instructions(user, token)
