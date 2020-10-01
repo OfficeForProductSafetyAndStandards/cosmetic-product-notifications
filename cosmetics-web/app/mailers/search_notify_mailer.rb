@@ -4,11 +4,11 @@ class SearchNotifyMailer < NotifyMailer
   TEMPLATES =
     # please add email name in Notify as comment
     {
-      invitation: "f1e0e917-d2f0-4e50-b1c2-7d52c87520e0", # Invite to join Search Cosmetic Product Notifications
-      reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", #  Reset password
-      account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
-      verify_new_email: "68edf46c-627d-4609-ae2e-ba9d4b32e3d6", # Confirm new email address
-      update_email_notification: "a1f0632a-a687-4911-8d60-526bdd8933a0", # Email address updated on Submit Cosmetic Product Notifications
+      invitation: "afa69f3d-1c7e-4f1f-86a2-4e8ecf7da1dc", # Invite to join Search Cosmetic Product Notifications
+      reset_password_instruction: "b40f6179-915a-40a9-94ef-32a0d8d82bba", #  Reset password
+      account_locked: "417fd139-8bc8-4c91-bae0-91dedda64c16", # Unlock account / reset password after too many incorrect password attempts
+      verify_new_email: "8048cb0e-4e91-4a57-9944-1fbe592df232", # Confirm new email address
+      update_email_notification: "f417c719-135f-40c0-9d95-0c0a34c3acf6", # Email address updated on Submit Cosmetic Product Notifications
     }.freeze
 
   def invitation_email(user)
