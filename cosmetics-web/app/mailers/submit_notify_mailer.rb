@@ -41,7 +41,6 @@ class SubmitNotifyMailer < NotifyMailer
     Sidekiq.logger.info "Responsible person invite email sent"
   end
 
-
   def send_account_confirmation_email(user)
     set_host(user)
     set_template(TEMPLATES[:verify_new_account])
