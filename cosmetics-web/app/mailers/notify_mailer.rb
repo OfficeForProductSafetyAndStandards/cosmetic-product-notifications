@@ -4,6 +4,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     {
       account_already_exists: "64ab6e58-12e8-4a66-89a0-84a87d49faa9", # Account creation with existing email address
       responsible_person_invitation: "aaa1ae91-c98f-492e-af58-9d44c93fe2f4", # Invitation to join Responsible Person
+      responsible_person_invitation_for_existing_user: "3c677e3c-0e49-49f6-b6fa-b0c11595f439", # Invitation to join Responsible Person for existing user
       invitation: "0ac7ff62-5b54-42cf-a0c3-45569c7b30bb", # Invite to join Search Cosmetic Product Notifications
       reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", #  Reset password
       account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
@@ -29,7 +30,12 @@ class NotifyMailer < GovukNotifyRails::Mailer
 
   def send_responsible_person_invite_email(responsible_person, invited_team_member, inviting_user_name)
     @host = submit_host
-    set_template(TEMPLATES[:responsible_person_invitation])
+    user = SubmitUser.find_by(email: invited_team_member.email_address)
+    if user
+      set_template(TEMPLATES[:responsible_person_invitation_for_existing_user])
+    else
+      set_template(TEMPLATES[:responsible_person_invitation])
+    end
     set_reference("Invite user to join responsible person")
     set_personalisation(
       responsible_person: responsible_person.name,
