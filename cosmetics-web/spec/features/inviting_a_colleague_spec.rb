@@ -295,8 +295,8 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
 
     expect(page).to have_css("h1", text: "Create an account")
 
-    fill_in "Full Name", with: "John Doe"
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Full name", with: "John Doe"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
@@ -323,8 +323,8 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
-    fill_in "Full Name", with: "Joe Doe"
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
@@ -363,8 +363,8 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
-    fill_in "Full Name", with: "Joe Doe"
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 

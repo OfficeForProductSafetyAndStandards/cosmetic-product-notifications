@@ -7,7 +7,7 @@ module FormHelper
       name: "#{resource_form_name(user)}[#{field}]",
       type: "text",
       classes: "app-!-max-width-two-thirds",
-      label: { text: field.titleize },
+      label: { text:  user.class.human_attribute_name(field.to_sym)},
       errorMessage: format_errors_for(user, user.errors.full_messages_for(field)),
       value: value,
     )
