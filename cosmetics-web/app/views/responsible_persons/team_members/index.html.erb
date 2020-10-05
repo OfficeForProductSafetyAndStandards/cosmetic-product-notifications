@@ -3,10 +3,10 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<div class="govuk-grid-row">
+<div class="govuk-grid-row govuk-!-margin-bottom-6">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Team members</h1>
-    <%= link_to "Invite a colleague", new_responsible_person_team_member_path %>
+    <%= link_to "Invite a colleague", new_responsible_person_team_member_path, class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19" %>
   </div>
 </div>
 
