@@ -15,7 +15,7 @@
 
     <%= form_for(@account_security_form, url: registration_create_account_security_path, html: { novalidate: true }, method: :post) do |f| %>
       <%= form_input @account_security_form, :full_name if @account_security_form.name_required? %>
-      <%= form_input @account_security_form, :mobile_number, hint: { text: "We'll send you a security code by text message" } %>
+      <%= form_input @account_security_form, :mobile_number, hint: { text: "We’ll send you a security code by text message" } %>
       <%= password_input @account_security_form, hint: { text: 'At least 8 characters' } %>
 
       <%= govukButton(text: "Continue") %>

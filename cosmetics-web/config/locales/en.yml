@@ -128,6 +128,9 @@ en:
             mobile_number:
               invalid: "Enter your mobile number in the correct format, like 07700 900 982"
   activemodel:
+    attributes:
+      registration/account_security_form:
+        mobile_number: 'Mobile number'
     errors:
       models:
         registration/account_security_form:
