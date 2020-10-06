@@ -25,7 +25,7 @@
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">-</td>
             <td class="govuk-table__cell"><%= user.email_address %></td>
-            <td class="govuk-table__cell">Pending</td>
+            <td class="govuk-table__cell"><%= link_to "Resend invitation", resend_invitation_responsible_person_team_member_path(@responsible_person, user) %></td>
           </tr>
         <% end %>
         <% @responsible_person.responsible_person_users.each do |user| %>

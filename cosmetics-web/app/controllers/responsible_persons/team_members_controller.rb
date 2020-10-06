@@ -43,6 +43,17 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     redirect_to root_path
   end
 
+  def resend_inviation
+    @team_member = @responsible_person.pending_responsible_person_users.find(params[:id])
+
+    ActiveRecord::Base.transaction do
+      @team_member.refresh_token_expiration!
+      send_invite_email
+    end
+
+    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{@team_member.email_address}"
+  end
+
   def sign_out_before_joining
     sign_out
     redirect_to join_responsible_person_team_members_path(params[:responsible_person_id], invitation_token: params[:invitation_token])
