@@ -13,10 +13,10 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install cf client
       env:
-        CF_CLI_VERSION: 7.0.0-beta.25
+        CF_CLI_VERSION: v7
       run: |
         curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
-        sudo cp /tmp/cf7 /usr/local/bin/cf7
+        sudo cp /tmp/cf7 /usr/local/bin/cf
 
     - name: Create GitHub deployment for Staging
       env:
@@ -48,12 +48,12 @@ jobs:
         CF_USERNAME: ${{ secrets.PaaSUsernameStaging }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordStaging }}
       run: |
-        cf7 api api.london.cloud.service.gov.uk
-        cf7 auth
-        cf7 target -o 'beis-opss' -s $SPACE
+        cf api api.london.cloud.service.gov.uk
+        cf auth
+        cf target -o 'beis-opss' -s $SPACE
         chmod +x ./cosmetics-web/deploy.sh
         ./cosmetics-web/deploy.sh
-        cf7 logout
+        cf logout
 
     - name: Update Staging deployment status (success)
       if: success()
@@ -102,11 +102,11 @@ jobs:
         CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
       run: |
-        cf7 api api.london.cloud.service.gov.uk
-        cf7 auth
-        cf7 target -o 'beis-opss' -s $SPACE
+        cf api api.london.cloud.service.gov.uk
+        cf auth
+        cf target -o 'beis-opss' -s $SPACE
         ./cosmetics-web/deploy.sh
-        cf7 logout
+        cf logout
 
     - name: Update Production deployment status (success)
       if: success()
