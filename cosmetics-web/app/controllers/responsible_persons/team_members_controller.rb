@@ -1,10 +1,10 @@
 class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :set_team_member, only: %i[new create]
-  before_action :authorize_responsible_person, only: %i[new create]
+  before_action :authorize_responsible_person, only: %i[index new create]
   skip_before_action :authenticate_user!, only: :join
   skip_before_action :create_or_join_responsible_person
-  skip_before_action :require_secondary_authentication, only: %i[index join]
+  skip_before_action :require_secondary_authentication, only: %i[join]
 
   def index; end
 
