@@ -19,7 +19,8 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
     when :create_or_join_existing
       create_or_join_existing_account
     when :enter_details
-      if responsible_person_saved?
+      if save_responsible_person
+        PendingResponsiblePersonUser.where(email_address: current_user.email).delete_all
         redirect_to new_responsible_person_contact_person_path(@responsible_person)
       else
         render step
@@ -51,7 +52,7 @@ private
     @responsible_person.valid?(step)
   end
 
-  def responsible_person_saved?
+  def save_responsible_person
     return false unless responsible_person_valid?
 
     @responsible_person.add_user(current_user)
