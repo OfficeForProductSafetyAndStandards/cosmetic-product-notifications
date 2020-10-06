@@ -220,14 +220,14 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     visit team_path
 
 
-    time_now = (Time.at(Time.now.utc.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
+    time_now = (Time.zone.at(Time.now.utc.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
     travel_to time_now
 
     click_on "Resend invitation"
 
     complete_secondary_authentication_for(user)
 
-    expect(invitation.reload.invitation_token_expires_at).to eq (time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
+    expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
     email = delivered_emails.last
 
     expect(email).to have_attributes(

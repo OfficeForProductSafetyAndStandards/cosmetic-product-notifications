@@ -5,6 +5,8 @@ RSpec.describe "Team members management", type: :request, with_stubbed_notify: t
   let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   before do
+    configure_requests_for_submit_domain
+
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 

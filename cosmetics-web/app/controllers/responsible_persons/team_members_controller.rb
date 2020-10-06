@@ -15,7 +15,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     return render :new if @responsible_person.errors.any?
 
     send_invite_email
-    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{team_member_params["email_address"]}"
+    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{team_member_params['email_address']}"
   end
 
   def join

@@ -71,3 +71,7 @@ Capybara/CurrentPathExpectation:
 # TODO: re-enable this after updating the helpers
 Rails/HelperInstanceVariable:
   Enabled: false
+
+Style/MethodCalledOnDoEndBlock:
+  Exclude:
+    - 'spec/**/*'
