@@ -228,3 +228,7 @@ en:
     mobile_number:
       invalid: "Enter your mobile number in the correct format, like 07700 900 982"
       blank: "Please enter mobile number"
+  contact_person:
+    email_address:
+      wrong_format: "Enter your email address in the correct format, like name@example.com"
+      blank: "Enter your email address"
