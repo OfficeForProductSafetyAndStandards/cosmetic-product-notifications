@@ -43,7 +43,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     redirect_to root_path
   end
 
-  def resend_inviation
+  def resend_invitation
     @team_member = @responsible_person.pending_responsible_person_users.find(params[:id])
 
     ActiveRecord::Base.transaction do
