@@ -28,11 +28,7 @@
       <% end %>
 
       <% if confirmation %>
-        <div class="confirmation-banner" aria-labelledby="confirmation-banner-title" tabindex="-1">
-          <h2 id="confirmation-banner-title" class="confirmation-banner__title">
-            <%= confirmation %>
-          </h2>
-        </div>
+        <%= render "components/hmcts_banner", text: confirmation, type: "success" %>
       <% end %>
 
       <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">
