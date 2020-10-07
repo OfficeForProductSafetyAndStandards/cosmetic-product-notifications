@@ -127,6 +127,8 @@ en:
           attributes:
             mobile_number:
               invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+            password:
+              too_short: "Password must be at least 8 characters"
   activemodel:
     attributes:
       registration/account_security_form:
@@ -140,6 +142,7 @@ en:
               blank: "Please enter mobile number"
             password:
               blank: "Please enter password"
+              too_short: "Password must be at least 8 characters"
             full_name:
               blank: "Enter your full name"
   enquiries_email: "opss.enquiries@beis.gov.uk"
