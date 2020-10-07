@@ -5,6 +5,10 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
   let(:user) { create(:submit_user) }
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
 
+  before do
+    configure_requests_for_submit_domain
+  end
+
   scenario "sending an invitation to an existing user that does not belong to any team" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
@@ -205,6 +209,36 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
       expect(page).to have_css("h1", text: "This invitation has expired")
       expect(invited_user.responsible_persons).not_to include(responsible_person)
     end
+  end
+
+  scenario "Resending an invitation" do
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+
+    invitation = create(:pending_responsible_person_user, responsible_person: responsible_person)
+
+    team_path = "/responsible_persons/#{responsible_person.id}/team_members"
+    visit team_path
+
+
+    time_now = (Time.zone.at(Time.now.utc.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
+    travel_to time_now
+
+    click_on "Resend invitation"
+
+    complete_secondary_authentication_for(user)
+
+    expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
+    email = delivered_emails.last
+
+    expect(email).to have_attributes(
+      recipient: invitation.email_address,
+      template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
+      personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                        invite_sender: user.name,
+                        responsible_person: responsible_person.name },
+    )
+
+    expect(page.current_path).to eq team_path
   end
 
   scenario "following an invitation link with a token that does not match any invitation" do
