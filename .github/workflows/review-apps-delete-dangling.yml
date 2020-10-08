@@ -8,6 +8,9 @@ jobs:
   cleanup_reviewapp:
     name: Delete dangling review apps
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     env:
       SPACE: int
       CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
