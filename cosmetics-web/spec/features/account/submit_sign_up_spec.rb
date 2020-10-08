@@ -219,6 +219,16 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).to have_css("h1", text: "Your cosmetic products")
   end
 
+  scenario "registered user can not access account security" do
+    user = create(:submit_user, :with_responsible_person)
+
+    sign_in(user)
+    visit '/account-security'
+
+    expect(page).not_to have_css("h1", text: "Account security")
+    expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
+  end
+
   def expect_to_be_on_check_your_email_page
     expect(page).to have_css("h1", text: "Check your email")
     expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")

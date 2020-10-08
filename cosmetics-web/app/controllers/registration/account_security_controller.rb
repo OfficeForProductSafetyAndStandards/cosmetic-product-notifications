@@ -1,5 +1,6 @@
 module Registration
   class AccountSecurityController < SubmitApplicationController
+    before_action :check_user
     skip_before_action :require_secondary_authentication
     skip_before_action :try_to_finish_account_setup
 
@@ -33,6 +34,12 @@ module Registration
       else
         declaration_path
       end
+    end
+
+    def check_user
+      return unless current_user.account_security_completed
+
+      redirect_to root_path
     end
   end
 end
