@@ -26,7 +26,7 @@ jobs:
     - name: Retrieve list of active pull requests
       run: |
         # Gets open PR numbers and builds the review app name for each PR. Returns an array.
-        active_prs=(`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss-cosmetics/pulls | jq -r '.[] | "cosmetics-pr-\(.number)"'`)
+        active_prs=(`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls | jq -r '.[] | "cosmetics-pr-\(.number)"'`)
 
         # Makes the active prs list available for further steps
         echo "::set-env name=ACTIVE_PRS::${active_prs[@]}"
