@@ -1,0 +1,72 @@
+name: Delete dangling review apps
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # Every night at 1am
+
+jobs:
+  cleanup_reviewapp:
+    name: Delete dangling review apps
+    runs-on: ubuntu-latest
+    env:
+      SPACE: int
+      CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
+      CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install cf client
+      env:
+        CF_CLI_VERSION: v7
+      run: |
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+        sudo cp /tmp/cf7 /usr/local/bin/cf
+    - name: Retrieve list of active pull requests
+      run: |
+        # Gets open PR numbers and builds the review app name for each PR. Returns an array.
+        active_prs=(`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss-cosmetics/pulls | jq -r '.[] | "cosmetics-pr-\(.number)"'`)
+
+        # Makes the active prs list available for further steps
+        echo "::set-env name=ACTIVE_PRS::${active_prs[@]}"
+    - name: Retrieve list of current review apps
+      run: |
+        cf api api.london.cloud.service.gov.uk
+        cf auth
+        cf target -o 'beis-opss' -s $SPACE
+
+        # Stores name of the review apps as an array
+        review_apps=(`cf apps | grep cosmetics-pr- | awk '{print $1}'`)
+        cf logout
+
+        # Makes the review apps list available for further steps
+        echo "::set-env name=REVIEW_APPS::${review_apps[@]}"
+    - name: Identify dangling review apps
+      run: |
+        # Iterates through review apps list and adds them to the dangling list
+        # unless they correspond to one of the open pull requests.
+        dangling_review_apps=()
+        for review_app in ${REVIEW_APPS[@]}; do
+          review_app_is_active="false"
+          for active in ${ACTIVE_PRS[@]}; do
+            if [ "$review_app" = "$active" ]; then
+              review_app_is_active="true"
+              break
+            fi
+          done
+          if [ "$review_app_is_active" = "false" ]; then
+            dangling_review_apps+=($review_app)
+          fi
+        done
+
+        # Makes the dangling review apps list available for further steps
+        echo "::set-env name=DANGLING_REVIEW_APPS::${dangling_review_apps[@]}"
+    - name: Delete dangling review apps
+      run: |
+        cf api api.london.cloud.service.gov.uk
+        cf auth
+        cf target -o 'beis-opss' -s $SPACE
+        for dangling in ${DANGLING_REVIEW_APPS[@]}; do
+          echo "Deleting ${dangling}"
+          cf delete -f -r ${dangling}
+          cf delete-service -f cosmetics-review-redis-${dangling:13} # Substring from 13th char contains the PR number
+        done
+        cf logout

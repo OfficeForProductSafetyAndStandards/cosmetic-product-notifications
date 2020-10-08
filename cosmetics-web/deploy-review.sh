@@ -23,28 +23,28 @@ if [ -z "$DB_NAME" ]
 then
   DB_NAME=cosmetics-review-database
 fi
-cf7 create-service postgres small-10 $DB_NAME -c '{"enable_extensions": ["pgcrypto"]}'
+cf create-service postgres small-10 $DB_NAME -c '{"enable_extensions": ["pgcrypto"]}'
 
 # Wait until db is prepared, might take up to 10 minutes
-until cf7 service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_exists; do sleep 20; echo "Waiting for db"; done
+until cf service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_exists; do sleep 20; echo "Waiting for db"; done
 
 if [ -z "$REDIS_NAME" ]
 then
   REDIS_NAME=cosmetics-review-redis
 fi
-cf7 create-service redis tiny-3.2 $REDIS_NAME
+cf create-service redis tiny-3.2 $REDIS_NAME
 
 # Wait until redis service is prepared, might take up to 10 minutes
-until cf7 service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
+until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
 
 
 # Copy files from infrastructure env
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
 # Deploy the submit app and set the hostname
-cf7 push $APP -f $MANIFEST_FILE --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --strategy rolling
+cf push $APP -f $MANIFEST_FILE --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --strategy rolling
 
-cf7 scale $APP --process worker -i 1
+cf scale $APP --process worker -i 1
 
 # Remove the copied infrastructure env files to clean up
 rm -R cosmetics-web/env/
