@@ -321,8 +321,10 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     different_user = create(:submit_user, name: "John Doedifferent")
     sign_out
     sign_in_as_member_of_responsible_person(responsible_person, different_user)
-    visit email.personalization[:invitation_url]
 
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.now.utc + wait_time.seconds)
+    visit email.personalization[:invitation_url]
     expect(page).to have_css("h1", text: "You are already signed in")
 
     click_button "Create a new account"
