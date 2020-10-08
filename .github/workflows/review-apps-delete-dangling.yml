@@ -30,15 +30,15 @@ jobs:
 
         # Makes the active prs list available for further steps
         echo "::set-env name=ACTIVE_PRS::${active_prs[@]}"
-    - name: Retrieve list of current review apps
+    - name: Login into CloudFoundry
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
         cf target -o 'beis-opss' -s $SPACE
-
+    - name: Retrieve list of current review apps
+      run: |
         # Stores name of the review apps as an array
         review_apps=(`cf apps | grep cosmetics-pr- | awk '{print $1}'`)
-        cf logout
 
         # Makes the review apps list available for further steps
         echo "::set-env name=REVIEW_APPS::${review_apps[@]}"
@@ -64,12 +64,10 @@ jobs:
         echo "::set-env name=DANGLING_REVIEW_APPS::${dangling_review_apps[@]}"
     - name: Delete dangling review apps
       run: |
-        cf api api.london.cloud.service.gov.uk
-        cf auth
-        cf target -o 'beis-opss' -s $SPACE
         for dangling in ${DANGLING_REVIEW_APPS[@]}; do
           echo "Deleting ${dangling}"
           cf delete -f -r ${dangling}
           cf delete-service -f cosmetics-review-redis-${dangling:13} # Substring from 13th char contains the PR number
         done
-        cf logout
+    - name: Logout from CloudFoundry
+      run: cf logout
