@@ -24,29 +24,36 @@ jobs:
         curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
         sudo cp /tmp/cf7 /usr/local/bin/cf
     - name: Retrieve list of active pull requests
+      id: retrieve-pull-requests
       run: |
         # Gets open PR numbers and builds the review app name for each PR. Returns an array.
         active_prs=(`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls | jq -r '.[] | "cosmetics-pr-\(.number)"'`)
 
         # Makes the active prs list available for further steps
-        echo "::set-env name=ACTIVE_PRS::${active_prs[@]}"
+        echo "::set-output name=ACTIVE_PRS::${active_prs[@]}"
     - name: Login into CloudFoundry
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
         cf target -o 'beis-opss' -s $SPACE
     - name: Retrieve list of current review apps
+      id: retrieve-review-apps
       run: |
         # Stores name of the review apps as an array
         review_apps=(`cf apps | grep cosmetics-pr- | awk '{print $1}'`)
 
         # Makes the review apps list available for further steps
-        echo "::set-env name=REVIEW_APPS::${review_apps[@]}"
+        echo "::set-output name=REVIEW_APPS::${review_apps[@]}"
     - name: Identify dangling review apps
+      id: identify-dangling
+      env:
+        ACTIVE_PRS: ${{ steps.retrieve-pull-requests.outputs.ACTIVE_PRS }}
+        REVIEW_APPS: ${{ steps.retrieve-review-apps.outputs.REVIEW_APPS }}
       run: |
         # Iterates through review apps list and adds them to the dangling list
         # unless they correspond to one of the open pull requests.
         dangling_review_apps=()
+
         for review_app in ${REVIEW_APPS[@]}; do
           review_app_is_active="false"
           for active in ${ACTIVE_PRS[@]}; do
@@ -61,8 +68,11 @@ jobs:
         done
 
         # Makes the dangling review apps list available for further steps
-        echo "::set-env name=DANGLING_REVIEW_APPS::${dangling_review_apps[@]}"
+        echo "::set-output name=DANGLING_REVIEW_APPS::${dangling_review_apps[@]}"
     - name: Delete dangling review apps
+      id: delete-dangling
+      env:
+        DANGLING_REVIEW_APPS: ${{ steps.identify-dangling.outputs.DANGLING_REVIEW_APPS }}
       run: |
         for dangling in ${DANGLING_REVIEW_APPS[@]}; do
           echo "Deleting ${dangling}"
