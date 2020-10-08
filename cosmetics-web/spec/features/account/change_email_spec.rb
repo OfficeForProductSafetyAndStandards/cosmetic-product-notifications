@@ -30,10 +30,10 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       it "changes password properly" do
         fill_in "Password", with: user.password
         fill_in "New email", with: "new@example.org"
-        click_on "Save"
+        click_on "Continue"
 
         expect_to_be_on_my_account_page
-        expect(page).to have_text(/Confirmation email sent. Please follow instructions from email/)
+        expect(page).to have_text(/A message with a confirmation link has been sent to your email address/)
         email = delivered_emails.first
         expect(email.recipient).to eq "new@example.org"
 
@@ -58,7 +58,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       it "does not get updated when password is wrong" do
         fill_in "Password", with: "user.password"
         fill_in "New email", with: "new@example.org"
-        click_on "Save"
+        click_on "Continue"
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
         expect(page).to have_link("Password is incorrect", href: "#password")
@@ -67,7 +67,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       it "does not get updated when new email is incorrect" do
         fill_in "Password", with: user.password
         fill_in "New email", with: "new@example"
-        click_on "Save"
+        click_on "Continue"
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
         expect(page).to have_link("", href: "#new_email")
@@ -77,10 +77,10 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         before do
           fill_in "Password", with: user.password
           fill_in "New email", with: "new@example.org"
-          click_on "Save"
+          click_on "Continue"
 
           expect_to_be_on_my_account_page
-          expect(page).to have_text(/Confirmation email sent. Please follow instructions from email/)
+          expect(page).to have_text(/A message with a confirmation link has been sent to your email address/)
           email = delivered_emails.last
           expect(email.recipient).to eq "new@example.org"
 

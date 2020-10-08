@@ -16,7 +16,7 @@ class MyAccountMobileNumberController < ApplicationController
     @user.mobile_number_verified = false
 
     if @user.save
-      redirect_to my_account_path, notice: "Mobile number changed successfully"
+      redirect_to my_account_path, confirmation: "Mobile number changed successfully"
     else
       render "my_account/mobile_number"
     end
