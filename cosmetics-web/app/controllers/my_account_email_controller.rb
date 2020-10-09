@@ -19,7 +19,7 @@ class MyAccountEmailController < ApplicationController
       user.send_new_email_confirmation_email
       render "users/check_your_email/show"
     end
-  rescue
+  rescue StandardError
     render "my_account/email"
   end
 
