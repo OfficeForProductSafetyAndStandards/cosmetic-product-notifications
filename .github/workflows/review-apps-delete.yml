@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [closed]
 
+env:
+  PR_NUMBER: ${{ github.event.number }}
+
 jobs:
   cleanup_reviewapp:
     name: Delete review app
@@ -15,35 +18,25 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       if: github.event.pull_request.merged == true
-    - name: Install cf7 client
+
+    - name: Install cf client
       env:
-        CF_CLI_VERSION: 7.0.0-beta.25
+        CF_CLI_VERSION: v7
       run: |
         curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
-        sudo cp /tmp/cf7 /usr/local/bin/cf7
-    - name: Get Pull Request ID using GitHub API
-      if: github.event.pull_request.merged == true
-      run: |
-        pr_number=`curl -H "Accept: application/vnd.github.groot-preview+json" https://api.github.com/repos/UKGovernmentBEIS/beis-opss/commits/$GITHUB_SHA/pulls | ./infrastructure/env/jq '.[0] | .number'`
-        echo "::set-env name=PR_NUMBER::$pr_number"
-    - name: Get Pull Request ID from GITHUB_REF
-      if: github.event.pull_request.merged != true
-      run: |
-        pr_number=`echo $GITHUB_REF | grep -o '[0-9_]\+'`
-        echo "::set-env name=PR_NUMBER::$pr_number"
+        sudo cp /tmp/cf7 /usr/local/bin/cf
+
     - name: Delete review app
-      env:
-        PR_NUMBER: ${{ env.PR_NUMBER }}
       run: |
-        cf7 api api.london.cloud.service.gov.uk
-        cf7 auth
-        cf7 target -o 'beis-opss' -s $SPACE
-        cf7 delete -f -r cosmetics-pr-$PR_NUMBER
-        cf7 delete-service -f cosmetics-review-redis-$PR_NUMBER
-        cf7 logout
+        cf api api.london.cloud.service.gov.uk
+        cf auth
+        cf target -o 'beis-opss' -s $SPACE
+        cf delete -f -r cosmetics-pr-$PR_NUMBER
+        cf delete-service -f cosmetics-review-redis-$PR_NUMBER
+        cf logout
+
     - name: Deactivate Github deploy
       env:
-        PR_NUMBER: ${{ env.PR_NUMBER }}
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
       run: |
         source cosmetics-web/deploy-github-functions.sh

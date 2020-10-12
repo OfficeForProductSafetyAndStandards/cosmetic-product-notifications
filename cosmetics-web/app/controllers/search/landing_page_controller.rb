@@ -5,6 +5,8 @@ class Search::LandingPageController < SearchApplicationController
 
   before_action :redirect_to_notifications
 
+  layout "landing_page"
+
   def index; end
 
 private

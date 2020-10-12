@@ -10,7 +10,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
     # First attempt with validation errors
-    fill_in "Full Name", with: ""
+    fill_in "Full name", with: ""
     fill_in "Email address", with: "signing_up.example.com"
     click_button "Continue"
 
@@ -22,7 +22,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).to have_link("Enter your email address", href: "#email")
     expect(page).to have_css("span#email-error", text: "Enter your email address")
 
-    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
@@ -35,7 +35,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
@@ -52,7 +52,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).to have_current_path("/create-an-account")
     # First attempt with validation errors
 
-    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
@@ -79,7 +79,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
     visit verify_url
 
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
@@ -97,7 +97,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
       click_on "Create an account"
       expect(page).to have_current_path("/create-an-account")
 
-      fill_in "Full Name", with: "Joe Doe"
+      fill_in "Full name", with: "Joe Doe"
       fill_in "Email address", with: user.email
       click_button "Continue"
 
@@ -127,7 +127,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
         click_on "Create an account"
         expect(page).to have_current_path("/create-an-account")
 
-        fill_in "Full Name", with: "Joe Doe"
+        fill_in "Full name", with: "Joe Doe"
         fill_in "Email address", with: user.email
         click_button "Continue"
 
@@ -141,7 +141,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
         verify_url = email.personalization[:verify_email_url]
         visit verify_url
 
-        fill_in "Mobile Number", with: "07000000000"
+        fill_in "Mobile number", with: "07000000000"
         fill_in "Password", with: "userpassword", match: :prefer_exact
         click_button "Continue"
 
@@ -159,7 +159,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
 
-    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
@@ -179,7 +179,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
     click_on "Create new account"
 
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
@@ -194,7 +194,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
 
-    fill_in "Full Name", with: "Joe Doe"
+    fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
@@ -217,6 +217,16 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
     click_link "Your cosmetic products"
     expect(page).to have_css("h1", text: "Your cosmetic products")
+  end
+
+  scenario "registered user can not access account security" do
+    user = create(:submit_user, :with_responsible_person)
+
+    sign_in(user)
+    visit '/account-security'
+
+    expect(page).not_to have_css("h1", text: "Account security")
+    expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
   end
 
   def expect_to_be_on_check_your_email_page

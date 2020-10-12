@@ -5,6 +5,12 @@
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=UKGovernmentBEIS/beis-opss)](https://dependabot.com)
 
 
+## Inviting Search Users
+
+1. SSH to rails console (described below)
+2. Run `InviteUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`
+3. Role could be `poison_centre` or `msa`
+
 ## Getting Setup
 
 ### Quick steps

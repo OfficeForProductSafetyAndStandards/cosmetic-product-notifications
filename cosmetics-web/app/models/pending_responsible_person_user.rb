@@ -24,6 +24,11 @@ class PendingResponsiblePersonUser < ApplicationRecord
     invitation_token_expires_at < DateTime.current
   end
 
+  def refresh_token_expiration!
+    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
+    self.save!
+  end
+
 private
 
   def generate_token

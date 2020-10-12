@@ -5,6 +5,10 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
   let(:user) { create(:submit_user) }
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
 
+  before do
+    configure_requests_for_submit_domain
+  end
+
   scenario "sending an invitation to an existing user that does not belong to any team" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
@@ -30,7 +34,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
       expect(email).to have_attributes(
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
-        template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation],
+        template: NotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
         personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                           invite_sender: user.name,
                           responsible_person: responsible_person.name },
@@ -182,7 +186,7 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(second_email).to have_attributes(
       recipient: "newusertoregister@example.com",
       reference: "Invite user to join responsible person",
-      template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation],
+      template: NotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                         invite_sender: user.name,
                         responsible_person: responsible_person.name },
@@ -205,6 +209,36 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
       expect(page).to have_css("h1", text: "This invitation has expired")
       expect(invited_user.responsible_persons).not_to include(responsible_person)
     end
+  end
+
+  scenario "Resending an invitation" do
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+
+    invitation = create(:pending_responsible_person_user, responsible_person: responsible_person)
+
+    team_path = "/responsible_persons/#{responsible_person.id}/team_members"
+    visit team_path
+
+
+    time_now = (Time.zone.at(Time.now.utc.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
+    travel_to time_now
+
+    click_on "Resend invitation"
+
+    complete_secondary_authentication_for(user)
+
+    expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
+    email = delivered_emails.last
+
+    expect(email).to have_attributes(
+      recipient: invitation.email_address,
+      template: NotifyMailer::TEMPLATES[:responsible_person_invitation],
+      personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                        invite_sender: user.name,
+                        responsible_person: responsible_person.name },
+    )
+
+    expect(page.current_path).to eq team_path
   end
 
   scenario "following an invitation link with a token that does not match any invitation" do
@@ -287,16 +321,18 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     different_user = create(:submit_user, name: "John Doedifferent")
     sign_out
     sign_in_as_member_of_responsible_person(responsible_person, different_user)
-    visit email.personalization[:invitation_url]
 
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.now.utc + wait_time.seconds)
+    visit email.personalization[:invitation_url]
     expect(page).to have_css("h1", text: "You are already signed in")
 
     click_button "Create a new account"
 
     expect(page).to have_css("h1", text: "Create an account")
 
-    fill_in "Full Name", with: "John Doe"
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Full name", with: "John Doe"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
@@ -323,8 +359,8 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
-    fill_in "Full Name", with: "Joe Doe"
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
@@ -363,8 +399,8 @@ RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_no
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
-    fill_in "Full Name", with: "Joe Doe"
-    fill_in "Mobile Number", with: "07000000000"
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 

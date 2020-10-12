@@ -1,10 +1,10 @@
 class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :set_team_member, only: %i[new create]
-  before_action :authorize_responsible_person, only: %i[new create]
+  before_action :authorize_responsible_person, only: %i[index new create]
   skip_before_action :authenticate_user!, only: :join
   skip_before_action :create_or_join_responsible_person
-  skip_before_action :require_secondary_authentication, only: %i[index join]
+  skip_before_action :require_secondary_authentication, only: %i[index join sign_out_before_joining]
 
   def index; end
 
@@ -15,7 +15,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     return render :new if @responsible_person.errors.any?
 
     send_invite_email
-    redirect_to responsible_person_team_members_path(@responsible_person)
+    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{team_member_params['email_address']}"
   end
 
   def join
@@ -41,6 +41,17 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path
+  end
+
+  def resend_invitation
+    @team_member = @responsible_person.pending_responsible_person_users.find(params[:id])
+
+    ActiveRecord::Base.transaction do
+      @team_member.refresh_token_expiration!
+      send_invite_email
+    end
+
+    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{@team_member.email_address}"
   end
 
   def sign_out_before_joining

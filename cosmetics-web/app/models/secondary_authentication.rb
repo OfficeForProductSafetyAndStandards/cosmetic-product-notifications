@@ -13,7 +13,7 @@ class SecondaryAuthentication
     CHANGE_PASSWORD => 300, # 5 minutes
     CHANGE_MOBILE_NUMBER => 300, # 5 minutes
     CHANGE_EMAIL_ADDRESS => 300, # 5 minutes
-    INVITE_USER => 3600, # 1 hour
+    INVITE_USER => 300, # 5 minutes
     UNLOCK_OPERATION => 300, # 5 minutes
   }.freeze
 

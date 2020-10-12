@@ -128,6 +128,9 @@ en:
             mobile_number:
               invalid: "Enter your mobile number in the correct format, like 07700 900 982"
   activemodel:
+    attributes:
+      registration/account_security_form:
+        mobile_number: 'Mobile number'
     errors:
       models:
         registration/account_security_form:
@@ -182,7 +185,7 @@ en:
       not_given: "Not given"
   users:
     check_your_email:
-      body: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
+      body: A message with a confirmation link has been sent to your email address. Please follow the link to continue.
   otp_code:
     blank: "Enter the security code"
     too_short: "You haven’t entered enough numbers"
