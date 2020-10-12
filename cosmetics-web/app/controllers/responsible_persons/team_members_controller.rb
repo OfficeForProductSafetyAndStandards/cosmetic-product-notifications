@@ -29,7 +29,8 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     if user&.account_security_completed?
       authenticate_user!
       responsible_person.add_user(user)
-      PendingResponsiblePersonUser.where(email_address: user.email).delete_all
+      # delete accepted pending request
+      pending_request.delete
       redirect_to responsible_person_notifications_path(responsible_person)
     else
       user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|
