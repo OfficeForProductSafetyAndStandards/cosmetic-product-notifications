@@ -16,7 +16,7 @@
         <li>submit cosmetic product notifications</li>
       </ul>
 
-      <%= render "form_components/govuk_input", form: form, key: :email_address, type: :email_field, label: { text: "Email address" } %>
+      <%= render "form_components/govuk_input", form: form, key: :email_address, id: "email_address", type: :email_field, label: { text: "Email address" } %>
 
       <div class="govuk-form-group">
         <%= govukButton text: "Send invitation" %>
