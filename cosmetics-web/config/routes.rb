@@ -73,9 +73,10 @@ Rails.application.routes.draw do
 
     root "submit/landing_page#index"
 
-    resources :responsible_persons, only: %i[show] do
+    resources :responsible_persons do
       collection do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
+        get 'change', to: "responsible_persons#change"
       end
 
       resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new create], shallow: true do

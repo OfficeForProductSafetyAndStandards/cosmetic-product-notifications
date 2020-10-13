@@ -1,4 +1,4 @@
-<%#= link_to "Change Responsible Person", new_responsible_person_add_notification_path(@responsible_person), style: "margin-bottom: 5px;", class: "govuk-button" %>
+<%= link_to "Change Responsible Person", change_responsible_persons_path, style: "margin-bottom: 25px; margin-top: 25px", class: "govuk-button" if current_user.responsible_persons.count > 1 %>
 <nav class="app-navigation govuk-clearfix">
   <ul class="app-navigation__list">
     <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons/notifications" %>">

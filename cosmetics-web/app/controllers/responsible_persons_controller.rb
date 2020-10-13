@@ -1,5 +1,7 @@
 class ResponsiblePersonsController < SubmitApplicationController
-  before_action :set_responsible_person
+  before_action :set_responsible_person, only: :show
+
+  def change; end
 
 private
 
