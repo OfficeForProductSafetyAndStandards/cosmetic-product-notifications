@@ -1,3 +1,4 @@
+<h1 class="govuk-heading-l">Change current responsible person</h1>
 <ul class="govuk-list">
   <% current_user.responsible_persons.each do |rp| %>
     <li><%= link_to rp.name, responsible_person_notifications_path(rp), class: 'govuk-link' %></li>
