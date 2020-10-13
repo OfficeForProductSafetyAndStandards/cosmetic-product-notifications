@@ -1,7 +1,7 @@
-<h1 class="govuk-heading-l">Change current responsible person</h1>
-<ul class="govuk-list">
+<h1 class="govuk-heading-l">Choose Responsible Person</h1>
+<ul class="govuk-list govuk-!-margin-bottom-6">
   <% current_user.responsible_persons.each do |rp| %>
-    <li><%= link_to rp.name, responsible_person_notifications_path(rp), class: 'govuk-link' %></li>
+    <li><%= link_to rp.name, responsible_person_notifications_path(rp), class: 'govuk-link govuk-link--no-visited-state' %></li>
   <% end %>
-  <li><%= link_to "Add new Responsible Person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %></li>
 </ul>
+<%= link_to "Add new Responsible Person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 govuk-body' %>
