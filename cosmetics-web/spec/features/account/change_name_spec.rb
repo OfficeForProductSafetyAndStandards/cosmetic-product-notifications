@@ -18,13 +18,13 @@ RSpec.describe "Changing name", :with_2fa, :with_stubbed_mailer, :with_stubbed_n
 
 
     it "changes name properly" do
-      fill_in "Name", with: ""
-      click_button "Save"
+      fill_in "Full name", with: ""
+      click_button "Continue"
 
       expect(page).to have_link("Name can not be blank", href: "#name")
 
-      fill_in "Name", with: "Joe Smith"
-      click_button "Save"
+      fill_in "Full name", with: "Joe Smith"
+      click_button "Continue"
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Name changed successfully/)
     end
