@@ -94,7 +94,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
           click_on "Continue"
 
           expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-          expect(page).to have_link("Password is too short", href: "#password")
+          expect(page).to have_link("Password must be at least 8 characters", href: "#password")
 
           expect(page).to have_field("username", type: "email", with: user.email, disabled: true)
         end

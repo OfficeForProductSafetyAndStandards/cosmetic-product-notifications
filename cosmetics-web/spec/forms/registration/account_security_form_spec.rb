@@ -18,7 +18,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
     it "contains errors" do
       form.valid?
-      expect(form.errors.full_messages_for(:password)).to eq ["Password is too short (minimum is 8 characters)"]
+      expect(form.errors.full_messages_for(:password)).to eq ["Password must be at least 8 characters"]
     end
   end
 

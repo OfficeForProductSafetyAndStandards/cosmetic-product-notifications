@@ -1,4 +1,4 @@
-<% title = "Change your email" %>
+<% title = "Change your email address" %>
 <% page_title title, errors: @user.errors.any? %>
 
 <% content_for(:after_header) do %>
@@ -29,12 +29,12 @@
         form: form,
         classes: "app-!-max-width-two-thirds",
         label: {
-          text: "New email"
+          text: "New email address"
         },
         value: nil,
         id: "new_email"
         %>
-      <%= govukButton(text: "Save") %>
+      <%= govukButton(text: "Continue") %>
     <% end %>
   </div>
 </div>
