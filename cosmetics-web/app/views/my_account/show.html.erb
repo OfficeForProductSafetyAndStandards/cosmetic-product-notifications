@@ -1,7 +1,7 @@
 <% title = "Your account" %>
 <% page_title title %>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
+  <div class="govuk-grid-column-full">
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
@@ -9,7 +9,7 @@
       classes: "app-summary-list--key-weight-regular",
       rows: [
         {
-          key: { text: "Name" },
+          key: { text: "Full name" },
           value: { text: current_user.name },
           actions: {
             items: [

@@ -24,7 +24,7 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
 
     context "when the password change is fine" do
       it "changes password properly" do
-        fill_in "Old password", with: user.password
+        fill_in "Current password", with: user.password
         fill_in "New password", with: "user.password"
         fill_in "New password confirmation", with: "user.password"
         click_on "Save"
@@ -35,7 +35,7 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
 
     context "when the update cant be done" do
       it "does not get updated when old password is wrong" do
-        fill_in "Old password", with: "user.password"
+        fill_in "Current password", with: "user.password"
         fill_in "New password", with: "user.password"
         fill_in "New password confirmation", with: "user.password"
         click_on "Save"
@@ -45,17 +45,17 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
       end
 
       it "does not get updated when new password does not fit to requirement" do
-        fill_in "Old password", with: user.password
+        fill_in "Current password", with: user.password
         fill_in "New password", with: "user"
         fill_in "New password confirmation", with: "user.password"
         click_on "Save"
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-        expect(page).to have_link("Password is too short (minimum is 6 characters)", href: "#password")
+        expect(page).to have_link("Password must be at least 8 characters", href: "#password")
       end
 
       it "does not get updated when new password confirmation is wrong" do
-        fill_in "Old password", with: user.password
+        fill_in "Current password", with: user.password
         fill_in "New password", with: "user.password"
         fill_in "New password confirmation", with: "user"
         click_on "Save"
