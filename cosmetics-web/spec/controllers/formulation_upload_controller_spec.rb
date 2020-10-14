@@ -31,7 +31,7 @@ RSpec.describe FormulationUploadController, :with_stubbed_antivirus, type: :cont
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #new" do

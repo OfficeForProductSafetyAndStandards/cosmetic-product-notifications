@@ -1,17 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "Notification files", :with_stubbed_antivirus, type: :request do
-  after do
-    sign_out
-  end
-
   context "when signed in as a user of a responsible_person" do
     let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-    let(:user) { build(:user) }
-    let(:colleague) { build(:user) }
+    let(:user) { build(:submit_user) }
+    let(:colleague) { build(:submit_user) }
 
     before do
       sign_in_as_member_of_responsible_person(responsible_person, user)
+    end
+
+    after do
+      sign_out(:submit_user)
     end
 
     context "when deleting a notification file" do

@@ -1,4 +1,4 @@
-class ComponentBuildController < ApplicationController
+class ComponentBuildController < SubmitApplicationController
   include Wicked::Wizard
   include CategoryHelper
   include ManualNotificationConcern

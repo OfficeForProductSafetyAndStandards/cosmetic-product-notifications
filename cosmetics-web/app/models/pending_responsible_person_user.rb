@@ -1,35 +1,53 @@
 class PendingResponsiblePersonUser < ApplicationRecord
+  INVITATION_TOKEN_VALID_FOR = 3 * 24 * 3600 # 3 days
+  EMAIL_ERROR_MESSAGE_SCOPE = %i[activerecord errors models pending_responsible_person_user attributes email_address].freeze
+
   belongs_to :responsible_person
 
-  validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validate :email_address_is_not_in_team?
+  validates :email_address,
+            email: {
+              message: I18n.t(:wrong_format, scope: EMAIL_ERROR_MESSAGE_SCOPE),
+              if: -> { email_address.present? },
+            }
+  validates_presence_of :email_address, message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE)
+  validate :email_address_not_in_team?
+  validate :email_address_not_in_other_team?
 
-  before_create :set_expires_at
+  before_create :generate_token
   before_create :remove_duplicate_pending_responsible_users
 
   def self.key_validity_duration
     1.day
   end
 
-  def self.pending_requests_to_join_responsible_person(user, responsible_person)
-    PendingResponsiblePersonUser.where(
-      "email_address = ? AND responsible_person_id = ? AND expires_at > ?",
-      user.email,
-      responsible_person.id,
-      DateTime.current,
-    )
+  def expired?
+    invitation_token_expires_at < DateTime.current
+  end
+
+  def refresh_token_expiration!
+    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
+    self.save!
   end
 
 private
 
-  def email_address_is_not_in_team?
+  def generate_token
+    token = SecureRandom.uuid
+    self.invitation_token = token
+    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
+  end
+
+  def email_address_not_in_team?
     if responsible_person.responsible_person_users.any? { |user| user.email_address == email_address }
-      errors.add :email_address, "The email address is already a member of this team"
+      errors.add :email_address, I18n.t(:this_team, scope: EMAIL_ERROR_MESSAGE_SCOPE)
     end
   end
 
-  def set_expires_at
-    self.expires_at = PendingResponsiblePersonUser.key_validity_duration.from_now
+  def email_address_not_in_other_team?
+    user = SubmitUser.find_by(email: email_address)
+    if user && user.responsible_persons.any?
+      errors.add :email_address, I18n.t(:other_team, scope: EMAIL_ERROR_MESSAGE_SCOPE)
+    end
   end
 
   def remove_duplicate_pending_responsible_users

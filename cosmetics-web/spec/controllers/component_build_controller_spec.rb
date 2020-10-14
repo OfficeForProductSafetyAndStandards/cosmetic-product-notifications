@@ -20,7 +20,7 @@ RSpec.describe ComponentBuildController, type: :controller do
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #new" do

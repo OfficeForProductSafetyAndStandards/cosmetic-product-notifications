@@ -1,0 +1,21 @@
+<% title = "Sign up" %>
+<% page_title(title, errors: resource.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary(resource.errors, %i[name mobile_number email password password_confirmation]) %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <%= form_for(resource, as: resource_name, url: user_registration_path, html: { novalidate: true }, method: :post) do |f| %>
+      <%= form_input resource, :name %>
+      <%= form_input resource, :mobile_number %>
+      <%= email_input resource %>
+      <%= password_input resource %>
+      <%= password_confirmation_input resource %>
+
+      <%= govukButton(text: "Sign up") %>
+    <% end %>
+  </div>
+</div>

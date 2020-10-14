@@ -1,0 +1,6 @@
+---
+  domains-regexps:
+    - !ruby/regexp /staging-submit\.cosmetic-product-notifications\.service\.gov\.uk/
+    - !ruby/regexp /staging-search\.cosmetic-product-notifications\.service\.gov\.uk/
+    - !ruby/regexp /cosmetics-pr-\d{3,5}-search-web\.london\.cloudapps\.digital/
+    - !ruby/regexp /cosmetics-pr-\d{3,5}-submit-web\.london\.cloudapps\.digital/

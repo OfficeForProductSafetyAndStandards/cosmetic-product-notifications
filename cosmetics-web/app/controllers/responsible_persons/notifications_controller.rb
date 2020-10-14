@@ -1,6 +1,6 @@
 require "will_paginate/array"
 
-class ResponsiblePersons::NotificationsController < ApplicationController
+class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :set_notification, only: %i[show edit confirm]
 
@@ -8,7 +8,7 @@ class ResponsiblePersons::NotificationsController < ApplicationController
     @pending_notification_files_count = 0
     @erroneous_notification_files = []
 
-    @responsible_person.notification_files.where(user_id: User.current.id).each do |notification_file|
+    @responsible_person.notification_files.where(user_id: current_user.id).each do |notification_file|
       if notification_file.upload_error
         @erroneous_notification_files << notification_file
       else

@@ -1,0 +1,22 @@
+<% title = "Sign in" %>
+<% page_title(title, errors: resource.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary resource.errors %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <%= form_for(resource, as: resource_name, url: user_session_path, html: { novalidate: true }, method: :post) do |f| %>
+      <%= email_input resource %>
+      <%= password_input resource %>
+
+      <%= govukButton(text: "Continue") %>
+
+      <div class="govuk-body">
+        <%= link_to "Forgot your password?", new_password_path(resource), class: "govuk-link" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-class NanomaterialBuildController < ApplicationController
+class NanomaterialBuildController < SubmitApplicationController
   include Wicked::Wizard
 
   steps :select_purposes,

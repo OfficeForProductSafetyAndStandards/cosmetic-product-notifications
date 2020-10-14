@@ -1,18 +1,17 @@
 require "rails_helper"
 
-RSpec.describe "Notifications page", :with_stubbed_antivirus, type: :request do
-  after do
-    sign_out
-  end
-
+RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_notify, type: :request do
   context "when signed in as a poison centre user but accessing from submit domain", with_errors_rendered: true do
-    let(:user) { create(:user) }
     let(:responsible_person) { create(:responsible_person) }
 
     before do
-      sign_in_as_poison_centre_user(user: user)
+      sign_in_as_poison_centre_user
       configure_requests_for_submit_domain
       get "/responsible_persons/#{responsible_person.id}/notifications"
+    end
+
+    after do
+      sign_out(:search_user)
     end
 
     it "redirects to invalid account page" do
@@ -22,14 +21,19 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, type: :request do
 
   context "when signed in as a user of a responsible_person" do
     let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-    let(:user) { build(:user) }
+    let(:user) { build(:submit_user) }
 
     let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
-    let(:other_user) { build(:user) }
+    let(:other_user) { build(:submit_user) }
 
     before do
       sign_in_as_member_of_responsible_person(responsible_person, user)
     end
+
+    after do
+      sign_out(:submit_user)
+    end
+
 
     context "when requesting notifications for the company associated with the user" do
       before do

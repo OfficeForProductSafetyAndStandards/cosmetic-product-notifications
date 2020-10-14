@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "Poison centre page", type: :request do
   include RSpecHtmlMatchers
 
-  let(:user) { create(:user) }
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:notification) { create(:draft_notification, responsible_person: responsible_person) }
   let(:params) do
@@ -13,11 +12,11 @@ RSpec.describe "Poison centre page", type: :request do
   end
 
   before do
-    sign_in_as_poison_centre_user(user: user)
+    sign_in_as_poison_centre_user
   end
 
   after do
-    sign_out
+    sign_out(:search_user)
   end
 
   describe "GET #show" do

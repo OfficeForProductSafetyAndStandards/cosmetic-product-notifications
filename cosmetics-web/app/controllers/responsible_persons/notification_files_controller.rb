@@ -1,4 +1,4 @@
-class ResponsiblePersons::NotificationFilesController < ApplicationController
+class ResponsiblePersons::NotificationFilesController < SubmitApplicationController
   before_action :set_responsible_person
 
   def new; end
@@ -26,7 +26,7 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
       notification_file = NotificationFile.new(
         name: uploaded_file.original_filename,
         responsible_person: @responsible_person,
-        user: User.current,
+        user: current_user,
       )
       notification_file.uploaded_file.attach(uploaded_file)
 
@@ -49,7 +49,7 @@ class ResponsiblePersons::NotificationFilesController < ApplicationController
   end
 
   def destroy_all
-    @responsible_person.notification_files.where(user_id: User.current.id).where.not(upload_error: nil).delete_all
+    @responsible_person.notification_files.where(user_id: current_user.id).where.not(upload_error: nil).delete_all
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
 

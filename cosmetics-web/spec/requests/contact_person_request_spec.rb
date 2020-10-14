@@ -8,7 +8,7 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "adding a contact person" do
@@ -34,10 +34,6 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
           email_address: "test@example.com",
           phone_number: "07712 345678",
         )
-      end
-
-      it "sends a welcome email to that contact" do
-        expect(NotifyMailer).to have_received(:send_contact_person_verification_email)
       end
     end
 

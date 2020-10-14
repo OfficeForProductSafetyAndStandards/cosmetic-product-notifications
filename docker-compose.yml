@@ -6,8 +6,6 @@ services:
       context: ./dev-docker/db/
     volumes:
       - postgres-volume:/var/lib/postgresql/data
-    env_file:
-      - ./dev-docker/.env.keycloak
     ports:
       - "5432:5432"
 
@@ -25,18 +23,6 @@ services:
     image: redis
     hostname: redis
 
-  keycloak:
-    image: beisopss/keycloak:latest
-    env_file:
-      - ./dev-docker/.env.keycloak
-    environment:
-      - NOTIFY_API_KEY=
-    depends_on:
-      - db
-    ports:
-      - "8080:8080"
-      - "9990:9990"
-
   cosmetics-web:
     command: ["./bin/rails", "s", "-p", "3000", "-b", "0.0.0.0"]
     build:
@@ -49,18 +35,12 @@ services:
     depends_on:
       - db
       - elasticsearch
-      - keycloak
       - redis
-    env_file:
-        - .env.keycloak.cosmetics
     ports:
       - "3000:3000"
     environment:
       - NOTIFY_API_KEY=
       - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
-      - KEYCLOAK_AUTH_URL=http://keycloak:8080/auth
-      - KEYCLOAK_CLIENT_ID=cosmetics-app
-      - KEYCLOAK_CLIENT_SECRET=bb1c1dde-7b7a-488a-9061-8090b59857ef
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - REDIS_URL=redis://redis:6379
       - SEARCH_HOST=search_cosmetics
@@ -79,9 +59,6 @@ services:
     environment:
       - NOTIFY_API_KEY=
       - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
-      - KEYCLOAK_AUTH_URL=http://keycloak:8080/auth
-      - KEYCLOAK_CLIENT_ID=cosmetics-app
-      - KEYCLOAK_CLIENT_SECRET=bb1c1dde-7b7a-488a-9061-8090b59857ef
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - REDIS_URL=redis://redis:6379
       - SEARCH_HOST=search_cosmetics

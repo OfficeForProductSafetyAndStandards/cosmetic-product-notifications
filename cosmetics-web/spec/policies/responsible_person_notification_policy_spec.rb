@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ResponsiblePersonNotificationPolicy, type: :policy do
   subject { described_class.new(user, notification) }
 
-  let(:user) { create(:user) }
+  let(:user) { create(:submit_user) }
   let(:notification) { create(:notification) }
 
   describe "when user and notification's responsible person are not in the same team" do
@@ -19,9 +19,9 @@ RSpec.describe ResponsiblePersonNotificationPolicy, type: :policy do
   end
 
   describe "when user and notification's responsible person are in the same team" do
-    before do
-      responsible_person = create(:responsible_person)
+    let(:responsible_person) { create(:responsible_person) }
 
+    before do
       notification.responsible_person = responsible_person
       create(:responsible_person_user, user: user, responsible_person: responsible_person)
     end

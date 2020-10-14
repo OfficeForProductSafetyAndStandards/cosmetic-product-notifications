@@ -1,4 +1,4 @@
-class ResponsiblePersons::ContactPersonsController < ApplicationController
+class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person
   before_action :set_contact_person
@@ -46,17 +46,7 @@ private
     )
   end
 
-  def send_verification_email
-    NotifyMailer.send_contact_person_verification_email(
-      @contact_person.name,
-      @contact_person.email_address,
-      @responsible_person.name,
-      User.current.name,
-    ).deliver_later
-  end
-
   def redirect_contact_person
-    send_verification_email
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
 end

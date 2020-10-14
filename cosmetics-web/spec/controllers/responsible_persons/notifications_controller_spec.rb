@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivirus, type: :controller do
-  let(:user) { build(:user) }
+  let(:user) { build(:submit_user) }
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:predefined_component) { create(:component) }
   let(:ranges_component) { create(:ranges_component) }
@@ -11,7 +11,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #index" do
@@ -32,7 +32,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
 
     it "excludes pending notification files for other users" do
-      other_user = build(:user, email: "other.user@example.com")
+      other_user = build(:submit_user, email: "other.user@example.com")
       responsible_person.add_user(other_user)
 
       create(:notification_file, responsible_person: responsible_person, user: other_user)

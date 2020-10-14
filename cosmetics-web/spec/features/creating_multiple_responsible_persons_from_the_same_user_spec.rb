@@ -2,9 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Creating multiple responsible persons from the same user", type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
+  let(:user) { responsible_person.responsible_person_users.first.user }
 
   before do
-    sign_in_as_member_of_responsible_person(responsible_person)
+    sign_in_as_member_of_responsible_person(responsible_person, user)
     stub_notify_mailer
   end
 

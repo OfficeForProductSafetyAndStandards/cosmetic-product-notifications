@@ -1,0 +1,7 @@
+<%= render "signed_in_as_another_user" do %>
+  <%= form_with url: sign_out_before_accepting_invitation_user_path(params[:id]), method: :post do %>
+    <%= hidden_field_tag :invitation, params[:invitation] %>
+    <button class="button-link govuk-link">Create a new account</button>
+  <% end %>
+<% end %>
+

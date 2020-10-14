@@ -14,30 +14,64 @@ end
 Rails.application.routes.draw do
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
-  resource :session, only: %i[new] do
-    member do
-      get :new
-      get :signin
-      get :logout
-    end
-  end
+  get "/sign_up", to: redirect("/")
+  resource :password_changed, controller: "users/password_changed", only: :show, path: "password-changed"
+
+  get "two-factor", to: "secondary_authentications#new", as: :new_secondary_authentication
+  post "two-factor", to: "secondary_authentications#create", as: :secondary_authentication
+
+  get "text-not-received", to: "secondary_authentications/resend_code#new", as: :new_resend_secondary_authentication_code
+  post "text-not-received", to: "secondary_authentications/resend_code#create", as: :resend_secondary_authentication_code
 
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
   end
 
   constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
-    root "landing_page#index"
+    devise_for :search_users,
+               path: "",
+               path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
+    devise_scope :search_user do
+      resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+      post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
+      post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
+    end
+    root "search/landing_page#index"
 
     scope module: "poison_centres", as: "poison_centre" do
       resources :notifications, param: :reference_number, only: %i[index show]
     end
+    resources :users, only: [:update] do
+      member do
+        get "complete-registration", action: :complete_registration
+        post "sign-out-before-accepting-invitation", action: :sign_out_before_accepting_invitation
+      end
+    end
+
+    resource :dashboard, controller: "search/dashboard", only: %i[show]
   end
 
   # All requests besides "Search" host ones will default to "Submit" pages.
   constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
-    root "landing_page#index"
+    devise_for :submit_users,
+               path: "",
+               path_names: { sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { confirmations: "users/confirmations", passwords: "users/passwords", sessions: "users/sessions", unlocks: "users/unlocks" },
+               skip: %i[confirmation registration]
+    devise_scope :submit_user do
+      resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+      post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
+    end
 
+    get "create-an-account", to: "registration/new_accounts#new", as: :registration_new_submit_user
+    post "create-an-account", to: "registration/new_accounts#create", as: :registration_create_submit_user
+    get "confirm-new-account", to: "registration/new_accounts#confirm", as: :registration_confirm_submit_user
+    get "account-security", to: "registration/account_security#new", as: :registration_new_account_security
+    post "account-security", to: "registration/account_security#create", as: :registration_create_account_security
+    post "sign-out-before-confirming-email", to: "registration/new_accounts#sign_out_before_confirming_email"
+
+    root "submit/landing_page#index"
 
     resources :responsible_persons, only: %i[show] do
       collection do
@@ -63,8 +97,13 @@ Rails.application.routes.draw do
       end
 
       resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
+        member do
+          get "new-account", action: :new_account
+          get "resend-invitation", action: :resend_invitation
+        end
         collection do
           get :join
+          post "sign-out-before-joining", action: :sign_out_before_joining
         end
       end
 
@@ -95,13 +134,24 @@ Rails.application.routes.draw do
         end
       end
     end
+    resource :dashboard, controller: "submit/dashboard", only: %i[show]
+  end
+
+  resource :my_account, only: [:show], controller: :my_account do
+    resource :password, controller: :my_account_password, only: %i[show update]
+    resource :name, controller: :my_account_name, only: %i[show update]
+    resource :mobile_number, controller: :my_account_mobile_number, only: %i[show update]
+    resource :email, controller: :my_account_email, only: %i[show update] do
+      member do
+        get :confirm
+      end
+    end
   end
 
   resource :declaration, controller: :declaration, only: %i[show] do
     post :accept
   end
 
-  resource :dashboard, controller: :dashboard, only: %i[show]
 
   namespace :guidance, as: "" do
     get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"

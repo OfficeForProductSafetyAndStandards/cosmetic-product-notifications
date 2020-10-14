@@ -77,6 +77,17 @@ en:
               missing: "Select if %{component_name} is intended to be rinsed off or left on"
             exposure_routes:
               blank: "Select how the user is likely to be exposed to the nanomaterials"
+        new_account:
+          attributes:
+            full_name:
+              blank: "Enter your full name"
+        pending_responsible_person_user:
+          attributes:
+            email_address:
+              wrong_format: "Enter email address in the correct format, like name@example.com"
+              blank: "Enter email address"
+              this_team: "This email address already belongs to member of this team"
+              other_team: "You can not invite this email address to join your team"
         trigger_question:
           attributes:
             applicable:
@@ -100,6 +111,41 @@ en:
           attributes:
             name:
               blank: "Enter a name"
+        submit_user:
+          attributes:
+            password:
+              blank: "Enter a password"
+            password_confirmation:
+              confirmation: "Password and confirmation does not match"
+        search_user:
+          attributes:
+            password:
+              blank: "Enter a password"
+            password_confirmation:
+              confirmation: "Password and confirmation does not match"
+        user:
+          attributes:
+            mobile_number:
+              invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+            password:
+              too_short: "Password must be at least 8 characters"
+  activemodel:
+    attributes:
+      registration/account_security_form:
+        mobile_number: 'Mobile number'
+    errors:
+      models:
+        registration/account_security_form:
+          attributes:
+            mobile_number:
+              invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+              blank: "Please enter mobile number"
+            password:
+              blank: "Please enter password"
+              too_short: "Password must be at least 8 characters"
+            full_name:
+              blank: "Enter your full name"
+  enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
     messages:
@@ -140,3 +186,49 @@ en:
       above_10: "Above 10"
       not_applicable: "No pH"
       not_given: "Not given"
+  users:
+    check_your_email:
+      body: A message with a confirmation link has been sent to your email address. Please follow the link to continue.
+  otp_code:
+    blank: "Enter the security code"
+    too_short: "You haven’t entered enough numbers"
+    too_long: "You’ve entered too many numbers"
+    incorrect: "Incorrect security code"
+    expired: "The security code has expired. New code sent."
+    numericality: "The code must be 5 numbers"
+  resend_secondary_authentication_code_form:
+    mobile_number:
+      blank: "Enter your mobile number"
+      invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+  sign_in_form:
+    email:
+      wrong_email_or_password: "Enter your email address in the correct format, like name@example.com"
+      wrong_format: "Enter your email address in the correct format, like name@example.com"
+      blank: "Enter your email address"
+    password:
+      blank: "Enter your password"
+  sign_up_form:
+    mobile_number:
+      wrong_format: "Enter your mobile number in the correct format, like 07700 900 982"
+      blank: "Enter your mobile number"
+    name:
+      blank: "Enter your name"
+    password:
+      blank: "Enter your password"
+    password_confirmation:
+      blank: "Enter your password confirmation"
+      missmatch: "Should match password"
+  sign_user_in:
+    email:
+      wrong_email_or_password: "Enter correct email address and password"
+  new_account:
+    full_name:
+      blank: "Enter your full name"
+  account_security_form:
+    mobile_number:
+      invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+      blank: "Please enter mobile number"
+  contact_person:
+    email_address:
+      wrong_format: "Enter your email address in the correct format, like name@example.com"
+      blank: "Enter your email address"

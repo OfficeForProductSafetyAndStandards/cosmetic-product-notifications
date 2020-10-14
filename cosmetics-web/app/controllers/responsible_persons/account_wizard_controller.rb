@@ -1,4 +1,4 @@
-class ResponsiblePersons::AccountWizardController < ApplicationController
+class ResponsiblePersons::AccountWizardController < SubmitApplicationController
   include Wicked::Wizard
 
   steps :overview, :create_or_join_existing, :join_existing, :select_type, :enter_details
@@ -54,7 +54,7 @@ private
   def responsible_person_saved?
     return false unless responsible_person_valid?
 
-    @responsible_person.add_user(User.current)
+    @responsible_person.add_user(current_user)
     @responsible_person.save
   end
 

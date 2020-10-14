@@ -1,4 +1,4 @@
-class NotificationBuildController < ApplicationController
+class NotificationBuildController < SubmitApplicationController
   include Wicked::Wizard
   include CountriesHelper
   include ManualNotificationConcern

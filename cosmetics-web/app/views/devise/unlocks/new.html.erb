@@ -1,0 +1,21 @@
+<% title = "Resend unlock instructions" %>
+<% page_title(title, errors: resource.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary resource.errors %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { novalidate: true }, method: :post) do |f| %>
+      <%= email_input resource %>
+
+      <%= govukButton(text: "Resend unlock instructions") %>
+
+    <% end %>
+      <div class="govuk-body">
+        <%= render "devise/shared/links" %>
+      </div>
+  </div>
+</div>

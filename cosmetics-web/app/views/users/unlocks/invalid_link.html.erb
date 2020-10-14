@@ -1,0 +1,12 @@
+<% title = "Invalid link" %>
+<% page_title(title) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <p class="govuk-body">Go to the <%= link_to "sign in page", new_user_session_path, class: "govuk-link" %> to request a password reset.</p>
+
+  </div>
+</div>

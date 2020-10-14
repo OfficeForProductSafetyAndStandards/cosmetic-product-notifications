@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_20_160827) do
+ActiveRecord::Schema.define(version: 2020_10_06_082502) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # These are custom enum types that must be created before they can be used in the schema definition
+  create_enum "user_roles", ["poison_centre", "market_surveilance_authority"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -171,10 +175,12 @@ ActiveRecord::Schema.define(version: 2019_12_20_160827) do
 
   create_table "pending_responsible_person_users", force: :cascade do |t|
     t.string "email_address"
-    t.datetime "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
+    t.string "invitation_token"
+    t.datetime "invitation_token_expires_at"
+    t.index ["invitation_token"], name: "index_pending_responsible_person_users_on_invitation_token"
     t.index ["responsible_person_id"], name: "index_pending_responsible_person_users_on_responsible_person_id"
   end
 
@@ -232,6 +238,49 @@ ActiveRecord::Schema.define(version: 2019_12_20_160827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_attributes_on_user_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "mobile_number"
+    t.boolean "mobile_number_verified", default: false, null: false
+    t.string "name"
+    t.string "type"
+    t.boolean "has_accepted_declaration", default: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.string "direct_otp"
+    t.datetime "direct_otp_sent_at"
+    t.integer "second_factor_attempts_count", default: 0
+    t.datetime "second_factor_attempts_locked_at"
+    t.string "secondary_authentication_operation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "invitation_token"
+    t.datetime "invited_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.enum "role", as: "user_roles"
+    t.string "new_email"
+    t.string "new_email_confirmation_token"
+    t.datetime "new_email_confirmation_token_expires_at"
+    t.boolean "account_security_completed", default: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

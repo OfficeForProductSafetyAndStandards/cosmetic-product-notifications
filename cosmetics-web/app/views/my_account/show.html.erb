@@ -1,0 +1,70 @@
+<% title = "Your account" %>
+<% page_title title %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <%= govukSummaryList(
+      classes: "app-summary-list--key-weight-regular",
+      rows: [
+        {
+          key: { text: "Full name" },
+          value: { text: current_user.name },
+          actions: {
+            items: [
+              {
+                href: my_account_name_path,
+                text: "Change",
+                visuallyHiddenText: "name"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Email address" },
+          value: { text: current_user.email },
+          actions: {
+            items: [
+              {
+                href: my_account_email_path,
+                text: "Change",
+                visuallyHiddenText: "email address"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Mobile number" },
+          value: { text: current_user.mobile_number },
+          actions: {
+            items: [
+              {
+                href: my_account_mobile_number_path,
+                text: "Change",
+                visuallyHiddenText: "mobile number"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Password" },
+          value: { text: "********" },
+          actions: {
+            items: [
+              {
+                href: my_account_password_path,
+                text: "Change",
+                visuallyHiddenText: "password"
+              }
+            ]
+          }
+        }
+      ]
+    ) %>
+
+    <div class="govuk-inset-text">
+      If you need to change your details, email <%= mail_to t(:enquiries_email), nil, class: "govuk-link" %>
+    </div>
+  </div>
+</div>

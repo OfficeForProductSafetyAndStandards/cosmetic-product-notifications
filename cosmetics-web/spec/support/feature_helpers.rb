@@ -4,9 +4,93 @@ RSpec.configure do |config|
   config.include PageMatchers
 end
 
-
-
 # --- Page expections -----
+
+def fill_in_credentials(password_override: nil)
+  fill_in "Email address", with: user.email
+  if password_override
+    fill_in "Password", with: password_override
+  else
+    fill_in "Password", with: user.password
+  end
+  click_on "Continue"
+end
+
+def expect_user_to_have_received_sms_code(code, current_user = nil)
+  if current_user.nil?
+    current_user = user
+  end
+  expect(notify_stub).to have_received(:send_sms).with(
+    hash_including(phone_number: current_user.mobile_number, personalisation: { code: code }),
+  ).at_least(:once)
+end
+
+def complete_secondary_authentication_with(security_code)
+  fill_in "Enter security code", with: security_code
+  click_on "Continue"
+end
+
+def expect_to_be_on_secondary_authentication_page
+  expect(page).to have_current_path(/\/two-factor/)
+  expect(page).to have_h1("Check your phone")
+end
+
+def expect_to_be_on_resend_secondary_authentication_page
+  expect(page).to have_current_path("/text-not-received")
+  expect(page).to have_h1("Resend security code")
+end
+
+def expect_to_be_on_signed_in_as_another_user_page
+  expect(page).to have_h1("You are already signed in")
+end
+
+def expect_to_be_on_complete_registration_page
+  expect(page).to have_current_path(/\/complete-registration?.+$/)
+  expect(page).to have_h1("Create an account")
+  expect(page).to have_field("username", type: "email", with: invited_user.email, disabled: true)
+end
+
+def expect_to_be_on_password_changed_page
+  expect(page).to have_current_path("/password-changed")
+  expect(page).to have_css("h1", text: "You have changed your password successfully")
+end
+
+def expect_to_be_on_reset_password_page
+  expect(page).to have_current_path("/password/new")
+end
+
+def expect_to_be_on_declaration_page
+  expect(page).to have_current_path("/declaration")
+end
+
+def expect_to_be_on_check_your_email_page
+  expect(page).to have_css("h1", text: "Check your email")
+end
+
+def expect_to_be_on_edit_user_password_page
+  expect(page).to have_current_path("/password/edit", ignore_query: true)
+end
+
+def expect_incorrect_email_or_password
+  expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+  expect(page).to have_link("Enter correct email address and password", href: "#email")
+  expect(page).to have_css("span#email-error", text: "Error: Enter correct email address and password")
+  expect(page).to have_css("span#password-error", text: "")
+
+  expect(page).not_to have_link("Cases")
+end
+
+def otp_code(email = nil)
+#  puts user
+
+#  p SubmitUser.pluck(:direct_otp)
+  user_with_code = User.find_by(email: email) || user
+  user_with_code.reload.direct_otp
+end
+
+def expect_to_be_on_my_account_page
+  expect(page).to have_current_path(/\/my_account/)
+end
 
 def expect_to_be_on__was_eu_notified_about_products_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/have_products_been_notified_in_eu")
@@ -560,6 +644,11 @@ def fill_in_rp_contact_details
   fill_in "Postcode", with: "b28 9un"
   click_on "Continue"
   expect(page).to have_h1("Contact person details")
+  fill_in "Full name", with: "Auto-test contact person"
+  fill_in "Email address", with: "auto-test@foo"
+  fill_in "Phone number", with: "07984563072"
+  click_on "Continue"
+  expect(page).to have_text("Enter your email address in the correct format")
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@exaple.com"
   fill_in "Phone number", with: "07984563072"

@@ -1,0 +1,24 @@
+<% if @account_security_form.name_required? %>
+  <% title = "Create an account" %>
+<% else %>
+  <% title = "Account security" %>
+<% end %>
+
+<% page_title(title, errors: @account_security_form.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary(@account_security_form.errors, %i[full_name mobile_number password]) %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <%= form_for(@account_security_form, url: registration_create_account_security_path, html: { novalidate: true }, method: :post) do |f| %>
+      <%= form_input @account_security_form, :full_name if @account_security_form.name_required? %>
+      <%= form_input @account_security_form, :mobile_number, hint: { text: "We’ll send you a security code by text message" } %>
+      <%= password_input @account_security_form, hint: { text: 'At least 8 characters' } %>
+
+      <%= govukButton(text: "Continue") %>
+    <% end %>
+  </div>
+</div>

@@ -17,7 +17,7 @@ RSpec.describe "Check your answers page", type: :request do
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #edit" do

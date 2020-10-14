@@ -2,17 +2,17 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:user) { create(:user) }
+  let(:user) { create(:submit_user) }
   let(:email_address) { "user@example.com" }
   let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
-  let(:params) { { responsible_person_id: responsible_person.id } }
+  let(:params) { { responsible_person_id: responsible_person.id, invitation_token: pending_responsible_person_user.invitation_token } }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
   after do
-    sign_out
+    sign_out(:submit_user)
   end
 
   describe "GET #index" do
@@ -51,19 +51,51 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   end
 
   describe "GET #join" do
-    it "adds user with a pending invite to the responsible person" do
-      get(:join, params: params)
-      expect(responsible_person.reload.responsible_person_users.size).to eq(1)
+    context "when signed in as the invited user" do
+      before do
+        invited_user = create(:submit_user, email: pending_responsible_person_user.email_address)
+        sign_in(invited_user)
+      end
+
+      it "adds user with a pending invite to the responsible person" do
+        expect { get(:join, params: params) }
+          .to change { responsible_person.reload.responsible_person_users.size }.from(1).to(2)
+      end
+
+      it "deletes any existing invites to the responsible person for this user" do
+        expect { get(:join, params: params) }
+          .to change { responsible_person.pending_responsible_person_users.size }
+          .from(1).to(0)
+      end
+
+      it "redirects to the responsible person notifications page" do
+        get(:join, params: params)
+        expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
+      end
     end
 
-    it "deletes any existing invites to the responsible person for this user" do
-      get(:join, params: params)
-      expect(responsible_person.reload.pending_responsible_person_users.size).to eq(0)
-    end
+    context "when signed in as the inviting user" do
+      before do
+        invited_user = create(:submit_user, email: pending_responsible_person_user.email_address)
+        sign_in(invited_user)
+      end
 
-    it "redirects to the responsible person team members page" do
-      get(:join, params: params)
-      expect(response).to redirect_to(responsible_person_path(responsible_person))
+      it "adds user with a pending invite to the responsible person" do
+        expect { get(:join, params: params) }
+          .to change { responsible_person.reload.responsible_person_users.size }.from(1).to(2)
+      end
+
+      it "deletes any existing invites to the responsible person for this user" do
+        expect { get(:join, params: params) }
+          .to change { responsible_person.pending_responsible_person_users.size }
+          .from(1).to(0)
+      end
+
+      it "redirects to the responsible person notifications page" do
+        get(:join, params: params)
+        expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
+      end
     end
+    # TODO: Add the rest of contexts. Turn into a request spec?
   end
 end

@@ -7,14 +7,7 @@ class Organisation < ActiveHash::Base
 
   has_many :users, dependent: :nullify
 
-  def self.load(force: false)
-    begin
-      self.data = KeycloakClient.instance.all_organisations(force: force)
-    rescue StandardError => e
-      Rails.logger.error "Failed to fetch organisations from Keycloak: #{e.message}"
-      self.data = nil
-    end
-  end
+  def self.load(*); end
 
   def self.all(options = {})
     self.load

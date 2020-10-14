@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
-  after do
-    sign_out
-  end
-
   context "when signed in as a company user" do
     let(:responsible_person) { create(:responsible_person) }
-    let(:user) { build(:user, first_login: true) }
+    let(:user) { build(:submit_user, has_accepted_declaration: false) }
 
     before do
       sign_in_as_member_of_responsible_person(responsible_person, user)
+    end
+
+    after do
+      sign_out(:submit_user)
     end
 
     context "when viewing the declaration page" do

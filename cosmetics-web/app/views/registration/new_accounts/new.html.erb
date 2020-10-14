@@ -1,0 +1,18 @@
+<% title = "Create an account" %>
+<% page_title(title, errors: @new_account_form.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary(@new_account_form.errors, %i[full_name email]) %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <%= form_for(@new_account_form, url: registration_create_submit_user_path, html: { novalidate: true }, method: :post) do |f| %>
+      <%= form_input @new_account_form, :full_name %>
+      <%= email_input @new_account_form %>
+
+      <%= govukButton(text: "Continue") %>
+    <% end %>
+  </div>
+</div>

@@ -3,16 +3,15 @@ require "rails_helper"
 RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:responsible_person_with_no_contact_person) { create(:responsible_person) }
-  let(:user) { create(:user) }
-  let(:user_who_hasnt_accepted_declaration) { create(:user, first_login: true) }
-
-  after do
-    sign_out
-  end
+  let(:user) { create(:submit_user) }
 
   context "when requested from the submit sub-domain" do
     before do
       configure_requests_for_submit_domain
+    end
+
+    after do
+      sign_out(:submit_user)
     end
 
     context "when not signed in" do
@@ -21,13 +20,13 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
 
       it "renders the homepage" do
-        expect(response).to render_template("landing_page/submit_landing_page")
+        expect(response).to render_template("submit/landing_page/index")
       end
     end
 
     context "when signed in as a user not associated with a responsible person" do
       before do
-        sign_in as_user: user
+        sign_in user
         get "/"
       end
 
@@ -37,8 +36,10 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     end
 
     context "when signed in as a user who hasn’t accepted declaration yet" do
+      let(:user_who_hasnt_accepted_declaration) { create(:submit_user, has_accepted_declaration: false) }
+
       before do
-        sign_in as_user: user_who_hasnt_accepted_declaration
+        sign_in user_who_hasnt_accepted_declaration
         get "/"
       end
 
@@ -50,7 +51,7 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     context "when signed in as a user associated with a Responsible Person account that doesn’t have a contact person" do
       before do
         responsible_person_with_no_contact_person.add_user(user)
-        sign_in as_user: user
+        sign_in user
         get "/"
       end
 
@@ -62,12 +63,12 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     context "when signed in as a user associated with a Responsible Person account" do
       before do
         responsible_person.add_user(user)
-        sign_in as_user: user
+        sign_in user
         get "/"
       end
 
       it "renders the homepage" do
-        expect(response).to render_template("landing_page/submit_landing_page")
+        expect(response).to render_template("submit/landing_page/index")
       end
     end
   end
@@ -83,15 +84,19 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
 
       it "renders the homepage" do
-        expect(response).to render_template("landing_page/search_landing_page")
+        expect(response).to render_template("search/landing_page/index")
       end
     end
 
     context "when signed in as a user associated with a Responsible Person account" do
       before do
         responsible_person.add_user(user)
-        sign_in as_user: user
+        sign_in user
         get "/"
+      end
+
+      after do
+        sign_out(:submit_user)
       end
 
       it "redirects to invalid account page" do
@@ -100,9 +105,15 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     end
 
     context "when signed in as a poison centre user" do
+      let(:user) { create(:poison_centre_user) }
+
       before do
-        sign_in as_user: user, with_roles: [:poison_centre_user]
+        sign_in_as_poison_centre_user(user: user)
         get "/"
+      end
+
+      after do
+        sign_out(:search_user)
       end
 
       it "redirects to the notifications page" do
@@ -111,9 +122,15 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     end
 
     context "when signed in as a market surveilance authority user" do
+      let(:user) { create(:msa_user) }
+
       before do
-        sign_in as_user: user, with_roles: [:msa_user]
+        sign_in_as_msa_user(user: user)
         get "/"
+      end
+
+      after do
+        sign_out(:search_user)
       end
 
       it "redirects to the notifications page" do
@@ -125,9 +142,8 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
   context "when requested from localhost" do
     before { host! "localhost" }
 
-    it "renders the submit homepage" do
-      get "/"
-      expect(response).to render_template("landing_page/submit_landing_page")
+    xit "raises error" do
+      expect(get("/")).to raise_error(RuntimeError)
     end
   end
 end

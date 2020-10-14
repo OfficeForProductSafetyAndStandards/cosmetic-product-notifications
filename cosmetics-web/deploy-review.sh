@@ -23,7 +23,7 @@ if [ -z "$DB_NAME" ]
 then
   DB_NAME=cosmetics-review-database
 fi
-cf create-service postgres small-10 $DB_NAME
+cf create-service postgres small-10 $DB_NAME -c '{"enable_extensions": ["pgcrypto"]}'
 
 # Wait until db is prepared, might take up to 10 minutes
 until cf service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_exists; do sleep 20; echo "Waiting for db"; done
