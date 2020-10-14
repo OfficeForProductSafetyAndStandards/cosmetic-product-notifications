@@ -29,13 +29,12 @@ jobs:
     - name: Initiate Staging deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
         # URL where the deployment progress can be tracked. Exported for future steps.
         log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
-        echo "::set-env name=LOG_URL::$log_url"
+        echo "LOG_URL=$log_url" >> $GITHUB_ENV
 
         gh_deploy_initiate staging $log_url
 
@@ -59,8 +58,6 @@ jobs:
       if: success()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         environment_url=https://staging-submit.cosmetic-product-notifications.service.gov.uk/
@@ -70,8 +67,6 @@ jobs:
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure staging $LOG_URL
@@ -87,8 +82,6 @@ jobs:
     - name: Initiate Production deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_initiate production $LOG_URL
@@ -112,8 +105,6 @@ jobs:
       if: success()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         environment_url=https://submit.cosmetic-product-notifications.service.gov.uk/
@@ -123,8 +114,6 @@ jobs:
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure production $LOG_URL
