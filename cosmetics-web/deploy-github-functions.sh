@@ -37,7 +37,7 @@ gh_deploy_create() {
     echo "Failed to create Github deployment"
   else
     # Need to be shared between steps
-    echo "::set-env name=DEPLOY_STATUSES_URL::$deploy_url/statuses"
+    echo "DEPLOY_STATUSES_URL=$deploy_url/statuses" >> $GITHUB_ENV
     echo "Github deployment created: $deploy_url"
   fi
 }

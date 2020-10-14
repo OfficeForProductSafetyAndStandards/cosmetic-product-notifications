@@ -17,7 +17,6 @@ jobs:
       CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
     steps:
     - uses: actions/checkout@v1
-      if: github.event.pull_request.merged == true
 
     - name: Install cf client
       env:

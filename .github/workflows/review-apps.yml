@@ -24,13 +24,12 @@ jobs:
     - name: Initiate deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
         # URL where the deployment progress can be tracked. Exported for future steps.
         log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
-        echo "::set-env name=LOG_URL::$log_url"
+        echo "LOG_URL=$log_url" >> $GITHUB_ENV
 
         gh_deploy_initiate review-app-${PR_NUMBER} $log_url
 
@@ -61,8 +60,6 @@ jobs:
       if: success()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
@@ -74,8 +71,6 @@ jobs:
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
-        DEPLOY_STATUSES_URL: ${{ env.DEPLOY_STATUSES_URL }}
-        LOG_URL: ${{ env.LOG_URL }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
