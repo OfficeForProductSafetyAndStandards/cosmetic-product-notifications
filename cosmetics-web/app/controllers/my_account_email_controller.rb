@@ -14,20 +14,19 @@ class MyAccountEmailController < ApplicationController
 
     @user.new_email = dig_params(:new_email)
 
-    ActiveRecord::Base.transaction do
-      @user.save!
+    if @user.save
       user.send_new_email_confirmation_email
-      render "users/check_your_email/show"
+      redirect_to my_account_path, notice: "Confirmation email sent. Please follow instructions from email"
+    else
+      render "my_account/email"
     end
-  rescue StandardError
-    render "my_account/email"
   end
 
   def confirm
     User.new_email!(params[:confirmation_token])
-    redirect_to my_account_path, confirmation: "Email changed successfully"
+    redirect_to my_account_path, notice: "Email changed successfully"
   rescue ArgumentError
-    redirect_to my_account_path, alert: "Email can not be changed, confirmation token is incorrect. Please try again."
+    redirect_to my_account_path, notice: "Email can not be changed, confirmation token is incorrect. Please try again."
   end
 
 private

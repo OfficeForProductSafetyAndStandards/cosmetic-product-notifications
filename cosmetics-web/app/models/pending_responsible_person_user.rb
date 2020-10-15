@@ -11,7 +11,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
             }
   validates_presence_of :email_address, message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE)
   validate :email_address_not_in_team?
-  validate :email_address_not_in_other_team?
+  # validate :email_address_not_in_other_team?
 
   before_create :generate_token
   before_create :remove_duplicate_pending_responsible_users

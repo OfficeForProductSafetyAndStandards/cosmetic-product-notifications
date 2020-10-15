@@ -223,7 +223,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     user = create(:submit_user, :with_responsible_person)
 
     sign_in(user)
-    visit "/account-security"
+    visit '/account-security'
 
     expect(page).not_to have_css("h1", text: "Account security")
     expect(page).to have_css("h1", text: "Submit cosmetic product notifications")

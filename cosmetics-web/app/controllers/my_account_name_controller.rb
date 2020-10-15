@@ -10,7 +10,7 @@ class MyAccountNameController < ApplicationController
     @user.name = dig_params(:name)
 
     if @user.save
-      redirect_to my_account_path, confirmation: "Name changed successfully"
+      redirect_to my_account_path, notice: "Name changed successfully"
     else
       render "my_account/name"
     end

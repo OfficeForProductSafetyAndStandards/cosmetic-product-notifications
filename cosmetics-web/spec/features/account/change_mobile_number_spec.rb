@@ -33,7 +33,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     it "changes password properly" do
       fill_in "Password", with: user.password
       fill_in "New mobile number", with: "07234234234"
-      click_on "Continue"
+      click_on "Save"
 
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
@@ -48,7 +48,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     it "does not get updated when password is wrong" do
       fill_in "Password", with: "user.password"
       fill_in "New mobile number", with: "07500111000"
-      click_on "Continue"
+      click_on "Save"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
       expect(page).to have_link("Password is incorrect", href: "#password")
@@ -60,7 +60,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     xit "does not get updated when new mobile number is empty" do
       fill_in "Password", with: user.password
       fill_in "New mobile number", with: ""
-      click_on "Continue"
+      click_on "Save"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
       expect(page).to have_link("Mobile number can not be blank", href: "#mobile_number")

@@ -20,13 +20,13 @@ RSpec.describe ContactPerson, type: :model do
   it "fails if an email address is not specified" do
     contact_person.email_address = nil
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:email_address]).to include("Enter your email address in the correct format, like name@example.com")
+    expect(contact_person.errors[:email_address]).to include("Email address can not be blank")
   end
 
   it "fails if the email address format is invalid" do
     contact_person.email_address = "invalid_format"
 
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:email_address]).to include("Enter your email address in the correct format, like name@example.com")
+    expect(contact_person.errors[:email_address]).to include("Email address is invalid")
   end
 end

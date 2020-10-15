@@ -17,7 +17,7 @@ class MyAccountPasswordController < ApplicationController
 
     if @user.save
       sign_in(@user, bypass: true)
-      redirect_to my_account_path, confirmation: "Password changed successfully"
+      redirect_to my_account_path, notice: "Password changed successfully"
     else
       render "my_account/password"
     end

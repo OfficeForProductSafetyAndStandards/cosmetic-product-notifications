@@ -9,6 +9,7 @@ class SubmitUser < User
   has_many :notification_files, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_persons, through: :responsible_person_users
+  belongs_to :current_responsible_person, class_name: 'ResponsiblePerson', optional: true
 
   has_one :user_attributes, dependent: :destroy
   validates :mobile_number, presence: true
@@ -32,12 +33,6 @@ class SubmitUser < User
     return true if !account_security_completed && self.persisted?
 
     super
-  end
-
-  def responsible_persons
-    # ActiveHash does not support has_many through: associations
-    # Therefore adopt the workaround suggested here: https://github.com/zilkey/active_hash/issues/25
-    ResponsiblePerson.find responsible_person_users.map(&:responsible_person_id)
   end
 
   def poison_centre_user?
@@ -83,7 +78,19 @@ class SubmitUser < User
 
   def regenerate_confirmation_token_if_expired; end
 
+  def current_responsible_person
+    return super if super
+
+    binding.pry
+    if super.nil? && responsible_persons.length == 1
+      responsible_persons.first
+    else
+      raise "No current responsible person"
+    end
+  end
+
 private
+
 
   # Devise::Models::Lockable
 

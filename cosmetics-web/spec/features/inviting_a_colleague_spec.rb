@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_notify, :with_stubbed_mailer, :with_2fa, type: :feature do
+RSpec.describe "Inviting a colleague", :with_stubbed_antivirus, :with_stubbed_notify, :with_stubbed_mailer, :with_2fa, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { create(:submit_user) }
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
@@ -15,7 +15,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds) do
-      click_on "Invite a team member"
+      click_on "Invite a colleague"
 
       complete_secondary_authentication_for(user)
 
@@ -50,7 +50,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds) do
-      click_on "Invite a team member"
+      click_on "Invite a colleague"
 
       complete_secondary_authentication_for(user)
 
@@ -66,6 +66,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "sending an invitation to an user that already belongs to a different team" do
+    pending "Working on multiple RPs"
     team = create(:responsible_person, :with_a_contact_person)
     create(:responsible_person_user, user: invited_user, responsible_person: team)
 
@@ -74,7 +75,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds) do
-      click_on "Invite a team member"
+      click_on "Invite a colleague"
 
       complete_secondary_authentication_for(user)
 
@@ -99,7 +100,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     wait_time = PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1
     travel_to(Time.now.utc + wait_time.seconds) do
-      click_on "Invite a team member"
+      click_on "Invite a colleague"
 
       complete_secondary_authentication_for(user)
 
@@ -135,7 +136,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     # User sends the original invitation to the team
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
-    click_on "Invite a team member"
+    click_on "Invite a colleague"
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
     fill_in "Email address", with: "newusertoregister@example.com"
@@ -170,7 +171,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in(user)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members"
-    click_on "Invite a team member"
+    click_on "Invite a colleague"
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
     fill_in "Email address", with: "newusertoregister@example.com"
@@ -300,7 +301,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.now.utc + wait_time.seconds)
 
-    click_on "Invite a team member"
+    click_on "Invite a colleague"
 
     complete_secondary_authentication_for(user)
 

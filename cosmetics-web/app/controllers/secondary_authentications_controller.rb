@@ -32,7 +32,7 @@ private
   def redirect_to_saved_path
     session[:secondary_authentication_user_id] = nil
     if session[:secondary_authentication_redirect_to]
-      redirect_to session.delete(:secondary_authentication_redirect_to), notice: session.delete(:secondary_authentication_notice), confirmation: session.delete(:secondary_authentication_confirmation)
+      redirect_to session.delete(:secondary_authentication_redirect_to), notice: session.delete(:secondary_authentication_notice)
     else
       redirect_to root_path
     end
