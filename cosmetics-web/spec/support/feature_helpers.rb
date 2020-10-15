@@ -645,6 +645,11 @@ def fill_in_rp_contact_details
   click_on "Continue"
   expect(page).to have_h1("Contact person details")
   fill_in "Full name", with: "Auto-test contact person"
+  fill_in "Email address", with: "auto-test@foo"
+  fill_in "Phone number", with: "07984563072"
+  click_on "Continue"
+  expect(page).to have_text("Enter your email address in the correct format")
+  fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@exaple.com"
   fill_in "Phone number", with: "07984563072"
   click_on "Continue"
