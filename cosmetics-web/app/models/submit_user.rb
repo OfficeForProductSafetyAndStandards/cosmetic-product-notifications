@@ -63,11 +63,11 @@ class SubmitUser < User
       generate_confirmation_token!
     end
 
-    NotifyMailer.send_account_confirmation_email(self).deliver_later
+    SubmitNotifyMailer.send_account_confirmation_email(self).deliver_later
   end
 
   def send_reset_password_instructions_notification(token)
-    NotifyMailer.reset_password_instructions(self, token).deliver_later
+    SubmitNotifyMailer.reset_password_instructions(self, token).deliver_later
   end
 
   # Don't reset password attempts yet, it will happen on next successful login
@@ -92,7 +92,7 @@ private
     self.unlock_token = enc
     save(validate: false)
     reset_password_token = set_reset_password_token
-    NotifyMailer.account_locked(
+    SubmitNotifyMailer.account_locked(
       self,
       unlock_token: raw,
       reset_password_token: reset_password_token,

@@ -30,7 +30,7 @@ module Registration
     def user_exists?
       if (user = SubmitUser.find_by(email: email))
         if user.confirmed?
-          NotifyMailer.send_account_already_exists(user).deliver_later
+          SubmitNotifyMailer.send_account_already_exists(user).deliver_later
         else
           user.resend_confirmation_instructions
         end

@@ -6,7 +6,6 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
-    stub_notify_mailer
   end
 
   scenario "creating another responsible person as a limited company" do
