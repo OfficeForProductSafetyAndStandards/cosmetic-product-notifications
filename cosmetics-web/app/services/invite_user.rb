@@ -31,7 +31,7 @@ private
       user.update! invitation_token: (user.invitation_token || SecureRandom.hex(15)), invited_at: Time.current
     end
 
-    NotifyMailer.invitation_email(user).deliver_later
+    SearchNotifyMailer.invitation_email(user).deliver_later
   end
 
   def email
