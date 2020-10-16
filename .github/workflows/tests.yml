@@ -81,12 +81,6 @@ jobs:
         bin/rails db:setup
     - name: Run Tests
       env:
-        KEYCLOAK_AUTH_URL: ${{ secrets.KeycloakAuthUrl }}
-        KEYCLOAK_CLIENT_ID: ${{ secrets.KeycloakClientId }}
-        KEYCLOAK_CLIENT_SECRET: ${{ secrets.KeycloakClientSecret }}
-        KEYCLOAK_USER_ID: ${{ secrets.KeycloakUserId }}
-        KEYCLOAK_POISON_CENTER_USER_ID: ${{ secrets.KeycloakPoisonCenterUserId }}
-        KEYCLOAK_USER_PASSWORD: ${{ secrets.KeycloakUserPassword }}
         ELASTICSEARCH_URL: localhost
         RAILS_ENV: test
         TWO_FACTOR_AUTHENTICATION_ENABLED: false
