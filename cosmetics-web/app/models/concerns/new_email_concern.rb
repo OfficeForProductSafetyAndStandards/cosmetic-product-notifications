@@ -21,7 +21,7 @@ module NewEmailConcern
       user.new_email_confirmation_token_expires_at = nil
       ActiveRecord::Base.transaction do
         user.save!
-        NotifyMailer.update_email_address_notification_email(user, old_email).deliver_later
+        NotifyMailer.get_mailer(user).update_email_address_notification_email(user, old_email).deliver_later
       end
     rescue ActiveRecord::RecordNotFound
       raise ArgumentError
