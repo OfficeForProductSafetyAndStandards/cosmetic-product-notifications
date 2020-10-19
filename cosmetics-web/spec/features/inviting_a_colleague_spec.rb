@@ -83,9 +83,21 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       fill_in "Email address", with: invited_user.email
       click_on "Send invitation"
 
-      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-      expect(page).to have_css(".govuk-error-message", text: "You can not invite this email address to join your team")
-      expect(delivered_emails.size).to eq 0
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
+
+      invitation = PendingResponsiblePersonUser.last
+
+      expect(delivered_emails.size).to eq 1
+      email = delivered_emails.first
+
+      expect(email).to have_attributes(
+        recipient: invited_user.email,
+        reference: "Invite user to join responsible person",
+        template: NotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
+        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                          invite_sender: user.name,
+                          responsible_person: responsible_person.name },
+      )
     end
   end
 

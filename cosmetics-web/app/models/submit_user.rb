@@ -81,10 +81,13 @@ class SubmitUser < User
   def current_responsible_person
     return super if super
 
-    binding.pry
     if super.nil? && responsible_persons.length == 1
       responsible_persons.first
     else
+      # This is to make sure we don't have data inconsistency
+      # This happening means that we have error in logic for assigning
+      # current responsible person
+      # TODO: consider if we should allow association to be ever nil?
       raise "No current responsible person"
     end
   end
