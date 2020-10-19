@@ -9,7 +9,7 @@ class SubmitUser < User
   has_many :notification_files, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_persons, through: :responsible_person_users
-  belongs_to :current_responsible_person, class_name: 'ResponsiblePerson', optional: true
+  belongs_to :current_responsible_person, class_name: "ResponsiblePerson", optional: true
 
   has_one :user_attributes, dependent: :destroy
   validates :mobile_number, presence: true
