@@ -23,7 +23,7 @@ private
     return unless fully_signed_in_submit_user?
     return unless current_user.mobile_number_verified?
 
-    responsible_person = current_user.responsible_persons.first
+    responsible_person = current_user.current_responsible_person
 
     if responsible_person.blank?
       redirect_to account_path(:overview)

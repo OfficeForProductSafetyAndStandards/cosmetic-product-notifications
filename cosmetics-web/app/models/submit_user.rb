@@ -72,24 +72,19 @@ class SubmitUser < User
     save(validate: false)
   end
 
-  def mobile_number_change_allowed?
-    !mobile_number_verified?
-  end
-
   def regenerate_confirmation_token_if_expired; end
 
+  # place where user can set up their current_responsible_person:
+  # * when creating one
+  # * when joining to one
   def current_responsible_person
-    return super if super
-
+    # hack?
+    # it works when new responsible person is created
+    # but it does not work when joining
     if super.nil? && responsible_persons.length == 1
-      responsible_persons.first
-    else
-      # This is to make sure we don't have data inconsistency
-      # This happening means that we have error in logic for assigning
-      # current responsible person
-      # TODO: consider if we should allow association to be ever nil?
-      raise "No current responsible person"
+      return responsible_persons.first
     end
+    super
   end
 
 private
