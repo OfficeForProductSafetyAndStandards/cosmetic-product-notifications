@@ -19,7 +19,6 @@ Add required hosts in `/etc/hosts`:
 
 ```
 127.0.0.1       search_cosmetics
-127.0.0.1       keycloak
 127.0.0.1       submit_cosmetics
 ```
 
@@ -41,7 +40,6 @@ Add required hosts in `/etc/hosts`:
 
 ```
 127.0.0.1       search_cosmetics
-127.0.0.1       keycloak
 127.0.0.1       submit_cosmetics
 ```
 
@@ -77,7 +75,7 @@ if there are new migrations:
 
 Running without docker is often more convinient for development. It is still advised to run all dependencies with docker compose:
 
-`docker-compose up keycloak db redis elasticsearch`
+`docker-compose up db redis elasticsearch`
 
 Copy config files:
 `cp cosmetics-web/.env.development.example cosmetics-web/.env.development`
@@ -87,11 +85,6 @@ And run all steps required to setup rails app like bundle install, migrations et
 
 ### Troubleshooting
 
-#### Keycloak ports are not exposed
-
-If `docker ps` shows that keycloak is up and running, but port are not expose, run keycloak with such command:
-
-`docker-compose run -p 8080:8080 keycloak`
 
 
 ### Mac tips
@@ -120,16 +113,6 @@ You may also want to setup docker-sync using [these instructions](https://github
 
 
 ### Accounts
-
-#### Keycloak
-
-The local developer instance of Keycloak is configured with the following default user accounts:
-* cosmetics website: `user@example.com` / `password`
-* Admin Console: `admin` / `admin`
-
-Log in to the [Keycloak admin console](http://keycloak:8080/auth/admin) to add or edit users.
-
-Ask someone on the team to create an account for you on the Int and Staging environments.
 
 #### GOV.UK Notify
 
@@ -276,8 +259,6 @@ Start by setting up the following credentials:
         "SIDEKIQ_PASSWORD": "XXX"
     }'
 
-* `cosmetics-keycloak-env` should already be setup from [the keycloak repo](https://github.com/UKGovernmentBEIS/beis-opss-keycloak).
-
 Once all the credentials are created, the app can be deployed using:
 
     SPACE=<<space>> ./cosmetics-web/deploy.sh
@@ -337,10 +318,6 @@ See [antivirus repo](https://github.com/UKGovernmentBEIS/beis-opss-antivirus).
 #### Maintenance page
 
 See [maintenance in infrastructure repo](https://github.com/UKGovernmentBEIS/beis-opss-infrastructure/blob/master/maintenance/README.md).
-
-#### Keycloak
-
-See [keycloak repository](https://github.com/UKGovernmentBEIS/beis-opss-keycloak).
 
 #### Other infrastructure
 

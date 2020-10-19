@@ -1,4 +1,4 @@
-class SendSMS
+class SendSubmitSMS
   TEMPLATES = {
     otp_code: "9eaabc3a-9eb5-453f-bbbf-624e0cb544f5",
   }.freeze
@@ -6,7 +6,7 @@ class SendSMS
   attr_reader :client
 
   def initialize
-    @client = Notifications::Client.new(Rails.configuration.notify_api_key)
+    @client = Notifications::Client.new(Rails.configuration.submit_notify_api_key)
   end
 
   def self.otp_code(mobile_number:, code:)

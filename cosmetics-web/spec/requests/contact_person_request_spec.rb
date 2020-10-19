@@ -14,7 +14,6 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
   describe "adding a contact person" do
     context "with all the required details" do
       before do
-        stub_notify_mailer
         post "/responsible_persons/#{responsible_person.id}/contact_persons", params: {
           contact_person: {
             name: "Test Person",

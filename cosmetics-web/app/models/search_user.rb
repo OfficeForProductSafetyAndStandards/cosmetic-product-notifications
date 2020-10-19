@@ -28,12 +28,13 @@ class SearchUser < User
     !msa_user?
   end
 
+  # TODO: is this used?
   def send_confirmation_instructions
-    NotifyMailer.send_account_confirmation_email(self).deliver_later
+    SearchNotifyMailer.send_account_confirmation_email(self).deliver_later
   end
 
   def send_reset_password_instructions_notification(token)
-    NotifyMailer.reset_password_instructions(self, token).deliver_later
+    SearchNotifyMailer.reset_password_instructions(self, token).deliver_later
   end
 
   # Don't reset password attempts yet, it will happen on next successful login
@@ -66,7 +67,7 @@ private
     self.unlock_token = enc
     save(validate: false)
     reset_password_token = set_reset_password_token
-    NotifyMailer.account_locked(
+    SearchNotifyMailer.account_locked(
       self,
       unlock_token: raw,
       reset_password_token: reset_password_token,

@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :name, presence: true, unless: -> { invite }
 
   def send_new_email_confirmation_email
-    NotifyMailer.new_email_verification_email(self).deliver_later
+    NotifyMailer.get_mailer(self).new_email_verification_email(self).deliver_later
   end
 
   def mobile_number_verified?

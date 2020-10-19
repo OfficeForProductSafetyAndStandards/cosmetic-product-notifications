@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SendSMS, :with_stubbed_notify do
+RSpec.describe SendSubmitSMS, :with_stubbed_notify do
   describe ".otp_code" do
     let(:phone_number) { "123234234" }
     let(:code) { 123 }

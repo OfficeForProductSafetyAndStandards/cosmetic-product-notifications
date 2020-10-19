@@ -84,7 +84,7 @@ private
   end
 
   def send_invite_email
-    NotifyMailer.send_responsible_person_invite_email(
+    SubmitNotifyMailer.send_responsible_person_invite_email(
       @responsible_person,
       @team_member,
       current_user.name,
