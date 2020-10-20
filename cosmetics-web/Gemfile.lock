@@ -325,7 +325,7 @@ GEM
       rubocop (>= 0.72.0)
     rubocop-rspec (1.37.1)
       rubocop (>= 0.68.1)
-    ruby-debug-ide (0.7.0)
+    ruby-debug-ide (0.7.2)
       rake (>= 0.8.1)
     ruby-progressbar (1.10.1)
     rubyzip (2.3.0)
