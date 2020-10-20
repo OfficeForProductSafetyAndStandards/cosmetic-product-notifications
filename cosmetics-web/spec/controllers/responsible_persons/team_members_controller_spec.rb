@@ -75,30 +75,6 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
         expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
       end
     end
-
-    context "when signed in as the inviting user" do
-      before do
-        invited_user = create(:submit_user, email: pending_responsible_person_user.email_address)
-        sign_in(invited_user)
-      end
-
-      it "adds user with a pending invite to the responsible person" do
-        expect { get(:join, params: params) }
-          .to change { responsible_person.reload.responsible_person_users.size }.from(1).to(2)
-      end
-
-      it "deletes any existing invites to the responsible person for this user" do
-        expect { get(:join, params: params) }
-          .to change { responsible_person.pending_responsible_person_users.size }
-          .from(1).to(0)
-      end
-
-      it "redirects to the responsible person notifications page" do
-        get(:join, params: params)
-        expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
-      end
-    end
-    # TODO: Add the rest of contexts. Turn into a request spec?
   end
 end
 
