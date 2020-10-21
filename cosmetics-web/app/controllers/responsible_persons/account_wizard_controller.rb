@@ -20,6 +20,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
       create_or_join_existing_account
     when :enter_details
       if responsible_person_saved?
+        clear_session
         current_user.update!(current_responsible_person_id: @responsible_person.id)
         redirect_to new_responsible_person_contact_person_path(@responsible_person)
       else
