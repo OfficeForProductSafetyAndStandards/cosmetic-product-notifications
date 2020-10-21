@@ -139,7 +139,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
                                                   responsible_person: responsible_person)
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     sign_in(invited_user)
-    # complete_secondary_authentication_for(invited_user)
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(page).to have_css("h1", text: "Your cosmetic products")
   end
