@@ -74,13 +74,13 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
   end
 
   describe "updating the contact person’s details" do
-    let(:contact_person) {
+    let(:contact_person) do
       create(:contact_person,
              name: "Alpha Person",
              email_address: "alpha@example.com",
              phone_number: "07711 111111",
              responsible_person: responsible_person)
-    }
+    end
 
     context "with all the required fields" do
       before do

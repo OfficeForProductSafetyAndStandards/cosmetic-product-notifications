@@ -86,7 +86,11 @@ RSpec.describe User, type: :model do
 
       context "when token is invalid" do
         it "does not change email" do
-          described_class.new_email!("token") rescue nil
+          begin
+            described_class.new_email!("token")
+          rescue StandardError
+            nil
+          end
           expect(user.reload.email).to eq(old_email)
         end
 
@@ -101,7 +105,11 @@ RSpec.describe User, type: :model do
         end
 
         it "does not change email" do
-          described_class.new_email!(expected_token) rescue nil
+          begin
+            described_class.new_email!(expected_token)
+          rescue StandardError
+            nil
+          end
           expect(user.reload.email).to eq(old_email)
         end
 

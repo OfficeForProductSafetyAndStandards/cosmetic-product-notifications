@@ -14,16 +14,14 @@ namespace :cpnp_import do
     xml_doc.xpath("//category[lngId='EN']").each do |english_category_node|
       english_category_name = english_category_node.xpath("name").first&.text
       category_key_name = get_category_key_name(english_category_name)
-      while category_key_names_set.add?(category_key_name).blank?
-        category_key_name = category_key_name + "_child"
-      end
+      category_key_name += "_child" while category_key_names_set.add?(category_key_name).blank?
 
       parent_id = english_category_node.xpath("parentID").first&.text
-      if parent_id.present?
-        parent_english_category_name = xml_doc.xpath("//category[id=#{parent_id} and lngId='EN']/name").first&.text
-        parent_category_key_name = get_category_key_name(parent_english_category_name)
-        parent_hash_command += label_string_pair(category_key_name, parent_category_key_name)
-      end
+      next if parent_id.blank?
+
+      parent_english_category_name = xml_doc.xpath("//category[id=#{parent_id} and lngId='EN']/name").first&.text
+      parent_category_key_name = get_category_key_name(parent_english_category_name)
+      parent_hash_command += label_string_pair(category_key_name, parent_category_key_name)
     end
     puts(end_command(parent_hash_command))
   end
@@ -74,9 +72,7 @@ def print_three_mapping_data_structures(variable_name, file_name, main_tag, id_t
     category_key_name_exist_in_set = category_key_names_set.add?(category_key_name).blank?
     if category_key_name_exist_in_set
       if enable_duplication
-        while category_key_names_set.add?(category_key_name).blank?
-          category_key_name = category_key_name + "_child"
-        end
+        category_key_name += "_child" while category_key_names_set.add?(category_key_name).blank?
       end
     end
     if !category_key_name_exist_in_set || enable_duplication

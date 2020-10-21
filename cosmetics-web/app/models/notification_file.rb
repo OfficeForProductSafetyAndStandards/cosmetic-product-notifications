@@ -8,16 +8,16 @@ class NotificationFile < ApplicationRecord
   validate :uploaded_file_is_within_allowed_size?
 
   enum upload_error: {
-      uploaded_file_not_a_zip: "uploaded_file_not_a_zip",
-      file_size_too_big: "file_size_too_big",
-      file_flagged_as_virus: "file_flagged_as_virus",
-      unzipped_files_are_pdf: "unzipped_files_are_pdf",
-      product_file_not_found: "product_file_not_found",
-      notification_duplicated: "notification_duplicated",
-      notification_validation_error: "notification_validation_error",
-      draft_notification_error: "draft_notification_error",
-      unknown_error: "unknown_error",
-      post_brexit_date: "post_brexit_date",
+    uploaded_file_not_a_zip: "uploaded_file_not_a_zip",
+    file_size_too_big: "file_size_too_big",
+    file_flagged_as_virus: "file_flagged_as_virus",
+    unzipped_files_are_pdf: "unzipped_files_are_pdf",
+    product_file_not_found: "product_file_not_found",
+    notification_duplicated: "notification_duplicated",
+    notification_validation_error: "notification_validation_error",
+    draft_notification_error: "draft_notification_error",
+    unknown_error: "unknown_error",
+    post_brexit_date: "post_brexit_date",
   }
 
   @allowed_content_types = %w[application/zip application/x-zip-compressed].freeze
@@ -37,7 +37,7 @@ class NotificationFile < ApplicationRecord
   end
 
   def upload_error_message
-    I18n.t("activerecord.attributes.notification_file.upload_errors.#{self.upload_error}")
+    I18n.t("activerecord.attributes.notification_file.upload_errors.#{upload_error}")
   end
 
 private

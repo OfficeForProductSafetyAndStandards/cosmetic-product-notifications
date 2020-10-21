@@ -6,6 +6,6 @@ class ContactPerson < ApplicationRecord
             email: {
               message: I18n.t(:wrong_format, scope: "contact_person.email_address"),
             }
-  validates_presence_of :email_address, message: I18n.t(:blank, scope: "contact_person.email_address")
+  validates :email_address, presence: { message: I18n.t(:blank, scope: "contact_person.email_address") }
   validates :phone_number, presence: true
 end

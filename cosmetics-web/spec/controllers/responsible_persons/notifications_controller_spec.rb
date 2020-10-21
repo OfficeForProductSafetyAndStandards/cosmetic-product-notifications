@@ -128,7 +128,8 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
 
     it "adds error if failed attempt to submit when images are pending antivirus check" do
       attach_image_to_draft_with_metadata({})
-      get :edit, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number,
+      get :edit, params: { responsible_person_id: responsible_person.id,
+                           reference_number: draft_notification.reference_number,
                            submit_failed: true }
       expect(assigns(:notification).errors[:image_uploads]).to include("waiting for files to pass anti virus check. Refresh to update")
     end
@@ -136,7 +137,8 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     it "adds error if failed attempt to submit when images have failed antivirus check" do
       draft_notification.image_uploads.build
       draft_notification.save
-      get :edit, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number,
+      get :edit, params: { responsible_person_id: responsible_person.id,
+                           reference_number: draft_notification.reference_number,
                            submit_failed: true }
       expect(assigns(:notification).errors[:image_uploads]).to include("failed anti virus check")
     end

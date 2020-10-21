@@ -137,7 +137,7 @@ private
   end
 
   def render_is_imported_step
-    remove_import_country = Proc.new do
+    remove_import_country = proc do
       @notification.import_country = nil
       @notification.add_import_country
     end

@@ -8,13 +8,13 @@ module CpnpNotificationExposures
   end
 
   EXPOSURE_ROUTE_ID = {
-      3 => :dermal,
-      4 => :oral,
-      5 => :inhalation,
+    3 => :dermal,
+    4 => :oral,
+    5 => :inhalation,
   }.freeze
 
   EXPOSURE_CONDITION_ID = {
-      1 => :rinse_off,
-      2 => :leave_on,
+    1 => :rinse_off,
+    2 => :leave_on,
   }.freeze
 end

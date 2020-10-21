@@ -29,9 +29,10 @@ class Component < ApplicationRecord
   accepts_nested_attributes_for :nano_material
 
   validates :physical_form, presence: {
-    on: :add_physical_form, message: ->(object, _) do
-      "Select the physical form of #{object.component_name}"
-    end
+    on: :add_physical_form,
+    message: lambda do |object, _|
+               "Select the physical form of #{object.component_name}"
+             end,
   }
 
   # Currently two components with no name are immediately created for

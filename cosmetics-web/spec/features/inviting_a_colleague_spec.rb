@@ -36,8 +36,8 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
         reference: "Invite user to join responsible person",
         template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
         personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                          invite_sender: user.name,
-                          responsible_person: responsible_person.name },
+                           invite_sender: user.name,
+                           responsible_person: responsible_person.name },
       )
     end
   end
@@ -119,12 +119,11 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
         reference: "Invite user to join responsible person",
         template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
         personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{new_token}",
-                          invite_sender: user.name,
-                          responsible_person: responsible_person.name },
+                           invite_sender: user.name,
+                           responsible_person: responsible_person.name },
       )
     end
   end
-
 
   scenario "re-sending an invitation to a new user that accepted the original invitation but didn't complete their user account" do
     configure_requests_for_submit_domain
@@ -153,8 +152,8 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       reference: "Invite user to join responsible person",
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                        invite_sender: user.name,
-                        responsible_person: responsible_person.name },
+                         invite_sender: user.name,
+                         responsible_person: responsible_person.name },
     )
 
     # Invited user accepts the invitation
@@ -188,8 +187,8 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       reference: "Invite user to join responsible person",
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                        invite_sender: user.name,
-                        responsible_person: responsible_person.name },
+                         invite_sender: user.name,
+                         responsible_person: responsible_person.name },
     )
   end
 
@@ -219,7 +218,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     team_path = "/responsible_persons/#{responsible_person.id}/team_members"
     visit team_path
 
-
     time_now = (Time.zone.at(Time.now.utc.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
     travel_to time_now
 
@@ -234,8 +232,8 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       recipient: invitation.email_address,
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                        invite_sender: user.name,
-                        responsible_person: responsible_person.name },
+                         invite_sender: user.name,
+                         responsible_person: responsible_person.name },
     )
 
     expect(page.current_path).to eq team_path

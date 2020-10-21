@@ -13,7 +13,7 @@ module Registration
     include EmailFormValidation
 
     def save
-      return false unless self.valid?
+      return false unless valid?
       return true if user_exists?
 
       user = SubmitUser.new(name: full_name, email: email)

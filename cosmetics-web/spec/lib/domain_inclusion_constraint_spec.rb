@@ -6,7 +6,6 @@ RSpec.describe DomainInclusionConstraint, type: :constraint do
   let(:expected_domain) { "www.example.com" }
   let(:other_domain) { "other.example.com" }
 
-
   describe "#matches?" do
     it "returns true for requests with the expected domain" do
       request = ActionDispatch::Request.new("HTTP_HOST" => expected_domain)

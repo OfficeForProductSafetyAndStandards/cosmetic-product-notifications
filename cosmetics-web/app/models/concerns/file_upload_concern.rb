@@ -41,8 +41,8 @@ module FileUploadConcern
   end
 
   def attachment
-    if self.send(attachment_name).attached?
-      self.send(attachment_name)
+    if send(attachment_name).attached?
+      send(attachment_name)
     else
       {}
     end
@@ -56,15 +56,15 @@ module FileUploadConcern
 private
 
   def attached_file_is_correct_type?
-    attachment = self.send(attachment_name).attachment
-    unless attachment.nil? || allowed_types.include?(self.send(attachment_name).blob.content_type)
+    attachment = send(attachment_name).attachment
+    unless attachment.nil? || allowed_types.include?(send(attachment_name).blob.content_type)
       errors.add attachment_name, "must be one of " + allowed_types.join(", ")
     end
   end
 
   def attached_file_is_within_allowed_size?
-    attachment = self.send(attachment_name).attachment
-    unless attachment.nil? || self.send(attachment_name).blob.byte_size <= max_file_size
+    attachment = send(attachment_name).attachment
+    unless attachment.nil? || send(attachment_name).blob.byte_size <= max_file_size
       errors.add attachment_name, "must be smaller than #{max_file_size / 1.megabyte}MB"
     end
   end

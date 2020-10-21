@@ -38,7 +38,7 @@ module Cosmetics
     # Use a longer timeout on development environments to allow for asset compilation.
     # config.slowpoke.timeout = Rails.env.production? ? 15 : 180
 
-    config.exceptions_app = self.routes
+    config.exceptions_app = routes
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
 
     config.active_record.belongs_to_required_by_default = true

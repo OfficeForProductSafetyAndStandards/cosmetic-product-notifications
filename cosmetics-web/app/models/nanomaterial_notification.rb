@@ -18,7 +18,6 @@ class NanomaterialNotification < ApplicationRecord
 
   has_one_attached :file
 
-
   # Expects either a date object, or a hash containing
   # year, month and day, for example:
   #
@@ -40,7 +39,7 @@ class NanomaterialNotification < ApplicationRecord
       date = nil
     end
 
-    write_attribute(:notified_to_eu_on, date)
+    self[:notified_to_eu_on] = date
   end
 
   def submit!
@@ -118,7 +117,7 @@ private
   end
 
   def eu_notification_date_is_nil
-    if notified_to_eu_on != nil
+    unless notified_to_eu_on.nil?
       errors.add(:notified_to_eu_on, I18n.t(:date_specified_but_eu_not_notified, scope: %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]))
     end
   end

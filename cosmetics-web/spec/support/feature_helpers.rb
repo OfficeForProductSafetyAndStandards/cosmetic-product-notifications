@@ -81,9 +81,9 @@ def expect_incorrect_email_or_password
 end
 
 def otp_code(email = nil)
-#  puts user
+  #  puts user
 
-#  p SubmitUser.pluck(:direct_otp)
+  #  p SubmitUser.pluck(:direct_otp)
   user_with_code = User.find_by(email: email) || user
   user_with_code.reload.direct_otp
 end
@@ -389,7 +389,6 @@ end
 def expect_to_be_on__responsible_person_declaration_page
   expect(page).to have_h1("Responsible Person Declaration")
 end
-
 
 # ---- Page interactions ----
 

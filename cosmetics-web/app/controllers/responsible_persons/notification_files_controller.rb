@@ -16,8 +16,8 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
 
     if uploaded_files_params.length > NotificationFile.get_max_number_of_files
       @errors << {
-          text: "You can only select up to #{NotificationFile.get_max_number_of_files} files at the same time",
-          href: "#uploaded_files",
+        text: "You can only select up to #{NotificationFile.get_max_number_of_files} files at the same time",
+        href: "#uploaded_files",
       }
       return render :new
     end
@@ -31,9 +31,9 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
       notification_file.uploaded_file.attach(uploaded_file)
 
       unless notification_file.save
-        @errors.concat(notification_file.errors.full_messages.map { |message|
+        @errors.concat(notification_file.errors.full_messages.map do |message|
           { text: message, href: "#file-upload-form-group" }
-        })
+        end)
         return render :new
       end
 

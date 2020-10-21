@@ -22,7 +22,8 @@ RSpec.describe ResponsiblePersons::AddNotificationWizardController, type: :contr
     describe "PUT #update" do
       it "redirects to the correct step for the given answer" do
         put(:update, params: { responsible_person_id: responsible_person.id,
-        id: "have_products_been_notified_in_eu", answer: "yes" })
+                               id: "have_products_been_notified_in_eu",
+                               answer: "yes" })
         expect(response).to redirect_to(responsible_person_add_notification_path(responsible_person, "do_you_have_files_from_eu_notification"))
       end
 
