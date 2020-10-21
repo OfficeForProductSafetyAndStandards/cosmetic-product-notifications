@@ -25,7 +25,7 @@ class NanomaterialNotification < ApplicationRecord
   def notified_to_eu_on=(notified_to_eu_on)
     return if notified_to_eu_on.nil?
 
-    if Date === notified_to_eu_on
+    if notified_to_eu_on.is_a?(Date)
       date = notified_to_eu_on
     elsif notified_to_eu_on[:year].present? && notified_to_eu_on[:month].present? && notified_to_eu_on[:day].present?
       begin
@@ -85,13 +85,13 @@ class NanomaterialNotification < ApplicationRecord
 private
 
   def eu_notification_date_must_be_pre_brexit
-    if notified_to_eu_on && Date === notified_to_eu_on && notified_to_eu_on > EU_EXIT_DATE
+    if notified_to_eu_on && notified_to_eu_on.is_a?(Date) && notified_to_eu_on > EU_EXIT_DATE
       errors.add(:notified_to_eu_on, I18n.t(:post_brexit_date_given, scope: %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]))
     end
   end
 
   def eu_notification_date_is_real
-    if notified_to_eu_on && !(Date === notified_to_eu_on)
+    if notified_to_eu_on && !notified_to_eu_on.is_a?(Date)
 
       translation_scope = %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]
 

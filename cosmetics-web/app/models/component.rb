@@ -177,7 +177,7 @@ private
   def reject_non_decimal_strings(value)
     decimal_regex = /\A\s*\d+(?:\.\d+)?\s*\z/
 
-    if String === value && value !~ decimal_regex
+    if value.is_a?(String) && value !~ decimal_regex
       nil
     else
       value

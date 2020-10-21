@@ -532,7 +532,7 @@ def answer_how_user_is_exposed_to_nanomaterials_with(answer)
 end
 
 def answer_nanomaterial_names_with(nanomaterial_names)
-  if String === nanomaterial_names
+  if nanomaterial_names.is_a?(String)
     # TODO: replace with label once these are unambiguous
     fill_in "nano_material_nano_elements_attributes_0_inci_name", with: nanomaterial_names
   end
