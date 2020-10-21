@@ -98,7 +98,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
           end
         end
 
-        context "when confirmation token is invalid" do
+        context "when confirmation token is expired" do
           it "displays proper message" do
             email = delivered_emails.last
             confirm_url = email.personalization[:verify_email_url]
