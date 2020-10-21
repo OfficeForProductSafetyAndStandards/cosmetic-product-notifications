@@ -663,7 +663,6 @@ def fill_in_rp_contact_details
   click_on "Continue"
 end
 
-
 def create_another_business_responsible_person
   select_options_to_create_account
   select_individual_account_type

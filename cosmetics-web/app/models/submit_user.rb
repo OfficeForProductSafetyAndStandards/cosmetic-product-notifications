@@ -84,6 +84,7 @@ class SubmitUser < User
     if super.nil? && responsible_persons.length == 1
       return responsible_persons.first
     end
+
     super
   end
 
