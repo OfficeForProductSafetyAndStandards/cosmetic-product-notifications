@@ -1,9 +1,10 @@
 namespace :cpnp_import do
-  desc "Print static product data from CPNP"
+  desc "Print static product categories data from CPNP"
   task categories: :environment do
     print_three_mapping_data_structures("category", "categories", "category")
   end
 
+  desc "Print static product categories parent data from CPNP"
   task categories_parent: :environment do
     parent_hash_command = start_hash_command("PARENT_OF_CATEGORY")
 
@@ -26,26 +27,32 @@ namespace :cpnp_import do
     puts(end_command(parent_hash_command))
   end
 
+  desc "Print static product frame formulations data from CPNP"
   task frame_formulations: :environment do
     print_three_mapping_data_structures("frame_formulation", "frameFormulation", "frameFormulation")
   end
 
+  desc "Print static product trigger rules questions data from CPNP"
   task trigger_rules_questions: :environment do
     print_three_mapping_data_structures("trigger_rules_question", "questions", "question", "id", "description", false)
   end
 
+  desc "Print static product trigger rules questions elements data from CPNP"
   task trigger_rules_question_elements: :environment do
     print_three_mapping_data_structures("trigger_rules_question_element", "questions", "element", "elemID", "elemName", false, false)
   end
 
+  desc "Print static product units data from CPNP"
   task units: :environment do
     print_three_mapping_data_structures("unit", "units", "unit", "id", "name", false, false, true)
   end
 
+  desc "Print static product exposure routes data from CPNP"
   task exposure_routes: :environment do
     print_three_mapping_data_structures("exposure_route", "exposureRoute", "exposureRoute")
   end
 
+  desc "Print static product exposure conditions data from CPNP"
   task exposure_conditions: :environment do
     print_three_mapping_data_structures("exposure_condition", "exposureConditions", "exposureCondition")
   end
