@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(version: 2020_10_16_163705) do
 
   create_table "responsible_person_users", force: :cascade do |t|
     t.bigint "responsible_person_id"
+    t.string "old_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id", default: -> { "gen_random_uuid()" }

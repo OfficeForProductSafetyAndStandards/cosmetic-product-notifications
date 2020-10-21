@@ -31,6 +31,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     expect_to_be_on_responsible_person_notifications_page(responsible_person_2)
   end
 
+
   scenario "Changing url manually redirects to change responsible person page" do
     visit("/responsible_persons/#{responsible_person_2.id}/notifications")
     expect(page).to have_css("h1", text: "Choose Responsible Person")
@@ -60,10 +61,32 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
 
     name = "Some other responsible person"
     fill_in "Business name", with: name
-    fill_in_rp_contact_details
+    fill_in_new_rp_details
 
     expect(page).to have_h1("Your cosmetic products")
     expect(page).to have_css(".responsible-person-name", text: name)
+  end
+
+  scenario "Adding new responsible person - cant ommit contact details" do
+    visit "/"
+
+    click_on "Your cosmetic products"
+
+    expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
+    click_on "Responsible person"
+    click_on "Change responsible person"
+    click_on "Add new Responsible Person"
+
+    select_business_account_type
+    expect(page).to have_h1("UK Responsible Person details")
+
+    name = "Some other responsible person"
+    fill_in "Business name", with: name
+    fill_in_rp_business_details
+
+    visit "/"
+
+    expect(page).to have_h1("Contact person details")
   end
 
   scenario "Landing page redirects to correct responsible person" do

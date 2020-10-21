@@ -34,6 +34,8 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
       responsible_person.add_user(user)
       # delete accepted pending request
       pending_request.delete
+
+      current_user.update!(current_responsible_person_id: responsible_person.id)
       redirect_to responsible_person_notifications_path(responsible_person)
     else
       user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|

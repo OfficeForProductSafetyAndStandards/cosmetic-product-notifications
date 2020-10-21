@@ -22,7 +22,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
       expect(page).to have_h1("UK Responsible Person details")
       fill_in "Name", with: "Auto-test rpuser"
-      fill_in_rp_contact_details
+      fill_in_new_rp_details
 
       expect(page).to have_h1("Your cosmetic products")
     end
@@ -40,7 +40,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
       expect(page).to have_h1("UK Responsible Person details")
       fill_in "Business name", with: "Auto-test rpuser"
-      fill_in_rp_contact_details
+      fill_in_new_rp_details
 
       expect(page).to have_h1("Your cosmetic products")
     end
