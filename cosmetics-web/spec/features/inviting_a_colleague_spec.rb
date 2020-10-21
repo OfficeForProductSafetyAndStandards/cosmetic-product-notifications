@@ -14,7 +14,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
-    travel_to(Time.now.utc + wait_time.seconds) do
+    travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
       complete_secondary_authentication_for(user)
@@ -49,7 +49,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
-    travel_to(Time.now.utc + wait_time.seconds) do
+    travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
       complete_secondary_authentication_for(user)
@@ -73,7 +73,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
-    travel_to(Time.now.utc + wait_time.seconds) do
+    travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
       complete_secondary_authentication_for(user)
@@ -98,7 +98,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1
-    travel_to(Time.now.utc + wait_time.seconds) do
+    travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
       complete_secondary_authentication_for(user)
@@ -202,7 +202,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
 
     wait_time = PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1
-    travel_to(Time.now.utc + wait_time.seconds) do
+    travel_to(Time.zone.now + wait_time.seconds) do
       visit join_path
       expect(page).to have_current_path(join_path)
       expect(page).to have_css("h1", text: "This invitation has expired")
@@ -218,7 +218,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     team_path = "/responsible_persons/#{responsible_person.id}/team_members"
     visit team_path
 
-    time_now = (Time.zone.at(Time.now.utc.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
+    time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
     travel_to time_now
 
     click_on "Resend invitation"
@@ -296,7 +296,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
-    travel_to(Time.now.utc + wait_time.seconds)
+    travel_to(Time.zone.now + wait_time.seconds)
 
     click_on "Invite a team member"
 
@@ -321,7 +321,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in_as_member_of_responsible_person(responsible_person, different_user)
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
-    travel_to(Time.now.utc + wait_time.seconds)
+    travel_to(Time.zone.now + wait_time.seconds)
     visit email.personalization[:invitation_url]
     expect(page).to have_css("h1", text: "You are already signed in")
 

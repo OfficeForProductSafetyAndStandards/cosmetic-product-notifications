@@ -9,7 +9,7 @@ class EmailVerificationKey < ApplicationRecord
   end
 
   def is_expired?
-    expires_at < DateTime.current
+    expires_at < Time.zone.now
   end
 
 private

@@ -21,11 +21,11 @@ class PendingResponsiblePersonUser < ApplicationRecord
   end
 
   def expired?
-    invitation_token_expires_at < DateTime.current
+    invitation_token_expires_at < Time.zone.now
   end
 
   def refresh_token_expiration!
-    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
+    self.invitation_token_expires_at = Time.zone.now + INVITATION_TOKEN_VALID_FOR.seconds
     save!
   end
 
@@ -34,7 +34,7 @@ private
   def generate_token
     token = SecureRandom.uuid
     self.invitation_token = token
-    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
+    self.invitation_token_expires_at = Time.zone.now + INVITATION_TOKEN_VALID_FOR.seconds
   end
 
   def email_address_not_in_team?

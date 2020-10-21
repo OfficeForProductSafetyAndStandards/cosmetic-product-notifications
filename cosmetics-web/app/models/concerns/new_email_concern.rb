@@ -5,14 +5,14 @@ module NewEmailConcern
     if email.present?
       token = SecureRandom.uuid
       self.new_email_confirmation_token = token
-      self.new_email_confirmation_token_expires_at = Time.now.utc + User::NEW_EMAIL_TOKEN_VALID_FOR.seconds
+      self.new_email_confirmation_token_expires_at = Time.zone.now + User::NEW_EMAIL_TOKEN_VALID_FOR.seconds
     end
     super(email)
   end
 
   class_methods do
     def new_email!(token)
-      user = User.where("new_email_confirmation_token_expires_at > ?", Time.now.utc).find_by! new_email_confirmation_token: token
+      user = User.where("new_email_confirmation_token_expires_at > ?", Time.zone.now).find_by! new_email_confirmation_token: token
 
       old_email = user.email
       user.email = user.new_email

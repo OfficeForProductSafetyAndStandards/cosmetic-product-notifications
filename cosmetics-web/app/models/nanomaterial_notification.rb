@@ -45,7 +45,7 @@ class NanomaterialNotification < ApplicationRecord
   def submit!
     raise AlreadySubmittedError, "Nanomaterial previously notified, on #{submitted_at}" if submitted?
 
-    self.submitted_at = DateTime.now
+    self.submitted_at = Time.zone.now
     save!
   end
 
