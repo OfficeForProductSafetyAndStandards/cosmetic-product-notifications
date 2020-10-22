@@ -1,5 +1,5 @@
 class ResponsiblePersonsController < SubmitApplicationController
-  before_action :set_responsible_person, only: %i[show select]
+  before_action :set_responsible_person, only: %i[show]
   include ResponsiblePersonConcern
 
   def show; end
