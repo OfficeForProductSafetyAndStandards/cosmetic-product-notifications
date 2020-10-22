@@ -31,7 +31,11 @@ private
     responsible_person = current_responsible_person
 
     if responsible_person.blank?
-      redirect_to account_path(:overview)
+      if current_user.responsible_persons.present?
+        redirect_to select_responsible_persons_path
+      else
+        redirect_to account_path(:overview)
+      end
     elsif responsible_person.contact_persons.empty?
       redirect_to new_responsible_person_contact_person_path(responsible_person)
     end

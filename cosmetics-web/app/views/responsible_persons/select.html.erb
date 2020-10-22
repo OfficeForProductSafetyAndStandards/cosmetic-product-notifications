@@ -1,6 +1,6 @@
 <h1 class="govuk-heading-l">Choose Responsible Person</h1>
 <% content_for :after_header do %>
-  <%= link_to "Back", responsible_person_path(current_responsible_person), class: "govuk-back-link" %>
+  <%= link_to "Back", responsible_person_path(current_responsible_person), class: "govuk-back-link" if current_responsible_person %>
 <% end %>
 <ul class="govuk-list govuk-!-margin-bottom-6">
   <% current_user.responsible_persons.each do |rp| %>

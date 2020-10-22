@@ -15,8 +15,10 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     create(:responsible_person_user, user: submit_user, responsible_person: responsible_person_1)
     create(:responsible_person_user, user: submit_user, responsible_person: responsible_person_2)
 
-    submit_user.current_responsible_person = responsible_person_1
-    submit_user.save
+    visit "/"
+
+    # No current responsible person in session - so redirected to select page
+    click_on name_1
   end
 
   scenario "Changing responsible person" do
@@ -95,6 +97,8 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
 
     submit_user.update!(current_responsible_person_id: responsible_person_2.id)
+    visit "/responsible_persons/select"
+    click_on name_2
 
     visit "/"
     click_on "Your cosmetic products"
