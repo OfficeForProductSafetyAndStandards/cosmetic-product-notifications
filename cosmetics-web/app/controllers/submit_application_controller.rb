@@ -4,6 +4,11 @@ class SubmitApplicationController < ApplicationController
   before_action :has_accepted_declaration
   before_action :create_or_join_responsible_person
 
+  def current_responsible_person
+    current_user.current_responsible_person
+  end
+  helper_method :current_responsible_person
+
 private
 
   def allow_only_submit_domain
