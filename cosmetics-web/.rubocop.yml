@@ -75,3 +75,11 @@ Rails/HelperInstanceVariable:
 Style/MethodCalledOnDoEndBlock:
   Exclude:
     - 'spec/**/*'
+
+RSpec/DescribeClass:
+  Exclude:
+    - spec/requests/responsible_person_access_spec.rb
+
+RSpec/RepeatedExampleGroupDescription:
+  Exclude:
+    - spec/requests/responsible_person_access_spec.rb
