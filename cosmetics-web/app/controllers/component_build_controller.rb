@@ -278,8 +278,7 @@ private
       return
     end
 
-    @component.update_attribute(:contains_poisonous_ingredients, params[:component][:contains_poisonous_ingredients])
-
+    @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
     if @component.contains_poisonous_ingredients?
       redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
     else
