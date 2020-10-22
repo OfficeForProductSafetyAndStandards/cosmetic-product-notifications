@@ -19,16 +19,41 @@ AllCops:
     - 'bin/**/*'
     - 'vendor/**/*'
 
+# Disable this so that we can use Capybara aliases like
+# 'feature' and 'scenario' for more readable tests
+Capybara/FeatureMethods:
+  Enabled: false
+
+# We can disable this as we're using Capybara with RackTest which
+# doesn't support javascript, and so we we don't need to use the
+# asynchronous `have_current_path` matcher.
+Capybara/CurrentPathExpectation:
+  Enabled: false
+
 Rails:
   Enabled: true
 
-RSpec/MultipleExpectations:
-  Max: 2
-  Exclude:
-    - 'spec/features/**/*'
+# TODO: re-enable this after updating the helpers
+Rails/HelperInstanceVariable:
+  Enabled: false
 
-RSpec/NestedGroups:
-  Max: 6
+# Reasoning behind disabling this rule after orginally trying to apply fixes in
+# the codebase to pass Rubocop check with the rule enabled:
+# - Makes testing harder as you cannot setup partially initialized objects for
+#   unit testing a particular behaviour on the object, forcing to do a full object
+#   initialization.
+# - Also makes harder to do testing over an object not being #valid?, as will
+#   raise an exception before we can assert over the object validation errors.
+# - Found multiple instances when the validity of the resulting object after
+#   creation/saving was being checked afterwards, but Rubocop wasn't able to
+#   identify it. I would end having to manually disable/enable the rule in multiple
+#   places.
+# - With the "!" methods enforcing validations in every call, I see a good chance
+#   to introduce bugs in the current codebase in situations where an object is
+#   being built with multiple steps, being invalid until some stage. This would
+#   now raise a runtime exception.
+Rails/SaveBang:
+  Enabled: false
 
 ExampleLength:
   Exclude:
@@ -53,24 +78,17 @@ RSpec/LetSetup:
     - spec/features/account/change_name_spec.rb
     - spec/features/account/change_password_spec.rb
 
+RSpec/MultipleExpectations:
+  Max: 2
+  Exclude:
+    - 'spec/features/**/*'
+
+RSpec/NestedGroups:
+  Max: 6
+
 RSpec/ScatteredSetup:
   Exclude:
     - spec/features/account/change_mobile_number_spec.rb
-
-# Disable this so that we can use Capybara aliases like
-# 'feature' and 'scenario' for more readable tests
-Capybara/FeatureMethods:
-  Enabled: false
-
-# We can disable this as we’re using Capybara with RackTest which
-# doesn’t support javascript, and so we we don’t need to use the
-# asynchronous `have_current_path` matcher.
-Capybara/CurrentPathExpectation:
-  Enabled: false
-
-# TODO: re-enable this after updating the helpers
-Rails/HelperInstanceVariable:
-  Enabled: false
 
 Style/MethodCalledOnDoEndBlock:
   Exclude:
