@@ -5,7 +5,12 @@ class SubmitApplicationController < ApplicationController
   before_action :create_or_join_responsible_person
 
   def current_responsible_person
-    current_user.current_responsible_person
+    rp = current_user.responsible_persons.find_by id: session[:current_responsible_person_id]
+    if rp.nil? && current_user.responsible_persons.count == 1
+      current_user.responsible_persons.first
+    else
+      rp
+    end
   end
   helper_method :current_responsible_person
 
@@ -54,6 +59,6 @@ private
   end
 
   def set_current_responsible_person(responsible_person)
-    current_user.update!(current_responsible_person_id: responsible_person.id)
+    session[:current_responsible_person_id] = responsible_person.id
   end
 end
