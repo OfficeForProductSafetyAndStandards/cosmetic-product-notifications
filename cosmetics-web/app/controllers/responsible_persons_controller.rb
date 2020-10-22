@@ -11,7 +11,7 @@ class ResponsiblePersonsController < SubmitApplicationController
     # TODO: security - make sure in such case user cant access wrong rp
 
     # TODO: spec for this line
-    current_user.update!(current_responsible_person_id: current_user.responsible_persons.find(params[:id]).id)
+    set_current_responsible_person(current_user.responsible_persons.find(params[:id]))
     redirect_to responsible_person_notifications_path(current_responsible_person)
   end
 

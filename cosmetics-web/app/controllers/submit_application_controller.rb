@@ -48,4 +48,8 @@ private
   def authorize_user!
     redirect_to invalid_account_path if current_user && !current_user.is_a?(SubmitUser)
   end
+
+  def set_current_responsible_person(responsible_person)
+    current_user.update!(current_responsible_person_id: responsible_person.id)
+  end
 end

@@ -21,7 +21,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
     when :enter_details
       if responsible_person_saved?
         clear_session
-        current_user.update!(current_responsible_person_id: @responsible_person.id)
+        set_current_responsible_person(@responsible_person)
         redirect_to new_responsible_person_contact_person_path(@responsible_person)
       else
         render step
