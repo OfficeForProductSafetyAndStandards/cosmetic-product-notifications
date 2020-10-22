@@ -105,7 +105,7 @@ class Notification < ApplicationRecord
   end
 
   def reference_number_for_display
-    "UKCP-%08d" % reference_number
+    sprintf("UKCP-%08d", reference_number)
   end
 
   def images_are_present_and_safe?
