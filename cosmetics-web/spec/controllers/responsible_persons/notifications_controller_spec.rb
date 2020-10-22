@@ -134,6 +134,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       expect(assigns(:notification).errors[:image_uploads]).to include("waiting for files to pass anti virus check. Refresh to update")
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it "adds error if failed attempt to submit when images have failed antivirus check" do
       draft_notification.image_uploads.build
       draft_notification.save
@@ -142,6 +143,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
                            submit_failed: true }
       expect(assigns(:notification).errors[:image_uploads]).to include("failed anti virus check")
     end
+    # rubocop:enable RSpec/ExampleLength
 
     it "does not allow the user to edit notification for a Responsible Person they not belong to" do
       other_responsible_person = create(:responsible_person)
