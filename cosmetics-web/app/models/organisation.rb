@@ -12,7 +12,7 @@ class Organisation < ActiveHash::Base
   def self.all(options = {})
     self.load
 
-    if options.has_key?(:conditions)
+    if options.key?(:conditions)
       where(options[:conditions])
     else
       @records ||= []

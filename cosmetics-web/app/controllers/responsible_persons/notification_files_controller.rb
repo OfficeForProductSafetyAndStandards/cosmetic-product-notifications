@@ -63,7 +63,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def uploaded_files_params
-    if params.has_key?(:uploaded_files)
+    if params.key?(:uploaded_files)
       params.require(:uploaded_files)
     end
   end
