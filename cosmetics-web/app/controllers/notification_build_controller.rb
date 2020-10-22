@@ -158,7 +158,7 @@ private
     elsif @notification.get_valid_multicomponents.length > 1
 
       if @notification.was_notified_before_eu_exit?
-        # Product images aren’t needed for pre-Brexit notifications,
+        # Product images aren't needed for pre-Brexit notifications,
         # so redirect to Check your answers page instead
         redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
       else

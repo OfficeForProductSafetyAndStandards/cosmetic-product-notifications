@@ -168,7 +168,7 @@ class Component < ApplicationRecord
 private
 
   # This takes any value and returns nil if the value
-  # is a string but isn’t a format which represents an
+  # is a string but isn't a format which represents an
   # integer (10) or decimal (1.3). Otherwise, returns the value.
   #
   # This allows `.to_f` to be called on the result, without the
