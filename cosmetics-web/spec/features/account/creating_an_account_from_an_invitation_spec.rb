@@ -90,7 +90,7 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :w
   #     )
   #   end
 
-  #   scenario "it shouldn’t show values entered previously" do
+  #   scenario "it shouldn't show values entered previously" do
   #     visit "/users/#{invited_user.id}/complete-registration?invitation=#{invited_user.invitation_token}"
 
   #     expect_to_be_on_complete_registration_page
