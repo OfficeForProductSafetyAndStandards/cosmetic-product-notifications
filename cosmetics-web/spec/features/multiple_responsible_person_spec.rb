@@ -96,7 +96,6 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     click_on "Your cosmetic products"
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
 
-    submit_user.update!(current_responsible_person_id: responsible_person_2.id)
     visit "/responsible_persons/select"
     click_on name_2
 

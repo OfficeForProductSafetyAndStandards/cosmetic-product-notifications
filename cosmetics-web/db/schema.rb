@@ -278,7 +278,6 @@ ActiveRecord::Schema.define(version: 2020_10_16_163705) do
     t.string "new_email_confirmation_token"
     t.datetime "new_email_confirmation_token_expires_at"
     t.boolean "account_security_completed", default: false
-    t.integer "current_responsible_person_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
