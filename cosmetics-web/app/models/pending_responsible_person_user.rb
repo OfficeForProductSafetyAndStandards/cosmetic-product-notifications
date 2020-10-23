@@ -11,7 +11,6 @@ class PendingResponsiblePersonUser < ApplicationRecord
             }
   validates_presence_of :email_address, message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE)
   validate :email_address_not_in_team?
-  # validate :email_address_not_in_other_team?
 
   before_create :generate_token
   before_create :remove_duplicate_pending_responsible_users
@@ -40,13 +39,6 @@ private
   def email_address_not_in_team?
     if responsible_person.responsible_person_users.any? { |user| user.email_address == email_address }
       errors.add :email_address, I18n.t(:this_team, scope: EMAIL_ERROR_MESSAGE_SCOPE)
-    end
-  end
-
-  def email_address_not_in_other_team?
-    user = SubmitUser.find_by(email: email_address)
-    if user && user.responsible_persons.any?
-      errors.add :email_address, I18n.t(:other_team, scope: EMAIL_ERROR_MESSAGE_SCOPE)
     end
   end
 
