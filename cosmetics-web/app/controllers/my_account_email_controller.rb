@@ -1,4 +1,4 @@
-class MyAccountEmailController < ApplicationController
+class MyAccountEmailController < SubmitApplicationController
   def show
     @user = current_user
     render "my_account/email"

@@ -1,4 +1,4 @@
-class MyAccountMobileNumberController < ApplicationController
+class MyAccountMobileNumberController < SubmitApplicationController
   def show
     @user = current_user
     render "my_account/mobile_number"

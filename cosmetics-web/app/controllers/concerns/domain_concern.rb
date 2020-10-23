@@ -9,6 +9,11 @@ module DomainConcern
     submit_domains.include?(request.host)
   end
 
+  included do
+    helper_method :search_domain?
+    helper_method :submit_domain?
+  end
+
 private
 
   def set_service_name
