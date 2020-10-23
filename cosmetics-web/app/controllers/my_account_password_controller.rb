@@ -1,5 +1,4 @@
 class MyAccountPasswordController < ApplicationController
-
   def show
     @user = current_user
     render "my_account/password"
