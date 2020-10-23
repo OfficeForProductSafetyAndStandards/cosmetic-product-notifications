@@ -85,7 +85,7 @@ RSpec.describe CpnpNotificationImporter do
     end
 
     it "creates a notification when orphaned component exists" do
-      #create(:component, name: 'A', notification: nil)
+      # create(:component, name: 'A', notification: nil)
       exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
 
       expect {
@@ -217,7 +217,6 @@ RSpec.describe CpnpNotificationImporter do
       expect(notification.components.second.shades.first).to eq("pink, lazuli")
     end
 
-
     context "when the file contains a component with a PH range" do
       before do
         cpnp_parser = create_cpnp_parser("testExportWithComponentWithPHRange.zip")
@@ -267,7 +266,6 @@ RSpec.describe CpnpNotificationImporter do
     # TODO: this probably should be tested somewhere else?
     context "when the file contains a post-Brexit date" do
       let(:cpnp_parser) { create_cpnp_parser("testExportFilePostBrexit.zip") }
-
 
       it "adds an error to the file" do
         exporter_instance = described_class.new(cpnp_parser, responsible_person)

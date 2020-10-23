@@ -111,7 +111,7 @@ class NanomaterialNotificationsController < SubmitApplicationController
   end
 
   def confirmation_page
-    if !@nanomaterial_notification.submitted?
+    unless @nanomaterial_notification.submitted?
       redirect_to(review_nanomaterial_path(@nanomaterial_notification)) && return
     end
 

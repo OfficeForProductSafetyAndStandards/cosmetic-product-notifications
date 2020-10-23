@@ -90,8 +90,8 @@ RSpec.describe AdditionalInformationController, :with_stubbed_antivirus, type: :
       context "when one component is complete" do
         let(:second_nano_elements) do
           [
-            create(:nano_element, iupac_name: "Element 1A", purposes: %w(other), confirm_toxicology_notified: "yes"),
-            create(:nano_element, iupac_name: "Element 2A", purposes: %w(other), confirm_toxicology_notified: "yes"),
+            create(:nano_element, iupac_name: "Element 1A", purposes: %w[other], confirm_toxicology_notified: "yes"),
+            create(:nano_element, iupac_name: "Element 2A", purposes: %w[other], confirm_toxicology_notified: "yes"),
           ]
         end
 

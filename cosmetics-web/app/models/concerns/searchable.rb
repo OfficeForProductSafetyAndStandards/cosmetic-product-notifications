@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 module Searchable
   extend ActiveSupport::Concern
 
@@ -7,7 +6,6 @@ module Searchable
 
     # TODO-COSBETA-28 add following line back into shared web for Elasticsearch indexing
     # include Elasticsearch::Model::Callbacks
-
 
     # The following dynamic templates define custom mappings for the major data types
     # that automatically generate appropriate sort fields for each type.
@@ -20,7 +18,8 @@ module Searchable
               type: "text",
             },
           },
-        }, {
+        },
+        {
           numbers: {
             match_mapping_type: "long",
             mapping: {
@@ -32,7 +31,8 @@ module Searchable
               },
             },
           },
-        }, {
+        },
+        {
           dates: {
             match_mapping_type: "date",
             mapping: {
@@ -44,7 +44,8 @@ module Searchable
               },
             },
           },
-        }, {
+        },
+        {
           booleans: {
             match_mapping_type: "boolean",
             mapping: {
@@ -56,7 +57,7 @@ module Searchable
               },
             },
           },
-        }
+        },
       ]
     end
 
@@ -69,4 +70,3 @@ module Searchable
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

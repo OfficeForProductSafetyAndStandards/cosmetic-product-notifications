@@ -4,10 +4,10 @@ module CpnpNotificationSpecialApplicators
   end
 
   SPECIAL_APPLICATOR_ID = {
-      100001 => :wipe_sponge_patch_pad,
-      100002 => :encapsulated_products,
-      100003 => :pressurised_spray_container,
-      100004 => :pressurised_container_non_spray_product,
-      99998 => :other_special_applicator,
+    100_001 => :wipe_sponge_patch_pad,
+    100_002 => :encapsulated_products,
+    100_003 => :pressurised_spray_container,
+    100_004 => :pressurised_container_non_spray_product,
+    99_998 => :other_special_applicator,
   }.freeze
 end

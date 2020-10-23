@@ -25,7 +25,7 @@ module Registration
                              account_security_completed: true,
                              confirmation_token: nil,
                              confirmation_sent_at: nil,
-                             confirmed_at: Time.now.utc)
+                             confirmed_at: Time.zone.now)
     end
 
     def [](field)

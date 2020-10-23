@@ -6,7 +6,7 @@ RSpec.describe SecondaryAuthenticationForm, :with_stubbed_notify do
   let(:user) { create(:submit_user, second_factor_attempts_count: attempts, direct_otp_sent_at: direct_otp_sent_at) }
 
   let(:attempts) { 0 }
-  let(:direct_otp_sent_at) { Time.new.utc }
+  let(:direct_otp_sent_at) { Time.zone.now }
   let(:secondary_authentication) { SecondaryAuthentication.new(user) }
   let(:otp_code) { user.direct_otp }
 

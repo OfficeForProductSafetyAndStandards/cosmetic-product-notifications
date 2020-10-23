@@ -9,7 +9,6 @@ class NotificationFileProcessorJob < ApplicationJob
   include CpnpStaticFiles
   include ActiveStorage::Downloading
 
-
   def perform(notification_file_id)
     @notification_file = NotificationFile.find(notification_file_id)
     create_notification_from_file

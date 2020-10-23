@@ -9,7 +9,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
               message: I18n.t(:wrong_format, scope: EMAIL_ERROR_MESSAGE_SCOPE),
               if: -> { email_address.present? },
             }
-  validates_presence_of :email_address, message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE)
+  validates :email_address, presence: { message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE) }
   validate :email_address_not_in_team?
   validate :email_address_not_in_other_team?
 
@@ -21,12 +21,12 @@ class PendingResponsiblePersonUser < ApplicationRecord
   end
 
   def expired?
-    invitation_token_expires_at < DateTime.current
+    invitation_token_expires_at < Time.zone.now
   end
 
   def refresh_token_expiration!
-    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
-    self.save!
+    self.invitation_token_expires_at = Time.zone.now + INVITATION_TOKEN_VALID_FOR.seconds
+    save!
   end
 
 private
@@ -34,7 +34,7 @@ private
   def generate_token
     token = SecureRandom.uuid
     self.invitation_token = token
-    self.invitation_token_expires_at = Time.now.utc + INVITATION_TOKEN_VALID_FOR.seconds
+    self.invitation_token_expires_at = Time.zone.now + INVITATION_TOKEN_VALID_FOR.seconds
   end
 
   def email_address_not_in_team?

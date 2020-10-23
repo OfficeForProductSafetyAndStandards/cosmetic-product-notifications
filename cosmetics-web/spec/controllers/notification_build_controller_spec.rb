@@ -8,12 +8,12 @@ RSpec.describe NotificationBuildController, :with_stubbed_antivirus, type: :cont
   let(:image_file) { fixture_file_upload("testImage.png", "image/png") }
   let(:text_file) { fixture_file_upload("testText.txt", "application/text") }
 
-  let(:params) {
+  let(:params) do
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
     }
-  }
+  end
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
@@ -151,7 +151,7 @@ RSpec.describe NotificationBuildController, :with_stubbed_antivirus, type: :cont
 
     it "stores internal reference if user adds internal reference" do
       post(:update, params: params.merge(id: :add_internal_reference,
-      notification: { add_internal_reference: "yes", industry_reference: "12345678" }))
+                                         notification: { add_internal_reference: "yes", industry_reference: "12345678" }))
       expect(assigns[:notification].industry_reference).to eq("12345678")
     end
 

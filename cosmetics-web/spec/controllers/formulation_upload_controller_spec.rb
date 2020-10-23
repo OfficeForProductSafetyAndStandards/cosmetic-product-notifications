@@ -10,21 +10,21 @@ RSpec.describe FormulationUploadController, :with_stubbed_antivirus, type: :cont
   let(:pdf_file) { fixture_file_upload("/testPdf.pdf", "application/pdf") }
   let(:image_file) { fixture_file_upload("/testImage.png", "image/png") }
 
-  let(:params) {
+  let(:params) do
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
       component_id: component.id,
     }
-  }
+  end
 
-  let(:other_responsible_person_params) {
+  let(:other_responsible_person_params) do
     {
       responsible_person_id: other_responsible_person.id,
       notification_reference_number: other_notification.reference_number,
       component_id: other_component.id,
     }
-  }
+  end
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)

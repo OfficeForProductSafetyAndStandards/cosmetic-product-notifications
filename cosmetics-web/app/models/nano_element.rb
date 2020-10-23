@@ -2,7 +2,7 @@ class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
   def self.purposes
-    %w(colorant preservative uv_filter other).freeze
+    %w[colorant preservative uv_filter other].freeze
   end
 
   validates :purposes, presence: true, on: :select_purposes

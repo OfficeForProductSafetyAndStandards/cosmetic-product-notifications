@@ -17,9 +17,9 @@ RSpec.describe "Team members management", type: :request, with_stubbed_notify: t
   describe "Access" do
     context "when user that belongs to different responsible person tries to access" do
       it "returns 404" do
-        expect do
+        expect {
           get responsible_person_team_members_path(other_responsible_person)
-        end.to raise_error(Pundit::NotAuthorizedError)
+        }.to raise_error(Pundit::NotAuthorizedError)
       end
     end
   end

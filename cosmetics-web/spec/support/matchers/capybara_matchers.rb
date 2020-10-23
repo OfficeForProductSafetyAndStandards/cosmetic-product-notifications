@@ -3,7 +3,6 @@ module PageMatchers
     have_selector("h1", text: text)
   end
 
-
   # Matcher for items within the [Summary list](https://design-system.service.gov.uk/components/summary-list/) component.
   #
   # Note: currently this expects table markup. However this should be updated to use

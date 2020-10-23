@@ -9,8 +9,6 @@ if Rails.env.production?
       ActiveSupport::SecurityUtils.secure_compare(password, ENV["SIDEKIQ_PASSWORD"])
   end
 end
-
-# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
@@ -92,7 +90,6 @@ Rails.application.routes.draw do
         end
       end
 
-
       resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[new create edit update] do
       end
 
@@ -152,7 +149,6 @@ Rails.application.routes.draw do
     post :accept
   end
 
-
   namespace :guidance, as: "" do
     get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"
     get :how_to_prepare_images_for_notification, path: "how-to-prepare-images-for-notification"
@@ -170,4 +166,3 @@ Rails.application.routes.draw do
   match "/500", to: "errors#internal_server_error", via: :all
   match "/503", to: "errors#timeout", via: :all
 end
-# rubocop:enable Metrics/BlockLength

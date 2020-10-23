@@ -215,7 +215,6 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
   end
 
-
   describe "GET /nanomaterials/ID/notified_to_eu" do
     context "when the user has access" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Zinc oxide") }
@@ -283,7 +282,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       context "when a valid pre-Brexit date is entered" do
-        let(:nanomaterial_params) {
+        let(:nanomaterial_params) do
           {
             eu_notified: "true",
             notified_to_eu_on: {
@@ -292,7 +291,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
               year: "2020",
             },
           }
-        }
+        end
 
         it "redirects to the upload PDF page" do
           expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/upload_file")
@@ -300,11 +299,11 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       context "when the EU wasn’t notified" do
-        let(:nanomaterial_params) {
+        let(:nanomaterial_params) do
           {
-          eu_notified: "false",
-        }
-        }
+            eu_notified: "false",
+          }
+        end
 
         it "redirects to the upload PDF page" do
           expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/upload_file")
@@ -320,16 +319,16 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       context "when a an invalid date is entered" do
-        let(:nanomaterial_params) {
+        let(:nanomaterial_params) do
           {
-          eu_notified: "true",
+            eu_notified: "true",
             notified_to_eu_on: {
               day: "12",
               month: "30",
               year: "2020",
             },
           }
-        }
+        end
 
         it "renders an error page" do
           expect(response.code).to eql("200")

@@ -23,7 +23,7 @@ RSpec.describe NanoElement, type: :model do
 
   describe "updating purposes" do
     it "allows multiple purposes to be specified" do
-      purposes = %w(preservative uv_filter)
+      purposes = %w[preservative uv_filter]
       nano_element.purposes = purposes
 
       expect(nano_element.save(context: :select_purposes)).to be true
@@ -32,7 +32,7 @@ RSpec.describe NanoElement, type: :model do
 
     it "adds error if invalid purpose is specified" do
       invalid_purpose = "invalid_purpose"
-      nano_element.purposes = %w(invalid_purpose)
+      nano_element.purposes = %w[invalid_purpose]
 
       expect(nano_element.save(context: :select_purposes)).to be false
       expect(nano_element.errors[:purposes]).to include("#{invalid_purpose} is not a valid purpose")
@@ -48,13 +48,13 @@ RSpec.describe NanoElement, type: :model do
 
   describe "#non_standard?" do
     it "is true when purposes includes 'other'" do
-      nano_element.purposes = %w(colorant other)
+      nano_element.purposes = %w[colorant other]
 
       expect(nano_element).to be_non_standard
     end
 
     it "is false when purposes do not include 'other'" do
-      nano_element.purposes = %w(colorant preservative uv_filter)
+      nano_element.purposes = %w[colorant preservative uv_filter]
 
       expect(nano_element).not_to be_non_standard
     end
@@ -62,7 +62,7 @@ RSpec.describe NanoElement, type: :model do
 
   describe "#standard?" do
     it "is true when purposes includes 'other'" do
-      nano_element.purposes = %w(colorant)
+      nano_element.purposes = %w[colorant]
 
       expect(nano_element).to be_standard
     end
@@ -83,7 +83,7 @@ RSpec.describe NanoElement, type: :model do
       end
 
       it "toxicology notified is not set" do
-        nano_element.purposes = %w(other)
+        nano_element.purposes = %w[other]
         nano_element.confirm_toxicology_notified = nil
 
         expect(nano_element).to be_required
@@ -91,7 +91,7 @@ RSpec.describe NanoElement, type: :model do
 
       context "when toxicology notified is set" do
         before do
-          nano_element.purposes = %w(other)
+          nano_element.purposes = %w[other]
           nano_element.confirm_restrictions = "no"
         end
 
@@ -111,7 +111,7 @@ RSpec.describe NanoElement, type: :model do
 
     context "when a nonstandard nanomaterial notification is complete" do
       before do
-        nano_element.purposes = %w(other)
+        nano_element.purposes = %w[other]
       end
 
       context "when toxicology has been notified" do
@@ -125,7 +125,7 @@ RSpec.describe NanoElement, type: :model do
 
     context "when a standard nanomaterial notification is required" do
       before do
-        nano_element.purposes = %w(colorant)
+        nano_element.purposes = %w[colorant]
       end
 
       it "has not confirmed restrictions" do
@@ -179,7 +179,7 @@ RSpec.describe NanoElement, type: :model do
 
     context "when a standard nanomaterial is complete" do
       before do
-        nano_element.purposes = %w(colorant)
+        nano_element.purposes = %w[colorant]
       end
 
       context "when restrictions are set to 'no'" do

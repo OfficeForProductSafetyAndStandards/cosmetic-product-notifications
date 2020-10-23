@@ -221,13 +221,13 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__upload_formulation_document_page
     upload_formulation_file
 
-
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
-    expect_check_your_answers_page_for_kit_items_to_contain(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
+    expect_check_your_answers_page_for_kit_items_to_contain(
+      product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
       imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
-       kit_items: [
+      kit_items: [
         {
           name: "RangeDoc",
           shades: "",
@@ -251,12 +251,12 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           formulation_given_as: "Exact concentration",
           physical_form: "Loose powder",
         },
-      ])
+      ],
+    )
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano"
   end
-
 
   scenario "Verify zip file upload with multi-items with range doc and exact values and nano elements in each item" do
     visit new_responsible_person_add_notification_path(responsible_person)
@@ -275,18 +275,14 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_incomplete_notification_with_eu_reference_number "1006080"
     click_link "Add missing information"
 
-
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
-
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
-
-
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
@@ -309,13 +305,13 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano")
-    expect_check_your_answers_page_for_kit_items_to_contain(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
+    expect_check_your_answers_page_for_kit_items_to_contain(
+      product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
       imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
-       kit_items: [
+      kit_items: [
         {
           name: "RangeDoc",
           shades: "",
@@ -339,7 +335,8 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           formulation_given_as: "Exact concentration",
           physical_form: "Loose powder",
         },
-      ])
+      ],
+    )
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano"
@@ -374,7 +371,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
@@ -384,14 +380,13 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-
-
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano")
-    expect_check_your_answers_page_for_kit_items_to_contain(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano",
+    expect_check_your_answers_page_for_kit_items_to_contain(
+      product_name: "Multi-Item-Rangevalues_Exactvalues_Nano",
       imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
-       kit_items: [
+      kit_items: [
         {
           name: "ConcentrationRangeValues",
           shades: "",
@@ -415,7 +410,8 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
           formulation_given_as: "Exact concentration",
           physical_form: "Loose powder",
         },
-      ])
+      ],
+    )
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-Rangevalues_Exactvalues_Nano"

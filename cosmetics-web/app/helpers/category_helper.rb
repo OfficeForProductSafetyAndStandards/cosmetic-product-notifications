@@ -15,7 +15,7 @@ module CategoryHelper
     Component.categories.reject { |category| parent_of_categories[category.to_sym].present? }.keys.map(&:to_sym)
   end
 
-  def get_sub_categories category
+  def get_sub_categories(category)
     Component.get_parent_of_categories.select { |_key, value| value == category.to_sym }.keys
   end
 

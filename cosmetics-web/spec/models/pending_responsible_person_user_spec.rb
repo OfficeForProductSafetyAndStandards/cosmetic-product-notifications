@@ -34,7 +34,7 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
     it "succeeds when the email is already in pending request but does not add a new instance" do
       pending_responsible_person.save
       pending_responsible_person_same_email = build(:pending_responsible_person_user, email_address: pending_responsible_person.email_address,
-                                                    responsible_person: pending_responsible_person.responsible_person)
+                                                                                      responsible_person: pending_responsible_person.responsible_person)
 
       expect { pending_responsible_person_same_email.save }.not_to change(described_class, :count)
       expect(pending_responsible_person_same_email.save).to be true

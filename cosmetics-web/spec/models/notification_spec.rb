@@ -121,7 +121,7 @@ RSpec.describe Notification, type: :model do
   end
 
   describe "#may_submit_notification?", :with_stubbed_antivirus do
-    let(:nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w(other)) }
+    let(:nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w[other]) }
     let(:nano_material) { build(:nano_material, nano_elements: [nano_element]) }
     let(:component) { build(:component, nano_material: nano_material) }
 

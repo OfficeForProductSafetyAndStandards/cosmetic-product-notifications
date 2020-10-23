@@ -27,7 +27,7 @@ class ProductImageUploadController < SubmitApplicationController
 
 private
 
-  def add_error error_message
+  def add_error(error_message)
     @error_list.push(text: error_message, href: "#image_upload")
   end
 

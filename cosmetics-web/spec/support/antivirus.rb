@@ -10,7 +10,6 @@ RSpec.configure do |rspec|
   rspec.include_context "with stubbed Antivirus API", with_stubbed_antivirus: true
 end
 
-
 RSpec.shared_context "with stubbed Antivirus API returning false", shared_context: :metadata do
   before do
     antivirus_url = Rails.application.config.antivirus_url

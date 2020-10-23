@@ -1,5 +1,5 @@
 class TestJob < ApplicationJob
   def perform
-    p "*** JOB RUNNING ***"
+    Sidekiq.logger.info "*** JOB RUNNING ***"
   end
 end

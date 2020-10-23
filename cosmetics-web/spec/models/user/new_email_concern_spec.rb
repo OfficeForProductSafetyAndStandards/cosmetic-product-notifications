@@ -85,10 +85,16 @@ RSpec.describe User, type: :model do
       end
 
       context "when token is invalid" do
+        # rubocop:disable RSpec/ExampleLength
         it "does not change email" do
-          described_class.new_email!("token") rescue nil
+          begin
+            described_class.new_email!("token")
+          rescue StandardError
+            nil
+          end
           expect(user.reload.email).to eq(old_email)
         end
+        # rubocop:enable RSpec/ExampleLength
 
         it "raises ArgumentError" do
           expect { described_class.new_email!("token") }.to raise_error(ArgumentError)
@@ -100,10 +106,16 @@ RSpec.describe User, type: :model do
           travel_to(Time.zone.now + User::NEW_EMAIL_TOKEN_VALID_FOR + 1)
         end
 
+        # rubocop:disable RSpec/ExampleLength
         it "does not change email" do
-          described_class.new_email!(expected_token) rescue nil
+          begin
+            described_class.new_email!(expected_token)
+          rescue StandardError
+            nil
+          end
           expect(user.reload.email).to eq(old_email)
         end
+        # rubocop:enable RSpec/ExampleLength
 
         it "raises ArgumentError" do
           expect { described_class.new_email!(expected_token) }.to raise_error(ArgumentError)

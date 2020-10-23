@@ -12,15 +12,15 @@ module ErrorSummaryHelper
       error_list = []
 
       model.errors.messages.each do |attribute, messages|
-        if !messages.empty?
-          href = "##{model.model_name.singular}_#{attribute}"
+        next if messages.empty?
 
-          if first_values[attribute]
-            href += "_#{first_values[attribute]}"
-          end
+        href = "##{model.model_name.singular}_#{attribute}"
 
-          error_list << { text: messages[0], href: href }
+        if first_values[attribute]
+          href += "_#{first_values[attribute]}"
         end
+
+        error_list << { text: messages[0], href: href }
       end
 
       govukErrorSummary(titleText: "There is a problem", errorList: error_list)

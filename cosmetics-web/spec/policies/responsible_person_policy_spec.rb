@@ -13,7 +13,6 @@ RSpec.describe ResponsiblePersonPolicy, type: :policy do
   it { is_expected.not_to permit(:edit)    }
   it { is_expected.not_to permit(:destroy) }
 
-
   describe "#show" do
     it "does not permit when user and responsible person are not in the same team" do
       expect(policy).not_to permit(:show)
