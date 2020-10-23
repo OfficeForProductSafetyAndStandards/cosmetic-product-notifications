@@ -71,7 +71,6 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
     end
 
     let(:user) { create(:submit_user, has_accepted_declaration: true) }
-    let!(:responsible_person) { create(:responsible_person_user, user: user) }
 
     include_examples "change password"
   end

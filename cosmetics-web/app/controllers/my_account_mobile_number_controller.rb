@@ -1,4 +1,6 @@
 class MyAccountMobileNumberController < SubmitApplicationController
+  skip_before_action :create_or_join_responsible_person
+
   def show
     @user = current_user
     render "my_account/mobile_number"

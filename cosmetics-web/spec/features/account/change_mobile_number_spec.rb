@@ -1,12 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
-  let(:user) { create(:poison_centre_user, has_accepted_declaration: true) }
-
-  # TODO: submit domain
+  let(:user) { create(:submit_user, has_accepted_declaration: true) }
 
   before do
-    configure_requests_for_search_domain
+    configure_requests_for_submit_domain
   end
 
   before do
