@@ -11,7 +11,7 @@ jobs:
     - name: Set up Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.6.x
+        ruby-version: 2.7.x
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
@@ -40,7 +40,7 @@ jobs:
     - name: Set up Nodejs
       uses: actions/setup-node@v1
       with:
-        node-version: 10.20.x
+        node-version: 10.22.x
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/node_modules

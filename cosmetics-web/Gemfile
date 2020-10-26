@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "~> 2.6.6"
+ruby "~> 2.7"
 
 gem "will_paginate", "3.2.1" # Must be laoded before elasticsearch gems
 
