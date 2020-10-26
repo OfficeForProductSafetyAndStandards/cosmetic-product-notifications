@@ -76,7 +76,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
 
-    travel_to(Time.now.utc + wait_time.seconds)
+    travel_to(Time.zone.now.utc + wait_time.seconds)
 
     click_on "Invite a team member"
 
@@ -99,8 +99,8 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       reference: "Invite user to join responsible person",
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                        invite_sender: user.name,
-                        responsible_person: responsible_person.name },
+                         invite_sender: user.name,
+                         responsible_person: responsible_person.name },
     )
   end
 

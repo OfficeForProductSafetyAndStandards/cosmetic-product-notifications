@@ -75,7 +75,6 @@ class SubmitUser < User
 
 private
 
-
   # Devise::Models::Lockable
 
   def send_unlock_instructions

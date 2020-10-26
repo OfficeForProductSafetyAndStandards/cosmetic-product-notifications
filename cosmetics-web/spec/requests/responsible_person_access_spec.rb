@@ -29,7 +29,6 @@ describe "Access control for actions related to responsible person" do
     end
   end
 
-
   context "when user is authorized" do
     let(:url) { "/responsible_persons/#{rp1.id}" }
 
