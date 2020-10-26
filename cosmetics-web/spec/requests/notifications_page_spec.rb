@@ -34,24 +34,22 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
       sign_out(:submit_user)
     end
 
-
     context "when requesting notifications for the company associated with the user" do
       before do
         # Setup notifications belonging to the company
         create(:draft_notification, responsible_person: responsible_person)
         create(:registered_notification, responsible_person: responsible_person)
         create(:notification_file, responsible_person: responsible_person, user: user,
-           upload_error: "uploaded_file_not_a_zip")
+                                   upload_error: "uploaded_file_not_a_zip")
         create(:notification_file, responsible_person: responsible_person, user: user)
 
         # Setup notifications belonging to other companies or users
         create(:draft_notification, responsible_person: other_responsible_person)
         create(:registered_notification, responsible_person: other_responsible_person)
         create(:notification_file, responsible_person: other_responsible_person, user: user,
-           upload_error: "uploaded_file_not_a_zip")
+                                   upload_error: "uploaded_file_not_a_zip")
         create(:notification_file, responsible_person: responsible_person, user: other_user)
         create(:notification_file, responsible_person: other_responsible_person, user: other_user)
-
 
         get "/responsible_persons/#{responsible_person.id}/notifications"
       end

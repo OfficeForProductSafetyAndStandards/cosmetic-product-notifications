@@ -7,13 +7,13 @@ RSpec.describe ComponentBuildController, type: :controller do
   let(:pre_eu_exit_notification) { create(:notification, :pre_brexit, components: [component], responsible_person: responsible_person) }
   let(:component_type) { nil }
 
-  let(:params) {
+  let(:params) do
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
       component_id: component.id,
     }
-  }
+  end
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)

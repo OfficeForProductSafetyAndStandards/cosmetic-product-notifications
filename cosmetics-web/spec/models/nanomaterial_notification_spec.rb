@@ -311,12 +311,12 @@ RSpec.describe NanomaterialNotification, type: :model do
     end
 
     context "when notified to the EU 6 months or more before Brexit" do
-      let(:nanomaterial_notification) {
+      let(:nanomaterial_notification) do
         create(:nanomaterial_notification,
                submitted_at: Time.zone.parse("2020-02-05T12:00Z"),
                eu_notified: true,
                notified_to_eu_on: Date.parse("2019-07-31"))
-      }
+      end
 
       it "is available from the start of the day after Brexit" do
         expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-01-31T00:00Z"))
@@ -324,12 +324,12 @@ RSpec.describe NanomaterialNotification, type: :model do
     end
 
     context "when notified to the EU less than 6 months before Brexit" do
-      let(:nanomaterial_notification) {
+      let(:nanomaterial_notification) do
         create(:nanomaterial_notification,
                submitted_at: Time.zone.parse("2020-02-05T12:00Z"),
                eu_notified: true,
                notified_to_eu_on: Date.parse("2019-08-01"))
-      }
+      end
 
       it "is available 7 months later" do
         expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-03-01T00:00Z"))
@@ -345,12 +345,12 @@ RSpec.describe NanomaterialNotification, type: :model do
     end
 
     context "when notified after Brexit between 11pm and mightnight during British Summer Time (BST)" do
-      let(:nanomaterial_notification) {
+      let(:nanomaterial_notification) do
         create(:nanomaterial_notification,
                submitted_at: Time.zone.parse("2020-08-31T23:30Z"),
                notified_to_eu_on: nil,
                eu_notified: false)
-      }
+      end
 
       it "is available 6 months later" do
         expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2021-03-01T00:00Z"))

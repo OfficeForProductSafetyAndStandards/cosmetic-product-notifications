@@ -28,10 +28,10 @@ module SecondaryAuthenticationConcern
 
   # returns true if 2 FA not needed
   def secondary_authentication_present?
-    return false if get_secondary_authentication_datetime.nil?
+    return false if get_secondary_authentication_time.nil?
 
-    last_otp_time = get_secondary_authentication_datetime
-    (last_otp_time + SecondaryAuthentication::TIMEOUTS[current_operation].seconds) > Time.now.utc
+    last_otp_time = get_secondary_authentication_time
+    (last_otp_time + SecondaryAuthentication::TIMEOUTS[current_operation].seconds) > Time.zone.now
   end
 
   # can be overrided for actions which require
@@ -53,11 +53,11 @@ module SecondaryAuthenticationConcern
     }
   end
 
-  def get_secondary_authentication_datetime
+  def get_secondary_authentication_time
     return if cookies.signed["two-factor-#{user_id_for_secondary_authentication}"].nil?
 
     timestamp = cookies.signed["two-factor-#{user_id_for_secondary_authentication}"].to_i
-    Time.zone.at(timestamp).to_datetime
+    Time.zone.at(timestamp)
   end
 
   def user

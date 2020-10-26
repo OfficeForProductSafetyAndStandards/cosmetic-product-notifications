@@ -40,7 +40,7 @@ describe ApplicationHelper do
 
     context "when providing a list with attributes order" do
       context "with all the attributes defined in the order" do
-        let(:order) { %i(mobile_number email name) }
+        let(:order) { %i[mobile_number email name] }
 
         it "generates the error summary with an ordered and formatted list of errors" do
           view.error_summary(errors, order)
@@ -51,7 +51,7 @@ describe ApplicationHelper do
       end
 
       context "when some attribute is missing in the order" do
-        let(:order) { %i(mobile_number name) }
+        let(:order) { %i[mobile_number name] }
 
         it "adds the attribute errors after the ordered ones" do
           view.error_summary(errors, order)
@@ -62,7 +62,7 @@ describe ApplicationHelper do
       end
 
       context "when the order includes attributes without errors" do
-        let(:order) { %i(bar name foo mobile_number email) }
+        let(:order) { %i[bar name foo mobile_number email] }
 
         it "ignores them and respects the order for the attributes with errors" do
           view.error_summary(errors, order)

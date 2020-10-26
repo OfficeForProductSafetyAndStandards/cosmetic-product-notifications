@@ -36,7 +36,6 @@ RSpec.describe "Notification files", :with_stubbed_antivirus, type: :request do
       let!(:notification_file_with_no_error) { create(:notification_file, responsible_person: responsible_person, user: user, upload_error: nil) }
       let!(:notification_file_with_error_belonging_to_colleague) { create(:notification_file, responsible_person: responsible_person, user: colleague, upload_error: "uploaded_file_not_a_zip") }
 
-
       before do
         delete destroy_all_responsible_person_notification_files_path(responsible_person)
       end

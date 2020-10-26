@@ -5,25 +5,25 @@ RSpec.describe NanomaterialBuildController, type: :controller do
   let(:notification) { create(:notification, components: [create(:component)], responsible_person: responsible_person) }
   let(:component) { notification.components.first }
 
-  let(:nanomaterial) {
+  let(:nanomaterial) do
     create(:nano_material,
            component: component,
            nano_elements: [
-               create(:nano_element, inci_name: "nanomaterial1"),
-               create(:nano_element, inci_name: "nanomaterial2"),
+             create(:nano_element, inci_name: "nanomaterial1"),
+             create(:nano_element, inci_name: "nanomaterial2"),
            ])
-  }
+  end
   let(:nano_element1) { nanomaterial.nano_elements.first }
   let(:nano_element2) { nanomaterial.nano_elements.second }
 
-  let(:params) {
+  let(:params) do
     {
-        responsible_person_id: responsible_person.id,
-        notification_reference_number: notification.reference_number,
-        component_id: component.id,
-        nanomaterial_nano_element_id: nano_element1,
+      responsible_person_id: responsible_person.id,
+      notification_reference_number: notification.reference_number,
+      component_id: component.id,
+      nanomaterial_nano_element_id: nano_element1,
     }
-  }
+  end
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
@@ -70,7 +70,7 @@ RSpec.describe NanomaterialBuildController, type: :controller do
 
     describe "at confirm_restrictions" do
       it "redirects to the non-standard nanomaterial path when nano-element purposes include 'other'" do
-        nano_element1.update(purposes: %w(other))
+        nano_element1.update(purposes: %w[other])
         get(:show, params: params.merge(id: :confirm_restrictions))
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :non_standard_nanomaterial_notified))
       end
@@ -83,12 +83,12 @@ RSpec.describe NanomaterialBuildController, type: :controller do
 
       it "updates the nano-element with the selected purposes" do
         post(:update, params: select_purposes_params.merge(nano_element: { "colorant": "0", "preservative": "1", "uv_filter": "1", "other": "0" }))
-        expect(nano_element1.reload.purposes).to eq(%w(preservative uv_filter))
+        expect(nano_element1.reload.purposes).to eq(%w[preservative uv_filter])
       end
 
       it "ignores invalid purpose values" do
         post(:update, params: select_purposes_params.merge(nano_element: { "colorant": "1", "invalid_purpose": "1", "other": "0" }))
-        expect(nano_element1.reload.purposes).to eq(%w(colorant))
+        expect(nano_element1.reload.purposes).to eq(%w[colorant])
       end
 
       it "redirects to the next page when purposes are selected" do

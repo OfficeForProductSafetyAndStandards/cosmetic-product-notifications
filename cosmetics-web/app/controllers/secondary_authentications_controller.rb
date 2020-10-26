@@ -13,7 +13,7 @@ class SecondaryAuthenticationsController < ApplicationController
 
   def create
     if secondary_authentication_form.valid?
-      set_secondary_authentication_cookie(Time.now.utc.to_i)
+      set_secondary_authentication_cookie(Time.zone.now.to_i)
       secondary_authentication_form.try_to_verify_user_mobile_number
       redirect_to_saved_path
     else

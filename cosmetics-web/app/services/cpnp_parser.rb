@@ -64,22 +64,22 @@ class CpnpParser
   def components
     current_version_component_lists_node.xpath(".//component").collect do |component_node|
       component = Component.new(name: component_name(component_node),
-                    shades: component_shades(component_node),
-                    notification_type: notification_type(component_node),
-                    sub_sub_category: sub_sub_category(component_node),
-                    frame_formulation: frame_formulation(component_node),
-                    exact_formulas: exact_formulas(component_node),
-                    range_formulas: range_formulas(component_node),
-                    trigger_questions: trigger_questions(component_node),
-                    cmrs: cmrs(component_node),
-                    nano_material: nano_material(component_node),
-                    physical_form: physical_form(component_node),
-                    special_applicator: special_applicator(component_node),
-                    acute_poisoning_info: acute_poisoning_info(component_node),
-                    state: "component_complete",
-                    ph: ph_answer(component_node),
-                    minimum_ph: minimum_ph(component_node) || component_ph(component_node),
-                    maximum_ph: maximum_ph(component_node) || component_ph(component_node))
+                                shades: component_shades(component_node),
+                                notification_type: notification_type(component_node),
+                                sub_sub_category: sub_sub_category(component_node),
+                                frame_formulation: frame_formulation(component_node),
+                                exact_formulas: exact_formulas(component_node),
+                                range_formulas: range_formulas(component_node),
+                                trigger_questions: trigger_questions(component_node),
+                                cmrs: cmrs(component_node),
+                                nano_material: nano_material(component_node),
+                                physical_form: physical_form(component_node),
+                                special_applicator: special_applicator(component_node),
+                                acute_poisoning_info: acute_poisoning_info(component_node),
+                                state: "component_complete",
+                                ph: ph_answer(component_node),
+                                minimum_ph: minimum_ph(component_node) || component_ph(component_node),
+                                maximum_ph: maximum_ph(component_node) || component_ph(component_node))
       component.skip_name_uniqueness_on_import = true
       component
     end
@@ -136,18 +136,15 @@ private
       question_id = question_node.xpath("./questionID").first.content
       question_elements = question_node.xpath(".//questionElement")
 
-      unless %w(100004 100023).include? question_id
+      next if %w[100004 100023].include? question_id
 
-        trigger_question_elements = question_elements.collect do |question_element_node|
-          trigger_rules_element(question_element_node)
-        end
-
-        trigger_questions << TriggerQuestion.create(question: trigger_rules_question(question_node),
-                               applicable: is_trigger_question_applicable(trigger_question_elements),
-                               trigger_question_elements: trigger_question_elements)
-
-
+      trigger_question_elements = question_elements.collect do |question_element_node|
+        trigger_rules_element(question_element_node)
       end
+
+      trigger_questions << TriggerQuestion.create(question: trigger_rules_question(question_node),
+                                                  applicable: is_trigger_question_applicable(trigger_question_elements),
+                                                  trigger_question_elements: trigger_question_elements)
     end
 
     trigger_questions
@@ -167,9 +164,9 @@ private
 
   def trigger_rules_element(question_element_node)
     TriggerQuestionElement.create!(answer_order: question_element_node.xpath(".//answerOrder").first&.text.to_i,
-                                  answer: question_element_node.xpath(".//answer").first&.text,
-                                  element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
-                                  element: get_trigger_rules_question_element(normalize_id(question_element_node.xpath(".//elementID").first&.text)))
+                                   answer: question_element_node.xpath(".//answer").first&.text,
+                                   element_order: question_element_node.xpath(".//elementOrder").first&.text.to_i,
+                                   element: get_trigger_rules_question_element(normalize_id(question_element_node.xpath(".//elementID").first&.text)))
   end
 
   def trigger_rules_question(question_node)
@@ -230,7 +227,7 @@ private
   end
 
   def normalize_id(id_string)
-    id_string.to_i < 100000 ? id_string.to_i + 100000 : id_string.to_i
+    id_string.to_i < 100_000 ? id_string.to_i + 100_000 : id_string.to_i
   end
 
   def current_version_component_lists_node

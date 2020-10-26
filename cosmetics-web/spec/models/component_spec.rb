@@ -116,7 +116,6 @@ RSpec.describe Component, type: :model do
     end
   end
 
-
   describe "updating special_applicator" do
     it "adds errors if special_applicator updated to be blank" do
       predefined_component.special_applicator = nil
@@ -335,7 +334,6 @@ RSpec.describe Component, type: :model do
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a value of 14 or lower for maximum pH")
     end
 
-
     it "adds an error if minimum_ph is missing when valid? called with ph_range" do
       predefined_component.minimum_ph = nil
 
@@ -414,7 +412,7 @@ RSpec.describe Component, type: :model do
       end
 
       context "when a nano element does not require information" do
-        let(:first_nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w(other)) }
+        let(:first_nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w[other]) }
 
         it "requires nano material information" do
           expect(component).not_to be_nano_material_required

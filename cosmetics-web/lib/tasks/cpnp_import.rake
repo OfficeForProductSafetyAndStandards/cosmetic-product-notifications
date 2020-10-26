@@ -1,9 +1,10 @@
 namespace :cpnp_import do
-  desc "Print static product data from CPNP"
+  desc "Print static product categories data from CPNP"
   task categories: :environment do
     print_three_mapping_data_structures("category", "categories", "category")
   end
 
+  desc "Print static product categories parent data from CPNP"
   task categories_parent: :environment do
     parent_hash_command = start_hash_command("PARENT_OF_CATEGORY")
 
@@ -14,40 +15,44 @@ namespace :cpnp_import do
     xml_doc.xpath("//category[lngId='EN']").each do |english_category_node|
       english_category_name = english_category_node.xpath("name").first&.text
       category_key_name = get_category_key_name(english_category_name)
-      while category_key_names_set.add?(category_key_name).blank?
-        category_key_name = category_key_name + "_child"
-      end
+      category_key_name += "_child" while category_key_names_set.add?(category_key_name).blank?
 
       parent_id = english_category_node.xpath("parentID").first&.text
-      if parent_id.present?
-        parent_english_category_name = xml_doc.xpath("//category[id=#{parent_id} and lngId='EN']/name").first&.text
-        parent_category_key_name = get_category_key_name(parent_english_category_name)
-        parent_hash_command += label_string_pair(category_key_name, parent_category_key_name)
-      end
+      next if parent_id.blank?
+
+      parent_english_category_name = xml_doc.xpath("//category[id=#{parent_id} and lngId='EN']/name").first&.text
+      parent_category_key_name = get_category_key_name(parent_english_category_name)
+      parent_hash_command += label_string_pair(category_key_name, parent_category_key_name)
     end
     puts(end_command(parent_hash_command))
   end
 
+  desc "Print static product frame formulations data from CPNP"
   task frame_formulations: :environment do
     print_three_mapping_data_structures("frame_formulation", "frameFormulation", "frameFormulation")
   end
 
+  desc "Print static product trigger rules questions data from CPNP"
   task trigger_rules_questions: :environment do
     print_three_mapping_data_structures("trigger_rules_question", "questions", "question", "id", "description", false)
   end
 
+  desc "Print static product trigger rules questions elements data from CPNP"
   task trigger_rules_question_elements: :environment do
     print_three_mapping_data_structures("trigger_rules_question_element", "questions", "element", "elemID", "elemName", false, false)
   end
 
+  desc "Print static product units data from CPNP"
   task units: :environment do
     print_three_mapping_data_structures("unit", "units", "unit", "id", "name", false, false, true)
   end
 
+  desc "Print static product exposure routes data from CPNP"
   task exposure_routes: :environment do
     print_three_mapping_data_structures("exposure_route", "exposureRoute", "exposureRoute")
   end
 
+  desc "Print static product exposure conditions data from CPNP"
   task exposure_conditions: :environment do
     print_three_mapping_data_structures("exposure_condition", "exposureConditions", "exposureCondition")
   end
@@ -74,9 +79,7 @@ def print_three_mapping_data_structures(variable_name, file_name, main_tag, id_t
     category_key_name_exist_in_set = category_key_names_set.add?(category_key_name).blank?
     if category_key_name_exist_in_set
       if enable_duplication
-        while category_key_names_set.add?(category_key_name).blank?
-          category_key_name = category_key_name + "_child"
-        end
+        category_key_name += "_child" while category_key_names_set.add?(category_key_name).blank?
       end
     end
     if !category_key_name_exist_in_set || enable_duplication

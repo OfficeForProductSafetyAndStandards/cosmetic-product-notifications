@@ -174,7 +174,7 @@ private
   end
 
   def render_contains_special_applicator
-    yes_no_question(:contains_special_applicator, before_skip: Proc.new { @component.special_applicator = nil })
+    yes_no_question(:contains_special_applicator, before_skip: proc { @component.special_applicator = nil })
   end
 
   def render_contains_cmrs
@@ -192,8 +192,8 @@ private
 
   def render_contains_nanomaterials
     yes_no_question(:contains_nanomaterials,
-                    before_skip: Proc.new { @nano_material.destroy if @nano_material.present? },
-                    before_render: Proc.new { @component.nano_material = NanoMaterial.create if @nano_material.nil? },
+                    before_skip: proc { @nano_material.destroy if @nano_material.present? },
+                    before_render: proc { @component.nano_material = NanoMaterial.create if @nano_material.nil? },
                     steps_to_skip: 3)
   end
 
@@ -278,8 +278,7 @@ private
       return
     end
 
-    @component.update_attribute(:contains_poisonous_ingredients, params[:component][:contains_poisonous_ingredients])
-
+    @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
     if @component.contains_poisonous_ingredients?
       redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
     else

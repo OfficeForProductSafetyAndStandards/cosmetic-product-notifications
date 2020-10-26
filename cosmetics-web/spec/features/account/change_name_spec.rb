@@ -16,7 +16,6 @@ RSpec.describe "Changing name", :with_2fa, :with_stubbed_mailer, :with_stubbed_n
       click_on "Change name"
     end
 
-
     it "changes name properly" do
       fill_in "Full name", with: ""
       click_button "Continue"

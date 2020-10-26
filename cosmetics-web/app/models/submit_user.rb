@@ -29,7 +29,7 @@ class SubmitUser < User
   end
 
   def active_for_authentication?
-    return true if !account_security_completed && self.persisted?
+    return true if !account_security_completed && persisted?
 
     super
   end

@@ -78,7 +78,6 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :w
     let(:expected_text) { "Are you or your organisation a UK Responsible Person?" }
     let(:expected_host_header) { "Are you or your organisation a UK Responsible Person?" }
 
-
     include_examples "locked account"
   end
 

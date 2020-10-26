@@ -15,11 +15,11 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
 
   describe "PUT #confirm_usage" do
     context "when the notification was via ZIP file upload, pre-Brexit, and formulation included" do
-      let(:notification) {
+      let(:notification) do
         create(:notification,
                :via_zip_file, :pre_brexit,
                responsible_person: responsible_person)
-      }
+      end
 
       let(:component) { create(:component, :with_range_formulas, notification: notification) }
       let(:nano_material) { create(:nano_material, component: component) }
@@ -35,11 +35,11 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
     end
 
     context "when the notification was via ZIP file upload, pre-Brexit, using exact, and formulation missing" do
-      let(:notification) {
+      let(:notification) do
         create(:notification,
                :via_zip_file, :pre_brexit,
                responsible_person: responsible_person)
-      }
+      end
 
       let(:component) { create(:component, :using_exact, notification: notification) }
       let(:nano_material) { create(:nano_material, component: component) }
@@ -55,10 +55,10 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
     end
 
     context "when the notification was manual" do
-      let(:notification) {
+      let(:notification) do
         create(:notification, :manual, :pre_brexit,
                responsible_person: responsible_person)
-      }
+      end
 
       let(:component) { create(:component, notification: notification) }
       let(:nano_material) { create(:nano_material, component: component) }
@@ -74,10 +74,10 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
     end
 
     context "when there is another nanomaterial to confirm usage for" do
-      let(:notification) {
+      let(:notification) do
         create(:notification, :via_zip_file, :pre_brexit,
                responsible_person: responsible_person)
-      }
+      end
 
       let(:component) { create(:component, notification: notification) }
       let(:nano_material) { create(:nano_material, component: component) }

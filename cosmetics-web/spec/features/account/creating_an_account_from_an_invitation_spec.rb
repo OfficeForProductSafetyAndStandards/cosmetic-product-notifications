@@ -25,10 +25,14 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :w
     fill_in "Enter security code", with: otp_code
     click_on "Continue"
 
-    # FIXME TODO:
+    # FIXME: TODO:
     # For some reason, we dont have declaration, only when spec when is being run
     # as single example
-    click_button "I accept" rescue nil
+    begin
+      click_button "I accept"
+    rescue StandardError
+      nil
+    end
     expect_to_be_signed_in_as_search_user
 
     # Now sign out and use those credentials to sign back in
@@ -68,7 +72,7 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :w
     fill_in "Enter security code", with: otp_code
     click_on "Continue"
 
-    # FIXME TODO:
+    # FIXME: TODO:
     # For some reason, here we have declaration, but we dont have in happy path spec...
     click_button "I accept"
     expect_to_be_signed_in_as_search_user
@@ -86,7 +90,7 @@ RSpec.feature "Creating an account from an invitation", :with_stubbed_mailer, :w
   #     )
   #   end
 
-  #   scenario "it shouldn’t show values entered previously" do
+  #   scenario "it shouldn't show values entered previously" do
   #     visit "/users/#{invited_user.id}/complete-registration?invitation=#{invited_user.invitation_token}"
 
   #     expect_to_be_on_complete_registration_page

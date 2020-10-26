@@ -2,21 +2,21 @@ class TriggerQuestionElement < ApplicationRecord
   # TODO: make this non-optional after refactoring CpnpParser
   belongs_to :trigger_question, optional: true
 
-  validates :answer, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, if: -> { question_is_applicable? && self.ph? }
+  validates :answer, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, if: -> { question_is_applicable? && ph? }
   validates :answer, presence: true, if: -> { question_is_applicable? && answer_is_single_value? }
   validate :no_empty_answers_within_grouped_answers?, if: -> { question_is_applicable? && answer_is_grouped_value? }
   validate :ph_not_between_3_and_10?, on: :exact_ph
 
   enum element: {
-      ethanol: "ethanol",
-      propanol: "propanol",
-      inciname: "inciname",
-      incivalue: "incivalue",
-      value: "value",
-      ph: "ph",
-      concentration: "concentration",
-      minrangevalue: "minrangevalue",
-      maxrangevalue: "maxrangevalue",
+    ethanol: "ethanol",
+    propanol: "propanol",
+    inciname: "inciname",
+    incivalue: "incivalue",
+    value: "value",
+    ph: "ph",
+    concentration: "concentration",
+    minrangevalue: "minrangevalue",
+    maxrangevalue: "maxrangevalue",
   }
 
 private
@@ -40,10 +40,10 @@ private
   end
 
   def answer_is_single_value?
-    self.ethanol? || self.propanol? || self.ph? || self.value?
+    ethanol? || propanol? || ph? || value?
   end
 
   def answer_is_grouped_value?
-    self.inciname? || self.incivalue?
+    inciname? || incivalue?
   end
 end

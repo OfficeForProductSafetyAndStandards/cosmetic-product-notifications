@@ -6,7 +6,7 @@ FactoryBot.define do
     password { "testpassword123" }
     confirmed_at { 1.hour.ago }
     has_accepted_declaration { true }
-    direct_otp_sent_at { Time.current }
+    direct_otp_sent_at { Time.zone.now }
     direct_otp { "12345" }
     mobile_number_verified { true }
     account_security_completed { true }
@@ -22,7 +22,7 @@ FactoryBot.define do
         password { nil }
         mobile_number { nil }
         confirmed_at { nil }
-        confirmation_sent_at { Time.current }
+        confirmation_sent_at { Time.zone.now }
         direct_otp_sent_at { nil }
         direct_otp { nil }
         confirmation_token { Devise.friendly_token }

@@ -24,7 +24,7 @@ RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notif
     end
 
     let(:attempts) { 0 }
-    let(:direct_otp_sent_at) { Time.new.utc }
+    let(:direct_otp_sent_at) { Time.zone.now }
     let(:secondary_authentication) { SecondaryAuthentication.new(user) }
     let(:submitted_code) { secondary_authentication.direct_otp }
     let(:max_attempts) { SecondaryAuthentication::MAX_ATTEMPTS }
@@ -110,7 +110,7 @@ RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notif
         let(:direct_otp_sent_at) { (SecondaryAuthentication::OTP_EXPIRY_SECONDS * 2).seconds.ago }
 
         context "when secondary authentication is locked" do
-          let(:second_factor_attempts_locked_at) { Time.now.utc }
+          let(:second_factor_attempts_locked_at) { Time.zone.now }
 
           it "does not send the code" do
             expect_any_instance_of(SecondaryAuthentication).not_to receive(:generate_and_send_code)

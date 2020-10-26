@@ -3,9 +3,9 @@ module NotificationTypes
 
   included do
     enum notification_type: {
-        predefined: "predefined",
-        exact: "exact",
-        range: "range",
+      predefined: "predefined",
+      exact: "exact",
+      range: "range",
     }
   end
 end

@@ -31,7 +31,6 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-
   # Randomize the order test cases are executed.
   config.active_support.test_order = :random
 
@@ -47,8 +46,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :inline
 
   config.action_controller.default_url_options = {
-      host: ENV["HTTP_HOST"] || "localhost",
-      port: ENV["HTTP_PORT"] || 3003,
+    host: ENV["HTTP_HOST"] || "localhost",
+    port: ENV["HTTP_PORT"] || 3003,
   }
 
   # Url for mailer

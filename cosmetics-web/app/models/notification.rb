@@ -17,7 +17,7 @@ class Notification < ApplicationRecord
   before_create do
     new_reference_number = nil
     loop do
-      new_reference_number = SecureRandom.rand(100000000)
+      new_reference_number = SecureRandom.rand(100_000_000)
       break unless Notification.where(reference_number: new_reference_number).exists?
     end
     self.reference_number = new_reference_number
@@ -32,7 +32,7 @@ class Notification < ApplicationRecord
 
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
-            allow_nil: true
+                             allow_nil: true
   validates :cpnp_reference, presence: true, on: :file_upload
   validates :import_country, presence: true, on: :add_import_country
   validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference" }
@@ -40,24 +40,22 @@ class Notification < ApplicationRecord
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 },
-            allow_nil: true
+                                          allow_nil: true
   validate :max_ph_is_greater_than_min_ph
 
   def as_indexed_json(*)
     as_json(
       only: %i[product_name],
       include: {
-          responsible_person: {
-              only: %i[name],
-          },
-          components: {
-              methods: %i[display_sub_category display_sub_sub_category display_root_category],
-          },
+        responsible_person: {
+          only: %i[name],
+        },
+        components: {
+          methods: %i[display_sub_category display_sub_sub_category display_root_category],
+        },
       },
     )
   end
-
-  # rubocop:disable Metrics/BlockLength
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :product_name_added
@@ -98,17 +96,16 @@ class Notification < ApplicationRecord
 
     event :submit_notification do
       transitions from: :draft_complete, to: :notification_complete,
-                  after: Proc.new { __elasticsearch__.index_document } do
+                  after: proc { __elasticsearch__.index_document } do
         guard do
           !missing_information?
         end
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 
   def reference_number_for_display
-    "UKCP-%08d" % reference_number
+    sprintf("UKCP-%08d", reference_number)
   end
 
   def images_are_present_and_safe?
@@ -120,9 +117,9 @@ class Notification < ApplicationRecord
   end
 
   def images_pending_anti_virus_check?
-    image_uploads.any? { |image|
+    image_uploads.any? do |image|
       image.file_exists? && !image.marked_as_safe?
-    }
+    end
   end
 
   def to_param
@@ -182,7 +179,7 @@ private
   def all_required_attributes_must_be_set
     mandatory_attributes = mandatory_attributes(state)
 
-    changed.each { |attribute|
+    changed.each do |attribute|
       if mandatory_attributes.include?(attribute) && self[attribute].blank?
 
         if attribute == "product_name"
@@ -191,7 +188,7 @@ private
           errors.add attribute, "Must not be empty"
         end
       end
-    }
+    end
   end
 
   def mandatory_attributes(state)

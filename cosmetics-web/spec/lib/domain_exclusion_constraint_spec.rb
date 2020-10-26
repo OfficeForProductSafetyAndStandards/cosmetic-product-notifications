@@ -6,7 +6,6 @@ RSpec.describe DomainExclusionConstraint, type: :constraint do
   let(:excluded_domain) { "www.example.com" }
   let(:other_domain) { "other.example.com" }
 
-
   describe "#matches?" do
     it "returns false for requests with the excluded domain" do
       request = ActionDispatch::Request.new("HTTP_HOST" => excluded_domain)

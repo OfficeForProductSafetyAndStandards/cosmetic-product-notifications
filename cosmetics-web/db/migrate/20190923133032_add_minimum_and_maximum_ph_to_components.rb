@@ -1,6 +1,5 @@
 class AddMinimumAndMaximumPhToComponents < ActiveRecord::Migration[5.2]
   def change
-    # rubocop:disable Metrics/BlockLength
     safety_assured do
       change_table :components, bulk: true do |table|
         table.float :minimum_ph
@@ -61,6 +60,5 @@ class AddMinimumAndMaximumPhToComponents < ActiveRecord::Migration[5.2]
         end
       end
     end
-    # rubocop:enable Metrics/BlockLength
   end
 end
