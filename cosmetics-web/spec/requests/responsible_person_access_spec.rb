@@ -14,7 +14,7 @@ describe "Access control for actions related to responsible person" do
   end
 
   shared_examples_for "proper authorization" do
-    it "authenticates" do
+    it "authorizes users belonging to the visited responsible person page" do
       sign_in user1
 
       get url
@@ -22,38 +22,38 @@ describe "Access control for actions related to responsible person" do
       expect(response.status).to eq 200
     end
 
-    it "fails" do
+    it "blocks users not belonging to the visited responsible person page" do
       sign_in user2
 
       expect { get(url) }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
-  context "when user is authorized" do
+  context "when visiting the responsible person page" do
     let(:url) { "/responsible_persons/#{rp1.id}" }
 
     include_examples "proper authorization"
   end
 
-  context "when user is authorized" do
+  context "when visiting the responsible person notifications page" do
     let(:url) { "/responsible_persons/#{rp1.id}/notifications" }
 
     include_examples "proper authorization"
   end
 
-  context "when user is authorized" do
+  context "visiting the responsible person nanomaterials page" do
     let(:url) { "/responsible_persons/#{rp1.id}/nanomaterials" }
 
     include_examples "proper authorization"
   end
 
-  context "when user is authorized" do
+  context "visiting the responsible person members page" do
     let(:url) { "/responsible_persons/#{rp1.id}/team_members" }
 
     include_examples "proper authorization"
   end
 
-  context "when user is authorized" do
+  context "visiting the responsible person add a member page" do
     let(:url) { "/responsible_persons/#{rp1.id}/team_members/new" }
 
     include_examples "proper authorization"

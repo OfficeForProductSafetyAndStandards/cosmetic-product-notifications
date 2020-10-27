@@ -33,7 +33,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     expect_to_be_on_responsible_person_notifications_page(responsible_person_2)
   end
 
-  scenario "Changing url manually redirects to change responsible person page" do
+  scenario "Attempting to visit different from current responsible person pages redirects to change responsible person page" do
     visit("/responsible_persons/#{responsible_person_2.id}/notifications")
     expect(page).to have_css("h1", text: "Choose Responsible Person")
 
