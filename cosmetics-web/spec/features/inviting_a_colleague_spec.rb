@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_notify, :with_stubbed_mailer, :with_2fa, type: :feature do
-  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person, name: "Responsible Person") }
   let(:user) { create(:submit_user) }
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
 
