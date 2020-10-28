@@ -36,7 +36,6 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
       it "does not get updated when old password is wrong" do
         fill_in "Current password", with: "user.password"
         fill_in "New password", with: "user.password"
-        fill_in "New password confirmation", with: "user.password"
         click_on "Save"
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -46,7 +45,6 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
       it "does not get updated when new password does not fit to requirement" do
         fill_in "Current password", with: user.password
         fill_in "New password", with: "user"
-        fill_in "New password confirmation", with: "user.password"
         click_on "Save"
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
