@@ -8,7 +8,7 @@
       <%= link_to "Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link--no-visited-state" %>
     </li>
     <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons" %>">
-      <%= link_to "Responsible person details", responsible_person_path(@responsible_person), "data-topnav": "responsible_persons", class: "govuk-link--no-visited-state" %>
+      <%= link_to "Responsible person", responsible_person_path(@responsible_person), "data-topnav": "responsible_persons", class: "govuk-link--no-visited-state" %>
     </li>
     <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons/team_members" %>">
       <%= link_to "Team members", responsible_person_team_members_path(@responsible_person), "data-topnav": "responsible_persons/team_members", class: "govuk-link--no-visited-state" %>

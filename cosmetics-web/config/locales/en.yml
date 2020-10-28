@@ -129,6 +129,10 @@ en:
               invalid: "Enter your mobile number in the correct format, like 07700 900 982"
             password:
               too_short: "Password must be at least 8 characters"
+        responsible_person:
+          attributes:
+            name:
+              taken: "This Responsible Person name is already in use"
   activemodel:
     attributes:
       registration/account_security_form:

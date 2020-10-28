@@ -13,4 +13,16 @@ class User < ApplicationRecord
   def send_new_email_confirmation_email
     NotifyMailer.get_mailer(self).new_email_verification_email(self).deliver_later
   end
+
+  def mobile_number_verified?
+    if Rails.configuration.secondary_authentication_enabled
+      super
+    else
+      true
+    end
+  end
+
+  def mobile_number_change_allowed?
+    !mobile_number_verified?
+  end
 end

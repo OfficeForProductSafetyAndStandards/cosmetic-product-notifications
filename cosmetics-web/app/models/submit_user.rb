@@ -34,12 +34,6 @@ class SubmitUser < User
     super
   end
 
-  def responsible_persons
-    # ActiveHash does not support has_many through: associations
-    # Therefore adopt the workaround suggested here: https://github.com/zilkey/active_hash/issues/25
-    ResponsiblePerson.find responsible_person_users.map(&:responsible_person_id)
-  end
-
   def poison_centre_user?
     false
   end
@@ -75,10 +69,6 @@ class SubmitUser < User
     self.locked_at = nil
     self.unlock_token = nil
     save(validate: false)
-  end
-
-  def mobile_number_change_allowed?
-    !mobile_number_verified?
   end
 
   def regenerate_confirmation_token_if_expired; end

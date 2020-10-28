@@ -93,3 +93,7 @@ RSpec/ScatteredSetup:
 Style/MethodCalledOnDoEndBlock:
   Exclude:
     - 'spec/**/*'
+
+RSpec/DescribeClass:
+  Exclude:
+    - spec/requests/*
