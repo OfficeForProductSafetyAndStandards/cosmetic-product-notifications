@@ -26,7 +26,6 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
       it "changes password properly" do
         fill_in "Current password", with: user.password
         fill_in "New password", with: "user.password"
-        fill_in "New password confirmation", with: "user.password"
         click_on "Save"
         expect_to_be_on_my_account_page
         expect(page).to have_text(/Password changed successfully/)
@@ -37,7 +36,6 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
       it "does not get updated when old password is wrong" do
         fill_in "Current password", with: "user.password"
         fill_in "New password", with: "user.password"
-        fill_in "New password confirmation", with: "user.password"
         click_on "Save"
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -47,21 +45,10 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
       it "does not get updated when new password does not fit to requirement" do
         fill_in "Current password", with: user.password
         fill_in "New password", with: "user"
-        fill_in "New password confirmation", with: "user.password"
         click_on "Save"
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
         expect(page).to have_link("Password must be at least 8 characters", href: "#password")
-      end
-
-      it "does not get updated when new password confirmation is wrong" do
-        fill_in "Current password", with: user.password
-        fill_in "New password", with: "user.password"
-        fill_in "New password confirmation", with: "user"
-        click_on "Save"
-
-        expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-        expect(page).to have_link("Password and confirmation does not match", href: "#password_confirmation")
       end
     end
   end
@@ -82,7 +69,6 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
     end
 
     let(:user) { create(:submit_user, has_accepted_declaration: true) }
-    let!(:responsible_person) { create(:responsible_person_user, user: user) }
 
     include_examples "change password"
   end
