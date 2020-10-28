@@ -2,7 +2,7 @@ require "will_paginate/array"
 
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
-  include ResponsiblePersonConcern
+  before_action :validate_responsible_person
   before_action :set_notification, only: %i[show edit confirm]
 
   def index
