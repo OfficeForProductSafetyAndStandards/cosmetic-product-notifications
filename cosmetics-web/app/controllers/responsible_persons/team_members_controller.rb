@@ -2,6 +2,8 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :set_team_member, only: %i[new create]
   before_action :authorize_responsible_person, only: %i[index new create]
+  before_action :validate_responsible_person, except: %i[join sign_out_before_joining]
+
   skip_before_action :authenticate_user!, only: :join
   skip_before_action :create_or_join_responsible_person
   skip_before_action :require_secondary_authentication, only: %i[index join sign_out_before_joining]
@@ -29,7 +31,10 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     if user&.account_security_completed?
       authenticate_user!
       responsible_person.add_user(user)
-      PendingResponsiblePersonUser.where(email_address: user.email).delete_all
+      # delete accepted pending request
+      pending_request.delete
+
+      set_current_responsible_person(responsible_person)
       redirect_to responsible_person_notifications_path(responsible_person)
     else
       user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|

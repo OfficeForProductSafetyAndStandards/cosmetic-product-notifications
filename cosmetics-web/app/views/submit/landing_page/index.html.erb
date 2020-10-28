@@ -10,7 +10,7 @@
         </h1>
         <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
           <% if @responsible_person.present? %>
-            <%= govukButton text: "Your cosmetic products", href: responsible_person_notifications_path(@responsible_person), classes: "govuk-!-font-weight-bold" %>
+            <%= govukButton text: "Your cosmetic products", href: responsible_person_notifications_path(current_responsible_person), classes: "govuk-!-font-weight-bold" %>
           <% else %>
             <%= govukButton text: "Create an account", href: registration_new_submit_user_path, classes: "govuk-!-font-weight-bold" %>
             or

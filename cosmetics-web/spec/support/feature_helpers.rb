@@ -636,12 +636,20 @@ def select_options_to_create_account
   expect(page).to have_h1("Is the UK Responsible Person a business or an individual?")
 end
 
-def fill_in_rp_contact_details
+def fill_in_new_rp_details
+  fill_in_rp_business_details
+  fill_in_rp_contact_details
+end
+
+def fill_in_rp_business_details
   fill_in "Building and street", with: "Auto-test-address1"
   fill_in "Town or city", with: "Auto-test city"
   fill_in "County", with: "auto-test-county"
   fill_in "Postcode", with: "b28 9un"
   click_on "Continue"
+end
+
+def fill_in_rp_contact_details
   expect(page).to have_h1("Contact person details")
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@foo"
@@ -658,7 +666,7 @@ def create_another_business_responsible_person
   select_options_to_create_account
   select_individual_account_type
   fill_in "Name", with: "Auto-test rpuser"
-  fill_in_rp_contact_details
+  fill_in_new_rp_details
 end
 
 def select_business_account_type

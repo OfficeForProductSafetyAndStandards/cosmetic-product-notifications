@@ -1,0 +1,10 @@
+<h1 class="govuk-heading-l">Choose Responsible Person</h1>
+<% content_for :after_header do %>
+  <%= link_to "Back", responsible_person_path(current_responsible_person), class: "govuk-back-link" if current_responsible_person %>
+<% end %>
+<ul class="govuk-list govuk-!-margin-bottom-6">
+  <% current_user.responsible_persons.each do |rp| %>
+    <li><%= link_to rp.name, change_responsible_person_path(rp), class: 'govuk-link govuk-link--no-visited-state' %></li>
+  <% end %>
+</ul>
+<%= link_to "Add new Responsible Person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 govuk-body' %>

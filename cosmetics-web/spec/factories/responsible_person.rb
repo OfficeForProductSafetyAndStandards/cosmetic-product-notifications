@@ -1,13 +1,16 @@
 FactoryBot.define do
   factory :responsible_person do
     account_type { :individual }
-    name { "Responsible Person" }
+    sequence(:name) { |n| "Responsible Person #{n}" }
     address_line_1 { "Street address" }
     city { "City" }
     postal_code { "AB12 3CD" }
 
     trait :with_a_contact_person do
-      contact_persons { [create(:contact_person)] }
+      after(:create) do |responsible_person|
+        create(:contact_person, responsible_person: responsible_person)
+        responsible_person.reload
+      end
     end
 
     factory :business_responsible_person do

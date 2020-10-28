@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "license": "MIT",
   "engines": {
-    "node": "10.20.x",
+    "node": "10.22.x",
     "yarn": "1.22.x"
   },
   "dependencies": {
@@ -18,7 +18,7 @@
     "rails-ujs": "5.2.4",
     "resolve-url-loader": "3.1.2",
     "sass-lint": "1.13.1",
-    "standard": "14.3.4",
+    "standard": "15.0.0",
     "webpack": "4.44.2",
     "webpack-cli": "4.1.0",
     "webpack-dev-server": "3.11.0"

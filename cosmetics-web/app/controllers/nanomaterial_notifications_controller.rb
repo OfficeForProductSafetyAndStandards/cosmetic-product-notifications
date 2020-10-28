@@ -1,5 +1,6 @@
 class NanomaterialNotificationsController < SubmitApplicationController
-  before_action :set_responsible_person_from_url, only: %w[index new create]
+  before_action :set_responsible_person, only: %w[index new create]
+  before_action :validate_responsible_person
 
   before_action :set_nanomaterial_notification_from_url, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]
 
@@ -151,7 +152,7 @@ private
     authorize @responsible_person, :show?
   end
 
-  def set_responsible_person_from_url
+  def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
     authorize @responsible_person, :show?
   end

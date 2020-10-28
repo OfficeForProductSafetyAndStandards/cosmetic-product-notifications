@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResendSecondaryAuthenticationCodeForm, :with_stubbed_mailer do
+RSpec.describe ResendSecondaryAuthenticationCodeForm, :with_stubbed_mailer, :with_2fa do
   subject(:form) { described_class.new(params) }
 
   let(:user) { create(:submit_user, has_viewed_introduction: true) }
