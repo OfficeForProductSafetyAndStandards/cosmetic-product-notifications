@@ -2,8 +2,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :set_team_member, only: %i[new create]
   before_action :authorize_responsible_person, only: %i[index new create]
-  include ResponsiblePersonConcern
-  skip_before_action :validate_responsible_person, only: %i[join sign_out_before_joining]
+  before_action :validate_responsible_person, except: %i[join sign_out_before_joining]
 
   skip_before_action :authenticate_user!, only: :join
   skip_before_action :create_or_join_responsible_person

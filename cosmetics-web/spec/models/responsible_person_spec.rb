@@ -22,6 +22,12 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.errors[:name]).to include("Name can not be blank")
     end
 
+    it "fails if a name is not unique" do
+      create(:responsible_person, name: responsible_person.name)
+      responsible_person.save
+      expect(responsible_person.errors[:name]).to include("This Responsible Person name is already in use")
+    end
+
     it "fails if a street address is not specified" do
       responsible_person.address_line_1 = nil
 

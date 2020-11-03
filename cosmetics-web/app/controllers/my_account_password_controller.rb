@@ -13,7 +13,6 @@ class MyAccountPasswordController < ApplicationController
     end
 
     @user.password = dig_params(:password)
-    @user.password_confirmation = dig_params(:password_confirmation)
 
     if @user.save
       sign_in(@user, bypass: true)

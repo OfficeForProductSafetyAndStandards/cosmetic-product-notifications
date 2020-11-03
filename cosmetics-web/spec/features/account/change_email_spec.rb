@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   describe "submit domain" do
     let(:old_email) { "old@example.org" }
-    let(:user) { create(:submit_user, :with_responsible_person, has_accepted_declaration: true, email: old_email) }
+    let(:user) { create(:submit_user, has_accepted_declaration: true, email: old_email) }
 
     before do
       configure_requests_for_submit_domain

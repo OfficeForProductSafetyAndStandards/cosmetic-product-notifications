@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :responsible_person do
     account_type { :individual }
-    name { "Responsible Person" }
+    sequence(:name) { |n| "Responsible Person #{n}" }
     address_line_1 { "Street address" }
     city { "City" }
     postal_code { "AB12 3CD" }

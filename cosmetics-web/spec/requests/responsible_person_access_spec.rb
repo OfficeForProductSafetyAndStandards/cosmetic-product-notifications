@@ -41,19 +41,19 @@ describe "Access control for actions related to responsible person" do
     include_examples "proper authorization"
   end
 
-  context "visiting the responsible person nanomaterials page" do
+  context "when visiting the responsible person nanomaterials page" do
     let(:url) { "/responsible_persons/#{rp1.id}/nanomaterials" }
 
     include_examples "proper authorization"
   end
 
-  context "visiting the responsible person members page" do
+  context "when visiting the responsible person members page" do
     let(:url) { "/responsible_persons/#{rp1.id}/team_members" }
 
     include_examples "proper authorization"
   end
 
-  context "visiting the responsible person add a member page" do
+  context "when visiting the responsible person add a member page" do
     let(:url) { "/responsible_persons/#{rp1.id}/team_members/new" }
 
     include_examples "proper authorization"
