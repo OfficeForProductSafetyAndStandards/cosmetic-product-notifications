@@ -3,7 +3,6 @@ module ResponsiblePersonConcern
 
   def create_or_join_responsible_person
     return unless fully_signed_in_submit_user?
-    return unless current_user.mobile_number_verified?
 
     responsible_person = current_responsible_person
 
@@ -43,7 +42,7 @@ private
 
   def fully_signed_in_submit_user?
     if Rails.configuration.secondary_authentication_enabled
-      user_signed_in? && secondary_authentication_present?
+      user_signed_in? && secondary_authentication_present? && current_user.mobile_number_verified?
     else
       user_signed_in?
     end
