@@ -9,12 +9,12 @@ class NotificationBuildController < SubmitApplicationController
         :add_import_country,
         :for_children_under_three,
         :single_or_multi_component,
+        :add_product_image,
         :is_mixed,
         :is_hair_dye,
         :is_ph_between_3_and_10,
         :ph_range,
-        :add_new_component,
-        :add_product_image
+        :add_new_component
 
   before_action :set_notification
   before_action :set_countries, only: %i[show update]
@@ -100,8 +100,8 @@ private
     case params.dig(:notification, :single_or_multi_component)
     when "single"
       @notification.components.destroy_all if @notification.is_multicomponent?
-      single_component = @notification.components.empty? ? @notification.components.create : @notification.components.first
-      redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, single_component)
+      @notification.components.create if  @notification.components.empty?
+      render_wizard @notification
     when "multiple"
       unless @notification.is_multicomponent?
         @notification.components.destroy_all
@@ -177,7 +177,11 @@ private
         image_upload.filename = image.original_filename
       end
       @notification.add_product_image
-      render_wizard @notification
+      if @notification.is_multicomponent?
+        render_wizard @notification
+      else
+        redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+      end
     else
       @notification.errors.add :image_uploads, "Select an image"
       render step
