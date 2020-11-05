@@ -28,9 +28,10 @@ module Registration
     end
 
     def after_creation_path
-      if (pending_team_invitation = PendingResponsiblePersonUser.find_by(email_address: current_user.email))
-        join_responsible_person_team_members_path(pending_team_invitation.responsible_person_id,
-                                                  invitation_token: pending_team_invitation.invitation_token)
+      invitation_id = session.delete(:registered_from_responsible_person_invitation_id)
+      if (invitation = PendingResponsiblePersonUser.find_by(id: invitation_id))
+        join_responsible_person_team_members_path(invitation.responsible_person_id,
+                                                  invitation_token: invitation.invitation_token)
       else
         declaration_path
       end

@@ -462,7 +462,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 end
 
 def complete_secondary_authentication_for(user)
-  expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
   expect_to_be_on_secondary_authentication_page
+  expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
   complete_secondary_authentication_with(user.direct_otp)
 end
