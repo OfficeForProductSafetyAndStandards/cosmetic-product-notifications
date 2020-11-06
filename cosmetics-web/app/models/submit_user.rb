@@ -9,6 +9,7 @@ class SubmitUser < User
   has_many :notification_files, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_persons, through: :responsible_person_users
+  has_many :pending_responsible_person_users, dependent: :destroy, foreign_key: :creator_id, inverse_of: :inviting_user
 
   has_one :user_attributes, dependent: :destroy
   validates :mobile_number, presence: true

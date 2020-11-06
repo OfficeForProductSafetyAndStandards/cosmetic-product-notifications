@@ -72,7 +72,9 @@ private
   end
 
   def set_team_member
-    @team_member = @responsible_person.pending_responsible_person_users.build(team_member_params)
+    @team_member = @responsible_person.pending_responsible_person_users.build(
+      team_member_params.merge(inviting_user: current_user),
+    )
   end
 
   def authorize_responsible_person

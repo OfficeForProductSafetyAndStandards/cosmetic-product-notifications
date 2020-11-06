@@ -2,6 +2,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
   INVITATION_TOKEN_VALID_FOR = 3 * 24 * 3600 # 3 days
   EMAIL_ERROR_MESSAGE_SCOPE = %i[activerecord errors models pending_responsible_person_user attributes email_address].freeze
 
+  belongs_to :inviting_user, class_name: :SubmitUser, inverse_of: :pending_responsible_person_users
   belongs_to :responsible_person
 
   validates :email_address,

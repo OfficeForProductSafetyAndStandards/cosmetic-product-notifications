@@ -105,8 +105,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for a new user when not signed in" do
-    pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
-                                                  responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user,
+                     email_address: "newusertoregister@example.com",
+                     responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/account-security")
@@ -135,8 +136,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     responsible_person2 = create(:responsible_person, :with_a_contact_person)
     create(:responsible_person_user, user: invited_user, responsible_person: responsible_person2)
 
-    pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
-                                                  responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user,
+                     email_address: invited_user.email,
+                     responsible_person: responsible_person)
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     sign_in(invited_user)
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
@@ -250,8 +252,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     configure_requests_for_submit_domain
     sign_in invited_user
 
-    invitation = PendingResponsiblePersonUser.create(email_address: invited_user.email,
-                                                     responsible_person: responsible_person)
+    invitation = create(:pending_responsible_person_user,
+                        email_address: invited_user.email,
+                        responsible_person: responsible_person)
 
     join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
 
@@ -307,8 +310,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     configure_requests_for_submit_domain
     sign_in invited_user
 
-    pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
-                                                  responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user,
+                     email_address: invited_user.email,
+                     responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
@@ -321,8 +325,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     sign_in different_user
 
-    pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
-                                                  responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user,
+                     email_address: invited_user.email,
+                     responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_css("h1", text: "You are already signed in")
@@ -404,8 +409,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
     configure_requests_for_submit_domain
 
-    pending = PendingResponsiblePersonUser.create(email_address: "newusertoregister@example.com",
-                                                  responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user,
+                     email_address: "newusertoregister@example.com",
+                     responsible_person: responsible_person)
 
     # Invited user originally accepts the invitation
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
@@ -444,8 +450,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   scenario "accepting an invitation for an existent user when not signed in" do
     configure_requests_for_submit_domain
 
-    pending = PendingResponsiblePersonUser.create(email_address: invited_user.email,
-                                                  responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user,
+                     email_address: invited_user.email,
+                     responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_css("h1", text: "Sign in")
