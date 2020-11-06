@@ -133,6 +133,8 @@ Rails.application.routes.draw do
 
         member do
           post :confirm
+          get :delete
+          delete :destroy
         end
       end
     end

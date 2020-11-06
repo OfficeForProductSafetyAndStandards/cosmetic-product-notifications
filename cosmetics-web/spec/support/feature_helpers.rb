@@ -650,7 +650,7 @@ def fill_in_rp_business_details
 end
 
 def fill_in_rp_contact_details
-  expect(page).to have_h1("Contact person details")
+  expect(page).to have_h1(/Contact person for/)
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@foo"
   fill_in "Phone number", with: "07984563072"
