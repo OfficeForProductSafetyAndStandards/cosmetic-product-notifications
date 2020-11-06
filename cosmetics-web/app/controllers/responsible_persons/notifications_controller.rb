@@ -106,7 +106,7 @@ private
 
   def get_unfinished_notifications(page_size)
     @responsible_person.notifications
-      .where.not(state: :notification_complete)
+      .where(state: %i[notification_file_imported draft_complete])
       .paginate(page: params[:incomplete], per_page: page_size)
   end
 
