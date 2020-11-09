@@ -6,7 +6,7 @@
     <h1 class="govuk-heading-xl"><%= title %></h1>
     <% @pending_responsible_person_invitations.each do |_rp_id, invitations| %>
       <p>
-        <strong><%= invitations.first.responsible_person.name%></strong>
+        <span class="no-wrap"><strong><%= invitations.first.responsible_person.name%></strong></span>
         <br>
         <% if invitations.size > 1 %>
           <% if invitations.all?(&:expired?) %>
@@ -14,22 +14,22 @@
               names_list = invitations.first.inviting_user.name
               invitations.drop(1).each_with_index do |invitation, index|
                 if index == invitations.size - 2 # Last element index after removing the first invitation from the array
-                  names_list << " and #{invitation.inviting_user.name}"
+                  names_list << " and <span class='no-wrap'>#{invitation.inviting_user.name}</span>"
                 else
-                  names_list << ", #{invitation.inviting_user.name}"
+                  names_list << ", <span class='no-wrap'>#{invitation.inviting_user.name}</span>"
                 end
               end
             %>
-            Your invite has expired and needs to be resent. You were invited by <%= names_list %>.
+            Your invite has expired and needs to be resent. You were invited by <%= raw(names_list) %>.
           <% else %>
-            Check your email inbox for your invite, sent <%= display_full_month_date(invitations.first.created_at) %>.
+            Check your email inbox for your invite, sent <span class="no-wrap"><%= display_full_month_date(invitations.first.created_at) %>.</span>
           <% end %>
         <% else %>
           <% invitation = invitations.first %>
           <% if invitation.expired? %>
             Your invite has expired and needs to be resent. You were invited by <%= invitation.inviting_user.name %>."
           <% else %>
-            Check your email inbox for your invite, sent <%= display_full_month_date(invitation.created_at) %>.
+            Check your email inbox for your invite, sent <span class="no-wrap"><%= display_full_month_date(invitation.created_at) %>.</span>
           <% end %>
         <% end %>
       </p>
