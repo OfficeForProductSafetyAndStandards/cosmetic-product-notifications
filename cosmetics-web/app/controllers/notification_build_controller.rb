@@ -176,6 +176,8 @@ private
         image_upload.file.attach(image)
         image_upload.filename = image.original_filename
       end
+      # temporary as add_product_image dont work here work
+      @notification.save
       @notification.add_product_image
       if @notification.is_multicomponent?
         render_wizard @notification
