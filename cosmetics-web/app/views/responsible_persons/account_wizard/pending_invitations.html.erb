@@ -4,11 +4,34 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= title %></h1>
-    <% @pending_responsible_person_invitations.each do |invitation| %>
+    <% @pending_responsible_person_invitations.each do |_rp_id, invitations| %>
       <p>
-        <strong><%= invitation.responsible_person.name%></strong>
+        <strong><%= invitations.first.responsible_person.name%></strong>
         <br>
-        Check your email inbox for your invite, sent <%= display_full_month_date(invitation.created_at) %>.
+        <% if invitations.size > 1 %>
+          <% if invitations.all?(&:expired?) %>
+            <%
+              names_list = invitations.first.inviting_user.name
+              invitations.drop(1).each_with_index do |invitation, index|
+                if index == invitations.size - 2 # Last element index after removing the first invitation from the array
+                  names_list << " and #{invitation.inviting_user.name}"
+                else
+                  names_list << ", #{invitation.inviting_user.name}"
+                end
+              end
+            %>
+            Your invite has expired and needs to be resent. You were invited by <%= names_list %>.
+          <% else %>
+            Check your email inbox for your invite, sent <%= display_full_month_date(invitations.first.created_at) %>.
+          <% end %>
+        <% else %>
+          <% invitation = invitations.first %>
+          <% if invitation.expired? %>
+            Your invite has expired and needs to be resent. You were invited by <%= invitation.inviting_user.name %>."
+          <% else %>
+            Check your email inbox for your invite, sent <%= display_full_month_date(invitation.created_at) %>.
+          <% end %>
+        <% end %>
       </p>
     <% end %>
     <p>or</p>

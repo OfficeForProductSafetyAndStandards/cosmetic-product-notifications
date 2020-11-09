@@ -51,7 +51,23 @@ private
   end
 
   def pending_responsible_person_invitations
-    @pending_responsible_person_invitations ||=
-      PendingResponsiblePersonUser.where(email_address: current_user.email).includes(:responsible_person)
+    @pending_responsible_person_invitations ||= invitations_grouped_by_responsible_person
+  end
+
+  def pending_invitations
+    PendingResponsiblePersonUser.where(email_address: current_user.email)
+                                .includes(:inviting_user)
+                                .order(created_at: :desc)
+  end
+
+  def invitations_grouped_by_responsible_person
+    pending_invitations.each_with_object(ActiveSupport::OrderedHash.new) do |invitation, hash|
+      rp_id = invitation.responsible_person_id
+      if hash[rp_id]
+        hash[rp_id] << invitation
+      else
+        hash[rp_id] = [invitation]
+      end
+    end
   end
 end
