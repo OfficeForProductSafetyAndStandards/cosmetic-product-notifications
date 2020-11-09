@@ -17,6 +17,12 @@ class ImageUpload < ApplicationRecord
   end
 
   def marked_as_safe?
-    file_exists? && file.metadata["safe"]
+    file_exists? && metadata_safe
+  end
+
+  def metadata_safe
+    return true if ENV["ANTIVIRUS_ENABLED"] == "false"
+
+    file.metadata["safe"]
   end
 end
