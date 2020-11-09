@@ -21,7 +21,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
   end
 
   def expired?
-    invitation_token_expires_at < Time.zone.now
+    invitation_token_expires_at && invitation_token_expires_at < Time.zone.now
   end
 
   def refresh_token_expiration!

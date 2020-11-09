@@ -5,11 +5,15 @@ FactoryBot.define do
     association :inviting_user, factory: :submit_user
 
     trait :expired do
-      # rubocop:disable Rails/SkipsModelValidations
-      after(:create) do |obj|
-        obj.update_attribute(:invitation_token_expires_at, 1.second.ago)
+      after(:stub, :build) do |obj|
+        obj.invitation_token_expires_at = 1.second.ago
       end
-      # rubocop:enable Rails/SkipsModelValidations
+
+      after(:create) do |obj|
+        # rubocop:disable Rails/SkipsModelValidations
+        obj.update_attribute(:invitation_token_expires_at, 1.second.ago)
+        # rubocop:enable Rails/SkipsModelValidations
+      end
     end
   end
 end

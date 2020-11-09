@@ -9,7 +9,7 @@ module ResponsiblePersonConcern
     if responsible_person.blank?
       if current_user.responsible_persons.present?
         redirect_to select_responsible_persons_path
-      elsif pending_responsible_person_invitations.any?
+      elsif pending_invitations.any?
         redirect_to account_path(:pending_invitations)
       else
         redirect_to account_path(:overview)
@@ -50,24 +50,16 @@ private
     end
   end
 
-  def pending_responsible_person_invitations
-    @pending_responsible_person_invitations ||= invitations_grouped_by_responsible_person
+  def pending_responsible_persons_invitations_text
+    @pending_responsible_persons_invitations_text ||= PendingResponsiblePersonInvitationsPresenter
+      .new(pending_invitations)
+      .responsible_persons_invitations_text
   end
 
   def pending_invitations
-    PendingResponsiblePersonUser.where(email_address: current_user.email)
-                                .includes(:responsible_person, :inviting_user)
-                                .order(created_at: :desc)
-  end
-
-  def invitations_grouped_by_responsible_person
-    pending_invitations.each_with_object(ActiveSupport::OrderedHash.new) do |invitation, hash|
-      rp_id = invitation.responsible_person_id
-      if hash[rp_id]
-        hash[rp_id] << invitation
-      else
-        hash[rp_id] = [invitation]
-      end
-    end
+    @pending_invitations ||= PendingResponsiblePersonUser
+      .where(email_address: current_user.email)
+      .includes(:responsible_person, :inviting_user)
+      .order(created_at: :desc)
   end
 end
