@@ -56,7 +56,7 @@ private
 
   def pending_invitations
     PendingResponsiblePersonUser.where(email_address: current_user.email)
-                                .includes(:inviting_user)
+                                .includes(:responsible_person, :inviting_user)
                                 .order(created_at: :desc)
   end
 
