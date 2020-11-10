@@ -32,6 +32,8 @@ module Registration
       if (invitation = PendingResponsiblePersonUser.find_by(id: invitation_id))
         join_responsible_person_team_members_path(invitation.responsible_person_id,
                                                   invitation_token: invitation.invitation_token)
+      elsif pending_invitations.any?
+        account_path(:pending_invitations)
       else
         declaration_path
       end

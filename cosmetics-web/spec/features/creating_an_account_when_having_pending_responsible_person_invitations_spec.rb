@@ -131,8 +131,5 @@ RSpec.describe "Creating an account when having pending responsible person invit
     expect_to_be_on_secondary_authentication_page
     expect_user_to_have_received_sms_code(otp_code)
     complete_secondary_authentication_with(otp_code)
-
-    expect_to_be_on_declaration_page
-    click_button "I confirm"
   end
 end
