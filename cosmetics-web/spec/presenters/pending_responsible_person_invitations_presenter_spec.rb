@@ -12,7 +12,7 @@ RSpec.describe PendingResponsiblePersonInvitationsPresenter do
       let(:invitations) { build_stubbed_list(:pending_responsible_person_user, 2) }
 
       it "returns a hash with the responsible person names from the invitations as keys" do
-        expect(presenter.responsible_persons_invitations_text.keys)
+        expect(presenter.invitations_text.keys)
           .to eq [invitations.first.responsible_person.name, invitations.last.responsible_person.name]
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe PendingResponsiblePersonInvitationsPresenter do
 
       it "displays the date of invitation" do
         rp_name = invitations.first.responsible_person.name
-        expect(presenter.responsible_persons_invitations_text[rp_name]).to eq(
+        expect(presenter.invitations_text[rp_name]).to eq(
           "Check your email inbox for your invite, sent <span class='no-wrap'>24 November 2020.</span>",
         )
       end
@@ -33,7 +33,7 @@ RSpec.describe PendingResponsiblePersonInvitationsPresenter do
 
       it "displays the name of the user who sent of invitation" do
         rp_name = invitations.first.responsible_person.name
-        expect(presenter.responsible_persons_invitations_text[rp_name]).to eq(
+        expect(presenter.invitations_text[rp_name]).to eq(
           "Your invite has expired and needs to be resent. " \
           "You were invited by <span class='no-wrap'>#{invitations.first.inviting_user.name}.</span>",
         )
@@ -48,7 +48,7 @@ RSpec.describe PendingResponsiblePersonInvitationsPresenter do
       # rubocop:disable RSpec/ExampleLength
       it "displays the name of the user who sent of invitation" do
         rp_name = invitations.first.responsible_person.name
-        expect(presenter.responsible_persons_invitations_text[rp_name]).to eq(
+        expect(presenter.invitations_text[rp_name]).to eq(
           "Your invite has expired and needs to be resent. You were invited by " \
           "<span class='no-wrap'>#{invitations.first.inviting_user.name}</span>, " \
           "<span class='no-wrap'>#{invitations.second.inviting_user.name}</span> " \
@@ -71,7 +71,7 @@ RSpec.describe PendingResponsiblePersonInvitationsPresenter do
 
       it "displays the date of the newest active invitation" do
         rp_name = invitations.first.responsible_person.name
-        expect(presenter.responsible_persons_invitations_text[rp_name]).to eq(
+        expect(presenter.invitations_text[rp_name]).to eq(
           "Check your email inbox for your invite, sent <span class='no-wrap'>24 November 2020.</span>",
         )
       end

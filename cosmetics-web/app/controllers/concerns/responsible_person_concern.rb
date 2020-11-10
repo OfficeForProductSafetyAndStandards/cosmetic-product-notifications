@@ -50,12 +50,6 @@ private
     end
   end
 
-  def pending_responsible_persons_invitations_text
-    @pending_responsible_persons_invitations_text ||= PendingResponsiblePersonInvitationsPresenter
-      .new(pending_invitations)
-      .responsible_persons_invitations_text
-  end
-
   def pending_invitations
     @pending_invitations ||= PendingResponsiblePersonUser
       .where(email_address: current_user.email)

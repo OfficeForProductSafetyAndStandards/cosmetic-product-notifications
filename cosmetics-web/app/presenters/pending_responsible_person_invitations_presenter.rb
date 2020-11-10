@@ -10,7 +10,7 @@ class PendingResponsiblePersonInvitationsPresenter
     @invitations = invitations
   end
 
-  def responsible_persons_invitations_text
+  def invitations_text
     responsible_persons_invitations.transform_values do |rp_invites|
       if rp_invites.size == 1
         single_invitation_text(rp_invites.first)
