@@ -1,4 +1,4 @@
-class FormulationUploadController < SubmitApplicationController
+class ResponsiblePersons::FormulationUploadController < SubmitApplicationController
   before_action :set_models
 
   def new; end
