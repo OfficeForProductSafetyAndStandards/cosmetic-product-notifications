@@ -1,3 +1,4 @@
+# candidate
 class AdditionalInformationController < SubmitApplicationController
   before_action :set_notification, only: %i[index]
 
