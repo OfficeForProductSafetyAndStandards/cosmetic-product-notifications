@@ -305,6 +305,28 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
+  scenario "accepting one of multiple invitations to same responsible person for an existing user" do
+    sign_in invited_user
+
+    pending = create(:pending_responsible_person_user,
+                     email_address: invited_user.email,
+                     responsible_person: responsible_person)
+
+    different_inviting_user = create(:submit_user)
+    create(:pending_responsible_person_user,
+           email_address: invited_user.email,
+           responsible_person: responsible_person,
+           inviting_user: different_inviting_user)
+
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(invited_user.responsible_persons).to include(responsible_person)
+
+    # User only shows up once on the team members list
+    click_link "Team members"
+    expect(page).to have_text(invited_user.email).once
+  end
+
   scenario "accepting an invitation for an existent user when signed in as different user" do
     different_user = create(:submit_user, name: "John Doedifferent")
 
