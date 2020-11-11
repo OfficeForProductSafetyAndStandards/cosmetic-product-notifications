@@ -42,6 +42,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
         u.save(validate: false)
       end
       bypass_sign_in(user)
+      session[:registered_from_responsible_person_invitation_id] = pending_request.id
       redirect_to registration_new_account_security_path
     end
   rescue ActiveRecord::RecordNotFound
@@ -71,7 +72,9 @@ private
   end
 
   def set_team_member
-    @team_member = @responsible_person.pending_responsible_person_users.build(team_member_params)
+    @team_member = @responsible_person.pending_responsible_person_users.build(
+      team_member_params.merge(inviting_user: current_user),
+    )
   end
 
   def authorize_responsible_person

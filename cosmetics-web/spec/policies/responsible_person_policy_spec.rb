@@ -25,7 +25,7 @@ RSpec.describe ResponsiblePersonPolicy, type: :policy do
     end
 
     it "permits when user is invited by responsible person" do
-      PendingResponsiblePersonUser.create(email_address: user.email, responsible_person: responsible_person)
+      create(:pending_responsible_person_user, email_address: user.email, responsible_person: responsible_person)
 
       expect(policy).to permit(:show)
     end

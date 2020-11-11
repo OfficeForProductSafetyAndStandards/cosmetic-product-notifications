@@ -1,10 +1,12 @@
 <% content_for :page_title, "Responsible person type" %>
 <% content_for :after_header do %>
-  <% if current_user.responsible_persons.none? %>
-    <%= link_to "Back", wizard_path(:create_or_join_existing), class: "govuk-back-link" %>
-  <% else %>
-    <%= link_to "Back", responsible_person_path(current_responsible_person), class: "govuk-back-link" %>
-  <% end %>
+  <% default_back_path =  if current_user.responsible_persons.none?
+                            wizard_path(:create_or_join_existing)
+                          else
+                            responsible_person_path(current_responsible_person)
+                          end
+  %>
+  <%= link_to "Back", request.referer.present? ? request.referer : default_back_path, class: "govuk-back-link" %>
 <% end %>
 
 <%= form_with model: @responsible_person, url: wizard_path, method: :put do |form| %>

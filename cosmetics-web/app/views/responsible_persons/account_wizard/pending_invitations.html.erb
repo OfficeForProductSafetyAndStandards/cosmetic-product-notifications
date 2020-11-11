@@ -1,0 +1,21 @@
+<% title = "Who do you want to submit cosmetic product notifications for?" %>
+<% page_title(title) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= title %></h1>
+    <% invitations_text = PendingResponsiblePersonInvitationsPresenter.new(@pending_invitations).invitations_text %>
+    <% invitations_text.each do |rp_name, text| %>
+      <p>
+        <span class="no-wrap"><strong><%= rp_name %></strong></span>
+        <br>
+        <%= sanitize(text, tags: %w(span)) %>
+      </p>
+    <% end %>
+    <p>or</p>
+    <p>
+      another organisation —
+      <%= link_to("create a new Responsible Person", account_path(:select_type), class: "govuk-link govuk-link--no-visited-state") %>.
+    </p>
+  </div>
+</div>

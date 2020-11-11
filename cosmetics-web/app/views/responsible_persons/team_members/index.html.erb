@@ -17,6 +17,7 @@
         <tr class="govuk-table__row">
           <th class="govuk-table__header" scope="col">Name</th>
           <th class="govuk-table__header" scope="col">Email address</th>
+          <th class="govuk-table__header" scope="col">Invited by</th>
           <th class="govuk-table__header" scope="col"></th>
         </tr>
       </thead>
@@ -25,6 +26,7 @@
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">-</td>
             <td class="govuk-table__cell"><%= user.email_address %></td>
+            <td class="govuk-table__cell"><%= user.inviting_user.name %></td>
             <td class="govuk-table__cell"><%= link_to "Resend invitation", resend_invitation_responsible_person_team_member_path(@responsible_person, user) %></td>
           </tr>
         <% end %>
@@ -32,6 +34,7 @@
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= user.name %></td>
             <td class="govuk-table__cell"><%= user.email_address %></td>
+            <td class="govuk-table__cell"></td>
             <td class="govuk-table__cell"></td>
           </tr>
         <% end %>

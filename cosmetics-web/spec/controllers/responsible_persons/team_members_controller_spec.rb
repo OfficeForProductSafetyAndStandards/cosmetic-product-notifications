@@ -4,7 +4,6 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { create(:submit_user) }
   let(:email_address) { "user@example.com" }
-  let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
   let(:params) { { responsible_person_id: responsible_person.id, invitation_token: pending_responsible_person_user.invitation_token } }
 
   before do
@@ -16,6 +15,8 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   end
 
   describe "GET #index" do
+    let(:params) { { responsible_person_id: responsible_person.id } }
+
     it "assigns @responsible_person" do
       get :index, params: params
       expect(assigns(:responsible_person)).to eq(responsible_person)
@@ -28,6 +29,8 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   end
 
   describe "PUT #create" do
+    let(:params) { { responsible_person_id: responsible_person.id } }
+
     it "render back to add team member form if no email address added" do
       put(:create, params: params.merge(team_member: { email_address: "" }))
       expect(response).to render_template(:new)
@@ -36,6 +39,13 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
     it "render back to add team member form if user already a member of the team" do
       put(:create, params: params.merge(team_member: { email_address: responsible_person.responsible_person_users.first.email_address }))
       expect(response).to render_template(:new)
+    end
+
+    it "registers the user that created the invitation" do
+      expect {
+        put(:create, params: params.merge(team_member: { email_address: email_address }))
+      }.to change(PendingResponsiblePersonUser, :count).by(1)
+      expect(PendingResponsiblePersonUser.last.inviting_user).to eq user
     end
 
     it "sends responsible person invite email" do
@@ -53,6 +63,9 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   end
 
   describe "GET #join" do
+    let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person: responsible_person, inviting_user: user) }
+    let(:params) { { responsible_person_id: responsible_person.id, invitation_token: pending_responsible_person_user.invitation_token } }
+
     context "when signed in as the invited user" do
       before do
         invited_user = create(:submit_user, email: pending_responsible_person_user.email_address)
