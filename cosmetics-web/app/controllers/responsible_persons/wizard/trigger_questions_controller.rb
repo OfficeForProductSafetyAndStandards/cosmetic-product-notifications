@@ -1,4 +1,4 @@
-class TriggerQuestionsController < SubmitApplicationController
+class ResponsiblePersons::Wizard::TriggerQuestionsController < SubmitApplicationController
   include Wicked::Wizard
   include CpnpNotificationTriggerRules
   include TriggerRulesHelper
