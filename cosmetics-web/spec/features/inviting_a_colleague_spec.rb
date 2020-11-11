@@ -170,8 +170,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "re-sending an invitation to a new user that accepted the original invitation but didn't complete their user account" do
-    configure_requests_for_submit_domain
-
     team = create(:responsible_person, :with_a_contact_person)
     create(:responsible_person_user, user: invited_user, responsible_person: team)
 
@@ -278,7 +276,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an expired invitation for an existing user" do
-    configure_requests_for_submit_domain
     sign_in invited_user
 
     invitation = create(:pending_responsible_person_user,
@@ -297,7 +294,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for an existing user" do
-    configure_requests_for_submit_domain
     sign_in invited_user
 
     pending = create(:pending_responsible_person_user,
@@ -310,7 +306,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for an existent user when signed in as different user" do
-    configure_requests_for_submit_domain
     different_user = create(:submit_user, name: "John Doedifferent")
 
     sign_in different_user
@@ -337,8 +332,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for a new user when signed in as different user" do
-    configure_requests_for_submit_domain
-
     # User invites a new member to the team
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
@@ -397,8 +390,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
-    configure_requests_for_submit_domain
-
     pending = create(:pending_responsible_person_user,
                      email_address: "newusertoregister@example.com",
                      responsible_person: responsible_person)
@@ -438,8 +429,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for an existent user when not signed in" do
-    configure_requests_for_submit_domain
-
     pending = create(:pending_responsible_person_user,
                      email_address: invited_user.email,
                      responsible_person: responsible_person)
@@ -458,7 +447,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "following an invitation link with a token that does not match any invitation" do
-    configure_requests_for_submit_domain
     join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=8cfa59f3-6b61-44f9-871b-c471651f234b"
     visit join_path
 
