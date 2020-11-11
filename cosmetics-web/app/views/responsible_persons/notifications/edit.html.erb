@@ -23,4 +23,8 @@
   <% if @notification.may_submit_notification? %>
     <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
   <% end %>
+
+  <div class="govuk-grid-column-two-thirds">
+    <%= link_to "Delete this cosmetics product", delete_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+  </div>
 </div>

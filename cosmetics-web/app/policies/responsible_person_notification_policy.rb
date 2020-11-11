@@ -29,6 +29,14 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     update?
   end
 
+  def delete?
+    update?
+  end
+
+  def destroy?
+    update?
+  end
+
 private
 
   def user_member_of_associated_responsible_person?
