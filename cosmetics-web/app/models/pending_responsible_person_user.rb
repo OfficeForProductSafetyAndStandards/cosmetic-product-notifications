@@ -2,6 +2,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
   INVITATION_TOKEN_VALID_FOR = 3 * 24 * 3600 # 3 days
   EMAIL_ERROR_MESSAGE_SCOPE = %i[activerecord errors models pending_responsible_person_user attributes email_address].freeze
 
+  belongs_to :inviting_user, class_name: :SubmitUser, inverse_of: :pending_responsible_person_users
   belongs_to :responsible_person
 
   validates :email_address,
@@ -20,7 +21,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
   end
 
   def expired?
-    invitation_token_expires_at < Time.zone.now
+    invitation_token_expires_at && invitation_token_expires_at < Time.zone.now
   end
 
   def refresh_token_expiration!
@@ -46,6 +47,7 @@ private
     PendingResponsiblePersonUser.where(
       responsible_person_id: responsible_person.id,
       email_address: email_address,
+      inviting_user: inviting_user,
     ).delete_all
   end
 end
