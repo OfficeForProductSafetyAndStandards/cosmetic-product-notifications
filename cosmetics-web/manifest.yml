@@ -13,7 +13,7 @@ applications:
   stack: cflinuxfs3
   services:
     - cosmetics-database
-    - cosmetics-elasticsearch
+    - cosmetics-elasticsearch-7
     - cosmetics-queue
     - opss-log-drain
     - cosmetics-aws-env

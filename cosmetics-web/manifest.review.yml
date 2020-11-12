@@ -16,7 +16,7 @@ applications:
   stack: cflinuxfs3
   services:
     - ((cosmetics-web-database))
-    - cosmetics-elasticsearch
+    - cosmetics-elasticsearch-7
     - ((cosmetics-redis-service))
     - opss-log-drain
     - antivirus-auth-env
