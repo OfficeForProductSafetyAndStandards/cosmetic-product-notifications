@@ -25,7 +25,8 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
         return redirect_to responsible_person_notification_build_path(
           @notification.responsible_person,
           @notification,
-          :is_mixed)
+          :is_mixed,
+        )
       else
         return redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
       end

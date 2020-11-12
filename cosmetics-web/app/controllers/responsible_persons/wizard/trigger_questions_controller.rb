@@ -30,10 +30,10 @@ private
   def finish_wizard_path
     if @component.notification.is_multicomponent?
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
-    else#if @component.notification.was_notified_before_eu_exit?
+    else # if @component.notification.was_notified_before_eu_exit?
       edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
-    # else
-    #   responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
+      # else
+      #   responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
     end
   end
 
@@ -65,7 +65,7 @@ private
 
   def update_notification_state
     # if @component.notification.was_notified_before_eu_exit?
-      @component.notification.components_completed_and_product_image_not_needed!
+    @component.notification.components_completed_and_product_image_not_needed!
     # end
   end
 
