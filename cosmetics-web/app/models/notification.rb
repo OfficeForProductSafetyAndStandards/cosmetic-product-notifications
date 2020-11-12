@@ -77,7 +77,7 @@ class Notification < ApplicationRecord
       transitions from: :import_country_added, to: :components_complete
     end
 
-    event :add_product_image do
+    event :complete_draft do
       transitions from: :components_complete, to: :draft_complete
     end
 
