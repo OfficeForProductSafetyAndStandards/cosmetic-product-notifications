@@ -64,9 +64,7 @@ private
   end
 
   def update_notification_state
-    # if @component.notification.was_notified_before_eu_exit?
-    @component.notification.components_completed_and_product_image_not_needed!
-    # end
+    @component.notification.complete_draft!
   end
 
   def component_ph_attributes

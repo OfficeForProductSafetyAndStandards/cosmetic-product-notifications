@@ -207,7 +207,7 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
         let(:completed_notification) { create(:notification, :pre_brexit, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
 
         it "redirects to the add 'check your answers' page" do
-          expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, completed_notification.reference_number))
+          expect(response.location).to include("/responsible_persons/#{responsible_person.id}/notifications/#{completed_notification.reference_number}/build/wicked_finish")
         end
       end
 

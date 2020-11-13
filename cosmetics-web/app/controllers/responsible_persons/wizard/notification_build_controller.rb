@@ -10,11 +10,11 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
         :for_children_under_three,
         :single_or_multi_component,
         :add_product_image,
-        :is_mixed,
-        :is_hair_dye,
-        :is_ph_between_3_and_10,
-        :ph_range,
-        :add_new_component
+        :is_mixed, # only for multicomponent - at least code says so
+        :is_hair_dye, # only for multicomponent - at least code says so
+        :is_ph_between_3_and_10, # only for multicomponent - at least code says so
+        :ph_range, # only for multicomponent - at least code says so
+        :add_new_component # only for multicomponent
 
   before_action :set_notification
   before_action :set_countries, only: %i[show update]
@@ -66,7 +66,7 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
   end
 
   def finish_wizard_path
-    @notification.complete_draft
+    @notification.complete_draft!
     edit_responsible_person_notification_path(@notification.responsible_person, @notification)
   end
 
@@ -181,13 +181,10 @@ private
         image_upload.file.attach(image)
         image_upload.filename = image.original_filename
       end
-      # Temporary fix as add_product_image event currently cant work
       @notification.save
-      # @notification.add_product_image
       if @notification.is_multicomponent?
         render_wizard @notification
       else
-        # spec issues: no components on notifications
         redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
       end
     else
