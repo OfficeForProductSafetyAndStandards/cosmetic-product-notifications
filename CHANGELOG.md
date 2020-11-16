@@ -1,11 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
-- Fix bug when updating cases
+## November 2020
 
-### Next release checklist
-- [ ] Add `HEALTH_USERNAME` and `HEALTH_PASSWORD` environment variables to the antivirus server
+### Image upload step relocated (#1822)
+
+'Image upload' step is now after 'Single or multicomponent' step.
+Diagrams in whimsical"
+- Added `Notification routing v2`
+- Added `Upload image relocataion`
 
 ## 2019-08-05
 ### Product safety database

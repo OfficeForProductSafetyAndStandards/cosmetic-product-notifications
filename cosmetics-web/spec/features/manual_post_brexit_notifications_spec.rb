@@ -32,6 +32,9 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
     expect_to_be_on__multi_item_kits_page
     answer_is_product_multi_item_kit_with "No, this is a single product"
 
+    exepct_to_be_on_upload_product_label_page
+    upload_product_label
+
     expect_to_be_on__is_item_available_in_shades_page
     answer_is_item_available_in_shades_with "No"
 
@@ -67,9 +70,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-
-    exepct_to_be_on_upload_product_label_page
-    upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
 
@@ -117,6 +117,9 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
     expect_to_be_on__multi_item_kits_page
     answer_is_product_multi_item_kit_with "No, this is a single product"
 
+    exepct_to_be_on_upload_product_label_page
+    upload_product_label
+
     expect_to_be_on__is_item_available_in_shades_page
     answer_is_item_available_in_shades_with "No"
 
@@ -152,9 +155,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-
-    exepct_to_be_on_upload_product_label_page
-    upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
 
@@ -202,6 +202,9 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
     expect_to_be_on__multi_item_kits_page
     answer_is_product_multi_item_kit_with "No, this is a single product"
 
+    exepct_to_be_on_upload_product_label_page
+    upload_product_label
+
     expect_to_be_on__is_item_available_in_shades_page
     answer_is_item_available_in_shades_with "No"
 
@@ -240,9 +243,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-
-    exepct_to_be_on_upload_product_label_page
-    upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
 
@@ -290,6 +290,9 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
     expect_to_be_on__multi_item_kits_page
     answer_is_product_multi_item_kit_with "No, this is a single product"
 
+    exepct_to_be_on_upload_product_label_page
+    upload_product_label
+
     expect_to_be_on__is_item_available_in_shades_page
     answer_is_item_available_in_shades_with "No"
 
@@ -331,9 +334,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-
-    exepct_to_be_on_upload_product_label_page
-    upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
 

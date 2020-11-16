@@ -118,25 +118,31 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
       expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :for_children_under_three))
     end
 
-    it "continues to next step if user submits under_three_years with a valid value" do
-      post(:update, params: params.merge(id: :for_children_under_three, notification: { under_three_years: "true" }))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :single_or_multi_component))
-    end
+    context "when on image upload step" do
+      before do
+        notification.components.create
+      end
 
-    it "adds image files to a notification in the add_product_image step" do
-      post(:update, params: params.merge(id: :add_product_image, image_upload: [image_file]))
-      expect(assigns[:notification].image_uploads.first.file.filename).to eq("testImage.png")
-    end
+      it "continues to next step if user submits under_three_years with a valid value" do
+        post(:update, params: params.merge(id: :for_children_under_three, notification: { under_three_years: "true" }))
+        expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :single_or_multi_component))
+      end
 
-    it "adds errors if user does not upload images in the add_product_image step" do
-      post(:update, params: params.merge(id: :add_product_image, image_upload: []))
-      expect(assigns[:notification].errors[:image_uploads]).to include("Select an image")
-    end
+      it "adds image files to a notification in the add_product_image step" do
+        post(:update, params: params.merge(id: :add_product_image, image_upload: [image_file]))
+        expect(assigns[:notification].image_uploads.first.file.filename).to eq("testImage.png")
+      end
 
-    it "adds errors if the user uploads an incorrect file type as a label image" do
-      post(:update, params: params.merge(id: :add_product_image, image_upload: [text_file]))
-      expect(assigns[:notification].image_uploads.first.errors[:file])
-        .to include("must be one of image/jpeg, application/pdf, image/png")
+      it "adds errors if user does not upload images in the add_product_image step" do
+        post(:update, params: params.merge(id: :add_product_image, image_upload: []))
+        expect(assigns[:notification].errors[:image_uploads]).to include("Select an image")
+      end
+
+      it "adds errors if the user uploads an incorrect file type as a label image" do
+        post(:update, params: params.merge(id: :add_product_image, image_upload: [text_file]))
+        expect(assigns[:notification].image_uploads.first.errors[:file])
+          .to include("must be one of image/jpeg, application/pdf, image/png")
+      end
     end
 
     it "adds error if user doesn't select radio option on add_internal_reference page" do
@@ -201,7 +207,7 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
         let(:completed_notification) { create(:notification, :pre_brexit, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
 
         it "redirects to the add 'check your answers' page" do
-          expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, completed_notification.reference_number))
+          expect(response.location).to include("/responsible_persons/#{responsible_person.id}/notifications/#{completed_notification.reference_number}/build/wicked_finish")
         end
       end
 
@@ -209,7 +215,8 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
         let(:completed_notification) { create(:notification, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
 
         it "redirects to the add product image page" do
-          expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, completed_notification.reference_number, :add_product_image))
+          expect(response.status).to eq(302)
+          expect(response.location).to include("/responsible_persons/#{responsible_person.id}/notifications/#{completed_notification.reference_number}/build/wicked_finish")
         end
       end
     end
