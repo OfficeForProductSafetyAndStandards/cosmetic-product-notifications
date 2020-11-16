@@ -119,8 +119,8 @@ RSpec.describe "Trigger questions", type: :request do
         end
 
         context "when the notification was first notified post-Brexit" do
-          it "redirects to the add product image page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+          it "redirects to the add check your answers page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
           end
         end
       end
@@ -143,8 +143,8 @@ RSpec.describe "Trigger questions", type: :request do
         end
 
         context "when the notification was first notified post-Brexit" do
-          it "redirects to the add product image page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+          it "redirects to the add check your answers page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
           end
         end
       end
@@ -219,8 +219,8 @@ RSpec.describe "Trigger questions", type: :request do
         end
 
         context "when the notification was first notified post-Brexit" do
-          it "redirects to the add product image page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+          it "redirects to the add check your answers page" do
+            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
           end
         end
       end

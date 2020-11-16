@@ -9,17 +9,28 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
         :add_import_country,
         :for_children_under_three,
         :single_or_multi_component,
-        :is_mixed,
-        :is_hair_dye,
-        :is_ph_between_3_and_10,
-        :ph_range,
-        :add_new_component,
-        :add_product_image
+        :add_product_image,
+        :is_mixed, # only for multicomponent - at least code says so
+        :is_hair_dye, # only for multicomponent - at least code says so
+        :is_ph_between_3_and_10, # only for multicomponent - at least code says so
+        :ph_range, # only for multicomponent - at least code says so
+        :add_new_component # only for multicomponent
 
   before_action :set_notification
   before_action :set_countries, only: %i[show update]
 
   def show
+    if step == :add_product_image && @notification.was_notified_before_eu_exit?
+      if @notification.is_multicomponent?
+        return redirect_to responsible_person_notification_build_path(
+          @notification.responsible_person,
+          @notification,
+          :is_mixed,
+        )
+      else
+        return redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+      end
+    end
     render_wizard
   end
 
@@ -100,8 +111,8 @@ private
     case params.dig(:notification, :single_or_multi_component)
     when "single"
       @notification.components.destroy_all if @notification.is_multicomponent?
-      single_component = @notification.components.empty? ? @notification.components.create : @notification.components.first
-      redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, single_component)
+      @notification.components.create if @notification.components.empty?
+      render_wizard @notification
     when "multiple"
       unless @notification.is_multicomponent?
         @notification.components.destroy_all
@@ -156,14 +167,8 @@ private
       new_component = invalid_multicomponents.empty? ? @notification.components.create : invalid_multicomponents.first
       redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, new_component)
     elsif @notification.get_valid_multicomponents.length > 1
-
-      if @notification.was_notified_before_eu_exit?
-        # Product images aren't needed for pre-Brexit notifications,
-        # so redirect to Check your answers page instead
-        redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      else
-        render_wizard @notification
-      end
+      @notification.complete_draft!
+      render_wizard @notification
     else
       render step
     end
@@ -176,8 +181,12 @@ private
         image_upload.file.attach(image)
         image_upload.filename = image.original_filename
       end
-      @notification.add_product_image
-      render_wizard @notification
+      @notification.save
+      if @notification.is_multicomponent?
+        render_wizard @notification
+      else
+        redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+      end
     else
       @notification.errors.add :image_uploads, "Select an image"
       render step
