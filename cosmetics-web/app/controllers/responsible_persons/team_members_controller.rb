@@ -33,7 +33,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
       user_joins_responsible_person(user, responsible_person)
       redirect_to responsible_person_notifications_path(responsible_person)
     else
-      set_user_from_invitation(pending_request, user)
+      login_user_from_invitation?(pending_request, user)
       redirect_to registration_new_account_security_path
     end
   rescue ActiveRecord::RecordNotFound
@@ -96,7 +96,7 @@ private
     set_current_responsible_person(responsible_person)
   end
 
-  def set_user_from_invitation(pending_request, user)
+  def login_user_from_invitation?(pending_request, user)
     # User will be already set at this point if was created but not completed security details
     user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|
       u.dont_send_confirmation_instructions!
