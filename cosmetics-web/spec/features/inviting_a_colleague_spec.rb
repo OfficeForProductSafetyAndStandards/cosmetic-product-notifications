@@ -67,6 +67,29 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     end
   end
 
+  scenario "sending an invitation to an user that had been already invited to the team" do
+    create(:pending_responsible_person_user, email_address: invited_user.email, responsible_person: responsible_person)
+
+    sign_in(user)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
+
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    travel_to(Time.zone.now + wait_time.seconds) do
+      click_on "Invite a team member"
+
+      complete_secondary_authentication_for(user)
+
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+
+      fill_in "Email address", with: invited_user.email
+      click_on "Send invitation"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_css(".govuk-error-message", text: "This email address has been already invited to this team")
+      expect(delivered_emails.size).to eq 0
+    end
+  end
+
   scenario "sending an invitation to an user that already belongs to a different team" do
     responsible_person2 = create(:responsible_person, :with_a_contact_person)
     create(:responsible_person_user, user: invited_user, responsible_person: responsible_person2)
@@ -104,42 +127,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     )
   end
 
-  scenario "sending an invitation to an user with an expired previous invitation" do
-    create(:pending_responsible_person_user,
-           email_address: invited_user.email,
-           responsible_person: responsible_person)
-
-    sign_in_as_member_of_responsible_person(responsible_person, user)
-    visit "/responsible_persons/#{responsible_person.id}/team_members"
-
-    wait_time = PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1
-    travel_to(Time.zone.now + wait_time.seconds) do
-      click_on "Invite a team member"
-
-      complete_secondary_authentication_for(user)
-
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
-
-      fill_in "Email address", with: invited_user.email
-      click_on "Send invitation"
-
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
-
-      expect(delivered_emails.size).to eq 1
-      email = delivered_emails.first
-      new_token = PendingResponsiblePersonUser.last.invitation_token
-
-      expect(email).to have_attributes(
-        recipient: invited_user.email,
-        reference: "Invite user to join responsible person",
-        template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
-        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{new_token}",
-                           invite_sender: user.name,
-                           responsible_person: responsible_person.name },
-      )
-    end
-  end
-
   scenario "re-sending an invitation" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
@@ -155,9 +142,11 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     complete_secondary_authentication_for(user)
 
+    # Extends the validity of the invitation
     expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
-    email = delivered_emails.last
 
+    # Sends a new email
+    email = delivered_emails.last
     expect(email).to have_attributes(
       recipient: invitation.email_address,
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation],
@@ -207,31 +196,32 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     # Invited user signs out without completing the registration
     sign_out
 
-    # Original team member can re-invite the user that didn't complete its registration
+    # Original team member can resend the invitation for the user that didn't complete its registration
     sign_in(user)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members"
-    click_on "Invite a team member"
 
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
-    fill_in "Email address", with: "newusertoregister@example.com"
-    click_on "Send invitation"
+    time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
+    travel_to time_now do
+      click_on "Resend invitation"
+      complete_secondary_authentication_for(user)
 
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
-    expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).not_to have_css(".govuk-error-message", text: "This email address already belongs to member of this team")
-    expect(delivered_emails.size).to eq 2
-    second_email = delivered_emails.last
-    invitation = PendingResponsiblePersonUser.last
+      # Extends the validity of the invitation
+      expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
 
-    expect(second_email).to have_attributes(
-      recipient: "newusertoregister@example.com",
-      reference: "Invite user to join responsible person",
-      template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
-      personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                         invite_sender: user.name,
-                         responsible_person: responsible_person.name },
-    )
+      # Sends a new email
+      expect(delivered_emails.size).to eq 2
+      new_email = delivered_emails.last
+
+      expect(new_email).to have_attributes(
+        recipient: "newusertoregister@example.com",
+        reference: "Invite user to join responsible person",
+        template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
+        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                           invite_sender: user.name,
+                           responsible_person: responsible_person.name },
+      )
+    end
   end
 
   scenario "accepting an invitation for a new user when not signed in" do
@@ -303,28 +293,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
-  end
-
-  scenario "accepting one of multiple invitations to same responsible person for an existing user" do
-    sign_in invited_user
-
-    pending = create(:pending_responsible_person_user,
-                     email_address: invited_user.email,
-                     responsible_person: responsible_person)
-
-    different_inviting_user = create(:submit_user)
-    create(:pending_responsible_person_user,
-           email_address: invited_user.email,
-           responsible_person: responsible_person,
-           inviting_user: different_inviting_user)
-
-    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-    expect(invited_user.responsible_persons).to include(responsible_person)
-
-    # User only shows up once on the team members list
-    click_link "Team members"
-    expect(page).to have_text(invited_user.email).once
   end
 
   scenario "accepting an invitation for an existent user when signed in as different user" do
