@@ -66,7 +66,6 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
   end
 
   def finish_wizard_path
-    @notification.complete_draft!
     edit_responsible_person_notification_path(@notification.responsible_person, @notification)
   end
 
@@ -168,6 +167,7 @@ private
       new_component = invalid_multicomponents.empty? ? @notification.components.create : invalid_multicomponents.first
       redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, new_component)
     elsif @notification.get_valid_multicomponents.length > 1
+      @notification.complete_draft!
       render_wizard @notification
     else
       render step
