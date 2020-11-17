@@ -135,6 +135,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     team_path = "/responsible_persons/#{responsible_person.id}/team_members"
     visit team_path
 
+    original_inviting_user_name = invitation.inviting_user.name
+    expect(page).to have_css("tr", text: "- #{invitation.email_address} #{original_inviting_user_name} Resend invitation")
+
     time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
     travel_to time_now
 
@@ -155,23 +158,28 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
                          responsible_person: responsible_person.name },
     )
 
-    expect(page.current_path).to eq team_path
+    # Shows the user who resent the invitation as the new inviting user
+    expect(page).to have_current_path(team_path)
+    expect(original_inviting_user_name).not_to eq user.name
+    expect(page).to have_css("tr", text: "- #{invitation.email_address} #{user.name} Resend invitation")
   end
 
   scenario "re-sending an invitation to a new user that accepted the original invitation but didn't complete their user account" do
+    original_inviting_user = create(:submit_user)
     team = create(:responsible_person, :with_a_contact_person)
     create(:responsible_person_user, user: invited_user, responsible_person: team)
 
     # User sends the original invitation to the team
-    sign_in_as_member_of_responsible_person(responsible_person, user)
-    visit "/responsible_persons/#{responsible_person.id}/team_members"
+    sign_in_as_member_of_responsible_person(responsible_person, original_inviting_user)
+    team_path = "/responsible_persons/#{responsible_person.id}/team_members"
+    visit team_path
     click_on "Invite a team member"
 
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+    expect(page).to have_current_path("#{team_path}/new")
     fill_in "Email address", with: "newusertoregister@example.com"
     click_on "Send invitation"
 
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
+    expect(page).to have_current_path(team_path)
 
     invitation = PendingResponsiblePersonUser.last
 
@@ -183,7 +191,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       reference: "Invite user to join responsible person",
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                         invite_sender: user.name,
+                         invite_sender: original_inviting_user.name,
                          responsible_person: responsible_person.name },
     )
 
@@ -196,32 +204,40 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     # Invited user signs out without completing the registration
     sign_out
 
-    # Original team member can resend the invitation for the user that didn't complete its registration
+    # Team member can resend the invitation for the user that didn't complete its registration
     sign_in(user)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
+    # Still shows the invitation as pending
+    expect(page).to have_css("tr", text: "- #{invitation.email_address} #{original_inviting_user.name} Resend invitation")
+
     time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
-    travel_to time_now do
-      click_on "Resend invitation"
-      complete_secondary_authentication_for(user)
+    travel_to time_now
 
-      # Extends the validity of the invitation
-      expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
+    click_on "Resend invitation"
+    complete_secondary_authentication_for(user)
 
-      # Sends a new email
-      expect(delivered_emails.size).to eq 2
-      new_email = delivered_emails.last
+    # Extends the validity of the invitation
+    expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
 
-      expect(new_email).to have_attributes(
-        recipient: "newusertoregister@example.com",
-        reference: "Invite user to join responsible person",
-        template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
-        personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
-                           invite_sender: user.name,
-                           responsible_person: responsible_person.name },
-      )
-    end
+    # Sends a new email
+    expect(delivered_emails.size).to eq 2
+    new_email = delivered_emails.last
+
+    expect(new_email).to have_attributes(
+      recipient: "newusertoregister@example.com",
+      reference: "Invite user to join responsible person",
+      template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
+      personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
+                         invite_sender: user.name,
+                         responsible_person: responsible_person.name },
+    )
+
+    # Shows the user who resent the invitation as the new inviting user
+    expect(page).to have_current_path(team_path)
+    expect(original_inviting_user.name).not_to eq user.name
+    expect(page).to have_css("tr", text: "- #{invitation.email_address} #{user.name} Resend invitation")
   end
 
   scenario "accepting an invitation for a new user when not signed in" do
