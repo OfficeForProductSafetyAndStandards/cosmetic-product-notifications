@@ -11,7 +11,7 @@
     <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
       <%= error_summary_for(@component, first_values: {contains_cmrs: "yes"}) %>
 
-      <h1 class="govuk-heading-xl"><%= title %></h1>
+      <h1 class="govuk-heading-l"><%= title %></h1>
 
       <p class="govuk-!-margin-bottom-1">CMRs categories are:</p>
 

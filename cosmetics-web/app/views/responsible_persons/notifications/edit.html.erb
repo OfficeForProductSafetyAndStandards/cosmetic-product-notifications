@@ -9,7 +9,7 @@
       <%= govukErrorSummary(titleText: "There is a problem", errorList: @errors) %>
     <% end %>
 
-    <h1 class="govuk-heading-xl"><%= @notification.product_name %></h1>
+    <h1 class="govuk-heading-l"><%= @notification.product_name %></h1>
 
     <%= render "notifications/product_overview", notification: @notification %>
   </div>

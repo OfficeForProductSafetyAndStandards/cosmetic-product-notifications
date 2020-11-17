@@ -11,7 +11,7 @@
       <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @notification.errors.messages[:image_uploads][0], href: "#image_upload"}]) %>
     <% end %>
 
-    <h1 class="govuk-heading-xl"><%= page_title %></h1>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
 
     <% if @notification.is_multicomponent? %>
       <p class="govuk-body">
