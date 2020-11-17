@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_130915) do
+ActiveRecord::Schema.define(version: 2020_11_16_164650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 2020_11_06_130915) do
     t.uuid "inviting_user_id"
     t.index ["invitation_token"], name: "index_pending_responsible_person_users_on_invitation_token"
     t.index ["inviting_user_id"], name: "index_pending_responsible_person_users_on_inviting_user_id"
+    t.index ["responsible_person_id", "email_address"], name: "index_pending_responsible_person_users_on_rp_and_email", unique: true
     t.index ["responsible_person_id"], name: "index_pending_responsible_person_users_on_responsible_person_id"
   end
 

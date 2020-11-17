@@ -45,6 +45,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
 
     ActiveRecord::Base.transaction do
       @team_member.refresh_token_expiration!
+      @team_member.update!(inviting_user: current_user)
       send_invite_email
     end
 
