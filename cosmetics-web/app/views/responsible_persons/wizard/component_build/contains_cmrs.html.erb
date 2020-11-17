@@ -1,5 +1,5 @@
-<% title = "Substances known or presumed to cause cancer, mutations or are toxic for reproduction (CMRs)" %>
-<% question = "Does #{@component_name} contain category 1A or 1B CMRs?" %>
+<% title = "Carcinogenic, mutagenic or reprotoxic substances" %>
+<% question = "Does #{@component_name} contain category 1A or 1B CMR substances" %>
 
 <% content_for :page_title, title %>
 <% content_for :after_header do %>
@@ -13,12 +13,16 @@
 
       <h1 class="govuk-heading-l"><%= title %></h1>
 
-      <p class="govuk-!-margin-bottom-1">CMRs categories are:</p>
+      <p class="govuk-!-margin-bottom-2">
+        Carcinogenic, mutagenic or reprotoxic (CMR) substances can cause or promote cancers, cause genetic mutations or damage the reproductive process.</p>
 
+      <p class="govuk-!-margin-bottom-2">
+        CMR substances are classified into 3 categories:
+      </p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>1A – known from studies on humans</li>
-        <li>1B – presumed from studies on animals</li>
-        <li>2 – suspected from some human or animal studies</li>
+        <li>1A – known to be CMRs, based on human studies</li>
+        <li>1B – presumed to be CMRs, based on animal studies</li>
+        <li>2 – suspected to be CMRs, based on some human or animal studies</li>
       </ul>
 
       <%= render "form_components/govuk_radios", form: form, key: :contains_cmrs,
