@@ -64,6 +64,8 @@ en:
               blank: "Choose an option"
             other_special_applicator:
               blank: "Enter the type of applicator"
+            formulation_file:
+              blank: "Upload a list of ingredients"
             cmrs:
               blank: "Enter at least 1 CMR"
         nano_element:

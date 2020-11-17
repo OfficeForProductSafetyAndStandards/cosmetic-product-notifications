@@ -298,7 +298,7 @@ private
         render step
       end
     else
-      @component.errors.add :formulation_file, "Please upload a file"
+      @component.errors.add :formulation_file, "Upload a list of ingredients"
       render step
     end
   end
