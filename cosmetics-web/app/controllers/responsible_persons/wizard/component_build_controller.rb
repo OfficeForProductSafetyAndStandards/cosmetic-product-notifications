@@ -273,7 +273,7 @@ private
 
   def update_contains_poisonous_ingredients
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
-      @component.errors.add :contains_poisonous_ingredients, "Select whether the product contains any poisonous ingredients"
+      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
       render :contains_poisonous_ingredients
       return
     end
