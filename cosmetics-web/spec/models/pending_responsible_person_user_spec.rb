@@ -31,25 +31,21 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
       expect(pending_responsible_person.errors[:email_address]).to include("This email address already belongs to member of this team")
     end
 
-    context "when there is already a pending rp user for the email from the same inviting user" do
-      let(:duplicated_pending_responsible_person) do
-        build(:pending_responsible_person_user,
-              email_address: pending_responsible_person.email_address,
-              responsible_person: pending_responsible_person.responsible_person,
-              inviting_user: pending_responsible_person.inviting_user)
-      end
+    it "fails if the email is already used on user for the same team" do
+      create(:pending_responsible_person_user,
+             email_address: pending_responsible_person.email_address,
+             responsible_person: pending_responsible_person.responsible_person)
 
-      before do
-        pending_responsible_person.save
-      end
+      expect(pending_responsible_person.save).to be false
+      expect(pending_responsible_person.errors[:email_address]).to include("This email address has been already invited to this team")
+    end
 
-      it "succeeds" do
-        expect(duplicated_pending_responsible_person.save).to be true
-      end
+    it "create record if the email is already used on user for a different team" do
+      create(:pending_responsible_person_user,
+             email_address: pending_responsible_person.email_address)
 
-      it "does not add a new instance" do
-        expect { duplicated_pending_responsible_person.save }.not_to change(described_class, :count)
-      end
+      expect(pending_responsible_person.save).to be true
+      expect(pending_responsible_person.errors).to be_empty
     end
 
     context "when inviting existing search user (by mistake)" do
