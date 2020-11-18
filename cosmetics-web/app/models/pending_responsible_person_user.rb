@@ -10,11 +10,13 @@ class PendingResponsiblePersonUser < ApplicationRecord
               message: I18n.t(:wrong_format, scope: EMAIL_ERROR_MESSAGE_SCOPE),
               if: -> { email_address.present? },
             }
-  validates :email_address, presence: { message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE) }
+  validates :email_address,
+            presence: { message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE) },
+            uniqueness: { scope: [:responsible_person], message: I18n.t(:taken, scope: EMAIL_ERROR_MESSAGE_SCOPE) }
   validate :email_address_not_in_team?
 
   before_create :generate_token
-  before_create :remove_duplicate_pending_responsible_users
+  before_create :remove_duplicate
 
   def self.key_validity_duration
     1.day
@@ -43,7 +45,7 @@ private
     end
   end
 
-  def remove_duplicate_pending_responsible_users
+  def remove_duplicate
     PendingResponsiblePersonUser.where(
       responsible_person_id: responsible_person.id,
       email_address: email_address,

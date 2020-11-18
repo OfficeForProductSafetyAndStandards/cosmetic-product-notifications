@@ -27,22 +27,13 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
     user = SubmitUser.find_by(email: pending_request.email_address)
     return render("signed_as_another_user", locals: { user: user }) if signed_as_another_user?(pending_request)
 
-    responsible_person = pending_request.responsible_person
     if user&.account_security_completed?
       authenticate_user!
-      responsible_person.add_user(user)
-      # delete accepted pending request
-      pending_request.delete
-
-      set_current_responsible_person(responsible_person)
+      responsible_person = pending_request.responsible_person
+      user_joins_responsible_person(user, responsible_person)
       redirect_to responsible_person_notifications_path(responsible_person)
     else
-      user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|
-        u.dont_send_confirmation_instructions!
-        u.save(validate: false)
-      end
-      bypass_sign_in(user)
-      session[:registered_from_responsible_person_invitation_id] = pending_request.id
+      login_user_from_invitation?(pending_request, user)
       redirect_to registration_new_account_security_path
     end
   rescue ActiveRecord::RecordNotFound
@@ -54,6 +45,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
 
     ActiveRecord::Base.transaction do
       @team_member.refresh_token_expiration!
+      @team_member.update!(inviting_user: current_user)
       send_invite_email
     end
 
@@ -97,6 +89,22 @@ private
 
   def signed_as_another_user?(invitation)
     current_user && current_user.email != invitation.email_address
+  end
+
+  def user_joins_responsible_person(user, responsible_person)
+    responsible_person.add_user(user)
+    PendingResponsiblePersonUser.where(email_address: user.email).delete_all
+    set_current_responsible_person(responsible_person)
+  end
+
+  def login_user_from_invitation?(pending_request, user)
+    # User will be already set at this point if was created but not completed security details
+    user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|
+      u.dont_send_confirmation_instructions!
+      u.save(validate: false)
+    end
+    bypass_sign_in(user)
+    session[:registered_from_responsible_person_invitation_id] = pending_request.id
   end
 
   # See: SecondaryAuthenticationConcern
