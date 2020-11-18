@@ -2,6 +2,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
   INVITATION_TOKEN_VALID_FOR = 3 * 24 * 3600 # 3 days
   EMAIL_ERROR_MESSAGE_SCOPE = %i[activerecord errors models pending_responsible_person_user attributes email_address].freeze
 
+  belongs_to :inviting_user, class_name: :SubmitUser, inverse_of: :pending_responsible_person_users
   belongs_to :responsible_person
 
   validates :email_address,
@@ -9,18 +10,20 @@ class PendingResponsiblePersonUser < ApplicationRecord
               message: I18n.t(:wrong_format, scope: EMAIL_ERROR_MESSAGE_SCOPE),
               if: -> { email_address.present? },
             }
-  validates :email_address, presence: { message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE) }
+  validates :email_address,
+            presence: { message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE) },
+            uniqueness: { scope: [:responsible_person], message: I18n.t(:taken, scope: EMAIL_ERROR_MESSAGE_SCOPE) }
   validate :email_address_not_in_team?
 
   before_create :generate_token
-  before_create :remove_duplicate_pending_responsible_users
+  before_create :remove_duplicate
 
   def self.key_validity_duration
     1.day
   end
 
   def expired?
-    invitation_token_expires_at < Time.zone.now
+    invitation_token_expires_at && invitation_token_expires_at < Time.zone.now
   end
 
   def refresh_token_expiration!
@@ -42,10 +45,11 @@ private
     end
   end
 
-  def remove_duplicate_pending_responsible_users
+  def remove_duplicate
     PendingResponsiblePersonUser.where(
       responsible_person_id: responsible_person.id,
       email_address: email_address,
+      inviting_user: inviting_user,
     ).delete_all
   end
 end

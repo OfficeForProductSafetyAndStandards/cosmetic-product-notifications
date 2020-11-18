@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_28_092140) do
+ActiveRecord::Schema.define(version: 2020_11_16_164650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -180,7 +180,10 @@ ActiveRecord::Schema.define(version: 2020_10_28_092140) do
     t.bigint "responsible_person_id"
     t.string "invitation_token"
     t.datetime "invitation_token_expires_at"
+    t.uuid "inviting_user_id"
     t.index ["invitation_token"], name: "index_pending_responsible_person_users_on_invitation_token"
+    t.index ["inviting_user_id"], name: "index_pending_responsible_person_users_on_inviting_user_id"
+    t.index ["responsible_person_id", "email_address"], name: "index_pending_responsible_person_users_on_rp_and_email", unique: true
     t.index ["responsible_person_id"], name: "index_pending_responsible_person_users_on_responsible_person_id"
   end
 
@@ -295,6 +298,7 @@ ActiveRecord::Schema.define(version: 2020_10_28_092140) do
   add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "responsible_persons"
+  add_foreign_key "pending_responsible_person_users", "users", column: "inviting_user_id"
   add_foreign_key "range_formulas", "components"
   add_foreign_key "responsible_person_users", "responsible_persons"
   add_foreign_key "trigger_question_elements", "trigger_questions"

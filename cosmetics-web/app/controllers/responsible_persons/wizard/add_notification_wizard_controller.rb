@@ -1,4 +1,4 @@
-class ResponsiblePersons::AddNotificationWizardController < SubmitApplicationController
+class ResponsiblePersons::Wizard::AddNotificationWizardController < SubmitApplicationController
   include Wicked::Wizard
 
   before_action :set_responsible_person, only: %i[update show]

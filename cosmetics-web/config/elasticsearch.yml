@@ -14,4 +14,4 @@ test:
       :timeout: 3000
 
 production:
-  :url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-elasticsearch")["uri"] %>
+  :url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-elasticsearch-7")["uri"] %>

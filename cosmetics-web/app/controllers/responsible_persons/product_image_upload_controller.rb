@@ -1,4 +1,4 @@
-class ProductImageUploadController < SubmitApplicationController
+class ResponsiblePersons::ProductImageUploadController < SubmitApplicationController
   before_action :set_models
 
   def new; end

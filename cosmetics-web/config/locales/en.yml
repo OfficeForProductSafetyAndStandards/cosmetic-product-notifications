@@ -88,6 +88,7 @@ en:
               blank: "Enter email address"
               this_team: "This email address already belongs to member of this team"
               other_team: "You can not invite this email address to join your team"
+              taken: "This email address has been already invited to this team"
         trigger_question:
           attributes:
             applicable:

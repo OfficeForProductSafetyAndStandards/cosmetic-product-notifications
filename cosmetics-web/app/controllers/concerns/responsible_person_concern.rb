@@ -9,6 +9,8 @@ module ResponsiblePersonConcern
     if responsible_person.blank?
       if current_user.responsible_persons.present?
         redirect_to select_responsible_persons_path
+      elsif pending_invitations.any?
+        redirect_to account_path(:pending_invitations)
       else
         redirect_to account_path(:overview)
       end
@@ -46,5 +48,12 @@ private
     else
       user_signed_in?
     end
+  end
+
+  def pending_invitations
+    @pending_invitations ||= PendingResponsiblePersonUser
+      .where(email_address: current_user.email)
+      .includes(:responsible_person, :inviting_user)
+      .order(created_at: :desc)
   end
 end

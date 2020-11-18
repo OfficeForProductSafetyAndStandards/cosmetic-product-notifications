@@ -97,3 +97,7 @@ Style/MethodCalledOnDoEndBlock:
 RSpec/DescribeClass:
   Exclude:
     - spec/requests/*
+
+RSpec/FilePath:
+  Exclude:
+    - spec/controllers/**/*
