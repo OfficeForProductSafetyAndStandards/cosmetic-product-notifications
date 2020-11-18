@@ -60,7 +60,7 @@ def expect_to_be_on_reset_password_page
 end
 
 def expect_to_be_on_declaration_page
-  expect(page).to have_current_path("/declaration")
+  expect(page).to have_current_path("/declaration", ignore_query: true)
 end
 
 def expect_to_be_on_check_your_email_page
@@ -81,9 +81,6 @@ def expect_incorrect_email_or_password
 end
 
 def otp_code(email = nil)
-  #  puts user
-
-  #  p SubmitUser.pluck(:direct_otp)
   user_with_code = User.find_by(email: email) || user
   user_with_code.reload.direct_otp
 end
@@ -650,7 +647,7 @@ def fill_in_rp_business_details
 end
 
 def fill_in_rp_contact_details
-  expect(page).to have_h1("Contact person details")
+  expect(page).to have_h1(/Contact person for/)
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@foo"
   fill_in "Phone number", with: "07984563072"

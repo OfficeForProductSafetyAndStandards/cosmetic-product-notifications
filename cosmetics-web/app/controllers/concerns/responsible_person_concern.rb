@@ -3,13 +3,14 @@ module ResponsiblePersonConcern
 
   def create_or_join_responsible_person
     return unless fully_signed_in_submit_user?
-    return unless current_user.mobile_number_verified?
 
     responsible_person = current_responsible_person
 
     if responsible_person.blank?
       if current_user.responsible_persons.present?
         redirect_to select_responsible_persons_path
+      elsif pending_invitations.any?
+        redirect_to account_path(:pending_invitations)
       else
         redirect_to account_path(:overview)
       end
@@ -43,9 +44,16 @@ private
 
   def fully_signed_in_submit_user?
     if Rails.configuration.secondary_authentication_enabled
-      user_signed_in? && secondary_authentication_present?
+      user_signed_in? && secondary_authentication_present? && current_user.mobile_number_verified?
     else
       user_signed_in?
     end
+  end
+
+  def pending_invitations
+    @pending_invitations ||= PendingResponsiblePersonUser
+      .where(email_address: current_user.email)
+      .includes(:responsible_person, :inviting_user)
+      .order(created_at: :desc)
   end
 end

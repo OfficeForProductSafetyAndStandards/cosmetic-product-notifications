@@ -6,7 +6,7 @@
 ## Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 - [ ] Automated checks are passing locally.
-- [ ] CHANGELOG updated if change is worth telling users about.
+- [ ] CHANGELOG updated if change is worth telling users about. Changes in notification wizard should always be included.
 ### General testing
 - [ ] Test without javascript
 - [ ] Test on small screen

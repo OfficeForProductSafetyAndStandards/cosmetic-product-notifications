@@ -87,7 +87,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
 
     visit "/"
 
-    expect(page).to have_h1("Contact person details")
+    expect(page).to have_h1(/Contact person for/)
   end
 
   scenario "Landing page redirects to correct responsible person" do

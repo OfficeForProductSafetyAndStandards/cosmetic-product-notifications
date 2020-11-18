@@ -192,7 +192,7 @@ To create a database for the current space:
 To create an Elasticsearch instance for the current space:
 
     cf marketplace -s elasticsearch
-    cf create-service elasticsearch tiny-6.x cosmetics-elasticsearch
+    cf create-service elasticsearch tiny-7.x cosmetics-elasticsearch-7
 
 ### Redis
 

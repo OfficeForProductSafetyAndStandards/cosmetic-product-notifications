@@ -9,7 +9,7 @@
   "dependencies": {
     "@rails/webpacker": "5.2.1",
     "accessible-autocomplete": "2.0.3",
-    "copy-webpack-plugin": "6.2.1",
+    "copy-webpack-plugin": "6.3.0",
     "govuk-country-and-territory-autocomplete": "1.0.1",
     "govuk-frontend": "3.9.1",
     "html5shiv": "3.7.3",
@@ -18,9 +18,9 @@
     "rails-ujs": "5.2.4",
     "resolve-url-loader": "3.1.2",
     "sass-lint": "1.13.1",
-    "standard": "15.0.0",
+    "standard": "16.0.2",
     "webpack": "4.44.2",
-    "webpack-cli": "4.1.0",
+    "webpack-cli": "4.2.0",
     "webpack-dev-server": "3.11.0"
   }
 }

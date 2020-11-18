@@ -47,3 +47,13 @@
                         panel: { html: render("responsible_persons/notifications/tabs/incomplete") } },
                 { id: "notified", label: "Notified (#{@registered_notifications.total_entries})",
                         panel: { html: render("responsible_persons/notifications/tabs/notified") } }] %>
+
+
+
+<% if params[:tab].present? %>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      window.location = window.location.href.split('#')[0] + '#<%= params[:tab] %>';
+    })
+  </script>
+<% end %>

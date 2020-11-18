@@ -109,7 +109,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :add_notification, controller: "responsible_persons/add_notification_wizard", only: %i[show new update]
+      resources :add_notification, controller: "responsible_persons/wizard/add_notification_wizard", only: %i[show new update]
 
       resources :notification_files, controller: "responsible_persons/notification_files", only: %i[show new create destroy] do
         collection do
@@ -118,21 +118,23 @@ Rails.application.routes.draw do
       end
 
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
-        resources :build, controller: :notification_build, only: %i[show update new]
-        resources :additional_information, controller: :additional_information, only: %i[index]
-        resources :product_image_upload, controller: :product_image_upload, only: %i[new create]
+        resources :build, controller: "responsible_persons/wizard/notification_build", only: %i[show update new]
+        resources :additional_information, controller: "responsible_persons/additional_information", only: %i[index]
+        resources :product_image_upload, controller: "responsible_persons/product_image_upload", only: %i[new create]
 
         resources :components do
-          resources :build, controller: :component_build, only: %i[show update new]
-          resources :trigger_question, controller: :trigger_questions, only: %i[show update new]
-          resources :formulation, controller: "formulation_upload", only: %w[new create]
+          resources :build, controller: "responsible_persons/wizard/component_build", only: %i[show update new]
+          resources :trigger_question, controller: "responsible_persons/wizard/trigger_questions", only: %i[show update new]
+          resources :formulation, controller: "responsible_persons/formulation_upload", only: %w[new create]
           resources :nanomaterials, param: :nano_element_id do
-            resources :build, controller: :nanomaterial_build, only: %i[show update new]
+            resources :build, controller: "responsible_persons/wizard/nanomaterial_build", only: %i[show update new]
           end
         end
 
         member do
           post :confirm
+          get :delete
+          delete :destroy
         end
       end
     end
