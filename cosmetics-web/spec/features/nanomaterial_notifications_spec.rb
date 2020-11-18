@@ -15,7 +15,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     fill_in "What is the name of the nanomaterial?", with: "My nanomaterial"
     click_button "Continue"
 
-    expect(page).to have_selector("h1", text: "Was the EU notified about My nanomaterial on CPNP before 1 February 2020?")
+    expect(page).to have_selector("h1", text: "Was the EU notified about My nanomaterial on CPNP before 1 January 2021?")
     choose "No"
     click_button "Continue"
 
@@ -35,8 +35,8 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     fill_in "What is the name of the nanomaterial?", with: "My EU nanomaterial"
     click_button "Continue"
 
-    expect(page).to have_selector("h1", text: "Was the EU notified about My EU nanomaterial on CPNP before 1 February 2020?")
-    choose "Yes, the EU was notified about the nanomaterial on CPNP before 1 February 2020"
+    expect(page).to have_selector("h1", text: "Was the EU notified about My EU nanomaterial on CPNP before 1 January 2021?")
+    choose "Yes, the EU was notified about the nanomaterial on CPNP before 1 January 2021"
     fill_in "Day", with: "01"
     fill_in "Month", with: "02"
     fill_in "Year", with: "2017"

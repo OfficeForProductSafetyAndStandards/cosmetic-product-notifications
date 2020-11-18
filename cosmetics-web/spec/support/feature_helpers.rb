@@ -113,7 +113,7 @@ end
 
 def expect_to_be_on__was_product_notified_before_brexit_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
-  expect(page).to have_h1("Was this product notified in the EU before 1 February 2020?")
+  expect(page).to have_h1("Was this product notified in the EU before 1 January 2021?")
 end
 
 def expect_to_be_on__what_is_product_called_page
@@ -174,7 +174,7 @@ end
 
 def expect_to_be_on__does_item_contain_cmrs_page
   expect(page.current_path).to end_with("/build/contains_cmrs")
-  expect(page).to have_h1("Substances known or presumed to cause cancer, mutations or are toxic for reproduction (CMRs)")
+  expect(page).to have_h1("Carcinogenic, mutagenic or reprotoxic substances")
 end
 
 def expect_to_be_on__does_item_contain_nanomaterial_page
@@ -232,9 +232,11 @@ def expect_to_be_on__formulation_method_page(item_name: nil)
   expect(page).to have_h1("How do you want to give the formulation of #{item_name || 'the product'}?")
 end
 
-def expect_to_be_on__upload_ingredients_page
+# Exact concentrations of the ingredients
+# Concentration ranges of the ingredients
+def expect_to_be_on__upload_ingredients_page(header_text)
   expect(page.current_path).to end_with("/build/upload_formulation")
-  expect(page).to have_h1("Upload list of ingredients")
+  expect(page).to have_h1(header_text)
 end
 
 def expect_to_be_on__upload_poisonous_ingredients_page
@@ -244,7 +246,7 @@ end
 
 def expect_to_be_on__poisonous_ingredients_page
   expect(page.current_path).to end_with("/contains_poisonous_ingredients")
-  expect(page).to have_h1("Poisonous ingredients")
+  expect(page).to have_h1("Ingredients the National Poison Information Service needs to know about")
 end
 
 def expect_to_be_on__what_is_ph_range_of_product_page
@@ -421,7 +423,7 @@ def answer_do_you_have_zip_files_with(answer)
 end
 
 def answer_was_product_notified_before_brexit_with(answer)
-  within_fieldset("Was this product notified in the EU before 1 February 2020?") do
+  within_fieldset("Was this product notified in the EU before 1 January 2021?") do
     page.choose(answer)
   end
   click_button "Continue"
@@ -487,7 +489,7 @@ def answer_what_is_physical_form_of_item_with(answer, item_name: nil)
 end
 
 def answer_does_item_contain_cmrs_with(answer, item_name: nil)
-  within_fieldset("Does #{item_name || 'the product'} contain category 1A or 1B CMRs?") do
+  within_fieldset("Does #{item_name || 'the product'} contain category 1A or 1B CMR substances?") do
     page.choose(answer)
   end
   click_button "Continue"

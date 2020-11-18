@@ -8,6 +8,8 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", type: :feature do
   end
 
   scenario "Using a zip file with a post-Brexit EU notification date", :with_stubbed_antivirus do
+    travel_to (2.years.from_now)
+
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
