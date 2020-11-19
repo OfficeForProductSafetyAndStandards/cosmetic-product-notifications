@@ -46,61 +46,20 @@ RSpec.describe "Creating an account when having pending responsible person invit
     expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/select_type")
   end
 
-  scenario "user is invited by multiple users to the same responsible person but all invitations have expired" do
+  scenario "user is invited to responsible person but invitation has expired" do
     create(:pending_responsible_person_user,
            :expired,
            email_address: invited_user_email,
            inviting_user: inviting_user,
            responsible_person: responsible_person,
            created_at: 5.days.ago)
-    create(:pending_responsible_person_user,
-           :expired,
-           email_address: invited_user_email,
-           responsible_person: responsible_person,
-           inviting_user: inviting_user2,
-           created_at: 4.days.ago)
-    create(:pending_responsible_person_user,
-           :expired,
-           email_address: invited_user_email,
-           responsible_person: responsible_person,
-           inviting_user: inviting_user3,
-           created_at: 3.days.ago)
 
     user_creates_an_account_with_invitation_email
     # User sees RP invites list
     expect(page).to have_css("h1", text: "Who do you want to submit cosmetic product notifications for?")
     # Displays the invitations to the RP as a single line with all the inviting users
     expect(page).to have_text(responsible_person.name).once
-    expect(page).to have_text(
-      "Your invite has expired and needs to be resent. You were invited by #{inviting_user3.name}, #{inviting_user2.name} and #{inviting_user.name}.",
-    )
-    # User gets the option to create a new responsible person
-    expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/select_type")
-  end
-
-  scenario "user is invited by multiple users to the same responsible person" do
-    create(:pending_responsible_person_user,
-           :expired,
-           email_address: invited_user_email,
-           inviting_user: inviting_user,
-           responsible_person: responsible_person,
-           created_at: 3.days.ago)
-    create(:pending_responsible_person_user,
-           email_address: invited_user_email,
-           responsible_person: responsible_person,
-           inviting_user: inviting_user2,
-           created_at: 2.days.ago)
-    create(:pending_responsible_person_user,
-           email_address: invited_user_email,
-           responsible_person: responsible_person,
-           inviting_user: inviting_user3)
-
-    user_creates_an_account_with_invitation_email
-    # User sees RP invites list
-    expect(page).to have_css("h1", text: "Who do you want to submit cosmetic product notifications for?")
-    # Displays the invitations to the RP as a single line with the last non expired invitation date
-    expect(page).to have_text(responsible_person.name).once
-    expect(page).to have_text("Check your email inbox for your invite, sent 24 November 2020.")
+    expect(page).to have_text("Your invite has expired and needs to be resent. You were invited by #{inviting_user.name}.")
     # User gets the option to create a new responsible person
     expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/select_type")
   end
