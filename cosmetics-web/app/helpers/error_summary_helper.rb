@@ -28,6 +28,6 @@ module ErrorSummaryHelper
   end
 
   def error_group_class(model)
-    'govuk-form-group--error' if model.errors.any?
+    "govuk-form-group--error" if model.errors.any?
   end
 end
