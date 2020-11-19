@@ -3,6 +3,8 @@ module Registration
     before_action :check_user
     skip_before_action :require_secondary_authentication
     skip_before_action :try_to_finish_account_setup
+    skip_before_action :has_accepted_declaration
+    skip_before_action :create_or_join_responsible_person
 
     def new
       @account_security_form = AccountSecurityForm.new(user: current_user)
