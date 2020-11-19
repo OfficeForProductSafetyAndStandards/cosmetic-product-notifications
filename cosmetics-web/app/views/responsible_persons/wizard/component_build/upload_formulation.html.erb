@@ -14,6 +14,8 @@
         <%= render 'exact_concentration' %>
       <% elsif @component.range? %>
         <%= render 'ranges_concentration' %>
+      <% else %>
+        <h1 class="govuk-heading-xl"><%= title %></h1>
       <% end %>
 
       <div class="govuk-form-group <%= error_group_class(@component)%>">

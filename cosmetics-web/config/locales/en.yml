@@ -99,11 +99,11 @@ en:
             name:
               blank: "Enter the name of the nanomaterial"
             eu_notified:
-              inclusion: "Select yes if the EU was notified about the nanomaterial before 1 February 2020"
+              inclusion: "Select yes if the EU was notified about the nanomaterial before 1 January 2021"
             notified_to_eu_on:
               blank: "Enter the date the EU was notified about the nanomaterial on CPNP"
               date_specified_but_eu_not_notified: "Remove date or change answer to Yes"
-              post_brexit_date_given: "The date the EU was notified on CPNP must be before 1 February 2020"
+              post_brexit_date_given: "The date the EU was notified on CPNP must be before 1 January 2021"
               not_a_real_date: "Enter a real EU notification date"
               date_incomplete: "EU notification date must include a %{missing_date_parts}"
             file:

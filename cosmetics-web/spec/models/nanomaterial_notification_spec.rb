@@ -37,7 +37,7 @@ RSpec.describe NanomaterialNotification, type: :model do
         end
 
         it "adds an error" do
-          expect(nanomaterial_notification.errors[:eu_notified]).to include("Select yes if the EU was notified about the nanomaterial before 1 February 2020")
+          expect(nanomaterial_notification.errors[:eu_notified]).to include("Select yes if the EU was notified about the nanomaterial before 1 January 2021")
         end
       end
 
@@ -67,7 +67,7 @@ RSpec.describe NanomaterialNotification, type: :model do
 
       context "when the EU was notified and a post-Brexit date is set" do
         let(:nanomaterial_notification) do
-          described_class.new(eu_notified: true, notified_to_eu_on: Date.parse("2020-02-02"))
+          described_class.new(eu_notified: true, notified_to_eu_on: Date.parse("2021-04-02"))
         end
 
         before do
@@ -75,7 +75,7 @@ RSpec.describe NanomaterialNotification, type: :model do
         end
 
         it "adds an error" do
-          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("The date the EU was notified on CPNP must be before 1 February 2020")
+          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("The date the EU was notified on CPNP must be before 1 January 2021")
         end
       end
 
@@ -328,11 +328,11 @@ RSpec.describe NanomaterialNotification, type: :model do
         create(:nanomaterial_notification,
                submitted_at: Time.zone.parse("2020-02-05T12:00Z"),
                eu_notified: true,
-               notified_to_eu_on: Date.parse("2019-08-01"))
+               notified_to_eu_on: Date.parse("2020-08-01"))
       end
 
       it "is available 7 months later" do
-        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2020-03-01T00:00Z"))
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to eql(Time.zone.parse("2021-03-01T00:00Z"))
       end
     end
 

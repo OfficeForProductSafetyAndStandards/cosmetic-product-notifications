@@ -228,11 +228,11 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       it "has a page heading" do
-        expect(response.body).to have_h1_with_text("Was the EU notified about Zinc oxide on CPNP before 1 February 2020?")
+        expect(response.body).to have_h1_with_text("Was the EU notified about Zinc oxide on CPNP before 1 January 2021?")
       end
 
       it "has a page title" do
-        expect(response.body).to have_title("Was the EU notified about Zinc oxide on CPNP before 1 February 2020?")
+        expect(response.body).to have_title("Was the EU notified about Zinc oxide on CPNP before 1 January 2021?")
       end
 
       it "includes a back link to the name page" do
