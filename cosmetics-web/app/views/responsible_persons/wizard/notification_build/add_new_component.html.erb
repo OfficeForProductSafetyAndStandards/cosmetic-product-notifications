@@ -11,15 +11,15 @@
     <%= form_for(@notification, url: wizard_path, method: :put) do |form| %>
       <% valid_multicomponents = @notification.get_valid_multicomponents %>
       <% valid_multicomponents.each do |valid_component| %>
-        <p><%= valid_component.name %></p>
-        <div class="govuk-form-group">
-          <%= govukButton text: "Remove component", classes: "govuk-button--secondary", value: valid_component.id, name: "remove_component" %>
+        <div class="kit-items-row">
+          <p><%= valid_component.name %></p>
+          <%= govukButton text: "Remove item", classes: "govuk-button--secondary", value: valid_component.id, name: "remove_component" %>
         </div>
       <% end %>
 
       <div class="govuk-form-group">
         <button class="govuk-button govuk-button--secondary" type="submit" name="add_component" value="true">
-          Add item
+          Add an item
         </button>
       </div>
 

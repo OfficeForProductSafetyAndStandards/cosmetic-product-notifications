@@ -622,7 +622,7 @@ def answer_does_product_contain_poisonous_ingredients_with(answer)
 end
 
 def add_an_item
-  click_button "Add item"
+  click_button "Add an item"
 end
 
 def select_options_to_create_account
