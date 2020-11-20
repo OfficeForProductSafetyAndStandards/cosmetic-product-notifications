@@ -11,9 +11,9 @@
     <%= form_for(@notification, url: wizard_path, method: :put) do |form| %>
       <% valid_multicomponents = @notification.get_valid_multicomponents %>
       <% valid_multicomponents.each do |valid_component| %>
-        <div class="kit-items-row">
-          <p><%= valid_component.name %></p>
-          <%= govukButton text: "Remove item", classes: "govuk-button--secondary", value: valid_component.id, name: "remove_component" %>
+        <div class="govuk-grid-row">
+          <p class="govuk-grid-column-two-thirds"><%= valid_component.name %></p>
+          <%= govukButton text: "Remove item", classes: "govuk-button--secondary govuk-grid-column-one-third", value: valid_component.id, name: "remove_component" %>
         </div>
       <% end %>
 
