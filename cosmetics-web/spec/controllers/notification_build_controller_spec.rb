@@ -93,31 +93,6 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
       expect(assigns(:notification).errors[:single_or_multi_component]).to eql(["Select yes if the product is a multi-item kit"])
     end
 
-    it "redirects to add_import_country step if is_imported set to true" do
-      post(:update, params: params.merge(id: :is_imported, notification: { is_imported: "yes" }))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_import_country))
-    end
-
-    it "redirects to for_children_under_three step if is_imported set to false and post-eu-exit (default)" do
-      post(:update, params: params.merge(id: :is_imported, notification: { is_imported: "no" }))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :for_children_under_three))
-    end
-
-    it "adds an error if user doesn't pick a radio option for is_imported" do
-      post(:update, params: params.merge(id: :is_imported, notification: { is_imported: nil }))
-      expect(assigns(:notification).errors[:is_imported]).to include("Select an option")
-    end
-
-    it "adds an error if user submits import_country with a blank value" do
-      post(:update, params: params.merge(id: :add_import_country, notification: { import_country: "" }))
-      expect(assigns(:notification).errors[:import_country]).to include("Import country can not be blank")
-    end
-
-    it "continues to next step if user submits import_country with a valid value and post-eu-exit (default)" do
-      post(:update, params: params.merge(id: :add_import_country, notification: { import_country: "France" }))
-      expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :for_children_under_three))
-    end
-
     context "when on image upload step" do
       before do
         notification.components.create
@@ -172,22 +147,6 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
       expect {
         post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
       }.to raise_error(Pundit::NotAuthorizedError)
-    end
-
-    context "when notified pre EU-exit" do
-      before do
-        params.merge!(notification_reference_number: pre_eu_exit_notification.reference_number)
-      end
-
-      it "skips for_children_under_three step and redirects to single_or_multi_component if is_imported set to false and pre-eu-exit" do
-        post(:update, params: params.merge(id: :is_imported, notification: { is_imported: "no" }))
-        expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, pre_eu_exit_notification, :single_or_multi_component))
-      end
-
-      it "skips for_children_under_three step and redirects to single_or_multi_component if user submits import_country with a valid value and pre-eu-exit" do
-        post(:update, params: params.merge(id: :add_import_country, notification: { import_country: "France" }))
-        expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, pre_eu_exit_notification, :single_or_multi_component))
-      end
     end
 
     context "when pressing 'Continue' from the List of components page" do

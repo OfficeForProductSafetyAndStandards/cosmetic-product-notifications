@@ -27,7 +27,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "CTPA moisture conditioner")
     expect_check_your_answers_page_to_contain(
       product_name: "CTPA moisture conditioner",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "1",
       shades: "",
       contains_cmrs: "No",
@@ -64,8 +63,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft skin whitener")
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft skin whitener",
-      imported: "Yes",
-      imported_from: "France",
       number_of_components: "1",
       shades: "",
       contains_cmrs: "No",
@@ -106,7 +103,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
     expect_check_your_answers_page_to_contain(
       product_name: "Beautify Facial Night Cream",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "1",
       shades: "",
       eu_notification_date: "12 November 2018",
@@ -157,8 +153,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft shocking green hair dye",
-      imported: "Yes",
-      imported_from: "China",
       number_of_components: "1",
       shades: "",
       eu_notification_date: "29 November 2019",
@@ -224,7 +218,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
       kit_items: [
@@ -308,7 +301,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
       kit_items: [
@@ -383,7 +375,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-Rangevalues_Exactvalues_Nano",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
       kit_items: [
