@@ -260,7 +260,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_is_product_multi_item_kit_with "Yes"
 
     expect_to_be_on__how_are_items_used_together_page
-    answer_how_are_items_used_together_with "Used in a particular order"
+    answer_does_contain_items_that_need_to_be_mixed_with "No, the items are used in sequence"
 
     expect_to_be_on__kit_items_page
     add_an_item
@@ -498,7 +498,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_is_product_multi_item_kit_with "Yes"
 
     expect_to_be_on__how_are_items_used_together_page
-    answer_how_are_items_used_together_with "Used in a particular order"
+    answer_does_contain_items_that_need_to_be_mixed_with "No, the items are used in sequence"
 
     expect_to_be_on__kit_items_page
     add_an_item
