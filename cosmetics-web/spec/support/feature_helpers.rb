@@ -259,7 +259,7 @@ end
 
 def expect_to_be_on__how_are_items_used_together_page
   expect(page.current_path).to end_with("/is_mixed")
-  expect(page).to have_h1("How are the items in the kit used?")
+  expect(page).to have_h1("Does the kit contain items that need to be mixed?")
 end
 
 def exepct_to_be_on_upload_product_label_page
@@ -460,8 +460,8 @@ def answer_is_product_multi_item_kit_with(answer)
   click_button "Continue"
 end
 
-def answer_how_are_items_used_together_with(answer)
-  within_fieldset("How are the items in the kit used?") do
+def answer_does_contain_items_that_need_to_be_mixed_with(answer)
+  within_fieldset("Does the kit contain items that need to be mixed?") do
     page.choose(answer)
   end
   click_button "Continue"
@@ -622,7 +622,7 @@ def answer_does_product_contain_poisonous_ingredients_with(answer)
 end
 
 def add_an_item
-  click_button "Add item"
+  click_button "Add an item"
 end
 
 def select_options_to_create_account
