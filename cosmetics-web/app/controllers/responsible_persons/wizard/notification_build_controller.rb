@@ -5,8 +5,6 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
 
   steps :add_product_name,
         :add_internal_reference,
-        :is_imported,
-        :add_import_country,
         :for_children_under_three,
         :single_or_multi_component,
         :add_product_image,
@@ -44,8 +42,6 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
       render_is_hair_dye_step
     when :is_ph_between_3_and_10
       render_is_ph_between_3_and_10_step
-    when :is_imported
-      render_is_imported_step
     when :add_new_component
       render_add_new_component_step
     when :add_product_image
@@ -89,7 +85,6 @@ private
       .permit(
         :product_name,
         :industry_reference,
-        :import_country,
         :under_three_years,
         :components_are_mixed,
         :ph_min_value,
@@ -145,14 +140,6 @@ private
 
   def render_is_ph_between_3_and_10_step
     yes_no_question(:is_ph_between_3_and_10, before_skip: method(:clear_ph_range))
-  end
-
-  def render_is_imported_step
-    remove_import_country = proc do
-      @notification.import_country = nil
-      @notification.add_import_country
-    end
-    yes_no_question(:is_imported, before_skip: remove_import_country)
   end
 
   def render_add_new_component_step
@@ -217,7 +204,7 @@ private
   def get_previous_step
     case step
     when :for_children_under_three
-      @notification.import_country.present? ? :add_import_country : :is_imported
+      :add_internal_reference
     when :ph_range
       :is_hair_dye
     when :add_new_component

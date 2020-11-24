@@ -66,16 +66,6 @@ RSpec.describe CpnpNotificationImporter do
       expect(notification.shades).equal?("red yellow pink blue")
     end
 
-    it "creates a notification populated with relevant imported info" do
-      exporter_instance = described_class.new(cpnp_parser_shades_import, responsible_person)
-      exporter_instance.create!
-
-      notification = Notification.order(created_at: :asc).last
-
-      expect(notification.cpnp_is_imported).equal?(true)
-      expect(notification.cpnp_imported_country).equal?("country:NZ")
-    end
-
     it "creates a notification populated with relevant number of components" do
       exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
 

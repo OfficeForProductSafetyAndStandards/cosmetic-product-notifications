@@ -126,11 +126,6 @@ def expect_to_be_on__internal_reference_page
   expect(page).to have_h1("Internal reference")
 end
 
-def expect_to_be_on__was_product_imported_page
-  expect(page.current_path).to end_with("/build/is_imported")
-  expect(page).to have_h1("Is the product imported into the UK?")
-end
-
 def expect_to_be_on__is_product_for_under_threes_page
   expect(page.current_path).to end_with("/for_children_under_three")
   expect(page).to have_h1("Is the product intended to be used on children under 3 years old?")
@@ -275,16 +270,10 @@ def expect_to_be_on__upload_formulation_document_page
 end
 
 # rubocop:disable Naming/MethodParameterName
-def expect_check_your_answers_page_to_contain(product_name:, imported:, imported_from: nil, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil)
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)
-
-    expect(page).to have_summary_item(key: "Imported", value: imported)
-
-    if imported_from
-      expect(page).to have_summary_item(key: "Imported from", value: imported_from)
-    end
 
     expect(page).to have_summary_item(key: "Number of components", value: number_of_components)
     expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
@@ -319,10 +308,9 @@ def expect_check_your_answers_page_to_contain(product_name:, imported:, imported
 end
 # rubocop:enable Naming/MethodParameterName
 
-def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, imported:, number_of_components:, components_mixed:, kit_items:)
+def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, number_of_components:, components_mixed:, kit_items:)
   within_table("Product") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
-    expect(page).to have_summary_item(key: "Imported", value: imported)
     expect(page).to have_summary_item(key: "Number of components", value: number_of_components)
     expect(page).to have_summary_item(key: "Are the components mixed?", value: components_mixed)
   end
@@ -436,13 +424,6 @@ end
 
 def answer_do_you_want_to_give_an_internal_reference_with(answer)
   within_fieldset("Do you want to add an internal reference?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_was_product_imported_with(answer)
-  within_fieldset("Is the product imported into the UK?") do
     page.choose(answer)
   end
   click_button "Continue"

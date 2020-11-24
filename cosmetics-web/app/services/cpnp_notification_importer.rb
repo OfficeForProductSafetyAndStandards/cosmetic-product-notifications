@@ -20,8 +20,6 @@ class CpnpNotificationImporter
                                         components: @cpnp_parser.components,
                                         cpnp_reference: @cpnp_parser.cpnp_reference,
                                         industry_reference: @cpnp_parser.industry_reference,
-                                        cpnp_is_imported: @cpnp_parser.is_imported,
-                                        cpnp_imported_country: @cpnp_parser.imported_country,
                                         cpnp_notification_date: @cpnp_parser.cpnp_notification_date,
                                         responsible_person: @responsible_person,
                                         under_three_years: @cpnp_parser.under_three_years,
