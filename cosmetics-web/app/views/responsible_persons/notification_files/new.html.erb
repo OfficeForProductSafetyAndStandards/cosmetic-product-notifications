@@ -8,7 +8,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with url: responsible_person_notification_files_path(@responsible_person),
       method: :post,
-      data: { "max-number-of-files": NotificationFile.get_max_number_of_files },
+      data: { "max-number-of-files": NotificationFile::MAX_NUMBER_OF_FILES },
       id: "file-upload-form",
       local: true do |form| %>
 
@@ -16,7 +16,7 @@
           <% if @errors.blank? %>
             <%= govukErrorSummary(titleText: "There is a problem",
               errorList: [{ text: "You can only select up to " \
-              "#{NotificationFile.get_max_number_of_files} files at the same time",
+              "#{NotificationFile::MAX_NUMBER_OF_FILES} files at the same time",
                 href: "#uploaded_files" }]) %>
           <% end %>
         </span>
@@ -29,7 +29,7 @@
         <h1 class="govuk-heading-xl">Upload your EU notification files</h1>
 
         <div class="govuk-body-m">
-          <p>You can upload up to <%= NotificationFile.get_max_number_of_files %> files at a time.</p>
+          <p>You can upload up to <%= NotificationFile::MAX_NUMBER_OF_FILES %> files at a time.</p>
 
           <p>To choose multiple files, hold the ‘Shift’ key when selecting them.</p>
         </div>

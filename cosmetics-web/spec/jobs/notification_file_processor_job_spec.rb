@@ -89,7 +89,7 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
     let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFile.zip")) }
 
     before do
-      allow(NotificationFile).to receive(:get_max_file_size).and_return(10)
+      stub_const("NotificationFile::MAX_FILE_SIZE_BYTES", 10)
       described_class.new.perform(notification_file.id)
     end
 
