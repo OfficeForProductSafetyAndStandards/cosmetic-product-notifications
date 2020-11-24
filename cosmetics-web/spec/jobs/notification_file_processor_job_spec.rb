@@ -29,14 +29,6 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
       end
     end
 
-    context "when the file contains a post-Brexit date" do
-      let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFilePostBrexit.zip")) }
-
-      it "adds an error to the file" do
-        expect(notification_file.reload.upload_error).to eq("post_brexit_date")
-      end
-    end
-
     context "when the file is the wrong file type" do
       let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testImage.png")) }
 

@@ -17,7 +17,6 @@ class NotificationFile < ApplicationRecord
     notification_validation_error: "notification_validation_error",
     draft_notification_error: "draft_notification_error",
     unknown_error: "unknown_error",
-    post_brexit_date: "post_brexit_date",
   }
 
   @allowed_content_types = %w[application/zip application/x-zip-compressed].freeze
