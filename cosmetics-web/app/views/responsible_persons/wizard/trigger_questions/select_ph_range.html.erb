@@ -11,7 +11,7 @@
 
       <%= error_summary_for(@component, first_values: {ph: "between_3_and_10"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :ph,
-        fieldset: { legend: { text: title, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+        fieldset: { legend: { text: title, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
         hint: { text: local_assigns[:hint] },
         items: [{ text: "The minimum pH is 3 or higher, and the maximum pH is 10 or lower", value: "between_3_and_10" },
           { text: "The minimum pH is lower than 3", value: "lower_than_3" },

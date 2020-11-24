@@ -14,7 +14,7 @@
         <%= govukErrorSummary titleText: "There is a problem", errorList: cmr_errors %>
       <% end %>
       <%= render "components/govuk_fieldset",
-              legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } %>
+              legend: { text: question, classes: "govuk-label--l", isPageHeading: true } %>
       <%= form.fields_for :cmrs do |cmr_fields| %>
         <%= cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-m" %>
         <%= render "form_components/govuk_input",

@@ -12,7 +12,7 @@
 
       <%= error_summary_for(@notification, first_values: {is_hair_dye: "yes"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :is_hair_dye,
-              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
               items: [{ text: "Yes", value: "yes" },
                       { text: "No", value: "no" }] %>
       <%= govukButton text: "Continue" %>

@@ -13,7 +13,7 @@
 
       <%= error_summary_for(@notification, first_values: {components_are_mixed: "true"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :components_are_mixed,
-              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
               items: [{ text: "Yes", value: "true" },
                       { text: "No, the items are used in sequence", value: "false" }] %>
       <%= govukButton text: "Continue" %>

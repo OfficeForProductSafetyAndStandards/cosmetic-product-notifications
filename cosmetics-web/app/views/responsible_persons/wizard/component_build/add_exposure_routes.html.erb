@@ -18,7 +18,7 @@
         <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @nano_material.errors.messages[:exposure_routes][0], href: "#nano_material_dermal"}] ) %>
       <% end %>
       <%= render "form_components/govuk_checkboxes", form: form, key: :exposure_routes,
-              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
               items: items %>
       <%= govukButton text: "Continue" %>
 

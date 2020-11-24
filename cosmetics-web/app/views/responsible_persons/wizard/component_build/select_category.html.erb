@@ -21,7 +21,7 @@
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component, first_values: {sub_category: items[0][:value]}) %>
       <%= render "form_components/govuk_radios", form: form, key: :sub_category,
-              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
               items: items %>
       <%= govukButton text: "Continue" %>
     </div>

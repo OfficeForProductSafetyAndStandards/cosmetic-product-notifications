@@ -12,7 +12,7 @@
 
       <%= error_summary_for(@notification, first_values: {is_imported: "yes"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :is_imported,
-              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
               items: [{ text: "Yes, it is imported", value: "yes" },
                       { text: "No, it is manufactured in the UK", value: "no" }] %>
       <%= govukButton text: "Continue" %>

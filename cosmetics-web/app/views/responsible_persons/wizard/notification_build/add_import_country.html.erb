@@ -15,7 +15,7 @@
       <%= render "form_components/govuk_select", form: form, key: :import_country, id: "location-autocomplete",
               items: @countries.map { |country| { text: country[0], value: country[1] } },
               is_autocomplete: true, show_all_values: true,
-              label: { text: question, classes: "govuk-label--xl", isPageHeading: true } %>
+              label: { text: question, classes: "govuk-label--l", isPageHeading: true } %>
 
       <%= govukButton text: "Continue" %>
 

@@ -10,7 +10,7 @@
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component, first_values: {contains_special_applicator: "no"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :contains_special_applicator,
-            fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+            fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
             items: [{ text: "A typical non-pressurised bottle, jar, sachet or other package", value: :no },
                     { text: "A pressurised container, an impregnated sponge, " \
                     + "wipe, patch or pad, or is encapsulated", value: :yes }] %>

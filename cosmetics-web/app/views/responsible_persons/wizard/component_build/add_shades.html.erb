@@ -9,7 +9,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component) %>
-      <%= render "components/govuk_fieldset", legend: { text: title, classes: "govuk-label--xl", isPageHeading: true } %>
+      <%= render "components/govuk_fieldset", legend: { text: title, classes: "govuk-label--l", isPageHeading: true } %>
 
         <% @component.shades.each_with_index do |shade, _index| %>
           <div class="govuk-form-group">

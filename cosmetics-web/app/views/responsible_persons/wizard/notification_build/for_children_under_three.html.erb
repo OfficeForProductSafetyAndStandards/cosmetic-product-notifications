@@ -13,7 +13,7 @@
 
       <%= error_summary_for(@notification, first_values: {under_three_years: "true"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :under_three_years,
-              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
               items: [{ text: "Yes", value: "true" },
                       { text: "No", value: "false" }] %>
       <%= govukButton text: "Continue" %>
