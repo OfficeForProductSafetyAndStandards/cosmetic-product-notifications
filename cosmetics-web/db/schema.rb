@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_164650) do
+ActiveRecord::Schema.define(version: 2020_11_23_092941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -157,8 +157,6 @@ ActiveRecord::Schema.define(version: 2020_11_16_164650) do
     t.bigint "responsible_person_id"
     t.integer "reference_number"
     t.string "cpnp_reference"
-    t.boolean "cpnp_is_imported"
-    t.string "cpnp_imported_country"
     t.string "shades"
     t.string "industry_reference"
     t.datetime "cpnp_notification_date"

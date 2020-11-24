@@ -29,14 +29,6 @@ class CpnpParser
     @xml_doc.xpath("//status").first&.text
   end
 
-  def is_imported
-    current_version_info_node.xpath(".//imported").first&.text&.casecmp?("Y")
-  end
-
-  def imported_country
-    get_gov_uk_country_code(current_version_info_node.xpath(".//importedCty").first&.text)
-  end
-
   def under_three_years
     current_version_info_node.xpath(".//under3year").first&.text&.casecmp?("Y")
   end
