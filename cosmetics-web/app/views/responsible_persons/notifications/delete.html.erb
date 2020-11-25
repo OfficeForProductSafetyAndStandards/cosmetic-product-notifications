@@ -6,10 +6,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Are you sure you want to delete <%= @notification.product_name %>?</h1>
-    <p class="govuk-!-margin-bottom-6">This will remove this notification and can not be undone.</p>
+    <p class="govuk-!-margin-bottom-6">This will remove this notification and cannot be undone.</p>
     <%= form_with url: responsible_person_notification_path(@responsible_person, @notification), method: :delete do |form| %>
       <%= govukButton text: "Delete notification", classes: "govuk-button--warning" %>
     <% end %>
-    <%= link_to "Return to notification summary", edit_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <%= link_to "Return to incomplete notification summary", edit_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>
