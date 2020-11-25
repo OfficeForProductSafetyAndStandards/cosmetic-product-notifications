@@ -30,7 +30,7 @@ class UsersController < SearchApplicationController
     @user = SearchUser.find(params[:id])
     return render("errors/forbidden", status: :forbidden) if params[:invitation] != @user.invitation_token
 
-    @user.assign_attributes(new_user_attributes)
+    @user.assign_attributes(new_user_attributes.merge(account_security_completed: true))
 
     if @user.save(context: :registration_completion)
       sign_in :search_user, @user
