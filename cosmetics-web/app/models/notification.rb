@@ -24,7 +24,6 @@ class Notification < ApplicationRecord
   end
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
-  before_save :add_import_country, if: :will_save_change_to_import_country?
 
   def self.duplicate_notification_message
     "Notification duplicated"
@@ -34,7 +33,6 @@ class Notification < ApplicationRecord
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
                              allow_nil: true
   validates :cpnp_reference, presence: true, on: :file_upload
-  validates :import_country, presence: true, on: :add_import_country
   validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference" }
   validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
@@ -59,7 +57,6 @@ class Notification < ApplicationRecord
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :product_name_added
-    state :import_country_added
     state :components_complete
     state :draft_complete
     state :notification_file_imported
@@ -69,12 +66,8 @@ class Notification < ApplicationRecord
       transitions from: :empty, to: :product_name_added
     end
 
-    event :add_import_country do
-      transitions from: :product_name_added, to: :import_country_added
-    end
-
     event :set_single_or_multi_component do
-      transitions from: :import_country_added, to: :components_complete
+      transitions from: :product_name_added, to: :components_complete
     end
 
     event :complete_draft do

@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivirus, type: :feature do
+RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
-  scenario "Using a zip file, pre-Brexit, frame formulation, single item, no nanomaterials" do
+  scenario "Using a zip file, frame formulation, single item, no nanomaterials" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -27,7 +27,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "CTPA moisture conditioner")
     expect_check_your_answers_page_to_contain(
       product_name: "CTPA moisture conditioner",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "1",
       shades: "",
       contains_cmrs: "No",
@@ -44,7 +43,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_message "CTPA moisture conditioner"
   end
 
-  scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with ingredients specied as ranges" do
+  scenario "Using a zip file, single item, no nanomaterials, with ingredients specied as ranges" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -64,8 +63,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft skin whitener")
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft skin whitener",
-      imported: "Yes",
-      imported_from: "France",
       number_of_components: "1",
       shades: "",
       contains_cmrs: "No",
@@ -83,7 +80,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_message "SkinSoft skin whitener"
   end
 
-  scenario "Using a zip file, pre-Brexit, single item, no nanomaterials, with missing formulation document" do
+  scenario "Using a zip file, single item, no nanomaterials, with missing formulation document" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -106,7 +103,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
     expect_check_your_answers_page_to_contain(
       product_name: "Beautify Facial Night Cream",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "1",
       shades: "",
       eu_notification_date: "12 November 2018",
@@ -125,7 +121,7 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_see_message "Beautify Facial Night Cream"
   end
 
-  scenario "Using a zip file, pre-Brexit, single item, containing nanomaterials, with missing formulation document" do
+  scenario "Using a zip file, single item, containing nanomaterials, with missing formulation document" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -157,8 +153,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft shocking green hair dye",
-      imported: "Yes",
-      imported_from: "China",
       number_of_components: "1",
       shades: "",
       eu_notification_date: "29 November 2019",
@@ -224,7 +218,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
       kit_items: [
@@ -308,7 +301,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
       kit_items: [
@@ -383,7 +375,6 @@ RSpec.describe "ZIP file upload, pre-Brexit notifications", :with_stubbed_antivi
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-Rangevalues_Exactvalues_Nano",
-      imported: "Manufactured in EU before Brexit",
       number_of_components: "2",
       components_mixed: "No",
       kit_items: [

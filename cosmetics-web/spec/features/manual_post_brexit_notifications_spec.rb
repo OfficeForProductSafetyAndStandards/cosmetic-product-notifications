@@ -23,9 +23,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
     expect_to_be_on__internal_reference_page
     answer_do_you_want_to_give_an_internal_reference_with "No"
 
-    expect_to_be_on__was_product_imported_page
-    answer_was_product_imported_with "No, it is manufactured in the UK"
-
     expect_to_be_on__is_product_for_under_threes_page
     answer_is_product_for_under_threes_with "No"
 
@@ -75,7 +72,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft tangerine shampoo",
-      imported: "No",
       number_of_components: "1",
       shades: "None",
       contains_cmrs: "No",
@@ -107,9 +103,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_to_be_on__internal_reference_page
     answer_do_you_want_to_give_an_internal_reference_with "No"
-
-    expect_to_be_on__was_product_imported_page
-    answer_was_product_imported_with "No, it is manufactured in the UK"
 
     expect_to_be_on__is_product_for_under_threes_page
     answer_is_product_for_under_threes_with "No"
@@ -160,7 +153,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft tangerine shampoo",
-      imported: "No",
       number_of_components: "1",
       shades: "None",
       contains_cmrs: "No",
@@ -192,9 +184,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_to_be_on__internal_reference_page
     answer_do_you_want_to_give_an_internal_reference_with "No"
-
-    expect_to_be_on__was_product_imported_page
-    answer_was_product_imported_with "No, it is manufactured in the UK"
 
     expect_to_be_on__is_product_for_under_threes_page
     answer_is_product_for_under_threes_with "No"
@@ -248,7 +237,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft tangerine shampoo",
-      imported: "No",
       number_of_components: "1",
       shades: "None",
       contains_cmrs: "No",
@@ -280,9 +268,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_to_be_on__internal_reference_page
     answer_do_you_want_to_give_an_internal_reference_with "No"
-
-    expect_to_be_on__was_product_imported_page
-    answer_was_product_imported_with "No, it is manufactured in the UK"
 
     expect_to_be_on__is_product_for_under_threes_page
     answer_is_product_for_under_threes_with "No"
@@ -339,7 +324,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
 
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft tangerine shampoo",
-      imported: "No",
       number_of_components: "1",
       shades: "None",
       contains_cmrs: "No",

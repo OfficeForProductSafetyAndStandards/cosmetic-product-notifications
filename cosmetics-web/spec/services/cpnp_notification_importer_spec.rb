@@ -66,16 +66,6 @@ RSpec.describe CpnpNotificationImporter do
       expect(notification.shades).equal?("red yellow pink blue")
     end
 
-    it "creates a notification populated with relevant imported info" do
-      exporter_instance = described_class.new(cpnp_parser_shades_import, responsible_person)
-      exporter_instance.create!
-
-      notification = Notification.order(created_at: :asc).last
-
-      expect(notification.cpnp_is_imported).equal?(true)
-      expect(notification.cpnp_imported_country).equal?("country:NZ")
-    end
-
     it "creates a notification populated with relevant number of components" do
       exporter_instance = described_class.new(cpnp_parser_multi_component_exact_formula, responsible_person)
 
@@ -260,16 +250,6 @@ RSpec.describe CpnpNotificationImporter do
 
       it "imports the single PH value as the maximum pH" do
         expect(notification.components.first.maximum_ph).to eq(2.0)
-      end
-    end
-
-    # TODO: this probably should be tested somewhere else?
-    context "when the file contains a post-Brexit date" do
-      let(:cpnp_parser) { create_cpnp_parser("testExportFilePostBrexit.zip") }
-
-      it "adds an error to the file" do
-        exporter_instance = described_class.new(cpnp_parser, responsible_person)
-        expect { exporter_instance.create! }.to raise_error(CpnpNotificationImporter::CpnpFileNotifiedPostBrexitError)
       end
     end
   end
