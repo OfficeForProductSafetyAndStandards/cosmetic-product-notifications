@@ -2,7 +2,6 @@ class CpnpNotificationImporter
   class DuplicateNotificationError < FileUploadError; end
   class NotificationValidationError < FileUploadError; end
   class DraftNotificationError < StandardError; end
-  class CpnpFileNotifiedPostBrexitError < StandardError; end
 
   def initialize(cpnp_parser, responsible_person)
     @cpnp_parser = cpnp_parser
@@ -12,8 +11,6 @@ class CpnpNotificationImporter
   def create!
     if @cpnp_parser.notification_status == "DR"
       raise DraftNotificationError, "DraftNotificationError - Draft notification uploaded"
-    elsif @cpnp_parser.cpnp_notification_date >= EU_EXIT_DATE
-      raise CpnpFileNotifiedPostBrexitError, "Product was notified to CPNP post-Brexit, which is not currently supported"
     else
       notification = ::Notification.new(product_name: @cpnp_parser.product_name,
                                         shades: @cpnp_parser.shades,

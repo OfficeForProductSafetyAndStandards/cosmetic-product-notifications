@@ -48,9 +48,6 @@ private
   rescue UnexpectedStaticFilesError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :unknown_error)
-  rescue CpnpNotificationImporter::CpnpFileNotifiedPostBrexitError => e
-    Sidekiq.logger.error e.message
-    @notification_file.update(upload_error: :post_brexit_date)
   rescue StandardError => e
     Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
     @notification_file.update(upload_error: :unknown_error)

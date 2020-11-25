@@ -252,16 +252,6 @@ RSpec.describe CpnpNotificationImporter do
         expect(notification.components.first.maximum_ph).to eq(2.0)
       end
     end
-
-    # TODO: this probably should be tested somewhere else?
-    context "when the file contains a post-Brexit date" do
-      let(:cpnp_parser) { create_cpnp_parser("testExportFilePostBrexit.zip") }
-
-      it "adds an error to the file" do
-        exporter_instance = described_class.new(cpnp_parser, responsible_person)
-        expect { exporter_instance.create! }.to raise_error(CpnpNotificationImporter::CpnpFileNotifiedPostBrexitError)
-      end
-    end
   end
 
   def create_cpnp_parser(filename = "testExportFile.zip")
