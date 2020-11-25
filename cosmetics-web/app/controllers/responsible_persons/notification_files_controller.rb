@@ -14,9 +14,9 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
       return render :new
     end
 
-    if uploaded_files_params.length > NotificationFile.get_max_number_of_files
+    if uploaded_files_params.length > NotificationFile::MAX_NUMBER_OF_FILES
       @errors << {
-        text: "You can only select up to #{NotificationFile.get_max_number_of_files} files at the same time",
+        text: "You can only select up to #{NotificationFile::MAX_NUMBER_OF_FILES} files at the same time",
         href: "#uploaded_files",
       }
       return render :new
