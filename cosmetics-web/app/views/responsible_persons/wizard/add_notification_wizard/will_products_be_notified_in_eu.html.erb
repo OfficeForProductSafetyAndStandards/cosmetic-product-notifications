@@ -11,7 +11,7 @@
         name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
         fieldset: { legend: { text: title, \
-          isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
+          isPageHeading: true, classes: "govuk-fieldset__legend--l" } },
         items: [{ text: "Yes", value: "yes", id: "answer_yes" },
           { text: "No", value: "no", id: "answer_no" }] %>
       <%= govukButton text: "Continue" %>

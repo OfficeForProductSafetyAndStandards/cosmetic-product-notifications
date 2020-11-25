@@ -10,7 +10,7 @@
       <%= render "components/govuk_radios", name: :answer,
         errorMessage: @error_text.present? && { text: @error_text },
         fieldset: { legend: { text: title, \
-          isPageHeading: true, classes: "govuk-fieldset__legend--xl" } },
+          isPageHeading: true, classes: "govuk-fieldset__legend--l" } },
         items: [{ text: "Yes", value: "yes" },
           { text: "No", value: "no" }] %>
 
