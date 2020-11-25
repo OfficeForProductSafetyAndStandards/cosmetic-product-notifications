@@ -15,7 +15,7 @@
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component, first_values: {number_of_shades: "multiple-shades-same-notification"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :number_of_shades,
-          fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+          fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
           items: items %>
       <%= govukButton text: "Continue" %>
     </div>

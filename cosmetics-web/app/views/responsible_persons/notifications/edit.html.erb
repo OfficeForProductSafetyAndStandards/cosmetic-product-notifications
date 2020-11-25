@@ -9,7 +9,7 @@
       <%= govukErrorSummary(titleText: "There is a problem", errorList: @errors) %>
     <% end %>
 
-    <h1 class="govuk-heading-xl"><%= @notification.product_name %></h1>
+    <h1 class="govuk-heading-l"><%= @notification.product_name %></h1>
 
     <%= render "notifications/product_overview", notification: @notification %>
   </div>
@@ -25,6 +25,6 @@
   <% end %>
 
   <div class="govuk-grid-column-two-thirds">
-    <%= link_to "Delete this cosmetics product", delete_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <%= link_to "Delete incomplete cosmetic product notification", delete_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>

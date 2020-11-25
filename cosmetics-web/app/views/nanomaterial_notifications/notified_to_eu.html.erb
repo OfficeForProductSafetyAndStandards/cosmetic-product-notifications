@@ -1,5 +1,5 @@
 <% page_title_prefix = safe_join(["Was the EU notified about ", @nanomaterial_notification.name," on CPNP before "]) %>
-<% brexit_date = display_full_month_date(EU_EXIT_DATE + 1.day) %>
+<% brexit_date = display_full_month_date(EU_EXIT_DATE) %>
 
 <% page_title = "What is the name of the nanomaterial?" %>
 
@@ -68,7 +68,7 @@
           "items": [
             {
               "value": "true",
-              "html": safe_join(["Yes, the EU was notified about the nanomaterial on CPNP before ", content_tag('span', display_full_month_date(EU_EXIT_DATE + 1.day), class: 'no-wrap')]),
+              "html": safe_join(["Yes, the EU was notified about the nanomaterial on CPNP before ", content_tag('span', display_full_month_date(EU_EXIT_DATE), class: 'no-wrap')]),
               "checked": @nanomaterial_notification.eu_notified == true,
               "conditional": {"html": date_notified_to_eu_html}
             },

@@ -12,7 +12,7 @@
 
       <%= error_summary_for(@notification) %>
       <%= render "components/govuk_fieldset",
-              legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } do %>
+              legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } do %>
         <div class="govuk-grid-column-one-third govuk-!-padding-left-0">
           <%= render "form_components/govuk_input", key: :ph_min_value, form: form,
                   classes: "govuk-input--width-4",

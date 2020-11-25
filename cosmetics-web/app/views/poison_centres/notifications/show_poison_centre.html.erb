@@ -5,7 +5,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= @notification.product_name %></h1>
+    <h1 class="govuk-heading-l"><%= @notification.product_name %></h1>
     <h2 class="govuk-heading-m"><%= @notification.responsible_person.name %></h2>
     <h3 class="govuk-heading-s govuk-!-font-weight-regular">
       <% if @notification.components&.first&.sub_sub_category&.present? %>

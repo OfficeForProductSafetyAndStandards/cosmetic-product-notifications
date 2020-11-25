@@ -257,7 +257,7 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
 
         it "re-renders the question with an error" do
           expect(response.status).to be(200)
-          expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select whether the product contains any poisonous ingredients")
+          expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select yes if the product contains any of these ingredients")
         end
       end
     end

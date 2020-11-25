@@ -52,7 +52,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__formulation_method_page
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
 
-    expect_to_be_on__upload_ingredients_page
+    expect_to_be_on__upload_ingredients_page "Exact concentrations of the ingredients"
     upload_ingredients_pdf
 
     expect_to_be_on__what_is_ph_range_of_product_page
@@ -124,7 +124,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__formulation_method_page
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range"
 
-    expect_to_be_on__upload_ingredients_page
+    expect_to_be_on__upload_ingredients_page "Concentration ranges of the ingredients"
     upload_ingredients_pdf
 
     expect_to_be_on__what_is_ph_range_of_product_page

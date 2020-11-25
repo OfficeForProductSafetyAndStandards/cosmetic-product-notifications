@@ -21,14 +21,14 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Your cosmetic products</h1>
+    <h1 class="govuk-heading-l">Your cosmetic products</h1>
 
     <% if @registered_notifications.total_entries.zero? %>
       <p><strong><%= @responsible_person.name %></strong> has not submitted any cosmetic product notifications in the UK.</p>
 
       <p>All cosmetic products sold or given away in the UK must be notified in the UK.</p>
 
-      <p>To continue to sell or give away cosmetic products that were notified to the European Union (EU) before <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %></span>, you must submit your product notifications in the UK within 90 days of the UK leaving the EU – that is by <span class="no-wrap"><%= display_time SUBMISSION_WINDOW_END_DATE %> on <%= display_full_month_date SUBMISSION_WINDOW_END_DATE %>.</span></p>
+      <p>To continue to sell or give away cosmetic products that were notified to the European Union (EU) before <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %></span>, you must submit your product notifications in the UK within 90 days of the UK leaving the EU – that is by <span class="no-wrap"><%= display_full_month_date SUBMISSION_WINDOW_END_DATE %>.</span></p>
 
       <p>You do not have to submit notifications for cosmetic products discontinued before <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %>.</span></p>
 

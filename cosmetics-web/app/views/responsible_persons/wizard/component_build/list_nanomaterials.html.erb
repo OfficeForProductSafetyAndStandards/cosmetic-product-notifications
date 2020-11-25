@@ -12,7 +12,7 @@
 
       <%= error_summary_for(@nano_material, first_values: {nano_elements: "attributes_0_inci_name"}) %>
       <%= render "components/govuk_fieldset",
-              legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } %>
+              legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } %>
       <%= form.fields_for :nano_elements do |nano_element_form| %>
         <%= render "form_components/govuk_input", form: nano_element_form, key: :inci_name, label: { text: "INCI name" } %>
       <% end %>

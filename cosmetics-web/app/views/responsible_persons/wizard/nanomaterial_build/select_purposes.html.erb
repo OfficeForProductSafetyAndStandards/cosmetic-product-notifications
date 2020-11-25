@@ -17,7 +17,7 @@
         <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @nano_element.errors.messages[:purposes][0], href: "#nano_element_colorant"}] ) %>
       <% end %>
       <%= render "form_components/govuk_checkboxes", form: form, key: :purposes,
-              fieldset: { legend: { text: question, classes: "govuk-label--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
               items: items %>
       <%= govukButton text: "Continue" %>
 

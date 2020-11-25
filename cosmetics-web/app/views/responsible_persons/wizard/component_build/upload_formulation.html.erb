@@ -5,21 +5,32 @@
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-<%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <%= error_summary_for(@component) %>
 
-      <h1 class="govuk-heading-xl"><%= title %></h1>
+    <% if @component.exact? %>
+      <%= render 'exact_concentration' %>
+    <% elsif @component.range? %>
+      <%= render 'ranges_concentration' %>
+    <% else %>
+      <h1 class="govuk-heading-l"><%= title %></h1>
+    <% end %>
 
-      <%= error_summary_for(@component) %>
-      <div class="govuk-form-group">
-        <%= form.label :formulation_file, "The file type must be a PDF", class: "govuk-label" %>
-        <%= form.file_field :formulation_file, class: "govuk-file-upload",
-                accept: Component.allowed_types.join(",") %>
+  </div>
+  <div class="govuk-grid-row">
+    <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+      <div class="govuk-form-group <%= error_group_class(@component)%>">
+          <%= form.label :formulation_file, "Upload a file", class: "govuk-label govuk-label--s" %>
 
+          <% if @component.errors.any? %>
+            <span id="file-upload-1-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
+            </span>
+          <% end %>
+          <%= form.file_field :formulation_file, class: "govuk-file-upload",
+                  accept: Component.allowed_types.join(",") %>
       </div>
       <%= govukButton text: "Continue" %>
-
-    </div>
+    <% end %>
   </div>
-<% end %>
+</div>

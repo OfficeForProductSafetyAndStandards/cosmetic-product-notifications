@@ -15,7 +15,7 @@ RSpec.describe "Notifications delete", type: :feature do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Incomplete (1)"
     click_on draft_notification.product_name
-    click_on "Delete this cosmetics product"
+    click_on "Delete incomplete cosmetic product notification"
     expect(page).to have_h1("Are you sure you want to delete #{draft_notification.product_name}")
     click_button "Delete notification"
 

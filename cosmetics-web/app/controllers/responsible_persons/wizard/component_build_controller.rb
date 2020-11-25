@@ -273,7 +273,7 @@ private
 
   def update_contains_poisonous_ingredients
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
-      @component.errors.add :contains_poisonous_ingredients, "Select whether the product contains any poisonous ingredients"
+      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
       render :contains_poisonous_ingredients
       return
     end
@@ -298,7 +298,7 @@ private
         render step
       end
     else
-      @component.errors.add :formulation_file, "Please upload a file"
+      @component.errors.add :formulation_file, "Upload a list of ingredients"
       render step
     end
   end

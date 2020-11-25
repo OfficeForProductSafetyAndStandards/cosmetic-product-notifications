@@ -14,7 +14,7 @@
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component, first_values: {physical_form: "solidpressed_powder"}) %>
       <%= render "form_components/govuk_radios", form: form, key: :physical_form,
-              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--xl", isPageHeading: true } },
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
               items: items %>
       <%= govukButton text: "Continue" %>
 
