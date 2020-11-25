@@ -51,7 +51,7 @@ jobs:
         cf target -o 'beis-opss' -s $SPACE
         export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
         export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
-        export DB_NAME=cosmetics-db-$DB_VERSION
+        export DB_NAME=cosmetics-db-2020_10_28_092140
         export REDIS_NAME=cosmetics-review-redis-$PR_NUMBER
         ./cosmetics-web/deploy-review.sh
         cf logout
