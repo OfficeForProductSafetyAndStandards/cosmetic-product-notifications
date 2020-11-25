@@ -73,8 +73,7 @@ private
   def authorize_user!; end
 
   def has_accepted_declaration
-    return unless user_signed_in?
-    return unless current_user.mobile_number_verified?
+    return unless user_signed_in? && current_user&.account_security_completed? && current_user&.mobile_number_verified?
 
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
 
