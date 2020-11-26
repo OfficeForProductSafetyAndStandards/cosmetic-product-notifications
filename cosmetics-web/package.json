@@ -19,7 +19,7 @@
     "resolve-url-loader": "3.1.2",
     "sass-lint": "1.13.1",
     "standard": "16.0.3",
-    "webpack": "4.44.2",
+    "webpack": "5.7.0",
     "webpack-cli": "4.2.0",
     "webpack-dev-server": "3.11.0"
   }
