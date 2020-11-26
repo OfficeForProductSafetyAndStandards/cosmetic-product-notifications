@@ -20,8 +20,14 @@
         <% end %>
       </h1>
 
-      <p>This can be either as ranges or the exact concentration.</p>
-      <p>For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.</p>
+      <% if @component.exact? %>
+        <%= render 'responsible_persons/wizard/component_build/exact_concentration' %>
+      <% elsif @component.range? %>
+        <%= render 'responsible_persons/wizard/component_build/ranges_concentration' %>
+      <% else %>
+        <p>This can be either as ranges or the exact concentration.</p>
+        <p>For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.</p>
+      <% end %>
 
       <div class="govuk-form-group <%= "govuk-form-group--error" if @error_list.present? %>">
         <%= form.label :formulation_file, "File type can be a ‘pdf’, ‘rtf’ or ‘txt’.", class: "govuk-label" %>
