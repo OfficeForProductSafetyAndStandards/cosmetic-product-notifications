@@ -59,6 +59,14 @@ private
   def responsible_person_saved?
     return false unless responsible_person_valid?
 
+    if current_user.responsible_persons.any? { |rp| rp.name = @responsible_person.name }
+      @responsible_person.errors.add(:name, "You are already a member of #{@responsible_person.name}")
+      return false
+    elsif PendingResponsiblePersonUser.includes(:responsible_person).where(email_address: user.email, responsible_persons: { name: @responsible_person.name }).any?
+      @responsible_person.errors.add(:name, "You have already been invited to join #{@responsible_person.name}. Check your email inbox for your invite")
+      return false
+    end
+
     @responsible_person.add_user(current_user)
     @responsible_person.save
   end
