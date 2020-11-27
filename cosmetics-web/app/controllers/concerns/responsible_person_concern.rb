@@ -44,14 +44,14 @@ private
 
   def fully_signed_in_submit_user?
     if Rails.configuration.secondary_authentication_enabled
-      fully_registered_user? && secondary_authentication_present? && current_user.mobile_number_verified?
+      current_user_fully_registered? && secondary_authentication_present? && current_user.mobile_number_verified?
     else
-      fully_registered_user?
+      current_user_fully_registered?
     end
   end
 
-  def fully_registered_user?
-    user_signed_in? && current_user&.account_security_completed?
+  def current_user_fully_registered?
+    current_user && current_user.account_security_completed?
   end
 
   def pending_invitations
