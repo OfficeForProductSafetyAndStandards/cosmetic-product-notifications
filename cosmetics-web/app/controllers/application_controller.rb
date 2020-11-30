@@ -74,7 +74,8 @@ private
 
   def has_accepted_declaration
     return unless user_signed_in?
-    return unless current_user.mobile_number_verified?
+    return unless current_user&.account_security_completed?
+    return unless current_user&.mobile_number_verified?
 
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
 
