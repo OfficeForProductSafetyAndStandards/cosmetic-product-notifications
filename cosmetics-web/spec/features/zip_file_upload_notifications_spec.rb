@@ -97,7 +97,7 @@ RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :
     expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
     click_link "Add missing information"
 
-    expect_to_be_on__upload_formulation_document_page
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
     upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
@@ -147,7 +147,7 @@ RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
     upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
@@ -200,7 +200,7 @@ RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page
+    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients")
     upload_formulation_file
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
@@ -212,7 +212,7 @@ RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
     upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
@@ -286,7 +286,7 @@ RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page
+    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients")
     upload_formulation_file
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
