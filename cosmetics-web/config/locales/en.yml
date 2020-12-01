@@ -139,6 +139,10 @@ en:
     attributes:
       registration/account_security_form:
         mobile_number: 'Mobile number'
+      responsible_person_details_form:
+        address_line_1: "Building and street"
+        city: "Town or city"
+        postal_code: "Postcode"
     errors:
       models:
         registration/account_security_form:
@@ -151,6 +155,11 @@ en:
               too_short: "Password must be at least 8 characters"
             full_name:
               blank: "Enter your full name"
+        responsible_person_details_form:
+          attributes:
+            name:
+              member_of_rp_with_same_name: "You are already a member of %{attribute}"
+              invited_to_rp_with_same_name: "You have already been invited to join %{attribute}. Check your email inbox for your invite"
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
