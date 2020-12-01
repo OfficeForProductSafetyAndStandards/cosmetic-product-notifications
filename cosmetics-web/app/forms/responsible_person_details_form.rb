@@ -25,7 +25,7 @@ class ResponsiblePersonDetailsForm
     return if errors[:name].present?
 
     if user.responsible_persons.any? { |rp| rp.name.casecmp(name).zero? }
-      errors.add(:name, "You are already a member of #{name}")
+      errors.add(:name, "You are already associated with #{name}")
     end
   end
 

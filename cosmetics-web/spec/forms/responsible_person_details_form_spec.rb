@@ -48,7 +48,7 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages).to eq(["You are already a member of #{name}"])
+        expect(form.errors.full_messages).to eq(["You are already associated with #{name}"])
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages).to eq(["You are already a member of #{name}"])
+        expect(form.errors.full_messages).to eq(["You are already associated with #{name}"])
       end
     end
 

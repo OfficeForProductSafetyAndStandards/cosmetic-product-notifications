@@ -81,7 +81,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("UK Responsible Person details")
     fill_in_rp_business_details(name: "auto-test RPuser")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("You are already a member of auto-test RPuser", href: "#name")
+    expect(page).to have_link("You are already associated with auto-test RPuser", href: "#name")
   end
 
   scenario "creating a responsible person with the same name as another responbible person the user is invited to" do
