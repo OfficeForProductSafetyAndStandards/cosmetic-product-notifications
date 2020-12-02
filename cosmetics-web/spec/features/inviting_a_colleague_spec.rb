@@ -85,7 +85,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       click_on "Send invitation"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-      expect(page).to have_css(".govuk-error-message", text: "This email address has been already invited to this team")
+      expect(page).to have_css(".govuk-error-message", text: "This person has already been invited to this team")
       expect(delivered_emails.size).to eq 0
     end
   end
