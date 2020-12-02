@@ -70,7 +70,7 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
     end
 
-    context "when the name is the same as another RP name where the user has been invited to" do
+    context "when the name is the same as another RP name where the user has an active invitation for" do
       let(:user) { create(:submit_user) }
 
       before do
@@ -89,7 +89,7 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
     end
 
-    context "when the name is the same with casing differences as another RP name where the user has been invited to" do
+    context "when the name is the same with casing differences as another RP name where the user has an active invitation for" do
       let(:user) { create(:submit_user) }
 
       before do
@@ -105,6 +105,24 @@ RSpec.describe ResponsiblePersonDetailsForm do
       it "populates an error message" do
         expect(form.errors.full_messages)
           .to eq(["You have already been invited to join #{name}. Check your email inbox for your invite"])
+      end
+    end
+
+    context "when the name is the same as another RP name where the user has an expired invitation for" do
+      let(:user) { create(:submit_user) }
+
+      before do
+        rp = create(:responsible_person, :with_a_contact_person, name: name)
+        create(:pending_responsible_person_user, :expired, responsible_person: rp, email_address: user.email)
+        form.validate
+      end
+
+      it "is is valid" do
+        expect(form).to be_valid
+      end
+
+      it "does not populate an error message" do
+        expect(form.errors.full_messages).to be_empty
       end
     end
 

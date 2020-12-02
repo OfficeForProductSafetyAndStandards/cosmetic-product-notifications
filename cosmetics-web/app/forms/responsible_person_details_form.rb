@@ -32,12 +32,19 @@ class ResponsiblePersonDetailsForm
   def user_not_invited_to_rp_with_same_name
     return if errors[:name].present?
 
-    invitations_to_rp_with_same_name = PendingResponsiblePersonUser
-      .joins(:responsible_person)
-      .where("email_address = ? AND LOWER(responsible_persons.name) = ?", user.email, name.downcase)
-
-    if invitations_to_rp_with_same_name.any?
+    if active_invitations_to_rp_with_same_name.any?
       errors.add(:name, "You have already been invited to join #{name}. Check your email inbox for your invite")
     end
+  end
+
+private
+
+  def active_invitations_to_rp_with_same_name
+    PendingResponsiblePersonUser
+      .joins(:responsible_person)
+      .where("email_address = ? AND LOWER(responsible_persons.name) = ? AND invitation_token_expires_at > ?",
+             user.email,
+             name.downcase,
+             Time.zone.now)
   end
 end
