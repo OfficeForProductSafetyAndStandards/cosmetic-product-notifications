@@ -37,7 +37,7 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
              responsible_person: pending_responsible_person.responsible_person)
 
       expect(pending_responsible_person.save).to be false
-      expect(pending_responsible_person.errors[:email_address]).to include("This email address has been already invited to this team")
+      expect(pending_responsible_person.errors[:email_address]).to include("This person has already been invited to this team")
     end
 
     it "create record if the email is already used on user for a different team" do
