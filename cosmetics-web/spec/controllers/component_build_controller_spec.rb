@@ -267,9 +267,9 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
         params.merge!(notification_reference_number: pre_eu_exit_notification.reference_number)
       end
 
-      it "redirects to contains_cmrs if pre-eu-exit" do
+      it "redirects to contains_nanomaterials if pre-eu-exit" do
         post(:update, params: params.merge(id: :add_physical_form, component: { physical_form: "loose powder" }))
-        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, pre_eu_exit_notification, component, :contains_cmrs))
+        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, pre_eu_exit_notification, component, :contains_nanomaterials))
       end
 
       it "skips contains poisonous ingredients question and redirects to PH question" do
