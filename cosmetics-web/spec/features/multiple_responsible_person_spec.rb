@@ -57,12 +57,12 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     click_on "Change responsible person"
     click_on "Add new Responsible Person"
 
-    select_business_account_type
+    select_rp_business_account_type
     expect(page).to have_h1("UK Responsible Person details")
 
     name = "Some other responsible person"
-    fill_in "Business name", with: name
-    fill_in_new_rp_details
+    fill_in_rp_business_details(name: name)
+    fill_in_rp_contact_details
 
     expect(page).to have_h1("Your cosmetic products")
     expect(page).to have_css(".responsible-person-name", text: name)
@@ -78,12 +78,11 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     click_on "Change responsible person"
     click_on "Add new Responsible Person"
 
-    select_business_account_type
+    select_rp_business_account_type
     expect(page).to have_h1("UK Responsible Person details")
 
     name = "Some other responsible person"
-    fill_in "Business name", with: name
-    fill_in_rp_business_details
+    fill_in_rp_business_details(name: name)
 
     visit "/"
 
