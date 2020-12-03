@@ -12,7 +12,7 @@ class ResponsiblePerson < ApplicationRecord
 
   validates :account_type, presence: true
 
-  validates :name, presence: true, on: %i[enter_details create], uniqueness: true
+  validates :name, presence: true, on: %i[enter_details create]
   validates :address_line_1, presence: true, on: %i[enter_details create]
   validates :city, presence: true, on: %i[enter_details create]
   validates :postal_code, presence: true, on: %i[enter_details create]
