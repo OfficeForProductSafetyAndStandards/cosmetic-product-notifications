@@ -52,11 +52,12 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
     end
 
-    context "when the name is the same with casing differences as another RP name where the user belongs to" do
+    context "when the name is the same with casing and leading/trailing spacing differences as another RP name where the user belongs to" do
       let(:user) { create(:submit_user) }
+      let(:name) { " RESP Person Name " }
 
       before do
-        rp = create(:responsible_person, :with_a_contact_person, name: name.upcase)
+        rp = create(:responsible_person, :with_a_contact_person, name: "resp person name")
         create(:responsible_person_user, responsible_person: rp, user: user)
         form.validate
       end
@@ -89,11 +90,12 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
     end
 
-    context "when the name is the same with casing differences as another RP name where the user has an active invitation for" do
+    context "when the name is the same with casing and leading/trailing spacing differences as another RP name where the user has an active invitation for" do
       let(:user) { create(:submit_user) }
+      let(:name) { " RESP Person Name " }
 
       before do
-        rp = create(:responsible_person, :with_a_contact_person, name: name.upcase)
+        rp = create(:responsible_person, :with_a_contact_person, name: "resp person name")
         create(:pending_responsible_person_user, responsible_person: rp, email_address: user.email)
         form.validate
       end

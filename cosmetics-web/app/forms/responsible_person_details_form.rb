@@ -24,7 +24,7 @@ class ResponsiblePersonDetailsForm
   def user_not_member_of_rp_with_same_name
     return if errors[:name].present?
 
-    if user.responsible_persons.any? { |rp| rp.name.casecmp(name).zero? }
+    if user.responsible_persons.any? { |rp| rp.name.casecmp(name&.strip).zero? }
       errors.add(:name, "You are already associated with #{name}")
     end
   end
@@ -44,7 +44,7 @@ private
       .joins(:responsible_person)
       .where("email_address = ? AND LOWER(responsible_persons.name) = ? AND invitation_token_expires_at > ?",
              user.email,
-             name.downcase,
+             name&.strip&.downcase,
              Time.zone.now)
   end
 end
