@@ -1,7 +1,7 @@
 <head>
   <% # Google Analytics %>
   <% if Rails.env.production? %>
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-126364208-2">
+    <%= javascript_tag src: "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true do -%>
       window.dataLayer = window.dataLayer || [];
 
       function gtag() {
@@ -10,7 +10,7 @@
 
       gtag('js', new Date());
       gtag('config', 'UA-126364208-2');
-    </script>
+    <% end -%>
   <% end %>
   <meta charset="utf-8" />
   <title><%= yield :page_title %><%= " - #{@service_name}" %></title>

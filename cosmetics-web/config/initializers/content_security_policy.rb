@@ -39,3 +39,6 @@ Rails.application.config.content_security_policy do |policy|
   # Specify URI for violation reports
   policy.report_uri ENV.fetch("SENTRY_SECURITY_HEADER_ENDPOINT", "")
 end
+
+Rails.application.config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
+Rails.application.config.content_security_policy_nonce_directives = %w[script-src]
