@@ -27,6 +27,7 @@
 Rails.application.config.content_security_policy_report_only = true
 
 Rails.application.config.content_security_policy do |policy|
+  policy.base_uri    :self
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
   policy.default_src :self, :https
   policy.font_src    :self, :https, :data
