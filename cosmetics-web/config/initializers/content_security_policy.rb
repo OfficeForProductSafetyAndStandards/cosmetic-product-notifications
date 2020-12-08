@@ -24,23 +24,32 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
 # Rails.application.config.content_security_policy_report_only = true
 
-Rails.application.config.content_security_policy_report_only = true
+defaults = %i[self https]
+ga_urls = %w[https://www.googletagmanager.com https://www.google-analytics.com]
+# Modern browsers supporting CSP3 will apply "nonce + strict-dynamic" more restrictive policies. They will ignore "unsafe-inline".
+# "unsafe-inline" adds backwards compatibility with older browsers not supporting CSP3 .
+allowed_script_srcs = defaults + %i[strict_dynamic unsafe_inline] + ga_urls
+
+if Rails.env.production?
+  production_urls = %w[https://*.london.cloudapps.digital
+                       https://*.cosmetic-product-notifications.service.gov.uk]
+  allowed_script_srcs += production_urls
+end
 
 Rails.application.config.content_security_policy do |policy|
-  policy.base_uri    :self
-  policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
-  policy.default_src :self, :https
-  policy.font_src    :self, :https, :data
-  policy.img_src     :self, :https, :data, "google-analytics.com"
-  policy.object_src  :none
-  # Modern browsers supporting CSP3 will apply "nonce + strict-dynamic" more restrictive policies. They will ignore "unsafe-inline".
-  # "unsafe-inline" adds backwards compatibility with older browsers not supporting CSP3 .
-  policy.script_src  :self, :https, :strict_dynamic, :unsafe_inline, "googletagmanager.com", "google-analytics.com"
-  policy.style_src   :self, :https, :unsafe_inline
+  policy.base_uri(:self)
+  policy.connect_src(*defaults, "http://localhost:3035", "ws://localhost:3035") if Rails.env.development?
+  policy.default_src(*defaults)
+  policy.font_src(*defaults, :data)
+  policy.img_src(*defaults, :data, *ga_urls)
+  policy.object_src(:none)
+  policy.script_src(*allowed_script_srcs)
+  policy.style_src(*defaults, :unsafe_inline)
 
   # Specify URI for violation reports
   policy.report_uri ENV.fetch("SENTRY_SECURITY_HEADER_ENDPOINT", "")
 end
 
+Rails.application.config.content_security_policy_report_only = true
 Rails.application.config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
 Rails.application.config.content_security_policy_nonce_directives = %w[script-src]
