@@ -30,11 +30,11 @@ Rails.application.config.content_security_policy do |policy|
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
   policy.default_src :self, :https
   policy.font_src    :self, :https, :data
-  policy.img_src     :self, :https, :data, "https://www.google-analytics.com"
+  policy.img_src     :self, :https, :data, "google-analytics.com"
   policy.object_src  :none
   # Modern browsers supporting CSP3 will apply "nonce + strict-dynamic" more restrictive policies. They will ignore "unsafe-inline".
   # "unsafe-inline" adds backwards compatibility with older browsers not supporting CSP3 .
-  policy.script_src  :self, :https, "strict-dynamic", "unsafe-inline", "https://www.googletagmanager.com", "https://www.google-analytics.com"
+  policy.script_src  :self, :https, :strict_dynamic, :unsafe_inline, "googletagmanager.com", "google-analytics.com"
   policy.style_src   :self, :https, :unsafe_inline
 
   # Specify URI for violation reports
