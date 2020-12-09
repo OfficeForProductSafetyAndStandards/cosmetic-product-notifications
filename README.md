@@ -1,3 +1,5 @@
+DONT MERGE!
+
 # Office for Product Safety & Standards Services
 
 [![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-opss.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
