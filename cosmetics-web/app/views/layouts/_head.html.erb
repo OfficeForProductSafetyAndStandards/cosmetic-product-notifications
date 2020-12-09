@@ -23,11 +23,11 @@
   <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_pack_path("media/images/govuk-apple-touch-icon-152x152.png") %>">
   <link rel="apple-touch-icon" href="<%= asset_pack_path("media/images/govuk-apple-touch-icon.png") %>">
   <!--[if !IE 8]><!-->
-    <%= javascript_pack_tag "application" %>
+    <%= javascript_pack_tag "application", nonce: true %>
     <%= stylesheet_pack_tag "application" %>
   <!--<![endif]-->
   <!--[if lte IE 8]>
-    <%= javascript_pack_tag "application-ie8" %>
+    <%= javascript_pack_tag "application-ie8", nonce: true %>
     <%= stylesheet_pack_tag "application-ie8" %>
   <![endif]-->
   <%= csrf_meta_tags %>

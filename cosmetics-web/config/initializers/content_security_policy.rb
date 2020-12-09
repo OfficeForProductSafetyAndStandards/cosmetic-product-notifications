@@ -26,15 +26,6 @@
 
 defaults = %i[self https]
 ga_urls = %w[https://www.googletagmanager.com https://www.google-analytics.com]
-# Modern browsers supporting CSP3 will apply "nonce + strict-dynamic" more restrictive policies. They will ignore "unsafe-inline".
-# "unsafe-inline" adds backwards compatibility with older browsers not supporting CSP3 .
-allowed_script_srcs = defaults + %i[strict_dynamic unsafe_inline] + ga_urls
-
-if Rails.env.production?
-  production_urls = %w[https://*.london.cloudapps.digital
-                       https://*.cosmetic-product-notifications.service.gov.uk]
-  allowed_script_srcs += production_urls
-end
 
 Rails.application.config.content_security_policy do |policy|
   policy.base_uri(:self)
@@ -43,7 +34,9 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src(*defaults, :data)
   policy.img_src(*defaults, :data, *ga_urls)
   policy.object_src(:none)
-  policy.script_src(*allowed_script_srcs)
+  # Modern browsers supporting CSP3 will apply "nonce + strict-dynamic" more restrictive policies. They will ignore "unsafe-inline".
+  # "unsafe-inline" adds backwards compatibility with older browsers not supporting nonce from CSP3
+  policy.script_src(*defaults, :strict_dynamic, :unsafe_inline, *ga_urls)
   policy.style_src(*defaults, :unsafe_inline)
 
   # Specify URI for violation reports
