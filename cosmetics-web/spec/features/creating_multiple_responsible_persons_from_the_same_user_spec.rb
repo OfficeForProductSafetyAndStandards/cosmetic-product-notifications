@@ -11,7 +11,11 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
   scenario "creating another responsible person as a limited company" do
     visit "/responsible_persons/account/overview"
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
-    create_another_business_responsible_person
+    # Creating another business responsible person
+    select_options_to_create_rp_account
+    select_rp_business_account_type
+    fill_in_rp_business_details
+    fill_in_rp_contact_details
   end
 
   scenario "Verify dead end page when user choosen as account already exist" do

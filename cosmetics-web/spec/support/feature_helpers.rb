@@ -608,7 +608,7 @@ def add_an_item
   click_button "Add an item"
 end
 
-def select_options_to_create_account
+def select_options_to_create_rp_account
   click_on "Continue"
   expect(page).to have_h1("Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?")
   choose "No, I need to create an account"
@@ -616,17 +616,22 @@ def select_options_to_create_account
   expect(page).to have_h1("Is the UK Responsible Person a business or an individual?")
 end
 
-def fill_in_new_rp_details
-  fill_in_rp_business_details
-  fill_in_rp_contact_details
-end
-
-def fill_in_rp_business_details
+def fill_in_rp_details
   fill_in "Building and street", with: "Auto-test-address1"
   fill_in "Town or city", with: "Auto-test city"
   fill_in "County", with: "auto-test-county"
   fill_in "Postcode", with: "b28 9un"
   click_on "Continue"
+end
+
+def fill_in_rp_business_details(name: "Auto-test rpuser")
+  fill_in "Business name", with: name
+  fill_in_rp_details
+end
+
+def fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
+  fill_in "Name", with: name
+  fill_in_rp_details
 end
 
 def fill_in_rp_contact_details
@@ -642,20 +647,13 @@ def fill_in_rp_contact_details
   click_on "Continue"
 end
 
-def create_another_business_responsible_person
-  select_options_to_create_account
-  select_individual_account_type
-  fill_in "Name", with: "Auto-test rpuser"
-  fill_in_new_rp_details
-end
-
-def select_business_account_type
+def select_rp_business_account_type
   assert_text "Is the UK Responsible Person a business or an individual?"
   choose "Limited company or Limited Liability Partnership (LLP)"
   click_on "Continue"
 end
 
-def select_individual_account_type
+def select_rp_individual_account_type
   assert_text "Is the UK Responsible Person a business or an individual?"
   choose "Individual or sole trader"
   click_on "Continue"

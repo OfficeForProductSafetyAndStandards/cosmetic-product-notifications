@@ -34,9 +34,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__physical_form_of_item_page
     answer_what_is_physical_form_of_item_with "Liquid"
 
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No"
-
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "No"
 
@@ -106,9 +103,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__physical_form_of_item_page
     answer_what_is_physical_form_of_item_with "Liquid"
 
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No"
-
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "No"
 
@@ -177,9 +171,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__physical_form_of_item_page
     answer_what_is_physical_form_of_item_with "Liquid"
-
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No"
 
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "No"
@@ -259,9 +250,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__physical_form_of_item_page(item_name: "SkinSoft strawberry blonde hair colourant")
     answer_what_is_physical_form_of_item_with "Liquid", item_name: "SkinSoft strawberry blonde hair colourant"
 
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No", item_name: "SkinSoft strawberry blonde hair colourant"
-
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "No", item_name: "SkinSoft strawberry blonde hair colourant"
 
@@ -294,9 +282,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__physical_form_of_item_page item_name: "SkinSoft strawberry blonde hair fixer"
     answer_what_is_physical_form_of_item_with "Liquid", item_name: "SkinSoft strawberry blonde hair fixer"
-
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No", item_name: "SkinSoft strawberry blonde hair fixer"
 
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "No", item_name: "SkinSoft strawberry blonde hair fixer"
@@ -387,9 +372,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__physical_form_of_item_page
     answer_what_is_physical_form_of_item_with "Solid or pressed powder"
-
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No"
 
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "Yes"
@@ -489,9 +471,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__physical_form_of_item_page(item_name: "SkinSoft nano black hair dye kit colourant")
     answer_what_is_physical_form_of_item_with "Liquid", item_name: "SkinSoft nano black hair dye kit colourant"
 
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No", item_name: "SkinSoft nano black hair dye kit colourant"
-
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "Yes", item_name: "SkinSoft nano black hair dye kit colourant"
 
@@ -542,9 +521,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__physical_form_of_item_page(item_name: "SkinSoft nano black hair dye kit fixer")
     answer_what_is_physical_form_of_item_with "Liquid", item_name: "SkinSoft nano black hair dye kit fixer"
-
-    expect_to_be_on__does_item_contain_cmrs_page
-    answer_does_item_contain_cmrs_with "No", item_name: "SkinSoft nano black hair dye kit fixer"
 
     expect_to_be_on__does_item_contain_nanomaterial_page
     answer_does_item_contain_nanomaterials_with "Yes", item_name: "SkinSoft nano black hair dye kit fixer"

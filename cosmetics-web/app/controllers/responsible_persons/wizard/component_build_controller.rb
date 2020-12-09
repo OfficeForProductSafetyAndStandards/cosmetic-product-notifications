@@ -342,7 +342,7 @@ private
   end
 
   def post_eu_exit_steps
-    %i[contains_special_applicator select_special_applicator_type]
+    %i[contains_cmrs add_cmrs contains_special_applicator select_special_applicator_type]
   end
 
   def model
