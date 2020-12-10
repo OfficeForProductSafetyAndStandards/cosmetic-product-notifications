@@ -24,6 +24,25 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
 # Rails.application.config.content_security_policy_report_only = true
 
+defaults = %i[self https]
+ga_urls = %w[https://www.googletagmanager.com https://www.google-analytics.com]
+
 Rails.application.config.content_security_policy do |policy|
-  policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
+  policy.base_uri(:self)
+  policy.connect_src(*defaults, "http://localhost:3035", "ws://localhost:3035") if Rails.env.development?
+  policy.default_src(*defaults)
+  policy.font_src(*defaults, :data)
+  policy.img_src(*defaults, :data, *ga_urls)
+  policy.object_src(:none)
+  # Modern browsers supporting CSP3 will apply "nonce + strict-dynamic" more restrictive policies. They will ignore "unsafe-inline".
+  # "unsafe-inline" adds backwards compatibility with older browsers not supporting nonce from CSP3
+  policy.script_src(*defaults, :strict_dynamic, :unsafe_inline, *ga_urls)
+  policy.style_src(*defaults, :unsafe_inline)
+
+  # Specify URI for violation reports
+  policy.report_uri ENV.fetch("SENTRY_SECURITY_HEADER_ENDPOINT", "")
 end
+
+Rails.application.config.content_security_policy_report_only = true
+Rails.application.config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
+Rails.application.config.content_security_policy_nonce_directives = %w[script-src]

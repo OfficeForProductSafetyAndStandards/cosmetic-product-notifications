@@ -41,7 +41,7 @@
   </div>
 </footer>
 
-<script>
+<%= javascript_tag nonce: true do -%>
   if (typeof window.GOVUKFrontend === 'undefined') document.body.className = document.body.className.replace('js-enabled', '')
   window.GOVUKFrontend.initAll()
-</script>
+<% end -%>
