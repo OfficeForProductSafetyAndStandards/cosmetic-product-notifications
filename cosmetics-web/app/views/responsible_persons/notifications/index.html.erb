@@ -51,9 +51,9 @@
 
 
 <% if params[:tab].present? %>
-  <script>
+  <%= javascript_tag nonce: true do -%>
     document.addEventListener("DOMContentLoaded", function() {
       window.location = window.location.href.split('#')[0] + '#<%= params[:tab] %>';
     })
-  </script>
+  <% end -%>
 <% end %>
