@@ -246,6 +246,8 @@ Start by setting up the following credentials:
         "BASIC_AUTH_PASSWORD": "XXX"
     }'
 
+    If the username/password set up in this step are not accepted when trying to visit the page, you may need to [forward the authorization header](https://docs.cloud.service.gov.uk/deploying_services/use_a_custom_domain/#forwarding-headers)
+
 * To enable and add basic auth to the health check endpoint at `/health/all`:
 
     cf cups cosmetics-health-env -p '{
