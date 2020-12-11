@@ -238,6 +238,7 @@ Start by setting up the following credentials:
     cf cups cosmetics-sentry-env -p '{
         "SENTRY_DSN": "XXX",
         "SENTRY_CURRENT_ENV": "<<SPACE>>"
+        "SENTRY_SECURITY_HEADER_ENDPOINT": "<<URL>>"
     }'
 
 * To enable and add basic auth to the entire application (useful for deployment or non-production environments):
