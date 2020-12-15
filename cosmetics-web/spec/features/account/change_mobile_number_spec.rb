@@ -52,16 +52,22 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
       expect(page).to have_link("Password is incorrect", href: "#password")
     end
 
-    # Mobile number validation is tricky,
-    # but due to a nature of requirement of mobile verification,
-    # for now it can stay so
-    xit "does not get updated when new mobile number is empty" do
+    it "does not get updated when new mobile number is empty" do
       fill_in "Password", with: user.password
       fill_in "New mobile number", with: ""
       click_on "Continue"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
       expect(page).to have_link("Mobile number can not be blank", href: "#mobile_number")
+    end
+
+    it "does not get updated when new mobile number has an incorrect format" do
+      fill_in "Password", with: user.password
+      fill_in "New mobile number", with: "12345678(wrong)9101112"
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
     end
   end
 end

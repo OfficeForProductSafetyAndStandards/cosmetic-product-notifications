@@ -18,7 +18,7 @@ class SearchUser < User
   }
 
   validates :mobile_number,
-            phone: { message: I18n.t(:invalid),
+            phone: { message: :invalid,
                      allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
 

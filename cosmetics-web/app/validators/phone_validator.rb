@@ -57,7 +57,7 @@ class PhoneValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     validate_phone_number(value, (options[:allow_international] || false))
   rescue InvalidPhoneError => e
-    record.errors[attribute] << (options[:message] || e.message)
+    record.errors.add(attribute, options[:message] || e.message)
   end
 
 private
