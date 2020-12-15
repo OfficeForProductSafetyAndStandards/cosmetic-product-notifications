@@ -128,7 +128,7 @@ en:
         user:
           attributes:
             mobile_number:
-              invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
             password:
               too_short: "Password must be at least 8 characters"
         responsible_person:
@@ -148,7 +148,7 @@ en:
         registration/account_security_form:
           attributes:
             mobile_number:
-              invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
               blank: "Please enter mobile number"
             password:
               blank: "Please enter password"
@@ -214,7 +214,7 @@ en:
   resend_secondary_authentication_code_form:
     mobile_number:
       blank: "Enter your mobile number"
-      invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+      invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
   sign_in_form:
     email:
       wrong_email_or_password: "Enter your email address in the correct format, like name@example.com"
@@ -224,7 +224,7 @@ en:
       blank: "Enter your password"
   sign_up_form:
     mobile_number:
-      wrong_format: "Enter your mobile number in the correct format, like 07700 900 982"
+      wrong_format: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
       blank: "Enter your mobile number"
     name:
       blank: "Enter your name"
@@ -241,7 +241,7 @@ en:
       blank: "Enter your full name"
   account_security_form:
     mobile_number:
-      invalid: "Enter your mobile number in the correct format, like 07700 900 982"
+      invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
       blank: "Please enter mobile number"
   contact_person:
     email_address:

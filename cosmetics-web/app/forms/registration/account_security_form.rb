@@ -14,7 +14,10 @@ module Registration
 
     validates_presence_of :full_name, message: error_message(:full_name, :blank), if: :name_required?
     validates :mobile_number, presence: true
-    validates :mobile_number, phone: { message: I18n.t(:invalid, scope: %i[activerecord errors models user attributes mobile_number]) }, if: -> { mobile_number.present? }
+    validates :mobile_number,
+              phone: { message: I18n.t(:invalid, scope: %i[activerecord errors models user attributes mobile_number]),
+                       allow_international: -> { user.class::ALLOW_INTERNATIONAL_PHONE_NUMBER } },
+              if: -> { mobile_number.present? }
     validates :password, length: { minimum: 8 }, if: -> { password.present? }
     validates :password, presence: true
 

@@ -1,4 +1,6 @@
 class SubmitUser < User
+  ALLOW_INTERNATIONAL_PHONE_NUMBER = true
+
   # Include default devise modules. Others available are:
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -13,6 +15,10 @@ class SubmitUser < User
 
   has_one :user_attributes, dependent: :destroy
   validates :mobile_number, presence: true
+  validates :mobile_number,
+            phone: { message: I18n.t(:invalid),
+                     allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
+            if: -> { mobile_number.present? }
 
   def self.confirm_by_token(token)
     user = super(token)
