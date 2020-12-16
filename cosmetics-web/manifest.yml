@@ -27,7 +27,7 @@ applications:
   path: .
   processes:
     - type: web
-      command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate && bundle exec puma
+      command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate &&  bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
       instances: 1
       memory: 1G
     - type: worker
