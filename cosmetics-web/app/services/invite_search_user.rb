@@ -1,4 +1,4 @@
-class InviteUser
+class InviteSearchUser
   include Interactor
 
   delegate :user, :role, :name, to: :context
