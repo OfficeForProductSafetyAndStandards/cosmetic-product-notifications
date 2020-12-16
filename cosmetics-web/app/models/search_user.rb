@@ -18,8 +18,7 @@ class SearchUser < User
   }
 
   validates :mobile_number,
-            phone: { message: :invalid,
-                     allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
+            phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
 
   def poison_centre_user?

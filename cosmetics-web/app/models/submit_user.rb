@@ -16,8 +16,7 @@ class SubmitUser < User
   has_one :user_attributes, dependent: :destroy
   validates :mobile_number, presence: true
   validates :mobile_number,
-            phone: { message: :invalid,
-                     allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
+            phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
 
   def self.confirm_by_token(token)
