@@ -44,7 +44,7 @@ GEM
       activemodel (= 5.2.4.4)
       activesupport (= 5.2.4.4)
       arel (>= 9.0)
-    activerecord-pg_enum (1.1.0)
+    activerecord-pg_enum (1.2.0)
       activerecord (>= 4.1.0)
       activesupport
       pg
@@ -404,7 +404,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.10)
     tins (1.21.1)
-    tzinfo (1.2.7)
+    tzinfo (1.2.8)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
