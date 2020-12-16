@@ -155,6 +155,11 @@ en:
               too_short: "Password must be at least 8 characters"
             full_name:
               blank: "Enter your full name"
+        resend_secondary_authentication_code_form:
+          attributes:
+            mobile_number:
+              blank: "Enter your mobile number"
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
         responsible_person_details_form:
           attributes:
             name:
@@ -211,10 +216,6 @@ en:
     incorrect: "Incorrect security code"
     expired: "The security code has expired. New code sent."
     numericality: "The code must be 5 numbers"
-  resend_secondary_authentication_code_form:
-    mobile_number:
-      blank: "Enter your mobile number"
-      invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
   sign_in_form:
     email:
       wrong_email_or_password: "Enter your email address in the correct format, like name@example.com"
