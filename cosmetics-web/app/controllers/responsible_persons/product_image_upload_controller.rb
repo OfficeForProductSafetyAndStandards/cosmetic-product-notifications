@@ -6,7 +6,7 @@ class ResponsiblePersons::ProductImageUploadController < SubmitApplicationContro
   def create
     return render_missing_file_error if params[:image_upload].blank?
 
-    params[:image_upload].each { |img| add_image_to_notification(img) }
+    params[:image_upload].each { |img| @notification.add_image(img) }
     if @notification.save
       redirect_to responsible_person_notification_additional_information_index_path(
         @notification.responsible_person,
@@ -22,12 +22,6 @@ private
   def render_missing_file_error
     add_error "No file selected"
     render :new
-  end
-
-  def add_image_to_notification(image)
-    image_upload = @notification.image_uploads.build
-    image_upload.file.attach(image)
-    image_upload.filename = image.original_filename
   end
 
   def render_image_upload_errors

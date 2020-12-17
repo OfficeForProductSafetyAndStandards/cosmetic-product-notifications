@@ -97,6 +97,13 @@ class Notification < ApplicationRecord
     sprintf("UKCP-%08d", reference_number)
   end
 
+  def add_image(image)
+    image_uploads.build.tap do |upload|
+      upload.file.attach(image)
+      upload.filename = image.original_filename
+    end
+  end
+
   def images_are_present_and_safe?
     !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
   end
