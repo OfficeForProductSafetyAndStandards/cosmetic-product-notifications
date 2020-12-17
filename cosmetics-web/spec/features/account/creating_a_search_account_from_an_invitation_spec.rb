@@ -9,15 +9,24 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     configure_requests_for_search_domain
   end
 
-  scenario "Creating an account from an invitation" do
+  scenario "Creating a Search account from an invitation" do
     email = delivered_emails.last
     invite_url = email.personalization[:invitation_url]
     visit invite_url
 
     expect_to_be_on_complete_registration_page
 
-    fill_in_account_details_with full_name: "Bob Jones", mobile_number: "07731123345", password: "testpassword123@"
+    # Attempts to complete registration with validation errors
+    # International numbers are not accepted for Search users.
+    fill_in_account_details_with full_name: "Bob Jones", mobile_number: "+34629010101", password: "testpassword123@"
+    click_button "Continue"
 
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
+    expect(page).to have_css("span#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
+
+    # Second attempt with no validation issues
+    fill_in_account_details_with full_name: "Bob Jones", mobile_number: "07731123345", password: "testpassword123@"
     click_button "Continue"
 
     expect_to_be_on_secondary_authentication_page

@@ -108,6 +108,29 @@ RSpec.describe "User requests new secondary authentication code", type: :request
         end
       end
 
+      context "when an incorrect mobile number is provied" do
+        let(:mobile_number) { "00thisIsWrong" }
+
+        it "shows the submission form" do
+          request_code
+
+          expect(response).to render_template("secondary_authentications/resend_code/new")
+        end
+
+        it "does not change the user secondary authentication code" do
+          expect {
+            request_code
+            user.reload
+          }.not_to change(user, :direct_otp)
+        end
+
+        it "does not send any sms to the user" do
+          request_code
+
+          expect(notify_stub).not_to have_received(:send_sms)
+        end
+      end
+
       context "when a mobile number is provided" do
         let(:mobile_number) { "7123456789" }
 
