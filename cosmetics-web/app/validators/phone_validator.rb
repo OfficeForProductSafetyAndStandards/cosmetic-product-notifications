@@ -67,10 +67,10 @@ private
 
     raise NotUKPhoneError unless allow_international
 
-    number = normalise_phone_number(number)
-    raise PhoneTooShortError if number.length < INTERNATIONAL_MIN_LENGTH
-    raise PhoneTooLongError if number.length > INTERNATIONAL_MAX_LENGTH
-    raise InvalidCountryError if international_prefix(number).blank?
+    normalised_number = normalise_phone_number(number)
+    raise PhoneTooShortError if normalised_number.length < INTERNATIONAL_MIN_LENGTH
+    raise PhoneTooLongError if normalised_number.length > INTERNATIONAL_MAX_LENGTH
+    raise InvalidCountryError if international_prefix(normalised_number).blank?
 
     number
   end
@@ -84,12 +84,19 @@ private
   end
 
   def normalise_phone_number(number)
-    STRINGS_TO_CLEAN.each { |str| number.gsub!(str, "") }
-    if number.match?(/^\d+$/) # All characters are digits (and has at least one digit)
-      number.delete_prefix!(ZERO) while number.start_with?(ZERO)
-      number
+    cleaned_number = remove_allowed_non_digits(number)
+    # All characters are digits (and has at least one digit)
+    if cleaned_number.match?(/^\d+$/)
+      cleaned_number.sub(/^0+/, "") # Remove any leading 0s
     else
       raise BadFormatError
+    end
+  end
+
+  def remove_allowed_non_digits(number)
+    # Using inject to avoid mutating the original 'number'
+    STRINGS_TO_CLEAN.inject(number) do |output, to_clean|
+      output.gsub(to_clean, "")
     end
   end
 

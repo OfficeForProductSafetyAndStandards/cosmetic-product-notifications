@@ -132,7 +132,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
       end
 
       context "when a mobile number is provided" do
-        let(:mobile_number) { "7123456789" }
+        let(:mobile_number) { "+(44)7123456789" }
 
         it "generates a new secondary authentication code for the user" do
           expect {
