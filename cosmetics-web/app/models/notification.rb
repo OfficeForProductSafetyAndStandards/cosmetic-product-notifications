@@ -105,17 +105,15 @@ class Notification < ApplicationRecord
   end
 
   def images_are_present_and_safe?
-    !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
+    !image_uploads.empty? && image_uploads.all?(&:passed_antivirus_check?)
   end
 
   def images_failed_anti_virus_check?
-    image_uploads.any?(&:file_missing?)
+    image_uploads.any?(&:failed_antivirus_check?)
   end
 
   def images_pending_anti_virus_check?
-    image_uploads.any? do |image|
-      image.file_exists? && !image.marked_as_safe?
-    end
+    image_uploads.any?(&:pending_antivirus_check?)
   end
 
   def to_param
