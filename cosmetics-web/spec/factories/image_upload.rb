@@ -5,7 +5,7 @@ FactoryBot.define do
 
     trait :uploaded_and_virus_scanned do
       after :create do |image_upload|
-        image_upload.file.metadata["safe"] = "true"
+        image_upload.file.metadata["safe"] = true
       end
     end
   end
