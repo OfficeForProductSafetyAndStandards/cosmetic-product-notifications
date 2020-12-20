@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :feature do
+RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do
@@ -406,5 +406,25 @@ RSpec.describe "ZIP file upload notifications", :with_stubbed_antivirus, type: :
     click_button "Accept and submit the cosmetic product notification"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-Rangevalues_Exactvalues_Nano"
+  end
+
+  feature "detecting virus in attachments", :with_stubbed_antivirus_returning_false do
+    scenario "Using a zip file that contains a virus" do
+      visit new_responsible_person_add_notification_path(responsible_person)
+
+      expect_to_be_on__was_eu_notified_about_products_page
+      answer_was_eu_notified_with "Yes"
+
+      expect_to_be_on__do_you_have_the_zip_files_page
+      answer_do_you_have_zip_files_with "Yes"
+
+      expect_to_be_on__upload_eu_notification_files_page
+      upload_zip_file "testExportFile.zip"
+
+      visit responsible_person_notifications_path(responsible_person)
+
+      expect(page).to have_link("Errors (1)", href: "#errors")
+      expect_to_see_notification_error("The uploaded file has been flagged as a virus")
+    end
   end
 end
