@@ -9,6 +9,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     visit "/"
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
+
     # First attempt with validation errors
     fill_in "Full name", with: ""
     fill_in "Email address", with: "signing_up.example.com"
@@ -22,6 +23,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).to have_link("Enter your email address", href: "#email")
     expect(page).to have_css("span#email-error", text: "Enter your email address")
 
+    # Second attempt with no validation issues
     fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
@@ -35,6 +37,18 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
+    # Attempts to submit security page with validation errors
+    expect(page).to have_current_path("/account-security")
+    fill_in "Mobile number", with: "07000 invalid 000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
+
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
+    expect(page).to have_css("span#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
+
+    # Second attempt with no validation issues
     fill_in "Mobile number", with: "07000000000"
     fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"

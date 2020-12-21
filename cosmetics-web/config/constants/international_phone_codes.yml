@@ -1,0 +1,657 @@
+# List obtained from Gov Digital Service list of international billing rates.
+# https://github.com/alphagov/notifications-utils/blob/master/notifications_utils/international_billing_rates.yml
+#
+# This list is used by the GOV.UK Notify API (https://github.com/alphagov/notifications-api) to validate phone
+# numbers prior to send SMS through the service.
+# We use this API in order to send 2FA codes to Cosmetics users.
+---
+'1':
+  names:
+  - Canada
+  - United States
+  - Dominican Republic
+'7':
+  names:
+  - South Ossetia
+  - Kazakhstan
+  - Abkhazia
+  - Russian Federation
+'20':
+  names:
+  - Egypt
+'27':
+  names:
+  - South Africa
+'30':
+  names:
+  - Greece
+'31':
+  names:
+  - Netherlands
+'32':
+  names:
+  - Belgium
+'33':
+  names:
+  - France
+'34':
+  names:
+  - Spain
+'36':
+  names:
+  - Hungary
+'39':
+  names:
+  - Italy
+'40':
+  names:
+  - Romania
+'41':
+  names:
+  - Switzerland
+'43':
+  names:
+  - Austria
+'44':
+  names:
+  - Guernsey
+  - Isle of Man
+  - Jersey
+'45':
+  names:
+  - Denmark
+'46':
+  names:
+  - Sweden
+'47':
+  names:
+  - Norway
+'48':
+  names:
+  - Poland
+'49':
+  names:
+  - Germany
+'51':
+  names:
+  - Peru
+'52':
+  names:
+  - Mexico
+'53':
+  names:
+  - Cuba
+'54':
+  names:
+  - Argentina
+'55':
+  names:
+  - Brazil
+'56':
+  names:
+  - Chile
+'57':
+  names:
+  - Colombia
+'58':
+  names:
+  - Venezuela
+'60':
+  names:
+  - Malaysia
+'61':
+  names:
+  - Australia
+'62':
+  names:
+  - Indonesia
+'63':
+  names:
+  - Philippines
+'64':
+  names:
+  - New Zealand
+'65':
+  names:
+  - Singapore
+'66':
+  names:
+  - Thailand
+'81':
+  names:
+  - Japan
+'82':
+  names:
+  - Korea, Republic of
+'84':
+  names:
+  - Vietnam
+'86':
+  names:
+  - China
+'90':
+  names:
+  - Turkey
+  - Northern Cyprus
+'91':
+  names:
+  - India
+'92':
+  names:
+  - Pakistan
+'93':
+  names:
+  - Afghanistan
+'94':
+  names:
+  - Sri Lanka
+'95':
+  names:
+  - Myanmar
+'98':
+  names:
+  - Iran
+'211':
+  names:
+  - South Sudan
+'212':
+  names:
+  - Morocco
+'213':
+  names:
+  - Algeria
+'216':
+  names:
+  - Tunisia
+'218':
+  names:
+  - Libya
+'220':
+  names:
+  - Gambia
+'221':
+  names:
+  - Senegal
+'222':
+  names:
+  - Mauritania
+'223':
+  names:
+  - Mali
+'224':
+  names:
+  - Guinea
+'225':
+  names:
+  - Cote d'Ivoire
+'226':
+  names:
+  - Burkina Faso
+'227':
+  names:
+  - Niger
+'228':
+  names:
+  - Togo
+'229':
+  names:
+  - Benin
+'230':
+  names:
+  - Mauritius
+'231':
+  names:
+  - Liberia
+'232':
+  names:
+  - Sierra Leone
+'233':
+  names:
+  - Ghana
+'234':
+  names:
+  - Nigeria
+'235':
+  names:
+  - Chad
+'236':
+  names:
+  - Central African Republic
+'237':
+  names:
+  - Cameroon
+'238':
+  names:
+  - Cape Verde
+'239':
+  names:
+  - Sao Tome and Principe
+'240':
+  names:
+  - Equatorial Guinea
+'241':
+  names:
+  - Gabon
+'242':
+  names:
+  - Congo
+'243':
+  names:
+  - Congo, Democratic Republic of
+'244':
+  names:
+  - Angola
+'245':
+  names:
+  - Guinea-Bissau
+'246':
+  names:
+  - British Indian Ocean Territory
+'248':
+  names:
+  - Seychelles
+'249':
+  names:
+  - Sudan
+'250':
+  names:
+  - Rwanda, Republic of
+'251':
+  names:
+  - Ethiopia
+'252':
+  names:
+  - Somalia
+'253':
+  names:
+  - Djibouti, Republic of
+'254':
+  names:
+  - Kenya
+'255':
+  names:
+  - Tanzania
+'256':
+  names:
+  - Uganda
+'257':
+  names:
+  - Burundi
+'258':
+  names:
+  - Mozambique
+'260':
+  names:
+  - Zambia
+'261':
+  names:
+  - Madagascar
+'262':
+  names:
+  - Reunion
+'263':
+  names:
+  - Zimbabwe
+'264':
+  names:
+  - Namibia
+'265':
+  names:
+  - Malawi
+'266':
+  names:
+  - Lesotho
+'267':
+  names:
+  - Botswana
+'268':
+  names:
+  - Swaziland
+'269':
+  names:
+  - Comoros
+'297':
+  names:
+  - Aruba
+'298':
+  names:
+  - Faroe Islands
+'299':
+  names:
+  - Greenland
+'350':
+  names:
+  - Gibraltar
+'351':
+  names:
+  - Portugal
+'352':
+  names:
+  - Luxembourg
+'353':
+  names:
+  - Ireland
+'354':
+  names:
+  - Iceland
+'355':
+  names:
+  - Albania
+'356':
+  names:
+  - Malta
+'357':
+  names:
+  - Cyprus
+'358':
+  names:
+  - Finland
+'359':
+  names:
+  - Bulgaria
+'370':
+  names:
+  - Lithuania
+'371':
+  names:
+  - Latvia
+'372':
+  names:
+  - Estonia
+'373':
+  names:
+  - Moldova
+'374':
+  names:
+  - Armenia
+'375':
+  names:
+  - Belarus
+'376':
+  names:
+  - Andorra
+'377':
+  names:
+  - Monaco
+'378':
+  names:
+  - San Marino, Republic of
+'380':
+  names:
+  - Ukraine
+'381':
+  names:
+  - Serbia
+'382':
+  names:
+  - Montenegro
+'385':
+  names:
+  - Croatia
+'386':
+  names:
+  - Slovenia
+'387':
+  names:
+  - Bosnia and Herzegovina
+'389':
+  names:
+  - Macedonia
+'420':
+  names:
+  - Czech Republic
+'421':
+  names:
+  - Slovakia
+'423':
+  names:
+  - Liechtenstein
+'500':
+  names:
+  - Falkland Islands
+'501':
+  names:
+  - Belize
+'502':
+  names:
+  - Guatemala
+'503':
+  names:
+  - El Salvador
+'504':
+  names:
+  - Honduras
+'505':
+  names:
+  - Nicaragua
+'506':
+  names:
+  - Costa Rica
+'507':
+  names:
+  - Panama
+'508':
+  names:
+  - Saint Pierre and Miquelon
+'509':
+  names:
+  - Haiti
+'590':
+  names:
+  - Guadeloupe
+'591':
+  names:
+  - Bolivia
+'592':
+  names:
+  - Guyana
+'593':
+  names:
+  - Ecuador
+'594':
+  names:
+  - French Guiana
+'595':
+  names:
+  - Paraguay
+'596':
+  names:
+  - Martinique
+'597':
+  names:
+  - Suriname
+'598':
+  names:
+  - Uruguay
+'599':
+  names:
+  - Curacao (former Netherlands Antilles)
+'670':
+  names:
+  - Timor L'este
+'672':
+  names:
+  - Norfolk Island
+'673':
+  names:
+  - Brunei Darussalam
+'674':
+  names:
+  - Nauru
+'675':
+  names:
+  - Papua New Guinea
+'676':
+  names:
+  - Tonga
+'677':
+  names:
+  - Solomon Islands
+'678':
+  names:
+  - Vanuatu
+'679':
+  names:
+  - Fiji
+'680':
+  names:
+  - Palau
+'682':
+  names:
+  - Cook Islands
+'685':
+  names:
+  - Samoa
+'687':
+  names:
+  - New Caledonia
+'689':
+  names:
+  - French Polynesia
+'691':
+  names:
+  - Micronesia, Federated States of
+'692':
+  names:
+  - Marshall Islands
+'852':
+  names:
+  - Hong Kong
+'853':
+  names:
+  - Macau
+'855':
+  names:
+  - Cambodia
+'856':
+  names:
+  - Laos
+'880':
+  names:
+  - Bangladesh
+'886':
+  names:
+  - Taiwan
+'960':
+  names:
+  - Maldives
+'961':
+  names:
+  - Lebanon
+'962':
+  names:
+  - Jordan
+'963':
+  names:
+  - Syria
+'964':
+  names:
+  - Iraq
+'965':
+  names:
+  - Kuwait
+'966':
+  names:
+  - Saudi Arabia
+'967':
+  names:
+  - Yemen
+'968':
+  names:
+  - Oman
+'970':
+  names:
+  - Palestinian Territory
+'971':
+  names:
+  - United Arab Emirates
+'972':
+  names:
+  - Israel
+'973':
+  names:
+  - Bahrain
+'974':
+  names:
+  - Qatar
+'975':
+  names:
+  - Bhutan
+'976':
+  names:
+  - Mongolia
+'977':
+  names:
+  - Nepal
+'992':
+  names:
+  - Tajikistan
+'993':
+  names:
+  - Turkmenistan
+'994':
+  names:
+  - Azerbaijan
+'995':
+  names:
+  - Georgia
+'996':
+  names:
+  - Kyrgyzstan
+'998':
+  names:
+  - Uzbekistan
+'1242':
+  names:
+  - Bahamas
+'1246':
+  names:
+  - Barbados
+'1264':
+  names:
+  - Anguilla
+'1268':
+  names:
+  - Antigua and Barbuda
+'1284':
+  names:
+  - Virgin Islands, British
+'1345':
+  names:
+  - Cayman Islands
+'1441':
+  names:
+  - Bermuda
+'1473':
+  names:
+  - Grenada
+'1649':
+  names:
+  - Turks and Caicos Islands
+'1664':
+  names:
+  - Montserrat
+'1684':
+  names:
+  - American Samoa
+'1721':
+  names:
+  - Sint Maarten
+'1758':
+  names:
+  - Saint Lucia
+'1767':
+  names:
+  - Dominica, Commonwealth of
+'1784':
+  names:
+  - Saint Vincent and The Grenadines
+'1868':
+  names:
+  - Trinidad and Tobago
+'1869':
+  names:
+  - Saint Kitts and Nevis
+'1876':
+  names:
+  - Jamaica
