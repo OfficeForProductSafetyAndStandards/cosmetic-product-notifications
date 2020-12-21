@@ -13,8 +13,7 @@ class ImageUpload < ApplicationRecord
   end
 
   def failed_antivirus_check?
-    # File is deleted when antivirus check flags it as a virus.
-    !file_exists? && virus_safe == false
+    file_exists? && virus_safe == false
   end
 
   def passed_antivirus_check?
@@ -23,7 +22,6 @@ class ImageUpload < ApplicationRecord
   end
 
   def pending_antivirus_check?
-    # If is 'false' is not pending.
     file_exists? && virus_safe.nil?
   end
 

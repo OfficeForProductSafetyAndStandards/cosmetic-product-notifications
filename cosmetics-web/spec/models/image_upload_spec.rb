@@ -130,12 +130,6 @@ RSpec.describe ImageUpload, type: :model do
     context "when image upload contains a file" do
       let(:attachment) { fixture_file_upload("/testImage.png", "image/png") }
 
-      it { expect(image_upload.failed_antivirus_check?).to eq false }
-    end
-
-    context "when image upload does not contain a file" do
-      let(:attachment) {}
-
       context "when the antivirus is disabled" do
         before { stub_const("ENV", { "ANTIVIRUS_ENABLED" => "false" }) }
 
@@ -163,6 +157,12 @@ RSpec.describe ImageUpload, type: :model do
           it { expect(image_upload.failed_antivirus_check?).to eq false }
         end
       end
+    end
+
+    context "when image upload does not contain a file" do
+      let(:attachment) {}
+
+      it { expect(image_upload.failed_antivirus_check?).to eq false }
     end
   end
 end
