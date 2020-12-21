@@ -8,7 +8,7 @@
 ## Inviting Search Users
 
 1. SSH to rails console (described below)
-2. Run `InviteUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`
+2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`
 3. Role could be `poison_centre` or `msa`
 
 ## Getting Setup

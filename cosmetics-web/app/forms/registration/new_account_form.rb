@@ -5,11 +5,7 @@ module Registration
 
     attribute :full_name
 
-    private_class_method def self.error_message(attr, key)
-      I18n.t(key, scope: "new_account.#{attr}")
-    end
-
-    validates_presence_of :full_name, message: error_message(:full_name, :blank)
+    validates_presence_of :full_name
     include EmailFormValidation
 
     def save

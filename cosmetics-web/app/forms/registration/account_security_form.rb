@@ -8,13 +8,14 @@ module Registration
     attribute :user
     attribute :full_name
 
-    private_class_method def self.error_message(attr, key)
-      I18n.t(key, scope: "account_security.#{attr}")
-    end
-
-    validates_presence_of :full_name, message: error_message(:full_name, :blank), if: :name_required?
+    validates_presence_of :full_name, if: :name_required?
     validates :mobile_number, presence: true
-    validates :mobile_number, phone: { message: I18n.t(:invalid, scope: %i[activerecord errors models user attributes mobile_number]) }, if: -> { mobile_number.present? }
+    validates :mobile_number,
+              phone: { message: :invalid, allow_international: true },
+              if: :validate_international_mobile_number?
+    validates :mobile_number,
+              phone: { message: :invalid, allow_international: false },
+              if: :validate_uk_mobile_number?
     validates :password, length: { minimum: 8 }, if: -> { password.present? }
     validates :password, presence: true
 
@@ -38,6 +39,14 @@ module Registration
 
     def name_required?
       user.name.blank?
+    end
+
+    def validate_uk_mobile_number?
+      mobile_number.present? && user && !user.class::ALLOW_INTERNATIONAL_PHONE_NUMBER
+    end
+
+    def validate_international_mobile_number?
+      mobile_number.present? && user && user.class::ALLOW_INTERNATIONAL_PHONE_NUMBER
     end
   end
 end
