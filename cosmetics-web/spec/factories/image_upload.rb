@@ -4,8 +4,14 @@ FactoryBot.define do
     file { Rack::Test::UploadedFile.new("spec/fixtures/testPdf.pdf", "image/png") }
 
     trait :uploaded_and_virus_scanned do
-      after :create do |image_upload|
+      after(:stub, :create) do |image_upload|
         image_upload.file.metadata["safe"] = true
+      end
+    end
+
+    trait :uploaded_and_virus_identified do
+      after(:stub, :create) do |image_upload|
+        image_upload.file.metadata["safe"] = false
       end
     end
   end
