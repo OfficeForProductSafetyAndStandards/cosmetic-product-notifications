@@ -110,14 +110,14 @@ RSpec.describe Registration::AccountSecurityForm do
     context "when mobile number has letters" do
       include_examples "mobile number" do
         let(:mobile_number) { "070000assd" }
-        let(:message) { "Enter your mobile number in the correct format, like 07700 900 982" }
+        let(:message) { "Enter a mobile number, like 07700 900 982 or +44 7700 900 982" }
       end
     end
 
     context "when mobile number has not enough characters" do
       include_examples "mobile number" do
         let(:mobile_number) { "0700710120" }
-        let(:message) { "Enter your mobile number in the correct format, like 07700 900 982" }
+        let(:message) { "Enter a mobile number, like 07700 900 982 or +44 7700 900 982" }
       end
     end
   end

@@ -8,7 +8,7 @@
 ## Inviting Search Users
 
 1. SSH to rails console (described below)
-2. Run `InviteUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`
+2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`
 3. Role could be `poison_centre` or `msa`
 
 ## Getting Setup
@@ -245,6 +245,8 @@ Start by setting up the following credentials:
         "BASIC_AUTH_USERNAME": "XXX",
         "BASIC_AUTH_PASSWORD": "XXX"
     }'
+
+    If the username/password set up in this step are not accepted when trying to visit the page, you may need to [forward the authorization header](https://docs.cloud.service.gov.uk/deploying_services/use_a_custom_domain/#forwarding-headers)
 
 * To enable and add basic auth to the health check endpoint at `/health/all`:
 
