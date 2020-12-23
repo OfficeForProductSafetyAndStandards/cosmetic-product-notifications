@@ -12,7 +12,7 @@ applications:
     COSMETICS_HOST: ((submit-host))
   stack: cflinuxfs3
   services:
-    - cosmetics-database
+    - cosmetics-database-large
     - cosmetics-elasticsearch-7
     - cosmetics-queue
     - opss-log-drain
@@ -27,8 +27,8 @@ applications:
   path: .
   processes:
     - type: web
-      command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate &&  bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
-      instances: 1
+      command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate && bundle exec puma
+      instances: 4
       memory: 1G
     - type: worker
       command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml
