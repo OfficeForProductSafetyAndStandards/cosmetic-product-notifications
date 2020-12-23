@@ -28,10 +28,12 @@ applications:
   processes:
     - type: web
       command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate &&  bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV
-      instances: 1
-      memory: 1G
+      instances: 4
+      memory: 2G
+      disk_quota: 2G
     - type: worker
       command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
-      instances: 1
-      memory: 500M
+      instances: 2
+      memory: 1G
+      disk_quota: 2G
