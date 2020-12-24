@@ -34,8 +34,16 @@
         <% if notification.image_uploads.present? %>
           <ul class="govuk-list">
             <% notification.image_uploads.each do |image| %>
-              <% if image.file_exists? && image.marked_as_safe? %>
+              <% if image.passed_antivirus_check? %>
                 <li><%= link_to image.filename, url_for(image.file) %></li>
+              <% elsif image.file_exists? %>
+                <p>
+                  <%= "Processing image #{image.file.filename} ..." %>
+                  <br>
+                  <%= link_to "Refresh",
+                              edit_responsible_person_notification_path(@responsible_person, @notification),
+                              class: "govuk-link--no-visited-state" %>
+                </p>
               <% end %>
             <% end %>
           </ul>

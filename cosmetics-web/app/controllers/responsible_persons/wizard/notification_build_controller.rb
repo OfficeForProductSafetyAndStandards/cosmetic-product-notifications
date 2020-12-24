@@ -163,11 +163,7 @@ private
 
   def render_add_product_image_step
     if params[:image_upload].present?
-      params[:image_upload].each do |image|
-        image_upload = @notification.image_uploads.build
-        image_upload.file.attach(image)
-        image_upload.filename = image.original_filename
-      end
+      params[:image_upload].each { |img| @notification.add_image(img) }
       @notification.save
       if @notification.is_multicomponent?
         render_wizard @notification

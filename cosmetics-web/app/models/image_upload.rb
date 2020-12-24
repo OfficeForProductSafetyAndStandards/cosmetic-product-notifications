@@ -12,15 +12,22 @@ class ImageUpload < ApplicationRecord
     file.attachment.present?
   end
 
-  def file_missing?
-    !file_exists?
+  def failed_antivirus_check?
+    file_exists? && virus_safe == false
   end
 
-  def marked_as_safe?
-    file_exists? && metadata_safe
+  def passed_antivirus_check?
+    # We want to return 'false' (not nil) when the virus_safe is 'nil'
+    file_exists? && virus_safe == true
   end
 
-  def metadata_safe
+  def pending_antivirus_check?
+    file_exists? && virus_safe.nil?
+  end
+
+private
+
+  def virus_safe
     return true if ENV["ANTIVIRUS_ENABLED"] == "false"
 
     file.metadata["safe"]
