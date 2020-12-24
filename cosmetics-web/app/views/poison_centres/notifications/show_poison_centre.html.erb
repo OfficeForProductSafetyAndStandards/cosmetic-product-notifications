@@ -18,7 +18,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third product-images">
     <% @notification.image_uploads.each do |image| %>
-      <% if image.marked_as_safe? %>
+      <% if image.passed_antivirus_check? %>
         <% if image.file.variable? %>
           <%= link_to image_tag(image.file.variant(resize: "450x450")), url_for(image.file) %>
         <% elsif image.file.previewable? %>

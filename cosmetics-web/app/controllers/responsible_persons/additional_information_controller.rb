@@ -13,7 +13,7 @@ class ResponsiblePersons::AdditionalInformationController < SubmitApplicationCon
       @notification.formulation_file_uploaded!
     end
 
-    if @notification.images_required_and_missing?
+    if @notification.required_images_missing_or_with_virus?
       return redirect_to new_responsible_person_notification_product_image_upload_path(@notification.responsible_person, @notification)
     end
 
