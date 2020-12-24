@@ -1,6 +1,8 @@
 require "zip"
 
 class NotificationFileProcessorJob < ApplicationJob
+  class AntivirusCheckFailedError < StandardError; end
+  class AntivirusCheckPendingError < StandardError; end
   class UnexpectedPdfFileError < FileUploadError; end
   class ProductFileNotFoundError < FileUploadError; end
   class NotificationMissingDataError < FileUploadError; end
@@ -9,8 +11,18 @@ class NotificationFileProcessorJob < ApplicationJob
   include CpnpStaticFiles
   include ActiveStorage::Downloading
 
+  discard_on AntivirusCheckFailedError do |job, _error|
+    Sidekiq.logger.error "Job #{job} re-scheduled due to missing antivirus check on the attachment"
+  end
+
+  retry_on AntivirusCheckPendingError do |job, _error| # defaults to ~3s wait, 5 attempts
+    Sidekiq.logger.error "Job #{job} cancelled due to virus detected on the attachment"
+  end
+
   def perform(notification_file_id)
     @notification_file = NotificationFile.find(notification_file_id)
+    check_antivirus_output(@notification_file.uploaded_file)
+
     create_notification_from_file
     delete_notification_file if @notification_file.upload_error.blank?
   end
@@ -102,5 +114,13 @@ private
 
   def delete_notification_file
     @notification_file.destroy!
+  end
+
+  def check_antivirus_output(uploaded_file)
+    case uploaded_file&.metadata&.fetch("safe", nil)
+    when true then true
+    when false then raise AntivirusCheckFailedError
+    when nil then raise AntivirusCheckPendingError
+    end
   end
 end
