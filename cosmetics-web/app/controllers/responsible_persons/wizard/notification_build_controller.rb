@@ -146,7 +146,7 @@ private
     if params.key?(:remove_component)
       remove_component_id = params[:remove_component].to_i
       componet_to_remove = @notification.components.select { |component| component.id == remove_component_id }
-      @notification.components.delete(componet_to_remove)
+      @notification.components.destroy(componet_to_remove)
       @notification.components.create if @notification.components.length < 2
       render step
     elsif params.key?(:add_component) && params[:add_component]
