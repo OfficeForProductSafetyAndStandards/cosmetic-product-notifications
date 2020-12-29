@@ -23,6 +23,7 @@ applications:
     - cosmetics-sentry-env
     - cosmetics-notify-env
     - cosmetics-sidekiq-env
+    - cosmetics-puma-env
     - antivirus-auth-env
   path: .
   processes:
