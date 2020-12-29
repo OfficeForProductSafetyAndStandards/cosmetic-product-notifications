@@ -28,8 +28,8 @@ applications:
   processes:
     - type: web
       command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate && bundle exec puma
-      instances: 4
-      memory: 1G
+      instances: 8
+      memory: 2G
     - type: worker
       command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
