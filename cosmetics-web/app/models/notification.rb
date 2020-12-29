@@ -97,18 +97,23 @@ class Notification < ApplicationRecord
     sprintf("UKCP-%08d", reference_number)
   end
 
-  def images_are_present_and_safe?
-    !image_uploads.empty? && image_uploads.all?(&:marked_as_safe?)
+  def add_image(image)
+    image_uploads.build.tap do |upload|
+      upload.file.attach(image)
+      upload.filename = image.original_filename
+    end
+  end
+
+  def all_images_passed_anti_virus_check?
+    image_uploads.all?(&:passed_antivirus_check?)
   end
 
   def images_failed_anti_virus_check?
-    image_uploads.any?(&:file_missing?)
+    image_uploads.any?(&:failed_antivirus_check?)
   end
 
   def images_pending_anti_virus_check?
-    image_uploads.any? do |image|
-      image.file_exists? && !image.marked_as_safe?
-    end
+    image_uploads.any?(&:pending_antivirus_check?)
   end
 
   def to_param
@@ -116,7 +121,7 @@ class Notification < ApplicationRecord
   end
 
   def missing_information?
-    nano_material_required? || formulation_required? || images_required_and_missing?
+    nano_material_required? || formulation_required? || required_images_missing_or_not_passed_antivirus_check?
   end
 
   def nano_material_required?
@@ -139,14 +144,20 @@ class Notification < ApplicationRecord
     !notified_pre_eu_exit?
   end
 
+  alias_method :requires_images?, :notified_post_eu_exit?
+
   def notified_pre_eu_exit?
     was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATE))
   end
 
-  # Returns true if images are required by policy AND have not yet
-  # been uploaded (and virus-scanned).
-  def images_required_and_missing?
-    notified_post_eu_exit? && !images_are_present_and_safe?
+  # If any image is waiting for the antivirus check or it got a virus alert this method will be "true"
+  def required_images_missing_or_not_passed_antivirus_check?
+    requires_images? && (image_uploads.empty? || !all_images_passed_anti_virus_check?)
+  end
+
+  # Only will return "true" when there are no images or any image got an explicit antivirus alert
+  def required_images_missing_or_with_virus?
+    requires_images? && (image_uploads.empty? || images_failed_anti_virus_check?)
   end
 
   def get_valid_multicomponents

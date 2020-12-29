@@ -44,12 +44,12 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
   end
 
   def destroy
-    NotificationFile.delete(params[:id])
+    NotificationFile.destroy(params[:id])
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
 
   def destroy_all
-    @responsible_person.notification_files.where(user_id: current_user.id).where.not(upload_error: nil).delete_all
+    @responsible_person.notification_files.where(user_id: current_user.id).where.not(upload_error: nil).destroy_all
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
 

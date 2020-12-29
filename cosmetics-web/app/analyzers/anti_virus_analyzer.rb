@@ -13,7 +13,7 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
       { safe: body["safe"] }
     end
 
-    if metadata["safe"] == false && notification_file.present?
+    if metadata[:safe] == false && notification_file.present?
       notification_file.update(upload_error: :file_flagged_as_virus)
     end
 
