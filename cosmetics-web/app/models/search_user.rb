@@ -5,7 +5,7 @@ class SearchUser < User
   # Include default devise modules. Others available are:
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable,
-         :lockable, :trackable
+         :lockable, :trackable, :session_limitable
 
   belongs_to :organisation
 
