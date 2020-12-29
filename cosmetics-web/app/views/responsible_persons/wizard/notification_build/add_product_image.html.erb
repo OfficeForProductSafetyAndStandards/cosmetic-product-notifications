@@ -14,21 +14,7 @@
     <h1 class="govuk-heading-l"><%= page_title %></h1>
 
     <% if @notification.is_multicomponent? %>
-      <p class="govuk-body">
-        For National Poison Information Services to identify the item, you need to upload images of the item labels.
-      </p>
-      <p class="govuk-body">
-        To further help identify the items, you can also provide a photo of the kit and its items.
-      </p>
-      <p class="govuk-body">
-        You can upload up to 10 images. Each file can be up to 30MB and must be a JPG, PNG or PDF.
-      </p>
-      <p class="govuk-body">
-        Upload an image of the label for each item in the kit.
-      </p>
-      <p class="govuk-body">
-        The image must be in focus and all packaging text legible.
-      </p>
+      <%= render "shared/multiple_images_upload_description" %>
     <% else %>
       <p class="govuk-body">
         For National Poison Information Services to identify the product, you need to upload an image of the product label.

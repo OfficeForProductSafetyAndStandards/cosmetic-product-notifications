@@ -9,16 +9,14 @@ class SecondaryAuthenticationForm
 
   attr_accessor :user_klass
 
-  validates_presence_of :otp_code, message: I18n.t(".otp_code.blank")
+  validates_presence_of :otp_code
   validates :otp_code,
-            format: { with: INTEGER_REGEX, message: I18n.t(".otp_code.numericality") },
+            format: { with: INTEGER_REGEX, message: :numericality },
             allow_blank: true
   validates :otp_code,
             length: {
               maximum: SecondaryAuthentication::OTP_LENGTH,
-              too_long: I18n.t(".otp_code.too_long"),
               minimum: SecondaryAuthentication::OTP_LENGTH,
-              too_short: I18n.t(".otp_code.too_short"),
             },
             allow_blank: true,
             if: -> { INTEGER_REGEX.match?(otp_code) }
@@ -36,7 +34,7 @@ class SecondaryAuthenticationForm
     return if errors.present?
 
     unless secondary_authentication.valid_otp? otp_code
-      errors.add(:otp_code, I18n.t(".otp_code.incorrect"))
+      errors.add(:otp_code, :incorrect)
     end
   end
 
@@ -44,7 +42,7 @@ class SecondaryAuthenticationForm
     return if errors.present?
 
     if secondary_authentication.otp_locked?
-      errors.add(:otp_code, I18n.t(".otp_code.incorrect"))
+      errors.add(:otp_code, :incorrect)
     end
   end
 
@@ -52,7 +50,7 @@ class SecondaryAuthenticationForm
     return if errors.present?
 
     if secondary_authentication.otp_expired?
-      errors.add(:otp_code, I18n.t(".otp_code.expired"))
+      errors.add(:otp_code, :expired)
     end
   end
 

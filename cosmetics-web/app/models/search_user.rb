@@ -1,10 +1,11 @@
 class SearchUser < User
   INVITATION_EXPIRATION_DAYS = 14
+  ALLOW_INTERNATIONAL_PHONE_NUMBER = false
 
   # Include default devise modules. Others available are:
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable,
-         :lockable, :trackable
+         :lockable, :trackable, :session_limitable
 
   belongs_to :organisation
 
@@ -15,6 +16,10 @@ class SearchUser < User
     poison_centre: "poison_centre",
     msa: "market_surveilance_authority",
   }
+
+  validates :mobile_number,
+            phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
+            if: -> { mobile_number.present? }
 
   def poison_centre_user?
     poison_centre?

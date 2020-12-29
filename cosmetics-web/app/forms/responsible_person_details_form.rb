@@ -17,10 +17,6 @@ class ResponsiblePersonDetailsForm
   validate :user_not_member_of_rp_with_same_name
   validate :user_not_invited_to_rp_with_same_name
 
-  private_class_method def self.error_message(attr, key)
-    I18n.t(key, scope: "responsible_person.#{attr}")
-  end
-
   def user_not_member_of_rp_with_same_name
     return if errors[:name].present?
 

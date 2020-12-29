@@ -249,7 +249,7 @@ private
     end
 
     if @component.predefined?
-      @component.formulation_file.delete if @component.formulation_file.attached?
+      @component.formulation_file.purge if @component.formulation_file.attached?
       jump_to(next_step(:upload_formulation)) # Intended target page is select_frame_formulation - assuming the step order declared above doesn't change!
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
@@ -294,7 +294,7 @@ private
       if @component.valid?
         redirect_to finish_wizard_path
       else
-        @component.formulation_file.delete if @component.formulation_file.attached?
+        @component.formulation_file.purge if @component.formulation_file.attached?
         render step
       end
     else

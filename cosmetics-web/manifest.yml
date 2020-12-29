@@ -12,7 +12,7 @@ applications:
     COSMETICS_HOST: ((submit-host))
   stack: cflinuxfs3
   services:
-    - cosmetics-database-large
+    - cosmetics-database
     - cosmetics-elasticsearch-7
     - cosmetics-queue
     - opss-log-drain
@@ -33,5 +33,6 @@ applications:
     - type: worker
       command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
-      instances: 1
-      memory: 500M
+      instances: 16
+      memory: 1G
+      disk_quota: 2G

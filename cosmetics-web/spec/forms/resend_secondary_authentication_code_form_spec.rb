@@ -63,7 +63,7 @@ RSpec.describe ResendSecondaryAuthenticationCodeForm, :with_stubbed_mailer, :wit
 
         it "contains errors" do
           form.valid?
-          expect(form.errors.full_messages_for(:mobile_number)).to eq ["Enter your mobile number in the correct format, like 07700 900 982"]
+          expect(form.errors.full_messages_for(:mobile_number)).to eq ["Enter a mobile number, like 07700 900 982 or +44 7700 900 982"]
         end
       end
 
