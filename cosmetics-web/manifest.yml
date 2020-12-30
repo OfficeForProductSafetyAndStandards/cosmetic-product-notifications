@@ -24,6 +24,7 @@ applications:
     - cosmetics-notify-env
     - cosmetics-sidekiq-env
     - cosmetics-puma-env
+    - cosmetics-scout-env
     - antivirus-auth-env
   path: .
   processes:
