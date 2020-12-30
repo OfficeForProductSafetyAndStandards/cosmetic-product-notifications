@@ -344,6 +344,8 @@ GEM
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
+    scout_apm (4.0.0)
+      parser
     sentry-raven (3.1.1)
       faraday (>= 1.0)
     sidekiq (5.2.9)
@@ -486,6 +488,7 @@ DEPENDENCIES
   rubocop-rspec (~> 1.42.0)
   ruby-debug-ide (~> 0.7.0)
   rubyzip (>= 1.2.1)
+  scout_apm
   sentry-raven (~> 3.1)
   sidekiq (~> 5.2.7)
   sidekiq-cron (~> 1.1.0)
