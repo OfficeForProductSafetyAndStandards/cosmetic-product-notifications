@@ -4,6 +4,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do
+    travel_to(Time.zone.parse("2021-02-01T00:00"))
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
@@ -78,6 +79,50 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft skin whitener"
+  end
+
+  scenario "Using a zip file, single item, no nanomaterials, with missing formulation document post exit" do
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on__was_eu_notified_about_products_page
+    answer_was_eu_notified_with "Yes"
+
+    expect_to_be_on__do_you_have_the_zip_files_page
+    answer_do_you_have_zip_files_with "Yes"
+
+    expect_to_be_on__upload_eu_notification_files_page
+    upload_zip_file "testMissingFormulationDocumentPostExit.zip"
+
+    visit responsible_person_notifications_path(responsible_person)
+
+    expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
+    click_link "Add missing information"
+
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
+    upload_formulation_file
+
+    exepct_to_be_on_upload_product_label_page
+    upload_product_label
+
+    expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
+    expect_check_your_answers_page_to_contain(
+      product_name: "Beautify Facial Night Cream",
+      number_of_components: "1",
+      shades: "",
+      eu_notification_date: "12 November 2018",
+      contains_cmrs: "No",
+      nanomaterials: "None",
+      category: "Skin products",
+      subcategory: "Skin care products",
+      sub_subcategory: "Face care products other than face mask",
+      formulation_given_as: "Exact concentration",
+      frame_formulation: "Skin Care Cream, Lotion, Gel",
+      physical_form: "Cream or paste",
+    )
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Beautify Facial Night Cream"
   end
 
   scenario "Using a zip file, single item, no nanomaterials, with missing formulation document" do
