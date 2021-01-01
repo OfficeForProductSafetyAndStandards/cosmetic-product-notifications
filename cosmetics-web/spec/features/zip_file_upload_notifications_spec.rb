@@ -101,7 +101,8 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
     upload_formulation_file
 
-    exepct_to_be_on_upload_product_label_page
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_h1("Upload an image of the product label")
     upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
@@ -109,7 +110,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       product_name: "Beautify Facial Night Cream",
       number_of_components: "1",
       shades: "",
-      eu_notification_date: "12 November 2018",
+      eu_notification_date: "20 January 2021",
       contains_cmrs: "No",
       nanomaterials: "None",
       category: "Skin products",
