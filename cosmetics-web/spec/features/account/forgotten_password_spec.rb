@@ -179,6 +179,34 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     let(:expected_text) { "Are you or your organisation a UK Responsible Person?" }
 
     include_examples "password reset"
+
+    context "when the user hasn't completed its registration" do
+      let(:user) { create(:submit_user, :unconfirmed) }
+
+      scenario "resends the confirmation email and shows the confirmation page" do
+        visit "/sign-in"
+        click_link "Forgot your password?"
+
+        expect(page).to have_css("h1", text: "Reset your password")
+        fill_in "Email address", with: user.email
+
+        perform_enqueued_jobs do
+          click_on "Send email"
+        end
+
+        expect(delivered_emails.size).to eq 1
+        email = delivered_emails.first
+
+        expect(email.recipient).to eq user.email
+        expect(email.reference).to eq "Send confirmation code"
+        expect(email.template).to eq mailer::TEMPLATES[:verify_new_account]
+        expect(email.personalization).to eq(
+          verify_email_url: "http://#{ENV.fetch('SUBMIT_HOST')}/confirm-new-account?confirmation_token=#{user.confirmation_token}",
+          name: user.name,
+        )
+        expect_to_be_on_check_your_email_page
+      end
+    end
   end
 
   describe "for search" do
@@ -194,6 +222,31 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     let(:expected_text) { "Search cosmetic products" }
 
     include_examples "password reset"
+
+    context "when the user hasn't completed its registration" do
+      let(:user) { create(:search_user, :registration_incomplete) }
+
+      scenario "resends the invitation email and shows the confirmation page" do
+        visit "/sign-in"
+        click_link "Forgot your password?"
+
+        expect(page).to have_css("h1", text: "Reset your password")
+        fill_in "Email address", with: user.email
+
+        perform_enqueued_jobs do
+          click_on "Send email"
+        end
+
+        expect(delivered_emails.size).to eq 1
+        email = delivered_emails.first
+        expect(email.recipient).to eq user.email
+        expect(email.template).to eq mailer::TEMPLATES[:invitation]
+        expect(email.personalization).to eq(
+          invitation_url: "http://#{ENV.fetch('SEARCH_HOST')}/users/#{user.id}/complete-registration?invitation=#{user.invitation_token}",
+        )
+        expect_to_be_on_check_your_email_page
+      end
+    end
   end
 
   def request_password_reset

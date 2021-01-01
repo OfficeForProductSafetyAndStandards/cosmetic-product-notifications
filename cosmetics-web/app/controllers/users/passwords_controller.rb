@@ -28,6 +28,9 @@ module Users
     end
 
     def create
+      user = user_class.find_by(email: params[user_param_key][:email])
+      return resend_account_setup_link_for(user) if user && !user.has_completed_registration?
+
       super do |resource|
         suppress_email_not_found_error
 
@@ -61,8 +64,8 @@ module Users
       user_signed_in? && is_fully_authenticated?
     end
 
-    def resend_invitation_link_for(user)
-      SendUserInvitationJob.perform_later(user.id, nil)
+    def resend_account_setup_link_for(user)
+      user.resend_account_setup_link
       redirect_to check_your_email_path
     end
 
