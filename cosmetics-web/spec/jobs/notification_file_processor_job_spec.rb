@@ -29,6 +29,15 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
       end
     end
 
+    context "with a zip file containing Mac metadata files" do
+      let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFileWithMacMetadata.zip")) }
+
+      it "creates a notification populated with relevant name" do
+        notification = Notification.order(created_at: :asc).last
+        expect(notification.product_name).equal?("CTPA moisture conditioner")
+      end
+    end
+
     context "when the file is the wrong file type" do
       let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testImage.png")) }
 
