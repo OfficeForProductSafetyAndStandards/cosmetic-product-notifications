@@ -65,6 +65,9 @@ module Users
     end
 
     def resend_account_setup_link_for(user)
+      user.confirmed_at = nil
+      user.account_security_completed = false
+      user.save(validate: false)
       user.resend_account_setup_link
       redirect_to check_your_email_path
     end

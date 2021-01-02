@@ -19,9 +19,17 @@ FactoryBot.define do
         end
       end
 
+      trait :confirmed_not_verified do
+        confirmed_at { 1.hour.ago }
+        confirmation_sent_at { Time.zone.now }
+        confirmation_token { Devise.friendly_token }
+        mobile_number_verified { false }
+      end
+
       trait :unconfirmed do
         password { nil }
         mobile_number { nil }
+        mobile_number_verified { false }
         confirmed_at { nil }
         confirmation_sent_at { Time.zone.now }
         direct_otp_sent_at { nil }

@@ -180,31 +180,40 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
     include_examples "password reset"
 
-    context "when the user hasn't completed its registration" do
-      let(:user) { create(:submit_user, :unconfirmed) }
+    context "when the user hasn't completed their registration" do
+      # If the user has confirmed their account but not verified with 2FA, the
+      # account may be in 'confirmed' state but still requires verification.
+      %i[confirmed_not_verified unconfirmed].each do |status|
+        context "when user status is #{status}" do
+          let(:user) { create(:submit_user, status) }
 
-      scenario "resends the confirmation email and shows the confirmation page" do
-        visit "/sign-in"
-        click_link "Forgot your password?"
+          scenario "resends the confirmation email and shows the confirmation page" do
+            visit "/sign-in"
+            click_link "Forgot your password?"
 
-        expect(page).to have_css("h1", text: "Reset your password")
-        fill_in "Email address", with: user.email
+            expect(page).to have_css("h1", text: "Reset your password")
+            fill_in "Email address", with: user.email
 
-        perform_enqueued_jobs do
-          click_on "Send email"
+            perform_enqueued_jobs do
+              click_on "Send email"
+            end
+
+            expect(delivered_emails.size).to eq 1
+            email = delivered_emails.first
+
+            expect(email.recipient).to eq user.email
+            expect(email.reference).to eq "Send confirmation code"
+            expect(email.template).to eq mailer::TEMPLATES[:verify_new_account]
+            expect(email.personalization).to eq(
+              verify_email_url: "http://#{ENV.fetch('SUBMIT_HOST')}/confirm-new-account?confirmation_token=#{user.confirmation_token}",
+              name: user.name,
+            )
+            expect_to_be_on_check_your_email_page
+
+            visit "/confirm-new-account?confirmation_token=#{user.confirmation_token}"
+            expect(page).to have_css("h1", text: "Account security")
+          end
         end
-
-        expect(delivered_emails.size).to eq 1
-        email = delivered_emails.first
-
-        expect(email.recipient).to eq user.email
-        expect(email.reference).to eq "Send confirmation code"
-        expect(email.template).to eq mailer::TEMPLATES[:verify_new_account]
-        expect(email.personalization).to eq(
-          verify_email_url: "http://#{ENV.fetch('SUBMIT_HOST')}/confirm-new-account?confirmation_token=#{user.confirmation_token}",
-          name: user.name,
-        )
-        expect_to_be_on_check_your_email_page
       end
     end
   end
