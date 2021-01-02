@@ -97,4 +97,29 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
       expect(notification_file.reload.upload_error).to eq("file_size_too_big")
     end
   end
+
+  context "when there is an unexpected error parsing the files" do
+    let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFile.zip")) }
+    let(:exception) { StandardError.new }
+
+    before do
+      allow(Zip::File).to receive(:open).and_raise(exception)
+      allow(Raven).to receive(:capture_exception)
+      described_class.new.perform(notification_file.id)
+    end
+
+    it "does not remove the notification file" do
+      expect {
+        notification_file.reload
+      }.not_to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "adds an error to the file" do
+      expect(notification_file.reload.upload_error).to eq("unknown_error")
+    end
+
+    it "sends the error to Sentry" do
+      expect(Raven).to have_received(:capture_exception).once.with(exception)
+    end
+  end
 end
