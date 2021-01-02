@@ -33,9 +33,8 @@ class SearchUser < User
     !msa_user?
   end
 
-  # TODO: is this used?
-  def send_confirmation_instructions
-    SearchNotifyMailer.send_account_confirmation_email(self).deliver_later
+  def resend_account_setup_link
+    SearchNotifyMailer.invitation_email(self).deliver_later
   end
 
   def send_reset_password_instructions_notification(token)
@@ -57,10 +56,6 @@ class SearchUser < User
 
   def invitation_expired?
     invited_at <= INVITATION_EXPIRATION_DAYS.days.ago
-  end
-
-  def has_completed_registration?
-    encrypted_password.present? && name.present? && mobile_number.present? && mobile_number_verified
   end
 
 private
