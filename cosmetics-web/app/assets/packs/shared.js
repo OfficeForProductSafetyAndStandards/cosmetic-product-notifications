@@ -1,6 +1,7 @@
 // JS
 import Rails from 'rails-ujs'
 import GOVUKFrontend from 'govuk-frontend'
+import * as ActiveStorage from '@rails/activestorage'
 
 import '../application/javascripts/location_picker'
 import '../application/javascripts/autocomplete'
@@ -20,4 +21,5 @@ import 'govuk-frontend/govuk/assets/images/govuk-opengraph-image.png'
 import 'govuk-frontend/govuk/assets/images/govuk-logotype-crown.png'
 
 Rails.start()
+ActiveStorage.start()
 window.GOVUKFrontend = GOVUKFrontend
