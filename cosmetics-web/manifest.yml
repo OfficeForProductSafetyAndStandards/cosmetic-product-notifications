@@ -36,5 +36,5 @@ applications:
       command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
       instances: 4
-      memory: 1G
+      memory: 2G
       disk_quota: 2G

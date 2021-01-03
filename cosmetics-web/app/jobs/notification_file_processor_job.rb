@@ -86,7 +86,7 @@ private
   end
 
   def file_is_product_xml?(file)
-    file.name&.match?(product_xml_file_name_regex)
+    File.basename(file.name).match?(product_xml_file_name_regex)
   end
 
   def file_is_valid?(file)
@@ -98,7 +98,7 @@ private
   end
 
   def product_xml_file_name_regex
-    /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/
+    /\A[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml\z/
   end
 
   def delete_notification_file

@@ -22,7 +22,5 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 # Deploy the submit app and set the hostname
 cf push $APP_NAME -f $MANIFEST_FILE --var app-name=$APP_NAME --var submit-host=$SUBMIT_HOST --var search-host=$SEARCH_HOST --strategy rolling
 
-cf scale $APP_NAME --process worker -i 1
-
 # Remove the copied infrastructure env files to clean up
 rm -R cosmetics-web/env/

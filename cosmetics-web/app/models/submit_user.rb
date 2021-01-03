@@ -56,6 +56,10 @@ class SubmitUser < User
     @dont_send_confirmation_instructions = true
   end
 
+  def resend_account_setup_link
+    resend_confirmation_instructions
+  end
+
   def send_confirmation_instructions
     return if @dont_send_confirmation_instructions
 
