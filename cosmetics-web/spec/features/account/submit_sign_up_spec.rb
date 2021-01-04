@@ -37,6 +37,19 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
+    # Attempting to access other pages should redirect back to form
+    click_link "Your account"
+    expect(page).to have_current_path("/account-security")
+
+    click_link "Submit cosmetic product notifications"
+    expect(page).to have_current_path("/account-security")
+
+    click_link "How to prepare images for notification"
+    expect(page).to have_current_path("/account-security")
+
+    click_link "Privacy policy"
+    expect(page).to have_current_path("/account-security")
+
     # Attempts to submit security page with validation errors
     expect(page).to have_current_path("/account-security")
     fill_in "Mobile number", with: "07000 invalid 000000"

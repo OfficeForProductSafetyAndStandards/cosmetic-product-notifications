@@ -29,6 +29,15 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
       end
     end
 
+    context "with a zip file containing Mac metadata files" do
+      let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFileWithMacMetadata.zip")) }
+
+      it "creates a notification populated with relevant name" do
+        notification = Notification.order(created_at: :asc).last
+        expect(notification.product_name).equal?("CTPA moisture conditioner")
+      end
+    end
+
     context "when the file is the wrong file type" do
       let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testImage.png")) }
 
@@ -95,6 +104,31 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
 
     it "adds an error to the file" do
       expect(notification_file.reload.upload_error).to eq("file_size_too_big")
+    end
+  end
+
+  context "when there is an unexpected error parsing the files" do
+    let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFile.zip")) }
+    let(:exception) { StandardError.new }
+
+    before do
+      allow(Zip::File).to receive(:open).and_raise(exception)
+      allow(Raven).to receive(:capture_exception)
+      described_class.new.perform(notification_file.id)
+    end
+
+    it "does not remove the notification file" do
+      expect {
+        notification_file.reload
+      }.not_to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "adds an error to the file" do
+      expect(notification_file.reload.upload_error).to eq("unknown_error")
+    end
+
+    it "sends the error to Sentry" do
+      expect(Raven).to have_received(:capture_exception).once.with(exception)
     end
   end
 end

@@ -25,4 +25,8 @@ class User < ApplicationRecord
   def mobile_number_change_allowed?
     !mobile_number_verified?
   end
+
+  def has_completed_registration?
+    encrypted_password.present? && name.present? && mobile_number.present? && mobile_number_verified
+  end
 end

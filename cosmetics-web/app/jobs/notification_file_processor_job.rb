@@ -50,6 +50,7 @@ private
     @notification_file.update(upload_error: :unknown_error)
   rescue StandardError => e
     Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
+    Raven.capture_exception(e)
     @notification_file.update(upload_error: :unknown_error)
   end
 
@@ -85,7 +86,7 @@ private
   end
 
   def file_is_product_xml?(file)
-    file.name&.match?(product_xml_file_name_regex)
+    File.basename(file.name).match?(product_xml_file_name_regex)
   end
 
   def file_is_valid?(file)
@@ -97,7 +98,7 @@ private
   end
 
   def product_xml_file_name_regex
-    /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/
+    /\A[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml\z/
   end
 
   def delete_notification_file
