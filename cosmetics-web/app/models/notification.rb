@@ -147,7 +147,7 @@ class Notification < ApplicationRecord
   alias_method :requires_images?, :notified_post_eu_exit?
 
   def notified_pre_eu_exit?
-    was_notified_before_eu_exit? || (cpnp_notification_date.present? && (cpnp_notification_date < EU_EXIT_DATE))
+    was_notified_before_eu_exit?
   end
 
   # If any image is waiting for the antivirus check or it got a virus alert this method will be "true"
