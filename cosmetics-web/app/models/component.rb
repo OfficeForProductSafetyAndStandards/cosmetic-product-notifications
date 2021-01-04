@@ -118,7 +118,7 @@ class Component < ApplicationRecord
   end
 
   def formulation_required?
-    return false if notification.cpnp_notification_date && notification.cpnp_notification_date < EU_EXIT_DATE
+    return false if notification.notified_pre_eu_exit?
 
     if range?
       !formulation_file.attached? && range_formulas&.empty?
