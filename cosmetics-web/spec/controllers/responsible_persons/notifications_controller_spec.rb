@@ -149,6 +149,16 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
         get :edit, params: { responsible_person_id: other_responsible_person.id, reference_number: other_notification.reference_number }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
+
+    context "when the notification is already submitted" do
+      subject(:request) { get(:edit, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
+    end
   end
 
   describe "POST /confirm" do
