@@ -27,7 +27,7 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 export CF_STARTUP_TIMEOUT=20
 
 # Deploy the submit app and set the hostname
-cf push $APP_NAME -f $MANIFEST_FILE --app-start-timeout 180 --var app-name=$APP_NAME --var submit-host=$SUBMIT_HOST --var search-host=$SEARCH_HOST --strategy rolling
+cf push $APP_NAME -f $MANIFEST_FILE --app-start-timeout 180 --var app-name=$APP_NAME --var submit-host=$SUBMIT_HOST --var search-host=$SEARCH_HOST --var web-max-threads=$WEB_MAX_THREADS --var worker-max-threads=$WORKER_MAX_THREADS --strategy rolling
 
 # Remove the copied infrastructure env files to clean up
 rm -R cosmetics-web/env/
