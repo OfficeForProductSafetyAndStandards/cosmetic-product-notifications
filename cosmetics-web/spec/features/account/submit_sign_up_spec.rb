@@ -162,7 +162,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
       expect(page).to have_current_path("/create-an-account")
 
       fill_in "Full name", with: "Joe Doe"
-      fill_in "Email address", with: user.email
+      fill_in "Email address", with: user.email.upcase
       click_button "Continue"
 
       expect_to_be_on_check_your_email_page

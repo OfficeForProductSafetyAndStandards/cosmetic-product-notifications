@@ -107,6 +107,16 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
     end
   end
 
+  context "when the zip file is invalid" do
+    let(:notification_file) { create(:notification_file, :skip_validations, uploaded_file: create_file_blob("testText.txt")) }
+
+    before { described_class.new.perform(notification_file.id) }
+
+    it "adds an error to the file" do
+      expect(notification_file.reload.upload_error).to eq("uploaded_file_not_a_zip")
+    end
+  end
+
   context "when there is an unexpected error parsing the files" do
     let(:notification_file) { create(:notification_file, uploaded_file: create_file_blob("testExportFile.zip")) }
     let(:exception) { StandardError.new }

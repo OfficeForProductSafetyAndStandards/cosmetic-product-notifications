@@ -30,6 +30,9 @@ private
 
       Sidekiq.logger.info "Successful File Upload"
     end
+  rescue Zip::Error => e
+    Sidekiq.logger.error e.message
+    @notification_file.update(upload_error: :uploaded_file_not_a_zip)
   rescue UnexpectedPdfFileError => e
     Sidekiq.logger.error e.message
     @notification_file.update(upload_error: :unzipped_files_are_pdf)
