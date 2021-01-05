@@ -58,7 +58,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
-      fill_in "Email address", with: invited_user.email
+      fill_in "Email address", with: invited_user.email.upcase
       click_on "Send invitation"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -81,7 +81,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
-      fill_in "Email address", with: invited_user.email
+      fill_in "Email address", with: invited_user.email.upcase
       click_on "Send invitation"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -303,7 +303,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in invited_user
 
     pending = create(:pending_responsible_person_user,
-                     email_address: invited_user.email,
+                     email_address: invited_user.email.upcase,
                      responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
@@ -317,7 +317,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in different_user
 
     pending = create(:pending_responsible_person_user,
-                     email_address: invited_user.email,
+                     email_address: invited_user.email.upcase,
                      responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
@@ -436,7 +436,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
   scenario "accepting an invitation for an existent user when not signed in" do
     pending = create(:pending_responsible_person_user,
-                     email_address: invited_user.email,
+                     email_address: invited_user.email.upcase,
                      responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
