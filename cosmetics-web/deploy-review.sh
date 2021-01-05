@@ -41,8 +41,18 @@ until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp
 # Copy files from infrastructure env
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
+if [ -z "$WEB_MAX_THREADS" ]
+then
+  WEB_MAX_THREADS=5
+fi
+
+if [ -z "$WORKER_MAX_THREADS" ]
+then
+  WORKER_MAX_THREADS=10
+fi
+
 # Deploy the submit app and set the hostname
-cf push $APP -f $MANIFEST_FILE --app-start-timeout 180 --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --strategy rolling
+cf push $APP -f $MANIFEST_FILE --app-start-timeout 180 --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --var web-max-threads=$WEB_MAX_THREADS --var worker-max-threads=$WORKER_MAX_THREADS --strategy rolling
 
 cf scale $APP --process worker -i 1
 
