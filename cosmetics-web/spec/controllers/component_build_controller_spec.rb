@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:component) { create(:component, notification_type: component_type) }
-  let(:notification) { create(:notification, components: [component], responsible_person: responsible_person) }
+  let(:component) { create(:component, notification: notification, notification_type: component_type) }
+  let(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:pre_eu_exit_notification) { create(:notification, :pre_brexit, components: [component], responsible_person: responsible_person) }
   let(:component_type) { nil }
 
@@ -63,11 +63,14 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it "does not allow the user to update a notification component that has already been submitted" do
-      notification.update state: "notification_complete"
-      expect {
-        get(:show, params: params.merge(id: :number_of_shades))
-      }.to raise_error(Pundit::NotAuthorizedError)
+    context "when the notification is already submitted" do
+      subject(:request) { get(:show, params: params.merge(id: :number_of_shades)) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
     end
 
     it "initialises 5 empty cmrs in add_cmrs step" do
@@ -171,11 +174,14 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it "does not allow the user to update a notification that has already been submitted" do
-      notification.update state: "notification_complete"
-      expect {
-        post(:update, params: params.merge(id: :add_shades, component: { shades: %w[red blue] }))
-      }.to raise_error(Pundit::NotAuthorizedError)
+    context "when the notification is already submitted" do
+      subject(:request) { post(:update, params: params.merge(id: :add_shades, component: { shades: %w[red blue] })) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
     end
 
     it "proceeds to add_physical_form step after adding shades" do

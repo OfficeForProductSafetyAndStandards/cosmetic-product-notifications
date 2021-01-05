@@ -58,11 +58,14 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it "does not allow the user to update a notification that has already been submitted" do
-      notification.update state: "notification_complete"
-      expect {
-        get(:show, params: params.merge(id: :add_product_name))
-      }.to raise_error(Pundit::NotAuthorizedError)
+    context "when the notification is already submitted" do
+      subject(:request) { get(:show, params: params.merge({ id: "add_internal_reference" })) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
     end
   end
 
@@ -142,11 +145,14 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it "does not allow the user to update a notification that has already been submitted" do
-      notification.update state: "notification_complete"
-      expect {
-        post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
-      }.to raise_error(Pundit::NotAuthorizedError)
+    context "when the notification is already submitted" do
+      subject(:request) { post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" })) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
     end
 
     context "when pressing 'Continue' from the List of components page" do

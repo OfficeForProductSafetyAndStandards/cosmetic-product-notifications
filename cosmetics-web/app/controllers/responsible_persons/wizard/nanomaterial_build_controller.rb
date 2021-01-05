@@ -95,6 +95,9 @@ private
 
   def set_component
     @component = Component.find(params[:component_id])
+
+    return redirect_to responsible_person_notification_path(@component.notification.responsible_person, @component.notification) if @component&.notification&.notification_complete?
+
     authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 
