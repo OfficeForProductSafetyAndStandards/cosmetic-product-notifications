@@ -43,6 +43,8 @@ jobs:
     - name: Deploy
       env:
         SPACE: int
+        WEB_MAX_THREADS: 1
+        WORKER_MAX_THREADS: 10
         CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
       run: |

@@ -30,10 +30,14 @@ applications:
     - cosmetics-devise-env
   processes:
     - type: web
+      env:
+        RAILS_MAX_THREADS: ((web-max-threads))
       command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate && bundle exec puma
       instances: 1
       memory: 1G
     - type: worker
+      env:
+        RAILS_MAX_THREADS: ((worker-max-threads))
       command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
       instances: 1
