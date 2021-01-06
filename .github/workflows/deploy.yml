@@ -44,6 +44,8 @@ jobs:
         APP_NAME: cosmetics-web
         SUBMIT_HOST: staging-submit.cosmetic-product-notifications.service.gov.uk
         SEARCH_HOST: staging-search.cosmetic-product-notifications.service.gov.uk
+        WEB_MAX_THREADS: 1
+        WORKER_MAX_THREADS: 10
         CF_USERNAME: ${{ secrets.PaaSUsernameStaging }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordStaging }}
       run: |
@@ -92,6 +94,8 @@ jobs:
         APP_NAME: cosmetics-web
         SUBMIT_HOST: submit.cosmetic-product-notifications.service.gov.uk
         SEARCH_HOST: search.cosmetic-product-notifications.service.gov.uk
+        WEB_MAX_THREADS: 1
+        WORKER_MAX_THREADS: 10
         CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
       run: |
