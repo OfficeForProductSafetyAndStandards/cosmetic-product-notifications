@@ -140,15 +140,11 @@ class Notification < ApplicationRecord
     components.length > 1
   end
 
-  def notified_post_eu_exit?
-    !notified_pre_eu_exit?
+  def was_notified_after_eu_exit?
+    !was_notified_before_eu_exit?
   end
 
-  alias_method :requires_images?, :notified_post_eu_exit?
-
-  def notified_pre_eu_exit?
-    was_notified_before_eu_exit?
-  end
+  alias_method :requires_images?, :was_notified_after_eu_exit?
 
   # If any image is waiting for the antivirus check or it got a virus alert this method will be "true"
   def required_images_missing_or_not_passed_antivirus_check?

@@ -14,7 +14,7 @@ module ManualNotificationConcern
   end
 
   def skip_step?(step = @step)
-    post_eu_exit_steps.include?(step) && notification.notified_pre_eu_exit?
+    after_eu_exit_steps.include?(step) && notification.was_notified_before_eu_exit?
   end
 
   def previous_step(current_step = nil)
@@ -74,13 +74,13 @@ module ManualNotificationConcern
     end
   end
 
-  def post_eu_exit_steps
-    # If you want your controller to allow different post_eu steps, override this
+  def after_eu_exit_steps
+    # If you want your controller to allow different after_eu steps, override this
     []
   end
 
   def model
-    # If you want your controller to allow different post_eu steps, override this
+    # If you want your controller to allow different after_eu steps, override this
     raise "model method should be overridden"
   end
 end

@@ -73,7 +73,7 @@ private
       # Incomplete notifications dashboard
       responsible_person_notifications_path(notification.responsible_person, anchor: "incomplete")
 
-    elsif notification.notified_post_eu_exit?
+    elsif notification.was_notified_after_eu_exit?
 
       # Last question is image upload page
       responsible_person_notification_build_path(notification.responsible_person, notification, :add_product_image)
