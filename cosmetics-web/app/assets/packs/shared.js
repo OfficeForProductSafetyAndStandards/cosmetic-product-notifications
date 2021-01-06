@@ -6,6 +6,9 @@ import '../application/javascripts/location_picker'
 import '../application/javascripts/autocomplete'
 import '../application/javascripts/bulk_file_upload_error_handling'
 
+import * as ActiveStorage from "activestorage"
+ActiveStorage.start()
+
 // Styles
 import 'accessible-autocomplete/src/autocomplete.css'
 // Images
