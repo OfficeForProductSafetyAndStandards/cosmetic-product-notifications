@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_07_104720) do
+ActiveRecord::Schema.define(version: 2021_01_05_111424) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -73,7 +74,7 @@ ActiveRecord::Schema.define(version: 2020_12_07_104720) do
 
   create_table "contact_persons", force: :cascade do |t|
     t.string "name"
-    t.string "email_address"
+    t.citext "email_address"
     t.string "phone_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -172,7 +173,7 @@ ActiveRecord::Schema.define(version: 2020_12_07_104720) do
   end
 
   create_table "pending_responsible_person_users", force: :cascade do |t|
-    t.string "email_address"
+    t.citext "email_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
@@ -247,7 +248,7 @@ ActiveRecord::Schema.define(version: 2020_12_07_104720) do
     t.string "name"
     t.string "type"
     t.boolean "has_accepted_declaration", default: false
-    t.string "email", default: "", null: false
+    t.citext "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -260,7 +261,7 @@ ActiveRecord::Schema.define(version: 2020_12_07_104720) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
+    t.citext "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
@@ -274,7 +275,7 @@ ActiveRecord::Schema.define(version: 2020_12_07_104720) do
     t.string "invitation_token"
     t.datetime "invited_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.enum "role", as: "user_roles"
-    t.string "new_email"
+    t.citext "new_email"
     t.string "new_email_confirmation_token"
     t.datetime "new_email_confirmation_token_expires_at"
     t.boolean "account_security_completed", default: false

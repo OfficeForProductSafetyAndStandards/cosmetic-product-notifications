@@ -31,10 +31,28 @@ RSpec.describe PendingResponsiblePersonUser, type: :model do
       expect(pending_responsible_person.errors[:email_address]).to include("This email address already belongs to member of this team")
     end
 
+    it "fails if the email with different capitalisation is already a member of team" do
+      create(:responsible_person_user, user: create(:submit_user, email: pending_responsible_person.email_address),
+                                       responsible_person: pending_responsible_person.responsible_person)
+      pending_responsible_person.email_address.upcase!
+
+      expect(pending_responsible_person.save).to be false
+      expect(pending_responsible_person.errors[:email_address]).to include("This email address already belongs to member of this team")
+    end
+
     it "fails if the email is already used on user for the same team" do
       create(:pending_responsible_person_user,
              email_address: pending_responsible_person.email_address,
              responsible_person: pending_responsible_person.responsible_person)
+
+      expect(pending_responsible_person.save).to be false
+      expect(pending_responsible_person.errors[:email_address]).to include("This person has already been invited to this team")
+    end
+
+    it "fails if the email with different capitalisation is already used on user for the same team" do
+      create(:pending_responsible_person_user, email_address: pending_responsible_person.email_address,
+                                               responsible_person: pending_responsible_person.responsible_person)
+      pending_responsible_person.email_address.upcase!
 
       expect(pending_responsible_person.save).to be false
       expect(pending_responsible_person.errors[:email_address]).to include("This person has already been invited to this team")
