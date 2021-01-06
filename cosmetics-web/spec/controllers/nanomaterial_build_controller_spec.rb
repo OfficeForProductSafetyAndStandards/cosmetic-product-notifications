@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:notification) { create(:notification, components: [create(:component)], responsible_person: responsible_person) }
-  let(:component) { notification.components.first }
+  let(:notification) { create(:notification, responsible_person: responsible_person) }
+  let(:component) { create(:component, notification: notification) }
 
   let(:nanomaterial) do
     create(:nano_material,
@@ -41,6 +41,16 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
   end
 
   describe "GET #show" do
+    context "when the notification is already submitted" do
+      subject(:request) { get(:show, params: params.merge({ id: "confirm_usage" })) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
+    end
+
     it "assigns the correct component" do
       get(:show, params: params.merge(id: :select_purposes))
       expect(assigns(:component)).to eq(component)

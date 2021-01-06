@@ -3,7 +3,7 @@ require "will_paginate/array"
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :validate_responsible_person
-  before_action :set_notification, only: %i[show edit confirm delete destroy]
+  before_action :set_notification, only: %i[show confirm delete destroy]
 
   def index
     @pending_notification_files_count = 0
@@ -39,6 +39,12 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
   # Check your answers page
   def edit
+    @notification = Notification.find_by reference_number: params[:reference_number]
+
+    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification.notification_complete?
+
+    authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
+
     @previous_page_path = previous_path_before_check_your_answers(@notification)
 
     if params[:submit_failed]

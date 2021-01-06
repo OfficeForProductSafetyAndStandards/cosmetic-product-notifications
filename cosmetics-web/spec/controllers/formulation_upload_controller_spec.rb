@@ -45,6 +45,16 @@ RSpec.describe ResponsiblePersons::FormulationUploadController, :with_stubbed_an
         get(:new, params: other_responsible_person_params)
       }.to raise_error(Pundit::NotAuthorizedError)
     end
+
+    context "when the notification is already submitted" do
+      subject(:request) { get(:new, params: params) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
+    end
   end
 
   describe "POST #create" do
@@ -84,11 +94,14 @@ RSpec.describe ResponsiblePersons::FormulationUploadController, :with_stubbed_an
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it "does not let the user submit the form for a component for a completed notification" do
-      notification.update state: "notification_complete"
-      expect {
-        post(:create, params: params.merge(formulation_file: pdf_file))
-      }.to raise_error(Pundit::NotAuthorizedError)
+    context "when the notification is already submitted" do
+      subject(:request) { post(:create, params: params.merge(formulation_file: pdf_file)) }
+
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+
+      it "redirects to the notifications page" do
+        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
     end
   end
 end
