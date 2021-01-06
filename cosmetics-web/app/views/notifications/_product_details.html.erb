@@ -12,7 +12,7 @@
         <td class="govuk-table__cell"><%= notification.industry_reference %></td>
       </tr>
     <% end %>
-    <% if notification.notified_post_eu_exit? %>
+    <% if notification. was_notified_after_eu_exit? %>
       <tr class="govuk-table__row">
         <th class="govuk-table__header">For children under 3</th>
         <td class="govuk-table__cell">

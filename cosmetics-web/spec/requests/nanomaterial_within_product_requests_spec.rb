@@ -50,6 +50,26 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
       end
 
       it "redirects to the Upload formulation page" do
+        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
+      end
+    end
+
+    context "when the notification was via ZIP file upload, post-Brexit, using exact, and formulation missing" do
+      let(:notification) do
+        create(:notification,
+               :via_zip_file, :post_brexit,
+               responsible_person: responsible_person)
+      end
+
+      let(:component) { create(:component, :using_exact, notification: notification) }
+      let(:nano_material) { create(:nano_material, component: component) }
+      let(:nano_element) { create(:nano_element, nano_material: nano_material) }
+
+      before do
+        put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }
+      end
+
+      it "redirects to the Upload formulation page" do
         expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/formulation/new")
       end
     end

@@ -221,7 +221,7 @@ private
     end
   end
 
-  def post_eu_exit_steps
+  def after_eu_exit_steps
     %i[for_children_under_three]
   end
 

@@ -264,7 +264,7 @@ private
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
 
-      if @component.notification.notified_post_eu_exit?
+      if @component.notification.was_notified_after_eu_exit?
         redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
       else
         redirect_to responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
@@ -344,7 +344,7 @@ private
     @component.cmrs.destroy_all
   end
 
-  def post_eu_exit_steps
+  def after_eu_exit_steps
     %i[contains_cmrs add_cmrs contains_special_applicator select_special_applicator_type]
   end
 

@@ -118,6 +118,8 @@ class Component < ApplicationRecord
   end
 
   def formulation_required?
+    return false if notification.was_notified_before_eu_exit?
+
     if range?
       !formulation_file.attached? && range_formulas&.empty?
     elsif exact?

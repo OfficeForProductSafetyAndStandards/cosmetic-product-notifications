@@ -4,6 +4,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do
+    travel_to(Time.zone.parse("2021-02-01T00:00"))
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
@@ -80,6 +81,51 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_see_message "SkinSoft skin whitener"
   end
 
+  scenario "Using a zip file, single item, no nanomaterials, with missing formulation document post exit" do
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on__was_eu_notified_about_products_page
+    answer_was_eu_notified_with "Yes"
+
+    expect_to_be_on__do_you_have_the_zip_files_page
+    answer_do_you_have_zip_files_with "Yes"
+
+    expect_to_be_on__upload_eu_notification_files_page
+    upload_zip_file "testMissingFormulationDocumentPostExit.zip"
+
+    visit responsible_person_notifications_path(responsible_person)
+
+    expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
+    click_link "Add missing information"
+
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
+    upload_formulation_file
+
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_h1("Upload an image of the product label")
+    upload_product_label
+
+    expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
+    expect_check_your_answers_page_to_contain(
+      product_name: "Beautify Facial Night Cream",
+      number_of_components: "1",
+      shades: "",
+      eu_notification_date: "20 January 2021",
+      contains_cmrs: "No",
+      nanomaterials: "None",
+      category: "Skin products",
+      subcategory: "Skin care products",
+      sub_subcategory: "Face care products other than face mask",
+      formulation_given_as: "Exact concentration",
+      frame_formulation: "Skin Care Cream, Lotion, Gel",
+      physical_form: "Cream or paste",
+    )
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Beautify Facial Night Cream"
+  end
+
   scenario "Using a zip file, single item, no nanomaterials, with missing formulation document" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
@@ -95,10 +141,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit responsible_person_notifications_path(responsible_person)
 
     expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
-    click_link "Add missing information"
-
-    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
-    upload_formulation_file
+    click_link "Confirm and notify"
 
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
     expect_check_your_answers_page_to_contain(
@@ -146,9 +189,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
-
-    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
-    upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
     expect_check_your_answers_page_to_contain(
@@ -200,9 +240,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients")
-    upload_formulation_file
-
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
@@ -211,9 +248,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
-
-    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
-    upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
     expect_check_your_answers_page_for_kit_items_to_contain(
@@ -285,9 +319,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
-
-    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients")
-    upload_formulation_file
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
