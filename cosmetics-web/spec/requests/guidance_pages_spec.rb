@@ -13,11 +13,11 @@ RSpec.describe "Guidance pages", type: :request do
     end
 
     it "has a page title" do
-      expect(response.body).to have_tag("title", text: /\AHow to notify nanomaterials/)
+      expect(response.body).to have_tag("title", text: /\AHow to notify products containing nanomaterials/)
     end
 
     it "has a page heading" do
-      expect(response.body).to have_tag("h1", text: /\AHow to notify nanomaterials/)
+      expect(response.body).to have_tag("h1", text: /\AHow to notify products containing nanomaterials/)
     end
   end
 
