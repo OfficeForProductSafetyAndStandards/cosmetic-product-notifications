@@ -42,5 +42,12 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.save).to be false
       expect(responsible_person.errors[:postal_code]).to include("Postcode can not be blank")
     end
+
+    it "fails if postal code does not belong to UK" do
+      responsible_person.postal_code = "JJJJJ"
+
+      expect(responsible_person.save).to be false
+      expect(responsible_person.errors[:postal_code]).to include("Enter a UK postcode")
+    end
   end
 end

@@ -14,6 +14,7 @@ class ResponsiblePersonDetailsForm
   validates :address_line_1, presence: true
   validates :city, presence: true
   validates :postal_code, presence: true
+  validates :postal_code, uk_postcode: true, if: -> { postal_code.present? }
   validate :user_not_member_of_rp_with_same_name
   validate :user_not_invited_to_rp_with_same_name
 

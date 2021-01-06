@@ -12,10 +12,13 @@ class ResponsiblePerson < ApplicationRecord
 
   validates :account_type, presence: true
 
-  validates :name, presence: true, on: %i[enter_details create]
-  validates :address_line_1, presence: true, on: %i[enter_details create]
-  validates :city, presence: true, on: %i[enter_details create]
-  validates :postal_code, presence: true, on: %i[enter_details create]
+  with_options on: %i[enter_details create] do |rp|
+    rp.validates :name, presence: true
+    rp.validates :address_line_1, presence: true
+    rp.validates :city, presence: true
+    rp.validates :postal_code, presence: true
+    rp.validates :postal_code, uk_postcode: true, if: -> { postal_code.present? }
+  end
 
   def add_user(user)
     responsible_person_users << ResponsiblePersonUser.create(user: user)

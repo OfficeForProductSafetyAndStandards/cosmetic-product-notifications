@@ -184,7 +184,7 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
     end
 
-    context "when the cpostal code is blank" do
+    context "when the postal code is blank" do
       let(:postal_code) { "" }
 
       before { form.validate }
@@ -195,6 +195,20 @@ RSpec.describe ResponsiblePersonDetailsForm do
 
       it "populates an error message" do
         expect(form.errors.full_messages).to eq(["Postcode can not be blank"])
+      end
+    end
+
+    context "when the postal code does not belong to UK" do
+      let(:postal_code) { "JJJJJ" }
+
+      before { form.validate }
+
+      it "is not valid" do
+        expect(form).to be_invalid
+      end
+
+      it "populates an error message" do
+        expect(form.errors.full_messages).to eq(["Enter a UK postcode"])
       end
     end
   end
