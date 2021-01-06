@@ -39,6 +39,9 @@ private
     @error_list = []
     @notification = Notification.find_by reference_number: params[:notification_reference_number]
     @responsible_person = @notification.responsible_person
+
+    return redirect_to responsible_person_notification_path(@responsible_person, @notification) if @notification&.notification_complete?
+
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 end
