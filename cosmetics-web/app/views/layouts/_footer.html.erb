@@ -27,8 +27,11 @@
           for help using this service
         </div>
         <ul class="govuk-footer__inline-list">
-          </li><li class="govuk-footer__inline-list-item">
+          <% unless search_domain? %>
+          <li class="govuk-footer__inline-list-item">
             <%= link_to "Accessibility Statement", accessibility_statement_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank %>
+          </li>
+          <% end %>
           <li class="govuk-footer__inline-list-item">
             <%= link_to "Privacy policy", privacy_notice_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
           </li><li class="govuk-footer__inline-list-item">
