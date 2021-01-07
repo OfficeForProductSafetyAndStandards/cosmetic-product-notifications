@@ -459,7 +459,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     end
   end
 
-  feature "handling file uplaod errors", :with_stubbed_s3_returning_not_found do
+  feature "handling file upload errors", :with_stubbed_s3_returning_not_found do
     scenario "When the upload to AWS S3 fails" do
       visit new_responsible_person_add_notification_path(responsible_person)
 
