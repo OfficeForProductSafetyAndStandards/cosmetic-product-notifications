@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
+RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus, :without_default_file_analyzers do
   after do
     sign_out(:submit_user)
     remove_uploaded_files
@@ -139,6 +139,20 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus do
 
     it "sends the error to Sentry" do
       expect(Raven).to have_received(:capture_exception).once.with(exception)
+    end
+  end
+
+  context "when the analyzer has added an error to the file" do
+    let!(:notification_file) { create(:notification_file, upload_error: :file_flagged_as_virus, uploaded_file: create_file_blob("testExportFile.zip")) }
+
+    it "does not parse the zip file" do
+      allow(Zip::File).to receive(:open)
+      described_class.new.perform(notification_file.id)
+      expect(Zip::File).not_to have_received(:open)
+    end
+
+    it "does not destroy the record" do
+      expect { described_class.new.perform(notification_file.id) }.not_to change(NotificationFile, :count)
     end
   end
 end

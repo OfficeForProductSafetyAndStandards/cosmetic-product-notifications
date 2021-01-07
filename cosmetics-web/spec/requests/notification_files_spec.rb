@@ -19,7 +19,8 @@ RSpec.describe "Notification files", :with_stubbed_antivirus, type: :request do
         create(:notification_file,
                uploaded_file: create_file_blob("testExportFile.zip"),
                responsible_person: responsible_person,
-               user: user)
+               user: user,
+               upload_error: "unknown_error")
       end
 
       it "redirects to the notifications dashboard" do
@@ -49,13 +50,6 @@ RSpec.describe "Notification files", :with_stubbed_antivirus, type: :request do
     end
 
     describe "deleting ALL notification files with errors" do
-      let!(:notification_file_with_no_error) do
-        create(:notification_file,
-               responsible_person: responsible_person,
-               uploaded_file: create_file_blob("testExportFile.zip"),
-               user: user,
-               upload_error: nil)
-      end
       let!(:notification_file_with_error) do
         create(:notification_file,
                responsible_person: responsible_person,
@@ -86,7 +80,6 @@ RSpec.describe "Notification files", :with_stubbed_antivirus, type: :request do
       it "deletes the notification files with errors belonging to the user" do
         delete destroy_all_responsible_person_notification_files_path(responsible_person)
         expect(responsible_person.notification_files).to contain_exactly(
-          notification_file_with_no_error,
           notification_file_with_error_belonging_to_colleague,
         )
       end

@@ -42,8 +42,6 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
         return render :new
       end
       Rails.logger.info "[#{uuid}][NotificationFileUpload][d=#{Time.zone.now.to_f - t1}] notification file saved"
-
-      NotificationFileProcessorJob.perform_later(notification_file.id)
     end
     Rails.logger.info "[#{uuid}][NotificationFileUpload][d=#{Time.zone.now.to_f - t1}] after adding notification files"
 
