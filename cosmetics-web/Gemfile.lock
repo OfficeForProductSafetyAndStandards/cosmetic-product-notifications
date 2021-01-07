@@ -44,7 +44,7 @@ GEM
       activemodel (= 5.2.4.4)
       activesupport (= 5.2.4.4)
       arel (>= 9.0)
-    activerecord-pg_enum (1.2.1)
+    activerecord-pg_enum (1.2.2)
       activerecord (>= 4.1.0)
       activesupport
       pg
