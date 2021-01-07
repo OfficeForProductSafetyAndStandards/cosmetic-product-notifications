@@ -11,6 +11,9 @@ class NotificationFileProcessorJob < ApplicationJob
 
   def perform(notification_file_id)
     @notification_file = NotificationFile.find(notification_file_id)
+
+    return if @notification_file.upload_error.present?
+
     create_notification_from_file
     delete_notification_file if @notification_file.upload_error.blank?
   end
