@@ -38,8 +38,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     visit verify_url
 
     # Attempting to access other pages should redirect back to form
-    click_link "Your account"
-    expect(page).to have_current_path("/account-security")
+    expect(page).not_to have_link("Your account")
 
     click_link "Submit cosmetic product notifications"
     expect(page).to have_current_path("/account-security")
