@@ -14,8 +14,6 @@
 
       <h1 class="govuk-fieldset__heading govuk-label--l"><%= title %></h1>
 
-      <p class="govuk-body">Download list of <%= link_to("predefined frame formulations (PDF)", "#") %></p>
-
       <%= render "form_components/govuk_select", form: form, key: :frame_formulation,
                 show_all_values: true, is_autocomplete: true,
                 label: { text: question, classes: "govuk-label--m", isPageHeading: true },
