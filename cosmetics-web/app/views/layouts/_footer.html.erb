@@ -1,48 +1,48 @@
 <footer class="govuk-footer" role="contentinfo">
-    <div class="govuk-width-container">
-      <div class="govuk-footer__navigation">
-        <div class="govuk-footer__section">
-          <h2 class="govuk-footer__heading govuk-heading-m">
-            Guidance
-          </h2>
-          <ul class="govuk-footer__list govuk-footer__list">
-            <li class="govuk-footer__list-item">
-              <%= link_to "How to notify nanomaterials", how_to_notify_nanomaterials_path, class: "govuk-footer__link", target: :_blank %>
-            </li>
-            <li class="govuk-footer__list-item">
-              <%= link_to "How to prepare images for notification", how_to_prepare_images_for_notification_path, class: "govuk-footer__link", target: :_blank  %>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <hr class="govuk-footer__section-break">
-
-      <div class="govuk-footer__meta">
-        <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-          <div class="govuk-footer__meta-custom">
-            Email
-            <%= link_to "opss.enquiries@beis.gov.uk", "mailto:OPSS.enquiries@beis.gov.uk", class: "govuk-footer__link ", target: :_blank %>
-            for help using this service
-          </div>
-          <ul class="govuk-footer__inline-list">
-            <% unless search_domain? %>
-            <li class="govuk-footer__inline-list-item">
-              <%= link_to "Accessibility Statement", accessibility_statement_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank %>
-            </li>
-            <% end %>
-            <li class="govuk-footer__inline-list-item">
-              <%= link_to "Privacy policy", privacy_notice_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
-            </li><li class="govuk-footer__inline-list-item">
-              <%= link_to "Terms and conditions", terms_and_conditions_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
-            </li>
-          </ul>
-        </div>
-        <div class="govuk-footer__meta-item">
-          <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/" target="_blank">© Crown copyright</a>
-        </div>
+  <div class="govuk-width-container">
+    <div class="govuk-footer__navigation">
+      <div class="govuk-footer__section">
+        <h2 class="govuk-footer__heading govuk-heading-m">
+          Guidance
+        </h2>
+        <ul class="govuk-footer__list govuk-footer__list">
+          <li class="govuk-footer__list-item">
+            <%= link_to "How to notify nanomaterials", how_to_notify_nanomaterials_path, class: "govuk-footer__link", target: :_blank %>
+          </li>
+          <li class="govuk-footer__list-item">
+            <%= link_to "How to prepare images for notification", how_to_prepare_images_for_notification_path, class: "govuk-footer__link", target: :_blank  %>
+          </li>
+        </ul>
       </div>
     </div>
+
+    <hr class="govuk-footer__section-break">
+
+    <div class="govuk-footer__meta">
+      <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+        <div class="govuk-footer__meta-custom">
+          Email
+          <%= link_to "opss.enquiries@beis.gov.uk", "mailto:OPSS.enquiries@beis.gov.uk", class: "govuk-footer__link ", target: :_blank %>
+          for help using this service
+        </div>
+        <ul class="govuk-footer__inline-list">
+          <% unless search_domain? %>
+          <li class="govuk-footer__inline-list-item">
+            <%= link_to "Accessibility Statement", accessibility_statement_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank %>
+          </li>
+          <% end %>
+          <li class="govuk-footer__inline-list-item">
+            <%= link_to "Privacy policy", privacy_notice_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
+          </li><li class="govuk-footer__inline-list-item">
+            <%= link_to "Terms and conditions", terms_and_conditions_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
+          </li>
+        </ul>
+      </div>
+      <div class="govuk-footer__meta-item">
+        <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/" target="_blank">© Crown copyright</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <%= javascript_tag nonce: true do -%>
