@@ -20,6 +20,7 @@ class NotificationFile < ApplicationRecord
     notification_duplicated: "notification_duplicated",
     notification_validation_error: "notification_validation_error",
     draft_notification_error: "draft_notification_error",
+    file_upload_failed: "file_upload_failed",
     unknown_error: "unknown_error",
   }
 

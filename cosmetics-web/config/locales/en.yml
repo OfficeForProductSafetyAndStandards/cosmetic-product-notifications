@@ -36,6 +36,7 @@ en:
           notification_duplicated: "A notification for this product already exists for this responsible person"
           notification_validation_error: "Try again or manually enter the production notification data"
           draft_notification_error: "The uploaded file is for a draft notification"
+          file_upload_failed: "The file upload failed. Please try again"
           unknown_error: "Try again or manually enter the production notification data"
       notification:
         ph_min_value: "pH"
