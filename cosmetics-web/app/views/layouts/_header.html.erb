@@ -31,6 +31,8 @@
             <li class="govuk-header__navigation-item">
               <%= link_to "Your account", my_account_path, class: "govuk-header__link" %>
             </li>
+          <% end %>
+          <% if current_user %>
             <li class="govuk-header__navigation-item">
               <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "govuk-header__link" %>
             </li>
