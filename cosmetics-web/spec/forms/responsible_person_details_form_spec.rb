@@ -67,7 +67,7 @@ RSpec.describe ResponsiblePersonDetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages).to eq(["You are already associated with #{name}"])
+        expect(form.errors.full_messages).to eq(["You are already associated with #{name.strip}"])
       end
     end
 
@@ -106,7 +106,7 @@ RSpec.describe ResponsiblePersonDetailsForm do
 
       it "populates an error message" do
         expect(form.errors.full_messages)
-          .to eq(["You have already been invited to join #{name}. Check your email inbox for your invite"])
+          .to eq(["You have already been invited to join #{name.strip}. Check your email inbox for your invite"])
       end
     end
 
@@ -209,6 +209,24 @@ RSpec.describe ResponsiblePersonDetailsForm do
 
       it "populates an error message" do
         expect(form.errors.full_messages).to eq(["Enter a UK postcode"])
+      end
+    end
+
+    context "when the postal code does contains leading/trailing spaces" do
+      let(:postal_code) { " EC1 2PE " }
+
+      before { form.validate }
+
+      it "is is valid" do
+        expect(form).to be_valid
+      end
+
+      it "does not populate an error message" do
+        expect(form.errors.full_messages).to be_empty
+      end
+
+      it "strips the leading/trailing spaces" do
+        expect(form.postal_code).to eq postal_code.strip
       end
     end
   end

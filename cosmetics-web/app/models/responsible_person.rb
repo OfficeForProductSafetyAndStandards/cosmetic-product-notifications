@@ -10,6 +10,8 @@ class ResponsiblePerson < ApplicationRecord
 
   enum account_type: { business: "business", individual: "individual" }
 
+  auto_strip_attributes :name, :address_line_1, :address_line_2, :city, :county, :postal_code
+
   validates :account_type, presence: true
 
   with_options on: %i[enter_details create] do |rp|

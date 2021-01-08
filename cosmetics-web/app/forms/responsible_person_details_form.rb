@@ -1,6 +1,8 @@
 class ResponsiblePersonDetailsForm
   include ActiveModel::Model
   include ActiveModel::Attributes
+  include ActiveModel::Validations::Callbacks
+  extend AutoStripAttributes
 
   attribute :name
   attribute :address_line_1
@@ -9,6 +11,8 @@ class ResponsiblePersonDetailsForm
   attribute :county
   attribute :postal_code
   attribute :user
+
+  auto_strip_attributes :name, :address_line_1, :address_line_2, :city, :county, :postal_code, virtual: true
 
   validates :name, presence: true
   validates :address_line_1, presence: true
