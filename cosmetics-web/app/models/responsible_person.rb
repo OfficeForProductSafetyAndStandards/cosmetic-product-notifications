@@ -1,4 +1,6 @@
 class ResponsiblePerson < ApplicationRecord
+  include StripWhitespace
+
   has_many :notifications, dependent: :destroy
   has_many :notification_files, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy
@@ -9,8 +11,6 @@ class ResponsiblePerson < ApplicationRecord
   has_many :nanomaterial_notifications, dependent: :destroy
 
   enum account_type: { business: "business", individual: "individual" }
-
-  auto_strip_attributes :name, :address_line_1, :address_line_2, :city, :county, :postal_code
 
   validates :account_type, presence: true
 
