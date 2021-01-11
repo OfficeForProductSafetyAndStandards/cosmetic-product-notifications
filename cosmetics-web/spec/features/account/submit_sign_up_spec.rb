@@ -41,9 +41,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).not_to have_link("Your account")
     expect(page).not_to have_link("Submit cosmetic product notifications")
 
-    click_link "How to prepare images for notification"
-    expect(page).to have_current_path("/account-security")
-
+    expect(page).to have_link("How to notify nanomaterials", href: "/guidance/how-to-notify-nanomaterials")
+    expect(page).to have_link("How to prepare images for notification", href: "/guidance/how-to-prepare-images-for-notification")
     expect(page).to have_link("Privacy policy", href: "/help/privacy-notice")
     expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
     expect(page).to have_link("Accessibility Statement", href: "/help/accessibility-statement")
