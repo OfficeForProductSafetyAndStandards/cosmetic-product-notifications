@@ -37,11 +37,9 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
-    # Attempting to access other pages should redirect back to form
+    # Some links should not be shown to users during the sign up flow
     expect(page).not_to have_link("Your account")
-
-    click_link "Submit cosmetic product notifications"
-    expect(page).to have_current_path("/account-security")
+    expect(page).not_to have_link("Submit cosmetic product notifications")
 
     click_link "How to prepare images for notification"
     expect(page).to have_current_path("/account-security")
