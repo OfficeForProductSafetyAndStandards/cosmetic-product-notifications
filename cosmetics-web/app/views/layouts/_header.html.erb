@@ -21,9 +21,7 @@
       </a>
     </div>
     <div class="govuk-header__content">
-      <a class="govuk-header__link govuk-header__link--service-name" href=<%= current_user && !current_user.has_completed_registration? ? "/" : "#" %>>
-        <%= @service_name %>
-      </a>
+      <%= link_to_unless(current_user && !current_user.has_completed_registration?, @service_name, "/", class: "govuk-header__link govuk-header__link--service-name") %>
       <button class="govuk-header__menu-button govuk-js-header-toggle" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
         <ul id="navigation" class="govuk-header__navigation" aria-label="Top Level Navigation">
