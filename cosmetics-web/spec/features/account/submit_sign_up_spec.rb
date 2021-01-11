@@ -55,6 +55,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     click_link "Accessibility Statement"
     expect(page).to have_current_path("/help/accessibility-statement")
 
+    click_link "Submit cosmetic product notifications"
+
     # Attempts to submit security page with validation errors
     expect(page).to have_current_path("/account-security")
     fill_in "Mobile number", with: "07000 invalid 000000"
