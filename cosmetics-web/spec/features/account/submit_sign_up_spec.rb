@@ -44,16 +44,9 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     click_link "How to prepare images for notification"
     expect(page).to have_current_path("/account-security")
 
-    click_link "Privacy policy"
-    expect(page).to have_current_path("/help/privacy-notice")
-
-    click_link "Terms and conditions"
-    expect(page).to have_current_path("/help/terms-and-conditions")
-
-    click_link "Accessibility Statement"
-    expect(page).to have_current_path("/help/accessibility-statement")
-
-    click_link "Submit cosmetic product notifications"
+    expect(page).to have_link("Privacy policy", href: "/help/privacy-notice")
+    expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
+    expect(page).to have_link("Accessibility Statement", href: "/help/accessibility-statement")
 
     # Attempts to submit security page with validation errors
     expect(page).to have_current_path("/account-security")
