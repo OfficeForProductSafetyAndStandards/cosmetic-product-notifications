@@ -8,44 +8,17 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
   end
 
   def create
-    t1 = Time.zone.now.to_f
-    uuid = SecureRandom.uuid
-    Rails.logger.info "[#{uuid}][NotificationFileUpload] started"
     @errors = []
     if uploaded_files_params.nil?
       @errors << { text: "Select an EU notification file", href: "#uploaded_files" }
       return render :new
     end
 
-    if uploaded_files_params.length > NotificationFile::MAX_NUMBER_OF_FILES
-      @errors << {
-        text: "You can only select up to #{NotificationFile::MAX_NUMBER_OF_FILES} files at the same time",
-        href: "#uploaded_files",
-      }
-      return render :new
+    if direct_upload?
+      DirectUploadHandler.new(uploaded_files_params[0..-2], uploaded_files_names_params, @responsible_person.id, current_user.id).call
+    else
+      handle_non_js_upload
     end
-
-    Rails.logger.info "[#{uuid}][NotificationFileUpload][d=#{Time.zone.now.to_f - t1}] before adding notification files"
-    uploaded_files_params.each do |uploaded_file|
-      notification_file = NotificationFile.new(
-        name: uploaded_file.original_filename,
-        responsible_person: @responsible_person,
-        user: current_user,
-      )
-      notification_file.uploaded_file.attach(uploaded_file)
-      Rails.logger.info "[#{uuid}][NotificationFileUpload][d=#{Time.zone.now.to_f - t1}] notification file attached"
-
-      unless notification_file.save
-        @errors.concat(notification_file.errors.full_messages.map do |message|
-          { text: message, href: "#file-upload-form-group" }
-        end)
-        return render :new
-      end
-      Rails.logger.info "[#{uuid}][NotificationFileUpload][d=#{Time.zone.now.to_f - t1}] notification file saved"
-
-      NotificationFileProcessorJob.perform_later(notification_file.id)
-    end
-    Rails.logger.info "[#{uuid}][NotificationFileUpload][d=#{Time.zone.now.to_f - t1}] after adding notification files"
 
     redirect_to responsible_person_notifications_path(@responsible_person)
   end
@@ -62,6 +35,34 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
 
 private
 
+  def handle_non_js_upload
+    if uploaded_files_params.length > NotificationFile::MAX_NUMBER_OF_FILES
+      @errors << {
+        text: "You can only select up to #{NotificationFile::MAX_NUMBER_OF_FILES} files at the same time",
+        href: "#uploaded_files",
+      }
+      return render :new
+    end
+
+    uploaded_files_params.each do |uploaded_file|
+      notification_file = NotificationFile.new(
+        name: uploaded_file.original_filename,
+        responsible_person: @responsible_person,
+        user: current_user,
+      )
+      notification_file.uploaded_file.attach(uploaded_file)
+
+      unless notification_file.save
+        @errors.concat(notification_file.errors.full_messages.map do |message|
+          { text: message, href: "#file-upload-form-group" }
+        end)
+        return render :new
+      end
+
+      NotificationFileProcessorJob.perform_later(notification_file.id)
+    end
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
@@ -73,5 +74,15 @@ private
     if params.key?(:uploaded_files)
       params.require(:uploaded_files)
     end
+  end
+
+  def uploaded_files_names_params
+    if params.key?(:uploaded_files_names)
+      params.require(:uploaded_files_names)
+    end
+  end
+
+  def direct_upload?
+    uploaded_files_params.all? { |entry| entry.is_a? String }
   end
 end
