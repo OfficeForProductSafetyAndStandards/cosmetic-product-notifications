@@ -16,7 +16,6 @@ class ResponsiblePersons::Wizard::AddNotificationWizardController < SubmitApplic
   def update
     answer = params[:answer]
     if answer != "yes" && answer != "no"
-
       @error_text = case step
                     when :do_you_have_files_from_eu_notification
                       "Select yes if you have EU notification files"
@@ -24,6 +23,8 @@ class ResponsiblePersons::Wizard::AddNotificationWizardController < SubmitApplic
                       "Select yes if you’re likely to notify the EU about these products"
                     when :have_products_been_notified_in_eu
                       "Select yes if the EU has been notified about these products using CPNP"
+                    when :was_product_on_sale_before_eu_exit
+                      "Select yes if the EU was notified about the nanomaterial before 1 January 2021"
                     else
                       "Select an option"
                     end

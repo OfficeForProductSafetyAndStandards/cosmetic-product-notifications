@@ -41,6 +41,11 @@ RSpec.describe ResponsiblePersons::Wizard::AddNotificationWizardController, type
         put(:update, params: { responsible_person_id: responsible_person.id, id: "have_products_been_notified_in_eu" })
         expect(assigns(:error_text)).to eq("Select yes if the EU has been notified about these products using CPNP")
       end
+
+      it "adds error message if no option selected for `was_product_on_sale_before_eu_exit`" do
+        put(:update, params: { responsible_person_id: responsible_person.id, id: "was_product_on_sale_before_eu_exit" })
+        expect(assigns(:error_text)).to eq("Select yes if the EU was notified about the nanomaterial before 1 January 2021")
+      end
     end
 
     describe "GET #new" do
