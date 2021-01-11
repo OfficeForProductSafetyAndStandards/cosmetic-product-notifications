@@ -47,7 +47,13 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     expect(page).to have_current_path("/account-security")
 
     click_link "Privacy policy"
-    expect(page).to have_current_path("/privacy-policy")
+    expect(page).to have_current_path("/help/privacy-notice")
+
+    click_link "Terms and conditions"
+    expect(page).to have_current_path("/help/terms-and-conditions")
+
+    click_link "Accessibility Statement"
+    expect(page).to have_current_path("/help/accessibility-statement")
 
     # Attempts to submit security page with validation errors
     expect(page).to have_current_path("/account-security")
