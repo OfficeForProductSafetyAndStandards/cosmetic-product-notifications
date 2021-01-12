@@ -37,6 +37,11 @@ class ResponsiblePersons::Wizard::ComponentBuildController < SubmitApplicationCo
       create_required_cmrs
     when :list_nanomaterials
       setup_nano_elements
+    when :select_formulation_type
+      if @component.notification.was_notified_before_eu_exit?
+        @component.update(notification_type: "predefined")
+        jump_to(:select_frame_formulation)
+      end
     end
     render_wizard
   end

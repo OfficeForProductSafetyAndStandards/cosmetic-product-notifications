@@ -7,144 +7,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
-  scenario "Manual, pre-Brexit, exact ingredients, single item, no nanomaterials", :with_stubbed_antivirus do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    answer_was_eu_notified_with "Yes"
-
-    expect_to_be_on__do_you_have_the_zip_files_page
-    answer_do_you_have_zip_files_with "No, I’ll enter information manually"
-
-    expect_to_be_on__was_product_notified_before_brexit_page
-    answer_was_product_notified_before_brexit_with "Yes"
-
-    expect_to_be_on__what_is_product_called_page
-    answer_product_name_with "SkinSoft tangerine shampoo"
-
-    expect_to_be_on__internal_reference_page
-    answer_do_you_want_to_give_an_internal_reference_with "No"
-
-    expect_to_be_on__multi_item_kits_page
-    answer_is_product_multi_item_kit_with "No, this is a single product"
-
-    expect_to_be_on__is_item_available_in_shades_page
-    answer_is_item_available_in_shades_with "No"
-
-    expect_to_be_on__physical_form_of_item_page
-    answer_what_is_physical_form_of_item_with "Liquid"
-
-    expect_to_be_on__does_item_contain_nanomaterial_page
-    answer_does_item_contain_nanomaterials_with "No"
-
-    expect_to_be_on__item_category_page
-    answer_item_category_with "Hair and scalp products"
-
-    expect_to_be_on__item_subcategoy_page(category: "hair and scalp products")
-    answer_item_subcategory_with "Hair and scalp care and cleansing products"
-
-    expect_to_be_on__item_sub_subcategory_page(subcategory: "hair and scalp care and cleansing products")
-    answer_item_sub_subcategory_with "Shampoo"
-
-    expect_to_be_on__formulation_method_page
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
-
-    expect_to_be_on__upload_ingredients_page "Exact concentrations of the ingredients"
-    upload_ingredients_pdf
-
-    expect_to_be_on__what_is_ph_range_of_product_page
-    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-
-    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
-
-    expect_check_your_answers_page_to_contain(
-      product_name: "SkinSoft tangerine shampoo",
-      number_of_components: "1",
-      shades: "None",
-      contains_cmrs: "No",
-      nanomaterials: "None",
-      category: "Hair and scalp products",
-      subcategory: "Hair and scalp care and cleansing products",
-      sub_subcategory: "Shampoo",
-      formulation_given_as: "Exact concentration",
-      physical_form: "Liquid",
-      ph: "Between 3 and 10",
-    )
-    click_button "Accept and submit the cosmetic product notification"
-
-    expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
-  end
-
-  scenario "Manual, pre-Brexit, ingredient ranges, single item, no nanomaterials", :with_stubbed_antivirus do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    answer_was_eu_notified_with "Yes"
-
-    expect_to_be_on__do_you_have_the_zip_files_page
-    answer_do_you_have_zip_files_with "No, I’ll enter information manually"
-
-    expect_to_be_on__was_product_notified_before_brexit_page
-    answer_was_product_notified_before_brexit_with "Yes"
-
-    expect_to_be_on__what_is_product_called_page
-    answer_product_name_with "SkinSoft tangerine shampoo"
-
-    expect_to_be_on__internal_reference_page
-    answer_do_you_want_to_give_an_internal_reference_with "No"
-
-    expect_to_be_on__multi_item_kits_page
-    answer_is_product_multi_item_kit_with "No, this is a single product"
-
-    expect_to_be_on__is_item_available_in_shades_page
-    answer_is_item_available_in_shades_with "No"
-
-    expect_to_be_on__physical_form_of_item_page
-    answer_what_is_physical_form_of_item_with "Liquid"
-
-    expect_to_be_on__does_item_contain_nanomaterial_page
-    answer_does_item_contain_nanomaterials_with "No"
-
-    expect_to_be_on__item_category_page
-    answer_item_category_with "Hair and scalp products"
-
-    expect_to_be_on__item_subcategoy_page(category: "hair and scalp products")
-    answer_item_subcategory_with "Hair and scalp care and cleansing products"
-
-    expect_to_be_on__item_sub_subcategory_page(subcategory: "hair and scalp care and cleansing products")
-    answer_item_sub_subcategory_with "Shampoo"
-
-    expect_to_be_on__formulation_method_page
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range"
-
-    expect_to_be_on__upload_ingredients_page "Concentration ranges of the ingredients"
-    upload_ingredients_pdf
-
-    expect_to_be_on__what_is_ph_range_of_product_page
-    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-
-    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
-
-    expect_check_your_answers_page_to_contain(
-      product_name: "SkinSoft tangerine shampoo",
-      number_of_components: "1",
-      shades: "None",
-      contains_cmrs: "No",
-      nanomaterials: "None",
-      category: "Hair and scalp products",
-      subcategory: "Hair and scalp care and cleansing products",
-      sub_subcategory: "Shampoo",
-      formulation_given_as: "Concentration ranges",
-      physical_form: "Liquid",
-      ph: "Between 3 and 10",
-    )
-    click_button "Accept and submit the cosmetic product notification"
-
-    expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
-  end
-
   scenario "Manual, pre-Brexit, frame formulation, single item, no nanomaterials", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
@@ -183,9 +45,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__item_sub_subcategory_page(subcategory: "mouth wash / breath spray")
     answer_item_sub_subcategory_with "Mouth wash"
-
-    expect_to_be_on__formulation_method_page
-    answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
 
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Mouthwash"
@@ -262,9 +121,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__item_sub_subcategory_page(subcategory: "hair colouring products", item_name: "SkinSoft strawberry blonde hair colourant")
     answer_item_sub_subcategory_with "Oxidative hair colour products"
 
-    expect_to_be_on__formulation_method_page item_name: "SkinSoft strawberry blonde hair colourant"
-    answer_how_do_you_want_to_give_formulation_with("Choose a predefined frame formulation", item_name: "SkinSoft strawberry blonde hair colourant")
-
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part"
 
@@ -294,9 +150,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__item_sub_subcategory_page(subcategory: "hair colouring products", item_name: "SkinSoft strawberry blonde hair fixer")
     answer_item_sub_subcategory_with "Oxidative hair colour products"
-
-    expect_to_be_on__formulation_method_page item_name: "SkinSoft strawberry blonde hair fixer"
-    answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation", item_name: "SkinSoft strawberry blonde hair fixer"
 
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Or Three Components - Oxidative Part"
@@ -403,9 +256,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__item_sub_subcategory_page(subcategory: "make-up products")
     answer_item_sub_subcategory_with "Eye shadow"
 
-    expect_to_be_on__formulation_method_page
-    answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
-
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Eye Shadow, Blusher And Liner (Powder)"
 
@@ -501,9 +351,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__item_sub_subcategory_page(subcategory: "hair colouring products", item_name: "SkinSoft nano black hair dye kit colourant")
     answer_item_sub_subcategory_with "Oxidative hair colour products"
 
-    expect_to_be_on__formulation_method_page item_name: "SkinSoft nano black hair dye kit colourant"
-    answer_how_do_you_want_to_give_formulation_with("Choose a predefined frame formulation", item_name: "SkinSoft nano black hair dye kit colourant")
-
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part"
 
@@ -551,9 +398,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__item_sub_subcategory_page(subcategory: "hair colouring products", item_name: "SkinSoft nano black hair dye kit fixer")
     answer_item_sub_subcategory_with "Oxidative hair colour products"
-
-    expect_to_be_on__formulation_method_page item_name: "SkinSoft nano black hair dye kit fixer"
-    answer_how_do_you_want_to_give_formulation_with("Choose a predefined frame formulation", item_name: "SkinSoft nano black hair dye kit fixer")
 
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part"
