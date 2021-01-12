@@ -24,16 +24,10 @@ import 'govuk-frontend/govuk/assets/images/govuk-logotype-crown.png'
 Rails.start()
 window.GOVUKFrontend = GOVUKFrontend
 
-// ('input').on('direct-upload:end', function(e) { e.preventDefault
-//   console.log(end)
-//   console.log(arguments)
-// })
-
 addEventListener("direct-upload:end", (event, file) => {
   const { target, detail } = event
   target.insertAdjacentHTML("beforebegin", `
     <input type="hidden" name="uploaded_files_names[]" value="${detail.file.name}"/>
   `)
-  console.log(detail.file)
 })
 ActiveStorage.start()
