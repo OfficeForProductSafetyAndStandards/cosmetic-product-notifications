@@ -32,6 +32,9 @@ private
     @component = Component.find(params[:component_id])
     @notification = @component.notification
     @responsible_person = @notification.responsible_person
+
+    return redirect_to responsible_person_notification_path(@responsible_person, @notification) if @notification&.notification_complete?
+
     authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 end

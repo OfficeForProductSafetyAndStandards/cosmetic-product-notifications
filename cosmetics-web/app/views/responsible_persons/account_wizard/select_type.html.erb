@@ -2,8 +2,10 @@
 <% content_for :after_header do %>
   <% default_back_path =  if current_user.responsible_persons.none?
                             wizard_path(:create_or_join_existing)
-                          else
+                          elsif current_responsible_person.present?
                             responsible_person_path(current_responsible_person)
+                          else
+                            select_responsible_persons_path
                           end
   %>
   <%= link_to "Back", request.referer.present? ? request.referer : default_back_path, class: "govuk-back-link" %>

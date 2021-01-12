@@ -42,5 +42,19 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.save).to be false
       expect(responsible_person.errors[:postal_code]).to include("Postcode can not be blank")
     end
+
+    it "fails if postal code does not belong to UK" do
+      responsible_person.postal_code = "JJJJJ"
+
+      expect(responsible_person.save).to be false
+      expect(responsible_person.errors[:postal_code]).to include("Enter a UK postcode")
+    end
+
+    it "strips postal code leading/trailing spaces before saving it" do
+      responsible_person.postal_code = " EC1 2PE "
+
+      expect(responsible_person.save).to be true
+      expect(responsible_person.postal_code).to eq "EC1 2PE"
+    end
   end
 end

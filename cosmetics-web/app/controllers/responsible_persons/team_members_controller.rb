@@ -88,7 +88,7 @@ private
   end
 
   def signed_as_another_user?(invitation)
-    current_user && current_user.email != invitation.email_address
+    current_user && !current_user.email.casecmp(invitation.email_address).zero?
   end
 
   def user_joins_responsible_person(user, responsible_person)

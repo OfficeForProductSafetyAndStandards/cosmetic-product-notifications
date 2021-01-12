@@ -37,7 +37,6 @@ class DirectUploadHandler
     end
   end
 
-      #self.upload_error = "uploaded_file_not_a_zip"
   def handle_missing_files
     (@uploaded_file_names - @present_names).each do |name|
       NotificationFile.new(

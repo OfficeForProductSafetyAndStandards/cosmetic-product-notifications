@@ -162,6 +162,7 @@ Rails.application.routes.draw do
   end
 
   namespace :help, as: "" do
+    get :accessibility_statement, path: "accessibility-statement"
     get :terms_and_conditions, path: "terms-and-conditions"
     get :privacy_notice, path: "privacy-notice"
   end
