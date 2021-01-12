@@ -34,7 +34,7 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 
-  if ENV['DIRECT_UPLOAD_DOMAIN']
-    config.action_controller.default_url_options = { host: ENV['DIRECT_UPLOAD_DOMAIN'], port: ENV.fetch("PORT", "3000") }
+  if ENV["DIRECT_UPLOAD_DOMAIN"]
+    config.action_controller.default_url_options = { host: ENV["DIRECT_UPLOAD_DOMAIN"], port: ENV.fetch("PORT", "3000") }
   end
 end

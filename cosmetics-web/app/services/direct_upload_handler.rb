@@ -1,8 +1,7 @@
 class DirectUploadHandler
-
   def initialize(signed_ids, uploaded_file_names, responsible_person_id, submit_user_id)
     @signed_ids = signed_ids
-    @uploaded_file_names = uploaded_file_names.map { |f| File.basename(f, '.*') }
+    @uploaded_file_names = uploaded_file_names.map { |f| File.basename(f, ".*") }
     @responsible_person = ResponsiblePerson.find(responsible_person_id)
     @submit_user = SubmitUser.find(submit_user_id)
   end
@@ -43,7 +42,7 @@ class DirectUploadHandler
         name: name,
         responsible_person: @responsible_person,
         user: @submit_user,
-        upload_error: :file_missing,
+        upload_error: :file_upload_failed,
       ).save(validate: false)
     end
   end
