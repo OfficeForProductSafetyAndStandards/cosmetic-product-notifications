@@ -84,7 +84,7 @@ private
 
   def files_uploaded_count
     uploaded_files_params.count || uploaded_files_names_params.count
-  rescue
+  rescue StandardError
     0
   end
 
