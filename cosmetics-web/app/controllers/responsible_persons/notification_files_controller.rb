@@ -20,7 +20,8 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
       handle_non_js_upload
     end
 
-    redirect_to responsible_person_notifications_path(@responsible_person, files_uploaded_count: files_uploaded_count)
+    session[:files_uploaded_count] = files_uploaded_count
+    redirect_to responsible_person_notifications_path(@responsible_person)
   end
 
   def destroy
