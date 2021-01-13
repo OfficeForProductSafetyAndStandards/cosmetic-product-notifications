@@ -29,13 +29,6 @@ RSpec.describe DirectUploadHandler, :with_stubbed_antivirus, :with_test_queue_ad
       expect(NotificationFile.first.uploaded_file.blob).to eq(blob1)
       expect(NotificationFile.last.uploaded_file.blob).to eq(blob2)
     end
-
-    it "schedules notification file parsing" do
-      allow(NotificationFileProcessorJob).to receive(:perform_later) { NotificationFile.first.id }
-      allow(NotificationFileProcessorJob).to receive(:perform_later) { NotificationFile.last.id }
-
-      direct_upload_handler.call
-    end
   end
 
   describe "when one file is missing" do
@@ -59,12 +52,6 @@ RSpec.describe DirectUploadHandler, :with_stubbed_antivirus, :with_test_queue_ad
 
       expect(NotificationFile.last.upload_error).to eq("file_upload_failed")
       expect(NotificationFile.last.name).to eq(File.basename(filename2, ".*"))
-    end
-
-    it "schedules only one notification file parsing" do
-      allow(NotificationFileProcessorJob).to receive(:perform_later) { NotificationFile.first.id }
-
-      direct_upload_handler.call
     end
   end
 end

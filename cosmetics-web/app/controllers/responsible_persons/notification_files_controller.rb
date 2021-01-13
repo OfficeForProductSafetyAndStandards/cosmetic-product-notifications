@@ -20,7 +20,7 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
       handle_non_js_upload
     end
 
-    redirect_to responsible_person_notifications_path(@responsible_person)
+    redirect_to responsible_person_notifications_path(@responsible_person, files_uploaded_count: files_uploaded_count)
   end
 
   def destroy
@@ -80,6 +80,12 @@ private
     if params.key?(:uploaded_files_names)
       params.require(:uploaded_files_names)
     end
+  end
+
+  def files_uploaded_count
+    uploaded_files_params.count || uploaded_files_names_params.count
+  rescue
+    0
   end
 
   def direct_upload?

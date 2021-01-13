@@ -30,10 +30,6 @@ class DirectUploadHandler
     end
 
     handle_missing_files
-
-    notification_file_ids.each do |id|
-      NotificationFileProcessorJob.perform_later(id)
-    end
   end
 
   def handle_missing_files

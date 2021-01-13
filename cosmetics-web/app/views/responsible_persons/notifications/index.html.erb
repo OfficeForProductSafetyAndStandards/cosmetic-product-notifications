@@ -3,13 +3,13 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<% if @pending_notification_files_count.positive? %>
+<% if params[:files_uploaded_count].to_i.positive? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <div class="govuk-error-summary loading-spinner__container">
         <h2 class="govuk-error-summary__title">
           <span class="loading-spinner__dot"></span>
-          Checking <%= pluralize(@pending_notification_files_count, 'notification file') %>
+          Checking <%= pluralize(params[:files_uploaded_count], 'notification file') %>
         </h2>
         <div class="govuk-error-summary__body">
           <%= link_to "Refresh the browser to see uploaded products", url_for, class: "govuk-link--no-visited-state" %>

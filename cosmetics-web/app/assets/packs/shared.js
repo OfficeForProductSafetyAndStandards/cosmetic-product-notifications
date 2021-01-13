@@ -30,4 +30,8 @@ addEventListener("direct-upload:end", (event, file) => {
     <input type="hidden" name="uploaded_files_names[]" value="${detail.file.name}"/>
   `)
 })
+
+addEventListener("direct-upload:start", (event, file) => {
+  document.getElementById("submit-button").disabled = true;
+})
 ActiveStorage.start()
