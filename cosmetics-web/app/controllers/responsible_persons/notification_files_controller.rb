@@ -15,7 +15,7 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
     end
 
     if direct_upload?
-      DirectUploadHandlerJob.perform_later(uploaded_files_params, uploaded_files_names_params, @responsible_person.id, current_user.id)
+      DirectUploadHandler.new(uploaded_files_params, uploaded_file_names_params, @responsible_person.id, current_user.id).call
     else
       handle_non_js_upload
     end
@@ -77,7 +77,7 @@ private
     end
   end
 
-  def uploaded_files_names_params
+  def uploaded_file_names_params
     if params.key?(:uploaded_files_names)
       params.require(:uploaded_files_names)
     end
