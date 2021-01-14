@@ -65,13 +65,14 @@ RSpec.describe "Check your answers page", type: :request do
 
     context "when the notification was post-Brexit" do
       let(:notification) { create(:notification, :post_brexit, responsible_person: responsible_person) }
+      let!(:component) { create(:component, notification: notification) }
 
       before do
         get edit_responsible_person_notification_path(params)
       end
 
-      it "includes a back link to the image upload page" do
-        expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/build/add_product_image")
+      it "includes a back link to the pH question" do
+        expect(response.body).to have_back_link_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/trigger_question/select_ph_range")
       end
     end
 
