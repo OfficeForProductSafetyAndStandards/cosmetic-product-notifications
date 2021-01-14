@@ -59,8 +59,6 @@ private
         end)
         return render :new
       end
-
-      NotificationFileProcessorJob.perform_later(notification_file.id)
     end
   end
 
