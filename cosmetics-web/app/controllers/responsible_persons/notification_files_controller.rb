@@ -53,12 +53,12 @@ private
       )
       notification_file.uploaded_file.attach(uploaded_file)
 
-      unless notification_file.save
-        @errors.concat(notification_file.errors.full_messages.map do |message|
-          { text: message, href: "#file-upload-form-group" }
-        end)
-        return render :new
-      end
+      next if notification_file.save
+
+      @errors.concat(notification_file.errors.full_messages.map do |message|
+        { text: message, href: "#file-upload-form-group" }
+      end)
+      return render :new
     end
   end
 
