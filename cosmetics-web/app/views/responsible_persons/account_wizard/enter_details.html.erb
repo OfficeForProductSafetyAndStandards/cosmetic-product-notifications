@@ -6,7 +6,6 @@
 <% end %>
 
 
-<% name_label = @responsible_person.business? ? "Business name" : "Name" %>
 <% address_label = @responsible_person.business? ? "UK business address" : "Address" %>
 
 <div class="govuk-grid-row">
@@ -16,7 +15,7 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <%= form_for(@responsible_person_details_form, url: wizard_path, method: :put) do |form| %>
-      <%= render "form_components/govuk_input", form: form, key: :name, label: { text: name_label } %>
+      <%= render "form_components/govuk_input", form: form, key: :name, label: { text: "Business name" } %>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           <%= address_label %>
