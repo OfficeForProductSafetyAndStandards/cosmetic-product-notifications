@@ -14,6 +14,8 @@ module ComponentBuildHelper
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
     elsif step == :select_category && @category.present?
       wizard_path(:select_category, category: Component.get_parent_category(@category))
+    elsif step == :select_formulation_type
+      wizard_path(:select_category, category: @component.sub_category)
     elsif step == :upload_formulation && @component.predefined?
       wizard_path(:contains_poisonous_ingredients)
     elsif step == :select_frame_formulation && @component.notification.was_notified_before_eu_exit?
