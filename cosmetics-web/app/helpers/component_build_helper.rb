@@ -11,7 +11,7 @@ module ComponentBuildHelper
     if step == :add_component_name
       responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_new_component)
     elsif step == :number_of_shades && !@component.notification.is_multicomponent?
-      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :single_or_multi_component)
+      responsible_person_notification_build_path(@component.notification.responsible_person, @component.notification, :add_product_image)
     elsif step == :select_category && @category.present?
       wizard_path(:select_category, category: Component.get_parent_category(@category))
     elsif step == :upload_formulation && @component.predefined?
