@@ -6,8 +6,8 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_notification, only: %i[show confirm delete destroy]
 
   def index
-    @pending_notification_files_count = 0
     @erroneous_notification_files = []
+    @pending_notification_files_count = 0
 
     @responsible_person.notification_files.where(user_id: current_user.id).each do |notification_file|
       if notification_file.upload_error
@@ -15,6 +15,11 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
       else
         @pending_notification_files_count += 1
       end
+    end
+
+    if session[:files_uploaded_count].to_i > @pending_notification_files_count
+      @pending_notification_files_count = session[:files_uploaded_count]
+      session[:files_uploaded_count] = nil
     end
 
     @erroneous_notification_files = @erroneous_notification_files.paginate(page: params[:errors], per_page: 10)
