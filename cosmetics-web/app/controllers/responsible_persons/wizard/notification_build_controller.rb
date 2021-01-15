@@ -217,7 +217,7 @@ private
         :is_mixed
       end
     when :add_product_image
-      @notification.is_multicomponent? ? :add_new_component : :single_or_multi_component
+      :single_or_multi_component
     end
   end
 
