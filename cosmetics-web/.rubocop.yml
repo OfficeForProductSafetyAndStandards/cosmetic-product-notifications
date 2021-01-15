@@ -78,10 +78,6 @@ RSpec/LetSetup:
     - spec/features/account/change_name_spec.rb
     - spec/features/account/change_password_spec.rb
 
-RSpec/MessageSpies:
-  Exclude:
-    - spec/requests/responsible_persons/notification_files_spec.rb
-
 RSpec/MultipleExpectations:
   Max: 2
   Exclude:
