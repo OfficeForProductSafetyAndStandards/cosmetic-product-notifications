@@ -69,10 +69,6 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
       it "displays the number of notification files containing errors" do
         expect(response.body).to include("Errors (1)")
       end
-
-      it "displays the number of notification files being checked" do
-        expect(response.body).to include("Checking 1 notification file")
-      end
     end
 
     context "when requesting notifications for non-existant company ID" do
