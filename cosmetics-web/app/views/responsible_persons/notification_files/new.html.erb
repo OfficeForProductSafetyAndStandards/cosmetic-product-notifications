@@ -42,7 +42,7 @@
             <%= @errors.last[:text] if @errors.present? %>
           </span>
 
-          <%= form.file_field :uploaded_files, multiple: true, accept: "application/zip", class: "govuk-file-upload" %>
+          <%= form.file_field :uploaded_files, multiple: true, accept: "application/zip", class: "govuk-file-upload", direct_upload: true %>
         </div>
         <div class="govuk-form-group">
           <%= form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button" %>
