@@ -29,9 +29,9 @@ RSpec.describe "Notifications files", :with_stubbed_antivirus, :with_stubbed_not
       it "processes upload using DirectUploadHandler" do
         handler = instance_double(DirectUploadHandler, call: true)
         allow(DirectUploadHandler).to receive(:new).with(file_ids, file_names, responsible_person.id, submit_user.id) { handler }
-   
+
         post "/responsible_persons/#{responsible_person.id}/notification_files", params: params
-        
+
         expect(handler).to have_received(:call)
       end
     end

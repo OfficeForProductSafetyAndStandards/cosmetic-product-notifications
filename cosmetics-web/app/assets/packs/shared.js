@@ -36,17 +36,16 @@ document.addEventListener('direct-upload:start', event => {
   document.getElementById('submit-button').disabled = true
 })
 
-document.addEventListener("DOMContentLoaded", function(event) {
-  document.getElementById('uploaded_files').addEventListener('change' , event => {
+document.addEventListener('DOMContentLoaded', event => {
+  document.getElementById('uploaded_files').addEventListener('change', event => {
     try {
       const max = 100
       if (event.target.files.length > max) {
-        alert(`Maximum number of selected files is ${max}`)
+        window.alert(`Please select no more than ${max} files`)
         event.target.files = null
         event.target.value = null
       }
-    }
-    catch(e) { console.log(e) }
+    } catch (e) { console.log(e) }
   })
 })
 
