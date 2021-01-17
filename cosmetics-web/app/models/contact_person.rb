@@ -7,5 +7,7 @@ class ContactPerson < ApplicationRecord
               message: I18n.t(:wrong_format, scope: "contact_person.email_address"),
             }
   validates :email_address, presence: { message: I18n.t(:blank, scope: "contact_person.email_address") }
-  validates :phone_number, presence: true
+  validates :phone_number, presence: true,
+                           numericality: true,
+                           length: { minimum: 8, :maximum => 12 }
 end
