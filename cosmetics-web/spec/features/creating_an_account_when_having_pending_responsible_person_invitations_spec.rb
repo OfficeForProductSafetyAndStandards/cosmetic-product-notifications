@@ -64,7 +64,36 @@ RSpec.describe "Creating an account when having pending responsible person invit
     expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/select_type")
   end
 
-  def user_creates_an_account_with_invitation_email
+  scenario "user is invited to responsible person but enters an invalid phone number" do
+    create(:pending_responsible_person_user,
+           :expired,
+           email_address: invited_user_email,
+           responsible_person: responsible_person,
+           inviting_user: inviting_user,
+           created_at: 3.days.ago)
+    create(:pending_responsible_person_user,
+           email_address: invited_user_email,
+           inviting_user: inviting_user,
+           responsible_person: responsible_person2)
+
+    user_creates_account
+    user_enters_contact_details("!!a8887686758")
+
+    # User sees RP invites list showing when user is invited
+    expect(page).to have_content("Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
+  end
+
+  def user_creates_an_account_with_invitation_email(phone_number = "07000000000")
+    user_creates_account
+
+    user_enters_contact_details(phone_number)
+
+    expect_user_details_to_be_accepted
+
+    user_completes_secondary_authentication
+  end
+
+  def user_creates_account
     visit "/"
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
@@ -82,12 +111,19 @@ RSpec.describe "Creating an account when having pending responsible person invit
 
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
+  end
 
-    fill_in "Mobile number", with: "07000000000"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
-    click_button "Continue"
+  def user_enters_contact_details(phone_number)
+      fill_in "Mobile number", with: phone_number
+      fill_in "Password", with: "userpassword", match: :prefer_exact
+      click_button "Continue"
+  end
 
+  def expect_user_details_to_be_accepted
     expect_to_be_on_secondary_authentication_page
+  end
+
+  def user_completes_secondary_authentication
     expect_user_to_have_received_sms_code(otp_code)
     complete_secondary_authentication_with(otp_code)
   end
