@@ -114,9 +114,9 @@ RSpec.describe "Creating an account when having pending responsible person invit
   end
 
   def user_enters_contact_details(phone_number)
-      fill_in "Mobile number", with: phone_number
-      fill_in "Password", with: "userpassword", match: :prefer_exact
-      click_button "Continue"
+    fill_in "Mobile number", with: phone_number
+    fill_in "Password", with: "userpassword", match: :prefer_exact
+    click_button "Continue"
   end
 
   def expect_user_details_to_be_accepted
