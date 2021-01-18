@@ -7,7 +7,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, single item, no nanomaterials", :with_stubbed_antivirus do
+  scenario "Manual, pre-Brexit, frame formulation, single item, no nanomaterials, no poison", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -49,6 +49,9 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Mouthwash"
 
+    expect_to_be_on__poisonous_ingredients_page
+    answer_does_product_contain_poisonous_ingredients_with "No"
+
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
@@ -66,6 +69,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       formulation_given_as: "Frame formulation",
       physical_form: "Liquid",
       ph: "No pH",
+      poisonous_ingredients: "No",
     )
     click_button "Accept and submit the cosmetic product notification"
 
@@ -73,7 +77,80 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, multi-item, no nanomaterials", :with_stubbed_antivirus do
+  scenario "Manual, pre-Brexit, frame formulation, single item, no nanomaterials, with poison", :with_stubbed_antivirus do
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on__was_eu_notified_about_products_page
+    answer_was_eu_notified_with "Yes"
+
+    expect_to_be_on__do_you_have_the_zip_files_page
+    answer_do_you_have_zip_files_with "No, I’ll enter information manually"
+
+    expect_to_be_on__was_product_notified_before_brexit_page
+    answer_was_product_notified_before_brexit_with "Yes"
+
+    expect_to_be_on__what_is_product_called_page
+    answer_product_name_with "SkinSoft deep blue mouthwash"
+
+    expect_to_be_on__internal_reference_page
+    answer_do_you_want_to_give_an_internal_reference_with "No"
+
+    expect_to_be_on__multi_item_kits_page
+    answer_is_product_multi_item_kit_with "No, this is a single product"
+
+    expect_to_be_on__is_item_available_in_shades_page
+    answer_is_item_available_in_shades_with "No"
+
+    expect_to_be_on__physical_form_of_item_page
+    answer_what_is_physical_form_of_item_with "Liquid"
+
+    expect_to_be_on__does_item_contain_nanomaterial_page
+    answer_does_item_contain_nanomaterials_with "No"
+
+    expect_to_be_on__item_category_page
+    answer_item_category_with "Oral hygiene products"
+
+    expect_to_be_on__item_subcategoy_page(category: "oral hygiene products")
+    answer_item_subcategory_with "Mouth wash / breath spray"
+
+    expect_to_be_on__item_sub_subcategory_page(subcategory: "mouth wash / breath spray")
+    answer_item_sub_subcategory_with "Mouth wash"
+
+    expect_to_be_on__frame_formulation_select_page
+    give_frame_formulation_as "Mouthwash"
+
+    expect_to_be_on__poisonous_ingredients_page
+    answer_does_product_contain_poisonous_ingredients_with "Yes"
+
+    expect_to_be_on__upload_poisonous_ingredients_page
+    upload_ingredients_pdf
+
+    expect_to_be_on__what_is_ph_range_of_product_page
+    answer_what_is_ph_range_of_product_with "It does not have a pH"
+
+    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft deep blue mouthwash")
+
+    expect_check_your_answers_page_to_contain(
+      product_name: "SkinSoft deep blue mouthwash",
+      number_of_components: "1",
+      shades: "None",
+      contains_cmrs: "No",
+      nanomaterials: "None",
+      category: "Oral hygiene products",
+      subcategory: "Mouth wash / breath spray",
+      sub_subcategory: "Mouth wash",
+      formulation_given_as: "Frame formulation",
+      physical_form: "Liquid",
+      ph: "No pH",
+      poisonous_ingredients: "Yes",
+    )
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
+  end
+
+  scenario "Manual, pre-Brexit, frame formulation, multi-item, no nanomaterials, no poison", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -124,6 +201,9 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part"
 
+    expect_to_be_on__poisonous_ingredients_page
+    answer_does_product_contain_poisonous_ingredients_with "No"
+
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
@@ -154,6 +234,9 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Or Three Components - Oxidative Part"
 
+    expect_to_be_on__poisonous_ingredients_page
+    answer_does_product_contain_poisonous_ingredients_with "No"
+
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
@@ -178,6 +261,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
           formulation_given_as: "Frame formulation",
           physical_form: "Liquid",
           ph: "No pH",
+          poisonous_ingredients: "No",
         },
         {
           name: "SkinSoft strawberry blonde hair fixer",
@@ -190,6 +274,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
           formulation_given_as: "Frame formulation",
           physical_form: "Liquid",
           ph: "No pH",
+          poisonous_ingredients: "No",
         },
       ],
     )
@@ -199,7 +284,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft strawberry blonde hair dye notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, single item, with nanomaterials", :with_stubbed_antivirus do
+  scenario "Manual, pre-Brexit, frame formulation, single item, with nanomaterials, with poison", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -259,6 +344,12 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Eye Shadow, Blusher And Liner (Powder)"
 
+    expect_to_be_on__poisonous_ingredients_page
+    answer_does_product_contain_poisonous_ingredients_with "Yes"
+
+    expect_to_be_on__upload_poisonous_ingredients_page
+    upload_ingredients_pdf
+
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
@@ -278,6 +369,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       formulation_given_as: "Frame formulation",
       physical_form: "Solid or pressed powder",
       ph: "No pH",
+      poisonous_ingredients: "Yes",
     )
     click_button "Accept and submit the cosmetic product notification"
 
@@ -285,7 +377,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_see_message "SkinSoft carbon black eyeshadow notification submitted"
   end
 
-  scenario "Manual, pre-Brexit, frame formulation, multi-item, each with nanomaterials", :with_stubbed_antivirus do
+  scenario "Manual, pre-Brexit, frame formulation, multi-item, each with nanomaterials, no poison", :with_stubbed_antivirus do
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
@@ -354,6 +446,9 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part"
 
+    expect_to_be_on__poisonous_ingredients_page
+    answer_does_product_contain_poisonous_ingredients_with "No"
+
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
@@ -402,6 +497,9 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__frame_formulation_select_page
     give_frame_formulation_as "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part"
 
+    expect_to_be_on__poisonous_ingredients_page
+    answer_does_product_contain_poisonous_ingredients_with "No"
+
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
@@ -428,6 +526,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
           formulation_given_as: "Frame formulation",
           physical_form: "Liquid",
           ph: "No pH",
+          poisonous_ingredients: "No",
         },
         {
           name: "SkinSoft nano black hair dye kit fixer",
@@ -442,6 +541,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
           formulation_given_as: "Frame formulation",
           physical_form: "Liquid",
           ph: "No pH",
+          poisonous_ingredients: "No",
         },
       ],
     )

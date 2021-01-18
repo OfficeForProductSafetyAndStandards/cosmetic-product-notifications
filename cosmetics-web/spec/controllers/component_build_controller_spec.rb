@@ -277,12 +277,6 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
         post(:update, params: params.merge(id: :add_physical_form, component: { physical_form: "loose powder" }))
         expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, pre_eu_exit_notification, component, :contains_nanomaterials))
       end
-
-      it "skips contains poisonous ingredients question and redirects to PH question" do
-        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "skin_care_cream_lotion_gel" }))
-
-        expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, pre_eu_exit_notification, component, :select_ph_range))
-      end
     end
   end
 
