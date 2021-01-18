@@ -268,12 +268,7 @@ private
 
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
-
-      if @component.notification.was_notified_after_eu_exit?
-        redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
-      else
-        redirect_to responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
-      end
+      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
     else
       render :select_frame_formulation
     end
@@ -305,6 +300,9 @@ private
         @component.formulation_file.purge if @component.formulation_file.attached?
         render step
       end
+    elsif @component.notification.was_notified_before_eu_exit?
+      @component.formulation_file.attach(formulation_file) if formulation_file.present?
+      redirect_to finish_wizard_path
     else
       @component.errors.add :formulation_file, "Upload a list of ingredients"
       render step
