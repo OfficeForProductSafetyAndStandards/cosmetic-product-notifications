@@ -50,21 +50,22 @@ class PhoneValidator < ActiveModel::EachValidator
   PHONE_NUMBER_SYMBOLS = %w[( ) + -].freeze
   STRINGS_TO_CLEAN = WHITESPACES + PHONE_NUMBER_SYMBOLS
   UK_MOBILE_LENGTH = 10
+  UK_MIN_LANDLINE_LENGHT = 7
+  UK_MAX_LANDLINE_LENGHT = 10
   UK_MOBILE_PREFIX = "7".freeze
   UK_PREFIX = "44".freeze
   ZERO = "0".freeze
 
   def validate_each(record, attribute, value)
-    validate_phone_number(value, (options[:allow_international] || false))
+    validate_phone_number(value, (options[:allow_international] || false), (options[:allow_landline] || false))
   rescue InvalidPhoneError => e
     record.errors.add(attribute, options[:message] || e.message)
   end
 
 private
 
-  def validate_phone_number(number, allow_international)
-    return validate_uk_phone_number(number) if uk_phone_number?(number)
-
+  def validate_phone_number(number, allow_international, allow_landline)
+    return validate_uk_phone_number(number, allow_landline) if uk_phone_number?(number)
     raise NotUKPhoneError unless allow_international
 
     normalised_number = normalise_phone_number(number)
@@ -100,13 +101,22 @@ private
     end
   end
 
-  def validate_uk_phone_number(number)
+  def validate_uk_phone_number(number, allow_landline)
     number = normalise_phone_number(number).delete_prefix(UK_PREFIX).delete_prefix(ZERO)
-    raise NotUKPhoneError unless number.start_with?(UK_MOBILE_PREFIX)
-    raise PhoneTooLongError if number.length > UK_MOBILE_LENGTH
-    raise PhoneTooShortError if number.length < UK_MOBILE_LENGTH
+    raise NotUKPhoneError unless number.start_with?(UK_MOBILE_PREFIX) || allow_landline
 
+    validate_uk_number_length(number, allow_landline)
     UK_PREFIX + number
+  end
+
+  def validate_uk_number_length(number, allow_landline)
+    if allow_landline
+      raise PhoneTooLongError if number.length > UK_MAX_LANDLINE_LENGHT
+      raise PhoneTooLongError if number.length < UK_MIN_LANDLINE_LENGHT
+    else
+      raise PhoneTooLongError if number.length > UK_MOBILE_LENGTH
+      raise PhoneTooShortError if number.length < UK_MOBILE_LENGTH
+    end
   end
 
   def international_prefix(number)

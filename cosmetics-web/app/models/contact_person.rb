@@ -8,4 +8,7 @@ class ContactPerson < ApplicationRecord
             }
   validates :email_address, presence: { message: I18n.t(:blank, scope: "contact_person.email_address") }
   validates :phone_number, presence: true
+  validates :phone_number,
+            phone: { message: I18n.t(:invalid, scope: "contact_person.phone_number"), allow_landline: true },
+            if: -> { phone_number.present? }
 end
