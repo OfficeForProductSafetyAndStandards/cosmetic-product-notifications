@@ -16,7 +16,7 @@ class MasterAnalyzer < ActiveStorage::Analyzer
           @blob.metadata.merge!(analyzer.metadata)
         end
       end
-    rescue Aws::S3::Errors::NotFound
+    rescue Aws::S3::Errors::NotFound, Aws::S3::Errors::NoSuchKey
       notification_file.update(upload_error: :file_upload_failed) if notification_file.present?
     end
 
