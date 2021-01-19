@@ -228,6 +228,8 @@ en:
     email_address:
       wrong_format: "Enter your email address in the correct format, like name@example.com"
       blank: "Enter your email address"
+    phone_number:
+      invalid: "Enter a valid phone number, like 0344 411 1444 or +44 7700 900 982"
   email_form_validation:
     wrong_email_or_password: "Enter your email address in the correct format, like name@example.com"
     wrong_format: "Enter your email address in the correct format, like name@example.com"
@@ -238,4 +240,3 @@ en:
   sign_user_in:
     email:
       wrong_email_or_password: "Enter correct email address and password"
-
