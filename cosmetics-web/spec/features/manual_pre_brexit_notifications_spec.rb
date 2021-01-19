@@ -122,9 +122,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__poisonous_ingredients_page
     answer_does_product_contain_poisonous_ingredients_with "Yes"
 
-    expect_to_be_on__upload_poisonous_ingredients_page
-    upload_ingredients_pdf
-
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
@@ -144,10 +141,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       ph: "No pH",
       poisonous_ingredients: "Yes",
     )
-    click_button "Accept and submit the cosmetic product notification"
-
-    expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
 
     click_link "Add poisonous ingredients document"
 
@@ -158,6 +151,12 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_what_is_ph_range_of_product_with "It does not have a pH"
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft deep blue mouthwash")
+    expect(page).to have_summary_item(key: "Poisonous ingredients", value: "testPdf.pdf")
+
+    click_button "Accept and submit the cosmetic product notification"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
   end
 
   scenario "Manual, pre-Brexit, frame formulation, multi-item, no nanomaterials, no poison", :with_stubbed_antivirus do
@@ -356,9 +355,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
 
     expect_to_be_on__poisonous_ingredients_page
     answer_does_product_contain_poisonous_ingredients_with "Yes"
-
-    expect_to_be_on__upload_poisonous_ingredients_page
-    upload_ingredients_pdf
 
     expect_to_be_on__what_is_ph_range_of_product_page
     answer_what_is_ph_range_of_product_with "It does not have a pH"
