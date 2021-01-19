@@ -147,9 +147,21 @@
       <tr class="govuk-table__row">
         <th class="govuk-table__header" scope="row">Poisonous ingredients</th>
         <td class="govuk-table__cell">
-          <%= link_to "Add poisonous ingredients document",
-                  responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
-                  class: "govuk-link--no-visited-state" %>
+          <% if component.formulation_file.attached? %>
+            <% if component.formulation_file.metadata["safe"] %>
+              <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
+            <% else %>
+              <%= "Processing file #{component.formulation_file.filename} ..." %>
+              <br>
+              <%= link_to "Refresh",
+                      edit_responsible_person_notification_path(@responsible_person, @notification),
+                      class: "govuk-link--no-visited-state" %>
+            <% end %>
+          <% else %>
+            <%= link_to "Add poisonous ingredients document",
+                    responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
+                    class: "govuk-link--no-visited-state" %>
+          <% end %>
         </td>
       </tr>
     <% end %>
