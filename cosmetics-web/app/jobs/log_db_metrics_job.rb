@@ -9,6 +9,8 @@ class LogDbMetricsJob < ApplicationJob
       submit_users_count: SubmitUser.count,
       responsible_persons_count_last_hour: ResponsiblePerson.where("created_at >= ?", 1.hour.ago).count,
       submit_users_count_last_hour: SubmitUser.where("created_at >= ?", 1.hour.ago).count,
+      complete_notifications_count_manual: Notification.where(state: "notification_complete").where("cpnp_reference IS NULL").count,
+      complete_notifications_count_zip: Notification.where(state: "notification_complete").where("cpnp_reference IS NOT NULL").count,
     }
 
     Sidekiq.logger.info "CosmeticsStatistics #{stats.to_a.map { |x| x.join('=') }.join(' ')}"
