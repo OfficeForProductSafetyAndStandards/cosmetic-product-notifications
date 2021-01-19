@@ -143,6 +143,16 @@
         <%= component.contains_poisonous_ingredients.present? ? "Yes" : "No" %>
       </td>
     </tr>
+    <% if component.notification.was_notified_before_eu_exit? && component.contains_poisonous_ingredients.present? %>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="row">Poisonous ingredients</th>
+        <td class="govuk-table__cell">
+          <%= link_to "Add poisonous ingredients document",
+                  responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
+                  class: "govuk-link--no-visited-state" %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
   <% if component.trigger_questions %>
     <%= render "notifications/ph", component: component %>

@@ -282,7 +282,7 @@ private
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    if @component.contains_poisonous_ingredients?
+    if @component.contains_poisonous_ingredients? && !@component.notification.was_notified_before_eu_exit?
       redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
     else
       redirect_to finish_wizard_path
