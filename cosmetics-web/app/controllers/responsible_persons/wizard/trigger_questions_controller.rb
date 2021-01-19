@@ -79,4 +79,15 @@ private
   def ph_param
     { ph: params.fetch(:component, {})[:ph] }
   end
+
+  def previous_wizard_path
+    notification = @component.notification
+    if step == :select_ph_range && notification.was_notified_before_eu_exit?
+      responsible_person_notification_component_build_path(
+        notification.responsible_person, notification, @component, :contains_poisonous_ingredients
+      )
+    else
+      super
+    end
+  end
 end
