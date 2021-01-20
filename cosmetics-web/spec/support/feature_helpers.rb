@@ -165,6 +165,10 @@ def expect_to_be_on__is_product_for_under_threes_page
   expect(page).to have_h1("Is the product intended to be used on children under 3 years old?")
 end
 
+def expect_back_link_to_is_product_for_under_threes_page
+  expect_back_link_to(/\/build\/for_children_under_three$/)
+end
+
 def expect_to_be_on__multi_item_kits_page
   expect(page.current_path).to end_with("/build/single_or_multi_component")
   expect(page).to have_h1("Multi-item kits")
@@ -216,14 +220,26 @@ def expect_to_be_on__what_is_product_contained_in_page(item_name: nil)
   expect(page).to have_h1("What is the #{item_name || 'the product'} contained in?")
 end
 
+def expect_back_link_to_what_is_product_contained_in_page
+  expect_back_link_to(/\/build\/contains_special_applicator$/)
+end
+
 def expect_to_be_on__what_type_of_applicator_page
   expect(page.current_path).to end_with("/select_special_applicator_type")
   expect(page).to have_h1("What type of applicator?")
 end
 
+def expect_back_link_to_what_type_of_applicator_page
+  expect_back_link_to(/\/build\/select_special_applicator_type$/)
+end
+
 def expect_to_be_on__does_item_contain_cmrs_page
   expect(page.current_path).to end_with("/build/contains_cmrs")
   expect(page).to have_h1("Carcinogenic, mutagenic or reprotoxic substances")
+end
+
+def expect_back_link_to_does_item_contain_cmrs_page
+  expect_back_link_to(/\/build\/contains_cmrs$/)
 end
 
 def expect_to_be_on__does_item_contain_nanomaterial_page
@@ -337,6 +353,10 @@ def expect_to_be_on__upload_poisonous_ingredients_page
   expect(page).to have_h1("Upload list of poisonous ingredients")
 end
 
+def expect_back_link_to_upload_poisonous_ingredients_page
+  expect_back_link_to(/\/build\/upload_formulation$/)
+end
+
 def expect_to_be_on__poisonous_ingredients_page
   expect(page.current_path).to end_with("/contains_poisonous_ingredients")
   expect(page).to have_h1("Ingredients the National Poison Information Service needs to know about")
@@ -372,6 +392,10 @@ end
 def exepct_to_be_on_upload_product_label_page
   expect(page.current_path).to end_with("/add_product_image")
   expect(page).to have_h1("Upload an image of the product label")
+end
+
+def expect_back_link_to_upload_product_label_page
+  expect_back_link_to(/\/build\/add_product_image$/)
 end
 
 def expect_to_be_on__upload_formulation_document_page(header_text)
