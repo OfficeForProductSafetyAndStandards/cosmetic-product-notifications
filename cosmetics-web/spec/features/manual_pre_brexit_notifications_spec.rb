@@ -147,9 +147,6 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     expect_to_be_on__upload_poisonous_ingredients_page
     upload_ingredients_pdf
 
-    expect_to_be_on__what_is_ph_range_of_product_page
-    answer_what_is_ph_range_of_product_with "It does not have a pH"
-
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft deep blue mouthwash")
     expect(page).to have_summary_item(key: "Poisonous ingredients", value: "testPdf.pdf")
 

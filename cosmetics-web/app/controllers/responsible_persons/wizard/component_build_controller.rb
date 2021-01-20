@@ -292,7 +292,10 @@ private
   def render_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
 
-    if formulation_file.present?
+    if @component.notification.was_notified_before_eu_exit?
+      @component.formulation_file.attach(formulation_file) if formulation_file.present?
+      redirect_to edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+    elsif formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
         redirect_to finish_wizard_path
@@ -300,9 +303,6 @@ private
         @component.formulation_file.purge if @component.formulation_file.attached?
         render step
       end
-    elsif @component.notification.was_notified_before_eu_exit?
-      @component.formulation_file.attach(formulation_file) if formulation_file.present?
-      redirect_to finish_wizard_path
     else
       @component.errors.add :formulation_file, "Upload a list of ingredients"
       render step
