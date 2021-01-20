@@ -97,6 +97,10 @@ def expect_back_link_to_notifications_page
   expect_back_link_to("/responsible_persons/#{responsible_person.id}/notifications")
 end
 
+def expect_back_link_to_incomplete_notifications_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/notifications#incomplete")
+end
+
 def expect_to_be_on__was_eu_notified_about_products_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/have_products_been_notified_in_eu")
   expect(page).to have_h1("Has the EU been notified about these products using CPNP?")
@@ -523,12 +527,15 @@ end
 
 def go_to_upload_notification_page
   expect_to_be_on__was_eu_notified_about_products_page
+  expect_back_link_to_notifications_page
   page.choose("Yes")
   click_button "Continue"
   expect_to_be_on__do_you_have_the_zip_files_page
+  expect_back_link_to_was_eu_notified_about_products_page
   page.choose("Yes")
   click_button "Continue"
   expect_to_be_on__upload_eu_notification_files_page
+  expect_back_link_to_do_you_have_the_zip_files_page
 end
 
 def answer_was_eu_notified_with(answer)
