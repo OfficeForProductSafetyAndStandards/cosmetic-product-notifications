@@ -23,7 +23,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_was_product_notified_before_brexit_with "Yes"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_was_eu_notified_about_products_page
+    expect_back_link_to_was_product_notified_before_brexit_page
     answer_product_name_with "SkinSoft deep blue mouthwash"
 
     expect_to_be_on__internal_reference_page
@@ -109,7 +109,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_was_product_notified_before_brexit_with "Yes"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_was_eu_notified_about_products_page
+    expect_back_link_to_was_product_notified_before_brexit_page
     answer_product_name_with "SkinSoft deep blue mouthwash"
 
     expect_to_be_on__internal_reference_page
@@ -203,7 +203,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_was_product_notified_before_brexit_with "Yes"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_was_eu_notified_about_products_page
+    expect_back_link_to_was_product_notified_before_brexit_page
     answer_product_name_with "SkinSoft strawberry blonde hair dye"
 
     expect_to_be_on__internal_reference_page
@@ -368,7 +368,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_was_product_notified_before_brexit_with "Yes"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_was_eu_notified_about_products_page
+    expect_back_link_to_was_product_notified_before_brexit_page
     answer_product_name_with "SkinSoft carbon black eyeshadow"
 
     expect_to_be_on__internal_reference_page
@@ -480,7 +480,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     answer_was_product_notified_before_brexit_with "Yes"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_was_eu_notified_about_products_page
+    expect_back_link_to_was_product_notified_before_brexit_page
     answer_product_name_with "SkinSoft nano black hair dye kit"
 
     expect_to_be_on__internal_reference_page
