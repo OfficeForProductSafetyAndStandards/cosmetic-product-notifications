@@ -143,7 +143,7 @@
         <%= component.contains_poisonous_ingredients.present? ? "Yes" : "No" %>
       </td>
     </tr>
-    <% if component.notification.was_notified_before_eu_exit? && component.contains_poisonous_ingredients.present? %>
+    <% if component.contains_poisonous_ingredients.present? %>
       <tr class="govuk-table__row">
         <th class="govuk-table__header" scope="row">Poisonous ingredients</th>
         <td class="govuk-table__cell">
