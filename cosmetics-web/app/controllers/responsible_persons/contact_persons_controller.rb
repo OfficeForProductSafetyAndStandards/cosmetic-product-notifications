@@ -16,7 +16,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
   def edit; end
 
   def update
-    if @contact_person.update(contact_person_params)
+    if @contact_person.update(contact_person_params) && @responsible_person.add_user(current_user)
       redirect_contact_person
     else
       render :edit

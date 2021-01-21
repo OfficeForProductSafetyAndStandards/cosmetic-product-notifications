@@ -64,8 +64,9 @@ private
 
   def responsible_person_saved?
     return false unless @responsible_person_details_form.valid?
-
-    @responsible_person.add_user(current_user)
+    # so it seems this is what is breaking when you actually add new details and i guess error is not surfacing because it isn't a form error?
+    # it is breaking because user has already been added and saved, nasir thinks we should not be saving the new RP until after contact details
+    # return false unless @responsible_person.add_user(current_user)
     @responsible_person.save
   end
 
