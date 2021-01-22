@@ -196,6 +196,7 @@ RSpec.describe Notification, type: :model do
 
   describe "#destroy_notification!" do
     before { notification }
+
     let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
     let(:submit_user) { responsible_person.responsible_person_users.first.user }
 
