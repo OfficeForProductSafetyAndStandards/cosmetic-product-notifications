@@ -193,4 +193,33 @@ RSpec.describe Notification, type: :model do
       end
     end
   end
+
+  describe "#destroy_notification!" do
+    before { notification }
+
+    context "when is draft" do
+      let(:notification) { create(:draft_notification) }
+
+      it "uses #destroy!" do
+        expect {
+          notification.destroy_notification!
+        }.to change(described_class, :count).by(-1)
+      end
+    end
+
+    context "when is completed" do
+      let(:notification) { create(:registered_notification) }
+      let(:service) { double }
+
+      it "uses NotificationDeleteService" do
+        allow(NotificationDeleteService).to receive(:new) { service }
+        allow(service).to receive(:call)
+
+        notification.destroy_notification!
+
+        expect(NotificationDeleteService).to have_received(:new).with(notification) { service }
+        expect(service).to have_received(:call)
+      end
+    end
+  end
 end

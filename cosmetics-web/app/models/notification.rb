@@ -1,4 +1,8 @@
 class Notification < ApplicationRecord
+  class DeletionPeriodExpired < ArgumentError; end
+
+  DELETION_PERIOD_DAYS = 30
+
   include Searchable
 
   include AASM
@@ -168,6 +172,18 @@ class Notification < ApplicationRecord
   # a ZIP file (eg from CPNP).
   def via_zip_file?
     notification_file_imported? || cpnp_reference
+  end
+
+  def destroy_notification!
+    if notification_complete?
+      NotificationDeleteService.new(self).call
+    else
+      destroy!
+    end
+  end
+
+  def can_be_deleted?
+    !notification_complete? || created_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
 
 private

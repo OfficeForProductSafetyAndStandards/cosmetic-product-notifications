@@ -59,6 +59,7 @@ ExampleLength:
   Exclude:
     - 'spec/system/**/*'
     - 'spec/features/**/*'
+    - 'spec/services/notification_delete_service_spec.rb'
 
 Metrics/BlockLength:
   Exclude:
@@ -82,6 +83,7 @@ RSpec/MultipleExpectations:
   Max: 2
   Exclude:
     - 'spec/features/**/*'
+    - 'spec/services/notification_delete_service_spec.rb'
 
 RSpec/NestedGroups:
   Max: 6
