@@ -30,11 +30,11 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
   end
 
   def delete?
-    update?
+    user_member_of_associated_responsible_person? && record.can_be_deleted?
   end
 
   def destroy?
-    update?
+    user_member_of_associated_responsible_person? && record.can_be_deleted?
   end
 
 private

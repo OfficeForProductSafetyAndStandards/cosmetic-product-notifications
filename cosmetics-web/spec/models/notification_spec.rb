@@ -196,28 +196,30 @@ RSpec.describe Notification, type: :model do
 
   describe "#destroy_notification!" do
     before { notification }
+    let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
+    let(:submit_user) { responsible_person.responsible_person_users.first.user }
 
     context "when is draft" do
-      let(:notification) { create(:draft_notification) }
+      let(:notification) { create(:draft_notification, responsible_person: responsible_person) }
 
       it "uses #destroy!" do
         expect {
-          notification.destroy_notification!
+          notification.destroy_notification!(submit_user)
         }.to change(described_class, :count).by(-1)
       end
     end
 
     context "when is completed" do
-      let(:notification) { create(:registered_notification) }
+      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
       let(:service) { double }
 
       it "uses NotificationDeleteService" do
         allow(NotificationDeleteService).to receive(:new) { service }
         allow(service).to receive(:call)
 
-        notification.destroy_notification!
+        notification.destroy_notification!(submit_user)
 
-        expect(NotificationDeleteService).to have_received(:new).with(notification) { service }
+        expect(NotificationDeleteService).to have_received(:new).with(notification, submit_user) { service }
         expect(service).to have_received(:call)
       end
     end

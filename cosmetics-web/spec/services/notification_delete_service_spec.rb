@@ -6,6 +6,7 @@ RSpec.describe NotificationDeleteService do
   let(:submit_user) { create(:submit_user) }
   let(:notification) { create(:registered_notification, cpnp_reference: "123412344") }
   let(:current_user) { submit_user }
+  let(:other_user) { submit_user }
   let(:service) { described_class.new(notification, current_user) }
 
   before do

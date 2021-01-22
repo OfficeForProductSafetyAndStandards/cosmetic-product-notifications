@@ -10,7 +10,7 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
   let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
   let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
 
-  context "when deleting notification user incomplete notification" do
+  context "when deleting notification user notification" do
     before do
       sign_in_as_member_of_responsible_person(responsible_person, user)
     end
@@ -21,23 +21,19 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
       expect(response.status).to eq 302
     end
 
+    it "creates log record with current user" do
+      expect(NotificationDeleteLog.count).to eq 0
+
+      delete responsible_person_notification_path(responsible_person, notification)
+
+      expect(NotificationDeleteLog.first.submit_user).to eq user
+    end
+
     it "removes record" do
       draft_notification
       expect {
         delete responsible_person_notification_path(responsible_person, draft_notification)
       }.to change(Notification, :count).from(1).to(0)
-    end
-  end
-
-  context "when deleting notification that is complete" do
-    before do
-      sign_in_as_member_of_responsible_person(responsible_person, user)
-    end
-
-    it "does not succeed" do
-      expect {
-        delete responsible_person_notification_path(responsible_person, notification)
-      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 

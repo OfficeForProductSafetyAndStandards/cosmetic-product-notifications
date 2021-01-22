@@ -174,9 +174,9 @@ class Notification < ApplicationRecord
     notification_file_imported? || cpnp_reference
   end
 
-  def destroy_notification!
+  def destroy_notification!(submit_user)
     if notification_complete?
-      NotificationDeleteService.new(self).call
+      NotificationDeleteService.new(self, submit_user).call
     else
       destroy!
     end
