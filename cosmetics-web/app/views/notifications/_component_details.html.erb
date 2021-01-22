@@ -86,12 +86,14 @@
         <% elsif component.formulation_file.attached? %>
           <% if component.formulation_file.metadata["safe"] %>
             <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
-          <% else %>
+          <% elsif component.formulation_file.metadata["safe"].nil? %>
             <%= "Processing file #{component.formulation_file.filename} ..." %>
             <br>
             <%= link_to "Refresh",
                     edit_responsible_person_notification_path(@responsible_person, @notification),
                     class: "govuk-link--no-visited-state" %>
+          <% else %>
+            <%= "The uploaded file has been flagged as a virus" %>
           <% end %>
         <% elsif allow_edits %>
           <%= link_to "Add formulation document",
@@ -150,12 +152,14 @@
           <% if component.formulation_file.attached? %>
             <% if component.formulation_file.metadata["safe"] %>
               <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
-            <% else %>
+            <% elsif component.formulation_file.metadata["safe"].nil? %>
               <%= "Processing file #{component.formulation_file.filename} ..." %>
               <br>
               <%= link_to "Refresh",
                       edit_responsible_person_notification_path(@responsible_person, @notification),
                       class: "govuk-link--no-visited-state" %>
+            <% else %>
+              <%= "The uploaded file has been flagged as a virus" %>
             <% end %>
           <% else %>
             <%= link_to "Add poisonous ingredients document",
