@@ -44,6 +44,7 @@ RSpec.describe EmailValidator do
     "user@example.com,",
     "user@example..com",
     "user@example",
+    "user@example.com2",
   ]
 
   valid_emails.each do |email|

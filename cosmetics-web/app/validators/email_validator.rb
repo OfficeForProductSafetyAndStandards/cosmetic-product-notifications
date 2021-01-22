@@ -13,7 +13,8 @@ private
 
   def email_accepted?(parsed_email, value)
     parsed_email.address == value && # Parsed address corresponds to introduced value
-      parsed_email.address =~ URI::MailTo::EMAIL_REGEXP && # Valid email format
-      parsed_email.domain.split(".").length > 1 # Exclude local domains (eg: user@example)
+      URI::MailTo::EMAIL_REGEXP.match?(value) && # Valid email format
+      parsed_email.domain.split(".").length > 1 && # Exclude local domains (eg: user@example)
+      /[a-zA-Z]/.match?(value[-1]) # Last character of the Top Level Domain is a letter
   end
 end
