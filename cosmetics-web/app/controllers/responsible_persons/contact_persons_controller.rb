@@ -6,7 +6,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
   def new; end
 
   def create
-    if @contact_person.save
+    if @contact_person.save && save_responsible_person_user
       redirect_contact_person
     else
       render :new
@@ -36,6 +36,11 @@ private
                       else
                         @responsible_person.contact_persons.build(contact_person_params)
                       end
+  end
+
+  def save_responsible_person_user
+    @responsible_person.add_responsible_person(current_user)
+    @responsible_person.save
   end
 
   def contact_person_params

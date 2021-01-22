@@ -26,6 +26,10 @@ class ResponsiblePerson < ApplicationRecord
     responsible_person_users << ResponsiblePersonUser.create(user: user)
   end
 
+  def add_pending_responsible_person(user)
+    pending_responsible_person_users << { email_address: user.email }
+  end
+
   def address_lines
     [address_line_1, address_line_2, city, county, postal_code].select(&:present?)
   end
