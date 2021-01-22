@@ -270,7 +270,7 @@ def expect_to_be_on__upload_formulation_document_page(header_text)
 end
 
 # rubocop:disable Naming/MethodParameterName
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil)
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)
@@ -292,6 +292,10 @@ def expect_check_your_answers_page_to_contain(product_name:, number_of_component
     end
 
     expect(page).to have_summary_item(key: "Physical form", value: physical_form)
+
+    if poisonous_ingredients
+      expect(page).to have_summary_item(key: "Contains poisonous ingredients", value: poisonous_ingredients)
+    end
 
     if ph
       expect(page).to have_summary_item(key: "pH", value: ph)

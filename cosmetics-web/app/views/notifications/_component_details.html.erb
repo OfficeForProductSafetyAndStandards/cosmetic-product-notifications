@@ -86,12 +86,14 @@
         <% elsif component.formulation_file.attached? %>
           <% if component.formulation_file.metadata["safe"] %>
             <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
-          <% else %>
+          <% elsif component.formulation_file.metadata["safe"].nil? %>
             <%= "Processing file #{component.formulation_file.filename} ..." %>
             <br>
             <%= link_to "Refresh",
                     edit_responsible_person_notification_path(@responsible_person, @notification),
                     class: "govuk-link--no-visited-state" %>
+          <% else %>
+            <%= "The uploaded file has been flagged as a virus" %>
           <% end %>
         <% elsif allow_edits %>
           <%= link_to "Add formulation document",
@@ -143,6 +145,30 @@
         <%= component.contains_poisonous_ingredients.present? ? "Yes" : "No" %>
       </td>
     </tr>
+    <% if component.contains_poisonous_ingredients.present? %>
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" scope="row">Poisonous ingredients</th>
+        <td class="govuk-table__cell">
+          <% if component.formulation_file.attached? %>
+            <% if component.formulation_file.metadata["safe"] %>
+              <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
+            <% elsif component.formulation_file.metadata["safe"].nil? %>
+              <%= "Processing file #{component.formulation_file.filename} ..." %>
+              <br>
+              <%= link_to "Refresh",
+                      edit_responsible_person_notification_path(@responsible_person, @notification),
+                      class: "govuk-link--no-visited-state" %>
+            <% else %>
+              <%= "The uploaded file has been flagged as a virus" %>
+            <% end %>
+          <% else %>
+            <%= link_to "Add poisonous ingredients document",
+                    responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
+                    class: "govuk-link--no-visited-state" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
   <% if component.trigger_questions %>
     <%= render "notifications/ph", component: component %>

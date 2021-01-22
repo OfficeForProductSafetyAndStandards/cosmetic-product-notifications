@@ -37,6 +37,11 @@ class ResponsiblePersons::Wizard::ComponentBuildController < SubmitApplicationCo
       create_required_cmrs
     when :list_nanomaterials
       setup_nano_elements
+    when :select_formulation_type
+      if @component.notification.was_notified_before_eu_exit?
+        @component.update(notification_type: "predefined")
+        jump_to(:select_frame_formulation)
+      end
     end
     render_wizard
   end
@@ -263,12 +268,7 @@ private
 
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
-
-      if @component.notification.was_notified_after_eu_exit?
-        redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
-      else
-        redirect_to responsible_person_notification_component_trigger_question_path(@component.notification.responsible_person, @component.notification, @component, :select_ph_range)
-      end
+      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
     else
       render :select_frame_formulation
     end
@@ -282,7 +282,7 @@ private
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    if @component.contains_poisonous_ingredients?
+    if @component.contains_poisonous_ingredients? && @component.notification.was_notified_after_eu_exit?
       redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
     else
       redirect_to finish_wizard_path
@@ -292,7 +292,10 @@ private
   def render_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
 
-    if formulation_file.present?
+    if @component.notification.was_notified_before_eu_exit?
+      @component.formulation_file.attach(formulation_file) if formulation_file.present?
+      redirect_to edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
+    elsif formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
         redirect_to finish_wizard_path
