@@ -16,6 +16,8 @@ module ComponentBuildHelper
       wizard_path(:select_category, category: Component.get_parent_category(@category))
     elsif step == :upload_formulation && @component.predefined?
       wizard_path(:contains_poisonous_ingredients)
+    elsif step == :select_frame_formulation && @component.notification.was_notified_before_eu_exit?
+      wizard_path(:select_category)
     elsif previous_step.present?
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
     else
