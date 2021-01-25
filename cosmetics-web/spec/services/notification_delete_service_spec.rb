@@ -32,12 +32,14 @@ RSpec.describe NotificationDeleteService do
 
     log = NotificationDeleteLog.first
 
-    expect(log.submit_user).to eq submit_user
-    expect(log.notification_product_name).to eq notification.product_name
-    expect(log.responsible_person).to eq notification.responsible_person
-    expect(log.notification_created_at).to eq notification.created_at
-    expect(log.notification_updated_at).to eq notification.updated_at
-    expect(log.cpnp_reference).to eq notification.cpnp_reference
+    expect(log).to have_attributes(
+      submit_user: submit_user,
+      notification_product_name: notification.product_name,
+      responsible_person: notification.responsible_person,
+      notification_created_at: notification.created_at,
+      notification_updated_at: notification.updated_at,
+      cpnp_reference: notification.cpnp_reference,
+    )
   end
 
   context "when submit user is not provided" do
@@ -48,12 +50,14 @@ RSpec.describe NotificationDeleteService do
 
       log = NotificationDeleteLog.first
 
-      expect(log.submit_user).to eq nil
-      expect(log.notification_product_name).to eq notification.product_name
-      expect(log.responsible_person).to eq notification.responsible_person
-      expect(log.notification_created_at).to eq notification.created_at
-      expect(log.notification_updated_at).to eq notification.updated_at
-      expect(log.cpnp_reference).to eq notification.cpnp_reference
+      expect(log).to have_attributes(
+        submit_user: nil,
+        notification_product_name: notification.product_name,
+        responsible_person: notification.responsible_person,
+        notification_created_at: notification.created_at,
+        notification_updated_at: notification.updated_at,
+        cpnp_reference: notification.cpnp_reference,
+      )
     end
   end
 

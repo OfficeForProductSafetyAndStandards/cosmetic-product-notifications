@@ -212,15 +212,13 @@ RSpec.describe Notification, type: :model do
 
     context "when is completed" do
       let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
-      let(:service) { double }
+      let(:service) { instance_double(NotificationDeleteService, call: nil) }
 
       it "uses NotificationDeleteService" do
-        allow(NotificationDeleteService).to receive(:new) { service }
-        allow(service).to receive(:call)
+        allow(NotificationDeleteService).to receive(:new).with(notification, submit_user) { service }
 
         notification.destroy_notification!(submit_user)
 
-        expect(NotificationDeleteService).to have_received(:new).with(notification, submit_user) { service }
         expect(service).to have_received(:call)
       end
     end
