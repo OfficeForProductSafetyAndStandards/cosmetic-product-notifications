@@ -6,13 +6,9 @@ class PendingResponsiblePersonUser < ApplicationRecord
   belongs_to :responsible_person
 
   validates :email_address,
-            email: {
-              message: I18n.t(:wrong_format, scope: EMAIL_ERROR_MESSAGE_SCOPE),
-              if: -> { email_address.present? },
-            }
-  validates :email_address,
-            presence: { message: I18n.t(:blank, scope: EMAIL_ERROR_MESSAGE_SCOPE) },
-            uniqueness: { scope: [:responsible_person], message: I18n.t(:taken, scope: EMAIL_ERROR_MESSAGE_SCOPE) }
+            email: { message: :wrong_format, if: -> { email_address.present? } },
+            presence: true,
+            uniqueness: { scope: [:responsible_person], message: :taken }
   validate :email_address_not_in_team?
 
   before_create :generate_token
