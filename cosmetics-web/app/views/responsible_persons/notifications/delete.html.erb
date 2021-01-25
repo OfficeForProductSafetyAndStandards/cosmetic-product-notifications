@@ -10,6 +10,10 @@
     <%= form_with url: responsible_person_notification_path(@responsible_person, @notification), method: :delete do |form| %>
       <%= govukButton text: "Delete notification", classes: "govuk-button--warning" %>
     <% end %>
-    <%= link_to "Return to incomplete notification summary", edit_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <% if @notification.notification_complete? %>
+      <%= link_to "Return to notification summary", responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+  <% else %>
+      <%= link_to "Return to incomplete notification summary", edit_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <% end %>
   </div>
 </div>

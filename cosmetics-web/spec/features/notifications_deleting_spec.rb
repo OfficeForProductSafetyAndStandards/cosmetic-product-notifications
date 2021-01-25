@@ -33,5 +33,8 @@ RSpec.describe "Notifications delete", type: :feature do
     click_button "Delete notification"
 
     assert_text "#{notification.product_name} notification deleted"
+
+    log = NotificationDeleteLog.first
+    expect(log.notification_product_name).to eq notification.product_name
   end
 end
