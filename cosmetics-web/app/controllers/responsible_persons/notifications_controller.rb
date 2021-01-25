@@ -62,7 +62,8 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def destroy
     @notification.destroy_notification!(current_user)
 
-    redirect_to responsible_person_notifications_path(@responsible_person, tab: "incomplete"), confirmation: "#{@notification.product_name} notification deleted"
+    tab = @notification.notification_complete? ? "notified" : "incomplete"
+    redirect_to responsible_person_notifications_path(@responsible_person, tab: tab), confirmation: "#{@notification.product_name} notification deleted"
   end
 
   def confirm
