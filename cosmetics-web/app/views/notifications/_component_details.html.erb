@@ -145,7 +145,7 @@
         <%= component.poisonous_ingredients_answer %>
       </td>
     </tr>
-    <% if component.contains_poisonous_ingredients %>
+    <% if component.contains_poisonous_ingredients && (allow_edits || component.formulation_file.attached?) %>
       <tr class="govuk-table__row">
         <th class="govuk-table__header" scope="row">Poisonous ingredients</th>
         <td class="govuk-table__cell">
