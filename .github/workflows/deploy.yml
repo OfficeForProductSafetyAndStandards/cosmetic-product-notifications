@@ -121,3 +121,52 @@ jobs:
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure production $LOG_URL
+
+    - name: Notify deployment success to Slack
+      uses: 8398a7/action-slack@v3 # https://github.com/marketplace/actions/action-slack
+      with:
+        status: custom
+        fields: workflow,job,commit,repo,ref,author,took # selectable (default: repo,message)
+        custom_payload: |
+          {
+            attachments: [{
+              color: 'good',
+              text: `Production ${process.env.AS_WORKFLOW} succeed.\n<https://cosmetics-pr-${{ github.event.number }}-submit-web.london.cloudapps.digital|Deployed service>\n(${process.env.AS_COMMIT}) of <https://github.com/${{ github.repository }}/pull/${{ github.event.number }}|PR-${{ github.event.number }}> by ${process.env.AS_AUTHOR}`,
+            }]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ACTION_STATUS_WEBHOOK_URL }} # required
+      if: success()
+
+    - name: Notify deployment failure to Slack
+      uses: 8398a7/action-slack@v3 # https://github.com/marketplace/actions/action-slack
+      with:
+        status: custom
+        fields: workflow,job,commit,repo,ref,author,took # selectable (default: repo,message)
+        custom_payload: |
+          {
+            attachments: [{
+              color: 'danger',
+              text: `Production ${process.env.AS_WORKFLOW} failed.\n(${process.env.AS_COMMIT}) of <https://github.com/${{ github.repository }}/pull/${{ github.event.number }}|PR-${{ github.event.number }}> by ${process.env.AS_AUTHOR}`,
+            }]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ACTION_STATUS_WEBHOOK_URL }} # required
+      if: failure()
+
+    - name: Notify deployment cancellation Slack
+      uses: 8398a7/action-slack@v3 # https://github.com/marketplace/actions/action-slack
+      with:
+        status: custom
+        fields: workflow,job,commit,repo,ref,author,took # selectable (default: repo,message)
+        custom_payload: |
+          {
+            attachments: [{
+              color: 'warning',
+              type: 'mrkdwn',
+              text: `Production ${process.env.AS_WORKFLOW} cancelled.\n(${process.env.AS_COMMIT}) of <https://github.com/${{ github.repository }}/pull/${{ github.event.number }}|PR-${{ github.event.number }}> by ${process.env.AS_AUTHOR}`,
+            }]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ACTION_STATUS_WEBHOOK_URL }} # required
+      if: cancelled()
