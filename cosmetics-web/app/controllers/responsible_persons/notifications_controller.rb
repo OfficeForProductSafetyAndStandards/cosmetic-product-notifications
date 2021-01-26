@@ -72,27 +72,15 @@ private
   # through the various sets of questions.
   def previous_path_before_check_your_answers(notification)
     if notification.via_zip_file?
-
       # Incomplete notifications dashboard
       responsible_person_notifications_path(notification.responsible_person, anchor: "incomplete")
-
-    elsif notification.was_notified_after_eu_exit?
-
-      # Last question is image upload page
-      responsible_person_notification_build_path(notification.responsible_person, notification, :add_product_image)
-
     elsif notification.is_multicomponent?
-
       # Last page is the List of components
       responsible_person_notification_build_path(notification.responsible_person, notification, :add_new_component)
-
     else
-
       component = notification.components.first
-
       # Last question was either pH question or exact pH range for the component
       page = component.minimum_ph ? :ph : :select_ph_range
-
       responsible_person_notification_component_trigger_question_path(notification.responsible_person, notification, component, page)
     end
   end

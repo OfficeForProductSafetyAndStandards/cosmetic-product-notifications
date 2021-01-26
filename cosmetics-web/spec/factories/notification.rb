@@ -5,6 +5,11 @@ FactoryBot.define do
 
     factory :draft_notification do
       state { :draft_complete }
+
+      after(:create) do |notification|
+        create(:component, notification: notification)
+        notification.reload
+      end
     end
 
     factory :imported_notification do
