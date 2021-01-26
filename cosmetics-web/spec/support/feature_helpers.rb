@@ -89,10 +89,25 @@ def expect_to_be_on_my_account_page
   expect(page).to have_current_path(/\/my_account/)
 end
 
+def expect_back_link_to(path)
+  expect(page).to have_link("Back", href: path)
+end
+
+def expect_back_link_to_notifications_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/notifications")
+end
+
+def expect_back_link_to_incomplete_notifications_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/notifications#incomplete")
+end
+
 def expect_to_be_on__was_eu_notified_about_products_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/have_products_been_notified_in_eu")
-
   expect(page).to have_h1("Has the EU been notified about these products using CPNP?")
+end
+
+def expect_back_link_to_was_eu_notified_about_products_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/have_products_been_notified_in_eu")
 end
 
 def expect_to_be_on__are_you_likely_to_notify_eu_page
@@ -100,10 +115,17 @@ def expect_to_be_on__are_you_likely_to_notify_eu_page
   expect(page).to have_h1("Are you likely to notify the EU about these products?")
 end
 
+def expect_back_link_to_are_you_likely_to_notify_eu_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/will_products_be_notified_in_eu")
+end
+
 def expect_to_be_on__do_you_have_the_zip_files_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
-
   expect(page).to have_h1("EU notification ZIP files")
+end
+
+def expect_back_link_to_do_you_have_the_zip_files_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
 end
 
 def expect_to_be_on__upload_eu_notification_files_page
@@ -111,9 +133,17 @@ def expect_to_be_on__upload_eu_notification_files_page
   expect(page).to have_h1("Upload your EU notification files")
 end
 
+def expect_back_link_to_upload_eu_notification_files_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
+end
+
 def expect_to_be_on__was_product_notified_before_brexit_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
   expect(page).to have_h1("Was this product notified in the EU before 1 January 2021?")
+end
+
+def expect_back_link_to_was_product_notified_before_brexit_page
+  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
 end
 
 def expect_to_be_on__what_is_product_called_page
@@ -121,9 +151,17 @@ def expect_to_be_on__what_is_product_called_page
   expect(page).to have_h1("What’s the product called?")
 end
 
+def expect_back_link_to_what_is_product_called_page
+  expect_back_link_to(/\/build\/add_product_name$/)
+end
+
 def expect_to_be_on__internal_reference_page
   expect(page.current_path).to end_with("/build/add_internal_reference")
   expect(page).to have_h1("Internal reference")
+end
+
+def expect_back_link_to_internal_reference_page
+  expect_back_link_to(/\/build\/add_internal_reference$/)
 end
 
 def expect_to_be_on__is_product_for_under_threes_page
@@ -131,9 +169,17 @@ def expect_to_be_on__is_product_for_under_threes_page
   expect(page).to have_h1("Is the product intended to be used on children under 3 years old?")
 end
 
+def expect_back_link_to_is_product_for_under_threes_page
+  expect_back_link_to(/\/build\/for_children_under_three$/)
+end
+
 def expect_to_be_on__multi_item_kits_page
   expect(page.current_path).to end_with("/build/single_or_multi_component")
   expect(page).to have_h1("Multi-item kits")
+end
+
+def expect_back_link_to_multi_item_kits_page
+  expect_back_link_to(/\/build\/single_or_multi_component$/)
 end
 
 def expect_to_be_on__kit_items_page
@@ -141,9 +187,17 @@ def expect_to_be_on__kit_items_page
   expect(page).to have_h1("Kit items")
 end
 
+def expect_back_link_to_kit_items_page
+  expect_back_link_to(/\/build\/add_new_component$/)
+end
+
 def expect_to_be_on__what_is_item_called_page
   expect(page.current_path).to end_with("/build/add_component_name")
   expect(page).to have_h1("What’s the item called?")
+end
+
+def expect_back_link_to_what_is_item_called_page
+  expect_back_link_to(/\/build\/add_component_name$/)
 end
 
 def expect_to_be_on__is_item_available_in_shades_page(item_name: nil)
@@ -152,9 +206,17 @@ def expect_to_be_on__is_item_available_in_shades_page(item_name: nil)
   expect(page).to have_h1(expected_title)
 end
 
+def expect_back_link_to_is_item_available_in_shades_page
+  expect_back_link_to(/\/build\/number_of_shades$/)
+end
+
 def expect_to_be_on__physical_form_of_item_page(item_name: nil)
   expect(page.current_path).to end_with("/build/add_physical_form")
   expect(page).to have_h1("What is the physical form of the #{item_name || 'the product'}?")
+end
+
+def expect_back_link_to_physical_form_of_item_page
+  expect_back_link_to(/\/build\/add_physical_form$/)
 end
 
 def expect_to_be_on__what_is_product_contained_in_page(item_name: nil)
@@ -162,9 +224,17 @@ def expect_to_be_on__what_is_product_contained_in_page(item_name: nil)
   expect(page).to have_h1("What is the #{item_name || 'the product'} contained in?")
 end
 
+def expect_back_link_to_what_is_product_contained_in_page
+  expect_back_link_to(/\/build\/contains_special_applicator$/)
+end
+
 def expect_to_be_on__what_type_of_applicator_page
   expect(page.current_path).to end_with("/select_special_applicator_type")
   expect(page).to have_h1("What type of applicator?")
+end
+
+def expect_back_link_to_what_type_of_applicator_page
+  expect_back_link_to(/\/build\/select_special_applicator_type$/)
 end
 
 def expect_to_be_on__does_item_contain_cmrs_page
@@ -172,9 +242,17 @@ def expect_to_be_on__does_item_contain_cmrs_page
   expect(page).to have_h1("Carcinogenic, mutagenic or reprotoxic substances")
 end
 
+def expect_back_link_to_does_item_contain_cmrs_page
+  expect_back_link_to(/\/build\/contains_cmrs$/)
+end
+
 def expect_to_be_on__does_item_contain_nanomaterial_page
   expect(page.current_path).to end_with("/build/contains_nanomaterials")
   expect(page).to have_h1("Nanomaterials")
+end
+
+def expect_back_link_to_does_item_contain_nanomaterial_page
+  expect_back_link_to(/\/build\/contains_nanomaterials$/)
 end
 
 def expect_to_be_on__is_item_intended_to_be_rinsed_off_or_left_on_page(item_name: nil)
@@ -182,9 +260,17 @@ def expect_to_be_on__is_item_intended_to_be_rinsed_off_or_left_on_page(item_name
   expect(page).to have_h1("Is #{item_name || 'the product'} intended to be rinsed off or left on?")
 end
 
+def expect_back_link_to_is_item_intended_to_be_rinsed_off_or_left_on_page
+  expect_back_link_to(/\/build\/add_exposure_condition$/)
+end
+
 def expect_to_be_on__how_is_user_exposed_to_nanomaterials_page
   expect(page.current_path).to end_with("/build/add_exposure_routes")
   expect(page).to have_h1("How is the user likely to be exposed to the nanomaterials?")
+end
+
+def expect_back_link_to_how_is_user_exposed_to_nanomaterials_page
+  expect_back_link_to(/\/build\/add_exposure_routes$/)
 end
 
 def expect_to_be_on__list_the_nanomaterials_page(item_name: nil)
@@ -192,9 +278,17 @@ def expect_to_be_on__list_the_nanomaterials_page(item_name: nil)
   expect(page).to have_h1("List the nanomaterials in #{item_name || 'the product'}")
 end
 
+def expect_back_link_to_list_the_nanomaterials_page
+  expect_back_link_to(/\/build\/list_nanomaterials$/)
+end
+
 def expect_to_be_on__what_is_the_purpose_of_nanomaterial_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/select_purposes")
   expect(page).to have_h1("What is the purpose of #{nanomaterial_name}")
+end
+
+def expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
+  expect_back_link_to(/\/build\/select_purposes$/)
 end
 
 def expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page(nanomaterial_name:)
@@ -202,14 +296,30 @@ def expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page(nanomaterial_n
   expect(page).to have_h1("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?")
 end
 
+def expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
+  expect_back_link_to(/\/build\/confirm_restrictions$/)
+end
+
 def expect_to_be_on__does_nanomaterial_conform_to_restrictions_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/confirm_usage")
   expect(page).to have_h1("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?")
 end
 
+def expect_back_link_to_does_nanomaterial_conform_to_restrictions_page
+  expect_back_link_to(/\/build\/confirm_usage$/)
+end
+
 def expect_to_be_on__item_category_page
   expect(page.current_path).to end_with("/build/select_category")
   expect(page).to have_h1("What category of cosmetic product is it?")
+end
+
+def expect_back_link_to_item_category_page(category = nil)
+  if category
+    expect_back_link_to(/\/build\/select_category\?category\=#{category}/)
+  else
+    expect_back_link_to(/\/build\/select_category/)
+  end
 end
 
 def expect_to_be_on__item_subcategoy_page(category:, item_name: nil)
@@ -227,6 +337,10 @@ def expect_to_be_on__formulation_method_page(item_name: nil)
   expect(page).to have_h1("How do you want to give the formulation of #{item_name || 'the product'}?")
 end
 
+def expect_back_link_to_formulation_method_page
+  expect_back_link_to(/\/build\/select_formulation_type$/)
+end
+
 # Exact concentrations of the ingredients
 # Concentration ranges of the ingredients
 def expect_to_be_on__upload_ingredients_page(header_text)
@@ -234,9 +348,17 @@ def expect_to_be_on__upload_ingredients_page(header_text)
   expect(page).to have_h1(header_text)
 end
 
+def expect_back_link_to_upload_ingredients_page
+  expect_back_link_to(/\/build\/upload_formulation$/)
+end
+
 def expect_to_be_on__upload_poisonous_ingredients_page
   expect(page.current_path).to end_with("/build/upload_formulation")
   expect(page).to have_h1("Upload list of poisonous ingredients")
+end
+
+def expect_back_link_to_upload_poisonous_ingredients_page
+  expect_back_link_to(/\/build\/upload_formulation$/)
 end
 
 def expect_to_be_on__poisonous_ingredients_page
@@ -244,9 +366,17 @@ def expect_to_be_on__poisonous_ingredients_page
   expect(page).to have_h1("Ingredients the National Poison Information Service needs to know about")
 end
 
+def expect_back_link_to_poisonous_ingredients_page
+  expect_back_link_to(/\/build\/contains_poisonous_ingredients$/)
+end
+
 def expect_to_be_on__what_is_ph_range_of_product_page
   expect(page.current_path).to end_with("/trigger_question/select_ph_range")
   expect(page).to have_h1("What is the pH range of the product?")
+end
+
+def expect_back_link_to_what_is_ph_range_of_product_page
+  expect_back_link_to(/\/trigger_question\/select_ph_range$/)
 end
 
 def expect_to_be_on__check_your_answers_page(product_name:)
@@ -254,14 +384,26 @@ def expect_to_be_on__check_your_answers_page(product_name:)
   expect(page).to have_h1(product_name)
 end
 
+def expect_back_link_to_check_your_answers_page
+  expect_back_link_to(/\/responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit$/)
+end
+
 def expect_to_be_on__how_are_items_used_together_page
   expect(page.current_path).to end_with("/is_mixed")
   expect(page).to have_h1("Does the kit contain items that need to be mixed?")
 end
 
+def expect_back_link_to_how_are_items_used_together_page
+  expect_back_link_to(/is_mixed$/)
+end
+
 def exepct_to_be_on_upload_product_label_page
   expect(page.current_path).to end_with("/add_product_image")
   expect(page).to have_h1("Upload an image of the product label")
+end
+
+def expect_back_link_to_upload_product_label_page
+  expect_back_link_to(/\/build\/add_product_image$/)
 end
 
 def expect_to_be_on__upload_formulation_document_page(header_text)
@@ -359,6 +501,10 @@ def expect_to_be_on__frame_formulation_select_page
   expect(page).to have_h1("Choose frame formulation")
 end
 
+def expect_back_link_to_frame_formulation_select_page
+  expect_back_link_to(/\/build\/select_frame_formulation$/)
+end
+
 def expect_to_see_incomplete_notification_with_eu_reference_number(eu_reference_number)
   within("#incomplete") do
     expect(page).to have_text("EU reference number: #{eu_reference_number}")
@@ -385,12 +531,15 @@ end
 
 def go_to_upload_notification_page
   expect_to_be_on__was_eu_notified_about_products_page
+  expect_back_link_to_notifications_page
   page.choose("Yes")
   click_button "Continue"
   expect_to_be_on__do_you_have_the_zip_files_page
+  expect_back_link_to_was_eu_notified_about_products_page
   page.choose("Yes")
   click_button "Continue"
   expect_to_be_on__upload_eu_notification_files_page
+  expect_back_link_to_do_you_have_the_zip_files_page
 end
 
 def answer_was_eu_notified_with(answer)

@@ -12,12 +12,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
+    expect_back_link_to_notifications_page
     answer_was_eu_notified_with "Yes"
 
     expect_to_be_on__do_you_have_the_zip_files_page
+    expect_back_link_to_was_eu_notified_about_products_page
     answer_do_you_have_zip_files_with "Yes"
 
     expect_to_be_on__upload_eu_notification_files_page
+    expect_back_link_to_do_you_have_the_zip_files_page
     upload_zip_file "testExportFile.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -48,12 +51,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
+    expect_back_link_to_notifications_page
     answer_was_eu_notified_with "Yes"
 
     expect_to_be_on__do_you_have_the_zip_files_page
+    expect_back_link_to_was_eu_notified_about_products_page
     answer_do_you_have_zip_files_with "Yes"
 
     expect_to_be_on__upload_eu_notification_files_page
+    expect_back_link_to_do_you_have_the_zip_files_page
     upload_zip_file "testNotificationUsingRanges.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -85,12 +91,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
+    expect_back_link_to_notifications_page
     answer_was_eu_notified_with "Yes"
 
     expect_to_be_on__do_you_have_the_zip_files_page
+    expect_back_link_to_was_eu_notified_about_products_page
     answer_do_you_have_zip_files_with "Yes"
 
     expect_to_be_on__upload_eu_notification_files_page
+    expect_back_link_to_do_you_have_the_zip_files_page
     upload_zip_file "testMissingFormulationDocumentPostExit.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -99,13 +108,16 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     click_link "Add missing information"
 
     expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
+    expect_back_link_to_incomplete_notifications_page
     upload_formulation_file
 
     expect(page.current_path).to end_with("/product_image_upload/new")
+    expect_back_link_to_incomplete_notifications_page
     expect(page).to have_h1("Upload an image of the product label")
     upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
+    expect_back_link_to_incomplete_notifications_page
     expect_check_your_answers_page_to_contain(
       product_name: "Beautify Facial Night Cream",
       number_of_components: "1",
@@ -130,12 +142,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
+    expect_back_link_to_notifications_page
     answer_was_eu_notified_with "Yes"
 
     expect_to_be_on__do_you_have_the_zip_files_page
+    expect_back_link_to_was_eu_notified_about_products_page
     answer_do_you_have_zip_files_with "Yes"
 
     expect_to_be_on__upload_eu_notification_files_page
+    expect_back_link_to_do_you_have_the_zip_files_page
     upload_zip_file "testMissingFormulationDocument.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -168,12 +183,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
+    expect_back_link_to_notifications_page
     answer_was_eu_notified_with "Yes"
 
     expect_to_be_on__do_you_have_the_zip_files_page
+    expect_back_link_to_was_eu_notified_about_products_page
     answer_do_you_have_zip_files_with "Yes"
 
     expect_to_be_on__upload_eu_notification_files_page
+    expect_back_link_to_do_you_have_the_zip_files_page
     upload_zip_file "testNanomaterialAndMissingFormulation.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -182,15 +200,19 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     click_link "Add missing information"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
+    expect_back_link_to_incomplete_notifications_page
     expect_check_your_answers_page_to_contain(
       product_name: "SkinSoft shocking green hair dye",
       number_of_components: "1",
@@ -223,33 +245,43 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     click_link "Add missing information"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
+    expect_back_link_to_incomplete_notifications_page
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano",
       number_of_components: "2",
@@ -289,12 +321,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit new_responsible_person_add_notification_path(responsible_person)
 
     expect_to_be_on__was_eu_notified_about_products_page
+    expect_back_link_to_notifications_page
     answer_was_eu_notified_with "Yes"
 
     expect_to_be_on__do_you_have_the_zip_files_page
+    expect_back_link_to_was_eu_notified_about_products_page
     answer_do_you_have_zip_files_with "Yes"
 
     expect_to_be_on__upload_eu_notification_files_page
+    expect_back_link_to_do_you_have_the_zip_files_page
     upload_zip_file "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano_modified.zip"
 
     visit responsible_person_notifications_path(responsible_person)
@@ -303,33 +338,43 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     click_link "Add missing information"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano")
+    expect_back_link_to_incomplete_notifications_page
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano",
       number_of_components: "2",
@@ -377,33 +422,43 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     click_link "Add missing information"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
     answer_is_nanomaterial_listed_in_ec_regulation_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+    expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-Rangevalues_Exactvalues_Nano")
+    expect_back_link_to_incomplete_notifications_page
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Multi-Item-Rangevalues_Exactvalues_Nano",
       number_of_components: "2",
@@ -444,12 +499,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       visit new_responsible_person_add_notification_path(responsible_person)
 
       expect_to_be_on__was_eu_notified_about_products_page
+      expect_back_link_to_notifications_page
       answer_was_eu_notified_with "Yes"
 
       expect_to_be_on__do_you_have_the_zip_files_page
+      expect_back_link_to_was_eu_notified_about_products_page
       answer_do_you_have_zip_files_with "Yes"
 
       expect_to_be_on__upload_eu_notification_files_page
+      expect_back_link_to_do_you_have_the_zip_files_page
       upload_zip_file "testExportFile.zip"
 
       visit responsible_person_notifications_path(responsible_person)
@@ -464,12 +522,15 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       visit new_responsible_person_add_notification_path(responsible_person)
 
       expect_to_be_on__was_eu_notified_about_products_page
+      expect_back_link_to_notifications_page
       answer_was_eu_notified_with "Yes"
 
       expect_to_be_on__do_you_have_the_zip_files_page
+      expect_back_link_to_was_eu_notified_about_products_page
       answer_do_you_have_zip_files_with "Yes"
 
       expect_to_be_on__upload_eu_notification_files_page
+      expect_back_link_to_do_you_have_the_zip_files_page
       upload_zip_file "testExportFile.zip"
 
       visit responsible_person_notifications_path(responsible_person)

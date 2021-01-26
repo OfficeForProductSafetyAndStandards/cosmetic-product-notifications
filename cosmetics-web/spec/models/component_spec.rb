@@ -420,4 +420,22 @@ RSpec.describe Component, type: :model do
       end
     end
   end
+
+  describe "#poisonous_ingredients_answer" do
+    let(:component) { build(:component) }
+
+    it "returns nil if contains_poisonous_ingredients is nil" do
+      expect(component.poisonous_ingredients_answer).to eq nil
+    end
+
+    it "returns 'Yes' if contains_poisonous_ingredients is true" do
+      component.update(contains_poisonous_ingredients: true)
+      expect(component.poisonous_ingredients_answer).to eq "Yes"
+    end
+
+    it "returns 'No' if contains_poisonous_ingredients is false" do
+      component.update(contains_poisonous_ingredients: false)
+      expect(component.poisonous_ingredients_answer).to eq "No"
+    end
+  end
 end
