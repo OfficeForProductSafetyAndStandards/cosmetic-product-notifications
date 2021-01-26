@@ -176,6 +176,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     click_link "Add poisonous ingredients document"
 
     expect_to_be_on__upload_poisonous_ingredients_page
+    expect_back_link_to_check_your_answers_page
     upload_ingredients_pdf
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft deep blue mouthwash")

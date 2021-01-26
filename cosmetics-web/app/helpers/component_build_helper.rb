@@ -22,6 +22,8 @@ module ComponentBuildHelper
       responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, @component, last_nanoelement, nanoelement_step)
     elsif step == :select_formulation_type
       wizard_path(:select_category, category: @component.sub_category)
+    elsif step == :upload_formulation && @component.notification.was_notified_before_eu_exit?
+      edit_responsible_person_notification_path(notification.responsible_person, notification)
     elsif step == :upload_formulation && @component.predefined?
       wizard_path(:contains_poisonous_ingredients)
     elsif step == :select_frame_formulation && @component.notification.was_notified_before_eu_exit?

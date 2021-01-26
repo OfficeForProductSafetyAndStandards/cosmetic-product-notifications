@@ -384,6 +384,10 @@ def expect_to_be_on__check_your_answers_page(product_name:)
   expect(page).to have_h1(product_name)
 end
 
+def expect_back_link_to_check_your_answers_page
+  expect_back_link_to(/\/responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit$/)
+end
+
 def expect_to_be_on__how_are_items_used_together_page
   expect(page.current_path).to end_with("/is_mixed")
   expect(page).to have_h1("Does the kit contain items that need to be mixed?")
