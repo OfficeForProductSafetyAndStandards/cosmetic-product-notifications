@@ -41,8 +41,15 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
   def previous_wizard_path
     case step
     when :select_purposes
-      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
-    when :confirm_usage, :non_standard_nanomaterial_notified
+      notification = @component.notification
+      if notification.via_zip_file?
+        responsible_person_notifications_path(notification.responsible_person, anchor: "incomplete")
+      else
+        responsible_person_notification_component_build_path(notification.responsible_person, notification, @component, :list_nanomaterials)
+      end
+    when :confirm_usage
+      wizard_path(:confirm_restrictions)
+    when :non_standard_nanomaterial_notified
       wizard_path(:select_purposes)
     when :when_products_containing_nanomaterial_can_be_placed_on_market, :notify_your_nanomaterial
       wizard_path(:non_standard_nanomaterial_notified)
