@@ -11,6 +11,7 @@ applications:
     SUBMIT_HOST: ((submit-host))
     COSMETICS_HOST: ((submit-host))
   stack: cflinuxfs3
+  timeout: 240
   services:
     - cosmetics-database
     - cosmetics-elasticsearch-7
