@@ -18,7 +18,10 @@
 
   <% if @notification.can_be_deleted? %>
     <div class="govuk-grid-column-two-thirds">
-      <%= link_to "Delete this cosmetic product notification", delete_responsible_person_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+      You have 7 days from the date you submitted your notification to delete it. You should only do this if your notification contains wrong information.
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+      <%= link_to "Delete this cosmetic product notification", delete_responsible_person_delete_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
     </div>
   <% end %>
 </div>

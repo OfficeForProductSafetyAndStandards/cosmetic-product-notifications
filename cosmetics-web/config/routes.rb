@@ -133,6 +133,11 @@ Rails.application.routes.draw do
 
         member do
           post :confirm
+        end
+      end
+
+      resources :delete_notification, param: :reference_number, controller: "responsible_persons/delete_notification", only: [] do
+        member do
           get :delete
           delete :destroy
         end
