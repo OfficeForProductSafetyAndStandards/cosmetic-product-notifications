@@ -3,7 +3,7 @@ require "will_paginate/array"
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :validate_responsible_person
-  before_action :set_notification, only: %i[show confirm delete destroy]
+  before_action :set_notification, only: %i[show confirm]
 
   def index
     @erroneous_notification_files = []

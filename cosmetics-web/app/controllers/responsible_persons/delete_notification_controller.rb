@@ -12,7 +12,7 @@ class ResponsiblePersons::DeleteNotificationController < SubmitApplicationContro
     redirect_to responsible_person_notifications_path(@responsible_person, tab: tab), confirmation: "#{@notification.product_name} notification deleted"
   end
 
-  private
+private
 
   def current_operation
     SecondaryAuthentication::DELETE_NOTIFICATION
@@ -28,4 +28,3 @@ class ResponsiblePersons::DeleteNotificationController < SubmitApplicationContro
     authorize @notification, :destroy?, policy_class: ResponsiblePersonNotificationPolicy
   end
 end
-

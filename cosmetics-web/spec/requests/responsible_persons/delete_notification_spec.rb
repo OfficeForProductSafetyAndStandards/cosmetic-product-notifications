@@ -40,12 +40,12 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       before do
         get delete_responsible_person_delete_notification_url(responsible_person, draft_notification)
         post secondary_authentication_url,
-            params: {
-              secondary_authentication_form: {
-                otp_code: user.reload.direct_otp,
-                user_id: user.id,
-              },
-            }
+             params: {
+               secondary_authentication_form: {
+                 otp_code: user.reload.direct_otp,
+                 user_id: user.id,
+               },
+             }
 
         travel_to 16.minutes.from_now
       end
@@ -59,7 +59,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       it "redirects to 2FA" do
         draft_notification
         delete responsible_person_delete_notification_path(responsible_person, draft_notification)
-        expect(response).to redirect_to('/two-factor')
+        expect(response).to redirect_to("/two-factor")
       end
 
       it "redirects info page to 2FA" do
@@ -69,7 +69,6 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       end
     end
   end
-
 
   context "when deleting notification that belongs to other user" do
     before do
