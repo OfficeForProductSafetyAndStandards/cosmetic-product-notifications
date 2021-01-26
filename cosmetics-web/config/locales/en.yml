@@ -89,7 +89,6 @@ en:
               wrong_format: "Enter email address in the correct format, like name@example.com"
               blank: "Enter email address"
               this_team: "This email address already belongs to member of this team"
-              other_team: "You can not invite this email address to join your team"
               taken: "This person has already been invited to this team"
         trigger_question:
           attributes:
@@ -128,14 +127,25 @@ en:
               confirmation: "Password and confirmation does not match"
         user:
           attributes:
+            email:
+              invalid: &invalid_email "Enter your email address in the correct format, like name@example.com"
             mobile_number:
               invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+            new_email:
+              invalid: *invalid_email
             password:
               too_short: "Password must be at least 8 characters"
         responsible_person:
           attributes:
             name:
               taken: "This Responsible Person name is already in use"
+        contact_person:
+          attributes:
+            email_address:
+              wrong_format: *invalid_email
+              blank: "Enter your email address"
+            phone_number:
+              invalid: "Enter a valid phone number, like 0344 411 1444 or +44 7700 900 982"
   activemodel:
     attributes:
       registration/account_security_form:
@@ -224,15 +234,9 @@ en:
       above_10: "Above 10"
       not_applicable: "No pH"
       not_given: "Not given"
-  contact_person:
-    email_address:
-      wrong_format: "Enter your email address in the correct format, like name@example.com"
-      blank: "Enter your email address"
-    phone_number:
-      invalid: "Enter a valid phone number, like 0344 411 1444 or +44 7700 900 982"
   email_form_validation:
-    wrong_email_or_password: "Enter your email address in the correct format, like name@example.com"
-    wrong_format: "Enter your email address in the correct format, like name@example.com"
+    wrong_email_or_password: *invalid_email
+    wrong_format: *invalid_email
     blank: "Enter your email address"
   users:
     check_your_email:
