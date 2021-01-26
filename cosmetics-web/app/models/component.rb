@@ -167,6 +167,12 @@ class Component < ApplicationRecord
     notification.is_multicomponent? ? name : "product"
   end
 
+  def poisonous_ingredients_answer
+    return if contains_poisonous_ingredients.nil?
+
+    contains_poisonous_ingredients? ? "Yes" : "No"
+  end
+
 private
 
   # This takes any value and returns nil if the value
