@@ -145,7 +145,7 @@
         <%= component.poisonous_ingredients_answer %>
       </td>
     </tr>
-    <% if component.contains_poisonous_ingredients && (allow_edits || component.formulation_file.attached?) %>
+    <% if component.contains_poisonous_ingredients%>
       <tr class="govuk-table__row">
         <th class="govuk-table__header" scope="row">Poisonous ingredients</th>
         <td class="govuk-table__cell">
@@ -165,6 +165,8 @@
             <%= link_to "Add poisonous ingredients document",
                     responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
                     class: "govuk-link--no-visited-state" %>
+          <% else %>
+            Not provided
           <% end %>
         </td>
       </tr>
