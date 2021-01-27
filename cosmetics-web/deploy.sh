@@ -24,7 +24,7 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 # time each app takes to start multiplied by the number of instances.
 #
 # See https://docs.cloudfoundry.org/devguide/deploy-apps/large-app-deploy.html
-export CF_STARTUP_TIMEOUT=35
+export CF_STARTUP_TIMEOUT=25
 
 # Deploy the submit app and set the hostname
 cf push $APP_NAME -f $MANIFEST_FILE --app-start-timeout 180 --var app-name=$APP_NAME --var submit-host=$SUBMIT_HOST --var search-host=$SEARCH_HOST --var web-instances=$WEB_INSTANCES --var web-max-threads=$WEB_MAX_THREADS --var worker-instances=$WORKER_INSTANCES --var worker-max-threads=$WORKER_MAX_THREADS --strategy rolling
