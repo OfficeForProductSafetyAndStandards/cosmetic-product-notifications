@@ -3,7 +3,7 @@ require "will_paginate/array"
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :validate_responsible_person
-  before_action :set_notification, only: %i[show confirm delete destroy]
+  before_action :set_notification, only: %i[show confirm]
 
   def index
     @erroneous_notification_files = []
@@ -55,14 +55,6 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     if params[:submit_failed]
       add_image_upload_errors
     end
-  end
-
-  def delete; end
-
-  def destroy
-    @notification.destroy!
-
-    redirect_to responsible_person_notifications_path(@responsible_person, tab: "incomplete"), confirmation: "#{@notification.product_name} notification deleted"
   end
 
   def confirm

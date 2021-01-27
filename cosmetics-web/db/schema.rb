@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_111424) do
+ActiveRecord::Schema.define(version: 2021_01_20_144330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -137,6 +137,18 @@ ActiveRecord::Schema.define(version: 2021_01_05_111424) do
     t.date "notified_to_eu_on"
     t.datetime "submitted_at"
     t.index ["responsible_person_id"], name: "index_nanomaterial_notifications_on_responsible_person_id"
+  end
+
+  create_table "notification_delete_logs", force: :cascade do |t|
+    t.uuid "submit_user_id"
+    t.string "notification_product_name"
+    t.integer "responsible_person_id"
+    t.datetime "notification_created_at"
+    t.datetime "notification_updated_at"
+    t.string "cpnp_reference"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["responsible_person_id"], name: "index_notification_delete_logs_on_responsible_person_id"
   end
 
   create_table "notification_files", force: :cascade do |t|
