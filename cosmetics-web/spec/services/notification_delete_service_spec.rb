@@ -61,9 +61,9 @@ RSpec.describe NotificationDeleteService do
     end
   end
 
-  context "when 30 days passed" do
+  context "when 7 days passed" do
     before do
-      travel_to 31.days.from_now
+      travel_to 8.days.from_now
     end
 
     it "doesn't delete the notification" do

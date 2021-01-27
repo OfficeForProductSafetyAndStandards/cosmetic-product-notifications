@@ -1,7 +1,7 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
 
-  DELETION_PERIOD_DAYS = 30
+  DELETION_PERIOD_DAYS = 7
 
   include Searchable
 
