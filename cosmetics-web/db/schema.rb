@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_20_144330) do
+ActiveRecord::Schema.define(version: 2021_01_28_101635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_144330) do
     t.string "cpnp_reference"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "reference_number"
     t.index ["responsible_person_id"], name: "index_notification_delete_logs_on_responsible_person_id"
   end
 

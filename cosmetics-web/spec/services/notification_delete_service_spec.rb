@@ -39,6 +39,7 @@ RSpec.describe NotificationDeleteService do
       notification_created_at: notification.created_at,
       notification_updated_at: notification.updated_at,
       cpnp_reference: notification.cpnp_reference,
+      reference_number: notification.reference_number,
     )
   end
 
@@ -57,6 +58,7 @@ RSpec.describe NotificationDeleteService do
         notification_created_at: notification.created_at,
         notification_updated_at: notification.updated_at,
         cpnp_reference: notification.cpnp_reference,
+        reference_number: notification.reference_number,
       )
     end
   end
