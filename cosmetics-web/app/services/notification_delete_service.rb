@@ -17,6 +17,7 @@ class NotificationDeleteService
         n.notification_created_at = @notification.created_at
         n.notification_updated_at = @notification.updated_at
         n.cpnp_reference = @notification.cpnp_reference
+        n.reference_number = @notification.reference_number
       end
       @notification.destroy!
     end
