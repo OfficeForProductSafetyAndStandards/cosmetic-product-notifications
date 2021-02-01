@@ -394,7 +394,9 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
     expect_back_link_to_frame_formulation_select_page
     answer_does_product_contain_poisonous_ingredients_with "Yes"
 
-    expect_to_be_on__upload_poisonous_ingredients_page
+    expect(page.current_path).to end_with("/build/upload_formulation")
+    expect(page).to have_h1("Upload a list of ingredients the National Poisons Information Service needs to know about")
+
     expect_back_link_to_poisonous_ingredients_page
     upload_ingredients_pdf
 

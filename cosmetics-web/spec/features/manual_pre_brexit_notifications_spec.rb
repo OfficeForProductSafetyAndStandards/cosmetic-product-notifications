@@ -173,9 +173,11 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       poisonous_ingredients: "Yes",
     )
 
-    click_link "Add poisonous ingredients document"
+    click_link "Add ingredients document"
 
-    expect_to_be_on__upload_poisonous_ingredients_page
+    expect(page.current_path).to end_with("/build/upload_formulation")
+    expect(page).to have_h1("Upload a list of ingredients the National Poisons Information Service needs to know about")
+
     expect_back_link_to_check_your_answers_page
     upload_ingredients_pdf
 
