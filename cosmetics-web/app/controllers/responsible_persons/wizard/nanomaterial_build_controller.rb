@@ -3,6 +3,7 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
 
   steps :select_purposes,
         :confirm_restrictions,
+        :must_be_listed,
         :confirm_usage,
         :non_standard_nanomaterial_notified,
         :when_products_containing_nanomaterial_can_be_placed_on_market,
@@ -143,9 +144,9 @@ private
     @nano_element.update_with_context(nano_element_params, step)
     case confirm_restrictions
     when "yes"
-      render_wizard @nano_element
+      redirect_to wizard_path(:confirm_usage)
     when "no"
-      redirect_to wizard_path(:non_standard_nanomaterial_notified)
+      redirect_to wizard_path(:must_be_listed)
     else
       @nano_element.errors.add :confirm_restrictions, "Select an option"
       render step
