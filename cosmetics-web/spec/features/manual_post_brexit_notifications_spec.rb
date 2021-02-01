@@ -103,7 +103,7 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       physical_form: "Liquid",
       ph: "Between 3 and 10",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
@@ -204,7 +204,7 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       physical_form: "Liquid",
       ph: "Between 3 and 10",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
@@ -309,7 +309,7 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       physical_form: "Liquid",
       ph: "Between 3 and 10",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
@@ -418,7 +418,7 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       physical_form: "Liquid",
       ph: "Between 3 and 10",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
