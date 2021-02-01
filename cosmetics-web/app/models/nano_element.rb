@@ -27,6 +27,10 @@ class NanoElement < ApplicationRecord
     purposes.present? && purposes.include?("other")
   end
 
+  def non_standard_single_purpose?
+    non_standard? && purposes.size == 1
+  end
+
 private
 
   def toxicology_required?
