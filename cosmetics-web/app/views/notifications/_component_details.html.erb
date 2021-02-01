@@ -140,7 +140,7 @@
 <% if current_user.can_view_product_ingredients? %>
   <% if component.predefined? %>
     <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Contains poisonous ingredients</th>
+      <th class="govuk-table__header" scope="row">Contains ingredients NPIS needs to know about</th>
       <td class="govuk-table__cell">
         <%= component.poisonous_ingredients_answer %>
       </td>
@@ -162,7 +162,7 @@
               <%= "The uploaded file has been flagged as a virus" %>
             <% end %>
           <% elsif allow_edits %>
-            <%= link_to "Add poisonous ingredients document",
+            <%= link_to "Add ingredients document",
                     responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
                     class: "govuk-link--no-visited-state" %>
           <% else %>

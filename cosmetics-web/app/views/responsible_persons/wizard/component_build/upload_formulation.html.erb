@@ -12,6 +12,8 @@
       <%= render 'exact_concentration' %>
     <% elsif @component.range? %>
       <%= render 'ranges_concentration' %>
+    <% elsif @component.predefined? %>
+      <%= render 'frame_formulation_poisonous_ingredients' %>
     <% else %>
       <h1 class="govuk-heading-l"><%= title %></h1>
     <% end %>
