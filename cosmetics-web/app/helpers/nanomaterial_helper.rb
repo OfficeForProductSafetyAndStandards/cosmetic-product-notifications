@@ -12,7 +12,7 @@ module NanomaterialHelper
   end
 
   def get_ec_regulation_annex_details_for_nanomaterial_purposes(purposes)
-    annex_numbers = purposes.map { |purpose| get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) }
+    annex_numbers = purposes.filter_map { |purpose| get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) }
     "#{'Annex'.pluralize(annex_numbers.count)} #{to_sentence(annex_numbers, last_word_connector: ' and ')}"
   end
 
