@@ -30,6 +30,7 @@ $govuk-assets-path: '~govuk-frontend/govuk/assets/';
   white-space: nowrap;
 }
 
-.danger, .danger:visited {
+.danger,
+.danger:visited {
   color: $govuk-error-colour;
 }
