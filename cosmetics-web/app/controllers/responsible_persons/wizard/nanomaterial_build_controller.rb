@@ -52,7 +52,11 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
     when :confirm_usage
       wizard_path(:confirm_restrictions)
     when :non_standard_nanomaterial_notified
-      wizard_path(:select_purposes)
+      if @nano_element.non_standard_single_purpose?
+        wizard_path(:select_purposes)
+      else
+        wizard_path(:confirm_usage)
+      end
     when :when_products_containing_nanomaterial_can_be_placed_on_market, :notify_your_nanomaterial
       wizard_path(:non_standard_nanomaterial_notified)
     else
@@ -160,7 +164,11 @@ private
     @nano_element.update_with_context(nano_element_params, step)
     case confirm_usage
     when "yes"
-      redirect_to finish_wizard_path
+      if @nano_element.non_standard?
+        redirect_to wizard_path(:non_standard_nanomaterial_notified)
+      else
+        redirect_to finish_wizard_path
+      end
     when "no"
       redirect_to wizard_path(:must_conform_to_restrictions)
     else
