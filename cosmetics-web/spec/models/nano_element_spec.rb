@@ -60,26 +60,6 @@ RSpec.describe NanoElement, type: :model do
     end
   end
 
-  describe "#non_standard_single_purpose?" do
-    it "is true when the only purpose is 'other'" do
-      nano_element.purposes = %w[other]
-
-      expect(nano_element).to be_non_standard_single_purpose
-    end
-
-    it "is false when has multiple purposes including 'other'" do
-      nano_element.purposes = %w[colorant other]
-
-      expect(nano_element).not_to be_non_standard_single_purpose
-    end
-
-    it "is false when purposes do not include 'other'" do
-      nano_element.purposes = %w[colorant preservative uv_filter]
-
-      expect(nano_element).not_to be_non_standard_single_purpose
-    end
-  end
-
   describe "#standard?" do
     it "is true when purposes does not include 'other'" do
       nano_element.purposes = %w[colorant]

@@ -14,7 +14,7 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
   before_action :set_nano_element
 
   def show
-    if step == :confirm_restrictions && @nano_element.non_standard_single_purpose?
+    if step == :confirm_restrictions && @nano_element.non_standard? && @nano_element.purposes.one?
       return redirect_to wizard_path(:non_standard_nanomaterial_notified)
     end
 
@@ -52,7 +52,7 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
     when :confirm_usage
       wizard_path(:confirm_restrictions)
     when :non_standard_nanomaterial_notified
-      if @nano_element.non_standard_single_purpose?
+      if @nano_element.purposes.one?
         wizard_path(:select_purposes)
       else
         wizard_path(:confirm_usage)
