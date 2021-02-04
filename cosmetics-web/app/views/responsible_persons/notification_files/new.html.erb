@@ -51,7 +51,7 @@
         </noscript>
         <div class="govuk-form-group">
           <%= form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button" %>
-          <button class="govuk-button" id="loading-button" data-module="govuk-button" disabled style='display: none;'>
+          <button class="govuk-button" id="loading-button" data-module="govuk-button" disabled style='display: none;' role="progressbar" aria-live="assertive" tabindex="-1">
             <span class="spinner"></span>Uploading, please wait
           </button>
         </div>
