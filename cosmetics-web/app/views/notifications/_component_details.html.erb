@@ -147,7 +147,7 @@
     </tr>
     <% if component.contains_poisonous_ingredients%>
       <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="row">Poisonous ingredients</th>
+        <th class="govuk-table__header" scope="row">Ingredients NPIS needs to know about</th>
         <td class="govuk-table__cell">
           <% if component.formulation_file.attached? %>
             <% if component.formulation_file.metadata["safe"] %>

@@ -25,11 +25,11 @@
   <% end %>
 
   <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-9">
-    <p class="govuk-!-margin-bottom-1">The production information is saved in your dashboard as an incomplete notification</p>
+    <p class="govuk-!-margin-bottom-1">The product information is saved in your dashboard as an incomplete notification.</p>
     <%= link_to "Save and return to dashboard", responsible_person_notifications_path(@responsible_person, tab: 'incomplete'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-!-margin-bottom-1">If the product contains wrong information, you can delete the incomplete notification</p>
-    <%= link_to "Delete incomplete cosmetic product notification", delete_responsible_person_delete_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 danger' %>
+    <p class="govuk-!-margin-bottom-1">If the product contains wrong information, you can delete the incomplete notification.</p>
+    <%= link_to "Delete incomplete cosmetic product notification", delete_responsible_person_delete_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>

@@ -6,20 +6,26 @@
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
+<%= error_summary_for(@component, first_values: {contains_poisonous_ingredients: "true"}) %>
+
+
 <div class="govuk-grid-row">
+  <%= render 'poisonous_ingredients' %>
+</div>
 
-  <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-    <%= error_summary_for(@component, first_values: {contains_poisonous_ingredients: "true"}) %>
+    <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
 
-    <%= render 'poisonous_ingredients' %>
 
-    <%= render "form_components/govuk_radios", form: form, key:   :contains_poisonous_ingredients,
-            fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--m", isPageHeading: false } },
-            items: [{ text: "Yes", value: "true" },
-                    { text: "No", value: "false" }] %>
+      <%= render "form_components/govuk_radios", form: form, key:   :contains_poisonous_ingredients,
+              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--m", isPageHeading: false } },
+              items: [{ text: "Yes", value: "true" },
+                      { text: "No", value: "false" }] %>
 
-    <%= govukButton text: "Continue" %>
-  <% end %>
+      <%= govukButton text: "Continue" %>
+    <% end %>
+  </div>
 </div>
 
