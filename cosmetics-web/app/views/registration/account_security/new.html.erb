@@ -17,6 +17,14 @@
       <%= form_input @account_security_form, :full_name if @account_security_form.name_required? %>
       <%= form_input @account_security_form, :mobile_number, hint: { text: "We’ll send you a security code by text message" } %>
       <%= password_input @account_security_form, hint: { text: 'At least 8 characters' } %>
+      <%= hidden_field_tag 'registration_account_security_form[totp_secret_key]', @account_security_form.totp_secret_key %>
+      <h1 class="govuk-heading-m">Scan QR code with your Authenticator App</h1>
+      <p clas="govuk-hint">Google Authenticator, Authy...</p>
+      <%= image_tag @account_security_form.totp_qr_code %>
+      <%= form_input @account_security_form,
+                     :totp_attempt,
+                     label: { text: "Verify one-time password" },
+                     hint: { text: "Introduce the code displayed in the Authenticator App for the service" } %>
 
       <%= govukButton(text: "Continue") %>
     <% end %>

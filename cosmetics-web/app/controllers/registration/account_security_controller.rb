@@ -10,6 +10,7 @@ module Registration
 
     def create
       if account_security_form.update!
+        set_secondary_authentication_cookie(Time.zone.now.to_i)
         bypass_sign_in(current_user)
         redirect_to after_creation_path
       else
@@ -24,7 +25,8 @@ module Registration
     end
 
     def account_security_form_params
-      params.require(:registration_account_security_form).permit(:mobile_number, :password, :full_name)
+      params.require(:registration_account_security_form)
+            .permit(:mobile_number, :password, :full_name, :totp_secret_key, :totp_attempt)
     end
 
     def after_creation_path
