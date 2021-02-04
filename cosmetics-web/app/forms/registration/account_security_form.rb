@@ -44,7 +44,6 @@ module Registration
     end
 
     def totp_qr_code
-      binding.pry
       RQRCode::QRCode
         .new(totp.provisioning_uri(user.email))
         .as_png(resize_exactly_to: 300)
