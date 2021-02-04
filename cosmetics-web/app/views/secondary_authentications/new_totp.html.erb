@@ -1,0 +1,33 @@
+<% title = "Open your Authentication App" %>
+<% page_title(title, errors: @secondary_authentication_form.errors.any?) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary @secondary_authentication_form.errors %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <p class="govuk-body">
+      <% if @secondary_authentication_form.operation == SecondaryAuthentication::INVITE_USER %>
+        You need to confirm your identity. Open your authentication App and get the code for this service.
+      <% else %>
+        Open your authentication App and get the code for this service.
+      <% end %>
+    </p>
+
+    <%= form_tag(secondary_authentication_path, :method => :post, novalidate: true) do %>
+      <%= hidden_field_tag 'secondary_authentication_form[user_id]', @secondary_authentication_form.user_id %>
+      <%= render "components/govuk_input",
+          id: "totp_code", name: "secondary_authentication_form[totp_code]",
+          type: "text",
+          classes: "govuk-input--width-6",
+          label: { text: "Enter security code" },
+          attributes: { pattern: "[0-9]*", inputmode: "numeric" },
+          errorMessage: format_errors_for(@secondary_authentication_form, @secondary_authentication_form.errors.full_messages_for(:totp_code)),
+          autocomplete: "one-time-code" %>
+
+      <%= govukButton(text: "Continue") %>
+    <% end %>
+  </div>
+</div>

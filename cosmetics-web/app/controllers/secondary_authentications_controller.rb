@@ -8,18 +8,24 @@ class SecondaryAuthenticationsController < ApplicationController
   def new
     return render("errors/forbidden", status: :forbidden) unless session[:secondary_authentication_user_id]
 
-    @secondary_authentication_form = SecondaryAuthenticationForm.new(user_id: session[:secondary_authentication_user_id])
+    # Overriding SMS OTP for Auth App TOTP
+    @secondary_authentication_form = TotpSecondaryAuthenticationForm.new(user_id: session[:secondary_authentication_user_id])
+    render :new_totp
   end
 
   def create
     if secondary_authentication_form.valid?
       set_secondary_authentication_cookie(Time.zone.now.to_i)
-      secondary_authentication_form.try_to_verify_user_mobile_number
+      # Overriding SMS OTP for Auth App TOTP
+      # secondary_authentication_form.try_to_verify_user_mobile_number
       redirect_to_saved_path
     else
-      try_to_resend_code
-      secondary_authentication_form.otp_code = nil
-      render :new
+      # Overriding SMS OTP for Auth App TOTP
+      secondary_authentication_form.totp_code = nil
+      render :new_totp
+      # try_to_resend_code
+      # secondary_authentication_form.otp_code = nil
+      # render :new
     end
   end
 
@@ -45,10 +51,12 @@ private
   end
 
   def secondary_authentication_form
-    @secondary_authentication_form ||= SecondaryAuthenticationForm.new(secondary_authentication_params)
+    # Overriding SMS OTP for Auth App TOTP
+    # @secondary_authentication_form ||= SecondaryAuthenticationForm.new(secondary_authentication_params)
+    @secondary_authentication_form ||= TotpSecondaryAuthenticationForm.new(secondary_authentication_params)
   end
 
   def secondary_authentication_params
-    params.require(:secondary_authentication_form).permit(:otp_code, :user_id)
+    params.require(:secondary_authentication_form).permit(:otp_code, :totp_code, :user_id)
   end
 end

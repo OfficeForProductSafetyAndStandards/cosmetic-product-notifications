@@ -10,7 +10,8 @@ module SecondaryAuthenticationConcern
   def require_secondary_authentication(redirect_to: request.fullpath)
     return unless Rails.configuration.secondary_authentication_enabled
 
-    if user && (!user.mobile_number_verified || !secondary_authentication_present?)
+    # if user && (!user.mobile_number_verified || !secondary_authentication_present?)
+    if user && !secondary_authentication_present? # Enforcing by TOTP Auth APP rather than sms verification
 
       if !user.account_security_completed? || !user.mobile_number
         return redirect_to(registration_new_account_security_path)
@@ -20,8 +21,10 @@ module SecondaryAuthenticationConcern
       session[:secondary_authentication_user_id] = user_id_for_secondary_authentication
       session[:secondary_authentication_notice] = notice
       session[:secondary_authentication_confirmation] = confirmation
-      auth = SecondaryAuthentication.new(user)
-      auth.generate_and_send_code(current_operation)
+
+      # This will be only necessary when using SMS. Lets force TOTP Auth APP Instead
+      # auth = SecondaryAuthentication.new(user)
+      # auth.generate_and_send_code(current_operation)
       redirect_to new_secondary_authentication_path
     end
   end
