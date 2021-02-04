@@ -44,7 +44,7 @@ private
 
   def fully_signed_in_submit_user?
     if Rails.configuration.secondary_authentication_enabled
-      current_user_fully_registered? && secondary_authentication_present? && current_user.mobile_number_verified?
+      current_user_fully_registered? && secondary_authentication_present? && (current_user.mobile_number_verified? || current_user.last_totp_at.present?)
     else
       current_user_fully_registered?
     end
