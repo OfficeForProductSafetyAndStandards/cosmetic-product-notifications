@@ -112,7 +112,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     upload_formulation_file
 
     expect(page.current_path).to end_with("/product_image_upload/new")
-    expect_back_link_to_incomplete_notifications_page
     expect(page).to have_h1("Upload an image of the product label")
     upload_product_label
 

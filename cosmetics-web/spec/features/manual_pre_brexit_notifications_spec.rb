@@ -182,7 +182,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
     upload_ingredients_pdf
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft deep blue mouthwash")
-    expect(page).to have_summary_item(key: "Poisonous ingredients", value: "testPdf.pdf")
+    expect(page).to have_summary_item(key: "Ingredients NPIS needs to know about", value: "testPdf.pdf")
 
     click_button "Accept and submit"
 
