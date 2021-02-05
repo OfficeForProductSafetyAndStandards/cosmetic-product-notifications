@@ -6,6 +6,7 @@ class SecondaryAuthentication
   CHANGE_PASSWORD = "change_password".freeze
   CHANGE_MOBILE_NUMBER = "change_mobile_number".freeze
   CHANGE_EMAIL_ADDRESS = "change_email_address".freeze
+  DELETE_NOTIFICATION = "delete_notification".freeze
 
   TIMEOUTS = {
     DEFAULT_OPERATION => 7 * 24 * 3600, # 7 days
@@ -15,6 +16,7 @@ class SecondaryAuthentication
     CHANGE_EMAIL_ADDRESS => 300, # 5 minutes
     INVITE_USER => 300, # 5 minutes
     UNLOCK_OPERATION => 300, # 5 minutes
+    DELETE_NOTIFICATION => 900, # 15 minutes
   }.freeze
 
   OTP_LENGTH = 5
