@@ -120,9 +120,9 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
         expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_usage))
       end
 
-      it "redirects to the non-standard nonomaterial notified path when confirm_restrictions is 'no'" do
+      it "redirects to the 'nanomaterial must be listed' error page when confirm_restrictions is 'no'" do
         post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "no" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :non_standard_nanomaterial_notified))
+        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :must_be_listed))
       end
 
       it "sets error when no option is selected" do
