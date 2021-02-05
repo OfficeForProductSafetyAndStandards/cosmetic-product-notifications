@@ -61,10 +61,16 @@ RSpec.describe NanoElement, type: :model do
   end
 
   describe "#standard?" do
-    it "is true when purposes includes 'other'" do
+    it "is true when purposes does not include 'other'" do
       nano_element.purposes = %w[colorant]
 
       expect(nano_element).to be_standard
+    end
+
+    it "is false when purposes includes 'other'" do
+      nano_element.purposes = %w[other]
+
+      expect(nano_element).not_to be_standard
     end
   end
 
