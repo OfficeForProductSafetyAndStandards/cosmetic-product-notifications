@@ -3,7 +3,9 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
 
   steps :select_purposes,
         :confirm_restrictions,
+        :must_be_listed,
         :confirm_usage,
+        :must_conform_to_restrictions,
         :non_standard_nanomaterial_notified,
         :when_products_containing_nanomaterial_can_be_placed_on_market,
         :notify_your_nanomaterial
@@ -12,7 +14,7 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
   before_action :set_nano_element
 
   def show
-    if step == :confirm_restrictions && @nano_element.non_standard?
+    if step == :confirm_restrictions && @nano_element.non_standard? && @nano_element.purposes.one?
       return redirect_to wizard_path(:non_standard_nanomaterial_notified)
     end
 
@@ -50,7 +52,11 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
     when :confirm_usage
       wizard_path(:confirm_restrictions)
     when :non_standard_nanomaterial_notified
-      wizard_path(:select_purposes)
+      if @nano_element.purposes.one?
+        wizard_path(:select_purposes)
+      else
+        wizard_path(:confirm_usage)
+      end
     when :when_products_containing_nanomaterial_can_be_placed_on_market, :notify_your_nanomaterial
       wizard_path(:non_standard_nanomaterial_notified)
     else
@@ -143,9 +149,9 @@ private
     @nano_element.update_with_context(nano_element_params, step)
     case confirm_restrictions
     when "yes"
-      render_wizard @nano_element
+      redirect_to wizard_path(:confirm_usage)
     when "no"
-      redirect_to wizard_path(:non_standard_nanomaterial_notified)
+      redirect_to wizard_path(:must_be_listed)
     else
       @nano_element.errors.add :confirm_restrictions, "Select an option"
       render step
@@ -158,9 +164,13 @@ private
     @nano_element.update_with_context(nano_element_params, step)
     case confirm_usage
     when "yes"
-      redirect_to finish_wizard_path
+      if @nano_element.non_standard?
+        redirect_to wizard_path(:non_standard_nanomaterial_notified)
+      else
+        redirect_to finish_wizard_path
+      end
     when "no"
-      redirect_to wizard_path(:non_standard_nanomaterial_notified)
+      redirect_to wizard_path(:must_conform_to_restrictions)
     else
       @nano_element.errors.add :confirm_usage, "Select an option"
       render step
