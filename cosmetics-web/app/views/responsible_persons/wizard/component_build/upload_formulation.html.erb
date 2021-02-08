@@ -1,35 +1,34 @@
-<% title = @component.predefined? ? "Upload list of poisonous ingredients" : "Upload list of ingredients" %>
+<% title = @component.predefined? ? "Ingredients the National Poisons Information Service needs to know about" : "Upload list of ingredients" %>
 
 <% content_for :page_title, title %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-  <div class="govuk-grid-row">
-    <%= error_summary_for(@component) %>
+<div class="govuk-grid-row">
+  <%= error_summary_for(@component) %>
 
-    <% if @component.exact? %>
-      <%= render 'exact_concentration' %>
-    <% elsif @component.range? %>
-      <%= render 'ranges_concentration' %>
-    <% else %>
-      <h1 class="govuk-heading-l"><%= title %></h1>
-    <% end %>
-  </div>
-  <div class="govuk-grid-row">
-    <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
-      <div class="govuk-form-group <%= error_group_class(@component)%>">
-          <%= form.label :formulation_file, "Upload a file", class: "govuk-label govuk-label--s" %>
-
-          <% if @component.errors.any? %>
-            <span id="file-upload-1-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
-            </span>
-          <% end %>
-          <%= form.file_field :formulation_file, class: "govuk-file-upload",
-                  accept: Component.allowed_types.join(",") %>
-      </div>
-      <%= govukButton text: "Continue" %>
-    <% end %>
-  </div>
+  <% if @component.exact? %>
+    <%= render 'exact_concentration' %>
+  <% elsif @component.range? %>
+    <%= render 'ranges_concentration' %>
+  <% elsif @component.predefined? %>
+    <%= render 'frame_formulation_poisonous_ingredients' %>
+  <% else %>
+    <h1 class="govuk-heading-l"><%= title %></h1>
+  <% end %>
 </div>
+<%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+  <div class="govuk-form-group <%= error_group_class(@component)%>">
+      <%= form.label :formulation_file, "Upload a file", class: "govuk-label govuk-label--s" %>
+
+      <% if @component.errors.any? %>
+        <span id="file-upload-1-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
+        </span>
+      <% end %>
+      <%= form.file_field :formulation_file, class: "govuk-file-upload",
+              accept: Component.allowed_types.join(",") %>
+  </div>
+  <%= govukButton text: "Continue" %>
+<% end %>
