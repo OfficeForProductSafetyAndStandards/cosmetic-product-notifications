@@ -8,11 +8,12 @@ module OneOff
     def call
       emails.each do |email|
         next if email.name.nil? || email.email.nil?
+
         InviteSearchUser.call name: email.name, email: email.email, role: @role
       end
     end
 
-    private
+  private
 
     def emails
       result = []

@@ -5,18 +5,14 @@ module OneOff
       extract_names
     end
 
-    def email
-      @email
-    end
+    attr_reader :email
 
-    def name
-      @name
-    end
+    attr_reader :name
 
-    private
+  private
 
     def extract_names
-      splited = email.split('@')
+      splited = email.split("@")
       if splited.length != 2
         @email = nil
         return
