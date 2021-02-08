@@ -812,3 +812,4 @@ def select_rp_individual_account_type
   choose "Individual or sole trader"
   click_on "Continue"
 end
+
