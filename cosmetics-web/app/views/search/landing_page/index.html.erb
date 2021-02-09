@@ -37,7 +37,7 @@
           <li>responsible person</li>
         </ul>
 
-        <div class="govuk-inset-text">The ‘responsible person’ (RP) is the company (or individual) responsible for ensuring the regulations are followed. Every cosmetic product placed on the GB market must have a UK based responsible person.</div>
+        <div class="govuk-inset-text">The ‘responsible person’ is the company (or individual) responsible for ensuring the regulations are followed. Every cosmetic product placed on the GB market must have a UK based responsible person.</div>
 
         <h3 class="govuk-heading-s">National Poisons Information Service (NPIS) staff</h3>
 
@@ -49,9 +49,9 @@
 
         <h2 class="govuk-heading-m">What you can’t search for</h2>
 
-        <p class="govuk-body">You can’t search for cosmetic products taken off the GB market before 1 February 2020 but still used in GB.</p>
+        <p class="govuk-body">You can’t search for cosmetic products taken off the GB market before <%= display_full_month_date(EU_EXIT_DATE) %> but still used in GB.</p>
 
-        <div class="govuk-inset-text">Some ingredient information and packaging images may be missing for cosmetic products notified with the EU before 1 February 2020.</div>
+        <div class="govuk-inset-text">Some ingredient information and packaging images may be missing for cosmetic products notified with the EU before <%= display_full_month_date(EU_EXIT_DATE) %>.</div>
 
       </div>
     </div>

@@ -87,7 +87,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       ph: "No pH",
       poisonous_ingredients: "No",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
@@ -173,16 +173,18 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       poisonous_ingredients: "Yes",
     )
 
-    click_link "Add poisonous ingredients document"
+    click_link "Add ingredients document"
 
-    expect_to_be_on__upload_poisonous_ingredients_page
+    expect(page.current_path).to end_with("/build/upload_formulation")
+    expect(page).to have_h1("Upload a list of ingredients the National Poisons Information Service needs to know about")
+
     expect_back_link_to_check_your_answers_page
     upload_ingredients_pdf
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft deep blue mouthwash")
-    expect(page).to have_summary_item(key: "Poisonous ingredients", value: "testPdf.pdf")
+    expect(page).to have_summary_item(key: "Ingredients NPIS needs to know about", value: "testPdf.pdf")
 
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft deep blue mouthwash notification submitted"
@@ -347,7 +349,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
         },
       ],
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft strawberry blonde hair dye notification submitted"
@@ -459,7 +461,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       ph: "No pH",
       poisonous_ingredients: "Yes",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft carbon black eyeshadow notification submitted"
@@ -677,7 +679,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       ],
     )
 
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft nano black hair dye kit notification submitted"
