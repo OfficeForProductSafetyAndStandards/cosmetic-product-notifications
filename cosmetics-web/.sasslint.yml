@@ -17,7 +17,6 @@ rules:
     - filename-extension: false
       leading-underscore: false
   empty-line-between-blocks:
-    - 2
     - ignore-single-line-rulesets: true
   extends-before-declarations: 0
   extends-before-mixins: 0
@@ -48,7 +47,6 @@ rules:
     - 2
     - max-depth: 5
   no-color-keywords: 2
-  no-color-literals: 2
   no-css-comments: 2
   no-debug: 2
   no-duplicate-properties: 2
