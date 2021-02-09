@@ -44,8 +44,16 @@
 
           <%= form.file_field :uploaded_files, multiple: true, accept: "application/zip", class: "govuk-file-upload", direct_upload: true %>
         </div>
+        <noscript>
+          <div class="govuk-inset-text">
+            Your browser does not support Javascript and may stop responding until all files are uploaded. You must wait for your files to upload
+          </div>
+        </noscript>
         <div class="govuk-form-group">
           <%= form.submit "Continue", data: { disable_with: false }, class: "govuk-button", id: "submit-button" %>
+          <button class="govuk-button" id="loading-button" data-module="govuk-button" disabled style='display: none;' role="status" aria-live="assertive" tabindex="-1">
+            <span class="spinner"></span>Uploading, please wait
+          </button>
         </div>
     <% end %>
   </div>

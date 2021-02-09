@@ -37,6 +37,7 @@ class ResponsiblePersons::NotificationFilesController < SubmitApplicationControl
 private
 
   def handle_non_js_upload
+    Rails.logger.info "[FileUpload] handling non-js upload"
     if uploaded_files_params.length > NotificationFile::MAX_NUMBER_OF_FILES
       @errors << {
         text: "You can only select up to #{NotificationFile::MAX_NUMBER_OF_FILES} files at the same time",

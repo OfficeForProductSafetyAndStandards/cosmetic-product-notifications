@@ -29,3 +29,29 @@ $govuk-assets-path: '~govuk-frontend/govuk/assets/';
 .no-wrap {
   white-space: nowrap;
 }
+
+.spinner {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  -webkit-animation: spinner infinite 1.75s linear;
+  -moz-animation: spinner infinite 1.75s linear;
+  -o-animation: spinner infinite 1.75s linear;
+  animation: spinner infinite 1.75s linear;
+  border: 4px solid rgba(225, 225, 225, 0.9);
+  border-top-color: rgba(0, 0, 0, .1);
+  border-right-color: rgba(0, 0, 0, .1);
+  border-bottom-color: rgba(0, 0, 0, .1);
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
