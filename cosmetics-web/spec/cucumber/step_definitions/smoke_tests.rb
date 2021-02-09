@@ -36,17 +36,6 @@ When('I select {string}') do |string|
  select_manual_notification_prebexit_or_post_brexit('Yes')
 end
 
-When('I select {string} are you likely to notify in EU') do |string|
-  choose(string, visible: false)
- click_button "Continue"
-end
-
-
-# When('I select Yes notified in EU') do
-#  answer_was_eu_notified_with('Yes')
-#  select_manual_notification('No, I’ll enter information manually')
-#  select_manual_notification_prebexit_or_post_brexit('Yes')
-# end
 
 Then('I should be able to notify product manually') do
 enter_product_name("test")
@@ -62,4 +51,27 @@ end
 Then('I should be able to notify {string} product {string}') do |string, string2|
   enter_product_name(string2)
  notify_product(string)
+end
+
+Then('I should be able to see the entered details in check your answer page') do
+  
+end
+
+When('I select I have zip file {string}') do |string|
+  expected_h1('EU notification ZIP files')
+  select_radio('Yes')
+  click_button "Continue"
+end
+
+Then('I should be redirected to zip file upload page') do
+ expected_h1("Upload your EU notification files")
+
+end
+
+Then('I should be able to upload valid zip file successfully') do
+ page.attach_file('spec/cucumber/test-file.zip')
+ click_button "Continue"
+ sleep 5
+
+ 
 end

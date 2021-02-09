@@ -11,21 +11,23 @@ def sign_in_as_business
 end
 
 def answer_was_eu_notified_with(answer)
-  choose(answer,visible: false)
+  select_radio(answer)
   click_button "Continue"
 end
 
 def select_manual_notification(answer)
 	expected_h1('EU notification ZIP files')
-	choose(answer,visible: false)
+	select_radio(answer)
 	click_button "Continue"
 end
 
 def select_manual_notification_prebexit_or_post_brexit(answer)
 	expected_h1('Was this product notified in the EU before 1 January 2021?')
-	choose(answer,visible: false)
+	select_radio(answer)
 	click_button "Continue"
 end
+
+
 
 def enter_product_name(product_name)
 	expected_h1('What’s the product called?')
@@ -36,15 +38,15 @@ end
 
 def notify_product(notification)
 	expected_h1('Internal reference')
-	choose('No',visible: false)
+	select_radio('No')
 	click_button "Continue"
 	if(notification =='post brexit')
 	expected_h1('Is the product intended to be used on children under 3 years old?')
-	choose('Yes',visible: false)
+	select_radio('Yes')
 	click_button "Continue"
 end
 	expected_h1('Multi-item kits')
-	choose('No, this is a single product',visible: false)
+	select_radio('No, this is a single product')
 	click_button "Continue"
 	if(notification =='post brexit')
 	expected_h1('Upload an image of the product label')
@@ -52,11 +54,11 @@ end
 	click_button "Continue"
 	end
 	expected_h1('Is the the product available in different shades?')
-	choose('No',visible: false)
+	select_radio('No')
 	click_button "Continue"
 	#choose physical form
 	expected_h1('What is the physical form of the the product?')
-	choose('Solid or pressed powder',visible: false)
+	select_radio('Solid or pressed powder')
 	click_button "Continue"
 	if(notification =='post brexit')
 	expected_h1('What is the the product contained in?')
@@ -64,21 +66,21 @@ end
 	click_button "Continue"
 	#choose cmrs 
 	expected_h1('Carcinogenic, mutagenic or reprotoxic substances')
-	choose('Yes',visible: false)
+	select_radio('Yes')
 	click_button "Continue"
 	expected_h1('List category 1A or 1B CMRs')
 	click_on('Back')
-	choose('No',visible: false)
+	select_radio('No')
 	click_button "Continue"
 end
 	expected_h1('Nanomaterials')
-	choose('No',visible: false)
+	select_radio('No')
 	click_button "Continue"
 	expected_h1('What category of cosmetic product is it?')
-	choose('Skin products',visible: false)
+	select_radio('Skin products')
 	click_button "Continue"
 	expected_h1('What category of skin products is the product?')
-	choose('Skin care products',visible: false)
+	select_radio('Skin care products')
 	click_button "Continue"
 	expected_h1('What category of skin care products is the product?')
 	choose('Face care products other than face mask',visible: false)
@@ -110,11 +112,22 @@ end
 
 end
 
+def validate_check_your_answer_page(product_name,product_category,product_formulation)
+	expect(page).to have_summary_item(key: "Name", value: product_name)
+	expect(page).to have_summary_item(key: "Name", value: product_cateogry)
+	expect(page).to have_summary_item(key: "Name", value: product_formulation)
+	end
+	
 
-
-
+def select_radio(option)
+	choose(option,visible: false)
+end
 
 
 def expected_h1(h1)
 	expect(page).to have_selector("h1",text: h1)
 end
+
+def have_summary_item(key:, value:)
+    HaveSummaryItem.new(key: key, value: value)
+  end
