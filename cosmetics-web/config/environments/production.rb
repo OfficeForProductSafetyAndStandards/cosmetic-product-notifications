@@ -81,19 +81,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  # Index all relevant records with elasticsearch
-  config.after_initialize do
-    unless Sidekiq.server?
-      ActiveRecord::Base.descendants.each do |model|
-        if model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
-          if model.respond_to?(:elasticsearch)
-            model.elasticsearch.import force: true
-          else
-            model.import force: true
-          end
-        end
-      end
-    end
-  end
 end

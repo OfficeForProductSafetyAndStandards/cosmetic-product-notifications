@@ -1,4 +1,3 @@
-
 def sign_in_as_business
    visit(ENV["ENV_URL"])
    click_on('sign in')
@@ -26,8 +25,6 @@ def select_manual_notification_prebexit_or_post_brexit(answer)
 	select_radio(answer)
 	click_button "Continue"
 end
-
-
 
 def enter_product_name(product_name)
 	expected_h1('What’s the product called?')

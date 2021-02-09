@@ -354,7 +354,7 @@ end
 
 def expect_to_be_on__upload_poisonous_ingredients_page
   expect(page.current_path).to end_with("/build/upload_formulation")
-  expect(page).to have_h1("Upload list of poisonous ingredients")
+  expect(page).to have_h1("Ingredients the National Poisons Information Service needs to know about")
 end
 
 def expect_back_link_to_upload_poisonous_ingredients_page
@@ -363,7 +363,7 @@ end
 
 def expect_to_be_on__poisonous_ingredients_page
   expect(page.current_path).to end_with("/contains_poisonous_ingredients")
-  expect(page).to have_h1("Ingredients the National Poison Information Service needs to know about")
+  expect(page).to have_h1("Ingredients the National Poisons Information Service needs to know about")
 end
 
 def expect_back_link_to_poisonous_ingredients_page
@@ -436,7 +436,7 @@ def expect_check_your_answers_page_to_contain(product_name:, number_of_component
     expect(page).to have_summary_item(key: "Physical form", value: physical_form)
 
     if poisonous_ingredients
-      expect(page).to have_summary_item(key: "Contains poisonous ingredients", value: poisonous_ingredients)
+      expect(page).to have_summary_item(key: "Contains ingredients NPIS needs to know about", value: poisonous_ingredients)
     end
 
     if ph
@@ -751,7 +751,7 @@ def give_frame_formulation_as(frame_formulation_name)
 end
 
 def answer_does_product_contain_poisonous_ingredients_with(answer)
-  within_fieldset("Does the product contain any poisonous ingredients?") do
+  within_fieldset("Does the product contain any ingredients NPIS needs to know about?") do
     page.choose(answer)
   end
   click_button "Continue"
