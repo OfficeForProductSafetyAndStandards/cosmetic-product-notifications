@@ -89,7 +89,7 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
           let(:component_type) { "predefined" }
 
           it "sets the page title to poisonous ingredients" do
-            expect(response.body).to match(/<title>Upload list of poisonous ingredients .+<\/title>/)
+            expect(response.body).to match(/<title>Ingredients the National Poisons Information Service needs to know about.+<\/title>/)
           end
         end
 

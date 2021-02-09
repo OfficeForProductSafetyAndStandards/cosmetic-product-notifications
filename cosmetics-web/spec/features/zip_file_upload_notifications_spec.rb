@@ -41,7 +41,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       formulation_given_as: "Frame formulation",
       physical_form: "Liquid",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "CTPA moisture conditioner"
@@ -81,7 +81,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       frame_formulation: "Bleach For Body Hair",
       physical_form: "Loose powder",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft skin whitener"
@@ -112,7 +112,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     upload_formulation_file
 
     expect(page.current_path).to end_with("/product_image_upload/new")
-    expect_back_link_to_incomplete_notifications_page
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
     expect(page).to have_h1("Upload an image of the product label")
     upload_product_label
 
@@ -132,7 +132,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       frame_formulation: "Skin Care Cream, Lotion, Gel",
       physical_form: "Cream or paste",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Beautify Facial Night Cream"
@@ -173,7 +173,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       frame_formulation: "Skin Care Cream, Lotion, Gel",
       physical_form: "Cream or paste",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Beautify Facial Night Cream"
@@ -227,7 +227,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
       frame_formulation: "Hair Colorant (Permanent, Oxidative Type) - Type 1 : Two Components - Colorant Part",
       physical_form: "Cream or paste",
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "SkinSoft shocking green hair dye"
@@ -312,7 +312,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
         },
       ],
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano"
   end
@@ -405,7 +405,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
         },
       ],
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-RangeDoc_pHRange_Exactvalues_Nano"
   end
@@ -489,7 +489,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
         },
       ],
     )
-    click_button "Accept and submit the cosmetic product notification"
+    click_button "Accept and submit"
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Multi-Item-Rangevalues_Exactvalues_Nano"
   end
