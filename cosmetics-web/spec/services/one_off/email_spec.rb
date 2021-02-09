@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe OneOff::NameExtractor do
+RSpec.describe OneOff::Email do
   let(:email) { "foo.bar.baz@gmail.com" }
 
   it "extracts all names" do

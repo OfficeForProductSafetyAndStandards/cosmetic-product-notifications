@@ -1,5 +1,5 @@
 module OneOff
-  class NameExtractor
+  class Email
     def initialize(email)
       @email = email
       extract_names

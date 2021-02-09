@@ -18,7 +18,7 @@ module OneOff
     def emails
       result = []
       File.open(@filepath).each_line do |email|
-        result << NameExtractor.new(email)
+        result << Email.new(email)
       end
       result
     end
