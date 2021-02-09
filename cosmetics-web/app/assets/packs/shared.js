@@ -33,14 +33,13 @@ document.addEventListener('direct-upload:end', (event, file) => {
 
 document.addEventListener('direct-upload:start', event => {
   event.preventDefault()
-  document.getElementById('submit-button').style.display = 'none';
-  document.getElementById('loading-button').style.display = 'block';
+  document.getElementById('submit-button').style.display = 'none'
+  document.getElementById('loading-button').style.display = 'block'
 })
 
-
 document.addEventListener('direct-upload:error', event => {
-  document.getElementById('submit-button').style.display = 'block';
-  document.getElementById('loading-button').style.display = 'none';
+  document.getElementById('submit-button').style.display = 'block'
+  document.getElementById('loading-button').style.display = 'none'
   event.target.files = null
   event.target.value = null
 })
