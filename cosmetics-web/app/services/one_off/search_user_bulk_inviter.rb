@@ -9,7 +9,11 @@ module OneOff
       emails.each do |email|
         next if email.name.nil? || email.email.nil?
 
-        InviteSearchUser.call name: email.name, email: email.email, role: @role
+        begin
+          InviteSearchUser.call name: email.name, email: email.email, role: @role
+        rescue ActiveRecord::RecordInvalid
+          next
+        end
       end
     end
 
