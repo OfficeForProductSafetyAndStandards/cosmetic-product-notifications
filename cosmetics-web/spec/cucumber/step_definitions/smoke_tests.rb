@@ -39,20 +39,37 @@ Then("I should be able to notify product manually") do
   notify_post_brexit
 end
 
-Then("I should be able to notify product {string}") do |string|
-  enter_product_name(string)
+Then("I should be able to notify product {string}") do |product_name|
+  enter_product_name(product_name)
   notify_product("post")
 end
 
-Then("I should be able to notify {string} product {string}") do |string, string2|
-  enter_product_name(string2)
-  notify_product(string)
+Then("I should be able to notify {string} product {string}") do |notification, product_name|
+  enter_product_name(product_name)
+  notify_product(notification)
 end
 
-Then("I should be able to see the entered details in check your answer page") do 
+Then("I should be able to notify {string} product {string} in category {string} and formulation given as {string}") do |notification_type, product_name, product_category, product_formulation|
+  enter_product_name(product_name)
+  notify_product(notification_type, product_category, product_formulation)
+  expected_h1(product_name)
 end
 
-When("I select I have zip file {string}") do |string|
+Then("I should be able to see the entered details product name {string} and category {string} and given formation as {string}") do |product_name, product_category, product_formulation|
+  validate_check_your_answer_page(product_name, product_category, product_formulation)
+  page.should have_xpath("//a[contains(text(),'Save and return to dashboard')]")
+end
+
+Then("I should be able to see the entered details product name {string} and category {string} and given formulation as {string}") do |product_name, product_category, product_formulation|
+  validate_check_your_answer_page(product_name, product_category, product_formulation)
+end
+
+Then("I should be able to submit product successfully") do
+  click_button "Accept and submit"
+  page.should have_xpath("//div[@class='hmcts-banner__message']")
+end
+
+When("I select I have zip file {string}") do |_string|
   expected_h1("EU notification ZIP files")
   select_radio("Yes")
   click_button "Continue"

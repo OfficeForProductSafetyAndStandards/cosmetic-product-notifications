@@ -4,13 +4,13 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
-require 'cucumber/rails'
-require 'rubygems'
-require 'capybara'
-require 'capybara/dsl'
-require 'capybara-screenshot/cucumber'
-require 'active_support/all'
-require 'active_record'
+require "cucumber/rails"
+require "rubygems"
+require "capybara"
+require "capybara/dsl"
+require "capybara-screenshot/cucumber"
+require "active_support/all"
+require "active_record"
 
 # frozen_string_literal: true
 
@@ -19,17 +19,15 @@ require 'active_record'
 # selectors in your step definitions to use the XPath syntax.
 # Capybara.default_selector = :xpath
 
-
-
 Capybara.default_driver = :selenium
 Capybara.register_driver :selenium do |app|
- options = {
-   js_errors: true,
-   timeout: 3600,
-   debug: true,
-   inspector: true,
- }
- Capybara::Selenium::Driver.new(app, :browser => :firefox)
+  options = {
+    js_errors: true,
+    timeout: 3600,
+    debug: true,
+    inspector: true,
+  }
+  Capybara::Selenium::Driver.new(app, browser: :firefox)
 end
 
 World(Capybara::DSL)
@@ -82,4 +80,3 @@ Cucumber::Rails::Database.autorun_database_cleaner = false
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
-
