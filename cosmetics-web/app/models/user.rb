@@ -1,11 +1,14 @@
 class User < ApplicationRecord
   NEW_EMAIL_TOKEN_VALID_FOR = 600 # 10 minutes
 
+  include Encryptable
   include NewEmailConcern
   validates :email, presence: true
 
   attribute :old_password, :string
   attribute :invite, :boolean
+
+  attr_encrypted :totp_secret_key
 
   validates :new_email, email: { message: :invalid, allow_nil: true }
   validates :name, presence: true, unless: -> { invite }
