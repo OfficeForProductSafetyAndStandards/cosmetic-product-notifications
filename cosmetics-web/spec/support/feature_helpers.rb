@@ -202,7 +202,7 @@ end
 
 def expect_to_be_on__is_item_available_in_shades_page(item_name: nil)
   expect(page.current_path).to end_with("/build/number_of_shades")
-  expected_title = "Is the #{item_name || 'the product'} available in different shades?"
+  expected_title = "Is #{item_name || 'the product'} available in different shades?"
   expect(page).to have_h1(expected_title)
 end
 
@@ -212,7 +212,7 @@ end
 
 def expect_to_be_on__physical_form_of_item_page(item_name: nil)
   expect(page.current_path).to end_with("/build/add_physical_form")
-  expect(page).to have_h1("What is the physical form of the #{item_name || 'the product'}?")
+  expect(page).to have_h1("What is the physical form of #{item_name || 'the product'}?")
 end
 
 def expect_back_link_to_physical_form_of_item_page
@@ -221,7 +221,7 @@ end
 
 def expect_to_be_on__what_is_product_contained_in_page(item_name: nil)
   expect(page.current_path).to end_with("/contains_special_applicator")
-  expect(page).to have_h1("What is the #{item_name || 'the product'} contained in?")
+  expect(page).to have_h1("What is #{item_name || 'the product'} contained in?")
 end
 
 def expect_back_link_to_what_is_product_contained_in_page
@@ -609,14 +609,14 @@ def answer_item_name_with(item_name)
 end
 
 def answer_is_item_available_in_shades_with(answer, item_name: nil)
-  within_fieldset("Is the #{item_name || 'the product'} available in different shades?") do
+  within_fieldset("Is #{item_name || 'the product'} available in different shades?") do
     page.choose(answer)
   end
   click_button "Continue"
 end
 
 def answer_what_is_physical_form_of_item_with(answer, item_name: nil)
-  within_fieldset("What is the physical form of the #{item_name || 'the product'}?") do
+  within_fieldset("What is the physical form of #{item_name || 'the product'}?") do
     page.choose(answer)
   end
   click_button "Continue"
@@ -630,7 +630,7 @@ def answer_does_item_contain_cmrs_with(answer, item_name: nil)
 end
 
 def answer_what_is_product_contained_in_with(answer, item_name: nil)
-  within_fieldset("What is the #{item_name || 'the product'} contained in?") do
+  within_fieldset("What is #{item_name || 'the product'} contained in?") do
     page.choose(answer)
   end
   click_button "Continue"
