@@ -9,6 +9,7 @@ FactoryBot.define do
     direct_otp { "12345" }
     mobile_number_verified { true }
     account_security_completed { true }
+    secondary_authentication_methods { %w[sms] }
 
     factory :submit_user, class: "SubmitUser" do
       confirmed_at { 1.hour.ago }
