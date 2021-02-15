@@ -1,0 +1,892 @@
+{
+  "name": "Skin care",
+  "data": [
+    {
+      "formulationName": "Skin care cream, lotion, gel",
+      "childNumber": 1,
+      "ingredients": [
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, PEG",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, xanthan gum",
+          "volume": "12"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, antioxidants, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "talc, silica, nylon powder",
+          "volume": "5"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "PEG stearate, ceteareth",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin care cream, lotion, gel - with high level of silicones",
+      "childNumber": 2,
+      "ingredients": [
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, PEG",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, vitamins",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "starch, kaolin, talc",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "sorbitan sesquioleate, sorbitan stearate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "cellulose gum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin care cream, lotion, gel - with high level of humectants",
+      "childNumber": 3,
+      "ingredients": [
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, PEG",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "glyceryl stearate, sodium cocoyl isethionate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "silica, talc",
+          "volume": "10"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Film forming polymers",
+          "ingredientExamples": "PVP",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin care cream, lotion, gel - with high level of bulking agents",
+      "childNumber": 4,
+      "ingredients": [
+        {
+          "ingredient": "Oils",
+          "ingredientExamples": "vegetable and/or mineral), waxes and fats long chain alcohols ",
+          "volume": "60"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "bentonite, carbomer, cellulose",
+          "volume": "60"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "starch, zinc oxide, kaolin",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "glyceryl stearate, sodium laureth sulfate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, antioxidants, chelating agents",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin care cream, lotion, gel - with high level of fatty compounds",
+      "childNumber": 5,
+      "ingredients": [
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "volume": "95"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, PEG",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "glyceryl stearate, PEG stearate",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, xanthan gum",
+          "volume": "12"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "talc, silica, zinc oxide, nylon powder",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, antioxidants, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Cationic polymers",
+          "ingredientExamples": "polyquaternium-7, polyquaternium-24",
+          "volume": "5"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin care cream, lotion, gel - with high level of uv filters",
+      "childNumber": 6,
+      "ingredients": [
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "volume": "60"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, PEG",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "glyceryl stearate, PEG stearate",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, xanthan gum",
+          "volume": "12"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "talc, silica, nylon powder",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "antioxidants, vitamins",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin care cream, lotion, gel – with high level of perfume",
+      "childNumber": 7,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "volume": "60"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, PEG",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "glyceyl stearate, PEG stearate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Colorants, colour additives",
+          "ingredientExamples": "opacifying /pearlescent agents",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, hydroxyethylcellulose",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "silica, nylon powder, starch",
+          "volume": "10"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "antioxidants, vitamins",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Zinc oxide based cream",
+      "childNumber": 8,
+      "ingredients": [
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "volume": "60"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "titanium dioxide, silica, nylon powder",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Zinc oxide",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, PEG",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "ethoxylated long chain alcohols",
+          "volume": "12"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, bisabolol",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, xanthan gum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin gel (hydro-alcoholic based)",
+      "childNumber": 9,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat, isopropyl alcohol)",
+          "volume": "70"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "propylene glycol, glycerin",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "fatty acid polyglycolethers",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "3.5"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin oil",
+      "childNumber": 10,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Plant extracts",
+          "ingredientExamples": "rosemary, camomile",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "steareth-2, steareth-4",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "dextrin palmitate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "antioxidants, colorants, aqua",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples": "vegetable and/or mineral) t",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Tonic, cosmetic water",
+      "childNumber": 12,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "70"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, PEG",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples": "vegetable and/or mineral",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "silica, nylon powder",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "sorbitan stearate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Chemical exfoliation products",
+      "childNumber": 13,
+      "ingredients": [
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "glycerin",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples": "vegetable and/or mineral",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "sorbitan stearate, TEA-stearate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Chemical exfoliating agents",
+          "ingredientExamples": "lactic acid, glycolic acid, salicylic acid (maximum concentration of salicylic acid permitted is 2%)",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "hydrolysed proteins, plant extracts, vitamins",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin care (silicone based)",
+      "childNumber": 14,
+      "ingredients": [
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExamples": "squalane",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, plant extracts",
+          "volume": "10"
+        }
+      ]
+    },
+    {
+      "formulationName": "Petroleum jelly",
+      "childNumber": 15,
+      "ingredients": [
+        {
+          "ingredient": "Petrolatum",
+          "volume": "100"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "0.5"
+        }
+      ]
+    },
+    {
+      "formulationName": "Talcum powder (loose or pressed)",
+      "childNumber": 16,
+      "ingredients": [
+        {
+          "ingredient": "Talc",
+          "volume": "99"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "starch, nylon powder, sodium polyacrylate, kaolin, magnesium carbonate, calcium carbonate",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Colorants, colour additives",
+          "ingredientExamples": "opacifying / pearlescent agents",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Binding agents",
+          "ingredientExamples": "vegetable and/or mineral oils, fatty acid esters",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "UV filters, vitamins, antioxidants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        }
+      ]
+    },
+    {
+      "formulationName": "Lip care (stick, cream, or gel)",
+      "childNumber": 17,
+      "ingredients": [
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, fatty alcohols)",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Film forming agents",
+          "ingredientExamples": "VP/hexadecene copolymer",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclomethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, hydroxyethylcellulose",
+          "volume": "15"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "silica, nylon powder",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "trioleyl phosphate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Cosmetic colorants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, antioxidants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Flavouring agents",
+          "volume": "1"
+        }
+      ]
+    }
+  ]
+}

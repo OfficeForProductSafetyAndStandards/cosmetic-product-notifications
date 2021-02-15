@@ -71,6 +71,8 @@ Rails.application.routes.draw do
 
     root "submit/landing_page#index"
 
+    get "frame_formulations", to: "frame_formulations#index"
+    get "frame_formulations/:id/:sub_id/:name", to: "frame_formulations#show"
     resources :responsible_persons do
       collection do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]

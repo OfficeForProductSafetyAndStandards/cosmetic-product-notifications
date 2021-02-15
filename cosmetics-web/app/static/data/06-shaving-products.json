@@ -1,0 +1,431 @@
+{
+  "name": "Shaving products",
+  "data": [
+    {
+      "childNumber": 1,
+      "formulationName": "Shaving cream",
+      "ingredients": [
+        {
+          "ingredient": "Soaps",
+          "ingredientExample": "Mixed sodium and potassium stearates, laurates and cocoates",
+          "volume": "60"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExample": "Glycerin, propylene glycol",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Thickeners, emulsifying agents",
+          "ingredientExample": "Fatty acid glycol esters, long chain alcohols",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExample": "Oils (for example, vegetable and/or mineral), fatty acid esters",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+          "ingredientExample": "Sodium laureth sulfate, betaine derivatives",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "Vitamins",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Opacifying agents",
+          "ingredientExample": "Titanium dioxide",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Anticorrosives",
+          "ingredientExample": "Sodium metasilicate",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Chelating agents",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Antioxidants",
+          "volume": "0.1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "childNumber": 2,
+      "formulationName": "Brushless shaving cream",
+      "ingredients": [
+        {
+          "ingredient": "Fatty acids",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Oils (for example vegetable and/or mineral",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Soaps",
+          "ingredientExample": "TEA-stearate and TEA-laurate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "Vitamins, plant extracts",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Antioxidants, chelating agents",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "childNumber": 3,
+      "formulationName": "Shave gel",
+      "ingredients": [
+        {
+          "ingredient": "Humectants",
+          "ingredientExample": "Glycerin",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Film forming polymers",
+          "ingredientExample": "Glyceryl polymethacrylate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExample": "Hydroxyethylcellulose",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExample": "Sodium laureth sulfate",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "Vitamins, plant extracts",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "childNumber": 4,
+      "formulationName": "Shaving gel (post foaming)",
+      "ingredients": [
+        {
+          "ingredient": "Soaps",
+          "ingredientExample": "Potassium salts of fatty acids, triethanolamine salts of fatty acids",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExample": "Glycerin",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExample": "PEG-150 distearate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "Vitamins, plant extracts",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Post foaming agents",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExample": "Cellulose derivatives",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Skin conditioning agents",
+          "ingredientExample": "Polyquaternium-7",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "0.2"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "childNumber": 5,
+      "formulationName": "Shaving foam aerosol",
+      "ingredients": [
+        {
+          "ingredient": "Soaps",
+          "ingredientExample": "Potassium salts of fatty acids, triethanolamine salts of fatty acids",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Anionic/Amphoteric/Non-ionic surfactants",
+          "ingredientExample": "Sodium laureth sulfate, betaine derivatives, polysorbate",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExample": "Glycerin",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Propellants",
+          "ingredientExample": "Hydrocarbons",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExample": "Waxes",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExample": "PEG derivatives",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "Plant extracts, vitamins",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExample": "Cellulose derivatives",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "childNumber": 6,
+      "formulationName": "Shaving soap or stick",
+      "ingredients": [
+        {
+          "ingredient": "Mixed sodium and potassium stearates and laurates",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExample": "Glycerin",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Non-ionic surfactants",
+          "ingredientExample": "Polysorbate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "Vitamins, plant extracts, chelating agents",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Opacifying agents",
+          "ingredientExample": "Titanium dioxide",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Antioxidants",
+          "volume": "0.1"
+        }
+      ]
+    },
+    {
+      "childNumber": 7,
+      "formulationName": "Aftershave balm",
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Oils (for example, vegetable and/or mineral) and fats",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExample": "Propylene glycol, glycerin",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "UV filters, vitamins, bisabolol, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredientExample": "Glyceryl stearate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExample": "Carbomer",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Chelating agents, antioxidants",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    },
+    {
+      "childNumber": 8,
+      "formulationName": "Aftershave lotion",
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExample": "Glycerin, propylene glycol, isopropyl myristate",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExample": "Plant extracts, astringents such as hamamelis",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Colorants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Chelating agents, antioxidants",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    }
+  ]
+}

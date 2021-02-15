@@ -1,0 +1,47 @@
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">Frame formulation for <%= @formulation["name"] %></span>
+    <h1 class="govuk-heading-l">
+      <%= @subformulation["formulationName"] %>
+    </h1>
+
+    <dl class="meta govuk-summary-list govuk-!-margin-bottom-9">
+      <div class="govuk-summary-list__row govuk-body-s">
+        <dt class="govuk-summary-list__key no-border">
+        Formulation number:
+        </dt>
+        <dd class="govuk-summary-list__value no-border">
+        <%= params[:id].to_i + 1 %>.<%= @subformulation["childNumber"] %>
+        </dd>
+      </div>
+    </dl>
+
+
+  </div>
+  <div class="govuk-grid-column-full">
+
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Ingredient</th>
+          <th scope="col" class="govuk-table__header">Maximum amount</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+
+        <% @subformulation["ingredients"].each do |ingredient| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-three-quarters">
+              <%= ingredient["ingredient"] %>
+            </td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter govuk-table__cell--numeric">
+              <%= ingredient["volume"] %> %
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

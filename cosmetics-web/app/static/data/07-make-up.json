@@ -1,0 +1,1433 @@
+{
+  "name": "Make up",
+  "data": [
+  {
+    "childNumber": 1,
+    "formulationName": "Foundation and blusher (liquid, cream, foam)",
+    "ingredients": [
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "60"
+      },
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral)",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExample": "Propylene glycol, lanolin",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, kaolin, silica, starch",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Glycerin, PEG",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Thickeners, emulsifying agents",
+        "ingredientExample": "Glyceryl stearate, PEG stearate",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "15"
+      },
+      {
+        "ingredient": "UV filters",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+        "ingredientExample": "Sodium lauroyl sarcosinate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 2,
+    "formulationName": "Foundation - anhydrous",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral)",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "60"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Nylon, talc, kaolin, silica",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Waxes",
+        "ingredientExample": "Cera alba, carnauba",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Thickeners, emulsifying agents",
+        "ingredientExample": "Sodium stearate, potassium stearate",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Glycerin",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExample": "Lanolin",
+        "volume": "10"
+      },
+      {
+        "ingredient": "UV filters",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 3,
+    "formulationName": "Concealer cream",
+    "ingredients": [
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral)",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Emollients, humectants",
+        "ingredientExample": "Oleyl alcohol",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Nylon, talc, starch, kaolin",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Glyceryl stearate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, antioxidants",
+        "volume": "6"
+      },
+      {
+        "ingredient": "Thickeners",
+        "volume": "3"
+      },
+      {
+        "ingredient": "UV filters",
+        "volume": "3"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 4,
+    "formulationName": "Concealer stick",
+    "ingredients": [
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "UV filters, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Glycerin",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Smoothing agents, anti-blemish agents",
+        "ingredientExample": "Salicylic acid",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Thickeners",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Chelating agents",
+        "volume": "0.1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 5,
+    "formulationName": "Foundation / concealer (solid)",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "55"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExample": "Lanolin oil, isopropyl myristate",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Opacifying agents",
+        "ingredientExample": "Calcium carbonate",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Pearlescent agents",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Stearalkonium hectorite, propylene carbonate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "UV filters",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "PEG derivatives, PPG derivatives",
+        "volume": "6"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Plant extracts, vitamins, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "2"
+      }
+    ]
+  },
+  {
+    "childNumber": 6,
+    "formulationName": "Face powder",
+    "ingredients": [
+      {
+        "ingredient": "Mineral Bulking agents",
+        "ingredientExample": "Talc, mica, kaolin, zinc oxide, titanium dioxide, magnesium/calcium carbonate",
+        "volume": "95"
+      },
+      {
+        "ingredient": "Other Bulking agents",
+        "ingredientExample": "Starch, nylon powder, polyethylene powder",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Binding agents",
+        "ingredientExample": "Vegetable and/or mineral oils, fatty acid esters",
+        "volume": "45"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "45"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Anticaking agents",
+        "ingredientExample": "Zinc/magnesium stearate, zinc/magnesium laurate",
+        "volume": "15"
+      },
+      {
+        "ingredient": "UV Filters",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Antioxidants, humectants, vitamins",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+        "ingredientExample": "Polysorbate",
+        "volume": "3"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1.5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1.5"
+      }
+    ]
+  },
+  {
+    "childNumber": 7,
+    "formulationName": "Lipstick / lip cream (including concealer sticks/creams)",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), esters and fatty acids",
+        "volume": "65"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "65"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "65"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExample": "Glycerin, oleyl alcohol, cetyl acetate, lanolin derivatives",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Waxes",
+        "ingredientExample": "Carnauba, candelilla cera, paraffin",
+        "volume": "35"
+      },
+      {
+        "ingredient": "Film forming polymers",
+        "ingredientExample": "VP/hexadecene copolymer",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Quaternium-18",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, silica, nylon powder",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Photoprotective products contain UV",
+        "volume": "filters"
+      },
+      {
+        "ingredient": "",
+        "ingredientExample": "Titanium dioxide, zinc oxide",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, hydrolysed proteins, antioxidants",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Trioleyl phosphate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Flavouring agents",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 8,
+    "formulationName": "Lip colour and glosser/balm",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "90"
+      },
+      {
+        "ingredient": "Film forming polymers",
+        "ingredientExample": "Stearalkonium hectorite, polybutene",
+        "volume": "80"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExample": "Glycerin, propylene glycol",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, silica, nylon powder",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Photoprotective products contain UV",
+        "volume": "filters"
+      },
+      {
+        "ingredient": "",
+        "ingredientExample": "Titanium dioxide, zinc oxide",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Carbomer, hydroxyethylcellulose",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Trioleyl phosphate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, proteins, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Flavouring agents",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Oral care-sweetening agents",
+        "ingredientExample": "Saccharin",
+        "volume": "00.2"
+      }
+    ]
+  },
+  {
+    "childNumber": 9,
+    "formulationName": "Lip pencil",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "90"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, silica",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Polymers",
+        "ingredientExample": "Nylon, PVP",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Stearalkonium hectorite",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "UV filters, vitamins, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Non-ionics such as polysorbate 60, PEG-6 sorbitan stearate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "0.5"
+      }
+    ]
+  },
+  {
+    "childNumber": 10,
+    "formulationName": "Lipstick sealer / lip coat",
+    "ingredients": [
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "95"
+      },
+      {
+        "ingredient": "Resins",
+        "ingredientExample": "PVP",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Plasticisers",
+        "ingredientExample": "Diisopropyl adipate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Hydroxyethylcellulose",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 11,
+    "formulationName": "Lip and eye fix",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "90"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Glycerin, propylene glycol",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Emulsifying agents, thickeners",
+        "ingredientExample": "Polysorbate",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, zinc stearate, silica",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExample": "Long chain alcohols, isopropyl myristate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Polymers, resins",
+        "ingredientExample": "Nylon, PVP",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, UV filters, plant extracts",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 12,
+    "formulationName": "Eye fix - anhydrous",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, silica, nylon powder",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Stearalkonium hectorite",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 13,
+    "formulationName": "Lip ink (pencil)",
+    "ingredients": [
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Glycerin, propylene glycol",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Polymers, resins",
+        "ingredientExample": "PVP, dimethicone copolyol",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Polysorbate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, UV filters, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 14,
+    "formulationName": "Lip ink (liquid)",
+    "ingredients": [
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Glycerin, propylene glycol",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Trioleyl phosphate, sodium lauryl phosphate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Polymers, resins",
+        "ingredientExample": "Xanthan gum, carbomer",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral) and fats",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 15,
+    "formulationName": "Eye shadow, blusher and liner (powder)",
+    "ingredients": [
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "80"
+      },
+      {
+        "ingredient": "Binding agents, oils",
+        "ingredientExample": "Vegetable and/or mineral), waxes and fat",
+        "volume": "20"
+      },
+      {
+        "ingredient": "",
+        "ingredientExample": "Long chai",
+        "volume": "alcohols)"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Anticaking agents",
+        "ingredientExample": "Zinc/magnesium stearate, zinc/magnesium laurate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Humectants, vitamins, UV filters",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, silica, starch, nylon powder, polyethylene powder) t",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 16,
+    "formulationName": "Eye shadow and blusher (cream)",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral) and waxes",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, silica, nylon powder",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "PEG stearate, polysorbate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Carbomer",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts, UV filters, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 17,
+    "formulationName": "Eye shadow and blusher - anhydrous (cream, stick, powder, …)",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "60"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, silica, nylon powder",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Stearalkonium hectorite",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Film forming polymers",
+        "ingredientExample": "VP/hexadecene copolymer",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts, antioxidants, UV filters",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 18,
+    "formulationName": "Eye pencil",
+    "ingredients": [
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Polymers, resins",
+        "ingredientExample": "Nylon",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+        "ingredientExample": "Polysorbate 60, PEG-6 sorbitan stearate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "UV filters",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts, antioxidants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "0.3"
+      }
+    ]
+  },
+  {
+    "childNumber": 19,
+    "formulationName": "Eye liner - regular (liquid, cream)",
+    "ingredients": [
+      {
+        "ingredient": "Film forming polymers",
+        "ingredientExample": "Acrylic resin, ammonium acrylates copolymer",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Propylene glycol, glycerin",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Polysorbate, PEG oleate, TEA-oleate",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Carbomer, magnesium/aluminium silicate, cellulose",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 20,
+    "formulationName": "Eye liner - waterproof (liquid, cream, paste)",
+    "ingredients": [
+      {
+        "ingredient": "Resins, film forming polymers",
+        "ingredientExample": "Acrylic resin, ammonium acrylates copolymer",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Stearalkonium hectorite, propylene carbonate",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts, aqua",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Propylene glycol, glycerin",
+        "volume": "8"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, kaolin, zinc stearate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane) t",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 21,
+    "formulationName": "Eye liner (cake)",
+    "ingredients": [
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Emulsifying agents, binding agents",
+        "ingredientExample": "Fatty acid esters",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 22,
+    "formulationName": "Mascara - regular",
+    "ingredients": [
+      {
+        "ingredient": "Film forming polymers",
+        "ingredientExample": "Ammonium acrylates copolymer, cellulose derivatives, acetyl trihexyl citrate",
+        "volume": "45"
+      },
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "TEA-stearate",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Propylene glycol, glycerin",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Magnesium silicate, aluminum silicate, PEG derivatives",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "11"
+      },
+      {
+        "ingredient": "Fibres",
+        "ingredientExample": "Cellulose, nylon fibres",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExample": "Isopropyl myristate",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "2.5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  },
+  {
+    "childNumber": 23,
+    "formulationName": "Mascara - waterproof",
+    "ingredients": [
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExample": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "80"
+      },
+      {
+        "ingredient": "Silicones including volatile silicones",
+        "ingredientExample": "Cyclopentasiloxane, dimethicone",
+        "volume": "80"
+      },
+      {
+        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Resins, Film forming polymers",
+        "ingredientExample": "Aluminum distearate, VP/hexadecene copolymer",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExample": "Cera alba",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Bulking agents",
+        "ingredientExample": "Talc, kaolin, zinc stearate",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Stearalkonium hectorite",
+        "volume": "12"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Propylene glycol, glycerin",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts, silk powder",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Antioxidants",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 24,
+    "formulationName": "Mascara (cake)",
+    "ingredients": [
+      {
+        "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+        "ingredientExample": "TEA-stearate",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Waxes",
+        "ingredientExample": "Ozokerite, cera alba, carnauba",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Film forming polymers",
+        "ingredientExample": "Ammonium acrylates copolymer, cellulose derivatives",
+        "volume": "25"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExample": "Polyethylene derivatives, stearalkonium hectorite",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExample": "Vitamins, plant extracts",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 25,
+    "formulationName": "Body glitter",
+    "ingredients": [
+      {
+        "ingredient": "Colorants, colour additives",
+        "ingredientExample": "Opacifying / pearlescent agents / coloured aluminium foil, polyester film or laminates of both",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExample": "Propylene glycol",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Polymers,",
+        "volume": "thickeners"
+      },
+      {
+        "ingredient": "",
+        "ingredientExample": "PVP/ VA copolymer with carbomer gel",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Triethanolamine",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+        "volume": "0.5"
+      },
+      {
+        "ingredient": "Aqua to",
+        "volume": "100"
+      }
+    ]
+  }
+]}

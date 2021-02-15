@@ -1,0 +1,36 @@
+{
+  "name": "Skin care",
+  "data": [
+    {
+      "formulationName": "Bleach for body hair",
+      "childNumber": 1,
+      "ingredients": [
+        {
+          "ingredient": "Emollients",
+          "example": "isopropyl myristate, petrolatum",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "example": "glyceryl stearate, ethoxylated alcohols",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Hydrogen peroxide",
+          "volume": "4"
+        },
+        {
+          "ingredient": "Hydrogen peroxide stabilising agents",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "pH adjusters qs pH 2-3"
+        },
+        {
+          "ingredient": "Aqua to",
+          "volume": "100"
+        }
+      ]
+    }
+  ]
+}
