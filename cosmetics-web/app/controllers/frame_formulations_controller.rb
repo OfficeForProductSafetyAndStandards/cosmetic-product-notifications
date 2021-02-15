@@ -1,4 +1,6 @@
-class FrameFormulationsController < ApplicationController
+class FrameFormulationsController < PubliclyAccessibleController
+  skip_before_action :require_secondary_authentication
+
   def index
   end
 
