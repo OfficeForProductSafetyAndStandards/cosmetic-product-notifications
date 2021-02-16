@@ -35,11 +35,27 @@ class User < ApplicationRecord
     !mobile_number_verified?
   end
 
+  def mobile_number_pending_verification?
+    mobile_number.present? && !mobile_number_verified?
+  end
+
   def has_completed_registration?
-    encrypted_password.present? && name.present? && mobile_number.present? && mobile_number_verified
+    account_security_completed? && secondary_authentication_set?
   end
 
 private
+
+  def sms_authentication_set?
+    mobile_number.present? && mobile_number_verified?
+  end
+
+  def app_authentication_set?
+    encrypted_totp_secret_key.present? && last_totp_at.present?
+  end
+
+  def secondary_authentication_set?
+    !mobile_number_pending_verification? && (sms_authentication_set? || app_authentication_set?)
+  end
 
   def secondary_authentication_methods_presence
     if !secondary_authentication_methods.is_a?(Array) || secondary_authentication_methods.empty?

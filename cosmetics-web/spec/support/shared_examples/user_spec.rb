@@ -153,49 +153,47 @@ RSpec.shared_examples "common user tests" do
 
   describe "#has_completed_registration?" do
     before do
-      user.assign_attributes(encrypted_password: "encrypted_password_hash",
-                             name: "John Doe",
-                             mobile_number: "07123456789",
-                             mobile_number_verified: true)
+      user.assign_attributes(account_security_completed: false,
+                             mobile_number: nil,
+                             mobile_number_verified: false,
+                             encrypted_totp_secret_key: nil,
+                             last_totp_at: nil)
     end
 
-    it "user has completed registration registration when password, name, mibile number and mobile number verification are set" do
-      expect(user.has_completed_registration?).to eq true
-    end
-
-    it "user has not completed registration when missing encrypted password" do
-      user.encrypted_password = nil
+    it "registration is not completed when account security has not been completed" do
+      user.account_security_completed = false
       expect(user.has_completed_registration?).to eq false
     end
 
-    it "user has not completed registration when blank encrypted password" do
-      user.encrypted_password = ""
-      expect(user.has_completed_registration?).to eq false
-    end
+    context "when account security has been completed" do
+      before { user.account_security_completed = true }
 
-    it "user has not completed registration when missing name" do
-      user.name = nil
-      expect(user.has_completed_registration?).to eq false
-    end
+      it "user has not completed registration when missing mobile number" do
+        user.mobile_number = nil
+        expect(user.has_completed_registration?).to eq false
+      end
 
-    it "user has not completed registration when blank name" do
-      user.name = ""
-      expect(user.has_completed_registration?).to eq false
-    end
+      it "user has not completed registration when blank mobile number" do
+        user.mobile_number = ""
+        expect(user.has_completed_registration?).to eq false
+      end
 
-    it "user has not completed registration when missing mobile number" do
-      user.mobile_number = nil
-      expect(user.has_completed_registration?).to eq false
-    end
+      it "user has not completed registration when mobile number is not verified" do
+        user.mobile_number_verified = false
+        expect(user.has_completed_registration?).to eq false
+      end
 
-    it "user has not completed registration when blank mobile number" do
-      user.mobile_number = ""
-      expect(user.has_completed_registration?).to eq false
-    end
+      it "user has completed registration when having a mobile number that is verified" do
+        user.mobile_number = "07123456789"
+        user.mobile_number_verified = false
+        expect(user.has_completed_registration?).to eq true
+      end
 
-    it "user has not completed registration when mobile number is not verified" do
-      user.mobile_number_verified = false
-      expect(user.has_completed_registration?).to eq false
+      it "user has completed registration when having set the app secondary authentication" do
+        user.encrypted_totp_secret_key = "foobarencrypted"
+        user.last_totp_at = 1_123_456_789
+        expect(user.has_completed_registration?).to eq true
+      end
     end
   end
 end
