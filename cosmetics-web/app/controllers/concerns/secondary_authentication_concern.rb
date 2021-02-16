@@ -52,10 +52,10 @@ module SecondaryAuthenticationConcern
   end
 
   def set_secondary_authentication_cookie(timestamp)
-    cookies.signed["two-factor-#{session[:secondary_authentication_user_id]}"] = {
-      value: timestamp,
-      expiry: 0,
-    }
+    user_id = (session[:secondary_authentication_user_id] || user_id_for_secondary_authentication)
+    return if user_id.blank?
+
+    cookies.signed["two-factor-#{user_id}"] = { value: timestamp, expiry: 0 }
   end
 
   def get_secondary_authentication_time
