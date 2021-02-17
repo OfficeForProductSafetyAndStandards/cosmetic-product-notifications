@@ -7,32 +7,32 @@
       "ingredients": [
         {
           "ingredient": "Soaps",
-          "ingredientExample": "Mixed sodium and potassium stearates, laurates and cocoates",
+          "ingredientExamples": "Mixed sodium and potassium stearates, laurates and cocoates",
           "volume": "60"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol",
+          "ingredientExamples": "Glycerin, propylene glycol",
           "volume": "30"
         },
         {
           "ingredient": "Thickeners, emulsifying agents",
-          "ingredientExample": "Fatty acid glycol esters, long chain alcohols",
+          "ingredientExamples": "Fatty acid glycol esters, long chain alcohols",
           "volume": "15"
         },
         {
           "ingredient": "Emollients",
-          "ingredientExample": "Oils (for example, vegetable and/or mineral), fatty acid esters",
+          "ingredientExamples": "Oils (for example, vegetable and/or mineral), fatty acid esters",
           "volume": "15"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "10"
         },
         {
           "ingredient": "Anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Sodium laureth sulfate, betaine derivatives",
+          "ingredientExamples": "Sodium laureth sulfate, betaine derivatives",
           "volume": "5"
         },
         {
@@ -41,17 +41,17 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Vitamins",
+          "ingredientExamples": "Vitamins",
           "volume": "3"
         },
         {
           "ingredient": "Opacifying agents",
-          "ingredientExample": "Titanium dioxide",
+          "ingredientExamples": "Titanium dioxide",
           "volume": "1"
         },
         {
           "ingredient": "Anticorrosives",
-          "ingredientExample": "Sodium metasilicate",
+          "ingredientExamples": "Sodium metasilicate",
           "volume": "0.5"
         },
         {
@@ -82,17 +82,17 @@
         },
         {
           "ingredient": "Soaps",
-          "ingredientExample": "TEA-stearate and TEA-laurate",
+          "ingredientExamples": "TEA-stearate and TEA-laurate",
           "volume": "10"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Vitamins, plant extracts",
+          "ingredientExamples": "Vitamins, plant extracts",
           "volume": "3"
         },
         {
@@ -115,32 +115,32 @@
       "ingredients": [
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin",
+          "ingredientExamples": "Glycerin",
           "volume": "15"
         },
         {
           "ingredient": "Film forming polymers",
-          "ingredientExample": "Glyceryl polymethacrylate",
+          "ingredientExamples": "Glyceryl polymethacrylate",
           "volume": "10"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Hydroxyethylcellulose",
+          "ingredientExamples": "Hydroxyethylcellulose",
           "volume": "3"
         },
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Sodium laureth sulfate",
+          "ingredientExamples": "Sodium laureth sulfate",
           "volume": "3"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Vitamins, plant extracts",
+          "ingredientExamples": "Vitamins, plant extracts",
           "volume": "3"
         },
         {
@@ -167,22 +167,22 @@
       "ingredients": [
         {
           "ingredient": "Soaps",
-          "ingredientExample": "Potassium salts of fatty acids, triethanolamine salts of fatty acids",
+          "ingredientExamples": "Potassium salts of fatty acids, triethanolamine salts of fatty acids",
           "volume": "30"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin",
+          "ingredientExamples": "Glycerin",
           "volume": "15"
         },
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "PEG-150 distearate",
+          "ingredientExamples": "PEG-150 distearate",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Vitamins, plant extracts",
+          "ingredientExamples": "Vitamins, plant extracts",
           "volume": "6"
         },
         {
@@ -191,12 +191,12 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Cellulose derivatives",
+          "ingredientExamples": "Cellulose derivatives",
           "volume": "2"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "2"
         },
         {
@@ -205,7 +205,7 @@
         },
         {
           "ingredient": "Skin conditioning agents",
-          "ingredientExample": "Polyquaternium-7",
+          "ingredientExamples": "Polyquaternium-7",
           "volume": "2"
         },
         {
@@ -228,42 +228,42 @@
       "ingredients": [
         {
           "ingredient": "Soaps",
-          "ingredientExample": "Potassium salts of fatty acids, triethanolamine salts of fatty acids",
+          "ingredientExamples": "Potassium salts of fatty acids, triethanolamine salts of fatty acids",
           "volume": "30"
         },
         {
           "ingredient": "Anionic/Amphoteric/Non-ionic surfactants",
-          "ingredientExample": "Sodium laureth sulfate, betaine derivatives, polysorbate",
+          "ingredientExamples": "Sodium laureth sulfate, betaine derivatives, polysorbate",
           "volume": "15"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin",
+          "ingredientExamples": "Glycerin",
           "volume": "15"
         },
         {
           "ingredient": "Propellants",
-          "ingredientExample": "Hydrocarbons",
+          "ingredientExamples": "Hydrocarbons",
           "volume": "15"
         },
         {
           "ingredient": "Emollients",
-          "ingredientExample": "Waxes",
+          "ingredientExamples": "Waxes",
           "volume": "10"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "PEG derivatives",
+          "ingredientExamples": "PEG derivatives",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, vitamins",
+          "ingredientExamples": "Plant extracts, vitamins",
           "volume": "3"
         },
         {
@@ -276,7 +276,7 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Cellulose derivatives",
+          "ingredientExamples": "Cellulose derivatives",
           "volume": "1"
         },
         {
@@ -295,22 +295,22 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin",
+          "ingredientExamples": "Glycerin",
           "volume": "15"
         },
         {
           "ingredient": "Non-ionic surfactants",
-          "ingredientExample": "Polysorbate",
+          "ingredientExamples": "Polysorbate",
           "volume": "5"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Vitamins, plant extracts, chelating agents",
+          "ingredientExamples": "Vitamins, plant extracts, chelating agents",
           "volume": "3"
         },
         {
@@ -319,7 +319,7 @@
         },
         {
           "ingredient": "Opacifying agents",
-          "ingredientExample": "Titanium dioxide",
+          "ingredientExamples": "Titanium dioxide",
           "volume": "1"
         },
         {
@@ -346,22 +346,22 @@
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "20"
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExample": "Propylene glycol, glycerin",
+          "ingredientExamples": "Propylene glycol, glycerin",
           "volume": "20"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "UV filters, vitamins, bisabolol, plant extracts",
+          "ingredientExamples": "UV filters, vitamins, bisabolol, plant extracts",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Glyceryl stearate",
+          "ingredientExamples": "Glyceryl stearate",
           "volume": "5"
         },
         {
@@ -370,7 +370,7 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Carbomer",
+          "ingredientExamples": "Carbomer",
           "volume": "1"
         },
         {
@@ -401,7 +401,7 @@
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExample": "Glycerin, propylene glycol, isopropyl myristate",
+          "ingredientExamples": "Glycerin, propylene glycol, isopropyl myristate",
           "volume": "15"
         },
         {
@@ -410,7 +410,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, astringents such as hamamelis",
+          "ingredientExamples": "Plant extracts, astringents such as hamamelis",
           "volume": "10"
         },
         {

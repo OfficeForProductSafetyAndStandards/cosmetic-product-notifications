@@ -7,42 +7,42 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "sodium/ammonium/TEA lauryl sulfate, sodium/ammonium/TEA laureth sulfate",
+          "ingredientExamples": "sodium/ammonium/TEA lauryl sulfate, sodium/ammonium/TEA laureth sulfate",
           "volume": 30
         },
         {
           "ingredient": "Amphoteric surfactants",
-          "ingredientExample": "betaine derivatives",
+          "ingredientExamples": "betaine derivatives",
           "volume": 20
         },
         {
           "ingredien": "Non-ionic surfactant",
-          "ingredientExample": "",
+          "ingredientExamples": "",
           "volume": 15
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "propylene glycol, PEG",
+          "ingredientExamples": "propylene glycol, PEG",
           "volume": 10
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExample": "(e.g. stearamidopropyl dimethylamine, distearyldimonium chloride)",
+          "ingredientExamples": "(e.g. stearamidopropyl dimethylamine, distearyldimonium chloride)",
           "volume": 5
         },
         {
           "ingredient": "Hair conditioning agents",
-          "ingredientExample": "(e.g. silicones including volatile silicones (e.g. cyclopentasiloxane, dimethicone, amodimethicone), silanes (e.g. alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters)",
+          "ingredientExamples": "(e.g. silicones including volatile silicones (e.g. cyclopentasiloxane, dimethicone, amodimethicone), silanes (e.g. alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters)",
           "volume": 15
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "(e.g. UV filters, pearlescent agents, opacifying agents)",
+          "ingredientExamples": "(e.g. UV filters, pearlescent agents, opacifying agents)",
           "volume": 10
         },
         {
           "ingredient": "Hair dyeing agents : Directs dyes",
-          "ingredientExample": "(e.g. disperse violet 1, acid violet 43, basic brown 17)",
+          "ingredientExamples": "(e.g. disperse violet 1, acid violet 43, basic brown 17)",
           "volume": 3
         },
         {
@@ -55,7 +55,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExample": "(e.g. disodium EDTA)",
+          "ingredientExamples": "(e.g. disodium EDTA)",
           "volume": 0.5
         },
         {
@@ -74,27 +74,27 @@
         },
         {
           "ingredient": "Anionic / non-ionic / amphoteric surfactants",
-          "ingredientExample": "sodium laureth sulfate)",
+          "ingredientExamples": "sodium laureth sulfate)",
           "volume": 10
         },
         {
           "ingredient": "Foam boosting agents",
-          "ingredientExample": "cocamide MIPA",
+          "ingredientExamples": "cocamide MIPA",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "plant extracts, pearlescent agents)",
+          "ingredientExamples": "plant extracts, pearlescent agents)",
           "volume": 5
         },
         {
           "ingredient": "Polymers, resins",
-          "ingredientExample": "(e.g. acrylates copolymer, carbomer)",
+          "ingredientExamples": "(e.g. acrylates copolymer, carbomer)",
           "volume": 4
         },
         {
           "ingredient": "Hair dyeing agents: : Directs dyes",
-          "ingredientExample": "disperse violet 1, acid violet 43, basic brown 17",
+          "ingredientExamples": "disperse violet 1, acid violet 43, basic brown 17",
           "volume": 3
         },
         {
@@ -103,12 +103,12 @@
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExample": "cetrimonium chloride",
+          "ingredientExamples": "cetrimonium chloride",
           "volume": 0.2
         },
         {
           "ingredient": "pH adjuster",
-          "ingredientExample": "citric acid, triethanolamine",
+          "ingredientExamples": "citric acid, triethanolamine",
           "volume": "pH Range3-9"
         },
         {
@@ -127,12 +127,12 @@
         },
         {
           "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats",
-          "ingredientExample": "(e.g. long chain alcohols)",
+          "ingredientExamples": "(e.g. long chain alcohols)",
           "volume": 20
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": " (e.g. laureth)",
+          "ingredientExamples": " (e.g. laureth)",
           "volume": 11
         },
         {
@@ -145,7 +145,7 @@
         },
         {
           "ingredient": "Hair dyeing agents : Direct dyes",
-          "ingredientExample": "HC red no.3, 4-amino-3-nitrophenol, 3-nitro-p-hydroxyethylaminophenol",
+          "ingredientExamples": "HC red no.3, 4-amino-3-nitrophenol, 3-nitro-p-hydroxyethylaminophenol",
           "volume": 10
         },
         {
@@ -158,17 +158,17 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "plant extracts, protein derivatives)",
+          "ingredientExamples": "plant extracts, protein derivatives)",
           "volume": 5
         },
         {
           "ingredient": "Hair conditioning agents",
-          "ingredientExample": "cationic polymers",
+          "ingredientExamples": "cationic polymers",
           "volume": 5
         },
         {
           "ingredient": "Resins",
-          "ingredientExample": "acrylates copolymer",
+          "ingredientExamples": "acrylates copolymer",
           "volume": 3
         },
         {
@@ -199,37 +199,37 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": " (e.g. ammonium laureth sulfate)",
+          "ingredientExamples": " (e.g. ammonium laureth sulfate)",
           "volume": 20
         },
         {
           "ingredient": "Non-ionic surfactants",
-          "ingredientExample": " (e.g. laureth-12, deceth-3)",
+          "ingredientExamples": " (e.g. laureth-12, deceth-3)",
           "volume": 20
         },
         {
           "ingredient": "Amphoteric surfactants",
-          "ingredientExample": " (e.g. betaine derivatives",
+          "ingredientExamples": " (e.g. betaine derivatives",
           "volume": 20
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": " (e.g. ethoxylated long chain alcohols)",
+          "ingredientExamples": " (e.g. ethoxylated long chain alcohols)",
           "volume": 30
         },
         {
           "ingredient": "Soaps",
-          "ingredientExample": " (e.g. ammonium hydroxide/ethanolamine oleates)",
+          "ingredientExamples": " (e.g. ammonium hydroxide/ethanolamine oleates)",
           "volume": 30
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": " (e.g. carbomer, long chain alcohols",
+          "ingredientExamples": " (e.g. carbomer, long chain alcohols",
           "volume": 30
         },
         {
           "ingredient": "Solvents",
-          "ingredientExample": " (e.g. propylene glycol, glycerin)",
+          "ingredientExamples": " (e.g. propylene glycol, glycerin)",
           "volume": 20
         },
         {
@@ -238,41 +238,41 @@
         },
         {
           "ingredient": "Primary intermediates",
-          "ingredientExample": "(e.g. p-phenylenediamines such as  p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate) ",
+          "ingredientExamples": "(e.g. p-phenylenediamines such as  p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate) ",
           "volume": 6
         },
         {
           "ingredient": "Couplers",
-          "ingredientExample": "(e.g. m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol) ",
+          "ingredientExamples": "(e.g. m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol) ",
           "volume": 6
         },
         {
           "ingredient": "Directs",
-          "ingredientExample": "(e.g. HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87) ",
+          "ingredientExamples": "(e.g. HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87) ",
           "volume": 6
         },
         {
           "ingredient": "Alkaline agents",
-          "ingredientExample": "(e.g. ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine) ",
+          "ingredientExamples": "(e.g. ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine) ",
           "volume": 10
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExample": "(e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
+          "ingredientExamples": "(e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
           "volume": 5
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": "polyquaternium-6) 5"
+          "ingredientExamples": "polyquaternium-6) 5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "hair conditioning agents, pearlescent agents",
+          "ingredientExamples": "hair conditioning agents, pearlescent agents",
           "volume": 5
         },
         {
           "ingredient": "Antioxidants",
-          "ingredientExample": "reducing agents",
+          "ingredientExamples": "reducing agents",
           "volume": 3
         },
         {
@@ -281,7 +281,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExample": "EDTA) ",
+          "ingredientExamples": "EDTA) ",
           "volume": 1
         },
         {
@@ -302,42 +302,42 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExample": "vegetable and/or mineral)",
+          "ingredientExamples": "vegetable and/or mineral)",
           "volume": 80
         },
         {
           "ingredient": " Anionic surfactants",
-          "ingredientExample": "ammonium laureth sulfate) ",
+          "ingredientExamples": "ammonium laureth sulfate) ",
           "volume": 20
         },
         {
           "ingredient": " Non-ionic surfactants",
-          "ingredientExample": "laureth-12, deceth-3) ",
+          "ingredientExamples": "laureth-12, deceth-3) ",
           "volume": 20
         },
         {
           "ingredient": " Amphoteric surfactants",
-          "ingredientExample": " betaine derivatives) ",
+          "ingredientExamples": " betaine derivatives) ",
           "volume": 20
         },
         {
           "ingredient": " Emulsifying agents",
-          "ingredientExample": " ethoxylated long chain alcohols)",
+          "ingredientExamples": " ethoxylated long chain alcohols)",
           "volume": 30
         },
         {
           "ingredient": " Soaps ",
-          "ingredientExample": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine oleates)",
+          "ingredientExamples": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine oleates)",
           "volume": 30
         },
         {
           "ingredient": " Solvents",
-          "ingredientExample": " propylene glycol, glycerin) ",
+          "ingredientExamples": " propylene glycol, glycerin) ",
           "volume": 20
         },
         {
           "ingredient": " Thickeners",
-          "ingredientExample": " carbomer, long chain alcohols)",
+          "ingredientExamples": " carbomer, long chain alcohols)",
           "volume": 20
         },
         {
@@ -351,12 +351,12 @@
         },
         {
           "ingredient": "Hair dyeing agents:Couplers",
-          "ingredientExample": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol)",
+          "ingredientExamples": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol)",
           "volume": 6
         },
         {
           "ingredient": "Hair dyeing agents:Directs",
-          "ingredientExample": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87)",
+          "ingredientExamples": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87)",
           "volume": 6
         },
         {
@@ -365,22 +365,22 @@
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExample": " (e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
+          "ingredientExamples": " (e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
           "volume": 5
         },
         {
           "ingredient": "Cationic polymers ",
-          "ingredientExample": "(e.g. polyquaternium-6)",
+          "ingredientExamples": "(e.g. polyquaternium-6)",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. hair conditioning agents, pearlescent agents) ",
+          "ingredientExamples": " (e.g. hair conditioning agents, pearlescent agents) ",
           "volume": 5
         },
         {
           "ingredient": "Antioxidants",
-          "ingredientExample": " (e.g. ascorbic acid) ",
+          "ingredientExamples": " (e.g. ascorbic acid) ",
           "volume": 3
         },
         {
@@ -393,7 +393,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExample": " (e.g. EDTA) ",
+          "ingredientExamples": " (e.g. EDTA) ",
           "volume": 1
         },
         {
@@ -415,7 +415,7 @@
       "ingredients": [
         {
           "ingredient": "Alkaline agents",
-          "ingredientExample": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine",
+          "ingredientExamples": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine",
           "volume": 22
         },
         {
@@ -424,17 +424,17 @@
         },
         {
           "ingredient": "Hair dyeing agent:Primary intermediates",
-          "ingredientExample": " (e.g. p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate) ",
+          "ingredientExamples": " (e.g. p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate) ",
           "volume": 10
         },
         {
           "ingredient": "Hair dyeing agent:Couplers ",
-          "ingredientExample": "(e.g. m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol)",
+          "ingredientExamples": "(e.g. m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol)",
           "volume": 10
         },
         {
           "ingredient": "Directs ",
-          "ingredientExample": "(e.g. HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87)",
+          "ingredientExamples": "(e.g. HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87)",
           "volume": 10
         },
         {
@@ -443,27 +443,27 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": " cellulose derivatives)",
+          "ingredientExamples": " cellulose derivatives)",
           "volume": 10
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExample": "dicetyldimonium chloride, PEG-2 oleamine",
+          "ingredientExamples": "dicetyldimonium chloride, PEG-2 oleamine",
           "volume": 5
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": "polyquaternium-6",
+          "ingredientExamples": "polyquaternium-6",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "hair conditioning agents, pearlescent agents) ",
+          "ingredientExamples": "hair conditioning agents, pearlescent agents) ",
           "volume": 5
         },
         {
           "ingredient": "Antioxidants, reducing agents",
-          "ingredientExample": "ascorbic acid, sodium metabisulfite",
+          "ingredientExamples": "ascorbic acid, sodium metabisulfite",
           "volume": 3
         },
         {
@@ -472,7 +472,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExample": "EDTA)",
+          "ingredientExamples": "EDTA)",
           "volume": 1
         },
         {
@@ -494,27 +494,27 @@
       "ingredients": [
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": " (e.g. ethoxylated long chain alcohols) ",
+          "ingredientExamples": " (e.g. ethoxylated long chain alcohols) ",
           "volume": 20
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExample": " (e.g. octyldodecanol) ",
+          "ingredientExamples": " (e.g. octyldodecanol) ",
           "volume": 20
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": " (e.g. bentonite, fatty esters) 2",
+          "ingredientExamples": " (e.g. bentonite, fatty esters) 2",
           "volume": 0
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExample": "dicetyldimonium chloride, PEG-2 oleamine) ",
+          "ingredientExamples": "dicetyldimonium chloride, PEG-2 oleamine) ",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. hair conditioning agents, antioxidants) ",
+          "ingredientExamples": " (e.g. hair conditioning agents, antioxidants) ",
           "volume": 5
         },
         {
@@ -523,7 +523,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExample": "EDTA",
+          "ingredientExamples": "EDTA",
           "volume": 1
         },
         {
@@ -545,7 +545,7 @@
       "ingredients": [
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": " (e.g. ethoxylated long chain alcohols) ",
+          "ingredientExamples": " (e.g. ethoxylated long chain alcohols) ",
           "volume": 15
         },
         {
@@ -554,12 +554,12 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "glycerin",
+          "ingredientExamples": "glycerin",
           "volume": 10
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. hair conditioning agents) ",
+          "ingredientExamples": " (e.g. hair conditioning agents) ",
           "volume": 5
         },
         {
@@ -572,11 +572,11 @@
         },
         {
           "ingredient": "Hydrogen peroxide stabilising agents",
-          "ingredientExample": " (e.g. sodium stannate)"
+          "ingredientExamples": " (e.g. sodium stannate)"
         },
         {
           "ingredient": "pH adjuster",
-          "ingredientExample": "phosphoric acid) qs pH 2 - 3"
+          "ingredientExamples": "phosphoric acid) qs pH 2 - 3"
         },
         {
           "ingredient": "Aqua",
@@ -595,17 +595,17 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExample": " (for example, vegetable and/or mineral)",
+          "ingredientExamples": " (for example, vegetable and/or mineral)",
           "volume": 80
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": " (e.g. long chain alcohols, acrylates copolymer) ",
+          "ingredientExamples": " (e.g. long chain alcohols, acrylates copolymer) ",
           "volume": 15
         },
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": " (e.g. ethoxylated long chain alcohols) ",
+          "ingredientExamples": " (e.g. ethoxylated long chain alcohols) ",
           "volume": 15
         },
         {
@@ -614,12 +614,12 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": " (e.g. glycerin)",
+          "ingredientExamples": " (e.g. glycerin)",
           "volume": 10
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. hair conditioning agents)",
+          "ingredientExamples": " (e.g. hair conditioning agents)",
           "volume": 5
         },
         {
@@ -632,12 +632,12 @@
         },
         {
           "ingredient": "Hydrogen peroxide stabilising agents ",
-          "ingredientExample": "(e.g. sodium stannate)",
+          "ingredientExamples": "(e.g. sodium stannate)",
           "volume": 0.5
         },
         {
           "ingredient": "pH adjuster ",
-          "ingredientExample": "(e.g. phosphoric acid) qs pH 2 - 3"
+          "ingredientExamples": "(e.g. phosphoric acid) qs pH 2 - 3"
         },
         {
           "ingredient": "Aqua ",
@@ -673,7 +673,7 @@
       "ingredients": [
         {
           "ingredient": "Reducing agent",
-          "ingredientExample": " (e.g. sodium thioglycolate )",
+          "ingredientExamples": " (e.g. sodium thioglycolate )",
           "volume": 20
         },
         {
@@ -692,36 +692,36 @@
       "ingredients": [
         {
           "ingredient": "Ammonium / sodium / potassium persulfate",
-          "ingredientExample": " 70"
+          "ingredientExamples": " 70"
         },
         {
           "ingredient": "Oils",
-          "ingredientExample": " (for example, vegetable and/or mineral)",
+          "ingredientExamples": " (for example, vegetable and/or mineral)",
           "volume": 50
         },
         {
           "ingredient": "Bulking agents",
-          "ingredientExample": " (e.g. kaolin, magnesium stearate)",
+          "ingredientExamples": " (e.g. kaolin, magnesium stearate)",
           "volume": 50
         },
         {
           "ingredient": "Alkaline agents including ammonium hydroxide liberators",
-          "ingredientExample": " (e.g. sodium/magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride)",
+          "ingredientExamples": " (e.g. sodium/magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride)",
           "volume": 45
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": " (e.g. sodium lauryl sulfate)",
+          "ingredientExamples": " (e.g. sodium lauryl sulfate)",
           "volume": 15
         },
         {
           "ingredient": "[Thickeners",
-          "ingredientExample": " (e.g. guar gum)",
+          "ingredientExamples": " (e.g. guar gum)",
           "volume": 10
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. colorants, chelating agents)",
+          "ingredientExamples": " (e.g. colorants, chelating agents)",
           "volume": 5
         }
       ],
@@ -736,7 +736,7 @@
       "ingredients": [
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": " (e.g. ethoxylated long chain alcohols) ",
+          "ingredientExamples": " (e.g. ethoxylated long chain alcohols) ",
           "volume": 15
         },
         {
@@ -745,12 +745,12 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": " (e.g. glycerin) ",
+          "ingredientExamples": " (e.g. glycerin) ",
           "volume": 10
         },
         {
           "ingredient": "Oils",
-          "ingredientExample": " (e.g.vegetable and/or mineral) ",
+          "ingredientExamples": " (e.g.vegetable and/or mineral) ",
           "volume": 5
         },
         {
@@ -763,12 +763,12 @@
         },
         {
           "ingredient": "Hydrogen peroxide stabilising agents",
-          "ingredientExample": " (e.g. sodium stannate) ",
+          "ingredientExamples": " (e.g. sodium stannate) ",
           "volume": 0.5
         },
         {
           "ingredient": "pH adjuster",
-          "ingredientExample": " (e.g. phosphoric acid) qs pH 2 - 3"
+          "ingredientExamples": " (e.g. phosphoric acid) qs pH 2 - 3"
         },
         {
           "ingredient": "Aqua ",
@@ -789,27 +789,27 @@
         },
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": " (e.g. sodium laureth sulfate, ethoxylated long chain alcohols) ",
+          "ingredientExamples": " (e.g. sodium laureth sulfate, ethoxylated long chain alcohols) ",
           "volume": 2
         },
         {
           "ingredient": "Solvents",
-          "ingredientExample": " (e.g. propylene glycol, PPG-2 butyl ether) ",
+          "ingredientExamples": " (e.g. propylene glycol, PPG-2 butyl ether) ",
           "volume": 10
         },
         {
           "ingredient": "Humectants ",
-          "ingredientExample": "(e.g. glycerin) ",
+          "ingredientExamples": "(e.g. glycerin) ",
           "volume": 10
         },
         {
           "ingredient": "Reducing agents",
-          "ingredientExample": " (e.g. sodium sulfite)",
+          "ingredientExamples": " (e.g. sodium sulfite)",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. bisabolol) ",
+          "ingredientExamples": " (e.g. bisabolol) ",
           "volume": 5
         },
         {
@@ -838,32 +838,32 @@
         },
         {
           "ingredient": "Bulking agents ",
-          "ingredientExample": "(e.g. kaolin, magnesium stearate) ",
+          "ingredientExamples": "(e.g. kaolin, magnesium stearate) ",
           "volume": 50
         },
         {
           "ingredient": "Alkaline agents including ammonium hydroxide liberators",
-          "ingredientExample": " (e.g. sodium carbonate, sodium/magnesium silicate, sodium metasilicate, ammonium chloride) ",
+          "ingredientExamples": " (e.g. sodium carbonate, sodium/magnesium silicate, sodium metasilicate, ammonium chloride) ",
           "volume": 45
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": " (e.g. sodium lauryl sulfate) ",
+          "ingredientExamples": " (e.g. sodium lauryl sulfate) ",
           "volume": 15
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": " (e.g. guar gum) ",
+          "ingredientExamples": " (e.g. guar gum) ",
           "volume": 15
         },
         {
           "ingredient": "Oils ",
-          "ingredientExample": "(for example, vegetable and/or mineral) ",
+          "ingredientExamples": "(for example, vegetable and/or mineral) ",
           "volume": 15
         },
         {
           "ingredient": "Additional ingredients ",
-          "ingredientExample": "(e.g. colorants, chelating agents) ",
+          "ingredientExamples": "(e.g. colorants, chelating agents) ",
           "volume": 5
         }
       ],
@@ -887,32 +887,32 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExample": " (for example, vegetable and/or mineral) ",
+          "ingredientExamples": " (for example, vegetable and/or mineral) ",
           "volume": 60
         },
         {
           "ingredient": "Bulking agents",
-          "ingredientExample": " (e.g. kaolin, magnesium stearate) ",
+          "ingredientExamples": " (e.g. kaolin, magnesium stearate) ",
           "volume": 50
         },
         {
           "ingredient": "Alkaline agents including ammonium hydroxide liberators",
-          "ingredientExample": " (e.g. sodium/magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride) ",
+          "ingredientExamples": " (e.g. sodium/magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride) ",
           "volume": 45
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": " (e.g. sodium lauryl sulfate) ",
+          "ingredientExamples": " (e.g. sodium lauryl sulfate) ",
           "volume": 15
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": " (e.g. guar gum)",
+          "ingredientExamples": " (e.g. guar gum)",
           "volume": 10
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. colorants, chelating agents) ",
+          "ingredientExamples": " (e.g. colorants, chelating agents) ",
           "volume": 5
         }
       ],
@@ -1031,37 +1031,37 @@
       "ingredient": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "ammonium laureth sulfate) ",
+          "ingredientExamples": "ammonium laureth sulfate) ",
           "volume": 20
         },
         {
           "ingredient": "Non-ionic surfactants",
-          "ingredientExample": " (e.g. laureth-12, deceth-3) ",
+          "ingredientExamples": " (e.g. laureth-12, deceth-3) ",
           "volume": 20
         },
         {
           "ingredient": "Amphoteric surfactants ",
-          "ingredientExample": "(e.g. betaine derivatives) ",
+          "ingredientExamples": "(e.g. betaine derivatives) ",
           "volume": 20
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": " (e.g. ethoxylated long chain alcohols) ",
+          "ingredientExamples": " (e.g. ethoxylated long chain alcohols) ",
           "volume": 30
         },
         {
           "ingredient": "Soaps",
-          "ingredientExample": " (e.g. ammonium hydroxide/ethanolamine oleates) ",
+          "ingredientExamples": " (e.g. ammonium hydroxide/ethanolamine oleates) ",
           "volume": 30
         },
         {
           "ingredient": "Solvents",
-          "ingredientExample": " (e.g. propylene glycol, glycerin) ",
+          "ingredientExamples": " (e.g. propylene glycol, glycerin) ",
           "volume": 20
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": " (e.g. carbomer, long chain alcohols) ",
+          "ingredientExamples": " (e.g. carbomer, long chain alcohols) ",
           "volume": 20
         },
         {
@@ -1070,22 +1070,22 @@
         },
         {
           "ingredient": "Alkaline agents",
-          "ingredientExample": " (e.g. ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine) ",
+          "ingredientExamples": " (e.g. ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine) ",
           "volume": 10
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExample": " (e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
+          "ingredientExamples": " (e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
           "volume": 5
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": " (e.g. polyquaternium-6) ",
+          "ingredientExamples": " (e.g. polyquaternium-6) ",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": " (e.g. hair conditioning agents, pearlescent agents)",
+          "ingredientExamples": " (e.g. hair conditioning agents, pearlescent agents)",
           "volume": 5
         },
         {
@@ -1094,7 +1094,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExample": " (e.g. EDTA) ",
+          "ingredientExamples": " (e.g. EDTA) ",
           "volume": 1
         },
         {
@@ -1112,22 +1112,22 @@
       "ingredients": [
         {
           "ingredient": "Waxes",
-          "ingredientExample": "(e.g. petrolatum, cetearyl alcohol) ",
+          "ingredientExamples": "(e.g. petrolatum, cetearyl alcohol) ",
           "volume": 35
         },
         {
           "ingredient": "Oils",
-          "ingredientExample": " (for example, vegetable and/or mineral) ",
+          "ingredientExamples": " (for example, vegetable and/or mineral) ",
           "volume": 20
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": " (e.g. sorbitol, glycerin) ",
+          "ingredientExamples": " (e.g. sorbitol, glycerin) ",
           "volume": 10
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": " (e.g. ceteth-12, sorbitan sesquioleate) ",
+          "ingredientExamples": " (e.g. ceteth-12, sorbitan sesquioleate) ",
           "volume": 10
         },
         {

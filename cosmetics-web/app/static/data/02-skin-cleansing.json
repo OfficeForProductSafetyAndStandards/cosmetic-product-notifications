@@ -7,7 +7,7 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "Sodium laureth sulfate",
+          "ingredientExamples": "Sodium laureth sulfate",
           "volume": "40"
         },
         {
@@ -16,32 +16,32 @@
         },
         {
           "ingredient": "Amphoteric / non-ionic surfactants",
-          "ingredientExample": "Ethoxylated sorbitan esters",
+          "ingredientExamples": "Ethoxylated sorbitan esters",
           "volume": "20"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol, sorbitol",
+          "ingredientExamples": "Glycerin, propylene glycol, sorbitol",
           "volume": "20"
         },
         {
           "ingredient": "Abrasives",
-          "ingredientExample": "Polyethylene, walnuts",
+          "ingredientExamples": "Polyethylene, walnuts",
           "volume": "10"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "5"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Hydroxyethylcellulose",
+          "ingredientExamples": "Hydroxyethylcellulose",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, vitamins",
+          "ingredientExamples": "Plant extracts, vitamins",
           "volume": "5"
         },
         {
@@ -72,37 +72,37 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol",
+          "ingredientExamples": "Glycerin, propylene glycol",
           "volume": "50"
         },
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "Sodium laureth sulfate,disodium laureth sulfosuccinate",
+          "ingredientExamples": "Sodium laureth sulfate,disodium laureth sulfosuccinate",
           "volume": "30"
         },
         {
           "ingredient": "Non-ionic / amphoteric surfactants",
-          "ingredientExample": "Ceteth-20, ethoxylated long chain alcohols",
+          "ingredientExamples": "Ceteth-20, ethoxylated long chain alcohols",
           "volume": "20"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "20"
         },
         {
           "ingredient": "Abrasives",
-          "ingredientExample": "Polyethylene, walnuts",
+          "ingredientExamples": "Polyethylene, walnuts",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Carbomer",
+          "ingredientExamples": "Carbomer",
           "volume": "6"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Pearlescent agents such as glycol distearate",
+          "ingredientExamples": "Pearlescent agents such as glycol distearate",
           "volume": "5"
         },
         {
@@ -133,17 +133,17 @@
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "50"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol",
+          "ingredientExamples": "Glycerin, propylene glycol",
           "volume": "20"
         },
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Glyceryl stearate, polysorbate 60",
+          "ingredientExamples": "Glyceryl stearate, polysorbate 60",
           "volume": "15"
         },
         {
@@ -152,12 +152,12 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Hydroxyethylcellulose",
+          "ingredientExamples": "Hydroxyethylcellulose",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Chelating agents, plant extracts, antioxidants",
+          "ingredientExamples": "Chelating agents, plant extracts, antioxidants",
           "volume": "5"
         },
         {
@@ -184,12 +184,12 @@
       "ingredients": [
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "50"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin",
+          "ingredientExamples": "Glycerin",
           "volume": "20"
         },
         {
@@ -198,17 +198,17 @@
         },
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Steareth-2, steareth-4",
+          "ingredientExamples": "Steareth-2, steareth-4",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Antioxidants, plant extracts, aqua",
+          "ingredientExamples": "Antioxidants, plant extracts, aqua",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Dextrin palmitate",
+          "ingredientExamples": "Dextrin palmitate",
           "volume": "5"
         },
         {
@@ -235,7 +235,7 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "Sodium lauroyl sarcosinate, disodium laureth sulfosuccinate",
+          "ingredientExamples": "Sodium lauroyl sarcosinate, disodium laureth sulfosuccinate",
           "volume": "20"
         },
         {
@@ -244,32 +244,32 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol",
+          "ingredientExamples": "Glycerin, propylene glycol",
           "volume": "20"
         },
         {
           "ingredient": "Non-ionic / amphoteric surfactants",
-          "ingredientExample": "Betaine derivatives, glucose derivatives",
+          "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "15"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "10"
         },
         {
           "ingredient": "Foam boosting agents",
-          "ingredientExample": "Cocamide MEA",
+          "ingredientExamples": "Cocamide MEA",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Pearlescent agents, plant extracts",
+          "ingredientExamples": "Pearlescent agents, plant extracts",
           "volume": "5"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Hydroxypropyl methylcellulose",
+          "ingredientExamples": "Hydroxypropyl methylcellulose",
           "volume": "5"
         },
         {
@@ -300,12 +300,12 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol, PEG",
+          "ingredientExamples": "Glycerin, propylene glycol, PEG",
           "volume": "25"
         },
         {
           "ingredient": "Anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Sodium cocoyl isethionate, sodium laureth sulfate",
+          "ingredientExamples": "Sodium cocoyl isethionate, sodium laureth sulfate",
           "volume": "25"
         },
         {
@@ -314,32 +314,32 @@
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "20"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Carbomer, xanthan gum",
+          "ingredientExamples": "Carbomer, xanthan gum",
           "volume": "12"
         },
         {
           "ingredient": "Bulking agents",
-          "ingredientExample": "Talc, silica, zinc oxide, nylon powder",
+          "ingredientExamples": "Talc, silica, zinc oxide, nylon powder",
           "volume": "10"
         },
         {
           "ingredient": "Abrasives",
-          "ingredientExample": "Polyethylene, walnuts",
+          "ingredientExamples": "Polyethylene, walnuts",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Vitamins, antioxidants, plant extracts",
+          "ingredientExamples": "Vitamins, antioxidants, plant extracts",
           "volume": "10"
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": "Polyquaternium-7, polyquaternium-24",
+          "ingredientExamples": "Polyquaternium-7, polyquaternium-24",
           "volume": "5"
         },
         {
@@ -366,7 +366,7 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "Sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
+          "ingredientExamples": "Sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
           "volume": "30"
         },
         {
@@ -375,32 +375,32 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, hexylene glycol",
+          "ingredientExamples": "Glycerin, hexylene glycol",
           "volume": "30"
         },
         {
           "ingredient": "Abrasives",
-          "ingredientExample": "Polyethylene, walnuts",
+          "ingredientExamples": "Polyethylene, walnuts",
           "volume": "20"
         },
         {
           "ingredient": "Non-ionic / amphoteric surfactants",
-          "ingredientExample": "Betaine derivatives, glucose derivatives",
+          "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "20"
         },
         {
           "ingredient": "Foam boosting agents",
-          "ingredientExample": "Ethoxylated long-chain alcohols, alkyl polyglucose",
+          "ingredientExamples": "Ethoxylated long-chain alcohols, alkyl polyglucose",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "PEG-6 laurate, glyceryl cocoate",
+          "ingredientExamples": "PEG-6 laurate, glyceryl cocoate",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Hydroxypropyl methylcellulose, sodium chloride",
+          "ingredientExamples": "Hydroxypropyl methylcellulose, sodium chloride",
           "volume": "10"
         },
         {
@@ -409,12 +409,12 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Pearlescent agents, plant extracts",
+          "ingredientExamples": "Pearlescent agents, plant extracts",
           "volume": "6"
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": "Polyquaternium-7",
+          "ingredientExamples": "Polyquaternium-7",
           "volume": "3"
         },
         {
@@ -437,7 +437,7 @@
       "ingredients": [
         {
           "ingredient": "Soap",
-          "ingredientExample": "Saponified vegetable oil, tallow fatty acids",
+          "ingredientExamples": "Saponified vegetable oil, tallow fatty acids",
           "volume": "99"
         },
         {
@@ -446,17 +446,17 @@
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExample": "Propylene glycol",
+          "ingredientExamples": "Propylene glycol",
           "volume": "10"
         },
         {
           "ingredient": "Amphoteric / anionic surfactants",
-          "ingredientExample": "Cocamidopropyl betaine",
+          "ingredientExamples": "Cocamidopropyl betaine",
           "volume": "5"
         },
         {
           "ingredient": "Oils",
-          "ingredientExample": "Egetable and/or mineral",
+          "ingredientExamples": "Egetable and/or mineral",
           "volume": "5"
         },
         {
@@ -473,12 +473,12 @@
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": "Polyquaternium-7",
+          "ingredientExamples": "Polyquaternium-7",
           "volume": "2"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts",
+          "ingredientExamples": "Plant extracts",
           "volume": "2"
         },
         {
@@ -498,12 +498,12 @@
       "ingredients": [
         {
           "ingredient": "Anionic / amphoteric surfactants",
-          "ingredientExample": "Laureth sulfate, betaine",
+          "ingredientExamples": "Laureth sulfate, betaine",
           "volume": "40"
         },
         {
           "ingredient": "Non-ionic surfactants",
-          "ingredientExample": "Glucose derivatives",
+          "ingredientExamples": "Glucose derivatives",
           "volume": "40"
         },
         {
@@ -512,32 +512,32 @@
         },
         {
           "ingredient": "Emollients",
-          "ingredientExample": "PEG-7, glyceryl cocoate",
+          "ingredientExamples": "PEG-7, glyceryl cocoate",
           "volume": "20"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol, sorbitol",
+          "ingredientExamples": "Glycerin, propylene glycol, sorbitol",
           "volume": "20"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Sodium chloride, hydroxycellulose derivatives",
+          "ingredientExamples": "Sodium chloride, hydroxycellulose derivatives",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, UV filters",
+          "ingredientExamples": "Plant extracts, UV filters",
           "volume": "5"
         },
         {
           "ingredient": "Pearlescent agents",
-          "ingredientExample": "Glycol distearate, glycol stearate",
+          "ingredientExamples": "Glycol distearate, glycol stearate",
           "volume": "5"
         },
         {
           "ingredient": "Skin conditioning agents",
-          "ingredientExample": "Cationic cellulose",
+          "ingredientExamples": "Cationic cellulose",
           "volume": "5"
         },
         {
@@ -568,37 +568,37 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, hexylene glycol",
+          "ingredientExamples": "Glycerin, hexylene glycol",
           "volume": "30"
         },
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "Sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
+          "ingredientExamples": "Sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
           "volume": "25"
         },
         {
           "ingredient": "Non-ionic / amphoteric surfactants",
-          "ingredientExample": "Betaine derivatives, glucose derivatives",
+          "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "20"
         },
         {
           "ingredient": "Foam boosting agents",
-          "ingredientExample": "Ethoxylated long-chain alcohols, alkyl polyglucose",
+          "ingredientExamples": "Ethoxylated long-chain alcohols, alkyl polyglucose",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "PEG-6 laurate, glyceryl cocoate",
+          "ingredientExamples": "PEG-6 laurate, glyceryl cocoate",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Hydroxypropyl methylcellulose, sodium chloride",
+          "ingredientExamples": "Hydroxypropyl methylcellulose, sodium chloride",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Pearlescent agents, plant extracts",
+          "ingredientExamples": "Pearlescent agents, plant extracts",
           "volume": "10"
         },
         {
@@ -607,7 +607,7 @@
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": "Polyquaternium-7",
+          "ingredientExamples": "Polyquaternium-7",
           "volume": "3"
         },
         {
@@ -634,37 +634,37 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, hexylene glycol",
+          "ingredientExamples": "Glycerin, hexylene glycol",
           "volume": "30"
         },
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "Sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
+          "ingredientExamples": "Sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
           "volume": "10"
         },
         {
           "ingredient": "Non-ionic / amphoteric surfactants",
-          "ingredientExample": "Betaine derivatives, glucose derivatives",
+          "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "10"
         },
         {
           "ingredient": "Foam boosting agents",
-          "ingredientExample": "Ethoxylated long-chain alcohols, alkyl polyglucose",
+          "ingredientExamples": "Ethoxylated long-chain alcohols, alkyl polyglucose",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "PEG-6 laurate, glyceryl cocoate",
+          "ingredientExamples": "PEG-6 laurate, glyceryl cocoate",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Hydroxypropyl methylcellulose, sodium chloride",
+          "ingredientExamples": "Hydroxypropyl methylcellulose, sodium chloride",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Pearlescent agents, plant extracts",
+          "ingredientExamples": "Pearlescent agents, plant extracts",
           "volume": "10"
         },
         {
@@ -673,7 +673,7 @@
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExample": "Polyquaternium-7",
+          "ingredientExamples": "Polyquaternium-7",
           "volume": "3"
         },
         {
@@ -696,7 +696,7 @@
       "ingredients": [
         {
           "ingredient": "Sodium salts",
-          "ingredientExample": "Sodium carbonate, sodium bicarbonate, sodium sesquicarbonate, sodium chloride",
+          "ingredientExamples": "Sodium carbonate, sodium bicarbonate, sodium sesquicarbonate, sodium chloride",
           "volume": "99"
         },
         {
@@ -705,17 +705,17 @@
         },
         {
           "ingredient": "Emollients",
-          "ingredientExample": "Glycerin",
+          "ingredientExamples": "Glycerin",
           "volume": "5"
         },
         {
           "ingredient": "Anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Sodium dodecylbenzenesulfonate",
+          "ingredientExamples": "Sodium dodecylbenzenesulfonate",
           "volume": "1"
         },
         {
           "ingredient": "Oils",
-          "ingredientExample": "Vegetable and/or mineral",
+          "ingredientExamples": "Vegetable and/or mineral",
           "volume": "1"
         },
         {
@@ -724,12 +724,12 @@
         },
         {
           "ingredient": "Binding agents",
-          "ingredientExample": "Silica",
+          "ingredientExamples": "Silica",
           "volume": "0.5"
         },
         {
           "ingredient": "NB: for bath cubes, desintegrating agents",
-          "ingredientExample": "Talc, starch",
+          "ingredientExamples": "Talc, starch",
           "volume": "6"
         }
       ]
@@ -740,7 +740,7 @@
       "ingredients": [
         {
           "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "PEG stearate, ethers of oleyl alcohol",
+          "ingredientExamples": "PEG stearate, ethers of oleyl alcohol",
           "volume": "15"
         },
         {
@@ -749,17 +749,17 @@
         },
         {
           "ingredient": "Plant extracts",
-          "ingredientExample": "Ivy extract, rosemary extract",
+          "ingredientExamples": "Ivy extract, rosemary extract",
           "volume": "10"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Vitamins, UV filters) 1",
+          "ingredientExamples": "Vitamins, UV filters) 1",
           "volume": "5"
         },
         {
@@ -785,22 +785,22 @@
       "ingredients": [
         {
           "ingredient": "Anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Sodium laureth sulfate",
+          "ingredientExamples": "Sodium laureth sulfate",
           "volume": "20"
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExample": "Glycol stearate, butylene glycol",
+          "ingredientExamples": "Glycol stearate, butylene glycol",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "Ethoxylated long chain alcohols",
+          "ingredientExamples": "Ethoxylated long chain alcohols",
           "volume": "10"
         },
         {
           "ingredient": "Foam boosting agents",
-          "ingredientExample": "Cocamide MEA",
+          "ingredientExamples": "Cocamide MEA",
           "volume": "10"
         },
         {
@@ -809,7 +809,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts",
+          "ingredientExamples": "Plant extracts",
           "volume": "5"
         },
         {
@@ -836,7 +836,7 @@
       "ingredients": [
         {
           "ingredient": "Anionic / nonionic / amphoteric surfactants",
-          "ingredientExample": "Sodium laureth sulfate, ethoxylated long-chain alcohols, betaine derivatives",
+          "ingredientExamples": "Sodium laureth sulfate, ethoxylated long-chain alcohols, betaine derivatives",
           "volume": "70"
         },
         {
@@ -845,17 +845,17 @@
         },
         {
           "ingredient": "Fillers",
-          "ingredientExample": "Talc, kaolin, starch",
+          "ingredientExamples": "Talc, kaolin, starch",
           "volume": "30"
         },
         {
           "ingredient": "Additional Ingredients",
-          "ingredientExample": "Plant extracts",
+          "ingredientExamples": "Plant extracts",
           "volume": "5"
         },
         {
           "ingredient": "Skin Conditioning Agents",
-          "ingredientExample": "Polyquaternium-7",
+          "ingredientExamples": "Polyquaternium-7",
           "volume": "5"
         },
         {
@@ -898,27 +898,27 @@
         },
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExample": "Sodium laureth sulfate",
+          "ingredientExamples": "Sodium laureth sulfate",
           "volume": "50"
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExample": "Glycerin, propylene glycol",
+          "ingredientExamples": "Glycerin, propylene glycol",
           "volume": "20"
         },
         {
           "ingredient": "Amphoteric/non-ionic surfactants",
-          "ingredientExample": "Betaine derivatives",
+          "ingredientExamples": "Betaine derivatives",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts",
+          "ingredientExamples": "Plant extracts",
           "volume": "5"
         },
         {
           "ingredient": "Skin conditioning agents",
-          "ingredientExample": "Polyquaternium-7",
+          "ingredientExamples": "Polyquaternium-7",
           "volume": "5"
         },
         {
@@ -935,7 +935,7 @@
         },
         {
           "ingredient": "Opacifier",
-          "ingredientExample": "Titanium dioxide",
+          "ingredientExamples": "Titanium dioxide",
           "volume": "2"
         },
         {

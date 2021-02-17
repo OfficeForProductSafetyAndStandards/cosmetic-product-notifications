@@ -15,12 +15,12 @@
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "30"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol",
+          "ingredientExamples": "Glycerin, propylene glycol",
           "volume": "30"
         },
         {
@@ -29,27 +29,27 @@
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "Glyceryl stearate, PEG-100 stearate",
+          "ingredientExamples": "Glyceryl stearate, PEG-100 stearate",
           "volume": "10"
         },
         {
           "ingredient": "Bulking agents",
-          "ingredientExample": "Talc, silica, nylon powder",
+          "ingredientExamples": "Talc, silica, nylon powder",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Bisabolol, vitamins",
+          "ingredientExamples": "Bisabolol, vitamins",
           "volume": "6"
         },
         {
           "ingredient": "Film forming polymers",
-          "ingredientExample": "PVP",
+          "ingredientExamples": "PVP",
           "volume": "5"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Carbomer, xanthan gum",
+          "ingredientExamples": "Carbomer, xanthan gum",
           "volume": "5"
         },
         {
@@ -84,17 +84,17 @@
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "30"
         },
         {
           "ingredient": "Film forming agents",
-          "ingredientExample": "PVP",
+          "ingredientExamples": "PVP",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Bisabolol",
+          "ingredientExamples": "Bisabolol",
           "volume": "6"
         },
         {
@@ -107,7 +107,7 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Bentonite",
+          "ingredientExamples": "Bentonite",
           "volume": "1"
         },
         {
@@ -134,22 +134,22 @@
         },
         {
           "ingredient": "Bulking agents",
-          "ingredientExample": "Kaolin, nylon powder",
+          "ingredientExamples": "Kaolin, nylon powder",
           "volume": "20"
         },
         {
           "ingredient": "Emollients",
-          "ingredientExample": "Cetearyl octanoate",
+          "ingredientExamples": "Cetearyl octanoate",
           "volume": "15"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Bisabolol",
+          "ingredientExamples": "Bisabolol",
           "volume": "6"
         },
         {
@@ -180,27 +180,27 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Sorbitol",
+          "ingredientExamples": "Sorbitol",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, vitamins",
+          "ingredientExamples": "Plant extracts, vitamins",
           "volume": "6"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "5"
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "Cetearyl palmitate",
+          "ingredientExamples": "Cetearyl palmitate",
           "volume": "5"
         },
         {
           "ingredient": "Polymers",
-          "ingredientExample": "Carbomer",
+          "ingredientExamples": "Carbomer",
           "volume": "5"
         },
         {
@@ -227,7 +227,7 @@
       "ingredients": [
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "40"
         },
         {
@@ -236,17 +236,17 @@
         },
         {
           "ingredient": "Film forming polymers",
-          "ingredientExample": "PVP",
+          "ingredientExamples": "PVP",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Bentonite",
+          "ingredientExamples": "Bentonite",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, vitamins",
+          "ingredientExamples": "Plant extracts, vitamins",
           "volume": "6"
         },
         {
@@ -285,22 +285,22 @@
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "Glyceryl stearate, PEG stearate",
+          "ingredientExamples": "Glyceryl stearate, PEG stearate",
           "volume": "25"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, PEG",
+          "ingredientExamples": "Glycerin, PEG",
           "volume": "25"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExample": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
           "volume": "20"
         },
         {
           "ingredient": "Anionic / amphoteric / non-ionic surfactants",
-          "ingredientExample": "Sodium cocoyl isethionate, sodium laureth sulfate",
+          "ingredientExamples": "Sodium cocoyl isethionate, sodium laureth sulfate",
           "volume": "20"
         },
         {
@@ -313,12 +313,12 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, vitamins, bisabolol",
+          "ingredientExamples": "Plant extracts, vitamins, bisabolol",
           "volume": "6"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Carbomer",
+          "ingredientExamples": "Carbomer",
           "volume": "5"
         },
         {
@@ -353,12 +353,12 @@
         },
         {
           "ingredient": "Humectants",
-          "ingredientExample": "Glycerin, propylene glycol",
+          "ingredientExamples": "Glycerin, propylene glycol",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExample": "PEG-40, hydrogenated castor oil",
+          "ingredientExamples": "PEG-40, hydrogenated castor oil",
           "volume": "10"
         },
         {
@@ -367,12 +367,12 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExample": "Carbomer",
+          "ingredientExamples": "Carbomer",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExample": "Plant extracts, allantoin, vitamins",
+          "ingredientExamples": "Plant extracts, allantoin, vitamins",
           "volume": "6"
         },
         {

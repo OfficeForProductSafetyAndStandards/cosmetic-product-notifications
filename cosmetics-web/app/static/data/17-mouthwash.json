@@ -11,17 +11,17 @@
 				},
 				{
 					"ingredient": "Humectants ",
-					"ingredientExample": "(e.g. sorbitol)",
+					"ingredientExamples": "(e.g. sorbitol)",
 					"volume": 20
 				},
 				{
 					"ingredient": "Additional ingredients ",
-					"ingredientExample": "(e.g. vitamins )",
+					"ingredientExamples": "(e.g. vitamins )",
 					"volume": 4
 				},
 				{
 					"ingredient": "Emulsifying agents, Anionic / amphoteric / non-ionic surfactants ",
-					"ingredientExample": "(e.g. ethoxylated long chain alcohols, PEG-60,hydrogenated castor oil, sodium lauryl sulphate, polysorbate)",
+					"ingredientExamples": "(e.g. ethoxylated long chain alcohols, PEG-60,hydrogenated castor oil, sodium lauryl sulphate, polysorbate)",
 					"volume": 4
 				},
 				{
@@ -38,17 +38,17 @@
 				},
 				{
 					"ingredient": "Oral care-deodorant",
-					"ingredientExample": " (e.g. zinc chloride)",
+					"ingredientExamples": " (e.g. zinc chloride)",
 					"volume": 0.5
 				},
 				{
 					"ingredient": "Thickeners",
-					"ingredientExample": " (e.g. cellulose derivatives) ",
+					"ingredientExamples": " (e.g. cellulose derivatives) ",
 					"volume": 0.5
 				},
 				{
 					"ingredient": "Oral care-sweetening agents",
-					"ingredientExample": " (e.g. sodium saccharin) ",
+					"ingredientExamples": " (e.g. sodium saccharin) ",
 					"volume": 0.2
 				},
 				{
@@ -72,7 +72,7 @@
 			"ingredients": [
 				{
 					"ingredient": "Humectants",
-					"ingredientExample": " (e.g. glycerin, propylene glycol)",
+					"ingredientExamples": " (e.g. glycerin, propylene glycol)",
 					"volume": 85
 				},
 				{
@@ -89,12 +89,12 @@
 				},
 				{
 					"ingredient": "Additional ingredients ",
-					"ingredientExample": "(e.g. vitamins ) ",
+					"ingredientExamples": "(e.g. vitamins ) ",
 					"volume": 5
 				},
 				{
 					"ingredient": "Thickeners",
-					"ingredientExample": " (e.g. cellulose derivatives) ",
+					"ingredientExamples": " (e.g. cellulose derivatives) ",
 					"volume": 5
 				},
 				{
@@ -107,7 +107,7 @@
 				},
 				{
 					"ingredient": "Oral care-sweetening agents",
-					"ingredientExample": " (e.g. sodium saccharin) ",
+					"ingredientExamples": " (e.g. sodium saccharin) ",
 					"volume": 0.2
 				},
 				{
@@ -126,7 +126,7 @@
 				},
 				{
 					"ingredient": "Humectants",
-					"ingredientExample": " (e.g. propylene glycol, glycerin) ",
+					"ingredientExamples": " (e.g. propylene glycol, glycerin) ",
 					"volume": 30
 				},
 				{
@@ -135,7 +135,7 @@
 				},
 				{
 					"ingredient": "Oral care-deodorant",
-					"ingredientExample": " (e.g. zinc chloride) ",
+					"ingredientExamples": " (e.g. zinc chloride) ",
 					"volume": 0.5
 				},
 				{
@@ -144,7 +144,7 @@
 				},
 				{
 					"ingredient": "Oral care-sweetening agents ",
-					"ingredientExample": "(e.g. sodium saccharin)",
+					"ingredientExamples": "(e.g. sodium saccharin)",
 					"volume": 0.2
 				},
 				{

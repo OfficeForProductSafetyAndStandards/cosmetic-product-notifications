@@ -11,7 +11,7 @@
 				},
 				{
 					"ingredient": "Abrasives ",
-					"ingredientExample": "(e.g. dicalcium phosphate dihydrate and/or alumina and/or 70calcium carbonate and/or silica and silicates) ",
+					"ingredientExamples": "(e.g. dicalcium phosphate dihydrate and/or alumina and/or 70calcium carbonate and/or silica and silicates) ",
 					"volume": 55
 				},
 				{
@@ -36,22 +36,22 @@
 				},
 				{
 					"ingredient": "Oral care-protecting agents",
-					"ingredientExample": " (e.g. strontium chloride) ",
+					"ingredientExamples": " (e.g. strontium chloride) ",
 					"volume": 10
 				},
 				{
 					"ingredient": "Anionic surfactants",
-					"ingredientExample": " (e.g. sodium lauryl sulfate) ",
+					"ingredientExamples": " (e.g. sodium lauryl sulfate) ",
 					"volume": 6
 				},
 				{
 					"ingredient": "Thickeners ",
-					"ingredientExample": "(e.g. cellulose derivatives) ",
+					"ingredientExamples": "(e.g. cellulose derivatives) ",
 					"volume": 5
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExample": " (e.g. pH stabilisers such as sodium/potassiumphosphate, vitamins, chelating agents)",
+					"ingredientExamples": " (e.g. pH stabilisers such as sodium/potassiumphosphate, vitamins, chelating agents)",
 					"volume": 5
 				},
 				{
@@ -72,12 +72,12 @@
 				},
 				{
 					"ingredient": "Oral care-antiplaque",
-					"ingredientExample": " (e.g. zinc citrate) ",
+					"ingredientExamples": " (e.g. zinc citrate) ",
 					"volume": 2
 				},
 				{
 					"ingredient": "Oral care-sweetening agents",
-					"ingredientExample": " (e.g. aspartame) ",
+					"ingredientExamples": " (e.g. aspartame) ",
 					"volume": 0.5
 				},
 				{
