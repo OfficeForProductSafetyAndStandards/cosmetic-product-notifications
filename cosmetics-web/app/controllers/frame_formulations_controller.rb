@@ -5,7 +5,7 @@ class FrameFormulationsController < PubliclyAccessibleController
   end
 
   def show
-    @formulation = FrameFormulations::ALL[params[:id].to_i]
-    @subformulation = @formulation["data"][params[:sub_id].to_i]
+    @formulation = FrameFormulations::ALL.find { |formulation| formulation["number"] == params[:id].to_i }
+    @subformulation = @formulation["data"].find { |formulation| formulation["childNumber"] == params[:sub_id].to_i }
   end
 end

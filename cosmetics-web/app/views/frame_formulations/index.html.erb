@@ -5,12 +5,7 @@
     </h1>
 
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
-      <div class="govuk-accordion__controls">
-        <button type="button" class="govuk-accordion__open-all" aria-expanded="false">
-          Open all<span class="govuk-visually-hidden"> sections</span>
-        </button>
-      </div>
-      <% FrameFormulations::ALL.each_with_index do |formulation, i| %>
+      <% FrameFormulations::ALL.each_with_index do |formulation| %>
         <div class="govuk-accordion__section">
           <div class="govuk-accordion__section-header">
             <h2 class="govuk-accordion__section-heading">
@@ -23,8 +18,8 @@
 
           <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
             <ol class="govuk-list">
-              <% formulation["data"].each_with_index do |subformulation, j| %>
-                <li class="govuk-!-padding-bottom-1"><a href="<%= "/frame_formulations/#{i}/#{j}/#{name_to_url(subformulation["formulationName"])}" %>"><%= i + 1 %>.<%= j + 1 %> <%= subformulation["formulationName"]%></a></li>
+              <% formulation["data"].each_with_index do |subformulation| %>
+                <li class="govuk-!-padding-bottom-1"><a href="<%= "/frame_formulations/#{formulation["number"]}/#{subformulation["childNumber"]}/#{name_to_url(subformulation["formulationName"])}" %>"><%= formulation["number"] %>.<%= subformulation["childNumber"] %> <%= subformulation["formulationName"]%></a></li>
               <% end %>
             </ol>
           </div>

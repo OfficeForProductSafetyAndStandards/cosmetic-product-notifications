@@ -1,4 +1,5 @@
 {
+  "number": 12,
 	"name": "Hair styling products",
 	"data": [
 		{
@@ -641,7 +642,7 @@
 				}
 			],
 			"extraInfo": [
-				"pH value: 2.5 - 3.5,pH value of the ready-to-use mixture (parts A and B): 7 - 9.5"
+				"pH value: 2.5 - 3.5", "pH value of the ready-to-use mixture (parts A and B): 7 - 9.5"
 			]
 		},
 		{
