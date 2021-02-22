@@ -42,7 +42,8 @@
             <td class="govuk-table__cell govuk-!-width-three-quarters">
               <%= ingredient["ingredient"] %>
               <% if ingredient["ingredientExamples"] %>
-                (<%= ingredient["ingredientExamples"] %>)
+                <br />
+                <span class="govuk-body-s">Examples: <%= ingredient["ingredientExamples"] %></span>
               <% end %>
             </td>
             <td class="govuk-table__cell govuk-!-width-one-quarter govuk-table__cell--numeric">
