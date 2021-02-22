@@ -10,7 +10,6 @@ RSpec.feature "Search smoke test", type: :feature do
     expect(page).to have_css("h1", text: "Search for cosmetic products")
    end
 
-
     scenario "sign-in and search notification product as poison center user" do
       visit "/sign-in"
       fill_in_search_credentials
@@ -33,10 +32,7 @@ RSpec.feature "Search smoke test", type: :feature do
    end
 end
 
-
-
 def fill_in_search_credentials
-	
       fill_in "Email address", with: "nasiralikhan1982@gmail.com"
       fill_in "Password", with: "Nasir123"
       click_button "Continue"
