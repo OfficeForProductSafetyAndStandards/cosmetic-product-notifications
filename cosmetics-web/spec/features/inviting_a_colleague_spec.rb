@@ -250,7 +250,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full name", with: "Joe Doe"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
@@ -379,7 +379,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full name", with: "John Doe"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
@@ -418,7 +418,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full name", with: "Joe Doe"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"

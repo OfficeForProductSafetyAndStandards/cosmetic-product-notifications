@@ -51,7 +51,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
     # Attempts to submit security page with validation errors
     expect(page).to have_current_path("/account-security")
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000 invalid 000000"
     click_button "Continue"
@@ -63,7 +63,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
     # Second attempt with no validation issues
     fill_in "Mobile number", with: "07000000000"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
     expect_user_to_have_received_sms_code(otp_code)
@@ -103,7 +103,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
@@ -144,7 +144,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
     visit verify_url
 
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
@@ -207,7 +207,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
         verify_url = email.personalization[:verify_email_url]
         visit verify_url
 
-        fill_in "Password", with: "userpassword", match: :prefer_exact
+        fill_in "Create your password", with: "userpassword", match: :prefer_exact
         check "Text message"
         fill_in "Mobile number", with: "07000000000"
         click_button "Continue"
@@ -246,7 +246,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :w
 
     click_on "Create new account"
 
-    fill_in "Password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
