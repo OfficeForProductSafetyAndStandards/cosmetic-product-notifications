@@ -30,8 +30,8 @@ RSpec.feature "Search smoke test", type: :feature do
 end
 
   def fill_in_search_credentials
-    fill_in "Email address", with: "nasiralikhan1982@gmail.com"
-    fill_in "Password", with: "Nasir123"
+    fill_in "Email address", with: ENV["SEARCH_USER"]
+    fill_in "Password", with: ENV["SEARCH_PASSWORD"]
     click_button "Continue"
 
       expect_to_be_on_secondary_authentication_page
