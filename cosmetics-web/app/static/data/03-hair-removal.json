@@ -46,8 +46,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -58,7 +58,7 @@
         {
           "ingredient": "Tackifying agents and thickeners",
           "example": "Triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica)",
-          "volume": "100"
+          "volume": "to 100"
         },
         {
           "ingredient": "Emollients, humectants",
@@ -80,7 +80,7 @@
           "volume": "3"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "3"
         },
         {

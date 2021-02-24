@@ -34,7 +34,7 @@
           "volume": "2"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
@@ -47,8 +47,8 @@
           "volume": "0.5"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -67,7 +67,7 @@
           "volume": "50"
         },
         {
-          "ingredient": "Colorants, colour additives",
+          "ingredient": "Colourants, colour additives",
           "ingredientExamples": "Opacifying / pearlescent agents",
           "volume": "40"
         },
@@ -100,7 +100,7 @@
           "volume": "90"
         },
         {
-          "ingredient": "Colorants, colour additives",
+          "ingredient": "Colourants, colour additives",
           "ingredientExamples": "Opacifying / pearlescent agents",
           "volume": "50"
         },
@@ -153,7 +153,7 @@
           "volume": "80"
         },
         {
-          "ingredient": "Colorants, colour additives",
+          "ingredient": "Colourants, colour additives",
           "ingredientExamples": "Opacifying / pearlescent agents",
           "volume": "40"
         },
@@ -197,7 +197,7 @@
         },
         {
           "ingredient": "Oils (vegetable and/or mineral) to",
-          "volume": "100"
+          "volume": "to 100"
         }
       ]
     }

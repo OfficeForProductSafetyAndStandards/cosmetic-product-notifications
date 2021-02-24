@@ -31,7 +31,7 @@
         "volume": "30"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "30"
       },
@@ -72,8 +72,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -101,7 +101,7 @@
         "volume": "30"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "30"
       },
@@ -149,7 +149,7 @@
     "formulationName": "Concealer cream",
     "ingredients": [
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "40"
       },
@@ -199,8 +199,8 @@
         "volume": "2"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -240,8 +240,8 @@
         "volume": "0.1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -264,7 +264,7 @@
         "volume": "40"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Pearlescent agents",
         "volume": "40"
       },
@@ -311,12 +311,12 @@
     "formulationName": "Face powder",
     "ingredients": [
       {
-        "ingredient": "Mineral Bulking agents",
+        "ingredient": "Mineral bulking agents",
         "ingredientExamples": "Talc, mica, kaolin, zinc oxide, titanium dioxide, magnesium/calcium carbonate",
         "volume": "95"
       },
       {
-        "ingredient": "Other Bulking agents",
+        "ingredient": "Other bulking agents",
         "ingredientExamples": "Starch, nylon powder, polyethylene powder",
         "volume": "50"
       },
@@ -331,7 +331,7 @@
         "volume": "45"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "30"
       },
@@ -366,7 +366,7 @@
   },
   {
     "childNumber": 7,
-    "formulationName": "Lipstick / lip cream (including concealer sticks/creams)",
+    "formulationName": "Lipstick / lip cream (including concealer sticks / creams)",
     "ingredients": [
       {
         "ingredient": "Oils (for example, vegetable and/or mineral), esters and fatty acids",
@@ -378,7 +378,7 @@
         "volume": "65"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "65"
       },
@@ -414,7 +414,7 @@
       },
       {
         "ingredient": "Photoprotective products contain UV",
-        "volume": "filters"
+        "volume": "UV filters (for photoprotective products)"
       },
       {
         "ingredient": "",
@@ -448,8 +448,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -486,7 +486,7 @@
         "volume": "40"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "30"
       },
@@ -556,7 +556,7 @@
         "volume": "50"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "50"
       },
@@ -682,8 +682,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -754,7 +754,7 @@
         "volume": "10"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "10"
       },
@@ -772,8 +772,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -801,7 +801,7 @@
         "volume": "10"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "10"
       },
@@ -823,8 +823,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -833,7 +833,7 @@
     "formulationName": "Eye shadow, blusher and liner (powder)",
     "ingredients": [
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "80"
       },
@@ -873,7 +873,7 @@
       {
         "ingredient": "Bulking agents",
         "ingredientExamples": "Talc, silica, starch, nylon powder, polyethylene powder) t",
-        "volume": "100"
+        "volume": "to 100"
       }
     ]
   },
@@ -886,7 +886,7 @@
         "volume": "70"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "50"
       },
@@ -924,8 +924,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -943,7 +943,7 @@
         "volume": "70"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "60"
       },
@@ -996,7 +996,7 @@
         "volume": "50"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "50"
       },
@@ -1049,7 +1049,7 @@
         "volume": "40"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "25"
       },
@@ -1095,8 +1095,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -1119,7 +1119,7 @@
         "volume": "30"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "20"
       },
@@ -1158,7 +1158,7 @@
       {
         "ingredient": "Liquid paraffin and isoparaffin",
         "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane) t",
-        "volume": "100"
+        "volume": "to 100"
       }
     ]
   },
@@ -1172,7 +1172,7 @@
         "volume": "70"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "50"
       },
@@ -1210,7 +1210,7 @@
         "volume": "30"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "25"
       },
@@ -1262,8 +1262,8 @@
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -1291,7 +1291,7 @@
         "volume": "30"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "25"
       },
@@ -1357,7 +1357,7 @@
         "volume": "50"
       },
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents",
         "volume": "25"
       },
@@ -1391,7 +1391,7 @@
     "formulationName": "Body glitter",
     "ingredients": [
       {
-        "ingredient": "Colorants, colour additives",
+        "ingredient": "Colourants, colour additives",
         "ingredientExamples": "Opacifying / pearlescent agents / coloured aluminium foil, polyester film or laminates of both",
         "volume": "30"
       },
@@ -1426,8 +1426,8 @@
         "volume": "0.5"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   }

@@ -4,8 +4,8 @@
   "data": [
     {
       "formulationName": "NAIL VARNISH",
-      "childNumber": "1",
-      "Ingredients": [
+      "childNumber": 1,
+      "ingredients": [
         {
           "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": "90"
@@ -26,7 +26,7 @@
           "volume": "15"
         },
         {
-          "ingredient": "Colorants, colour additives",
+          "ingredient": "Colourants, colour additives",
           "example": "opacifying / pearlescent agents",
           "volume": "15"
         },
@@ -48,15 +48,15 @@
     },
     {
       "formulationName": "NAIL WHITE PENCIL",
-      "childNumber": "2",
-      "Ingredients": [
+      "childNumber": 2,
+      "ingredients": [
         {
           "ingredient": "Bulking agents",
           "example": "kaolin, magnesium carbonate, chalk",
           "volume": "80"
         },
         {
-          "ingredient": "Colorants, colour additives",
+          "ingredient": "Colourants, colour additives",
           "example": "opacifying agents / titanium dioxide",
           "volume": "30"
         },

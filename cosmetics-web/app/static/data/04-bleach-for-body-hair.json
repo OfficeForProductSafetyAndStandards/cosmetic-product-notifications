@@ -25,11 +25,12 @@
           "volume": "0.5"
         },
         {
-          "ingredient": "pH adjusters qs pH 2-3"
+          "ingredient": "pH adjusters",
+          "volume": "qs pH 2-3"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     }

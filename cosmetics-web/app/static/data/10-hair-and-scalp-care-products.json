@@ -8,7 +8,7 @@
     "ingredients": [
       {
         "ingredient": "Anionic surfactant",
-        "ingredientExamples": "Sodium/ammonium/TEA lauryl sulfates, sodium/ammonium/TEA laureth sulfates)",
+        "ingredientExamples": "Sodium/ammonium/TEA lauryl sulfates, sodium/ammonium/TEA laureth sulfates",
         "volume": "30"
       },
       {
@@ -55,8 +55,8 @@
         "volume": "0.5"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -149,7 +149,7 @@
         "volume": "1.5"
       },
       {
-        "ingredient": "Colorants",
+        "ingredient": "Colourants",
         "volume": "1"
       },
       {
@@ -157,8 +157,8 @@
         "volume": "0.5"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -231,12 +231,12 @@
         "volume": "1.5"
       },
       {
-        "ingredient": "Colorants",
+        "ingredient": "Colourants",
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -269,7 +269,7 @@
       {
         "ingredient": "Silicones including volatile silicones",
         "ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone) t",
-        "volume": "100"
+        "volume": "to 100"
       }
     ]
   },
@@ -324,12 +324,12 @@
         "volume": "2"
       },
       {
-        "ingredient": "Colorants",
+        "ingredient": "Colourants",
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },
@@ -397,12 +397,12 @@
         "volume": "2"
       },
       {
-        "ingredient": "Colorants",
+        "ingredient": "Colourants",
         "volume": "1"
       },
       {
-        "ingredient": "Aqua to",
-        "volume": "100"
+        "ingredient": "Aqua",
+        "volume": "to 100"
       }
     ]
   },

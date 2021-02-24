@@ -64,8 +64,8 @@
           "volume": "0.1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -105,8 +105,8 @@
           "volume": "0.5"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -149,7 +149,7 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
@@ -157,8 +157,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -210,7 +210,7 @@
           "volume": "2"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
@@ -218,8 +218,8 @@
           "volume": "0.2"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -233,7 +233,7 @@
           "volume": "30"
         },
         {
-          "ingredient": "Anionic/Amphoteric/Non-ionic surfactants",
+          "ingredient": "Anionic / amphoteric / non-ionic surfactants",
           "ingredientExamples": "Sodium laureth sulfate, betaine derivatives, polysorbate",
           "volume": "15"
         },
@@ -281,8 +281,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -375,7 +375,7 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
@@ -387,8 +387,8 @@
           "volume": "0.5"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -415,7 +415,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
@@ -423,8 +423,8 @@
           "volume": "0.5"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     }

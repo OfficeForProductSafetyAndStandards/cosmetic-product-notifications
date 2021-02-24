@@ -85,12 +85,12 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "plant extracts, pearlescent agents)",
+          "ingredientExamples": "plant extracts, pearlescent agents",
           "volume": 5
         },
         {
           "ingredient": "Polymers, resins",
-          "ingredientExamples": "(e.g. acrylates copolymer, carbomer)",
+          "ingredientExamples": "acrylates copolymer, carbomer",
           "volume": 4
         },
         {
@@ -127,13 +127,12 @@
           "volume": 50
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats",
-          "ingredientExamples": "(e.g. long chain alcohols)",
+          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example long chain alcohols)",
           "volume": 20
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExamples": " (e.g. laureth)",
+          "ingredientExamples": "laureth",
           "volume": 11
         },
         {
@@ -150,16 +149,18 @@
           "volume": 10
         },
         {
-          "ingredient": "Solvents (e.g. propylene glycol, benzyl alcohol)",
+          "ingredient": "Solvents",
+          "ingredientExamples": "propylene glycol, benzyl alcohol",
           "volume": 10
         },
         {
-          "ingredient": "Cationic surfactants (e.g. dicetyldimonium chloride)",
+          "ingredient": "Cationic surfactants",
+          "ingredientExamples": "dicetyldimonium chloride",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "plant extracts, protein derivatives)",
+          "ingredientExamples": "plant extracts, protein derivatives",
           "volume": 5
         },
         {
@@ -173,7 +174,8 @@
           "volume": 3
         },
         {
-          "ingredient": "Thickeners (e.g. cellulose derivatives)",
+          "ingredient": "Thickeners",
+          "ingredientExamples": "cellulose derivatives",
           "volume": 2
         },
         {
@@ -181,7 +183,7 @@
           "volume": 1
         },
         {
-          "ingredient": "{Preservatives, antimicrobials",
+          "ingredient": "Preservatives, antimicrobials",
           "volume": 1
         },
         {
@@ -190,7 +192,7 @@
         },
         {
           "ingredient": "Aqua",
-          "volume": "upto 100"
+          "volume": "to 100"
         }
       ]
     },
@@ -200,37 +202,37 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExamples": " (e.g. ammonium laureth sulfate)",
+          "ingredientExamples": "ammonium laureth sulfate",
           "volume": 20
         },
         {
           "ingredient": "Non-ionic surfactants",
-          "ingredientExamples": " (e.g. laureth-12, deceth-3)",
+          "ingredientExamples": "laureth-12, deceth-3",
           "volume": 20
         },
         {
           "ingredient": "Amphoteric surfactants",
-          "ingredientExamples": " (e.g. betaine derivatives",
+          "ingredientExamples": "betaine derivatives",
           "volume": 20
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExamples": " (e.g. ethoxylated long chain alcohols)",
+          "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 30
         },
         {
           "ingredient": "Soaps",
-          "ingredientExamples": " (e.g. ammonium hydroxide/ethanolamine oleates)",
+          "ingredientExamples": "ammonium hydroxide/ethanolamine oleates",
           "volume": 30
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples": " (e.g. carbomer, long chain alcohols",
+          "ingredientExamples": "carbomer, long chain alcohols",
           "volume": 30
         },
         {
           "ingredient": "Solvents",
-          "ingredientExamples": " (e.g. propylene glycol, glycerin)",
+          "ingredientExamples": "propylene glycol, glycerin",
           "volume": 20
         },
         {
@@ -239,32 +241,32 @@
         },
         {
           "ingredient": "Primary intermediates",
-          "ingredientExamples": "(e.g. p-phenylenediamines such as  p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate) ",
+          "ingredientExamples": "p-phenylenediamines such as  p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
           "volume": 6
         },
         {
           "ingredient": "Couplers",
-          "ingredientExamples": "(e.g. m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol) ",
+          "ingredientExamples": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol",
           "volume": 6
         },
         {
           "ingredient": "Directs",
-          "ingredientExamples": "(e.g. HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87) ",
+          "ingredientExamples": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87",
           "volume": 6
         },
         {
           "ingredient": "Alkaline agents",
-          "ingredientExamples": "(e.g. ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine) ",
+          "ingredientExamples": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine",
           "volume": 10
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExamples": "(e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
+          "ingredientExamples": "dicetyldimonium chloride, PEG-2 oleamine",
           "volume": 5
         },
         {
           "ingredient": "Cationic polymers",
-          "ingredientExamples": "polyquaternium-6) 5"
+          "ingredientExamples": "polyquaternium-6"
         },
         {
           "ingredient": "Additional ingredients",
@@ -282,7 +284,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExamples": "EDTA) ",
+          "ingredientExamples": "EDTA",
           "volume": 1
         },
         {
@@ -303,61 +305,61 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral)",
+          "ingredientExamples": "vegetable and/or mineral",
           "volume": 80
         },
         {
-          "ingredient": " Anionic surfactants",
-          "ingredientExamples": "ammonium laureth sulfate) ",
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "ammonium laureth sulfate",
           "volume": 20
         },
         {
-          "ingredient": " Non-ionic surfactants",
-          "ingredientExamples": "laureth-12, deceth-3) ",
+          "ingredient": "Non-ionic surfactants",
+          "ingredientExamples": "laureth-12, deceth-3",
           "volume": 20
         },
         {
-          "ingredient": " Amphoteric surfactants",
-          "ingredientExamples": " betaine derivatives) ",
+          "ingredient": "Amphoteric surfactants",
+          "ingredientExamples": " betaine derivatives",
           "volume": 20
         },
         {
-          "ingredient": " Emulsifying agents",
-          "ingredientExamples": " ethoxylated long chain alcohols)",
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": " ethoxylated long chain alcohols",
           "volume": 30
         },
         {
-          "ingredient": " Soaps ",
-          "ingredientExamples": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine oleates)",
+          "ingredient": "Soaps ",
+          "ingredientExamples": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine oleates",
           "volume": 30
         },
         {
-          "ingredient": " Solvents",
-          "ingredientExamples": " propylene glycol, glycerin) ",
+          "ingredient": "Solvents",
+          "ingredientExamples": "propylene glycol, glycerin",
           "volume": 20
         },
         {
-          "ingredient": " Thickeners",
-          "ingredientExamples": " carbomer, long chain alcohols)",
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, long chain alcohols",
           "volume": 20
         },
         {
-          "ingredient": " Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": 16
         },
         {
-          "ingredient": "Hair dyeing agents:Primary intermediates",
-          "ingedientExample": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate)",
+          "ingredient": "Hair dyeing agents: Primary intermediates",
+          "ingedientExample": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
           "volume": 6
         },
         {
-          "ingredient": "Hair dyeing agents:Couplers",
-          "ingredientExamples": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol)",
+          "ingredient": "Hair dyeing agents: Couplers",
+          "ingredientExamples": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol",
           "volume": 6
         },
         {
           "ingredient": "Hair dyeing agents:Directs",
-          "ingredientExamples": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87)",
+          "ingredientExamples": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87",
           "volume": 6
         },
         {
@@ -366,35 +368,35 @@
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExamples": " (e.g. dicetyldimonium chloride, PEG-2 oleamine) ",
+          "ingredientExamples": "dicetyldimonium chloride, PEG-2 oleamine",
           "volume": 5
         },
         {
           "ingredient": "Cationic polymers ",
-          "ingredientExamples": "(e.g. polyquaternium-6)",
+          "ingredientExamples": "polyquaternium-6",
           "volume": 5
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": " (e.g. hair conditioning agents, pearlescent agents) ",
+          "ingredientExamples": "hair conditioning agents, pearlescent agents",
           "volume": 5
         },
         {
           "ingredient": "Antioxidants",
-          "ingredientExamples": " (e.g. ascorbic acid) ",
+          "ingredientExamples": "ascorbic acid",
           "volume": 3
         },
         {
-          "ingredient": "Reducing agents ",
+          "ingredient": "Reducing agents",
           "volume": 3
         },
         {
-          "ingredient": "Parfum ",
+          "ingredient": "Parfum",
           "volume": 2
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExamples": " (e.g. EDTA) ",
+          "ingredientExamples": "EDTA",
           "volume": 1
         },
         {
@@ -420,12 +422,13 @@
           "volume": 22
         },
         {
-          "ingredient": "Solvents (e.g. propylene glycol, glycerin) ",
+          "ingredient": "Solvents",
+          "ingredientExamples": "propylene glycol, glycerin",
           "volume": 20
         },
         {
           "ingredient": "Hair dyeing agent:Primary intermediates",
-          "ingredientExamples": " (e.g. p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate) ",
+          "ingredientExamples": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
           "volume": 10
         },
         {
@@ -477,7 +480,7 @@
           "volume": 1
         },
         {
-          "ingredient": "Aqua to 100"
+          "ingredient": "Aqua 100"
         },
         {
           "ingredient": "pH value: 8 - 11.6"
@@ -962,7 +965,7 @@
           "ingredient": "pH adjuster (e.g. phosphoric acid) qs pH 2 - 3"
         },
         {
-          "ingredient": "Aqua to 100"
+          "ingredient": "Aqua 100"
         }
       ],
       "extraInfo": "pH value of the different mixtures: 9.5 - 11.5"

@@ -43,7 +43,7 @@
 				},
 				{
 					"ingredient": " Additional ingredients",
-					"ingredientExamples": " (e.g. UV filters, vitamins, Colorants,chelating agents ",
+					"ingredientExamples": " (e.g. UV filters, vitamins, Colourants,chelating agents ",
 					"volume": 5
 				},
 				{
@@ -93,7 +93,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Colorants",
+					"ingredient": "Colourants",
 					"volume": 1
 				}
 			]
@@ -152,7 +152,7 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Colorants",
+					"ingredient": "Colourants",
 					"volume": 1
 				},
 				{
@@ -269,7 +269,7 @@
 					"volume": 15
 				},
 				{
-					"ingredient": "Colorants, colour additives",
+					"ingredient": "Colourants, colour additives",
 					"ingredientExamples": " (e.g. opacifying / pearlescent agents)",
 					"volume": 15
 				},
@@ -601,7 +601,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Colorants ",
+					"ingredient": "Colourants ",
 					"volume": 1
 				},
 				{
@@ -683,7 +683,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Colorants",
+					"ingredient": "Colourants",
 					"volume": 1
 				},
 				{
@@ -737,7 +737,7 @@
 					"volume": 2.5
 				},
 				{
-					"ingredient": "Aqua to",
+					"ingredient": "Aqua",
 					"volume": 100
 				}
 			],
@@ -845,7 +845,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Colorants",
+					"ingredient": "Colourants",
 					"volume": 1
 				},
 				{
@@ -991,7 +991,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Colorants ",
+					"ingredient": "Colourants ",
 					"volume": 1
 				},
 				{

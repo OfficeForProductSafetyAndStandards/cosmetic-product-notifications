@@ -54,12 +54,12 @@
           "volume": "2"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -115,12 +115,12 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -170,12 +170,12 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -221,12 +221,12 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
           "ingredient": "Oils (for example, vegetable and/or mineral)",
-          "volume": "100"
+          "volume": "to 100"
         }
       ]
     },
@@ -282,12 +282,12 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -352,12 +352,12 @@
           "volume": "2"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -419,7 +419,7 @@
           "volume": "3"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
@@ -427,8 +427,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -465,7 +465,7 @@
           "volume": "5"
         },
         {
-          "ingredient": "Colorants 2",
+          "ingredient": "Colourants",
           "volume": "5"
         },
         {
@@ -487,8 +487,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -550,12 +550,12 @@
           "volume": "2"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -616,12 +616,12 @@
           "volume": "1.5"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -682,12 +682,12 @@
           "volume": "1.5"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -705,6 +705,11 @@
           "volume": "5"
         },
         {
+          "ingredient": "Disintegrating agents (for bath cubes)",
+          "ingredientExamples": "Talc, starch",
+          "volume": "6"
+        },
+        {
           "ingredient": "Emollients",
           "ingredientExamples": "Glycerin",
           "volume": "5"
@@ -720,20 +725,14 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
           "ingredient": "Binding agents",
           "ingredientExamples": "Silica",
           "volume": "0.5"
-        },
-        {
-          "ingredient": "NB: for bath cubes, desintegrating agents",
-          "ingredientExamples": "Talc, starch",
-          "volume": "6"
-        }
-      ]
+        }      ]
     },
     {
       "formulationName": "Bath and shower oil (including bath beads)",
@@ -764,7 +763,7 @@
           "volume": "5"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
@@ -772,13 +771,11 @@
           "volume": "1"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral) and emollients (for example, glycerin, PEG, isopropyl myristate) to",
-          "volume": "100"
-        },
-        {
-          "ingredient": "In case of capsules, or beads : Nature of the capsule, e.g. caprolactone and cellulose derivatives, agar and plasticisers (such as glycerin, sorbitol)"
+          "ingredient": "Oils (for example, vegetable and/or mineral) and emollients (for example, glycerin, PEG, isopropyl myristate)",
+          "volume": "to 100"
         }
-      ]
+      ],
+      "annotations": "In case of capsules, or beads : Nature of the capsule, e.g. caprolactone and cellulose derivatives, agar and plasticisers (such as glycerin, sorbitol)"
     },
     {
       "formulationName": "Footbath",
@@ -814,7 +811,7 @@
           "volume": "5"
         },
         {
-          "ingredient": "Preservatives, antimicrobials, antioxidants 1",
+          "ingredient": "Preservatives, antimicrobials, antioxidants",
           "volume": "5"
         },
         {
@@ -822,12 +819,12 @@
           "volume": "1"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "1"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -868,7 +865,7 @@
           "volume": "2"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "2"
         },
         {
@@ -880,12 +877,12 @@
           "volume": "1"
         },
         {
-          "ingredient": "Opacifying Agents 0",
+          "ingredient": "Opacifying Agents",
           "volume": "5"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     },
@@ -931,7 +928,7 @@
           "volume": "2"
         },
         {
-          "ingredient": "Colorants",
+          "ingredient": "Colourants",
           "volume": "2"
         },
         {
@@ -940,8 +937,8 @@
           "volume": "2"
         },
         {
-          "ingredient": "Aqua to",
-          "volume": "100"
+          "ingredient": "Aqua",
+          "volume": "to 100"
         }
       ]
     }
