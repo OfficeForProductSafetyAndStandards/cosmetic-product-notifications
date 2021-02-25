@@ -2,11 +2,10 @@
 <% page_title(title, errors: @user.errors.any?) %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= error_summary(@account_security_form.errors, %i[full_name
-                                                        password
-                                                        secondary_authentication_methods
-                                                        app_authentication_code
-                                                        mobile_number]) %>
+
+    <%= error_summary(@account_security_form.errors,
+                      %i[full_name password secondary_authentication_methods app_authentication_code mobile_number],
+                      map_errors: { secondary_authentication_methods: :app_authentication }) %>
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
@@ -61,11 +60,13 @@
                         isPageHeading: false }
               },
               items: [
-                { key: :app_authentication,
+                { id: "app_authentication",
+                  key: :app_authentication,
                   text: "Authentication app for smartphone or tablet",
                   conditional: { html: authenticartion_app_setup_html },
                   checked: @account_security_form.app_authentication_selected? },
-                { key: :sms_authentication,
+                { id: "sms_authentication",
+                  key: :sms_authentication,
                   text: "Text message",
                   conditional: { html: mobile_number_input_html },
                   checked: @account_security_form.sms_authentication_selected? }
