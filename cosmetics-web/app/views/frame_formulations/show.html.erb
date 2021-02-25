@@ -18,16 +18,23 @@
         Frame formulation number:
         </dt>
         <dd class="govuk-summary-list__value no-border">
-        <%= params[:id] %>.<%= @subformulation["childNumber"] %>
+        <%= params[:id] %>.<%= @subformulation["childNumber"] %> - 2013
         </dd>
       </div>
     </dl>
-
-
   </div>
+
   <div class="govuk-grid-column-full">
+    <% if @subformulation["formulationNotes"].present? %>
+      <% if @subformulation["formulationNotes"].present? %>
+        <% @subformulation["formulationNotes"].each do |info| %>
+          <p><%= info %></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
 
-
+  <div class="govuk-grid-column-full">
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -36,7 +43,6 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-
         <% @subformulation["ingredients"].each do |ingredient| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-width-three-quarters">

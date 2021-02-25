@@ -3,7 +3,7 @@
 	"name": "Mouthwash",
 	"data": [
 		{
-			"formulationName": "MOUTHWASH",
+			"formulationName": "Mouthwash",
 			"childNumber": 1,
 			"ingredients": [
 				{
@@ -11,22 +11,22 @@
 					"volume": 25
 				},
 				{
-					"ingredient": "Humectants ",
-					"ingredientExamples": "(e.g. sorbitol)",
+					"ingredient": "Humectants",
+					"ingredientExamples": "sorbitol",
 					"volume": 20
 				},
 				{
-					"ingredient": "Additional ingredients ",
-					"ingredientExamples": "(e.g. vitamins )",
+					"ingredient": "Additional ingredients",
+					"ingredientExamples": "vitamins",
 					"volume": 4
 				},
 				{
 					"ingredient": "Emulsifying agents, Anionic / amphoteric / non-ionic surfactants ",
-					"ingredientExamples": "(e.g. ethoxylated long chain alcohols, PEG-60,hydrogenated castor oil, sodium lauryl sulphate, polysorbate)",
+					"ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
 					"volume": 4
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils e.g. mint)",
+					"ingredient": "Flavour (mostly essential oils for example mint)",
 					"volume": 3
 				},
 				{
@@ -39,17 +39,17 @@
 				},
 				{
 					"ingredient": "Oral care-deodorant",
-					"ingredientExamples": " (e.g. zinc chloride)",
+					"ingredientExamples": "zinc chloride",
 					"volume": 0.5
 				},
 				{
 					"ingredient": "Thickeners",
-					"ingredientExamples": " (e.g. cellulose derivatives) ",
+					"ingredientExamples": "cellulose derivatives",
 					"volume": 0.5
 				},
 				{
 					"ingredient": "Oral care-sweetening agents",
-					"ingredientExamples": " (e.g. sodium saccharin) ",
+					"ingredientExamples": "sodium saccharin",
 					"volume": 0.2
 				},
 				{
@@ -63,17 +63,17 @@
 			],
 			"annotation": [
 				"* actual weight present will depend on M.Wt. of fluorine donor",
-				"e.g. 0.15% fluorine = 1.14 % MFP (monofluorophosphate)",
+				"for example 0.15% fluorine = 1.14 % MFP (monofluorophosphate)",
 				"or 0.333 % NaF (sodium fluoride)"
 			]
 		},
 		{
-			"formulationName": "MOUTHWASH (CONCENTRATE)",
+			"formulationName": "Mouthwash (concentrate)",
 			"childNumber": 2,
 			"ingredients": [
 				{
 					"ingredient": "Humectants",
-					"ingredientExamples": " (e.g. glycerin, propylene glycol)",
+					"ingredientExamples": "glycerin, propylene glycol",
 					"volume": 85
 				},
 				{
@@ -81,21 +81,22 @@
 					"volume": 80
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils, e.g. mint) ",
+					"ingredient": "Flavour (mostly essential oils, for example mint) ",
 					"volume": 7.5
 				},
 				{
-					"ingredient": "Emulsifying agents, Anionic / amphoteric / non-ionic surfactants (e.g. ethoxylated long chain alcohols, PEG-60,hydrogenated castor oil, sodium lauryl sulphate, polysorbate)",
+					"ingredient": "Emulsifying agents, Anionic / amphoteric / non-ionic surfactants",
+          "ingredientExamples": "(for example ethoxylated long chain alcohols, PEG-60,hydrogenated castor oil, sodium lauryl sulphate, polysorbate)",
 					"volume": 6
 				},
 				{
-					"ingredient": "Additional ingredients ",
-					"ingredientExamples": "(e.g. vitamins ) ",
+					"ingredient": "Additional ingredients",
+					"ingredientExamples": "vitamins",
 					"volume": 5
 				},
 				{
 					"ingredient": "Thickeners",
-					"ingredientExamples": " (e.g. cellulose derivatives) ",
+					"ingredientExamples": "cellulose derivatives",
 					"volume": 5
 				},
 				{
@@ -108,7 +109,7 @@
 				},
 				{
 					"ingredient": "Oral care-sweetening agents",
-					"ingredientExamples": " (e.g. sodium saccharin) ",
+					"ingredientExamples": "sodium saccharin",
 					"volume": 0.2
 				},
 				{
@@ -118,7 +119,7 @@
 			]
 		},
 		{
-			"formulationName": "BREATH SPRAY (PUMP SPRAY)",
+			"formulationName": "Breath spray (pump spray)",
 			"childNumber": 3,
 			"ingredients": [
 				{
@@ -127,25 +128,25 @@
 				},
 				{
 					"ingredient": "Humectants",
-					"ingredientExamples": " (e.g. propylene glycol, glycerin) ",
+					"ingredientExamples": "propylene glycol, glycerin",
 					"volume": 30
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils, e.g. mint) ",
+					"ingredient": "Flavour (mostly essential oils, for example mint) ",
 					"volume": 2
 				},
 				{
 					"ingredient": "Oral care-deodorant",
-					"ingredientExamples": " (e.g. zinc chloride) ",
+					"ingredientExamples": "zinc chloride",
 					"volume": 0.5
 				},
 				{
-					"ingredient": "Preservatives, antimicrobials ",
+					"ingredient": "Preservatives, antimicrobials",
 					"volume": 0.2
 				},
 				{
-					"ingredient": "Oral care-sweetening agents ",
-					"ingredientExamples": "(e.g. sodium saccharin)",
+					"ingredient": "Oral care-sweetening agents",
+					"ingredientExamples": "sodium saccharin",
 					"volume": 0.2
 				},
 				{

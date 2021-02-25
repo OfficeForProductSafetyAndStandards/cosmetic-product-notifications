@@ -3,7 +3,7 @@
 	"name": "Toothpaste",
 	"data": [
 		{
-			"formulationName": "TOOTHPASTE",
+			"formulationName": "Toothpaste",
 			"childNumber": 1,
 			"ingredients": [
 				{
@@ -12,11 +12,11 @@
 				},
 				{
 					"ingredient": "Abrasives ",
-					"ingredientExamples": "(e.g. dicalcium phosphate dihydrate and/or alumina and/or 70calcium carbonate and/or silica and silicates) ",
+					"ingredientExamples": "dicalcium phosphate dihydrate and / or alumina and / or calcium carbonate and / or silica and silicates",
 					"volume": 55
 				},
 				{
-					"ingredient": "Glycerin ",
+					"ingredient": "Glycerin",
 					"volume": 40
 				},
 				{
@@ -37,66 +37,66 @@
 				},
 				{
 					"ingredient": "Oral care-protecting agents",
-					"ingredientExamples": " (e.g. strontium chloride) ",
+					"ingredientExamples": "strontium chloride",
 					"volume": 10
 				},
 				{
 					"ingredient": "Anionic surfactants",
-					"ingredientExamples": " (e.g. sodium lauryl sulfate) ",
+					"ingredientExamples": "sodium lauryl sulfate",
 					"volume": 6
 				},
 				{
-					"ingredient": "Thickeners ",
-					"ingredientExamples": "(e.g. cellulose derivatives) ",
+					"ingredient": "Thickeners",
+					"ingredientExamples": "cellulose derivatives",
 					"volume": 5
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": " (e.g. pH stabilisers such as sodium/potassiumphosphate, vitamins, chelating agents)",
+					"ingredientExamples": " pH stabilisers such as sodium/potassiumphosphate, vitamins, chelating agents",
 					"volume": 5
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils, e.g. mint)",
+					"ingredient": "Flavour (mostly essential oils, for example mint)",
 					"volume": 3
 				},
 				{
-					"ingredient": "Titanium dioxide ",
+					"ingredient": "Titanium dioxide",
 					"volume": 2
 				},
 				{
-					"ingredient": "Colourants ",
+					"ingredient": "Colourants",
 					"volume": 1
 				},
 				{
-					"ingredient": "Preservatives ",
+					"ingredient": "Preservatives",
 					"volume": 1
 				},
 				{
 					"ingredient": "Oral care-antiplaque",
-					"ingredientExamples": " (e.g. zinc citrate) ",
+					"ingredientExamples": "zinc citrate",
 					"volume": 2
 				},
 				{
 					"ingredient": "Oral care-sweetening agents",
-					"ingredientExamples": " (e.g. aspartame) ",
+					"ingredientExamples": "aspartame",
 					"volume": 0.5
 				},
 				{
-					"ingredient": "Calcium glycerophosphate ",
+					"ingredient": "Calcium glycerophosphate",
 					"volume": 0.5
 				},
 				{
-					"ingredient": "Fluoride compounds (calculated as Fluorine) ",
+					"ingredient": "Fluoride compounds (calculated as Fluorine)",
 					"volume": "0.15*"
 				},
 				{
-					"ingredient": "Aqua ",
+					"ingredient": "Aqua",
 					"volume": "to 100"
 				}
 			],
-			"annotation": [
+			"annotations": [
 				"* actual weight present will depend on M.Wt. of fluorine donor,",
-				"e.g. 0.15% fluorine = 1.14 % MFP (monofluorophosphate)",
+				"for example 0.15% fluorine = 1.14 % MFP (monofluorophosphate)",
 				"or 0.333 % NaF (sodium fluoride)"
 			]
 		}

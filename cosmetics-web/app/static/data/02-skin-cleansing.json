@@ -125,7 +125,7 @@
       ]
     },
     {
-      "formulationName": "Make-up remover - non foaming cleanser",
+      "formulationName": "Make-up remover - non foaming cleanser (including thw-phase products)",
       "childNumber": 3,
       "ingredients": [
         {
@@ -775,7 +775,7 @@
           "volume": "to 100"
         }
       ],
-      "annotations": "In case of capsules, or beads : Nature of the capsule, e.g. caprolactone and cellulose derivatives, agar and plasticisers (such as glycerin, sorbitol)"
+      "annotations": "In case of capsules, or beads : Nature of the capsule, for example caprolactone and cellulose derivatives, agar and plasticisers (such as glycerin, sorbitol)"
     },
     {
       "formulationName": "Footbath",
