@@ -3,6 +3,9 @@ module Registration
     include ActiveModel::Model
     include ActiveModel::Attributes
 
+    TOTP_SUBMIT_ISSUER = "Submit Cosmetics".freeze
+    TOTP_SEARCH_ISSUER = "Search Cosmetics".freeze
+
     attribute :app_authentication
     attribute :app_authentication_code
     attribute :app_authentication_secret_key
@@ -60,7 +63,7 @@ module Registration
     end
 
     def name_required?
-      user.name.blank?
+      user.is_a?(SearchUser) || user.name.blank?
     end
 
     def app_authentication_secret_key
@@ -102,8 +105,12 @@ module Registration
 
   private
 
+    def totp_issuer
+      user.is_a?(SearchUser) ? TOTP_SEARCH_ISSUER : TOTP_SUBMIT_ISSUER
+    end
+
     def totp
-      @totp ||= ROTP::TOTP.new(app_authentication_secret_key, issuer: "Submit Cosmetics")
+      @totp ||= ROTP::TOTP.new(app_authentication_secret_key, issuer: totp_issuer)
     end
 
     def last_totp_at

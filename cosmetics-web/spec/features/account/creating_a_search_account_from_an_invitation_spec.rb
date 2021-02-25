@@ -133,8 +133,9 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
   def fill_in_account_details_with(full_name:, mobile_number:, password:)
     fill_in "Full name", with: full_name
-    fill_in "Mobile number", with: mobile_number
     fill_in "Password", with: password
+    check "Text message"
+    fill_in "Mobile number", with: mobile_number
   end
 
   def otp_code
