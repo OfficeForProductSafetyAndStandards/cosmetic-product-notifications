@@ -8,12 +8,12 @@
       "ingredients": [
         {
           "ingredient": "Emollients",
-          "example": "isopropyl myristate, petrolatum",
+          "ingredientExamples": "isopropyl myristate, petrolatum",
           "volume": "15"
         },
         {
           "ingredient": "Emulsifying agents",
-          "example": "glyceryl stearate, ethoxylated alcohols",
+          "ingredientExamples": "glyceryl stearate, ethoxylated alcohols",
           "volume": "15"
         },
         {
