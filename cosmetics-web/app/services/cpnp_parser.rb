@@ -72,7 +72,6 @@ class CpnpParser
                                 ph: ph_answer(component_node),
                                 minimum_ph: minimum_ph(component_node) || component_ph(component_node),
                                 maximum_ph: maximum_ph(component_node) || component_ph(component_node))
-      component.skip_name_uniqueness_on_import = true
       component
     end
   end
