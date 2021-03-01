@@ -7,7 +7,8 @@
       "formulationName": "Sunscreen cream, lotion",
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
           "volume": "70"
         },
         {
@@ -127,6 +128,7 @@
       "ingredients": [
         {
           "ingredient": "Waxes, fats (for example, theobroma cacao seed butter, polyethylene)",
+          "ingredientExamples":"theobroma cacao seed butter,polyethylene",
           "volume": "60"
         },
         {
@@ -277,7 +279,8 @@
       "formulationName": "Self tan - lotion, cream",
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohol)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
           "volume": "50"
         },
         {

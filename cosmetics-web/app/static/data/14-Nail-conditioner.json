@@ -23,7 +23,8 @@
           "volume": 0.5
         },
         {
-          "ingredient": "Vegetable oils (for example sesame oil)",
+          "ingredient": "Vegetable oils",
+          "ingredientExamples":"sesame oil",
           "volume": "to 100"
         }
       ]
