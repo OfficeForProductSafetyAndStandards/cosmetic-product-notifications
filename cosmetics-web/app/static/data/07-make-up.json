@@ -12,7 +12,8 @@
         "volume": "60"
       },
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral)",
+        "ingredient": "Oils",
+        "ingredientExamples":"vegetable and/or mineral",
         "volume": "40"
       },
       {

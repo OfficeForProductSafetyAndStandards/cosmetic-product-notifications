@@ -12,7 +12,8 @@
           "volume": "40"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
           "volume": "30"
         },
         {
@@ -68,7 +69,8 @@
       "childNumber": 2,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
           "volume": "50"
         },
         {
@@ -125,11 +127,12 @@
       ]
     },
     {
-      "formulationName": "Make-up remover - non foaming cleanser (including thw-phase products)",
+      "formulationName": "Make-up remover - non foaming cleanser (including two-phase products)",
       "childNumber": 3,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples" : "vegetable and/or mineral,long chain alcohols",
           "volume": "80"
         },
         {
@@ -240,7 +243,8 @@
           "volume": "20"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples" :"vegetable and/or mineral,long chain alcohols",
           "volume": "20"
         },
         {
@@ -296,7 +300,8 @@
       "childNumber": 6,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples": "vegetable and/or mineral,long chain alcohols",
           "volume": "95"
         },
         {
@@ -371,7 +376,8 @@
           "volume": "30"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples" :"vegetable and/or mineral,long chain alcohols",
           "volume": "30"
         },
         {
@@ -564,7 +570,8 @@
       "childNumber": 10,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
           "volume": "30"
         },
         {
@@ -630,7 +637,8 @@
       "childNumber": 11,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
           "volume": "60"
         },
         {

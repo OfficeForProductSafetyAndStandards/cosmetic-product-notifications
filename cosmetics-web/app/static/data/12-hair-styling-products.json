@@ -117,12 +117,13 @@
 					"volume": 20
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats(for example long chain alcohols)",
+					"ingredient": "Oils, waxes and fats",
+        			"ingredientExamples":"vegetable and/or mineral,long chain alcohols",
 					"volume": 15
 				},
 				{
 					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
-          "volume": 15
+                    "volume": 15
 				},
 				{
 					"ingredient": "Resins, polymers (for example polyvinyl acetate, PVP) / Neutralising agent (for example aminomethyl propanol)",
@@ -310,10 +311,14 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats 25(for example long chain alcohols)"
+					"ingredient": "Oils, waxes and fats",
+        			"ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+        			"volume":"25"
+
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones,silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone,alcoxysilanes",
 					"volume": 25
 				},
 				{
@@ -322,7 +327,7 @@
 				},
 				{
 					"ingredient": "Humectants",
-          "ingredientExamples": "Glycerin",
+         			 "ingredientExamples": "Glycerin",
 					"volume": 10
 				},
 				{
@@ -428,7 +433,7 @@
 				},
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-          "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        		   "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
