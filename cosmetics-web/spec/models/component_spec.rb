@@ -19,7 +19,7 @@ RSpec.describe Component, type: :model do
     context "when notification is missing" do
       specify do
         component = described_class.new(name: "component x", notification: nil)
-        expect { component.valid? }.to raise_error
+        expect { component.valid? }.to raise_error NoMethodError
       end
     end
   end
@@ -40,7 +40,6 @@ RSpec.describe Component, type: :model do
         component.valid?
         expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
       end
-
     end
 
     context "when there is already a component with the same name but using uppercase for the same notification" do
@@ -71,8 +70,8 @@ RSpec.describe Component, type: :model do
     context "when component was imported" do
       let(:notification) { create(:notification, :via_zip_file) }
 
-      let(:component1) { build(:component, name: 'Some component', notification: notification) }
-      let(:component2) { build(:component, name: 'Some component', notification: notification) }
+      let(:component1) { build(:component, name: "Some component", notification: notification) }
+      let(:component2) { build(:component, name: "Some component", notification: notification) }
 
       before do
         component1.save(validate: false)
