@@ -7,7 +7,8 @@
       "childNumber": 1,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
           "volume": "30"
         },
         {
