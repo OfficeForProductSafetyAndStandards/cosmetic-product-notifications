@@ -83,8 +83,9 @@ RSpec.describe "Creating an account when having pending responsible person invit
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    check "Text message"
     fill_in "Mobile number", with: "07000000000"
-    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
     expect_to_be_on_secondary_authentication_page

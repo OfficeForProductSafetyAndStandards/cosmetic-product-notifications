@@ -8,14 +8,11 @@ module SecondaryAuthenticationConcern
   extend ActiveSupport::Concern
 
   def require_secondary_authentication(redirect_to: request.fullpath)
-    return unless Rails.configuration.secondary_authentication_enabled
+    return unless user && Rails.configuration.secondary_authentication_enabled
 
-    if user && (!user.mobile_number_verified || !secondary_authentication_present?)
-
-      if !user.account_security_completed? || !user.mobile_number
-        return redirect_to(registration_new_account_security_path)
-      end
-
+    if !user.account_security_completed?
+      redirect_to(registration_new_account_security_path)
+    elsif !secondary_authentication_present_in_session? || user.mobile_number_pending_verification?
       session[:secondary_authentication_redirect_to] = redirect_to
       session[:secondary_authentication_user_id] = user_id_for_secondary_authentication
       session[:secondary_authentication_notice] = notice
@@ -32,7 +29,7 @@ module SecondaryAuthenticationConcern
   end
 
   # returns true if 2 FA not needed
-  def secondary_authentication_present?
+  def secondary_authentication_present_in_session?
     return false if get_secondary_authentication_time.nil?
 
     last_otp_time = get_secondary_authentication_time
@@ -52,10 +49,10 @@ module SecondaryAuthenticationConcern
   end
 
   def set_secondary_authentication_cookie(timestamp)
-    cookies.signed["two-factor-#{session[:secondary_authentication_user_id]}"] = {
-      value: timestamp,
-      expiry: 0,
-    }
+    user_id = (session[:secondary_authentication_user_id] || user_id_for_secondary_authentication)
+    return if user_id.blank?
+
+    cookies.signed["two-factor-#{user_id}"] = { value: timestamp, expiry: 0 }
   end
 
   def get_secondary_authentication_time

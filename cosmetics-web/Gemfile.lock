@@ -99,6 +99,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     cf-app-utils (0.6)
+    chunky_png (1.4.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.8)
     connection_pool (2.2.3)
@@ -305,6 +306,11 @@ GEM
     reverse_markdown (2.0.0)
       nokogiri
     rexml (3.2.4)
+    rotp (6.2.0)
+    rqrcode (1.2.0)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 0.2)
+    rqrcode_core (0.2.0)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -507,6 +513,8 @@ DEPENDENCIES
   rails-controller-testing (~> 1.0.4)
   request_store (~> 1.5.0)
   rest-client (~> 2.1.0)
+  rotp (~> 6.2.0)
+  rqrcode (~> 1.2.0)
   rspec-collection_matchers (~> 1.2.0)
   rspec-html-matchers (~> 0.9.1)
   rspec-rails (~> 3.9.0)

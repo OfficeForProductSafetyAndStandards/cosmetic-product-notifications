@@ -66,7 +66,7 @@ class SecondaryAuthentication
   end
 
   def try_to_verify_user_mobile_number
-    user.update!(mobile_number_verified: true) unless user.mobile_number_verified
+    user.update!(mobile_number_verified: true) unless user.mobile_number_verified?
   end
 
   def try_to_unlock_secondary_authentication

@@ -135,6 +135,9 @@ en:
               invalid: *invalid_email
             password:
               too_short: "Password must be at least 8 characters"
+            secondary_authentication_methods:
+              blank: "Select at least a secondary authentication method"
+              invalid: "Invalid method. Secondary authentication methods accepted: 'sms','app' (or both)"
         responsible_person:
           attributes:
             name:
@@ -162,14 +165,18 @@ en:
               blank: "Enter your full name"
         registration/account_security_form:
           attributes:
-            mobile_number:
-              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
-              blank: "Please enter mobile number"
-            password:
-              blank: "Please enter password"
-              too_short: "Password must be at least 8 characters"
+            app_authentication_code:
+              blank: "Enter an access code"
+              invalid: "Enter a correct code"
             full_name:
               blank: "Enter your full name"
+            mobile_number:
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+            password:
+              blank: "Enter a password"
+              too_short: "Password must be at least 8 characters"
+            secondary_authentication_methods:
+              blank: "Select at least one method to get access codes"
         resend_secondary_authentication_code_form:
           attributes:
             mobile_number:
