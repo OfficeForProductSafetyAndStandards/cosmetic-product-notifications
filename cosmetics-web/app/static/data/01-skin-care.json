@@ -8,7 +8,7 @@
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and mineral, long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "30"
         },
         {
@@ -78,7 +78,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and mineral, long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "40"
         },
         {
@@ -143,7 +143,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and mineral, long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "40"
         },
         {
@@ -208,7 +208,7 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral), waxes and fats long chain alcohols ",
+          "ingredientExamples": "vegetable, mineral, waxes and fats long chain alcohols",
           "volume": "60"
         },
         {
@@ -273,7 +273,7 @@
       "ingredients": [
         {
            "ingredient": "Oils, waxes and fats",
-           "ingredientExamples":"vegetable and mineral, long chain alcohols",
+           "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "95"
         },
         {
@@ -343,7 +343,7 @@
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and mineral, long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -408,7 +408,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and mineral, long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -470,7 +470,7 @@
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and mineral, long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -526,7 +526,7 @@
       ]
     },
     {
-      "formulationName": "Skin gel (hydro-alcoholic based)",
+      "formulationName": "Skin gel (hydro-alchohol based)",
       "childNumber": 9,
       "ingredients": [
         {
@@ -704,7 +704,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": "30"
         },
         {
@@ -805,7 +805,7 @@
         },
         {
           "ingredient": "Binding agents",
-          "ingredientExamples": "vegetable and mineral oils, fatty acid esters",
+          "ingredientExamples": "vegetable, mineral oils, fatty acid esters",
           "volume": "10"
         },
         {
@@ -829,7 +829,7 @@
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExample": "vegetable and mineral, fatty alcohols",
+          "ingredientExample": "vegetable, mineral, fatty alcohols",
           "volume": "90"
         },
         {
