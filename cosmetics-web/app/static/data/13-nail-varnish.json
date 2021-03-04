@@ -12,32 +12,32 @@
         },
         {
           "ingredient": "Solvents",
-          "example": "ethyl acetate, butyl acetate, diacetone alcohol, PPG-2 butyl ether",
+          "ingredientExamples": "ethyl acetate, butyl acetate, diacetone alcohol, PPG-2 butyl ether",
           "volume": "90"
         },
         {
           "ingredient": "Resins, polymers",
-          "example": "nitrocellulose, acrylates copolymer, phthalic anhydride/butyl benzoic acid/propylene glycol copolymer",
+          "ingredientExamples": "nitrocellulose, acrylates copolymer, phthalic anhydride/butyl benzoic acid/propylene glycol copolymer",
           "volume": "50"
         },
         {
           "ingredient": "Plasticisers",
-          "example": "triethyl citrate",
+          "ingredientExamples": "triethyl citrate",
           "volume": "15"
         },
         {
           "ingredient": "Colourants, colour additives",
-          "example": "opacifying / pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "15"
         },
         {
           "ingredient": "Additional ingredients",
-          "example": "vitamins , proteins, plant extracts",
+          "ingredientExamples": "vitamins , proteins, plant extracts",
           "volume": "10"
         },
         {
           "ingredient": "Thickeners",
-          "example": "stearalkonium hectorite, silica",
+          "ingredientExamples": "stearalkonium hectorite, silica",
           "volume": "5"
         },
         {
@@ -52,22 +52,22 @@
       "ingredients": [
         {
           "ingredient": "Bulking agents",
-          "example": "kaolin, magnesium carbonate, chalk",
+          "ingredientExamples": "kaolin, magnesium carbonate, chalk",
           "volume": "80"
         },
         {
           "ingredient": "Colourants, colour additives",
-          "example": "opacifying agents / titanium dioxide",
+          "ingredientExamples": "opacifying agents, titanium dioxide",
           "volume": "30"
         },
         {
           "ingredient": "Binding agents",
-          "example": "waxes, stearic acid",
+          "ingredientExamples": "waxes, stearic acid",
           "volume": "25"
         },
         {
           "ingredient": "Thickeners",
-          "example": "bentonite",
+          "ingredientExamples": "bentonite",
           "volume": "5"
         }
       ]

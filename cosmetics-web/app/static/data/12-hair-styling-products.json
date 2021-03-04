@@ -8,7 +8,7 @@
 			"ingredients": [
 				{
 					"ingredient": "Oils",
-					"ingredientExamples": "Vegetable and/or mineral",
+					"ingredientExamples": "Vegetable, mineral",
 					"volume": 60
 				},
 				{
@@ -27,8 +27,8 @@
 					"volume": 20
 				},
 				{
-					"ingredient": "Silicones including volatile silicones",
-					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 20
 				},
 				{
@@ -37,8 +37,8 @@
 					"volume": 20
 				},
 				{
-					"ingredient": "Resins, polymers",
-					"ingredientExamples": "PVP/VA copolymer, acrylates copolymer) /Neutralising agent (for example aminomethyl propanol)",
+					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredientExamples":"PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -65,13 +65,13 @@
 			"childNumber": 2,
 			"ingredients": [
 				{
-					"ingredient": "Oils",
-					"ingredientExamples": "Vegetable and / or mineral and waxes",
+					"ingredient": "Oils and waxes",
+					"ingredientExamples": "Vegetable, mineral",
 					"volume": 99
 				},
 				{
-					"ingredient": "Silicones including volatile silicones",
-					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 99
 				},
 				{
@@ -118,15 +118,17 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-        			"ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+        			"ingredientExamples":"vegetable, mineral,long chain alcohols",
 					"volume": 15
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+                    "ingredientExample":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
                     "volume": 15
 				},
 				{
-					"ingredient": "Resins, polymers (for example polyvinyl acetate, PVP) / Neutralising agent (for example aminomethyl propanol)",
+					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredientExamples":"polyvinyl acetate, PVP, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -145,7 +147,7 @@
 				},
 				{
 					"ingredient": "Parfum",
-          "volume": 3
+         			 "volume": 3
 				},
 				{
 					"ingredient": "Preservatives, antimicrobials",
@@ -174,11 +176,13 @@
 					"volume": 40
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats(for example long chain alcohols)",
+					"ingredient": "Oils, waxes and fats",
+					"ingredientExamples":"vegetable, mineral, long chain alcohol",
 					"volume": 10
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 10
 				},
 				{
@@ -247,11 +251,13 @@
 					"volume": 80
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent (for example aminomethyl propanol, triethanolamine)",
+					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredientExamples":"PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol, triethanolamine",
 					"volume": 25
 				},
 				{
@@ -312,7 +318,7 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-        			"ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+        			"ingredientExamples":"vegetable, mineral,long chain alcohols",
         			"volume":"25"
 
 				},
@@ -424,11 +430,13 @@
 					"volume": 95
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats (for example long chain alcohols)",
+					"ingredient": "Oils, waxes and fats",
+          			"ingredientExamples":"vegetable and/or mineral, long chain alcohols",
 					"volume": 50
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 50
 				},
 				{
@@ -484,16 +492,18 @@
 					"volume": 95
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats(for example long chain alcohols) ",
+					"ingredient": "Oils, waxes and fats",
+          			"ingredientExamples":"vegetable, mineral, long chain alcohols",
 					"volume": 50
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 50
 				},
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-          "ingredientExamples": "Branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
+         			 "ingredientExamples": "Branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
@@ -872,7 +882,8 @@
 			"childNumber": 18,
 			"ingredients": [
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral) and waxes",
+					"ingredient": "Oils and waxes",
+					"ingredientExamples":" vegetable, mineral",
 					"volume": 80
 				},
 				{
