@@ -27,6 +27,13 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     @unfinished_notifications = get_unfinished_notifications(10)
 
     @registered_notifications = get_registered_notifications(10)
+    respond_to do |format|
+      format.html
+      format.csv do
+        @notifications = NotificationsDecorator.new(@responsible_person.notifications.completed.order(:created_at))
+        render csv: @notifications, filename: "all-notifications-#{Time.zone.now.to_s(:db)}"
+      end
+    end
   end
 
   def show; end
@@ -103,7 +110,7 @@ private
 
   def get_registered_notifications(page_size)
     @responsible_person.notifications
-      .where(state: :notification_complete)
+      .completed
       .paginate(page: params[:notified], per_page: page_size)
   end
 
