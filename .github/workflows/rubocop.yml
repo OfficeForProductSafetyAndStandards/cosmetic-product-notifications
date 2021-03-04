@@ -40,7 +40,7 @@ jobs:
     - name: Set up Nodejs
       uses: actions/setup-node@v1
       with:
-        node-version: 10.22.x
+        node-version: 10.24.x
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/node_modules
