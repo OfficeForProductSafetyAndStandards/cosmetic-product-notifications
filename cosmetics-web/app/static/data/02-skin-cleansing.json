@@ -13,7 +13,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples":"vegetable, mineral,long chain alcohols",
           "volume": "30"
         },
         {
@@ -70,7 +70,7 @@
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples":"vegetable, mineral,long chain alcohols",
           "volume": "50"
         },
         {
@@ -132,7 +132,7 @@
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples" : "vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples" : "vegetable, mineral,long chain alcohols",
           "volume": "80"
         },
         {
@@ -228,8 +228,9 @@
           "volume": "1"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral)",
-          "volume": "to 100"
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable, mineral",
+          "volume": "100"
         }
       ]
     },
@@ -244,7 +245,7 @@
         },
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples" :"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples" :"vegetable, mineral,long chain alcohols",
           "volume": "20"
         },
         {
@@ -301,7 +302,7 @@
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples": "vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples": "vegetable, mineral,long chain alcohols",
           "volume": "95"
         },
         {
@@ -377,7 +378,7 @@
         },
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples" :"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples" :"vegetable, mineral,long chain alcohols",
           "volume": "30"
         },
         {
@@ -571,7 +572,7 @@
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples":"vegetable, mineral,long chain alcohols",
           "volume": "30"
         },
         {
@@ -729,7 +730,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "Vegetable and/or mineral",
+          "ingredientExamples": "Vegetable, mineral",
           "volume": "1"
         },
         {
@@ -779,7 +780,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral) and emollients (for example, glycerin, PEG, isopropyl myristate)",
+          "ingredient": "Oils and emollients",
+           "ingredientExamples":"vegetable,mineral, glycerin, PEG, isopropyl myristate",
           "volume": "to 100"
         }
       ],

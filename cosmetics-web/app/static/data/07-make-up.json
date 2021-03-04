@@ -13,7 +13,7 @@
       },
       {
         "ingredient": "Oils",
-        "ingredientExamples":"vegetable and/or mineral",
+        "ingredientExamples":"vegetable, mineral",
         "volume": "40"
       },
       {
@@ -83,7 +83,8 @@
     "formulationName": "Foundation - anhydrous",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral)",
+        "ingredient": "Oils",
+        "ingredientExamples":"vegetable, mineral",
         "volume": "70"
       },
       {
@@ -155,7 +156,8 @@
         "volume": "40"
       },
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral)",
+        "ingredient": "Oils",
+        "ingredientExamples":"vegetable, mineral",
         "volume": "20"
       },
       {
@@ -251,7 +253,8 @@
     "formulationName": "Foundation / concealer (solid)",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "55"
       },
       {
@@ -370,7 +373,8 @@
     "formulationName": "Lipstick / lip cream (including concealer sticks / creams)",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), esters and fatty acids",
+        "ingredient": "Oils",
+        "ingredientExamples":"vegetable, mineral, esters and fatty acids",
         "volume": "65"
       },
       {
@@ -459,7 +463,8 @@
     "formulationName": "Lip colour and glosser/balm",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":" vegetable, mineral, long chain alcohols",
         "volume": "90"
       },
       {
@@ -548,7 +553,8 @@
     "formulationName": "Lip pencil",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "90"
       },
       {
@@ -631,7 +637,8 @@
     "formulationName": "Lip and eye fix",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "90"
       },
       {
@@ -693,7 +700,8 @@
     "formulationName": "Eye fix - anhydrous",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "70"
       },
       {
@@ -883,7 +891,8 @@
     "formulationName": "Eye shadow and blusher (cream)",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral) and waxes",
+        "ingredient": "Oils and waxes",
+        "ingredientExamples":"vegetable, mineral",
         "volume": "70"
       },
       {
@@ -935,7 +944,8 @@
     "formulationName": "Eye shadow and blusher - anhydrous (cream, stick, powder, …)",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "70"
       },
       {
@@ -988,7 +998,8 @@
     "formulationName": "Eye pencil",
     "ingredients": [
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "70"
       },
       {
@@ -1055,7 +1066,8 @@
         "volume": "25"
       },
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "30"
       },
       {
@@ -1111,7 +1123,8 @@
         "volume": "30"
       },
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "30"
       },
       {
@@ -1207,7 +1220,8 @@
         "volume": "45"
       },
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "30"
       },
       {
@@ -1283,7 +1297,8 @@
         "volume": "80"
       },
       {
-        "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
         "volume": "30"
       },
       {
