@@ -623,7 +623,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral) t",
+          "ingredientExamples": "vegetable, mineral",
           "volume": "to 100"
         }
       ]
@@ -723,7 +723,7 @@
         },
         {
           "ingredient": "Chemical exfoliating agents",
-          "ingredientExamples": "lactic acid, glycolic acid, salicylic acid (maximum concentration of salicylic acid permitted is 2%",
+          "ingredientExamples": "lactic acid, glycolic acid, salicylic acid (maximum concentration of salicylic acid permitted is 2%)",
           "volume": "10"
         },
         {
@@ -777,7 +777,7 @@
       "ingredients": [
         {
           "ingredient": "Petrolatum",
-          "volume": "to 100"
+          "volume": "100"
         },
         {
           "ingredient": "Parfum",
@@ -800,7 +800,7 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying,pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "40"
         },
         {
@@ -871,7 +871,7 @@
           "volume": "5"
         },
         {
-          "ingredient": "Cosmetic colorants",
+          "ingredient": "Cosmetic colourants",
           "volume": "5"
         },
         {
