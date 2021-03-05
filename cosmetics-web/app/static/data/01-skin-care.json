@@ -207,8 +207,8 @@
       "childNumber": 4,
       "ingredients": [
         {
-          "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral, waxes and fats long chain alcohols",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -432,7 +432,7 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying /pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "20"
         },
         {
@@ -488,7 +488,7 @@
           "volume": "20"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": "12"
         },
@@ -530,7 +530,7 @@
       "childNumber": 9,
       "ingredients": [
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat, isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat, isopropyl alcohol)",
           "volume": "70"
         },
         {
@@ -544,7 +544,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "fatty acid polyglycolethers",
           "volume": "6"
         },
@@ -647,7 +647,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": "5"
         },
         {
@@ -666,7 +666,7 @@
           "volume": "5"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "sorbitan stearate",
           "volume": "5"
         },
@@ -708,7 +708,7 @@
           "volume": "30"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "sorbitan stearate, TEA-stearate",
           "volume": "25"
         },
