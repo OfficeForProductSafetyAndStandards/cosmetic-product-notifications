@@ -328,7 +328,8 @@
 					"volume": 25
 				},
 				{
-					"ingredient": "Film forming agents, polymers, resins (for example polyvinyl acetate, PVP,polyquaternium-4) and neutralising agent (for example aminomethyl propanol)",
+					"ingredient": "Film forming agents, polymers, resins and neutralising agent",
+					"ingredientExamples":" polyvinyl acetate, PVP,polyquaternium-4, aminomethyl propanol",
 					"volume": 20
 				},
 				{
@@ -394,7 +395,8 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent(for example aminomethyl propanol) / Alkoxylated glucose derivatives",
+					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
+					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -431,7 +433,7 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-          			"ingredientExamples":"vegetable and/or mineral, long chain alcohols",
+          			"ingredientExamples":"vegetable, mineral, long chain alcohols",
 					"volume": 50
 				},
 				{
@@ -450,7 +452,8 @@
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent(for example aminomethyl propanol) / Alkoxylated glucose derivatives",
+					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
+					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -507,7 +510,8 @@
 					"volume": 40
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent(for example aminomethyl propanol) / Alkoxylated glucose derivatives",
+					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
+					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -780,7 +784,8 @@
 					"volume": 5
 				},
 				{
-					"ingedient": "Silicones (for example amodimethicone), silanes (for example alcoxysilanes)",
+					"ingedient": "Silicones, silanes",
+					"ingredientExamples":"amodimethicone, alcoxysilanes",
 					"volume": 5
 				},
 				{
@@ -837,7 +842,8 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Hair conditioning agents(for example silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone)), silanes (for example alcoxysilanes, polyquaternium-6)",
+					"ingredient": "Hair conditioning agents(for example silicones including volatile silicones, silanes",
+					"ingredientExamples":"silicones including volatile silicones, cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes, polyquaternium-6",
 					"volume": 2
 				},
 				{
