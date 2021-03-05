@@ -149,10 +149,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
           expect(response.body).not_to match(/Still on the market/)
         end
 
-        it "renders CMR substances" do
-          expect(response.body).to match(/Contains CMR substances/)
-        end
-
         it "renders nanomaterials" do
           expect(response.body).to match(/Nanomaterials/)
         end
