@@ -24,7 +24,7 @@ class Notification < ApplicationRecord
       new_reference_number = SecureRandom.rand(100_000_000)
       break unless Notification.where(reference_number: new_reference_number).exists?
     end
-    self.reference_number = new_reference_number if self.reference_number.nil?
+    self.reference_number = new_reference_number if reference_number.nil?
   end
 
   before_save :add_product_name, if: :will_save_change_to_product_name?

@@ -1,14 +1,11 @@
 class NotificationDecorator
-
   def initialize(notification)
     @notification = notification
   end
 
-  def to_csv
-    row = []
-    NotificationsDecorator::ATTRIBUTES.each do |attr|
-      row << @notification.send(attr)
+  def as_csv
+    NotificationsDecorator::ATTRIBUTES.map do |attr|
+      @notification.public_send(attr)
     end
-    row.join(",")
   end
 end

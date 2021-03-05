@@ -36,7 +36,7 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
 
     context "when requesting notifications for the company associated with the user" do
       before do
-        travel_to(Time.new(2021, 2, 20, 13))
+        travel_to(Time.zone.local(2021, 2, 20, 13))
 
         # Setup notifications belonging to the company
         create(:draft_notification, responsible_person: responsible_person)
@@ -77,24 +77,23 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
       end
 
       context "when downloading notifications as a file" do
-
         before do
-          travel_to(Time.new(2021, 2, 20, 13, 1))
+          travel_to(Time.zone.local(2021, 2, 20, 13, 1))
           create(:registered_notification, product_name: "Product 2", reference_number: 2, responsible_person: responsible_person)
 
           get "/responsible_persons/#{responsible_person.id}/notifications.csv"
         end
 
         let(:expected_csv) do
-          <<-CSV
-Product name,Reference number,Notification date,EU Reference number,EU Notification date
-Product 1,1,2021-02-20 13:00:00 UTC,,
-Product 2,2,2021-02-20 13:01:00 UTC,,
+          <<~CSV
+            Product name,Reference number,Notification date,EU Reference number,EU Notification date
+            Product 1,1,2021-02-20 13:00:00 UTC,,
+            Product 2,2,2021-02-20 13:01:00 UTC,,
           CSV
         end
 
         it "returns file with proper notifications" do
-          expect(response.body).to eq expected_csv.strip
+          expect(response.body).to eq expected_csv
         end
       end
     end
