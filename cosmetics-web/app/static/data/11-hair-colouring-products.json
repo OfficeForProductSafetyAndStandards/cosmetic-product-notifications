@@ -74,7 +74,7 @@
           "volume": 60
         },
         {
-          "ingredient": "Anionic / non-ionic / amphoteric surfactants",
+          "ingredient": "Anionic, non-ionic, amphoteric surfactants",
           "ingredientExamples": "sodium laureth sulfate)",
           "volume": 10
         },
@@ -141,7 +141,7 @@
           "volume": 10
         },
         {
-          "ingredient": "Anionic / non-ionic / amphoteric surfactants (for example ether of oleyl alcohol)",
+          "ingredient": "Anionic, non-ionic, amphoteric surfactants (for example ether of oleyl alcohol)",
           "volume": 10
         },
         {
@@ -237,7 +237,7 @@
           "volume": 20
         },
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": 16
         },
         {
@@ -345,7 +345,7 @@
           "volume": 20
         },
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": 16
         },
         {
@@ -607,7 +607,7 @@
           "volume": 15
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -885,7 +885,7 @@
       "childNumber": 16,
       "ingredients": [
         {
-          "ingredient": "Ammonium / sodium / potassium persulfate ",
+          "ingredient": "Ammonium, sodium, potassium persulfate ",
           "volume": 70
         },
         {
@@ -900,7 +900,7 @@
         },
         {
           "ingredient": "Alkaline agents including ammonium hydroxide liberators",
-          "ingredientExamples": "sodium / magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride",
+          "ingredientExamples": "sodium, magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride",
           "volume": 45
         },
         {
@@ -998,7 +998,7 @@
           "volume": 15
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -1073,7 +1073,7 @@
         },
         {
           "ingredient": "Soaps",
-          "ingredientExamples": "ammonium hydroxide / ethanolamine oleates",
+          "ingredientExamples": "ammonium hydroxide, ethanolamine oleates",
           "volume": 30
         },
         {
