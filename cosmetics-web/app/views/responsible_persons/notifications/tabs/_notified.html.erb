@@ -1,6 +1,16 @@
 <h2 class="govuk-heading-m">Notified cosmetic products</h2>
 <% if @registered_notifications.present? %>
   <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <ul class="govuk-list">
+        <li class="govuk-!-padding-bottom-2">
+          <%= link_to "Download a CSV of notified products", responsible_person_notifications_path(@responsible_person, format: :csv),
+                  class: "govuk-link--no-visited-state" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <ul class="product-list govuk-!-margin-bottom-0">
         <% @registered_notifications.each do |notification| %>
