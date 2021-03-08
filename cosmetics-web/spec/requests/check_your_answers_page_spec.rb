@@ -54,10 +54,6 @@ RSpec.describe "Check your answers page", type: :request do
         get edit_responsible_person_notification_path(params)
       end
 
-      it "displays whether CMRs are present" do
-        expect(response.body).to have_tag("td#has-cmrs")
-      end
-
       it "displays a list of CMRs" do
         expect(response.body).not_to have_tag("td#cmr-names")
       end

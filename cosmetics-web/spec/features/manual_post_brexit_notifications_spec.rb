@@ -8,6 +8,112 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
+  scenario "Manual, post-Brexit, exact ingredients, single item, with CMRS, no nanomaterials" do
+    visit new_responsible_person_add_notification_path(responsible_person)
+
+    expect_to_be_on__was_eu_notified_about_products_page
+    expect_back_link_to_notifications_page
+    answer_was_eu_notified_with "No"
+
+    expect_to_be_on__are_you_likely_to_notify_eu_page
+    expect_back_link_to_was_eu_notified_about_products_page
+    answer_are_you_likely_to_notify_eu_with "No"
+
+    expect_to_be_on__what_is_product_called_page
+    expect_back_link_to_are_you_likely_to_notify_eu_page
+    answer_product_name_with "SkinSoft tangerine shampoo"
+
+    expect_to_be_on__internal_reference_page
+    expect_back_link_to_what_is_product_called_page
+    answer_do_you_want_to_give_an_internal_reference_with "No"
+
+    expect_to_be_on__is_product_for_under_threes_page
+    expect_back_link_to_internal_reference_page
+    answer_is_product_for_under_threes_with "No"
+
+    expect_to_be_on__multi_item_kits_page
+    expect_back_link_to_is_product_for_under_threes_page
+    answer_is_product_multi_item_kit_with "No, this is a single product"
+
+    exepct_to_be_on_upload_product_label_page
+    expect_back_link_to_multi_item_kits_page
+    upload_product_label
+
+    expect_to_be_on__is_item_available_in_shades_page
+    expect_back_link_to_upload_product_label_page
+    answer_is_item_available_in_shades_with "No"
+
+    expect_to_be_on__physical_form_of_item_page
+    expect_back_link_to_is_item_available_in_shades_page
+    answer_what_is_physical_form_of_item_with "Liquid"
+
+    expect_to_be_on__what_is_product_contained_in_page
+    expect_back_link_to_physical_form_of_item_page
+    answer_what_is_product_contained_in_with "A pressurised container, an impregnated sponge, wipe, patch or pad, or is encapsulated"
+
+    expect_to_be_on__what_type_of_applicator_page
+    expect_back_link_to_what_is_product_contained_in_page
+    answer_what_type_of_applicator_with "Pressurised spray"
+
+    expect_to_be_on__does_item_contain_cmrs_page
+    expect_back_link_to_what_type_of_applicator_page
+    answer_does_item_contain_cmrs_with "Yes"
+
+    fill_in "component_cmrs_attributes_0_name", with: "Cmrs 1"
+    fill_in "component_cmrs_attributes_0_cas_number", with: "1111-11-1"
+    fill_in "component_cmrs_attributes_0_ec_number", with: "111-111-3"
+    click_button "Continue"
+
+    expect_to_be_on__does_item_contain_nanomaterial_page
+    expect_back_link_to_add_cmrs_page
+    answer_does_item_contain_nanomaterials_with "No"
+
+    expect_to_be_on__item_category_page
+    expect_back_link_to_does_item_contain_nanomaterial_page
+    answer_item_category_with "Hair and scalp products"
+
+    expect_to_be_on__item_subcategoy_page(category: "hair and scalp products")
+    expect_back_link_to_item_category_page
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+
+    expect_to_be_on__item_sub_subcategory_page(subcategory: "hair and scalp care and cleansing products")
+    expect_back_link_to_item_category_page("hair_and_scalp_products")
+    answer_item_sub_subcategory_with "Shampoo"
+
+    expect_to_be_on__formulation_method_page
+    expect_back_link_to_item_category_page("hair_and_scalp_care_and_cleansing_products")
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+
+    expect_to_be_on__upload_ingredients_page "Exact concentrations of the ingredients"
+    expect_back_link_to_formulation_method_page
+    upload_ingredients_pdf
+
+    expect_to_be_on__what_is_ph_range_of_product_page
+    expect_back_link_to_upload_ingredients_page
+    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
+
+    expect_to_be_on__check_your_answers_page(product_name: "SkinSoft tangerine shampoo")
+    expect_back_link_to_what_is_ph_range_of_product_page
+
+    expect_check_your_answers_page_to_contain(
+      product_name: "SkinSoft tangerine shampoo",
+      number_of_components: "1",
+      shades: "None",
+      nanomaterials: "None",
+      contains_cmrs: "Yes",
+      category: "Hair and scalp products",
+      subcategory: "Hair and scalp care and cleansing products",
+      sub_subcategory: "Shampoo",
+      formulation_given_as: "Exact concentration",
+      physical_form: "Liquid",
+      ph: "Between 3 and 10",
+    )
+    click_button "Accept and submit"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
+  end
+
   scenario "Manual, post-Brexit, exact ingredients, single item, no nanomaterials" do
     visit new_responsible_person_add_notification_path(responsible_person)
 
@@ -94,7 +200,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       product_name: "SkinSoft tangerine shampoo",
       number_of_components: "1",
       shades: "None",
-      contains_cmrs: "No",
       nanomaterials: "None",
       category: "Hair and scalp products",
       subcategory: "Hair and scalp care and cleansing products",
@@ -195,7 +300,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       product_name: "SkinSoft tangerine shampoo",
       number_of_components: "1",
       shades: "None",
-      contains_cmrs: "No",
       nanomaterials: "None",
       category: "Hair and scalp products",
       subcategory: "Hair and scalp care and cleansing products",
@@ -300,7 +404,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       product_name: "SkinSoft tangerine shampoo",
       number_of_components: "1",
       shades: "None",
-      contains_cmrs: "No",
       nanomaterials: "None",
       category: "Hair and scalp products",
       subcategory: "Hair and scalp care and cleansing products",
@@ -411,7 +514,6 @@ RSpec.describe "Manual, pre-Brexit notifications", :with_stubbed_antivirus, type
       product_name: "SkinSoft tangerine shampoo",
       number_of_components: "1",
       shades: "None",
-      contains_cmrs: "No",
       nanomaterials: "None",
       category: "Hair and scalp products",
       subcategory: "Hair and scalp care and cleansing products",

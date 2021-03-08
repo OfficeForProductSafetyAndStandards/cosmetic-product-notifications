@@ -246,6 +246,10 @@ def expect_back_link_to_does_item_contain_cmrs_page
   expect_back_link_to(/\/build\/contains_cmrs$/)
 end
 
+def expect_back_link_to_add_cmrs_page
+  expect_back_link_to(/\/build\/add_cmrs$/)
+end
+
 def expect_to_be_on__does_item_contain_nanomaterial_page
   expect(page.current_path).to end_with("/build/contains_nanomaterials")
   expect(page).to have_h1("Nanomaterials")
@@ -412,18 +416,21 @@ def expect_to_be_on__upload_formulation_document_page(header_text)
 end
 
 # rubocop:disable Naming/MethodParameterName
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs: nil, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)
 
     expect(page).to have_summary_item(key: "Number of components", value: number_of_components)
-    expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
     expect(page).to have_summary_item(key: "Nanomaterials", value: nanomaterials)
     expect(page).to have_summary_item(key: "Category of product", value: category)
     expect(page).to have_summary_item(key: "Category of #{category.downcase.singularize}", value: subcategory)
     expect(page).to have_summary_item(key: "Category of #{subcategory.downcase.singularize}", value: sub_subcategory)
     expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
+
+    if contains_cmrs
+      expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
+    end
 
     if eu_notification_date
       expect(page).to have_summary_item(key: "EU notification date", value: eu_notification_date)
@@ -466,7 +473,11 @@ def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, numbe
 
     within_table(kit_item[:name]) do
       expect(page).to have_summary_item(key: "Shades", value: kit_item[:shades])
-      expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
+
+      if kit_item[:contains_cmrs]
+        expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
+      end
+
       expect(page).to have_summary_item(key: "Nanomaterials", value: kit_item[:nanomaterials])
 
       if kit_item[:application_instruction]

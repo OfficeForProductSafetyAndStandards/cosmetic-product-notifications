@@ -77,7 +77,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       product_name: "SkinSoft deep blue mouthwash",
       number_of_components: "1",
       shades: "None",
-      contains_cmrs: "No",
+
       nanomaterials: "None",
       category: "Oral hygiene products",
       subcategory: "Mouth wash / breath spray",
@@ -162,7 +162,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       product_name: "SkinSoft deep blue mouthwash",
       number_of_components: "1",
       shades: "None",
-      contains_cmrs: "No",
+
       nanomaterials: "None",
       category: "Oral hygiene products",
       subcategory: "Mouth wash / breath spray",
@@ -324,7 +324,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
         {
           name: "SkinSoft strawberry blonde hair colourant",
           shades: "None",
-          contains_cmrs: "No",
+
           nanomaterials: "None",
           category: "Hair and scalp products",
           subcategory: "Hair colouring products",
@@ -337,7 +337,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
         {
           name: "SkinSoft strawberry blonde hair fixer",
           shades: "None",
-          contains_cmrs: "No",
+
           nanomaterials: "None",
           category: "Hair and scalp products",
           subcategory: "Hair colouring products",
@@ -449,7 +449,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
       product_name: "SkinSoft carbon black eyeshadow",
       number_of_components: "1",
       shades: "None",
-      contains_cmrs: "No",
+
       nanomaterials: "Carbon Black",
       application_instruction: "Dermal",
       exposure_condition: "Left on",
@@ -649,7 +649,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
         {
           name: "SkinSoft nano black hair dye kit colourant",
           shades: "None",
-          contains_cmrs: "No",
+
           nanomaterials: "Carbon Black",
           application_instruction: "Dermal",
           exposure_condition: "Rinsed off",
@@ -664,7 +664,7 @@ RSpec.describe "Manual, pre-Brexit notifications", type: :feature do
         {
           name: "SkinSoft nano black hair dye kit fixer",
           shades: "None",
-          contains_cmrs: "No",
+
           nanomaterials: "Carbon Black",
           application_instruction: "Dermal",
           exposure_condition: "Rinsed off",
