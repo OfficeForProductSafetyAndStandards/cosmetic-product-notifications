@@ -157,6 +157,19 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
           expect(response.body).to match(/Physical form/)
         end
       end
+
+      describe "Notification with CMRS substances" do
+        let(:cmr) { create(:cmr) }
+        let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
+        let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+        let(:notification) { create(:notification, :imported, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
+
+        render_views
+
+        it "renders CMR substances" do
+          expect(response.body).to match(/Contains CMR substances/)
+        end
+      end
     end
   end
 
