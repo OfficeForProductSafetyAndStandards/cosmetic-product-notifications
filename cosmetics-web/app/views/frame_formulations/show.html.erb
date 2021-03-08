@@ -4,7 +4,7 @@
 <div class="govuk-grid-row">
 
   <div class="govuk-grid-column-full">
-    <span class="govuk-caption-l">Frame formulation for <%= @formulation["name"] %></span>
+    <span class="govuk-caption-l">Formulation name</span>
     <h1 class="govuk-heading-l">
       <%= @subformulation["formulationName"] %>
     </h1>
@@ -13,6 +13,14 @@
     </h2>
 
     <dl class="meta govuk-summary-list govuk-!-margin-bottom-9">
+      <div class="govuk-summary-list__row govuk-body-s">
+        <dt class="govuk-summary-list__key no-border">
+          Product category:
+        </dt>
+        <dd class="govuk-summary-list__value no-border">
+          <%= @formulation["name"] %>
+        </dd>
+      </div>
       <div class="govuk-summary-list__row govuk-body-s">
         <dt class="govuk-summary-list__key no-border">
         Frame formulation number:
@@ -35,11 +43,15 @@
   </div>
 
   <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">Frame formulation</h2>
+  </div>
+
+  <div class="govuk-grid-column-full">
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Ingredient</th>
-          <th scope="col" class="govuk-table__header govuk-table__header--right">Maximum levels (% w/w)</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--right">Maximum&nbsp;concentration&nbsp;(%&nbsp;w/w)</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
