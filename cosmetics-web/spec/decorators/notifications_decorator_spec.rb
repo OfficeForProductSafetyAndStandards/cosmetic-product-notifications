@@ -14,9 +14,9 @@ RSpec.describe NotificationsDecorator do
   let(:expected_csv) do
     <<~CSV
       Product name,Reference number,Notification date,EU Reference number,EU Notification date
-      Product 1,111,2021-02-20 13:00:00 UTC,,
-      Product 2,222,2021-02-20 13:00:00 UTC,123456789,
-      Product 3,333,2021-02-20 13:00:00 UTC,123456789,2020-09-22 13:00:00 UTC
+      Product 1,111,2021-02-20 13:00:00 +0000,,
+      Product 2,222,2021-02-20 13:00:00 +0000,123456789,
+      Product 3,333,2021-02-20 13:00:00 +0000,123456789,2020-09-22 13:00:00 +0100
     CSV
   end
 

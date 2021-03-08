@@ -87,8 +87,8 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
         let(:expected_csv) do
           <<~CSV
             Product name,Reference number,Notification date,EU Reference number,EU Notification date
-            Product 1,1,2021-02-20 13:00:00 UTC,,
-            Product 2,2,2021-02-20 13:01:00 UTC,,
+            Product 1,1,2021-02-20 13:00:00 +0000,,
+            Product 2,2,2021-02-20 13:01:00 +0000,,
           CSV
         end
 
