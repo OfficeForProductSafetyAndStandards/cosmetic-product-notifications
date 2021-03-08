@@ -8,37 +8,37 @@
     "ingredients": [
       {
         "ingredient": "Propellants",
-        "ingredientExamples": "Dimethyl ether, hydrocarbons",
+        "ingredientExamples": "dimethyl ether, hydrocarbons",
         "volume": "90"
       },
       {
         "ingredient": "Emollients, humectants",
-        "ingredientExamples": "Isopropyl myristate, glycerin, propylene glycol",
+        "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol",
         "volume": "20"
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "20"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "20"
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "20"
       },
       {
         "ingredient": "Aluminium salts",
-        "ingredientExamples": "Aluminum chlorohydrate",
+        "ingredientExamples": "aluminum chlorohydrate",
         "volume": "10"
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Stearalkonium bentonite",
+        "ingredientExamples": "stearalkonium bentonite",
         "volume": "10"
       },
       {
@@ -47,17 +47,17 @@
       },
       {
         "ingredient": "Bulking agents",
-        "ingredientExamples": "Perlite, nylon powder",
+        "ingredientExamples": "perlite, nylon powder",
         "volume": "5"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Vitamins, plant extracts",
+        "ingredientExamples": "vitamins, plant extracts",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "4"
       },
       {
@@ -80,47 +80,47 @@
       },
       {
         "ingredient": "Propellants",
-        "ingredientExamples": "Dimethyl ether, hydrocarbons, compressed gas",
+        "ingredientExamples": "dimethyl ether, hydrocarbons, compressed gas",
         "volume": "90"
       },
       {
         "ingredient": "Humectants, emollients",
-        "ingredientExamples": "Isopropyl myristate, glycerin, propylene glycol",
+        "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol",
         "volume": "25"
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "15"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "15"
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "15"
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Stearalkonium bentonite",
+        "ingredientExamples": "stearalkonium bentonite",
         "volume": "10"
       },
       {
         "ingredient": "Bulking agents",
-        "ingredientExamples": "Perlite, nylon powder",
+        "ingredientExamples": "perlite, nylon powder",
         "volume": "5"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts",
+        "ingredientExamples": "plant extracts",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "4"
       },
       {
@@ -148,17 +148,17 @@
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "30"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "30"
       },
       {
         "ingredient": "Antiperspirant salts",
-        "ingredientExamples": "Aluminium salt or aluminium/zirconium complex",
+        "ingredientExamples": "aluminium salt or aluminium/zirconium complex",
         "volume": "25"
       },
       {
@@ -168,22 +168,22 @@
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "20"
       },
       {
         "ingredient": "Bulking agents",
-        "ingredientExamples": "Perlite, nylon powder",
+        "ingredientExamples": "perlite, nylon powder",
         "volume": "10"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts",
+        "ingredientExamples": "plant extracts",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "5"
       },
       {
@@ -210,12 +210,12 @@
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "30"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "30"
       },
       {
@@ -225,22 +225,22 @@
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "20"
       },
       {
         "ingredient": "Bulking agents",
-        "ingredientExamples": "Perlite, nylon powder",
+        "ingredientExamples": "perlite, nylon powder",
         "volume": "20"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts, EDTA",
+        "ingredientExamples": "plant extracts, EDTA",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "5"
       },
       {
@@ -267,22 +267,22 @@
       },
       {
         "ingredient": "Humectants",
-        "ingredientExamples": "Propylene glycol, glycerin",
+        "ingredientExamples": "propylene glycol, glycerin",
         "volume": "80"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "50"
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "45"
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain soparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain soparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "45"
       },
       {
@@ -292,27 +292,27 @@
       },
       {
         "ingredient": "Antiperspirant salts",
-        "ingredientExamples": "Aluminum chlorohydrate, aluminum zirconium tetrachlorohydrate",
+        "ingredientExamples": "aluminum chlorohydrate, aluminum zirconium tetrachlorohydrate",
         "volume": "25"
       },
       {
         "ingredient": "Soaps, emulsifying agents",
-        "ingredientExamples": "Sodium stearate",
+        "ingredientExamples": "sodium stearate",
         "volume": "20"
       },
       {
         "ingredient": "Bulking agents",
-        "ingredientExamples": "Stearalkonium bentonite, perlite, nylon powder, talc",
+        "ingredientExamples": "stearalkonium bentonite, perlite, nylon powder, talc",
         "volume": "20"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts, EDTA",
+        "ingredientExamples": "plant extracts, EDTA",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "5"
       },
       {
@@ -339,22 +339,22 @@
       },
       {
         "ingredient": "Humectants",
-        "ingredientExamples": "Propylene glycol, glycerin",
+        "ingredientExamples": "propylene glycol, glycerin",
         "volume": "80"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "50"
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "45"
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "45"
       },
       {
@@ -364,22 +364,22 @@
       },
       {
         "ingredient": "Soaps, emulsifying agents",
-        "ingredientExamples": "Sodium stearate",
+        "ingredientExamples": "sodium stearate",
         "volume": "25"
       },
       {
         "ingredient": "Bulking agents",
-        "ingredientExamples": "Stearalkonium bentonite, perlite, nylon powder, talc",
+        "ingredientExamples": "stearalkonium bentonite, perlite, nylon powder, talc",
         "volume": "20"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts, EDTA",
+        "ingredientExamples": "plant extracts, EDTA",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "5"
       },
       {
@@ -406,37 +406,37 @@
       },
       {
         "ingredient": "Aluminium salts",
-        "ingredientExamples": "Aluminum chlorohydrate",
+        "ingredientExamples": "aluminum chlorohydrate",
         "volume": "30"
       },
       {
         "ingredient": "Emollients, humectants",
-        "ingredientExamples": "Isopropyl myristate, glycerin, propylene glycol derivatives",
+        "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol derivatives",
         "volume": "25"
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "15"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "15"
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "15"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts, EDTA",
+        "ingredientExamples": "plant extracts, EDTA",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "4"
       },
       {
@@ -463,32 +463,32 @@
       },
       {
         "ingredient": "Emollients, humectants",
-        "ingredientExamples": "Propylene glycol, glycerin",
+        "ingredientExamples": "propylene glycol, glycerin",
         "volume": "25"
       },
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "15"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "15"
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "15"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts",
+        "ingredientExamples": "plant extracts",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "4"
       },
       {
@@ -511,17 +511,17 @@
     "ingredients": [
       {
         "ingredient": "Oils and waxes",
-        "ingredientExamples": "Vegetable, mineral, isoparaffin",
+        "ingredientExamples": "vegetable, mineral, isoparaffin",
         "volume": "30"
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Dimethicone, cyclopentasiloxane",
+        "ingredientExamples": "dimethicone, cyclopentasiloxane",
         "volume": "30"
       },
       {
         "ingredient": "Antiperspirant salts",
-        "ingredientExamples": "Aluminium or zirconium salts",
+        "ingredientExamples": "aluminium or zirconium salts",
         "volume": "30"
       },
       {
@@ -531,27 +531,27 @@
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "20"
       },
       {
         "ingredient": "Emollients",
-        "ingredientExamples": "Long chain alcohols",
+        "ingredientExamples": "long chain alcohols",
         "volume": "20"
       },
       {
         "ingredient": "Emulsifying agents",
-        "ingredientExamples": "Ceteareth-30, PEG stearate",
+        "ingredientExamples": "ceteareth-30, PEG stearate",
         "volume": "10"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts, EDTA",
+        "ingredientExamples": "plant extracts, EDTA",
         "volume": "5"
       },
       {
         "ingredient": "Deodorants",
-        "ingredientExamples": "Zinc ricinoleate",
+        "ingredientExamples": "zinc ricinoleate",
         "volume": "5"
       },
       {
