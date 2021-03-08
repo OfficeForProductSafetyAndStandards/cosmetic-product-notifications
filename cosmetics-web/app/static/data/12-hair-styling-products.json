@@ -8,42 +8,42 @@
 			"ingredients": [
 				{
 					"ingredient": "Oils",
-					"ingredientExamples": "Vegetable, mineral",
+					"ingredientExamples": "vegetable, mineral",
 					"volume": 60
 				},
 				{
 					"ingredient": "Humectants",
-					"ingredientExamples": "Propylene glycol, glycerin",
+					"ingredientExamples": "propylene glycol, glycerin",
 					"volume": 50
 				},
 				{
 					"ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-					"ingredientExamples": "Ethoxylated fatty acids",
+					"ingredientExamples": "ethoxylated fatty acids",
 					"volume": 30
 				},
 				{
 					"ingredient": "Hair conditioning agents",
-					"ingredientExamples": "Cellulose derivatives, cationic polymers",
+					"ingredientExamples": "cellulose derivatives, cationic polymers",
 					"volume": 20
 				},
 				{
 					"ingredient": "Silicones including volatile silicones, silanes",
-					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 20
 				},
 				{
 					"ingredient": "Hair texturising agents",
-					"ingredientExamples": "Kaolin, starch",
+					"ingredientExamples": "kaolin, starch",
 					"volume": 20
 				},
 				{
 					"ingredient": "Resins, polymers, Neutralising agent",
-					"ingredientExamples":"PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredientExamples":"pvp, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins, colourants, chelating agents",
+					"ingredientExamples": "uv filters, vitamins, colourants, chelating agents",
 					"volume": 5
 				},
 				{
@@ -66,17 +66,17 @@
 			"ingredients": [
 				{
 					"ingredient": "Oils and waxes",
-					"ingredientExamples": "Vegetable, mineral",
+					"ingredientExamples": "vegetable, mineral",
 					"volume": 99
 				},
 				{
 					"ingredient": "Silicones including volatile silicones, silanes",
-					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 99
 				},
 				{
 					"ingredient": "Emulsifying agents",
-					"ingredientExamples": "Ethoxylated fatty acids",
+					"ingredientExamples": "ethoxylated fatty acids",
 					"volume": 25
 				},
 				{
@@ -85,7 +85,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins",
+					"ingredientExamples": "uv filters, vitamins",
 					"volume": 2
 				},
 				{
@@ -104,7 +104,7 @@
 			"ingredients": [
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-					"ingredientExamples": "Branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
+					"ingredientExamples": "branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 90
 				},
 				{
@@ -113,7 +113,7 @@
 				},
 				{
 					"ingredient": "Hair conditioning agents ",
-					"ingredientExamples": "Cationic polymers, cellulose derivatives",
+					"ingredientExamples": "cationic polymers, cellulose derivatives",
 					"volume": 20
 				},
 				{
@@ -187,17 +187,17 @@
 				},
 				{
 					"ingredient": "Resins, polymers",
-					"ingredientExamples": "Polyvinyl acetate, PVP",
+					"ingredientExamples": "polyvinyl acetate, PVP",
 					"volume": 5
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins",
+					"ingredientExamples": "uv filters, vitamins",
 					"volume": 3
 				},
 				{
 					"ingredient": "Cationic surfactants",
-					"ingredientExamples": "Cetrimonium chloride",
+					"ingredientExamples": "cetrimonium chloride",
 					"volume": 3
 				},
 				{
@@ -206,17 +206,17 @@
 				},
 				{
 					"ingredient": "Humectants",
-					"ingredientExamples": "Propylene glycol",
+					"ingredientExamples": "propylene glycol",
 					"volume": 2
 				},
 				{
 					"ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
-					"ingredientExamples": "Ethoxylated fatty acids",
+					"ingredientExamples": "ethoxylated fatty acids",
 					"volume": 2
 				},
 				{
 					"ingredient": "Neutralising agents",
-					"ingredientExamples": "Aminomethyl propanol",
+					"ingredientExamples": "aminomethyl propanol",
 					"volume": 2
 				},
 				{
@@ -225,7 +225,7 @@
 				},
 				{
 					"ingredient": "Cationic polymers",
-					"ingredientExamples": "Polyquaternium-11,polyquaternium-28 ",
+					"ingredientExamples": "polyquaternium-11,polyquaternium-28 ",
 					"volume": 1
 				},
 				{
@@ -272,12 +272,12 @@
 				},
 				{
 					"ingredient": "Colourants, colour additives",
-					"ingredientExamples": "Opacifying / pearlescent agents",
+					"ingredientExamples": "opacifying / pearlescent agents",
 					"volume": 15
 				},
 				{
 					"ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
-					"ingredientExamples": "Ethoxylated fatty acids",
+					"ingredientExamples": "ethoxylated fatty acids",
 					"volume": 5
 				},
 				{
@@ -286,7 +286,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins",
+					"ingredientExamples": "uv filters, vitamins",
 					"volume": 2
 				},
 				{
@@ -313,7 +313,7 @@
 				},
 				{
 					"ingredient": "Propellants",
-					"ingredientExamples": "Hydrocarbons, dimethyl ether, compressed gas",
+					"ingredientExamples": "hydrocarbons, dimethyl ether, compressed gas",
 					"volume": 30
 				},
 				{
@@ -334,7 +334,7 @@
 				},
 				{
 					"ingredient": "Humectants",
-         			 "ingredientExamples": "Glycerin",
+         			 "ingredientExamples": "glycerin",
 					"volume": 10
 				},
 				{
@@ -343,22 +343,22 @@
 				},
 				{
 					"ingredient": "Cationic surfactants",
-					"ingredientExamples": "Cetrimonium chloride",
+					"ingredientExamples": "cetrimonium chloride",
 					"volume": 5
 				},
 				{
 					"ingredient": "Non-ionic surfactants",
-					"ingredientExamples": "Oleth-20 ",
+					"ingredientExamples": "oleth-20 ",
 					"volume": 5
 				},
 				{
 					"ingredient": "Hair texturizing agents",
-					"ingredientExamples": "Kaolin, starch ",
+					"ingredientExamples": "kaolin, starch ",
 					"volume": 3
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins",
+					"ingredientExamples": "uv filters, vitamins",
 					"volume": 3
 				},
 				{
@@ -391,17 +391,17 @@
 				},
 				{
 					"ingredient": "Humectants",
-					"ingredientExamples": "Glycerin, propylene glycol",
+					"ingredientExamples": "glycerin, propylene glycol",
 					"volume": 30
 				},
 				{
 					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
-					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredientExamples":"pvp/va copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins",
+					"ingredientExamples": "uv filters, vitamins",
 					"volume": 3
 				},
 				{
@@ -443,7 +443,7 @@
 				},
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-        		   "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        		   "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
@@ -453,17 +453,17 @@
 				},
 				{
 					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
-					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredientExamples":"pvp/va copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
 					"ingredient": "Plasticisers",
-					"ingredientExamples": "Polyglycol ethers, alcohol esters",
+					"ingredientExamples": "polyglycol ethers, alcohol esters",
 					"volume": 2
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins",
+					"ingredientExamples": "uv filters, vitamins",
 					"volume": 2
 				},
 				{
@@ -506,7 +506,7 @@
 				},
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-         			 "ingredientExamples": "Branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
+         			 "ingredientExamples": "branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
@@ -572,27 +572,27 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "Thickeners, emulsifying agents",
+					"ingredientExamples": "thickeners, emulsifying agents",
 					"volume": 3
 				},
 				{
 					"ingredient": "Anionic, non-ionic, amphoteric surfactants",
-					"ingredientExamples": "Cocamidopropyl betaine",
+					"ingredientExamples": "cocamidopropyl betaine",
 					"volume": 3
 				},
 				{
 					"ingredient": "Cationic surfactants",
-					"ingredientExamples": "Dicetyldimonium chloride",
+					"ingredientExamples": "dicetyldimonium chloride",
 					"volume": 3
 				},
 				{
 					"ingredient": "Anionic, cationic polymers",
-					"ingredientExamples": "Acrylates copolymer, polyquaternium-11",
+					"ingredientExamples": "acrylates copolymer, polyquaternium-11",
 					"volume": 2.5
 				},
 				{
 					"ingredient": "Hair conditioning agents",
-					"ingredientExamples": "Proteins",
+					"ingredientExamples": "proteins",
 					"volume": 2.5
 				},
 				{

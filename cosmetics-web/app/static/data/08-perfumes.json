@@ -16,7 +16,7 @@
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExamples": "Glycerin, propylene glycol",
+          "ingredientExamples": "glycerin, propylene glycol",
           "volume": "10"
         },
         {
@@ -30,7 +30,7 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples": "Carbomer",
+          "ingredientExamples": "carbomer",
           "volume": "2"
         },
         {
@@ -39,7 +39,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "Chelating agents",
+          "ingredientExamples": "chelating agents",
           "volume": "1"
         },
         {
@@ -58,17 +58,17 @@
       "ingredients": [
         {
           "ingredient": "Mineral Bulking agents",
-          "ingredientExamples": "Talc, kaolin, magnesium, calcium carbonate",
+          "ingredientExamples": "talc, kaolin, magnesium, calcium carbonate",
           "volume": "99"
         },
         {
           "ingredient": "Other Bulking agents",
-          "ingredientExamples": "Starch, nylon powder, sodium polyacrylate copolymer",
+          "ingredientExamples": "starch, nylon powder, sodium polyacrylate copolymer",
           "volume": "50"
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "Opacifying, pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "40"
         },
         {
@@ -77,12 +77,12 @@
         },
         {
           "ingredient": "Binding agents",
-          "ingredientExamples": "Vegetable, mineral oils, fatty acid esters",
+          "ingredientExamples": "vegetable, mineral oils, fatty acid esters",
           "volume": "10"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "UV filters, vitamins, antioxidants",
+          "ingredientExamples": "uv filters, vitamins, antioxidants",
           "volume": "5"
         },
         {
@@ -102,17 +102,17 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "Opacifying, pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "50"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
           "volume": "30"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExamples": "Glycerin, propylene glycol",
+          "ingredientExamples": "glycerin, propylene glycol",
           "volume": "30"
         },
         {
@@ -121,22 +121,22 @@
         },
         {
           "ingredient": "Bulking agents",
-          "ingredientExamples": "Silica, nylon powder, starch",
+          "ingredientExamples": "silica, nylon powder, starch",
           "volume": "20"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples": "Carbomer, hydroxyethylcellulose",
+          "ingredientExamples": "carbomer, hydroxyethylcellulose",
           "volume": "10"
         },
         {
           "ingredient": "Film forming polymers",
-          "ingredientExamples": "Acrylic resin, ammonium acrylates copolymer",
+          "ingredientExamples": "acrylic resin, ammonium acrylates copolymer",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "Vitamins, proteins, antioxidants",
+          "ingredientExamples": "vitamins, proteins, antioxidants",
           "volume": "5"
         },
         {
@@ -155,12 +155,12 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "Opacifying, pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "40"
         },
         {
           "ingredient": "Silicones including volatile silicones",
-          "ingredientExamples": "Cyclopentasiloxane, dimethicone",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
           "volume": "30"
         },
         {
@@ -169,27 +169,27 @@
         },
         {
           "ingredient": "Bulking agents",
-          "ingredientExamples": "Silica, nylon powder, starch",
+          "ingredientExamples": "silica, nylon powder, starch",
           "volume": "15"
         },
         {
           "ingredient": "Humectants",
-          "ingredientExamples": "Glycerin, propylene glycol",
+          "ingredientExamples": "glycerin, propylene glycol",
           "volume": "10"
         },
         {
           "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
-          "ingredientExamples": "Glyceryl stearate, PEG stearate",
+          "ingredientExamples": "glyceryl stearate, PEG stearate",
           "volume": "5"
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples": "Dextrin palmitate",
+          "ingredientExamples": "dextrin palmitate",
           "volume": "5"
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "Antioxidants, plant extracts",
+          "ingredientExamples": "antioxidants, plant extracts",
           "volume": "5"
         },
         {
