@@ -18,7 +18,7 @@
         },
         {
           "ingredien": "Non-ionic surfactant",
-          "ingredientExamples": "",
+          "ingredientExamples": "fatty alkanolamides",
           "volume": 15
         },
         {
@@ -28,22 +28,22 @@
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExamples": "(for example stearamidopropyl dimethylamine, distearyldimonium chloride)",
+          "ingredientExamples": "stearamidopropyl dimethylamine, distearyldimonium chloride)",
           "volume": 5
         },
         {
           "ingredient": "Hair conditioning agents",
-          "ingredientExamples": "(for example silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters)",
+          "ingredientExamples": "silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters)",
           "volume": 15
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "(for example UV filters, pearlescent agents, opacifying agents)",
+          "ingredientExamples": "UV filters, pearlescent agents, opacifying agents",
           "volume": 10
         },
         {
           "ingredient": "Hair dyeing agents : Directs dyes",
-          "ingredientExamples": "(for example disperse violet 1, acid violet 43, basic brown 17)",
+          "ingredientExamples": "disperse violet 1, acid violet 43, basic brown 17",
           "volume": 3
         },
         {
@@ -56,7 +56,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExamples": "(for example disodium EDTA)",
+          "ingredientExamples": "disodium EDTA",
           "volume": 0.5
         },
         {
@@ -74,7 +74,7 @@
           "volume": 60
         },
         {
-          "ingredient": "Anionic / non-ionic / amphoteric surfactants",
+          "ingredient": "Anionic, non-ionic, amphoteric surfactants",
           "ingredientExamples": "sodium laureth sulfate)",
           "volume": 10
         },
@@ -127,7 +127,8 @@
           "volume": 50
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohol",
           "volume": 20
         },
         {
@@ -140,7 +141,7 @@
           "volume": 10
         },
         {
-          "ingredient": "Anionic / non-ionic / amphoteric surfactants (for example ether of oleyl alcohol)",
+          "ingredient": "Anionic, non-ionic, amphoteric surfactants (for example ether of oleyl alcohol)",
           "volume": 10
         },
         {
@@ -236,7 +237,7 @@
           "volume": 20
         },
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": 16
         },
         {
@@ -305,7 +306,7 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 80
         },
         {
@@ -329,7 +330,7 @@
           "volume": 30
         },
         {
-          "ingredient": "Soaps ",
+          "ingredient": "Soaps",
           "ingredientExamples": "ammonium hydroxide (maximum concentration of ammonium hydroxide permitted is 6%), ethanolamine oleates",
           "volume": 30
         },
@@ -344,7 +345,7 @@
           "volume": 20
         },
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": 16
         },
         {
@@ -515,7 +516,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": " (for example hair conditioning agents, antioxidants) ",
+          "ingredientExamples": "hair conditioning agents, antioxidants",
           "volume": 5
         },
         {
@@ -529,7 +530,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientEXample": " vegetable and/or mineral",
+          "ingredientEXample": " vegetable, mineral",
           "volume": " to 100"
         }
       ],
@@ -597,7 +598,7 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 80
         },
         {
@@ -606,7 +607,7 @@
           "volume": 15
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -697,7 +698,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 50
         },
         {
@@ -751,7 +752,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and / or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 5
         },
         {
@@ -860,7 +861,7 @@
         },
         {
           "ingredient": "Oils ",
-          "ingredientExamples": "vegetable and / or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 15
         },
         {
@@ -884,12 +885,12 @@
       "childNumber": 16,
       "ingredients": [
         {
-          "ingredient": "Ammonium / sodium / potassium persulfate ",
+          "ingredient": "Ammonium, sodium, potassium persulfate ",
           "volume": 70
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/ or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 60
         },
         {
@@ -899,7 +900,7 @@
         },
         {
           "ingredient": "Alkaline agents including ammonium hydroxide liberators",
-          "ingredientExamples": "sodium / magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride",
+          "ingredientExamples": "sodium, magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride",
           "volume": 45
         },
         {
@@ -949,7 +950,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and / or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 5
         },
         {
@@ -988,7 +989,7 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and / or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 80
         },
         {
@@ -997,7 +998,7 @@
           "volume": 15
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -1072,7 +1073,7 @@
         },
         {
           "ingredient": "Soaps",
-          "ingredientExamples": "ammonium hydroxide / ethanolamine oleates",
+          "ingredientExamples": "ammonium hydroxide, ethanolamine oleates",
           "volume": 30
         },
         {
@@ -1139,7 +1140,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": 20
         },
         {

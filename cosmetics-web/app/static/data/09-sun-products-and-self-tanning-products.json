@@ -7,8 +7,8 @@
       "formulationName": "Sunscreen cream, lotion",
       "ingredients": [
         {
-          "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "70"
         },
         {
@@ -117,7 +117,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral) to",
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable, mineral",
           "volume": "to 100"
         }
       ]
@@ -127,8 +128,8 @@
       "formulationName": "Sunscreen stick",
       "ingredients": [
         {
-          "ingredient": "Waxes, fats (for example, theobroma cacao seed butter, polyethylene)",
-          "ingredientExamples":"theobroma cacao seed butter,polyethylene",
+          "ingredient": "Waxes, fats",
+          "ingredientExamples":"theobroma cacao seed butter, polyethylene",
           "volume": "60"
         },
         {
@@ -164,7 +165,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral) to",
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable, mineral",
           "volume": "to 100"
         }
       ]
@@ -269,7 +271,8 @@
           "volume": "0.5"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral)",
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable, mineral",
           "volume": "to 100"
         }
       ]
@@ -280,7 +283,7 @@
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "50"
         },
         {
@@ -303,7 +306,7 @@
           "volume": "20"
         },
         {
-          "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "Sodium cocoyl isethionate, sodium laureth sulfate",
           "volume": "20"
         },

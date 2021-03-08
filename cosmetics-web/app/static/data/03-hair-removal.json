@@ -9,12 +9,12 @@
       "ingredients": [
         {
           "ingredient": "Alkaline agents",
-          "example": "Calcium carbonate, sodium carbonate, potassium carbonate, sodium silicate, potassium silicate, sodium hydroxide, calcium oxide",
+          "ingredientExamples": "Calcium carbonate, sodium carbonate, potassium carbonate, sodium silicate, potassium silicate, sodium hydroxide, calcium oxide",
           "volume": "15"
         },
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "15"
         },
         {
@@ -24,7 +24,7 @@
         },
         {
           "ingredient": "Emulsifying agents",
-          "example": "Ethoxylated long chain alcohols / esters",
+          "example": "Ethoxylated long chain alcohols, esters",
           "volume": "15"
         },
         {
@@ -50,7 +50,8 @@
           "ingredient": "Aqua",
           "volume": "to 100"
         }
-      ]
+      ],
+      "annotations":["less than 5% calculated as thioglycolic acid","pH 11-12.7"]
     },
     {
       "formulationName": "Physical depilatory wax – resin based",

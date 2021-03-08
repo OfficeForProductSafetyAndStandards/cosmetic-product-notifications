@@ -8,7 +8,7 @@
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "30"
         },
         {
@@ -77,7 +77,8 @@
           "volume": "50"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "40"
         },
         {
@@ -141,7 +142,8 @@
           "volume": "50"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "40"
         },
         {
@@ -205,8 +207,8 @@
       "childNumber": 4,
       "ingredients": [
         {
-          "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral), waxes and fats long chain alcohols ",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -270,7 +272,8 @@
       "childNumber": 5,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+           "ingredient": "Oils, waxes and fats",
+           "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "95"
         },
         {
@@ -339,7 +342,8 @@
       "childNumber": 6,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -403,7 +407,8 @@
           "volume": "80"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -427,7 +432,7 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying /pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "20"
         },
         {
@@ -464,7 +469,8 @@
       "childNumber": 8,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, long chain alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -482,7 +488,7 @@
           "volume": "20"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": "12"
         },
@@ -520,11 +526,11 @@
       ]
     },
     {
-      "formulationName": "Skin gel (hydro-alcoholic based)",
+      "formulationName": "Skin gel (hydro-alchohol based)",
       "childNumber": 9,
       "ingredients": [
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat, isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat, isopropyl alcohol)",
           "volume": "70"
         },
         {
@@ -538,7 +544,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "fatty acid polyglycolethers",
           "volume": "6"
         },
@@ -617,7 +623,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral) t",
+          "ingredientExamples": "vegetable, mineral",
           "volume": "to 100"
         }
       ]
@@ -641,7 +647,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": "5"
         },
         {
@@ -660,7 +666,7 @@
           "volume": "5"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "sorbitan stearate",
           "volume": "5"
         },
@@ -698,11 +704,11 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable and/or mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": "30"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "sorbitan stearate, TEA-stearate",
           "volume": "25"
         },
@@ -717,7 +723,7 @@
         },
         {
           "ingredient": "Chemical exfoliating agents",
-          "ingredientExamples": "lactic acid, glycolic acid, salicylic acid (maximum concentration of salicylic acid permitted is 2%",
+          "ingredientExamples": "lactic acid, glycolic acid, salicylic acid (maximum concentration of salicylic acid permitted is 2%)",
           "volume": "10"
         },
         {
@@ -771,7 +777,7 @@
       "ingredients": [
         {
           "ingredient": "Petrolatum",
-          "volume": "to 100"
+          "volume": "100"
         },
         {
           "ingredient": "Parfum",
@@ -794,12 +800,12 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying / pearlescent agents",
+          "ingredientExamples": "opacifying, pearlescent agents",
           "volume": "40"
         },
         {
           "ingredient": "Binding agents",
-          "ingredientExamples": "vegetable and/or mineral oils, fatty acid esters",
+          "ingredientExamples": "vegetable, mineral oils, fatty acid esters",
           "volume": "10"
         },
         {
@@ -822,7 +828,8 @@
       "childNumber": 17,
       "ingredients": [
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral), waxes and fats (for example, fatty alcohols)",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExample": "vegetable, mineral, fatty alcohols",
           "volume": "90"
         },
         {
@@ -864,7 +871,7 @@
           "volume": "5"
         },
         {
-          "ingredient": "Cosmetic colorants",
+          "ingredient": "Cosmetic colourants",
           "volume": "5"
         },
         {

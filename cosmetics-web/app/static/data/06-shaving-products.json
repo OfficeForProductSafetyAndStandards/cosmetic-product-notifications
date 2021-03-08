@@ -23,7 +23,7 @@
         },
         {
           "ingredient": "Emollients",
-          "ingredientExamples": "Oils (for example, vegetable and/or mineral), fatty acid esters",
+          "ingredientExamples": "Oils, vegetable, mineral, fatty acid esters",
           "volume": "15"
         },
         {
@@ -32,7 +32,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Anionic, amphoteric, non-ionic surfactants",
           "ingredientExamples": "Sodium laureth sulfate, betaine derivatives",
           "volume": "5"
         },
@@ -79,7 +79,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable and/or mineral",
+          "ingredientExamples":"vegetable, mineral",
           "volume": "20"
         },
         {
@@ -343,7 +343,8 @@
           "volume": "40"
         },
         {
-          "ingredient": "Oils (for example, vegetable and/or mineral) and fats",
+          "ingredient": "Oils and fats",
+          "ingredientExamples":"vegetable, mineral",
           "volume": "20"
         },
         {

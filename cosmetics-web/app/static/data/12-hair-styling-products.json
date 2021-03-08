@@ -8,7 +8,7 @@
 			"ingredients": [
 				{
 					"ingredient": "Oils",
-					"ingredientExamples": "Vegetable and/or mineral",
+					"ingredientExamples": "Vegetable, mineral",
 					"volume": 60
 				},
 				{
@@ -27,8 +27,8 @@
 					"volume": 20
 				},
 				{
-					"ingredient": "Silicones including volatile silicones",
-					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 20
 				},
 				{
@@ -37,8 +37,8 @@
 					"volume": 20
 				},
 				{
-					"ingredient": "Resins, polymers",
-					"ingredientExamples": "PVP/VA copolymer, acrylates copolymer) /Neutralising agent (for example aminomethyl propanol)",
+					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredientExamples":"PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -65,13 +65,13 @@
 			"childNumber": 2,
 			"ingredients": [
 				{
-					"ingredient": "Oils",
-					"ingredientExamples": "Vegetable and / or mineral and waxes",
+					"ingredient": "Oils and waxes",
+					"ingredientExamples": "Vegetable, mineral",
 					"volume": 99
 				},
 				{
-					"ingredient": "Silicones including volatile silicones",
-					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 99
 				},
 				{
@@ -118,15 +118,17 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-        			"ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+        			"ingredientExamples":"vegetable, mineral, long chain alcohols",
 					"volume": 15
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+                    "ingredientExample":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
                     "volume": 15
 				},
 				{
-					"ingredient": "Resins, polymers (for example polyvinyl acetate, PVP) / Neutralising agent (for example aminomethyl propanol)",
+					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredientExamples":"polyvinyl acetate, PVP, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -145,7 +147,7 @@
 				},
 				{
 					"ingredient": "Parfum",
-          "volume": 3
+         			 "volume": 3
 				},
 				{
 					"ingredient": "Preservatives, antimicrobials",
@@ -174,11 +176,13 @@
 					"volume": 40
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats(for example long chain alcohols)",
+					"ingredient": "Oils, waxes and fats",
+					"ingredientExamples":"vegetable, mineral, long chain alcohol",
 					"volume": 10
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 10
 				},
 				{
@@ -206,7 +210,7 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+					"ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
 					"ingredientExamples": "Ethoxylated fatty acids",
 					"volume": 2
 				},
@@ -247,11 +251,13 @@
 					"volume": 80
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent (for example aminomethyl propanol, triethanolamine)",
+					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredientExamples":"PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol, triethanolamine",
 					"volume": 25
 				},
 				{
@@ -270,7 +276,7 @@
 					"volume": 15
 				},
 				{
-					"ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+					"ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
 					"ingredientExamples": "Ethoxylated fatty acids",
 					"volume": 5
 				},
@@ -312,7 +318,7 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-        			"ingredientExamples":"vegetable and/or mineral,long chain alcohols",
+        			"ingredientExamples":"vegetable, mineral,long chain alcohols",
         			"volume":"25"
 
 				},
@@ -322,7 +328,8 @@
 					"volume": 25
 				},
 				{
-					"ingredient": "Film forming agents, polymers, resins (for example polyvinyl acetate, PVP,polyquaternium-4) and neutralising agent (for example aminomethyl propanol)",
+					"ingredient": "Film forming agents, polymers, resins and neutralising agent",
+					"ingredientExamples":" polyvinyl acetate, PVP,polyquaternium-4, aminomethyl propanol",
 					"volume": 20
 				},
 				{
@@ -388,7 +395,8 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent(for example aminomethyl propanol) / Alkoxylated glucose derivatives",
+					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
+					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -424,11 +432,13 @@
 					"volume": 95
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats (for example long chain alcohols)",
+					"ingredient": "Oils, waxes and fats",
+          			"ingredientExamples":"vegetable, mineral, long chain alcohols",
 					"volume": 50
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 50
 				},
 				{
@@ -442,7 +452,8 @@
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent(for example aminomethyl propanol) / Alkoxylated glucose derivatives",
+					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
+					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -484,20 +495,23 @@
 					"volume": 95
 				},
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral), waxes and fats(for example long chain alcohols) ",
+					"ingredient": "Oils, waxes and fats",
+          			"ingredientExamples":"vegetable, mineral, long chain alcohols",
 					"volume": 50
 				},
 				{
-					"ingredient": "Silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 50
 				},
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-          "ingredientExamples": "Branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
+         			 "ingredientExamples": "Branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
-					"ingredient": "Resins, polymers (for example PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer) / Neutralising agent(for example aminomethyl propanol) / Alkoxylated glucose derivatives",
+					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
+					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -562,7 +576,7 @@
 					"volume": 3
 				},
 				{
-					"ingredient": "Anionic / non-ionic / amphoteric surfactants",
+					"ingredient": "Anionic, non-ionic, amphoteric surfactants",
 					"ingredientExamples": "Cocamidopropyl betaine",
 					"volume": 3
 				},
@@ -572,7 +586,7 @@
 					"volume": 3
 				},
 				{
-					"ingredient": "Anionic / cationic polymers",
+					"ingredient": "Anionic, cationic polymers",
 					"ingredientExamples": "Acrylates copolymer, polyquaternium-11",
 					"volume": 2.5
 				},
@@ -656,7 +670,7 @@
 					"volume": 3
 				},
 				{
-					"ingredient": "Anionic / non-ionic / amphoteric surfactants",
+					"ingredient": "Anionic, non-ionic, amphoteric surfactants",
 					"ingredientExamples": "betaine derivatives",
 					"volume": 3
 				},
@@ -755,7 +769,7 @@
 					"volume": 1
 				},
 				{
-					"ingedient": "Anionic / non-ionic / amphoteric surfactants ",
+					"ingedient": "Anionic, non-ionic, amphoteric surfactants ",
 					"ingredientExamples": "betaine derivatives",
 					"volume": 10
 				},
@@ -770,7 +784,8 @@
 					"volume": 5
 				},
 				{
-					"ingedient": "Silicones (for example amodimethicone), silanes (for example alcoxysilanes)",
+					"ingedient": "Silicones, silanes",
+					"ingredientExamples":"amodimethicone, alcoxysilanes",
 					"volume": 5
 				},
 				{
@@ -827,7 +842,8 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Hair conditioning agents(for example silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone)), silanes (for example alcoxysilanes, polyquaternium-6)",
+					"ingredient": "Hair conditioning agents(for example silicones including volatile silicones, silanes",
+					"ingredientExamples":"silicones including volatile silicones, cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes, polyquaternium-6",
 					"volume": 2
 				},
 				{
@@ -872,7 +888,8 @@
 			"childNumber": 18,
 			"ingredients": [
 				{
-					"ingredient": "Oils (for example vegetable and/or mineral) and waxes",
+					"ingredient": "Oils and waxes",
+					"ingredientExamples":" vegetable, mineral",
 					"volume": 80
 				},
 				{
@@ -881,7 +898,7 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Anionic / non-ionic / amphoteric surfactants",
+					"ingredient": "Anionic, non-ionic, amphoteric surfactants",
 					"ingredientExamples": "polysorbate 60",
 					"volume": 15
 				},
@@ -952,7 +969,7 @@
 					"volume": 6
 				},
 				{
-					"ingredient": "Anionic / non-ionic / amphoteric surfactants ",
+					"ingredient": "Anionic, non-ionic, amphoteric surfactants ",
 					"ingredientExamples": "Cocamidopropyl betaine",
 					"volume": 5
 				},
@@ -962,7 +979,8 @@
 					"volume": 5
 				},
 				{
-					"ingredient": "Silicones (for example amodimethicone), silanes (for example alcoxysilanes) ",
+					"ingredient": "Silicones, silanes",
+					"ingredientExamples":"amodimethicone, alcoxysilanes",
 					"volume": 5
 				},
 				{
@@ -971,7 +989,7 @@
 					"volume": 5
 				},
 				{
-					"ingredient": "Anionic / cationic polymers, hair conditioning agents",
+					"ingredient": "Anionic, cationic polymers, hair conditioning agents",
 					"ingredientExamples": "acrylates copolymer, polyquaternium-11"
 				},
 				{
