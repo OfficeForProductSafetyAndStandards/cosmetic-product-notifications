@@ -3,14 +3,14 @@ require "csv"
 class NotificationsDecorator
   HEADER = [
     "Product name",
-    "Reference number",
+    "UK cosmetic product number",
     "Notification date",
     "EU Reference number",
     "EU Notification date",
   ].freeze
 
   ATTRIBUTES = %i[product_name
-                  reference_number
+                  reference_number_for_display
                   updated_at
                   cpnp_reference
                   cpnp_notification_date].freeze
