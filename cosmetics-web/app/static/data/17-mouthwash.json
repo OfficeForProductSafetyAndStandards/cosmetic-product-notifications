@@ -21,7 +21,7 @@
 					"volume": 4
 				},
 				{
-					"ingredient": "Emulsifying agents, Anionic / amphoteric / non-ionic surfactants ",
+					"ingredient": "Emulsifying agents, Anionic surfactants, amphoteric surfactants, non-ionic surfactants ",
 					"ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
 					"volume": 4
 				},
@@ -85,7 +85,7 @@
 					"volume": 7.5
 				},
 				{
-					"ingredient": "Emulsifying agents, Anionic / amphoteric / non-ionic surfactants",
+					"ingredient": "Emulsifying agents, Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           			"ingredientExamples": "ethoxylated long chain alcohols, PEG-60,hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
 					"volume": 6
 				},

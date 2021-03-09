@@ -55,7 +55,7 @@
         "volume": "10"
       },
       {
-        "ingredient": "Anionic, amphoteric, non-ionic surfactants",
+        "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
         "ingredientExamples": "sodium lauroyl sarcosinate",
         "volume": "5"
       },
@@ -354,7 +354,7 @@
         "volume": "5"
       },
       {
-        "ingredient": "Anionic, amphoteric, non-ionic surfactants",
+        "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
         "ingredientExamples": "polysorbate",
         "volume": "3"
       },
@@ -1021,7 +1021,7 @@
         "volume": "20"
       },
       {
-        "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+        "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
         "ingredientExamples": "Polysorbate 60, PEG-6 sorbitan stearate",
         "volume": "5"
       },
@@ -1356,7 +1356,7 @@
     "formulationName": "Mascara (cake)",
     "ingredients": [
       {
-        "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+        "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
         "ingredientExamples": "TEA-stearate",
         "volume": "50"
       },
@@ -1431,7 +1431,7 @@
         "volume": "1"
       },
       {
-        "ingredient": "Anionic, amphoteric, non-ionic surfactants",
+        "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
         "volume": "0.5"
       },
       {

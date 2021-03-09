@@ -5,7 +5,6 @@
     {
       "formulationName": "Chemical depilatory - cream, gel",
       "childNumber": 1,
-      "pH": "11 to 12.7",
       "ingredients": [
         {
           "ingredient": "Alkaline agents",
@@ -19,27 +18,27 @@
         },
         {
           "ingredient": "Thickeners",
-          "example": "propylene carbonate",
+          "ingredientExamples": "propylene carbonate",
           "volume": "15"
         },
         {
           "ingredient": "Emulsifying agents",
-          "example": "ethoxylated long chain alcohols, esters",
+          "ingredientExamples": "ethoxylated long chain alcohols, esters",
           "volume": "15"
         },
         {
           "ingredient": "Emollients, humectants and",
-          "example": "glycerin, propylene glycol ",
+          "ingredientExamples": "glycerin, propylene glycol ",
           "volume": "15"
         },
         {
           "ingredient": "Reducing agents",
-          "example": "thioglycerin, thioglycolic acid and its salts (less than 5% calculated as thioglycolic acid)",
+          "ingredientExamples": "thioglycerin, thioglycolic acid and its salts (less than 5% calculated as thioglycolic acid)",
           "volume": "8"
         },
         {
           "ingredient": "Additional ingredients",
-          "example": "plant extracts, colorants, chelating agents",
+          "ingredientExamples": "plant extracts, colorants, chelating agents",
           "volume": "5"
         },
         {
@@ -57,19 +56,15 @@
       "formulationName": "physical depilatory wax – resin based",
       "childNumber": 2,
       "ingredients": [
-        {
-          "ingredient": "Tackifying agents and thickeners",
-          "example": "triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica)",
-          "volume": "to 100"
-        },
+       
         {
           "ingredient": "Emollients, humectants",
-          "example": "Paraffinum liquidum, glycerin",
+          "ingredientExamples": "Paraffinum liquidum, glycerin",
           "volume": "25"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "example": "PEG-40 hydrogenated castor oil",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "PEG-40 hydrogenated castor oil",
           "volume": "10"
         },
         {
@@ -78,7 +73,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "example": "plant extracts, skin conditioning agents, opacifying agents, antioxidants",
+          "ingredientExamples": "plant extracts, skin conditioning agents, opacifying agents, antioxidants",
           "volume": "3"
         },
         {
@@ -92,6 +87,11 @@
         {
           "ingredient": "Preservatives, antimicrobials",
           "volume": "1"
+        },
+         {
+          "ingredient": "Tackifying agents and thickeners",
+          "ingredientExamples": "triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica)",
+          "volume": "to 100"
         }
       ]
     },

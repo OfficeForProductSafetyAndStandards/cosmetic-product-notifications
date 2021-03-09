@@ -17,7 +17,7 @@
           "volume": "30"
         },
         {
-          "ingredient": "Amphoteric, non-ionic surfactants",
+          "ingredient": "Amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "Ethoxylated sorbitan esters",
           "volume": "20"
         },
@@ -84,7 +84,7 @@
           "volume": "30"
         },
         {
-          "ingredient": "Non-ionic, amphoteric surfactants",
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
           "ingredientExamples": "Ceteth-20, ethoxylated long chain alcohols",
           "volume": "20"
         },
@@ -146,7 +146,7 @@
           "volume": "20"
         },
         {
-          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "Glyceryl stearate, polysorbate 60",
           "volume": "15"
         },
@@ -201,7 +201,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "Steareth-2, steareth-4",
           "volume": "10"
         },
@@ -254,7 +254,7 @@
           "volume": "20"
         },
         {
-          "ingredient": "Non-ionic / amphoteric surfactants",
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
           "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "15"
         },
@@ -311,7 +311,7 @@
           "volume": "25"
         },
         {
-          "ingredient": "Anionic, amphoteric, non-ionic surfactants",
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "Sodium cocoyl isethionate, sodium laureth sulfate",
           "volume": "25"
         },
@@ -392,7 +392,7 @@
           "volume": "20"
         },
         {
-          "ingredient": "Non-ionic / amphoteric surfactants",
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
           "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "20"
         },
@@ -586,7 +586,7 @@
           "volume": "25"
         },
         {
-          "ingredient": "Non-ionic, amphoteric surfactants",
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
           "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "20"
         },
@@ -653,7 +653,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Non-ionic / amphoteric surfactants",
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
           "ingredientExamples": "Betaine derivatives, glucose derivatives",
           "volume": "10"
         },
@@ -710,21 +710,21 @@
           "volume": "99"
         },
         {
-          "ingredient": "Parfum",
-          "volume": "5"
-        },
-        {
           "ingredient": "Disintegrating agents (for bath cubes)",
           "ingredientExamples": "Talc, starch",
           "volume": "6"
         },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        }, 
         {
           "ingredient": "Emollients",
           "ingredientExamples": "Glycerin",
           "volume": "5"
         },
         {
-          "ingredient": "Anionic, amphoteric, non-ionic surfactants",
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "Sodium dodecylbenzenesulfonate",
           "volume": "1"
         },
@@ -748,7 +748,7 @@
       "childNumber": 13,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "PEG stearate, ethers of oleyl alcohol",
           "volume": "15"
         },
@@ -843,7 +843,7 @@
       "childNumber": 15,
       "ingredients": [
         {
-          "ingredient": "Anionic / nonionic / amphoteric surfactants",
+          "ingredient": "Anionic surfactants, nonionic surfactants, amphoteric surfactants",
           "ingredientExamples": "Sodium laureth sulfate, ethoxylated long-chain alcohols, betaine derivatives",
           "volume": "70"
         },
@@ -887,8 +887,8 @@
           "volume": "1"
         },
         {
-          "ingredient": "Opacifying Agents",
-          "volume": "5"
+          "ingredient": "Opacifying agents",
+          "volume": "0.5"
         },
         {
           "ingredient": "Aqua",
@@ -915,7 +915,7 @@
           "volume": "20"
         },
         {
-          "ingredient": "Amphoteric, non-ionic surfactants",
+          "ingredient": "Amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "betaine derivatives",
           "volume": "5"
         },

@@ -74,7 +74,7 @@
           "volume": 60
         },
         {
-          "ingredient": "Anionic, non-ionic, amphoteric surfactants",
+          "ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
           "ingredientExamples": "sodium laureth sulfate)",
           "volume": 10
         },
@@ -495,19 +495,19 @@
       "childNumber": 7,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": " (for example ethoxylated long chain alcohols) ",
           "volume": 20
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExamples": " (for example octyldodecanol) ",
+          "ingredientExamples": "octyldodecanol",
           "volume": 20
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples": " (for example bentonite, fatty esters) 2",
-          "volume": 0
+          "ingredientExamples": "bentonite, fatty esters",
+          "volume": 20
         },
         {
           "ingredient": "Cationic surfactants",
@@ -530,7 +530,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientEXample": " vegetable, mineral",
+          "ingredientEXample": " vegetable oil, mineral oil",
           "volume": " to 100"
         }
       ],
@@ -546,7 +546,7 @@
       "childNumber": 8,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -607,7 +607,7 @@
           "volume": 15
         },
         {
-          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -737,7 +737,7 @@
       "childNumber": 13,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -752,7 +752,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 5
         },
         {
@@ -791,7 +791,7 @@
           "volume": 30
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "sodium laureth sulfate, ethoxylated long chain alcohols",
           "volume": 2
         },
@@ -931,7 +931,8 @@
       "childNumber": 17,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants (for example ethoxylated long chain alcohols) ",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples":"ethoxylated, long chain alcohols",
           "volume": 15
         },
         {
@@ -950,7 +951,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 5
         },
         {

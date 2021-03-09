@@ -17,7 +17,7 @@
 					"volume": 50
 				},
 				{
-					"ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
 					"ingredientExamples": "ethoxylated fatty acids",
 					"volume": 30
 				},
@@ -142,7 +142,7 @@
 					"volume": 5
 				},
 				{
-					"ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants ",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants ",
 					"ingredientExamples": "ethoxylated long chain alcohols"
 				},
 				{
@@ -210,7 +210,7 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
 					"ingredientExamples": "ethoxylated fatty acids",
 					"volume": 2
 				},
@@ -576,7 +576,7 @@
 					"volume": 3
 				},
 				{
-					"ingredient": "Anionic, non-ionic, amphoteric surfactants",
+					"ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
 					"ingredientExamples": "cocamidopropyl betaine",
 					"volume": 3
 				},
@@ -670,7 +670,7 @@
 					"volume": 3
 				},
 				{
-					"ingredient": "Anionic, non-ionic, amphoteric surfactants",
+					"ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
 					"ingredientExamples": "betaine derivatives",
 					"volume": 3
 				},
@@ -769,7 +769,7 @@
 					"volume": 1
 				},
 				{
-					"ingedient": "Anionic, non-ionic, amphoteric surfactants ",
+					"ingedient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants ",
 					"ingredientExamples": "betaine derivatives",
 					"volume": 10
 				},
@@ -829,7 +829,7 @@
 			"childNumber": 17,
 			"ingredients": [
 				{
-					"ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants, wetting agents ",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants, wetting agents ",
 					"ingredientExamples": "cetearyl alcohol",
 					"volume": 8
 				},
@@ -898,7 +898,7 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Anionic, non-ionic, amphoteric surfactants",
+					"ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
 					"ingredientExamples": "polysorbate 60",
 					"volume": 15
 				},
@@ -969,7 +969,7 @@
 					"volume": 6
 				},
 				{
-					"ingredient": "Anionic, non-ionic, amphoteric surfactants ",
+					"ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants ",
 					"ingredientExamples": "Cocamidopropyl betaine",
 					"volume": 5
 				},

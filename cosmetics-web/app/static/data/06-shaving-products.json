@@ -136,7 +136,7 @@
           "volume": "3"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "sodium laureth sulfate",
           "volume": "3"
         },
@@ -178,7 +178,7 @@
           "volume": "15"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "PEG-150 distearate",
           "volume": "10"
         },
@@ -234,7 +234,7 @@
           "volume": "30"
         },
         {
-          "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "sodium laureth sulfate, betaine derivatives, polysorbate",
           "volume": "15"
         },
@@ -363,7 +363,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants,amphoteric surfactants,non-ionic surfactants",
           "ingredientExamples": "glyceryl stearate",
           "volume": "5"
         },
