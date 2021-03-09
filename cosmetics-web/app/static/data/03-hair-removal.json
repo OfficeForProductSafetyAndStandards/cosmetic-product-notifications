@@ -50,7 +50,9 @@
           "volume": "to 100"
         }
       ],
-      "annotations":["less than 5% calculated as thioglycolic acid","pH 11-12.7"]
+      "annotations":["less than 5% calculated as thioglycolic acid","pH 11-12.7"],
+      "annotations":["pH 11-12.7"]
+
     },
     {
       "formulationName": "physical depilatory wax – resin based",
@@ -90,7 +92,7 @@
         },
          {
           "ingredient": "Tackifying agents and thickeners",
-          "ingredientExamples": "triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica)",
+          "ingredientExamples": "triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica",
           "volume": "to 100"
         }
       ]
@@ -110,12 +112,12 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "Plant extracts, antioxidants, colorants",
+          "ingredientExamples": "plant extracts, antioxidants, colorants",
           "volume": "3"
         },
         {
           "ingredient": "pH adjuster",
-          "ingredientExamples": "Citric acid",
+          "ingredientExamples": "citric acid",
           "volume": "2"
         },
         {

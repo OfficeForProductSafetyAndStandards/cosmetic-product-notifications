@@ -230,7 +230,7 @@
         {
           "ingredient": "Oils",
           "ingredientExamples":"vegetable, mineral",
-          "volume": "100"
+          "volume": "to 100"
         }
       ]
     },
@@ -445,7 +445,7 @@
       "ingredients": [
         {
           "ingredient": "Soap",
-          "ingredientExamples": "Saponified vegetable oil, tallow fatty acids",
+          "ingredientExamples": "saponified vegetable oil, tallow fatty acids",
           "volume": "99"
         },
         {
