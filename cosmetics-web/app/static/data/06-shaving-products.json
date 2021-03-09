@@ -32,7 +32,7 @@
           "volume": "10"
         },
         {
-          "ingredient": "Anionic, amphoteric, non-ionic surfactants",
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "sodium laureth sulfate, betaine derivatives",
           "volume": "5"
         },
@@ -373,7 +373,7 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples": "Carbomer",
+          "ingredientExamples": "carbomer",
           "volume": "1"
         },
         {
