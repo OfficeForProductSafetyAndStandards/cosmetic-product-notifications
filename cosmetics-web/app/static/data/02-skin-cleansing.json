@@ -639,7 +639,7 @@
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable and/or mineral, long chain alcohols",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -741,7 +741,12 @@
           "ingredient": "Binding agents",
           "ingredientExamples": "Silica",
           "volume": "0.5"
-        }      ]
+        },
+        {
+          "ingredient":"NB: for bath cubes, desintegrating agents ",
+          "ingredientExamples":"talc, starch",
+          "volume":  6
+        }    ]
     },
     {
       "formulationName": "Bath and shower oil (including bath beads)",
@@ -792,7 +797,7 @@
       "childNumber": 14,
       "ingredients": [
         {
-          "ingredient": "Anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "sodium laureth sulfate",
           "volume": "20"
         },
@@ -844,7 +849,7 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants, nonionic surfactants, amphoteric surfactants",
-          "ingredientExamples": "Sodium laureth sulfate, ethoxylated long-chain alcohols, betaine derivatives",
+          "ingredientExamples": "sodium laureth sulfate, ethoxylated long-chain alcohols, betaine derivatives",
           "volume": "70"
         },
         {
