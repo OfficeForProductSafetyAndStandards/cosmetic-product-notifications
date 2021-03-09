@@ -136,7 +136,7 @@
         "volume": "to 100"
       }
     ],
-    "annotations": "This includes aerosol spray compressed gas (for example, air, nitrogen, carbon dioxide)"
+    "annotations": "NB:This includes aerosol spray compressed gas (for example, air, nitrogen, carbon dioxide)"
   },
   {
     "childNumber": 3,
@@ -162,8 +162,8 @@
         "volume": "25"
       },
       {
-        "ingredient": "Thickeners",
-        "ingredientExamples": "Starch), emollients (for example glycerin), emulsifying agents (for example steareth, PPG ethers",
+        "ingredient": "Thickeners, emollients, emulsifying agents",
+        "ingredientExamples": "starch, glycerin, steareth, PPG ethers",
         "volume": "25"
       },
       {

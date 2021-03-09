@@ -741,12 +741,8 @@
           "ingredient": "Binding agents",
           "ingredientExamples": "Silica",
           "volume": "0.5"
-        },
-        {
-          "ingredient":"NB: for bath cubes, desintegrating agents ",
-          "ingredientExamples":"talc, starch",
-          "volume":  6
-        }    ]
+        }
+         ]
     },
     {
       "formulationName": "Bath and shower oil (including bath beads)",
