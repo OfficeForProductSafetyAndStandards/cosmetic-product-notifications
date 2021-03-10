@@ -504,7 +504,7 @@
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Carbomer, hydroxyethylcellulose",
+        "ingredientExamples": "carbomer, hydroxyethylcellulose",
         "volume": "10"
       },
       {
@@ -1159,7 +1159,7 @@
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane) t",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane) t",
         "volume": "to 100"
       }
     ]
@@ -1409,11 +1409,7 @@
         "volume": "10"
       },
       {
-        "ingredient": "Polymers,",
-        "volume": "thickeners"
-      },
-      {
-        "ingredient": "",
+        "ingredient": "Polymers, thickeners",
         "ingredientExamples": "PVP/ VA copolymer with carbomer gel",
         "volume": "2"
       },
