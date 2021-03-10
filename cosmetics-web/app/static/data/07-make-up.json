@@ -929,7 +929,7 @@
   },
   {
     "childNumber": 17,
-    "formulationName": "Eye shadow and blusher - anhydrous (cream, stick, powder, …)",
+    "formulationName": "Eye shadow and blusher - anhydrous (cream, stick, powder)",
     "ingredients": [
       {
         "ingredient": "Oils, waxes and fats",
@@ -1070,12 +1070,12 @@
       },
       {
         "ingredient": "Emulsifying agents",
-        "ingredientExamples": "Polysorbate, PEG oleate, TEA-oleate",
+        "ingredientExamples": "polysorbate, PEG oleate, TEA-oleate",
         "volume": "10"
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "carbomer, magnesium/aluminium silicate, cellulose",
+        "ingredientExamples": "carbomer, magnesium silicate, aluminium silicate, cellulose",
         "volume": "10"
       },
       {
@@ -1204,7 +1204,7 @@
     "ingredients": [
       {
         "ingredient": "Film forming polymers",
-        "ingredientExamples": "Ammonium acrylates copolymer, cellulose derivatives, acetyl trihexyl citrate",
+        "ingredientExamples": "ammonium acrylates copolymer, cellulose derivatives, acetyl trihexyl citrate",
         "volume": "45"
       },
       {
@@ -1234,7 +1234,7 @@
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Magnesium silicate, aluminum silicate, PEG derivatives",
+        "ingredientExamples": "magnesium silicate, aluminum silicate, PEG derivatives",
         "volume": "15"
       },
       {
