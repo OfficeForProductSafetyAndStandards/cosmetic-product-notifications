@@ -178,7 +178,7 @@
         "volume": "20"
       },
       {
-        "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
         "volume": "15"
       },
       {
@@ -270,7 +270,7 @@
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone) t",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone)",
         "volume": "to 100"
       }
     ]
