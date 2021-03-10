@@ -36,9 +36,11 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
 
     context "when requesting notifications for the company associated with the user" do
       before do
+        travel_to(Time.zone.local(2021, 2, 20, 13))
+
         # Setup notifications belonging to the company
         create(:draft_notification, responsible_person: responsible_person)
-        create(:registered_notification, responsible_person: responsible_person)
+        create(:registered_notification, product_name: "Product 1", reference_number: 1, responsible_person: responsible_person)
         create(:notification_file, responsible_person: responsible_person, user: user,
                                    upload_error: "uploaded_file_not_a_zip")
         create(:notification_file, responsible_person: responsible_person, user: user)
@@ -50,24 +52,49 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
                                    upload_error: "uploaded_file_not_a_zip")
         create(:notification_file, responsible_person: responsible_person, user: other_user)
         create(:notification_file, responsible_person: other_responsible_person, user: other_user)
-
-        get "/responsible_persons/#{responsible_person.id}/notifications"
       end
 
-      it "renders the page successfully" do
-        expect(response.status).to be(200)
+      context "when visiting notification page" do
+        before do
+          get "/responsible_persons/#{responsible_person.id}/notifications"
+        end
+
+        it "renders the page successfully" do
+          expect(response.status).to be(200)
+        end
+
+        it "displays the number of draft notifications" do
+          expect(response.body).to include("Incomplete (1)")
+        end
+
+        it "displays the number of completed notifications" do
+          expect(response.body).to include("Notified (1)")
+        end
+
+        it "displays the number of notification files containing errors" do
+          expect(response.body).to include("Errors (1)")
+        end
       end
 
-      it "displays the number of draft notifications" do
-        expect(response.body).to include("Incomplete (1)")
-      end
+      context "when downloading notifications as a file" do
+        before do
+          travel_to(Time.zone.local(2021, 2, 20, 13, 1))
+          create(:registered_notification, product_name: "Product 2", reference_number: 2, responsible_person: responsible_person)
 
-      it "displays the number of completed notifications" do
-        expect(response.body).to include("Notified (1)")
-      end
+          get "/responsible_persons/#{responsible_person.id}/notifications.csv"
+        end
 
-      it "displays the number of notification files containing errors" do
-        expect(response.body).to include("Errors (1)")
+        let(:expected_csv) do
+          <<~CSV
+            Product name,UK cosmetic product number,Notification date,EU Reference number,EU Notification date
+            Product 1,UKCP-00000001,2021-02-20 13:00:00 +0000,,
+            Product 2,UKCP-00000002,2021-02-20 13:01:00 +0000,,
+          CSV
+        end
+
+        it "returns file with proper notifications" do
+          expect(response.body).to eq expected_csv
+        end
       end
     end
 

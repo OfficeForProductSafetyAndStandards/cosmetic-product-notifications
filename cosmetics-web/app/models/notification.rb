@@ -24,13 +24,17 @@ class Notification < ApplicationRecord
       new_reference_number = SecureRandom.rand(100_000_000)
       break unless Notification.where(reference_number: new_reference_number).exists?
     end
-    self.reference_number = new_reference_number
+    self.reference_number = new_reference_number if reference_number.nil?
   end
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
 
   def self.duplicate_notification_message
     "Notification duplicated"
+  end
+
+  def self.completed
+    where(state: :notification_complete)
   end
 
   validate :all_required_attributes_must_be_set
