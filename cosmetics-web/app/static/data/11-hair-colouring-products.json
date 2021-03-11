@@ -225,7 +225,7 @@
         },
         {
           "ingredient": "Soaps",
-          "ingredientExamples": "ammonium hydroxide/ethanolamine oleates",
+          "ingredientExamples": "ammonium hydroxide, ethanolamine oleates",
           "volume": 30
         },
         {
@@ -298,7 +298,8 @@
       "extraInfo": [
         "pH value: 8 - 11.6",
         "pH value of the mixture with oxidative part: 6 - 11.6"
-      ]
+      ],
+      "annotations":["*  maximum concentration of ammonium hydroxide permitted is 6 %"]
     },
     {
       "formulationName": "Hair colorant (permanent, oxidative type)",
