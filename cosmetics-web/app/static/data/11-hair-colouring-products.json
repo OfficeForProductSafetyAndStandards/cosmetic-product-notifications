@@ -17,7 +17,7 @@
           "volume": 20
         },
         {
-          "ingredien": "Non-ionic surfactant",
+          "ingredient": "Non-ionic surfactant",
           "ingredientExamples": "fatty alkanolamides",
           "volume": 15
         },
@@ -189,9 +189,9 @@
           "volume": 1
         },
         {
-          "ingredient": "pH adjuster, alkaline (for example ethanolamine, sodium hydroxide, ammonium hydroxide) qs pH",
+          "ingredient": "pH adjuster, alkaline",
           "ingredientExamples":"citric acid, ethanolamine, sodium hydroxide, ammonium hydroxide",
-          "volume": "2 - 10"
+          "volume": "up to and not surpassing pH 2 - 10"
         },
         {
           "ingredient": "Aqua",
