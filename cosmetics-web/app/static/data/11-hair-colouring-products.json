@@ -299,7 +299,7 @@
         "pH value: 8 - 11.6",
         "pH value of the mixture with oxidative part: 6 - 11.6"
       ],
-      "annotations":["*  maximum concentration of ammonium hydroxide permitted is 6 %"]
+      "annotations": "*  maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
       "formulationName": "Hair colorant (permanent, oxidative type)",
@@ -411,7 +411,8 @@
       "extraInfo": [
         "pH value: 8 - 11.6",
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
-      ]
+      ],
+      "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
       "formulationName": "Hair colorant (permanent, oxidative type)",
@@ -445,7 +446,7 @@
           "volume": 10
         },
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol) ",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol) ",
           "volume": 16
         },
         {
@@ -489,7 +490,8 @@
       ],
       "extraInfo": [
        "pH value: 8 - 11.6", "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
-      ]
+      ],
+       "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
       "formulationName": "Hair colorant (permanent, oxidative type)",
