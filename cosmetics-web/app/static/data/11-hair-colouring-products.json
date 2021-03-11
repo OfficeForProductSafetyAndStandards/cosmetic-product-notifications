@@ -66,7 +66,7 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (temporary) - foam, or lotion",
+      "formulationName": "Hair colorant (temporary) - foam,lotion",
       "childNumber": 2,
       "ingredients": [
         {
@@ -110,7 +110,7 @@
         {
           "ingredient": "pH adjuster",
           "ingredientExamples": "citric acid, triethanolamine",
-          "volume": "pH Range3-9"
+          "volume": "up to and not surpassing pH 3-9"
         },
         {
           "ingredient": "Aqua",
@@ -119,11 +119,11 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (temporary or semi-permanent) – liquid, cream, or foam",
+      "formulationName": "Hair colorant (temporary or semi-permanent) – liquid, cream, foam",
       "childNumber": 3,
       "ingredients": [
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": 50
         },
         {
@@ -141,7 +141,8 @@
           "volume": 10
         },
         {
-          "ingredient": "Anionic, non-ionic, amphoteric surfactants (for example ether of oleyl alcohol)",
+          "ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
+          "ingredientExamples":"ether of oleyl alcohol",
           "volume": 10
         },
         {
@@ -188,7 +189,8 @@
           "volume": 1
         },
         {
-          "ingredient": "pH adjuster: (for example citric acid) or alkaline (for example ethanolamine, sodium hydroxide, ammonium hydroxide) qs pH",
+          "ingredient": "pH adjuster, alkaline (for example ethanolamine, sodium hydroxide, ammonium hydroxide) qs pH",
+          "ingredientExamples":"citric acid, ethanolamine, sodium hydroxide, ammonium hydroxide",
           "volume": "2 - 10"
         },
         {
