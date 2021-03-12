@@ -71,8 +71,6 @@ Rails.application.routes.draw do
 
     root "submit/landing_page#index"
 
-    get "frame_formulations", to: "frame_formulations#index"
-    get "frame_formulations/:id/:sub_id/:name", to: "frame_formulations#show"
     resources :responsible_persons do
       collection do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
@@ -173,6 +171,9 @@ Rails.application.routes.draw do
     get :terms_and_conditions, path: "terms-and-conditions"
     get :privacy_notice, path: "privacy-notice"
   end
+
+  get "frame_formulations", to: "frame_formulations#index"
+  get "frame_formulations/:id/:sub_id/:name", to: "frame_formulations#show"
 
   get "invalid-account", to: "errors#invalid_account", as: :invalid_account
 
