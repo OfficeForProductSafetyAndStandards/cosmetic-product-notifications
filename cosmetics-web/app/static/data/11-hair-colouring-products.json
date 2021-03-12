@@ -17,7 +17,7 @@
           "volume": 20
         },
         {
-          "ingredien": "Non-ionic surfactant",
+          "ingredient": "Non-ionic surfactant",
           "ingredientExamples": "fatty alkanolamides",
           "volume": 15
         },
@@ -66,7 +66,7 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (temporary) - foam, or lotion",
+      "formulationName": "Hair colorant (temporary) - foam,lotion",
       "childNumber": 2,
       "ingredients": [
         {
@@ -74,7 +74,7 @@
           "volume": 60
         },
         {
-          "ingredient": "Anionic, non-ionic, amphoteric surfactants",
+          "ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
           "ingredientExamples": "sodium laureth sulfate)",
           "volume": 10
         },
@@ -110,7 +110,7 @@
         {
           "ingredient": "pH adjuster",
           "ingredientExamples": "citric acid, triethanolamine",
-          "volume": "pH Range3-9"
+          "volume": "up to and not surpassing pH 3-9"
         },
         {
           "ingredient": "Aqua",
@@ -119,11 +119,11 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (temporary or semi-permanent) – liquid, cream, or foam",
+      "formulationName": "Hair colorant (temporary or semi-permanent) – liquid, cream, foam",
       "childNumber": 3,
       "ingredients": [
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": 50
         },
         {
@@ -141,7 +141,8 @@
           "volume": 10
         },
         {
-          "ingredient": "Anionic, non-ionic, amphoteric surfactants (for example ether of oleyl alcohol)",
+          "ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
+          "ingredientExamples":"ether of oleyl alcohol",
           "volume": 10
         },
         {
@@ -188,8 +189,9 @@
           "volume": 1
         },
         {
-          "ingredient": "pH adjuster: (for example citric acid) or alkaline (for example ethanolamine, sodium hydroxide, ammonium hydroxide) qs pH",
-          "volume": "2 - 10"
+          "ingredient": "pH adjuster, alkaline",
+          "ingredientExamples":"citric acid, ethanolamine, sodium hydroxide, ammonium hydroxide",
+          "volume": "up to and not surpassing pH 2 - 10"
         },
         {
           "ingredient": "Aqua",
@@ -223,7 +225,7 @@
         },
         {
           "ingredient": "Soaps",
-          "ingredientExamples": "ammonium hydroxide/ethanolamine oleates",
+          "ingredientExamples": "ammonium hydroxide, ethanolamine oleates",
           "volume": 30
         },
         {
@@ -296,7 +298,8 @@
       "extraInfo": [
         "pH value: 8 - 11.6",
         "pH value of the mixture with oxidative part: 6 - 11.6"
-      ]
+      ],
+      "annotations": "*  maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
       "formulationName": "Hair colorant (permanent, oxidative type)",
@@ -408,7 +411,8 @@
       "extraInfo": [
         "pH value: 8 - 11.6",
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
-      ]
+      ],
+      "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
       "formulationName": "Hair colorant (permanent, oxidative type)",
@@ -442,7 +446,7 @@
           "volume": 10
         },
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol) ",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol) ",
           "volume": 16
         },
         {
@@ -486,7 +490,8 @@
       ],
       "extraInfo": [
        "pH value: 8 - 11.6", "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
-      ]
+      ],
+       "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
       "formulationName": "Hair colorant (permanent, oxidative type)",
@@ -495,19 +500,19 @@
       "childNumber": 7,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": " (for example ethoxylated long chain alcohols) ",
           "volume": 20
         },
         {
           "ingredient": "Emollients, humectants",
-          "ingredientExamples": " (for example octyldodecanol) ",
+          "ingredientExamples": "octyldodecanol",
           "volume": 20
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples": " (for example bentonite, fatty esters) 2",
-          "volume": 0
+          "ingredientExamples": "bentonite, fatty esters",
+          "volume": 20
         },
         {
           "ingredient": "Cationic surfactants",
@@ -530,7 +535,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientEXample": " vegetable, mineral",
+          "ingredientEXample": " vegetable oil, mineral oil",
           "volume": " to 100"
         }
       ],
@@ -546,7 +551,7 @@
       "childNumber": 8,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -607,7 +612,7 @@
           "volume": 15
         },
         {
-          "ingredient": "Emulsifying agents, anionic, amphoteric, non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -737,7 +742,7 @@
       "childNumber": 13,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 15
         },
@@ -752,7 +757,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 5
         },
         {
@@ -791,7 +796,7 @@
           "volume": 30
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "sodium laureth sulfate, ethoxylated long chain alcohols",
           "volume": 2
         },
@@ -931,7 +936,8 @@
       "childNumber": 17,
       "ingredients": [
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants (for example ethoxylated long chain alcohols) ",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples":"ethoxylated, long chain alcohols",
           "volume": 15
         },
         {
@@ -950,7 +956,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 5
         },
         {

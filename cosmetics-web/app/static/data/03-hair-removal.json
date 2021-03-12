@@ -5,11 +5,10 @@
     {
       "formulationName": "Chemical depilatory - cream, gel",
       "childNumber": 1,
-      "pH": "11 to 12.7",
       "ingredients": [
         {
           "ingredient": "Alkaline agents",
-          "ingredientExamples": "Calcium carbonate, sodium carbonate, potassium carbonate, sodium silicate, potassium silicate, sodium hydroxide, calcium oxide",
+          "ingredientExamples": "calcium carbonate, sodium carbonate, potassium carbonate, sodium silicate, potassium silicate, sodium hydroxide, calcium oxide",
           "volume": "15"
         },
         {
@@ -19,27 +18,27 @@
         },
         {
           "ingredient": "Thickeners",
-          "example": "Propylene carbonate",
+          "ingredientExamples": "propylene carbonate",
           "volume": "15"
         },
         {
           "ingredient": "Emulsifying agents",
-          "example": "Ethoxylated long chain alcohols, esters",
+          "ingredientExamples": "ethoxylated long chain alcohols, esters",
           "volume": "15"
         },
         {
           "ingredient": "Emollients, humectants and",
-          "example": "Glycerin, propylene glycol ",
+          "ingredientExamples": "glycerin, propylene glycol ",
           "volume": "15"
         },
         {
           "ingredient": "Reducing agents",
-          "example": "Thioglycerin, thioglycolic acid and its salts (less than 5% calculated as thioglycolic acid)",
+          "ingredientExamples": "thioglycerin, thioglycolic acid and its salts (less than 5% calculated as thioglycolic acid)",
           "volume": "8"
         },
         {
           "ingredient": "Additional ingredients",
-          "example": "Plant extracts, colorants, chelating agents",
+          "ingredientExamples": "plant extracts, colorants, chelating agents",
           "volume": "5"
         },
         {
@@ -51,25 +50,23 @@
           "volume": "to 100"
         }
       ],
-      "annotations":["less than 5% calculated as thioglycolic acid","pH 11-12.7"]
+      "annotations": ["* less than 5% calculated as thioglycolic acid"],
+      "annotations": ["The pH may be between pH 11-12.7"]
+
     },
     {
-      "formulationName": "Physical depilatory wax – resin based",
+      "formulationName": "physical depilatory wax – resin based",
       "childNumber": 2,
       "ingredients": [
-        {
-          "ingredient": "Tackifying agents and thickeners",
-          "example": "Triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica)",
-          "volume": "to 100"
-        },
+       
         {
           "ingredient": "Emollients, humectants",
-          "example": "Paraffinum liquidum, glycerin",
+          "ingredientExamples": "paraffinum liquidum, glycerin",
           "volume": "25"
         },
         {
-          "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-          "example": "PEG-40 hydrogenated castor oil",
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "PEG-40 hydrogenated castor oil",
           "volume": "10"
         },
         {
@@ -78,7 +75,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "example": "Plant extracts, skin conditioning agents, opacifying agents, antioxidants",
+          "ingredientExamples": "plant extracts, skin conditioning agents, opacifying agents, antioxidants",
           "volume": "3"
         },
         {
@@ -92,6 +89,11 @@
         {
           "ingredient": "Preservatives, antimicrobials",
           "volume": "1"
+        },
+         {
+          "ingredient": "Tackifying agents and thickeners",
+          "ingredientExamples": "triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica",
+          "volume": "to 100"
         }
       ]
     },
@@ -101,7 +103,7 @@
       "ingredients": [
         {
           "ingredient": "Tackifying agents",
-          "example": "Sucrose",
+          "ingredientExamples": "sucrose",
           "volume": "90"
         },
         {
@@ -110,12 +112,12 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "example": "Plant extracts, antioxidants, colorants",
+          "ingredientExamples": "plant extracts, antioxidants, colorants",
           "volume": "3"
         },
         {
           "ingredient": "pH adjuster",
-          "example": "Citric acid",
+          "ingredientExamples": "citric acid",
           "volume": "2"
         },
         {

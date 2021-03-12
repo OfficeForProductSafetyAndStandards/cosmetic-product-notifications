@@ -8,37 +8,37 @@
     "ingredients": [
       {
         "ingredient": "Anionic surfactant",
-        "ingredientExamples": "Sodium/ammonium/TEA lauryl sulfates, sodium/ammonium/TEA laureth sulfates",
+        "ingredientExamples": "sodium/ammonium/TEA lauryl sulfates, sodium/ammonium/TEA laureth sulfates",
         "volume": "30"
       },
       {
         "ingredient": "Amphoteric surfactants",
-        "ingredientExamples": "Betaine derivatives",
+        "ingredientExamples": "betaine derivatives",
         "volume": "20"
       },
       {
         "ingredient": "Non-ionic surfactants",
-        "ingredientExamples": "Atty alkanolamides",
+        "ingredientExamples": "atty alkanolamides",
         "volume": "15"
       },
       {
         "ingredient": "Hair conditioning agents",
-        "ingredientExamples": "Silicones including volatile silicones (for example, cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters",
+        "ingredientExamples": "silicones including volatile silicones (for example, cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters",
         "volume": "15"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "UV filters, pearlescent agents, opacifying agents",
+        "ingredientExamples": "uv filters, pearlescent agents, opacifying agents",
         "volume": "10"
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Propylene glycol, PEG",
+        "ingredientExamples": "propylene glycol, PEG",
         "volume": "10"
       },
       {
         "ingredient": "Cationic surfactants",
-        "ingredientExamples": "Stearamidopropyl dimethylamine, behentrimonium chloride",
+        "ingredientExamples": "stearamidopropyl dimethylamine, behentrimonium chloride",
         "volume": "5"
       },
       {
@@ -51,7 +51,7 @@
       },
       {
         "ingredient": "Chelating agents",
-        "ingredientExamples": "Disodium EDTA",
+        "ingredientExamples": "disodium EDTA",
         "volume": "0.5"
       },
       {
@@ -66,7 +66,7 @@
     "ingredients": [
       {
         "ingredient": "Soap base",
-        "ingredientExamples": "Mixed sodium/potassium stearate and sodium/potassium laurate",
+        "ingredientExamples": "mixed sodium/potassium stearate and sodium/potassium laurate",
         "volume": "70"
       },
       {
@@ -93,22 +93,22 @@
     "ingredients": [
       {
         "ingredient": "Anionic surfactants",
-        "ingredientExamples": "Sodium laureth sulfate",
+        "ingredientExamples": "sodium laureth sulfate",
         "volume": "20"
       },
       {
         "ingredient": "Non-ionic surfactants",
-        "ingredientExamples": "Alkyl polyglucosides",
+        "ingredientExamples": "alkyl polyglucosides",
         "volume": "20"
       },
       {
         "ingredient": "Amphoteric surfactants",
-        "ingredientExamples": "Betaine derivatives",
+        "ingredientExamples": "betaine derivatives",
         "volume": "20"
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Long chain alcohols, stearyl alcohol",
+        "ingredientExamples": "long chain alcohols, stearyl alcohol",
         "volume": "10"
       },
       {
@@ -118,27 +118,27 @@
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
         "volume": "10"
       },
       {
         "ingredient": "Cationic surfactants",
-        "ingredientExamples": "Behentrimonium chloride",
+        "ingredientExamples": "behentrimonium chloride",
         "volume": "5"
       },
       {
         "ingredient": "Cationic polymers",
-        "ingredientExamples": "Polyquaternium-11",
+        "ingredientExamples": "polyquaternium-11",
         "volume": "5"
       },
       {
         "ingredient": "Humectants, emollients",
-        "ingredientExamples": "Glycerin",
+        "ingredientExamples": "glycerin",
         "volume": "5"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "UV filters, pearlescent agents",
+        "ingredientExamples": "uv filters, pearlescent agents",
         "volume": "5"
       },
       {
@@ -174,46 +174,46 @@
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
         "volume": "20"
       },
       {
-        "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
         "volume": "15"
       },
       {
         "ingredient": "Amphoteric surfactants",
-        "ingredientExamples": "Betaine derivatives",
+        "ingredientExamples": "betaine derivatives",
         "volume": "15"
       },
       {
         "ingredient": "Emulsifying agents",
-        "ingredientExamples": "Ceteth-30, cetyl alcohol",
+        "ingredientExamples": "ceteth-30, cetyl alcohol",
         "volume": "10"
       },
       {
         "ingredient": "Emollients, humectants",
-        "ingredientExamples": "Glycerin, propylene glycol",
+        "ingredientExamples": "glycerin, propylene glycol",
         "volume": "10"
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Carbomer, hydroxyethylcellulose",
+        "ingredientExamples": "carbomer, hydroxyethylcellulose",
         "volume": "10"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Proteins, chelating agents, pearlescent agents",
+        "ingredientExamples": "proteins, chelating agents, pearlescent agents",
         "volume": "10"
       },
       {
         "ingredient": "Cationic surfactants",
-        "ingredientExamples": "Behentrimonium chloride",
+        "ingredientExamples": "behentrimonium chloride",
         "volume": "5"
       },
       {
         "ingredient": "Polymers, resins",
-        "ingredientExamples": "Polyquaternium-10, polyquaternium",
+        "ingredientExamples": "polyquaternium-10, polyquaternium",
         "volume": "11,"
       },
       {
@@ -252,7 +252,7 @@
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "UV filters, polymers",
+        "ingredientExamples": "uv filters, polymers",
         "volume": "10"
       },
       {
@@ -261,7 +261,7 @@
       },
       {
         "ingredient": "Emulsifying agents",
-        "ingredientExamples": "Ethoxylated long chain alcohols",
+        "ingredientExamples": "ethoxylated long chain alcohols",
         "volume": "6"
       },
       {
@@ -270,7 +270,7 @@
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone) t",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone)",
         "volume": "to 100"
       }
     ]
@@ -285,12 +285,12 @@
       },
       {
         "ingredient": "Polymers",
-        "ingredientExamples": "PVP",
+        "ingredientExamples": "pvp",
         "volume": "10"
       },
       {
         "ingredient": "Hair conditioning agents",
-        "ingredientExamples": "Cationic polymers, cellulose derivatives",
+        "ingredientExamples": "cationic polymers, cellulose derivatives",
         "volume": "5"
       },
       {
@@ -300,22 +300,22 @@
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
         "volume": "5"
       },
       {
         "ingredient": "Humectants",
-        "ingredientExamples": "Glycerin",
+        "ingredientExamples": "glycerin",
         "volume": "5"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Vitamins, plant extracts, chelating agents, UV filters, protein hydrolysates",
+        "ingredientExamples": "vitamins, plant extracts, chelating agents, UV filters, protein hydrolysates",
         "volume": "5"
       },
       {
         "ingredient": "Emulsifying agents",
-        "ingredientExamples": "Ethoxylated long chain alcohols",
+        "ingredientExamples": "ethoxylated long chain alcohols",
         "volume": "3"
       },
       {
@@ -342,7 +342,7 @@
     "ingredients": [
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "Branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
         "volume": "90"
       },
       {
@@ -356,7 +356,7 @@
       },
       {
         "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "Cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
         "volume": "50"
       },
       {
@@ -370,7 +370,7 @@
       },
       {
         "ingredient": "Hair conditioning agents",
-        "ingredientExamples": "Cationic copolymers, cellulose derivatives",
+        "ingredientExamples": "cationic copolymers, cellulose derivatives",
         "volume": "10"
       },
       {
@@ -384,12 +384,12 @@
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "UV filters, vitamins",
+        "ingredientExamples": "uv filters, vitamins",
         "volume": "5"
       },
       {
-        "ingredient": "Emulsifying agents, anionic / amphoteric / non-ionic surfactants",
-        "ingredientExamples": "Ethoxylated fatty acids",
+        "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+        "ingredientExamples": "ethoxylated fatty acids",
         "volume": "3"
       },
       {
@@ -416,7 +416,7 @@
     "ingredients": [
       {
         "ingredient": "Propellants",
-        "ingredientExamples": "Hydrocarbons",
+        "ingredientExamples": "hydrocarbons",
         "volume": "95"
       },
       {
@@ -425,7 +425,7 @@
       },
       {
         "ingredient": "Absorbents",
-        "ingredientExamples": "Oriza sativa starch, aluminum starch octenylsuccinate",
+        "ingredientExamples": "oriza sativa starch, aluminum starch octenylsuccinate",
         "volume": "15"
       },
       {
@@ -434,27 +434,27 @@
       },
       {
         "ingredient": "Emollients",
-        "ingredientExamples": "Isopropyl myristate",
+        "ingredientExamples": "isopropyl myristate",
         "volume": "3"
       },
       {
         "ingredient": "Anticaking Agents",
-        "ingredientExamples": "Silica, magnesium sulfate",
+        "ingredientExamples": "silica, magnesium sulfate",
         "volume": "2"
       },
       {
         "ingredient": "Thickeners",
-        "ingredientExamples": "Stearalkonium hectorite, propylene carbonate",
+        "ingredientExamples": "stearalkonium hectorite, propylene carbonate",
         "volume": "2"
       },
       {
         "ingredient": "Hair conditioning agents",
-        "ingredientExamples": "Fatty acid ester",
+        "ingredientExamples": "fatty acid ester",
         "volume": "2"
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "Plant extracts, hair conditioning agents",
+        "ingredientExamples": "plant extracts, hair conditioning agents",
         "volume": "2"
       },
       {
