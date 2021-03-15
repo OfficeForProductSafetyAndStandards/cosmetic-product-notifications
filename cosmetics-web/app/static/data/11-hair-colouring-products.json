@@ -3,7 +3,7 @@
   "name": "Hair colouring products",
   "data": [
     {
-      "formulationName": "Hair colorant (temporary) - shampoo",
+      "formulationName": "Hair colourant (temporary) - shampoo",
       "childNumber": 1,
       "ingredients": [
         {
@@ -244,7 +244,7 @@
         },
         {
           "ingredient": "Primary intermediates",
-          "ingredientExamples": "p-phenylenediamines such as  p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
+          "ingredientExamples": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
           "volume": 6
         },
         {
@@ -302,8 +302,8 @@
       "annotations": "*  maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
-      "formulationName": "Hair colorant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 2 : TWO COMPONENTS - COLORANT PART WITH HIGH LEVEL OF OILS",
+      "formulationName": "Hair colourant (permanent, oxidative type)",
+      "formulationSubheader": "TYPE 2 : TWO COMPONENTS - COLOURANT PART WITH HIGH LEVEL OF OILS",
       "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9- 2013)"],
       "childNumber": 5,
       "ingredients": [
@@ -415,8 +415,8 @@
       "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
-      "formulationName": "Hair colorant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLORANT PART - PART A",
+      "formulationName": "Hair colourant (permanent, oxidative type)",
+      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLOURANT PART - PART A",
       "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)"],
       "childNumber": 6,
       "ingredients": [
@@ -494,8 +494,8 @@
        "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
-      "formulationName": "Hair colorant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLORANT PART - PART B",
+      "formulationName": "Hair colourant (permanent, oxidative type)",
+      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLOURANT PART - PART B",
       "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)"],
       "childNumber": 7,
       "ingredients": [
@@ -545,7 +545,7 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (permanent, oxidative type)",
+      "formulationName": "Hair colourant (permanent, oxidative type)",
       "formulationSubheader": "TYPE 1 : TWO OR MULTI COMPONENTS - OXIDATIVE PART",
       "formulationNotes": ["To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"],
       "childNumber": 8,
@@ -596,7 +596,7 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (permanent, oxidative type)",
+      "formulationName": "Hair colourant (permanent, oxidative type)",
       "formulationSubheader": "TYPE 2 : TWO OR MULTI COMPONENTS - OXIDATIVE PART WITH HIGH LEVEL OF OILS",
       "formulationNotes": ["To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"],
       "childNumber": 9,
@@ -728,7 +728,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "colorants, chelating agents",
+          "ingredientExamples": "colourants, chelating agents",
           "volume": 5
         }
       ],
@@ -841,7 +841,7 @@
       ],
       "ingredients": [
         {
-          "ingredient": "Ammonium / sodium / potassium persulfate ",
+          "ingredient": "Ammonium or sodium or potassium persulfate ",
           "volume": 70
         },
         {
@@ -871,7 +871,7 @@
         },
         {
           "ingredient": "Additional ingredients ",
-          "ingredientExamples": "colorants, chelating agents",
+          "ingredientExamples": "colourants, chelating agents",
           "volume": 5
         }
       ],
@@ -920,7 +920,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "colorants, chelating agents",
+          "ingredientExamples": "colourants, chelating agents",
           "volume": 5
         }
       ],
