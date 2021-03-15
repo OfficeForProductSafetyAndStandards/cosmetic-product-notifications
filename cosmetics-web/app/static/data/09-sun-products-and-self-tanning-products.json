@@ -46,7 +46,7 @@
         },
         {
           "ingredient": "Film forming polymers",
-          "ingredientExamples": "pvp",
+          "ingredientExamples": "PVP",
           "volume": "5"
         },
         {
@@ -85,7 +85,7 @@
           "volume": "35"
         },
         {
-          "ingredient": "Silicones including volatile silicones",
+          "ingredient": "Silicones(including volatile silicones)",
           "ingredientExamples": "cyclopentasiloxane, dimethicone",
           "volume": "30"
         },
@@ -147,7 +147,7 @@
           "volume": "15"
         },
         {
-          "ingredient": "Silicones including volatile silicones",
+          "ingredient": "Silicones(including volatile silicones)",
           "ingredientExamples": "cyclopentasiloxane, dimethicone",
           "volume": "10"
         },
@@ -194,7 +194,7 @@
           "volume": "6"
         },
         {
-          "ingredient": "Silicones including volatile silicones",
+          "ingredient": "Silicones(including volatile silicones)",
           "ingredientExamples": "cyclopentasiloxane, dimethicone",
           "volume": "5"
         },
@@ -231,7 +231,7 @@
       "formulationName": "Sunscreen gel (oil based)",
       "ingredients": [
         {
-          "ingredient": "Silicones including volatile silicones",
+          "ingredient": "Silicones(including volatile silicones)",
           "ingredientExamples": "cyclopentasiloxane, dimethicone",
           "volume": "40"
         },

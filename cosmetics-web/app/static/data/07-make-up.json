@@ -33,7 +33,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "30"
       },
       {
@@ -104,7 +104,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "30"
       },
       {
@@ -152,7 +152,7 @@
     "ingredients": [
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "40"
       },
       {
@@ -336,12 +336,12 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "30"
       },
       {
         "ingredient": "Anticaking agents",
-        "ingredientExamples": "zinc/magnesium stearate, zinc/magnesium laurate",
+        "ingredientExamples": "zinc stearate, magnesium stearate, zinc laurate,magnesium laurate",
         "volume": "15"
       },
       {
@@ -384,7 +384,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "65"
       },
       {
@@ -418,7 +418,7 @@
         "volume": "20"
       },
       {
-        "ingredient": "Photoprotective products contain UV",      
+        "ingredient": "Photoprotective products containing UV filters",      
         "ingredientExamples": "titanium dioxide, zinc oxide",
         "volume": "10"
       },
@@ -489,7 +489,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "30"
       },
       {
@@ -498,7 +498,7 @@
         "volume": "20"
       },
       {
-        "ingredient": "Photoprotective products contain UV filters",
+        "ingredient": "Photoprotective products containing UV filters",
         "ingredientExamples": "titanium dioxide, zinc oxide",
         "volume": "10"
       },
@@ -556,7 +556,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "50"
       },
       {
@@ -756,7 +756,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "10"
       },
       {
@@ -803,7 +803,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "10"
       },
       {
@@ -836,7 +836,7 @@
     "ingredients": [
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "80"
       },
       {
@@ -869,7 +869,7 @@
       },
       {
         "ingredient": "Bulking agents",
-        "ingredientExamples": "talc, silica, starch, nylon powder, polyethylene powder) t",
+        "ingredientExamples": "talc, silica, starch, nylon powder, polyethylene powder",
         "volume": "to 100"
       }
     ]
@@ -885,7 +885,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "50"
       },
       {
@@ -943,7 +943,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "60"
       },
       {
@@ -997,7 +997,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "50"
       },
       {
@@ -1050,7 +1050,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "25"
       },
       {
@@ -1122,7 +1122,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "20"
       },
       {
@@ -1159,7 +1159,7 @@
       },
       {
         "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane) t",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane)",
         "volume": "to 100"
       }
     ]
@@ -1175,7 +1175,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "50"
       },
       {
@@ -1214,7 +1214,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "25"
       },
       {
@@ -1296,7 +1296,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "25"
       },
       {
@@ -1362,7 +1362,7 @@
       },
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents",
+        "ingredientExamples": "opacifying agents, pearlescent agents",
         "volume": "25"
       },
       {
@@ -1396,7 +1396,7 @@
     "ingredients": [
       {
         "ingredient": "Colourants, colour additives",
-        "ingredientExamples": "opacifying, pearlescent agents, coloured aluminium foil, polyester film or laminates of both",
+        "ingredientExamples": "opacifying agents, pearlescent agents, coloured aluminium foil, polyester film or laminates of both",
         "volume": "30"
       },
       {

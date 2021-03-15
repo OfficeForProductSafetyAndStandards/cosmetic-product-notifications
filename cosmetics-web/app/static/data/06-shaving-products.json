@@ -23,7 +23,7 @@
         },
         {
           "ingredient": "Emollients",
-          "ingredientExamples": "oils, vegetable, mineral, fatty acid esters",
+          "ingredientExamples": "oils, vegetable oil, mineral oil, fatty acid esters",
           "volume": "15"
         },
         {
@@ -79,12 +79,12 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable, mineral",
+          "ingredientExamples":"vegetable oil, mineral oil",
           "volume": "20"
         },
         {
           "ingredient": "Soaps",
-          "ingredientExamples": "TEA-stearate and TEA-laurate",
+          "ingredientExamples": "TEA-stearate, TEA-laurate",
           "volume": "10"
         },
         {
@@ -94,7 +94,7 @@
         },
         {
           "ingredient": "Additional ingredients",
-          "ingredientExamples": "citamins, plant extracts",
+          "ingredientExamples": "vitamins, plant extracts",
           "volume": "3"
         },
         {
