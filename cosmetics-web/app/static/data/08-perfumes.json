@@ -57,18 +57,18 @@
       "formulationName": "Perfumed powder (loose or pressed)",
       "ingredients": [
         {
-          "ingredient": "Mineral Bulking agents",
+          "ingredient": "Mineral bulking agents",
           "ingredientExamples": "talc, kaolin, magnesium, calcium carbonate",
           "volume": "99"
         },
         {
-          "ingredient": "Other Bulking agents",
+          "ingredient": "Other bulking agents",
           "ingredientExamples": "starch, nylon powder, sodium polyacrylate copolymer",
           "volume": "50"
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying, pearlescent agents",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
           "volume": "40"
         },
         {
@@ -93,7 +93,7 @@
     },
     {
       "childNumber": 3,
-      "formulationName": "Solid perfume (paste, waxe)",
+      "formulationName": "Solid perfume (paste, wax)",
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
@@ -102,7 +102,7 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying, pearlescent agents",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
           "volume": "50"
         },
         {
@@ -155,7 +155,7 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying, pearlescent agents",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
           "volume": "40"
         },
         {
@@ -198,7 +198,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable, mineral",
+          "ingredientExamples":"vegetable oil, mineral oil",
           "volume": "to 100"
         }
       ]
