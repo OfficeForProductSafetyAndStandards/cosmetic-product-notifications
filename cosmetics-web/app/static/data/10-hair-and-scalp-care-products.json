@@ -117,8 +117,8 @@
         "volume": "10"
       },
       {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "ingredient": "Silicones (including volatile silicones)",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes (for example alcoxysilanes)",
         "volume": "10"
       },
       {
@@ -138,7 +138,7 @@
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "uv filters, pearlescent agents",
+        "ingredientExamples": "UV filters, pearlescent agents",
         "volume": "5"
       },
       {
@@ -174,7 +174,7 @@
       },
       {
         "ingredient": "Silicones(including volatile silicones)",
-        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes (for example, alcoxysilanes)",
         "volume": "20"
       },
       {
@@ -269,7 +269,7 @@
         "volume": "2"
       },
       {
-        "ingredient": "Silicones including volatile silicones",
+        "ingredient": "Silicones (including volatile silicones)",
         "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone)",
         "volume": "to 100"
       }
@@ -280,12 +280,12 @@
     "formulationName": "Hair / scalp care lotion",
     "ingredients": [
       {
-        "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
         "volume": "60"
       },
       {
         "ingredient": "Polymers",
-        "ingredientExamples": "pvp",
+        "ingredientExamples": "PVP",
         "volume": "10"
       },
       {
@@ -295,12 +295,12 @@
       },
       {
         "ingredient": "Oils",
-        "ingredientExamples":"vegetable, mineral, long chain alcohols",
+        "ingredientExamples":"vegetable oil, mineral oil, long chain alcohols",
         "volume": "5"
       },
       {
         "ingredient": "Silicones(including volatile silicones)",
-        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes (for example, alcoxysilanes)",
         "volume": "5"
       },
       {
@@ -351,7 +351,7 @@
       },
       {
         "ingredient": "Oils",
-        "ingredientExamples":"vegetable, mineral, long chain alcohols",
+        "ingredientExamples":"vegetable oil, mineral oil, long chain alcohols",
         "volume": "50"
       },
       {
@@ -375,7 +375,7 @@
       },
       {
         "ingredient": "Humectants",
-        "ingredientExamples": "Propylene glycol",
+        "ingredientExamples": "propylene glycol",
         "volume": "10"
       },
       {
@@ -384,7 +384,7 @@
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "uv filters, vitamins",
+        "ingredientExamples": "UV filters, vitamins",
         "volume": "5"
       },
       {
@@ -462,7 +462,7 @@
         "volume": "1"
       },
       {
-        "ingredient": "Hair dyeing agents, colorants",
+        "ingredient": "Hair dyeing agents, colourants",
         "volume": "0.2"
       }
     ]
