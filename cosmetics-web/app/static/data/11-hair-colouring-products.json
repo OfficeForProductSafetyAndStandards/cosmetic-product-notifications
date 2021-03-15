@@ -8,7 +8,7 @@
       "ingredients": [
         {
           "ingredient": "Anionic surfactants",
-          "ingredientExamples": "sodium/ammonium/TEA lauryl sulfate, sodium/ammonium/TEA laureth sulfate",
+          "ingredientExamples": "sodium or ammonium or TEA lauryl sulfate, sodium or ammonium or TEA laureth sulfate",
           "volume": 30
         },
         {
@@ -28,7 +28,7 @@
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExamples": "stearamidopropyl dimethylamine, distearyldimonium chloride)",
+          "ingredientExamples": "stearamidopropyl dimethylamine, distearyldimonium chloride",
           "volume": 5
         },
         {
@@ -66,16 +66,16 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (temporary) - foam,lotion",
+      "formulationName": "Hair colourant (temporary) - foam,lotion",
       "childNumber": 2,
       "ingredients": [
         {
-          "ingredient": "Ethanol (alcohol, alcohol denat",
+          "ingredient": "Ethanol (alcohol, alcohol denat)",
           "volume": 60
         },
         {
           "ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
-          "ingredientExamples": "sodium laureth sulfate)",
+          "ingredientExamples": "sodium laureth sulfate",
           "volume": 10
         },
         {
@@ -119,7 +119,7 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (temporary or semi-permanent) – liquid, cream, foam",
+      "formulationName": "Hair colourant (temporary or semi-permanent) – liquid, cream, foam",
       "childNumber": 3,
       "ingredients": [
         {
@@ -137,7 +137,7 @@
           "volume": 11
         },
         {
-          "ingredient": "Silicones including volatile silicones (cyclopentasiloxane, dimethicone, amodimethicone)",
+          "ingredient": "Silicones (including volatile silicones (cyclopentasiloxane, dimethicone, amodimethicone))",
           "volume": 10
         },
         {
@@ -200,7 +200,7 @@
       ]
     },
     {
-      "formulationName": "Hair colorant (permanent, oxidative type)",
+      "formulationName": "Hair colourant (permanent, oxidative type)",
       "childNumber": 4,
       "ingredients": [
         {
@@ -309,7 +309,7 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 80
         },
         {
@@ -324,12 +324,12 @@
         },
         {
           "ingredient": "Amphoteric surfactants",
-          "ingredientExamples": " betaine derivatives",
+          "ingredientExamples": "betaine derivatives",
           "volume": 20
         },
         {
           "ingredient": "Emulsifying agents",
-          "ingredientExamples": " ethoxylated long chain alcohols",
+          "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 30
         },
         {
@@ -480,7 +480,7 @@
         },
         {
           "ingredient": "Chelating agents",
-          "ingredientExamples": "EDTA)",
+          "ingredientExamples": "EDTA",
           "volume": 1
         },
         {

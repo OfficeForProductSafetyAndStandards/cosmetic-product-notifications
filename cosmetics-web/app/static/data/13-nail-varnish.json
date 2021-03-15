@@ -7,7 +7,7 @@
       "childNumber": 1,
       "ingredients": [
         {
-          "ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
           "volume": "90"
         },
         {
@@ -27,7 +27,7 @@
         },
         {
           "ingredient": "Colourants, colour additives",
-          "ingredientExamples": "opacifying, pearlescent agents",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
           "volume": "15"
         },
         {
