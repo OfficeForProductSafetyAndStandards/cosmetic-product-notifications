@@ -16,7 +16,7 @@
           "volume": "40"
         },
         {
-          "ingredient": "Silicones including volatile silicones",
+          "ingredient": "Silicones(including volatile silicones)",
           "ingredientExamples": "cyclopentasiloxane, dimethicone",
           "volume": "30"
         },
@@ -77,7 +77,7 @@
       "formulationName": "Sunscreen oil",
       "ingredients": [
         {
-          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "ingredient": "Ethanol(alcohol, alcohol denat.)",
           "volume": "70"
         },
         {
@@ -91,7 +91,7 @@
         },
         {
           "ingredient": "Film forming agents",
-          "ingredientExamples": "pvp",
+          "ingredientExamples": "PVP",
           "volume": "10"
         },
         {
@@ -166,7 +166,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable, mineral",
+          "ingredientExamples":"vegetable oil, mineral oil",
           "volume": "to 100"
         }
       ]
@@ -228,7 +228,7 @@
     },
     {
       "childNumber": 5,
-      "formulationName": "Sunscreen gel (oil based)",
+      "formulationName": "Sunscreen gel(oil based)",
       "ingredients": [
         {
           "ingredient": "Silicones(including volatile silicones)",
@@ -272,7 +272,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable, mineral",
+          "ingredientExamples":"vegetable oil, mineral oil",
           "volume": "to 100"
         }
       ]
@@ -351,11 +351,11 @@
       "formulationName": "Self tan – lotion, gel",
       "ingredients": [
         {
-          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "ingredient": "Ethanols (alcohol, alcohol denat.)",
           "volume": "60"
         },
         {
-          "ingredient": "UV Filters",
+          "ingredient": "UV filters",
           "volume": "15"
         },
         {

@@ -8,7 +8,7 @@
     "ingredients": [
       {
         "ingredient": "Anionic surfactant",
-        "ingredientExamples": "sodium/ammonium/TEA lauryl sulfates, sodium/ammonium/TEA laureth sulfates",
+        "ingredientExamples": "sodium or ammonium or TEA lauryl sulfates, sodium or ammonium or TEA laureth sulfates",
         "volume": "30"
       },
       {
@@ -18,7 +18,7 @@
       },
       {
         "ingredient": "Non-ionic surfactants",
-        "ingredientExamples": "atty alkanolamides",
+        "ingredientExamples": "fatty alkanolamides",
         "volume": "15"
       },
       {
@@ -28,7 +28,7 @@
       },
       {
         "ingredient": "Additional ingredients",
-        "ingredientExamples": "uv filters, pearlescent agents, opacifying agents",
+        "ingredientExamples": "UV filters, pearlescent agents, opacifying agents",
         "volume": "10"
       },
       {
@@ -66,7 +66,7 @@
     "ingredients": [
       {
         "ingredient": "Soap base",
-        "ingredientExamples": "mixed sodium/potassium stearate and sodium/potassium laurate",
+        "ingredientExamples": "mixed sodium or potassium stearate and sodium or potassium laurate",
         "volume": "70"
       },
       {
@@ -173,7 +173,7 @@
         "volume": "20"
       },
       {
-        "ingredient": "Silicones including volatile silicones",
+        "ingredient": "Silicones(including volatile silicones)",
         "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
         "volume": "20"
       },
@@ -299,7 +299,7 @@
         "volume": "5"
       },
       {
-        "ingredient": "Silicones including volatile silicones",
+        "ingredient": "Silicones(including volatile silicones)",
         "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
         "volume": "5"
       },
@@ -355,7 +355,7 @@
         "volume": "50"
       },
       {
-        "ingredient": "Silicones including volatile silicones",
+        "ingredient": "Silicones (including volatile silicones)",
         "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
         "volume": "50"
       },
@@ -429,7 +429,7 @@
         "volume": "15"
       },
       {
-        "ingredient": "Silicones including volatile silicones (cyclopentasiloxane, dimethicone)",
+        "ingredient": "Silicones (including volatile silicones (cyclopentasiloxane, dimethicone))",
         "volume": "5"
       },
       {
@@ -438,7 +438,7 @@
         "volume": "3"
       },
       {
-        "ingredient": "Anticaking Agents",
+        "ingredient": "Anticaking agents",
         "ingredientExamples": "silica, magnesium sulfate",
         "volume": "2"
       },
