@@ -11,8 +11,8 @@
 					"volume": 70
 				},
 				{
-					"ingredient": "Abrasives ",
-					"ingredientExamples": "dicalcium phosphate dihydrate and / or alumina and / or calcium carbonate and / or silica and silicates",
+					"ingredient": "Abrasives",
+					"ingredientExamples": "dicalcium phosphate dihydrate, alumina, calcium carbonate, silica and silicates",
 					"volume": 55
 				},
 				{
@@ -52,11 +52,12 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "pH stabilisers such as sodium/potassiumphosphate, vitamins, chelating agents",
+					"ingredientExamples": "pH stabilisers such as sodium or potassiumphosphate, vitamins, chelating agents",
 					"volume": 5
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils, for example mint)",
+					"ingredient": "Flavour (mostly essential oils)",
+					"ingredientExamples": "mint",
 					"volume": 3
 				},
 				{

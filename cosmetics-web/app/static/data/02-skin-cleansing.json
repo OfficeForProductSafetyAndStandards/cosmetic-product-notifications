@@ -229,7 +229,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable, mineral",
+          "ingredientExamples":"vegetable oil, mineral oil",
           "volume": "to 100"
         }
       ]
@@ -464,7 +464,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": "5"
         },
         {
@@ -701,7 +701,7 @@
       ]
     },
     {
-      "formulationName": "Bath salts / cubes",
+      "formulationName": "Bath salts or cubes",
       "childNumber": 12,
       "ingredients": [
         {

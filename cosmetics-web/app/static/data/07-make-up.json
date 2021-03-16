@@ -13,7 +13,7 @@
       },
       {
         "ingredient": "Oils",
-        "ingredientExamples":"vegetable, mineral",
+        "ingredientExamples":"vegetable oil, mineral oil",
         "volume": "40"
       },
       {
@@ -84,7 +84,7 @@
     "ingredients": [
       {
         "ingredient": "Oils",
-        "ingredientExamples":"vegetable, mineral",
+        "ingredientExamples":"vegetable oil, mineral oil",
         "volume": "70"
       },
       {
@@ -157,7 +157,7 @@
       },
       {
         "ingredient": "Oils",
-        "ingredientExamples":"vegetable, mineral",
+        "ingredientExamples":"vegetable oil, mineral oil",
         "volume": "20"
       },
       {
@@ -374,7 +374,7 @@
     "ingredients": [
       {
         "ingredient": "Oils",
-        "ingredientExamples":"vegetable, mineral, esters and fatty acids",
+        "ingredientExamples":"vegetable oil, mineral oil, esters and fatty acids",
         "volume": "65"
       },
       {

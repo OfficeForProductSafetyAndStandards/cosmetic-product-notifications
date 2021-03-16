@@ -21,12 +21,13 @@
 					"volume": 4
 				},
 				{
-					"ingredient": "Emulsifying agents, Anionic surfactants, amphoteric surfactants, non-ionic surfactants ",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants ",
 					"ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
 					"volume": 4
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils for example mint)",
+					"ingredient": "Flavour (mostly essential oils)",
+					"ingredientExamples":"mint",
 					"volume": 3
 				},
 				{
@@ -81,7 +82,8 @@
 					"volume": 80
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils, for example mint) ",
+					"ingredient": "Flavour (mostly essential oils)",
+					"ingredientExamples":"mint",
 					"volume": 7.5
 				},
 				{
@@ -132,7 +134,8 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils, for example mint) ",
+					"ingredient": "Flavour (mostly essential oils) ",
+					"ingredientExamples":"mint",
 					"volume": 2
 				},
 				{

@@ -501,7 +501,7 @@
       "ingredients": [
         {
           "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
-          "ingredientExamples": " (for example ethoxylated long chain alcohols) ",
+          "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 20
         },
         {
@@ -516,7 +516,7 @@
         },
         {
           "ingredient": "Cationic surfactants",
-          "ingredientExamples": "dicetyldimonium chloride, PEG-2 oleamine) ",
+          "ingredientExamples": "dicetyldimonium chloride, PEG-2 oleamine",
           "volume": 5
         },
         {
@@ -603,7 +603,7 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 80
         },
         {
@@ -631,7 +631,7 @@
           "volume": 5
         },
         {
-          "ingredient": "Parfum ",
+          "ingredient": "Parfum",
           "volume": 2
         },
         {
@@ -646,7 +646,7 @@
         {
           "ingredient": "pH adjuster",
           "ingredientExamples": "phosphoric acid",
-          "volume": "qs pH 2 - 3"
+          "volume": "up to and not surpassing pH 2 - 3"
         },
         {
           "ingredient": "Aqua",
@@ -680,7 +680,7 @@
       "ingredients": [
         {
           "ingredient": "Reducing agent",
-          "ingredientExamples": " (for example sodium thioglycolate )",
+          "ingredientExamples": "sodium thioglycolate",
           "volume": 20
         },
         {
@@ -698,12 +698,12 @@
       "childNumber": 12,
       "ingredients": [
         {
-          "ingredient": "Ammonium / sodium / potassium persulfate",
+          "ingredient": "Ammonium or sodium or potassium persulfate",
           "ingredientExamples": "70"
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 50
         },
         {
@@ -713,7 +713,7 @@
         },
         {
           "ingredient": "Alkaline agents including ammonium hydroxide liberators",
-          "ingredientExamples": "sodium/magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride",
+          "ingredientExamples": "sodium silicate, magnesium silicate, sodium carbonate, sodium metasilicate, ammonium chloride",
           "volume": 45
         },
         {
@@ -866,7 +866,7 @@
         },
         {
           "ingredient": "Oils ",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 15
         },
         {
@@ -895,7 +895,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 60
         },
         {
@@ -995,7 +995,7 @@
       "ingredients": [
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 80
         },
         {
@@ -1038,7 +1038,7 @@
         {
           "ingredient": "pH adjuster",
           "ingredientExamples": "phosphoric acid",
-          "volume": "gs pH 2-3"
+          "volume": "up to and not surpassing pH 2-3"
         },
         {
           "ingredient": "Aqua ",
@@ -1093,7 +1093,7 @@
           "volume": 20
         },
         {
-          "ingredient": "Ethanol and/or isopropanol",
+          "ingredient": "Ethanol, isopropanol",
           "ingredientExamples": "alcohol, alcohol denat., isopropyl alcohol",
           "volume": 16
         },
@@ -1146,7 +1146,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples": "vegetable, mineral",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": 20
         },
         {

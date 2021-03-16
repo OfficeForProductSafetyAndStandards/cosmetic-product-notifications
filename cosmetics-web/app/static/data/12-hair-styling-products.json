@@ -3,12 +3,12 @@
 	"name": "Hair styling products",
 	"data": [
 		{
-			"formulationName": "Hair styling cream / paste (gum, pomade, paste, wax..)",
+			"formulationName": "Hair styling cream or paste (gum, pomade, paste, wax..)",
 			"childNumber": 1,
 			"ingredients": [
 				{
 					"ingredient": "Oils",
-					"ingredientExamples": "vegetable, mineral",
+					"ingredientExamples": "vegetable oil, mineral oil",
 					"volume": 60
 				},
 				{
@@ -43,7 +43,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "uv filters, vitamins, colourants, chelating agents",
+					"ingredientExamples": "UV filters, vitamins, colourants, chelating agents",
 					"volume": 5
 				},
 				{
@@ -70,7 +70,7 @@
 					"volume": 99
 				},
 				{
-					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredient": "Silicones (including volatile silicones), silanes",
 					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 99
 				},
@@ -108,7 +108,7 @@
 					"volume": 90
 				},
 				{
-					"ingredient": "Ethanol and / or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+					"ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
 					"volume": 80
 				},
 				{
@@ -122,12 +122,12 @@
 					"volume": 15
 				},
 				{
-					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredient": "Silicones (including volatile silicones), silanes",
                     "ingredientExample":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
                     "volume": 15
 				},
 				{
-					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredient": "Resins, polymers, neutralising agent",
 					"ingredientExamples":"polyvinyl acetate, PVP, aminomethyl propanol",
 					"volume": 10
 				},
@@ -138,11 +138,11 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "vitamins , plant extracts, chelating agents,UV filters, protein hydrolysates",
+					"ingredientExamples": "vitamins, plant extracts, chelating agents, UV filters, protein hydrolysates",
 					"volume": 5
 				},
 				{
-					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants ",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
 					"ingredientExamples": "ethoxylated long chain alcohols"
 				},
 				{
@@ -181,7 +181,7 @@
 					"volume": 10
 				},
 				{
-					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredient": "Silicones (including volatile silicones), silanes",
 					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 10
 				},
@@ -233,7 +233,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Hair dyeing agents, colorants",
+					"ingredient": "Hair dyeing agents, colourants",
 					"volume": 1
 				},
 				{
@@ -243,7 +243,7 @@
 			]
 		},
 		{
-			"formulationName": "Hair shine/styling gel",
+			"formulationName": "Hair shine, styling gel",
 			"childNumber": 5,
 			"ingredients": [
 				{
@@ -251,12 +251,12 @@
 					"volume": 80
 				},
 				{
-					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredient": "Silicones (including volatile silicones), silanes",
 					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers, Neutralising agent",
+					"ingredient": "Resins, polymers, neutralising agent",
 					"ingredientExamples":"PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol, triethanolamine",
 					"volume": 25
 				},
@@ -272,7 +272,7 @@
 				},
 				{
 					"ingredient": "Colourants, colour additives",
-					"ingredientExamples": "opacifying / pearlescent agents",
+					"ingredientExamples": "opacifying agents, pearlescent agents",
 					"volume": 15
 				},
 				{
@@ -286,7 +286,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "uv filters, vitamins",
+					"ingredientExamples": "UV filters, vitamins",
 					"volume": 2
 				},
 				{
@@ -377,7 +377,7 @@
 			"childNumber": 7,
 			"ingredients": [
 				{
-					"ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+					"ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
 					"volume": 95
 				},
 				{
@@ -395,7 +395,7 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
+					"ingredient": "Resins, polymers, neutralising agent, alkoxylated glucose derivatives",
 					"ingredientExamples":"pvp/va copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
@@ -428,7 +428,7 @@
 			"childNumber": 8,
 			"ingredients": [
 				{
-					"ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat., isopropyl alcohol) ",
+					"ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol) ",
 					"volume": 95
 				},
 				{
@@ -437,7 +437,7 @@
 					"volume": 50
 				},
 				{
-					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredient": "Silicones (including volatile silicones), silanes",
 					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 50
 				},
@@ -452,8 +452,8 @@
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
-					"ingredientExamples":"pvp/va copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredient": "Resins, polymers, neutralising agent, alkoxylated glucose derivatives",
+					"ingredientExamples":"PVP/va copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -463,7 +463,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "uv filters, vitamins",
+					"ingredientExamples": "UV filters, vitamins",
 					"volume": 2
 				},
 				{
@@ -500,7 +500,7 @@
 					"volume": 50
 				},
 				{
-					"ingredient": "Silicones including volatile silicones, silanes",
+					"ingredient": "Silicones (including volatile silicones), silanes",
 					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
 					"volume": 50
 				},
@@ -510,8 +510,8 @@
 					"volume": 40
 				},
 				{
-					"ingredient": "Resins, polymers, Neutralising agent, Alkoxylated glucose derivatives",
-					"ingredientExamples":"PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredient": "Resins, polymers, neutralising agent, alkoxylated glucose derivatives",
+					"ingredientExamples": "PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
 					"volume": 10
 				},
 				{
@@ -528,7 +528,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Ethanol and/or isopropanol (alcohol, alcohol denat, isopropyl alcohol)",
+					"ingredient": "Ethanol, isopropanol (alcohol, alcohol denat, isopropyl alcohol)",
 					"volume": "to 100"
 				}
 			]
@@ -567,7 +567,8 @@
 					"volume": 6
 				},
 				{
-					"ingredient": "Silicones (for example amodimethicone), silanes (for example alcoxysilanes)",
+					"ingredient": "Silicones, silanes",
+					"ingredientExamples": "amodimethicone, alcoxysilanes",
 					"volume": 5
 				},
 				{
@@ -605,7 +606,7 @@
 				},
 				{
 					"ingredient": "Opacifying agents",
-					"ingredientExamples": " styrene/PVP copolymer",
+					"ingredientExamples": " styrene, PVP copolymer",
 					"volume": 0.5
 				},
 				{
@@ -825,7 +826,7 @@
 			]
 		},
 		{
-			"formulationName": "Permanent wave neutraliser / hair straightner (relaxer) Neutraliser -liquid,cream",
+			"formulationName": "Permanent wave neutraliser, hair straightner (relaxer) Neutraliser -liquid,cream",
 			"childNumber": 17,
 			"ingredients": [
 				{
@@ -842,8 +843,8 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Hair conditioning agents(for example silicones including volatile silicones, silanes",
-					"ingredientExamples":"silicones including volatile silicones, cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes, polyquaternium-6",
+					"ingredient": "Hair conditioning agents, silanes",
+					"ingredientExamples":"silicones (including volatile silicones), cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes, polyquaternium-6",
 					"volume": 2
 				},
 				{
@@ -861,7 +862,7 @@
 				},
 				{
 					"ingredient": "Opacifying agents",
-					"ingredientExamples": "styrene / PVP copolymer",
+					"ingredientExamples": "styrene, PVP copolymer",
 					"volume": 0.5
 				},
 				{
@@ -875,7 +876,7 @@
 				{
 					"ingredient": "pH adjuster",
 					"ingredientExamples": " citric acid ",
-					"volume": "qs pH 2.5 - 3.5"
+					"volume": "up to and not surpassing pH 2.5 - 3.5"
 				},
 				{
 					"ingredient": "Aqua",
@@ -961,7 +962,7 @@
 				},
 				{
 					"ingredient": "Alkaline agents",
-					"ingredientExamples": "Ammonium hydroxide, ethanolamine, ammonium bicarbonate",
+					"ingredientExamples": "ammonium hydroxide, ethanolamine, ammonium bicarbonate",
 					"volume": 8
 				},
 				{
@@ -970,12 +971,12 @@
 				},
 				{
 					"ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants ",
-					"ingredientExamples": "Cocamidopropyl betaine",
+					"ingredientExamples": "cocamidopropyl betaine",
 					"volume": 5
 				},
 				{
 					"ingredient": "Cationic surfactants",
-					"ingredientExamples": " Dicetyldimonium chloride",
+					"ingredientExamples": "dicetyldimonium chloride",
 					"volume": 5
 				},
 				{
@@ -985,7 +986,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients ",
-					"ingredientExamples": "Plant extracts, Thickeners",
+					"ingredientExamples": "plant extracts, Thickeners",
 					"volume": 5
 				},
 				{
@@ -1001,7 +1002,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "helating agents"
+					"ingredient": "Chelating agents"
 				},
 				{
 					"ingredient": "Aqua ",
