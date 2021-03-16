@@ -80,6 +80,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     click_button "Continue"
 
     expect_to_be_on_secondary_authentication_sms_page
+    expect(page).not_to have_link("Back", href: "/two-factor-method")
     expect_user_to_have_received_sms_code(otp_code)
     complete_secondary_authentication_sms_with(otp_code)
 

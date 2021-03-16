@@ -35,6 +35,10 @@ class SecondaryAuthenticationWithAppForm
     @last_totp_at ||= totp.verify(otp_code.strip, drift_behind: 15)
   end
 
+  def back_link?
+    user && user.secondary_authentication_methods.size > 1
+  end
+
 private
 
   def secondary_authentication

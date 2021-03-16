@@ -28,6 +28,10 @@ class SecondaryAuthenticationWithSmsForm
     super(code.to_s.strip)
   end
 
+  def back_link?
+    user && !user.mobile_number_pending_verification? && user.secondary_authentication_methods.size > 1
+  end
+
   def correct_otp_validation
     return if errors.present?
 
@@ -53,6 +57,10 @@ class SecondaryAuthenticationWithSmsForm
   end
 
   def secondary_authentication
-    @secondary_authentication ||= SecondaryAuthentication.new(User.find(user_id))
+    @secondary_authentication ||= SecondaryAuthentication.new(user)
+  end
+
+  def user
+    @user ||= User.find(user_id)
   end
 end
