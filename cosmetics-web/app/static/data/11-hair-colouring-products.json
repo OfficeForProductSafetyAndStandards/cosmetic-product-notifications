@@ -416,7 +416,7 @@
     },
     {
       "formulationName": "Hair colourant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLOURANT PART - PART A",
+      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLOURANT PART- PART A",
       "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)"],
       "childNumber": 6,
       "ingredients": [
@@ -546,7 +546,7 @@
     },
     {
       "formulationName": "Hair colourant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 1 : TWO OR MULTI COMPONENTS - OXIDATIVE PART",
+      "formulationSubheader": "TYPE 1 : TWO OR MORE COMPONENTS - OXIDATIVE PART",
       "formulationNotes": ["To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"],
       "childNumber": 8,
       "ingredients": [
@@ -851,7 +851,7 @@
         },
         {
           "ingredient": "Alkaline agents including ammonium hydroxide liberators",
-          "ingredientExamples": "sodium carbonate, sodium/magnesium silicate, sodium metasilicate, ammonium chloride",
+          "ingredientExamples": "sodium carbonate, sodium or magnesium silicate, sodium metasilicate, ammonium chloride",
           "volume": 45
         },
         {
@@ -884,8 +884,8 @@
       "formulationName": "Hair bleach - paste",
       "formulationNotes": [
         "to be mixed immediately prior to use with oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
-        "or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 ",
-        "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)"
+        "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1 ",
+        "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part"
       ],
       "childNumber": 16,
       "ingredients": [
