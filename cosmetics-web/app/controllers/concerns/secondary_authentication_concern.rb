@@ -8,6 +8,7 @@ module SecondaryAuthenticationConcern
   extend ActiveSupport::Concern
 
   def require_secondary_authentication(redirect_to: request.fullpath)
+    user = secondary_authentication_user
     return unless user && Rails.configuration.secondary_authentication_enabled
 
     if !user.account_security_completed?
@@ -17,8 +18,15 @@ module SecondaryAuthenticationConcern
       session[:secondary_authentication_user_id] = user_id_for_secondary_authentication
       session[:secondary_authentication_notice] = notice
       session[:secondary_authentication_confirmation] = confirmation
-      auth = SecondaryAuthentication.new(user)
-      auth.generate_and_send_code(current_operation)
+
+      if secondary_authentication_with_sms? || user.mobile_number_pending_verification?
+        session[:secondary_authentication_method] = "sms"
+        auth = SecondaryAuthentication.new(user)
+        auth.generate_and_send_code(current_operation)
+      elsif user_needs_to_choose_secondary_authentication_method?
+        return redirect_to new_secondary_authentication_method_path
+      end
+
       redirect_to new_secondary_authentication_path
     end
   end
@@ -62,7 +70,26 @@ module SecondaryAuthenticationConcern
     Time.zone.at(timestamp)
   end
 
-  def user
-    User.find_by(id: user_id_for_secondary_authentication)
+  def secondary_authentication_user
+    @secondary_authentication_user ||= User.find_by(
+      id: session[:secondary_authentication_user_id] || user_id_for_secondary_authentication,
+    )
+  end
+
+  def user_needs_to_choose_secondary_authentication_method?
+    return false unless secondary_authentication_user
+
+    session[:secondary_authentication_method].blank? &&
+      secondary_authentication_user.secondary_authentication_methods.size > 1
+  end
+
+  def secondary_authentication_with_sms?
+    session[:secondary_authentication_method] == "sms" ||
+      secondary_authentication_user&.secondary_authentication_methods == %w[sms]
+  end
+
+  def secondary_authentication_with_app?
+    session[:secondary_authentication_method] == "app" ||
+      secondary_authentication_user&.secondary_authentication_methods == %w[app]
   end
 end

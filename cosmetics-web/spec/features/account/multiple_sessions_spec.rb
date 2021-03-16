@@ -9,9 +9,9 @@ RSpec.feature "One user can use only one session", :with_2fa, :with_stubbed_mail
       fill_in "Password", with: user.password
       click_button "Continue"
 
-      expect(page).to have_css("h1", text: "Check your phone")
-      fill_in "Enter security code", with: "#{otp_code} "
-      click_on "Continue"
+      select_secondary_authentication_sms
+      expect_to_be_on_secondary_authentication_sms_page
+      complete_secondary_authentication_sms_with("#{otp_code} ")
 
       expect(page).to have_current_path(path)
 
@@ -22,9 +22,9 @@ RSpec.feature "One user can use only one session", :with_2fa, :with_stubbed_mail
         fill_in "Password", with: user.password
         click_button "Continue"
 
-        expect(page).to have_css("h1", text: "Check your phone")
-        fill_in "Enter security code", with: "#{otp_code} "
-        click_on "Continue"
+        select_secondary_authentication_sms
+        expect_to_be_on_secondary_authentication_sms_page
+        complete_secondary_authentication_sms_with("#{otp_code} ")
 
         expect(page).to have_current_path(path)
       end

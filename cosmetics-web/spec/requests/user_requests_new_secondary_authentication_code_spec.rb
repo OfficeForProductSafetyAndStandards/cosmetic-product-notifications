@@ -9,7 +9,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
     subject(:request_code) { get new_resend_secondary_authentication_code_path }
 
     context "with an user session" do
-      let(:user) { create(:submit_user, :with_responsible_person) }
+      let(:user) { create(:submit_user, :with_responsible_person, :with_sms_secondary_authentication) }
 
       before do
         sign_in(user)
@@ -46,7 +46,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
     context "with an user session" do
       subject(:request_code) { post new_resend_secondary_authentication_code_path }
 
-      let(:user) { create(:submit_user, :with_responsible_person) }
+      let(:user) { create(:submit_user, :with_responsible_person, :with_sms_secondary_authentication) }
 
       before do
         sign_in(user)
@@ -79,7 +79,9 @@ RSpec.describe "User requests new secondary authentication code", type: :request
         post new_resend_secondary_authentication_code_path, params: { submit_user: { mobile_number: mobile_number } }
       end
 
-      let(:user) { create(:submit_user, :with_responsible_person, mobile_number_verified: false) }
+      let(:user) do
+        create(:submit_user, :with_responsible_person, :with_sms_secondary_authentication, mobile_number_verified: false)
+      end
 
       before do
         sign_in(user)

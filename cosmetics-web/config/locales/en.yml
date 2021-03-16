@@ -187,7 +187,7 @@ en:
             name:
               member_of_rp_with_same_name: "You are already associated with %{attribute}"
               invited_to_rp_with_same_name: "You have already been invited to join %{attribute}. Check your email inbox for your invite"
-        secondary_authentication_form:
+        secondary_authentication_with_sms_form:
           attributes:
             otp_code:
               blank: "Enter the security code"
@@ -196,6 +196,18 @@ en:
               incorrect: "Incorrect security code"
               expired: "The security code has expired. New code sent."
               numericality: "The code must be 5 numbers"
+        secondary_authentication_with_app_form:
+          attributes:
+            otp_code:
+              blank: "Enter the access code"
+              too_short: "You haven’t entered enough numbers"
+              too_long: "You’ve entered too many numbers"
+              incorrect: "Incorrect access code"
+              numericality: "The code must be 6 numbers"
+        secondary_authentication_method_form:
+          attributes:
+            authentication_method:
+              blank: "Select an option"
         sign_in_form:
           attributes:
             password:

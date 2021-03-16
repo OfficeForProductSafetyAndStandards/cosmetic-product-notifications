@@ -88,8 +88,8 @@ RSpec.describe "Creating an account when having pending responsible person invit
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_page
+    expect_to_be_on_secondary_authentication_sms_page
     expect_user_to_have_received_sms_code(otp_code)
-    complete_secondary_authentication_with(otp_code)
+    complete_secondary_authentication_sms_with(otp_code)
   end
 end

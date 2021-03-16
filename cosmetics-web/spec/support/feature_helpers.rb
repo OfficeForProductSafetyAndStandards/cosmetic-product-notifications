@@ -25,14 +25,36 @@ def expect_user_to_have_received_sms_code(code, current_user = nil)
   ).at_least(:once)
 end
 
-def complete_secondary_authentication_with(security_code)
+def complete_secondary_authentication_sms_with(security_code)
   fill_in "Enter security code", with: security_code
   click_on "Continue"
 end
 
-def expect_to_be_on_secondary_authentication_page
-  expect(page).to have_current_path(/\/two-factor/)
+def complete_secondary_authentication_app(access_code = nil)
+  fill_in "Access code", with: access_code.presence || correct_app_code
+  click_on "Continue"
+end
+
+def select_secondary_authentication_sms
+  expect(page).to have_css("h1", text: "How do you want to get an access code?")
+  choose "Text message"
+  click_on "Continue"
+end
+
+def select_secondary_authentication_app
+  expect(page).to have_css("h1", text: "How do you want to get an access code?")
+  choose "Authentication app for smartphone or tablet"
+  click_on "Continue"
+end
+
+def expect_to_be_on_secondary_authentication_sms_page
+  expect(page).to have_current_path(/\/two-factor$/)
   expect(page).to have_h1("Check your phone")
+end
+
+def expect_to_be_on_secondary_authentication_app_page
+  expect(page).to have_current_path(/\/two-factor$/)
+  expect(page).to have_h1("Enter the access code")
 end
 
 def expect_to_be_on_resend_secondary_authentication_page

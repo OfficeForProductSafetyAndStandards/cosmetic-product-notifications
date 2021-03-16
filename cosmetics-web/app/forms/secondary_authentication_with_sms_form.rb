@@ -1,4 +1,4 @@
-class SecondaryAuthenticationForm
+class SecondaryAuthenticationWithSmsForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -6,8 +6,6 @@ class SecondaryAuthenticationForm
 
   attribute :otp_code
   attribute :user_id
-
-  attr_accessor :user_klass
 
   validates_presence_of :otp_code
   validates :otp_code,

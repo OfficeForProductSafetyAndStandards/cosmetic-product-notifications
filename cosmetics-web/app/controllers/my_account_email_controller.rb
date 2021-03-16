@@ -18,7 +18,7 @@ class MyAccountEmailController < SubmitApplicationController
 
     ActiveRecord::Base.transaction do
       @user.save!
-      user.send_new_email_confirmation_email
+      @user.send_new_email_confirmation_email
       render "users/check_your_email/show"
     end
   rescue StandardError

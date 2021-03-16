@@ -9,6 +9,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       configure_requests_for_submit_domain
       visit "/sign-in"
       fill_in_credentials
+      select_secondary_authentication_sms
 
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
@@ -24,6 +25,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
       click_on "Continue"
+      expect(page).to have_css("h1", text: "Change your email address")
     end
 
     context "when the password change is fine" do
@@ -33,6 +35,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         click_on "Continue"
 
         expect_to_be_on_my_account_page
+        expect(page).to have_css("h1", text: "Check your email")
         expect(page).to have_text(/A message with a confirmation link has been sent to your email address/)
         email = delivered_emails.first
         expect(email.recipient).to eq "new@example.org"

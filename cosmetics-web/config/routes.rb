@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   get "text-not-received", to: "secondary_authentications/resend_code#new", as: :new_resend_secondary_authentication_code
   post "text-not-received", to: "secondary_authentications/resend_code#create", as: :resend_secondary_authentication_code
 
+  get "two-factor-method", to: "secondary_authentication_method#new", as: :new_secondary_authentication_method
+  post "two-factor-method", to: "secondary_authentication_method#create", as: :secondary_authentication_method
+
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
   end

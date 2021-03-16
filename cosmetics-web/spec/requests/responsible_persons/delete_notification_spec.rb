@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubbed_notify, type: :request do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:user) { build(:submit_user) }
+  let(:user) { build(:submit_user, :with_sms_secondary_authentication) }
 
   let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:other_user) { build(:submit_user) }

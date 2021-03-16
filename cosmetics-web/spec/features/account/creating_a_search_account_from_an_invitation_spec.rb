@@ -3,7 +3,7 @@ require "support/feature_helpers"
 
 RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
   let!(:invited_user) { InviteSearchUser.call(email: "john.doe@example.com", name: "John Doe", role: :poison_centre).user }
-  let(:existing_user) { create(:poison_centre_user) }
+  let(:existing_user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
   before do
     configure_requests_for_search_domain
@@ -38,13 +38,12 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     fill_in_account_details_with(full_name: "Bob Jones",
                                  password: "testpassword123@",
                                  mobile_number: "07731123345",
-                                 app_code: "123456")
+                                 app_code: correct_app_code)
     click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_page
+    expect_to_be_on_secondary_authentication_sms_page
+    complete_secondary_authentication_sms_with(otp_code)
 
-    fill_in "Enter security code", with: otp_code
-    click_on "Continue"
     click_button "I accept"
     expect_to_be_signed_in_as_search_user
 
@@ -80,7 +79,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_page
+    expect_to_be_on_secondary_authentication_sms_page
 
     fill_in "Enter security code", with: otp_code
     click_on "Continue"
@@ -123,7 +122,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
   #     click_button "Continue"
 
-  #     expect_to_be_on_secondary_authentication_page
+  #     expect_to_be_on_secondary_authentication_sms_page
 
   #     fill_in "Enter security code", with: otp_code
   #     click_on "Continue"
