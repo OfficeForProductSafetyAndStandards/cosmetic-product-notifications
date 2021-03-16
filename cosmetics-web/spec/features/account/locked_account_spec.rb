@@ -39,6 +39,7 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :w
         expect(page).to have_css("h1", text: expected_host_header)
 
         visit unlock_path
+        select_secondary_authentication_sms
         expect(page).to have_css("h1", text: "Check your phone")
       end
 

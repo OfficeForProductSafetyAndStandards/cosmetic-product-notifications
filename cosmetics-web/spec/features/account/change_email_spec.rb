@@ -22,6 +22,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       travel_to((wait_for + 1).seconds.from_now)
 
       click_on "Change email address"
+      select_secondary_authentication_sms
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
       click_on "Continue"
@@ -108,7 +109,8 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
             travel_to((User::NEW_EMAIL_TOKEN_VALID_FOR + 1).seconds.from_now)
 
             visit confirm_url
-
+            select_secondary_authentication_sms
+            expect(page).to have_css("h1", text: "Check your phone")
             fill_in "Enter security code", with: "#{otp_code} "
             click_on "Continue"
 

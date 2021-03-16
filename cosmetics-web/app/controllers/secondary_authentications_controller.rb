@@ -53,6 +53,7 @@ private
     set_secondary_authentication_cookie(Time.zone.now.to_i)
     yield
     session[:secondary_authentication_user_id] = nil
+    session[:secondary_authentication_method] = nil
     redirect_to_saved_path
   end
 

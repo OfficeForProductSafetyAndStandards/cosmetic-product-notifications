@@ -23,6 +23,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     travel_to((wait_for + 1).seconds.from_now)
 
     click_on "Change mobile number"
+    select_secondary_authentication_sms
     expect(page).to have_css("h1", text: "Check your phone")
     fill_in "Enter security code", with: "#{otp_code} "
     click_on "Continue"
