@@ -296,8 +296,8 @@
           "volume": "up to 100"
         }
       ],
-      "annotations": "To be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
       "extraInfo": [
+        "To be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
         "pH value: 8 - 11.6",
         "pH value of the mixture with oxidative part: 6 - 11.6"
       ]
@@ -411,8 +411,7 @@
         "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9- 2013)",
         "pH value: 8 - 11.6",
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
-      ],
-      "annotations" : " maximum concentration of ammonium hydroxide permitted is 6 %"
+      ]
     },
     {
       "formulationName": "Hair colourant (permanent, oxidative type) - type 3: multi components, colourant part - part a",
