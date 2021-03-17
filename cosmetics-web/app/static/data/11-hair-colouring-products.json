@@ -22,25 +22,25 @@
           "volume": 15
         },
         {
-          "ingredient": "Thickeners",
-          "ingredientExamples": "propylene glycol, PEG",
-          "volume": 10
-        },
-        {
-          "ingredient": "Cationic surfactants",
-          "ingredientExamples": "stearamidopropyl dimethylamine, distearyldimonium chloride",
-          "volume": 5
-        },
-        {
           "ingredient": "Hair conditioning agents",
           "ingredientExamples": "silicones including volatile silicones (for example cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters",
           "volume": 15
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "propylene glycol, PEG",
+          "volume": 10
         },
         {
           "ingredient": "Additional ingredients",
           "ingredientExamples": "UV filters, pearlescent agents, opacifying agents",
           "volume": 10
         },
+        {
+          "ingredient": "Cationic surfactants",
+          "ingredientExamples": "stearamidopropyl dimethylamine, distearyldimonium chloride",
+          "volume": 5
+        },  
         {
           "ingredient": "Hair dyeing agents : Directs dyes",
           "ingredientExamples": "disperse violet 1, acid violet 43, basic brown 17",
@@ -244,17 +244,17 @@
           "volume": 16
         },
         {
-          "ingredient": "Primary intermediates",
+          "ingredient": "Hair dyeing agents: primary intermediates",
           "ingredientExamples": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
           "volume": 6
         },
         {
-          "ingredient": "Couplers",
+          "ingredient": "Hair dyeing agent: couplers",
           "ingredientExamples": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol",
           "volume": 6
         },
         {
-          "ingredient": "Directs",
+          "ingredient": "Hair dyeing agent: directs",
           "ingredientExamples": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87",
           "volume": 6
         },
@@ -303,9 +303,7 @@
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 2 : TWO COMPONENTS - COLOURANT PART WITH HIGH LEVEL OF OILS",
-      "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9- 2013)"],
+      "formulationName": "Hair colourant (permanent, oxidative type) - type 2: two components, colourant part with high level of oils",
       "childNumber": 5,
       "ingredients": [
         {
@@ -358,12 +356,12 @@
           "volume": 6
         },
         {
-          "ingredient": "Hair dyeing agents: Couplers",
+          "ingredient": "Hair dyeing agents: couplers",
           "ingredientExamples": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol",
           "volume": 6
         },
         {
-          "ingredient": "Hair dyeing agents:Directs",
+          "ingredient": "Hair dyeing agents:directs",
           "ingredientExamples": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87",
           "volume": 6
         },
@@ -410,14 +408,14 @@
         }
       ],
       "extraInfo": [
+        "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9- 2013)",
         "pH value: 8 - 11.6",
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
       ],
-      "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
+      "annotations" : " maximum concentration of ammonium hydroxide permitted is 6 %"
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLOURANT PART- PART A",
+      "formulationName": "Hair colourant (permanent, oxidative type) - type 3: multi components, colourant part - part a",
       "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)"],
       "childNumber": 6,
       "ingredients": [
@@ -490,9 +488,9 @@
         }
       ],
       "extraInfo": [
+        "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
        "pH value: 8 - 11.6", "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
-      ],
-       "annotations" : "* maximum concentration of ammonium hydroxide permitted is 6 %"
+      ]
     },
     {
       "formulationName": "Hair colourant (permanent, oxidative type)",
@@ -541,8 +539,7 @@
         }
       ],
       "extraInfo": [
-        "pH value of the mixture Part A",
-        "Part B and oxidative part: 8 - 11.6"
+        "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6",
       ]
     },
     {
@@ -699,8 +696,8 @@
       "childNumber": 12,
       "ingredients": [
         {
-          "ingredient": "Ammonium or sodium or potassium persulfate",
-          "ingredientExamples": "70"
+          "ingredient": "Ammonium persulfate or sodium persulfate or potassium persulfate",
+          "volume": "70"
         },
         {
           "ingredient": "Oils",
@@ -799,7 +796,7 @@
         {
           "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
           "ingredientExamples": "sodium laureth sulfate, ethoxylated long chain alcohols",
-          "volume": 2
+          "volume": 20
         },
         {
           "ingredient": "Solvents",
@@ -842,11 +839,11 @@
       ],
       "ingredients": [
         {
-          "ingredient": "Ammonium or sodium or potassium persulfate ",
+          "ingredient": "Ammonium persulfate or sodium persulfate or potassium persulfate ",
           "volume": 70
         },
         {
-          "ingredient": "Bulking agents ",
+          "ingredient": "Bulking agents",
           "ingredientExamples": "kaolin, magnesium stearate",
           "volume": 50
         },
@@ -891,7 +888,7 @@
       "childNumber": 16,
       "ingredients": [
         {
-          "ingredient": "Ammonium, sodium, potassium persulfate ",
+          "ingredient": "Ammonium persulfate, sodium persulfate, potassium persulfate ",
           "volume": 70
         },
         {
@@ -976,7 +973,7 @@
         {
           "ingredient": "pH adjuster",
           "ingredientExamples": "phosphoric acid",
-          "volume": "qs pH 2 - 3"
+          "volume": "up to and not surpassing pH pH 2 - 3"
         },
         {
           "ingredient": "Aqua",

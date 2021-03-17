@@ -39,7 +39,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Oral care-deodorant",
+					"ingredient": "Oral care : deodorant",
 					"ingredientExamples": "zinc chloride",
 					"volume": 0.5
 				},
@@ -49,12 +49,12 @@
 					"volume": 0.5
 				},
 				{
-					"ingredient": "Oral care-sweetening agents",
+					"ingredient": "Oral care : sweetening agents",
 					"ingredientExamples": "sodium saccharin",
 					"volume": 0.2
 				},
 				{
-					"ingredient": "Fluoride compounds (calculated as Fluorine)",
+					"ingredient": "Fluoride compounds (calculated as fluorine)",
 					"volume": "0.15*"
 				},
 				{
@@ -62,11 +62,8 @@
 					"volume": "to 100"
 				}
 			],
-			"annotation": [
-				"* actual weight present will depend on M.Wt. of fluorine donor",
-				"for example 0.15% fluorine = 1.14 % MFP (monofluorophosphate)",
-				"or 0.333 % NaF (sodium fluoride)"
-			]
+			"annotation": 
+				"For fluoride compounds the actual weight present will depend on the molecular weight of the fluorine donor. For example 0.15% fluorine = 1.14% monofluorophosphate (MFP) or 0.333% sodium fluoride (NaF)"
 		},
 		{
 			"formulationName": "Mouthwash (concentrate)",
@@ -87,8 +84,8 @@
 					"volume": 7.5
 				},
 				{
-					"ingredient": "Emulsifying agents, Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
-          			"ingredientExamples": "ethoxylated long chain alcohols, PEG-60,hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          			"ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
 					"volume": 6
 				},
 				{
@@ -110,7 +107,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Oral care-sweetening agents",
+					"ingredient": "Oral care : sweetening agents",
 					"ingredientExamples": "sodium saccharin",
 					"volume": 0.2
 				},
@@ -139,7 +136,7 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Oral care-deodorant",
+					"ingredient": "Oral care : deodorant",
 					"ingredientExamples": "zinc chloride",
 					"volume": 0.5
 				},
@@ -148,7 +145,7 @@
 					"volume": 0.2
 				},
 				{
-					"ingredient": "Oral care-sweetening agents",
+					"ingredient": "Oral care : sweetening agents",
 					"ingredientExamples": "sodium saccharin",
 					"volume": 0.2
 				},

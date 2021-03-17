@@ -3,7 +3,7 @@
 	"name": "Hair styling products",
 	"data": [
 		{
-			"formulationName": "Hair styling cream or paste (gum, pomade, paste, wax..)",
+			"formulationName": "Hair styling cream or paste (gum, pomade, paste, wax)",
 			"childNumber": 1,
 			"ingredients": [
 				{
@@ -37,8 +37,8 @@
 					"volume": 20
 				},
 				{
-					"ingredient": "Resins, polymers, Neutralising agent",
-					"ingredientExamples":"pvp, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredient": "Resins",
+					"ingredientExamples":"polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
 					"volume": 10
 				},
 				{
@@ -70,8 +70,8 @@
 					"volume": 99
 				},
 				{
-					"ingredient": "Silicones (including volatile silicones), silanes",
-					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones (including volatile silicones)",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 99
 				},
 				{
@@ -85,7 +85,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "uv filters, vitamins",
+					"ingredientExamples": "UV filters, vitamins",
 					"volume": 2
 				},
 				{
@@ -104,7 +104,7 @@
 			"ingredients": [
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-					"ingredientExamples": "branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
+					"ingredientExamples": "branched chain isoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 90
 				},
 				{
@@ -122,13 +122,13 @@
 					"volume": 15
 				},
 				{
-					"ingredient": "Silicones (including volatile silicones), silanes",
-                    "ingredientExample":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones (including volatile silicones)",
+                    "ingredientExample":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
                     "volume": 15
 				},
 				{
-					"ingredient": "Resins, polymers, neutralising agent",
-					"ingredientExamples":"polyvinyl acetate, PVP, aminomethyl propanol",
+					"ingredient": "Resins",
+					"ingredientExamples":"polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
 					"volume": 10
 				},
 				{
@@ -181,18 +181,18 @@
 					"volume": 10
 				},
 				{
-					"ingredient": "Silicones (including volatile silicones), silanes",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones (including volatile silicones)",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 10
 				},
 				{
-					"ingredient": "Resins, polymers",
-					"ingredientExamples": "polyvinyl acetate, PVP",
+					"ingredient": "Resins",
+					"ingredientExamples": "polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
 					"volume": 5
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "uv filters, vitamins",
+					"ingredientExamples": "UV filters, vitamins",
 					"volume": 3
 				},
 				{
@@ -251,13 +251,13 @@
 					"volume": 80
 				},
 				{
-					"ingredient": "Silicones (including volatile silicones), silanes",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones (including volatile silicones)",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers, neutralising agent",
-					"ingredientExamples":"PVP, polyquaternium-11, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol, triethanolamine",
+					"ingredient": "Resins",
+					"ingredientExamples":"polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
 					"volume": 25
 				},
 				{
@@ -318,13 +318,13 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-        			"ingredientExamples":"vegetable, mineral,long chain alcohols",
+        			"ingredientExamples":"vegetable, mineral, long chain alcohols",
         			"volume":"25"
 
 				},
 				{
-					"ingredient": "Silicones including volatile silicones,silanes",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone,alcoxysilanes",
+					"ingredient": "Silicones including volatile silicones",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 25
 				},
 				{
@@ -358,7 +358,7 @@
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "uv filters, vitamins",
+					"ingredientExamples": "UV filters, vitamins",
 					"volume": 3
 				},
 				{
@@ -373,7 +373,7 @@
 			]
 		},
 		{
-			"formulationName": "Hair spray- aerosol",
+			"formulationName": "Hair spray - aerosol",
 			"childNumber": 7,
 			"ingredients": [
 				{
@@ -387,6 +387,7 @@
 				},
 				{
 					"ingredient": "Solvents (for example volatile silicones (for example cyclopentasiloxane, dimethicone), liquid paraffin and isoparaffin (for example branched-chain,isoparaffin (C11-C16), isododecane, isohexadecane)",
+					"ingredientExamples":"volatile silicones (cyclopentasiloxane, dimethicone), liquid paraffin, isoparaffin (branched-chain,isoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
@@ -395,8 +396,8 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Resins, polymers, neutralising agent, alkoxylated glucose derivatives",
-					"ingredientExamples":"pvp/va copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredient": "Resins",
+					"ingredientExamples":"polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer), neutralising agent (aminomethyl propanol), alkoxylated glucose derivatives",
 					"volume": 10
 				},
 				{
@@ -437,8 +438,8 @@
 					"volume": 50
 				},
 				{
-					"ingredient": "Silicones (including volatile silicones), silanes",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones (including volatile silicones)",
+					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 50
 				},
 				{
@@ -452,8 +453,8 @@
 					"volume": 25
 				},
 				{
-					"ingredient": "Resins, polymers, neutralising agent, alkoxylated glucose derivatives",
-					"ingredientExamples":"PVP/va copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredient": "Resins",
+					"ingredientExamples":"polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer), neutralising agent (aminomethyl propanol)",
 					"volume": 10
 				},
 				{
@@ -511,12 +512,12 @@
 				},
 				{
 					"ingredient": "Resins, polymers, neutralising agent, alkoxylated glucose derivatives",
-					"ingredientExamples": "PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer, aminomethyl propanol",
+					"ingredientExamples": "polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer), neutralising agent (aminomethyl propanol), alkoxylated glucose derivatives",
 					"volume": 10
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "UV filters, vitamins , colorants",
+					"ingredientExamples": "UV filters, vitamins, colourants",
 					"volume": 5
 				},
 				{
@@ -567,8 +568,8 @@
 					"volume": 6
 				},
 				{
-					"ingredient": "Silicones, silanes",
-					"ingredientExamples": "amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones",
+					"ingredientExamples": "amodimethicone, silanes(alcoxysilanes)",
 					"volume": 5
 				},
 				{
@@ -618,7 +619,7 @@
 					"volume": "to 100"
 				}
 			],
-      "annotations": ["pH value: 7 - 9.5"]
+      "annotations": "pH value: 7 - 9.5"
 		},
 		{
 			"formulationName": "Permanent wave lotion - two-components- based on hydrdogenperoxide and reducing agents part-A",
@@ -657,7 +658,7 @@
 			"childNumber": 14,
 			"ingredients": [
 				{
-					"ingredient": "Reducing agent: Ammonium thioglycolate",
+					"ingredient": "Reducing agent: ammonium thioglycolate",
 					"volume": "20*"
 				},
 				{
@@ -706,27 +707,28 @@
 					"volume": "to 100"
 				}
 			],
+			"annotations": "For the reducing agent ammonium thioglycolate, this is the maximum concentration before exothermic reaction with hydrogen peroxide",
 			"extraInfo": [
 				"pH value: 7 - 9.5,pH value of the ready-to-use mixture (parts A and B): 7 - 9.5"
 			],
-			"annotation": "* before exothermic reaction with hydrogen peroxide"
+			"annotation": "before exothermic reaction with hydrogen peroxide"
 		},
 		{
-			"formulationName": "Permanent wave lotion - two components – based on reducing agents part - A",
+			"formulationName": "Permanent wave lotion - two components – based on reducing agents, part A",
 			"formulationNotes": ["To be mixed prior to use with part B (12.16-2013)"],
 			"childNumber": 15,
 			"ingredients": [
 				{
-					"ingredient": "Reducing agent- Thioglycolate ester",
+					"ingredient": "Reducing agent : thioglycolate ester",
 					"ingredientExamples": "glyceryl thioglycolate",
 					"volume": "99"
 				},
 				{
-					"ingredient": "Reducing agent- ammonium thioglycolate",
+					"ingredient": "Reducing agent: ammonium thioglycolate",
 					"volume": 60
 				},
 				{
-					"ingredient": "Reducing agent- ammonium thiolactate",
+					"ingredient": "Reducing agent: ammonium thiolactate",
 					"volume": 20
 				},
 				{
@@ -749,11 +751,11 @@
 				}
 			],
 			"extraInfo": [
-				"pH value: 5 - 6.5,pH value of the ready-to-use mixture (parts A and B): 6.5 - 9"
+				"pH value: 5 - 6.5","pH value of the ready-to-use mixture (parts A and B): 6.5 - 9"
 			]
 		},
 		{
-			"formulationName": "Permanent wave lotion - Two component - Based on reducing agents - Part B",
+			"formulationName": "Permanent wave lotion - two component - based on reducing agents, Part B",
 			"formulationNotes": ["To be mixed prior to use with part A (12.15-2013)"],
 			"childNumber": 16,
 			"ingredients": [
@@ -826,7 +828,7 @@
 			]
 		},
 		{
-			"formulationName": "Permanent wave neutraliser, hair straightner (relaxer) Neutraliser -liquid,cream",
+			"formulationName": "Permanent wave neutraliser, hair straightner (relaxer) neutraliser -liquid, cream",
 			"childNumber": 17,
 			"ingredients": [
 				{
@@ -835,7 +837,8 @@
 					"volume": 8
 				},
 				{
-					"ingredient": "Hydrogen peroxide "
+					"ingredient": "Hydrogen peroxide",
+					"volume": "2-6",
 				},
 				{
 					"ingredient": "Thickeners",
@@ -843,8 +846,8 @@
 					"volume": 2
 				},
 				{
-					"ingredient": "Hair conditioning agents, silanes",
-					"ingredientExamples":"silicones (including volatile silicones), cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes, polyquaternium-6",
+					"ingredient": "Hair conditioning agents",
+					"ingredientExamples":"silicones (including volatile silicones), cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes), polyquaternium-6",
 					"volume": 2
 				},
 				{
@@ -885,7 +888,7 @@
 			]
 		},
 		{
-			"formulationName": "Permanent wave lotion - two components – based on reducing agents– part B",
+			"formulationName": "Hair straightner (relaxer) - type 1",
 			"childNumber": 18,
 			"ingredients": [
 				{
@@ -915,7 +918,7 @@
 				},
 				{
 					"ingredient": "Straightening agents",
-					"ingredientExamples": "sodium hydroxide, potassium hydroxide,lithium hydroxide, calcium hydroxide",
+					"ingredientExamples": "sodium hydroxide, potassium hydroxide, lithium hydroxide, calcium hydroxide",
 					"volume": 4.5
 				},
 				{
@@ -937,7 +940,7 @@
 			]
 		},
 		{
-			"formulationName": "Permanent wave lotion - two components – based on reducing agents– part B",
+			"formulationName": "Hair straightner (relaxer) - type 3",
 			"childNumber": 21,
 			"ingredients": [
 				{
@@ -946,19 +949,19 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Straightening agent- ammonium thioglycolate",
+					"ingredient": "Straightening agent : ammonium thioglycolate",
 					"volume": 1
 				},
 				{
-					"ingredient": "Straightening agent- ammonium thiolactate",
+					"ingredient": "Straightening agent :  ammonium thiolactate",
 					"volume": 1
 				},
 				{
-					"ingredient": "Straightening agent- cysteine HCl",
+					"ingredient": "Straightening agent : cysteine HCl",
 					"volume": 1
 				},
 				{
-					"ingredient": "Straightening agent- ethanolamine thioglycolate"
+					"ingredient": "Straightening agent : ethanolamine thioglycolate"
 				},
 				{
 					"ingredient": "Alkaline agents",
@@ -980,13 +983,13 @@
 					"volume": 5
 				},
 				{
-					"ingredient": "Silicones, silanes",
-					"ingredientExamples":"amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones",
+					"ingredientExamples":"amodimethicone, silanes(alcoxysilanes)",
 					"volume": 5
 				},
 				{
 					"ingredient": "Additional ingredients ",
-					"ingredientExamples": "plant extracts, Thickeners",
+					"ingredientExamples": "plant extracts, thickeners",
 					"volume": 5
 				},
 				{
