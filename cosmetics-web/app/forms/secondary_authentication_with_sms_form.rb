@@ -13,8 +13,8 @@ class SecondaryAuthenticationWithSmsForm
             allow_blank: true
   validates :otp_code,
             length: {
-              maximum: SecondaryAuthentication::OTP_LENGTH,
-              minimum: SecondaryAuthentication::OTP_LENGTH,
+              maximum: SecondaryAuthentication::DirectOtp::OTP_LENGTH,
+              minimum: SecondaryAuthentication::DirectOtp::OTP_LENGTH,
             },
             allow_blank: true,
             if: -> { INTEGER_REGEX.match?(otp_code) }
@@ -57,7 +57,7 @@ class SecondaryAuthenticationWithSmsForm
   end
 
   def secondary_authentication
-    @secondary_authentication ||= SecondaryAuthentication.new(user)
+    @secondary_authentication ||= SecondaryAuthentication::DirectOtp.new(user)
   end
 
   def user

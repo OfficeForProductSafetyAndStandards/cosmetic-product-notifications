@@ -15,7 +15,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
@@ -53,7 +53,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in(user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
@@ -79,7 +79,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in(user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
@@ -106,7 +106,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
 
     travel_to(Time.zone.now.utc + wait_time.seconds)
 
@@ -377,7 +377,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds)
 
     click_on "Invite a team member"
@@ -405,7 +405,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_out
     sign_in_as_member_of_responsible_person(responsible_person, different_user)
 
-    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds)
     visit email.personalization[:invitation_url]
     expect(page).to have_css("h1", text: "You are already signed in")

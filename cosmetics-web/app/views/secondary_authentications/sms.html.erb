@@ -15,7 +15,7 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <p class="govuk-body">
-      <% if @form.operation == SecondaryAuthentication::INVITE_USER %>
+      <% if @form.operation == SecondaryAuthentication::Operations::INVITE_USER %>
         You need to confirm your identity. We have sent you a security code by text message.
       <% else %>
         We have sent you a security code by text message

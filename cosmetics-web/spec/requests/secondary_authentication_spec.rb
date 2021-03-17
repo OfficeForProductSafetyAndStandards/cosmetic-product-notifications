@@ -98,9 +98,9 @@ RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notif
     context "when submitting sms authentication" do
       let(:attempts) { 0 }
       let(:direct_otp_sent_at) { Time.zone.now }
-      let(:secondary_authentication) { SecondaryAuthentication.new(user) }
+      let(:secondary_authentication) { SecondaryAuthentication::DirectOtp.new(user) }
       let(:submitted_code) { secondary_authentication.direct_otp }
-      let(:max_attempts) { SecondaryAuthentication::MAX_ATTEMPTS }
+      let(:max_attempts) { SecondaryAuthentication::DirectOtp::MAX_ATTEMPTS }
       let(:second_factor_attempts_locked_at) { nil }
       let(:previous_attempts_count) { 1 }
       let(:user) do
@@ -162,7 +162,7 @@ RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notif
       end
 
       context "with expired otp" do
-        let(:direct_otp_sent_at) { (SecondaryAuthentication::OTP_EXPIRY_SECONDS * 2).seconds.ago }
+        let(:direct_otp_sent_at) { (SecondaryAuthentication::DirectOtp::OTP_EXPIRY_SECONDS * 2).seconds.ago }
 
         include_examples "code not accepted", "The security code has expired. New code sent."
       end
@@ -176,19 +176,19 @@ RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notif
       context "with resending otp code" do
         # rubocop:disable RSpec/AnyInstance
         context "when code is expired" do
-          let(:direct_otp_sent_at) { (SecondaryAuthentication::OTP_EXPIRY_SECONDS * 2).seconds.ago }
+          let(:direct_otp_sent_at) { (SecondaryAuthentication::DirectOtp::OTP_EXPIRY_SECONDS * 2).seconds.ago }
 
           context "when secondary authentication is locked" do
             let(:second_factor_attempts_locked_at) { Time.zone.now }
 
             it "does not send the code" do
-              expect_any_instance_of(SecondaryAuthentication).not_to receive(:generate_and_send_code)
+              expect_any_instance_of(SecondaryAuthentication::DirectOtp).not_to receive(:generate_and_send_code)
               submit_2fa
             end
           end
 
           it "resends the code" do
-            expect_any_instance_of(SecondaryAuthentication).to receive(:generate_and_send_code)
+            expect_any_instance_of(SecondaryAuthentication::DirectOtp).to receive(:generate_and_send_code)
             submit_2fa
           end
         end

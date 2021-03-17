@@ -7,7 +7,7 @@ RSpec.describe SecondaryAuthenticationWithSmsForm, :with_stubbed_notify do
 
   let(:attempts) { 0 }
   let(:direct_otp_sent_at) { Time.zone.now }
-  let(:secondary_authentication) { SecondaryAuthentication.new(user) }
+  let(:secondary_authentication) { SecondaryAuthentication::DirectOtp.new(user) }
   let(:otp_code) { user.direct_otp }
 
   describe "#valid?" do
@@ -51,7 +51,7 @@ RSpec.describe SecondaryAuthenticationWithSmsForm, :with_stubbed_notify do
       end
 
       context "when the two factor code has less digits than the required ones" do
-        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::OTP_LENGTH] }
+        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::DirectOtp::OTP_LENGTH] }
 
         it "is not valid" do
           expect(form).to be_invalid
@@ -75,7 +75,7 @@ RSpec.describe SecondaryAuthenticationWithSmsForm, :with_stubbed_notify do
       end
 
       context "when the two factor code has more digits than the required ones" do
-        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::OTP_LENGTH + 2] }
+        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::DirectOtp::OTP_LENGTH + 2] }
 
         it "is not valid" do
           expect(form).to be_invalid
@@ -100,7 +100,7 @@ RSpec.describe SecondaryAuthenticationWithSmsForm, :with_stubbed_notify do
     end
 
     context "when otp is expired" do
-      let(:direct_otp_sent_at) { (SecondaryAuthentication::OTP_EXPIRY_SECONDS * 2).seconds.ago }
+      let(:direct_otp_sent_at) { (SecondaryAuthentication::DirectOtp::OTP_EXPIRY_SECONDS * 2).seconds.ago }
 
       context "with form validation" do
         before { form.validate }

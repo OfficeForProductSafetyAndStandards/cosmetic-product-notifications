@@ -21,7 +21,7 @@ module SecondaryAuthenticationConcern
 
       if secondary_authentication_with_sms? || user.mobile_number_pending_verification?
         session[:secondary_authentication_method] = "sms"
-        auth = SecondaryAuthentication.new(user)
+        auth = SecondaryAuthentication::DirectOtp.new(user)
         auth.generate_and_send_code(current_operation)
       elsif user_needs_to_choose_secondary_authentication_method?
         return redirect_to new_secondary_authentication_method_path
@@ -41,7 +41,7 @@ module SecondaryAuthenticationConcern
     return false if get_secondary_authentication_time.nil?
 
     last_otp_time = get_secondary_authentication_time
-    (last_otp_time + SecondaryAuthentication::TIMEOUTS[current_operation].seconds) > Time.zone.now
+    (last_otp_time + SecondaryAuthentication::Operations::TIMEOUTS[current_operation].seconds) > Time.zone.now
   end
 
   # can be overrided for actions which require
@@ -53,7 +53,7 @@ module SecondaryAuthenticationConcern
   # can be overrided for actions which require
   # custom secondary authentication flow
   def current_operation
-    SecondaryAuthentication::DEFAULT_OPERATION
+    SecondaryAuthentication::Operations::DEFAULT
   end
 
   def set_secondary_authentication_cookie(timestamp)

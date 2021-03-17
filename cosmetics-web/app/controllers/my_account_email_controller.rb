@@ -35,6 +35,6 @@ class MyAccountEmailController < SubmitApplicationController
 private
 
   def current_operation
-    SecondaryAuthentication::CHANGE_EMAIL_ADDRESS
+    SecondaryAuthentication::Operations::CHANGE_EMAIL_ADDRESS
   end
 end

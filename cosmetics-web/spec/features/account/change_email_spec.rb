@@ -18,7 +18,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       click_on "Your account"
       expect_to_be_on_my_account_page
 
-      wait_for = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::CHANGE_EMAIL_ADDRESS]
+      wait_for = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::CHANGE_EMAIL_ADDRESS]
       travel_to((wait_for + 1).seconds.from_now)
 
       click_on "Change email address"

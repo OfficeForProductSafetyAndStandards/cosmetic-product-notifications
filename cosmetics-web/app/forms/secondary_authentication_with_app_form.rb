@@ -46,7 +46,7 @@ class SecondaryAuthenticationWithAppForm
 private
 
   def secondary_authentication
-    @secondary_authentication ||= SecondaryAuthentication.new(user)
+    @secondary_authentication ||= SecondaryAuthentication::DirectOtp.new(user)
   end
 
   # Brought from Account Sec form

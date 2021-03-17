@@ -34,7 +34,7 @@ module SecondaryAuthentications
     end
 
     def current_operation
-      @user&.secondary_authentication_operation.presence || SecondaryAuthentication::DEFAULT_OPERATION
+      @user&.secondary_authentication_operation.presence || SecondaryAuthentication::Operations::DEFAULT
     end
 
     def resend_code_form
