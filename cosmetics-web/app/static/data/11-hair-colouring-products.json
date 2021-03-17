@@ -577,7 +577,7 @@
         {
           "ingredient": "pH adjuster",
           "ingredientExamples": "phosphoric acid",
-          "volume": "qs pH 2 - 3"
+          "volume": "up to and not surpassing pH 2 - 3"
         },
         {
           "ingredient": "Aqua",
@@ -654,7 +654,7 @@
       "ingredients": [
         {
           "ingredient": "Acid: citric acid",
-          "volume": 14
+          "volume": 13
         },
         {
           "ingredient": "Aqua",
@@ -768,7 +768,7 @@
         {
           "ingredient": "pH adjuster",
           "ingredientExamples": "phosphoric acid",
-          "volume" :"qs pH 2 - 3"
+          "volume" :"up to and not surpassing pH 2 - 3"
         },
         {
           "ingredient": "Aqua",
@@ -1038,10 +1038,8 @@
     {
       "formulationName": "Hair bleach - alkaline part",
       "childNumber": 19,
-      "formulationNotes": [
-       
-      ],
-      "ingredient": [
+      
+      "ingredients": [
         {
           "ingredient": "Anionic surfactants",
           "ingredientExamples": "ammonium laureth sulfate",
