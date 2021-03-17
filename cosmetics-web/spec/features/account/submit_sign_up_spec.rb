@@ -58,7 +58,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     # Attempts to submit security page with invalid phone and wrong app authentication code
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authentication app for smartphone or tablet"
+    check "Authenticator app for smartphone or tablet"
     fill_in "Enter the access code", with: "000000"
     check "Text message"
     fill_in "Mobile number", with: "07000 invalid 000000"
@@ -73,7 +73,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     # New attempt setting both secondary authentication methods with no issues
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authentication app for smartphone or tablet"
+    check "Authenticator app for smartphone or tablet"
     fill_in "Enter the access code", with: correct_app_code
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
@@ -107,7 +107,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     expect(page).to have_current_path("/account-security")
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authentication app for smartphone or tablet"
+    check "Authenticator app for smartphone or tablet"
     fill_in "Enter the access code", with: correct_app_code
     click_button "Continue"
 

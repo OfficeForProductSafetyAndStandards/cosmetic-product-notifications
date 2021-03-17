@@ -43,7 +43,7 @@ end
 
 def select_secondary_authentication_app
   expect(page).to have_css("h1", text: "How do you want to get an access code?")
-  choose "Authentication app for smartphone or tablet"
+  choose "Authenticator app for smartphone or tablet"
   click_on "Continue"
 end
 

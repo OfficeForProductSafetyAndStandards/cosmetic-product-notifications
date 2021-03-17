@@ -150,7 +150,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
       fill_in "Mobile number", with: mobile_number
     end
     if app_code
-      check "Authentication app for smartphone or tablet"
+      check "Authenticator app for smartphone or tablet"
       fill_in "Enter the access code", with: app_code
     end
   end
