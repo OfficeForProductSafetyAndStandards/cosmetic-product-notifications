@@ -88,12 +88,7 @@ RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notif
   describe "#create" do
     subject(:submit_2fa) do
       post secondary_authentication_path,
-           params: {
-             secondary_authentication_form: {
-               otp_code: submitted_code,
-               user_id: user.id,
-             },
-           }
+           params: { otp_code: submitted_code, user_id: user.id }
     end
 
     before do

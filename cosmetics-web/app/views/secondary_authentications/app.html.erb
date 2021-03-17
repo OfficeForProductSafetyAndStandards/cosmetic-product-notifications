@@ -1,7 +1,7 @@
 <% title = "Enter the access code" %>
-<% page_title(title, errors: @secondary_authentication_form.errors.any?) %>
+<% page_title(title, errors: @form.errors.any?) %>
 
-<% if @secondary_authentication_form.back_link? %>
+<% if @form.back_link? %>
   <% content_for(:after_header) do %>
     <%= govukBackLink(text: "Back", href: new_secondary_authentication_method_path) %>
   <% end %>
@@ -10,7 +10,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <%= error_summary @secondary_authentication_form.errors %>
+    <%= error_summary @form.errors %>
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
@@ -18,16 +18,16 @@
       This is the code that is shown on your <b>authenticator app</b> for this service.
     </p>
 
-    <%= form_tag(secondary_authentication_path, :method => :post, novalidate: true) do %>
-      <%= hidden_field_tag 'secondary_authentication_form[user_id]', @secondary_authentication_form.user_id %>
-      <%= render "components/govuk_input",
-          id: "otp_code", name: "secondary_authentication_form[otp_code]",
-          type: "text",
-          classes: "govuk-input--width-5",
-          label: { text: "Access code" },
-          attributes: { pattern: "[0-9]*", inputmode: "numeric" },
-          errorMessage: format_errors_for(@secondary_authentication_form, @secondary_authentication_form.errors.full_messages_for(:otp_code)),
-          autocomplete: "one-time-code" %>
+    <%= form_with(url: secondary_authentication_path, method: :post, html: { novalidate: true }) do |f| %>
+      <%= f.hidden_field :user_id, value: @form.user_id %>
+      <%= render "form_components/govuk_input",
+            key: :otp_code,
+            form: f,
+            classes: "govuk-input--width-5",
+            label: { text: "Access code" },
+            attributes: { pattern: "[0-9]*", inputmode: "numeric" },
+            errorMessage: format_errors_for(@form, @form.errors.full_messages_for(:otp_code)),
+            autocomplete: "one-time-code" %>
 
       <%= govukButton(text: "Continue") %>
     <% end %>

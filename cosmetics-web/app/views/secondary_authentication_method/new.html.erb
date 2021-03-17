@@ -1,23 +1,22 @@
 <% title = "Secondary authentication method" %>
-<% page_title(title, errors: @secondary_authentication_method_form.errors.any?) %>
+<% page_title(title, errors: @form.errors.any?) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <%= error_summary(@secondary_authentication_method_form.errors,
-                      map_errors: { authentication_method: :sms }) %>
+    <%= error_summary(@form.errors, map_errors: { authentication_method: :sms }) %>
 
     <% heading = capture do %>
       <h1 class="govuk-heading-l">How do you want to get an access code?</h1>
     <% end %>
-    <%= form_for(@secondary_authentication_method_form, url: secondary_authentication_method_path, html: { novalidate: true }, method: :post) do |f| %>
+    <%= form_with(url: secondary_authentication_method_path, html: { novalidate: true }, method: :post) do |f| %>
       <%= render "form_components/govuk_radios", form: f, key: :authentication_method,
             fieldset: { legend: { html: heading } },
             items: [{ text: "Text message",
                       id: "sms",
                       value: :sms,
                       classes: "govuk-label govuk-radios__label",
-                      hint: { text: @secondary_authentication_method_form.partially_hidden_mobile_number } },
+                      hint: { text: @form.partially_hidden_mobile_number } },
                     { text: "Authentication app for smartphone or tablet",
                       id: "app",
                       value: :app,

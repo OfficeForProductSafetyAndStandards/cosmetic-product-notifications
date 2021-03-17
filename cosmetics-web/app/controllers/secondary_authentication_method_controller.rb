@@ -9,14 +9,14 @@ class SecondaryAuthenticationMethodController < ApplicationController
       return render("errors/forbidden", status: :forbidden)
     end
 
-    @secondary_authentication_method_form = SecondaryAuthenticationMethodForm.new(
+    @form = SecondaryAuthenticationMethodForm.new(
       mobile_number: secondary_authentication_user.mobile_number,
     )
   end
 
   def create
-    if secondary_authentication_method_form.valid?
-      session[:secondary_authentication_method] = secondary_authentication_method_form.authentication_method
+    if form.valid?
+      session[:secondary_authentication_method] = form.authentication_method
       redirect_to new_secondary_authentication_path
     else
       render :new
@@ -25,14 +25,13 @@ class SecondaryAuthenticationMethodController < ApplicationController
 
 private
 
-  def secondary_authentication_method_form
-    @secondary_authentication_method_form ||= SecondaryAuthenticationMethodForm.new(
-      form_params
-        .merge(mobile_number: secondary_authentication_user.mobile_number),
+  def form
+    @form ||= SecondaryAuthenticationMethodForm.new(
+      secondary_authentication_method_params.merge(mobile_number: secondary_authentication_user.mobile_number),
     )
   end
 
-  def form_params
-    params.fetch(:secondary_authentication_method_form, {}).permit(:authentication_method)
+  def secondary_authentication_method_params
+    params.permit(:authentication_method)
   end
 end

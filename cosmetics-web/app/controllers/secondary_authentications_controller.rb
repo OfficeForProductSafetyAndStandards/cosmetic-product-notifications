@@ -12,34 +12,32 @@ class SecondaryAuthenticationsController < ApplicationController
     if user_needs_to_choose_secondary_authentication_method?
       redirect_to new_secondary_authentication_method_path
     elsif secondary_authentication_with_sms?
-      @secondary_authentication_form = SecondaryAuthenticationWithSmsForm.new(user_id: user_id)
-      @secondary_authentication_form.secondary_authentication.generate_and_send_code(current_operation)
+      @form = SecondaryAuthenticationWithSmsForm.new(user_id: user_id)
+      @form.secondary_authentication.generate_and_send_code(current_operation)
       render :sms
     elsif secondary_authentication_with_app?
-      @secondary_authentication_form = SecondaryAuthenticationWithAppForm.new(user_id: user_id)
+      @form = SecondaryAuthenticationWithAppForm.new(user_id: user_id)
       render :app
     end
   end
 
   def create
     if secondary_authentication_with_sms?
-      @secondary_authentication_form = sms_form
-      if @secondary_authentication_form.valid?
+      @form = sms_form
+      if @form.valid?
         handle_successful_authentication do
-          @secondary_authentication_form.try_to_verify_user_mobile_number
+          @form.try_to_verify_user_mobile_number
         end
       else
         try_to_resend_sms_code
-        @secondary_authentication_form.otp_code = nil
+        @form.otp_code = nil
         render :sms
       end
     elsif secondary_authentication_with_app?
-      @secondary_authentication_form = app_form
-      if @secondary_authentication_form.valid?
+      @form = app_form
+      if @form.valid?
         handle_successful_authentication do
-          secondary_authentication_user.update!(
-            last_totp_at: @secondary_authentication_form.last_totp_at,
-          )
+          secondary_authentication_user.update!(last_totp_at: @form.last_totp_at)
         end
       else
         render :app
@@ -84,6 +82,6 @@ private
   end
 
   def secondary_authentication_params
-    params.require(:secondary_authentication_form).permit(:otp_code, :user_id)
+    params.permit(:otp_code, :user_id)
   end
 end
