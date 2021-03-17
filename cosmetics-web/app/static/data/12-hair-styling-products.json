@@ -838,7 +838,8 @@
 				},
 				{
 					"ingredient": "Hydrogen peroxide",
-					"volume": "2-6",
+					"volume" : "2-6"
+					
 				},
 				{
 					"ingredient": "Thickeners",
