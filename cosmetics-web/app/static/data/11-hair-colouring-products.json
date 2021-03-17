@@ -530,7 +530,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientEXample": " vegetable oil, mineral oil",
+          "ingredientEXamples": " vegetable oil, mineral oil",
           "volume": " to 100"
         }
       ],
