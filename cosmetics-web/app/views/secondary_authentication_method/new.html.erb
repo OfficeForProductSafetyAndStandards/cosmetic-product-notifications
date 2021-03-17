@@ -12,6 +12,7 @@
     <%= form_with(url: secondary_authentication_method_path, html: { novalidate: true }, method: :post) do |f| %>
       <%= render "form_components/govuk_radios", form: f, key: :authentication_method,
             fieldset: { legend: { html: heading } },
+            errorMessage: format_errors_for(@form, @form.errors.full_messages_for(:authentication_method)),
             items: [{ text: "Text message",
                       id: "sms",
                       value: :sms,
