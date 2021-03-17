@@ -45,11 +45,6 @@ class SecondaryAuthenticationWithAppForm
 
 private
 
-  def secondary_authentication
-    @secondary_authentication ||= SecondaryAuthentication::DirectOtp.new(user)
-  end
-
-  # Brought from Account Sec form
   def totp
     @totp ||= ROTP::TOTP.new(user.totp_secret_key)
   end
