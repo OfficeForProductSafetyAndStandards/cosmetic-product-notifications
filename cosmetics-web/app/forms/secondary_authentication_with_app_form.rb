@@ -39,14 +39,14 @@ class SecondaryAuthenticationWithAppForm
     user && user.secondary_authentication_methods.size > 1
   end
 
+  def user
+    @user ||= User.find(user_id)
+  end
+
 private
 
   def secondary_authentication
     @secondary_authentication ||= SecondaryAuthentication.new(user)
-  end
-
-  def user
-    @user ||= User.find(user_id)
   end
 
   # Brought from Account Sec form
