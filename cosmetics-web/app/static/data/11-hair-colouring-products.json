@@ -361,7 +361,7 @@
           "volume": 6
         },
         {
-          "ingredient": "Hair dyeing agents:directs",
+          "ingredient": "Hair dyeing agents: directs",
           "ingredientExamples": "HC red no. 3, 2-amino-6-chloro-4-nitrophenol, basic yellow 87",
           "volume": 6
         },
@@ -415,7 +415,6 @@
     },
     {
       "formulationName": "Hair colourant (permanent, oxidative type) - type 3: multi components, colourant part - part a",
-      "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)"],
       "childNumber": 6,
       "ingredients": [
         {
@@ -492,9 +491,7 @@
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 3 : MULTI COMPONENTS - COLOURANT PART - PART B",
-      "formulationNotes": ["Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)"],
+      "formulationName": "Hair colourant (permanent, oxidative type) - type 3: multi components, colourant part - part b",
       "childNumber": 7,
       "ingredients": [
         {
@@ -538,13 +535,12 @@
         }
       ],
       "extraInfo": [
+        "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6",
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 1 : TWO OR MORE COMPONENTS - OXIDATIVE PART",
-      "formulationNotes": ["To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"],
+      "formulationName": "Hair colourant (permanent, oxidative type) - type 1: two or more components, oxidative part",
       "childNumber": 8,
       "ingredients": [
         {
@@ -589,13 +585,12 @@
         }
       ],
       "extraInfo": [
+        "To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)",
         "pH value of the mixture with colourant part: 8 - 11.6"
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type)",
-      "formulationSubheader": "TYPE 2 : TWO OR MULTI COMPONENTS - OXIDATIVE PART WITH HIGH LEVEL OF OILS",
-      "formulationNotes": ["To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"],
+      "formulationName": "Hair colourant (permanent, oxidative type - type 2 : tow or more components, oxidative part with high level of oils",
       "childNumber": 9,
       "ingredients": [
         {
@@ -650,11 +645,11 @@
           "volume": "to 100"
         }
       ],
+      "extraInfo" : ["To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"],
       "annotations": "pH value of the mixture with colourant part: 8 - 11.6"
     },
     {
       "formulationName": "Dye remover (reducing type) - part a",
-      "formulationNotes": ["To be mixed immediately prior to use with part B (11.11-2013)"],
       "childNumber": 10,
       "ingredients": [
         {
@@ -667,12 +662,12 @@
         }
       ],
       "extraInfo": [
+        "To be mixed immediately prior to use with part B (11.11-2013)",
         "pH value: 1.5 - 2"
       ]
     },
     {
       "formulationName": "Dye remover (reducing type) - part b",
-      "formulationNotes": ["To be mixed immediately prior to use with part A (11.10-2013)"],
       "childNumber": 11,
       "ingredients": [
         {
@@ -686,12 +681,12 @@
         }
       ],
       "extraInfo": [
+        "To be mixed immediately prior to use with part A (11.10-2013)",
         "pH value: 10 - 11"
       ]
     },
     {
       "formulationName": "Dye remover (oxidative type) - part a",
-      "formulationNotes": ["to be mixed immediately prior to use with dye remover (oxidative type) - part b"],
       "childNumber": 12,
       "ingredients": [
         {
@@ -730,12 +725,12 @@
         }
       ],
       "extraInfo": [
+        "To be mixed immediately prior to use with dye remover (oxidative type) - part b",
         "pH value of the mixture Part A + Part B: 9.5 - 11.5"
       ]
     },
     {
       "formulationName": "Dye remover (oxidative type) - part b",
-      "formulationNotes": ["to be mixed immediately prior to use with dye remover (oxidative type) - part a"],
       "childNumber": 13,
       "ingredients": [
         {
@@ -781,6 +776,7 @@
         }
       ],
       "extraInfo": [
+        "To be mixed immediately prior to use with dye remover (oxidative type) - part a",
         "pH value of the mixture Part A + Part B: 9.5 - 11.5"
       ]
     },
@@ -830,12 +826,6 @@
     {
       "formulationName": "Hair bleach - powder",
       "childNumber": 15,
-      "formulationNotes": [
-        "to be mixed immediately prior to use:",
-        "with aqua for use alone",
-        "or with oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)",
-        "or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)"
-      ],
       "ingredients": [
         {
           "ingredient": "Ammonium persulfate or sodium persulfate or potassium persulfate ",
@@ -873,17 +863,16 @@
         }
       ],
       "extraInfo": [
+        "To be mixed immediately prior to use:",
+        "with aqua for use alone",
+        "or with oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)",
+        "or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)",
         "pH value at 1% powder in water: 10 - 12",
         "pH value of the different mixtures: 9.5 - 11.5"
       ]
     },
     {
       "formulationName": "Hair bleach - paste",
-      "formulationNotes": [
-        "to be mixed immediately prior to use with oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
-        "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1 ",
-        "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part"
-      ],
       "childNumber": 16,
       "ingredients": [
         {
@@ -921,15 +910,14 @@
           "volume": 5
         }
       ],
-      "extraInfo": ["pH value of the different mixtures: 9.5 - 11.5"]
+      "extraInfo": [
+         "To be mixed immediately prior to use with oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
+        "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1 ",
+        "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part",
+        "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
       "formulationName": "Hair bleach - oxidative part - type 1",
-      "formulationNotes": [
-        "to be mixed immediately prior to use with:",
-        "hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013 + Hair bleach - alkaline part)",
-        "hair bleach paste (11.16-2013) or hair bleach paste + alkaline part(11.16-2013 + Hair bleach - alkaline part)"
-      ],
       "childNumber": 17,
       "ingredients": [
         {
@@ -979,15 +967,14 @@
           "volume": "to 100"
         }
       ],
-      "extraInfo": ["pH value of the different mixtures: 9.5 - 11.5"]
+      "extraInfo": [
+        "To be mixed immediately prior to use with:",
+        "hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013 + Hair bleach - alkaline part)",
+        "hair bleach paste (11.16-2013) or hair bleach paste + alkaline part(11.16-2013 + Hair bleach - alkaline part)",
+        "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
       "formulationName": "Hair bleach - oxidative part - type 2",
-      "formulationNotes": [
-        "to be mixed immediately prior to use with :",
-        "hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013 + Hair bleach - alkaline part)",
-        "hair bleach paste (11.16-2013) or hair bleach paste + alkaline part (11.16-2013 + Hair bleach - alkaline part)"
-      ],
       "childNumber": 18,
       "ingredients": [
         {
@@ -1042,16 +1029,17 @@
           "volume": "to 100"
         }
       ],
-      "extraInfo": ["pH value of the different mixtures: 9.5 - 11.5"]
+      "extraInfo": [
+         "to be mixed immediately prior to use with :",
+        "hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013 + Hair bleach - alkaline part)",
+        "hair bleach paste (11.16-2013) or hair bleach paste + alkaline part (11.16-2013 + Hair bleach - alkaline part)",
+        "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
       "formulationName": "Hair bleach - alkaline part",
       "childNumber": 19,
       "formulationNotes": [
-        "to be mixed immediately prior to use with:",
-        "- hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
-        "- hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
-        "- oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)"
+       
       ],
       "ingredient": [
         {
@@ -1129,6 +1117,10 @@
         }
       ],
       "extraInfo": [
+         "To be mixed immediately prior to use with:",
+        "- hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
+        "- hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
+        "- oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)",
         "pH value: 8 - 11.6,pH value of the different mixtures: 7.5 - 11.5"
       ]
     },
