@@ -17,4 +17,17 @@ RSpec.describe SecondaryAuthenticationMethodForm do
       expect(form.partially_hidden_mobile_number).to eq "*******6789"
     end
   end
+
+  describe "validations" do
+    it "is not valid when the authentication method is not present" do
+      form = described_class.new
+      expect(form).not_to be_valid
+      expect(form.errors.full_messages_for(:authentication_method)).to eq ["Select an option"]
+    end
+
+    it "is valid when the authentication method is present" do
+      form = described_class.new(authentication_method: "sms")
+      expect(form).to be_valid
+    end
+  end
 end
