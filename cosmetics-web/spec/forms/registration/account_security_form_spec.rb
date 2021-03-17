@@ -146,13 +146,13 @@ RSpec.describe Registration::AccountSecurityForm do
     end
   end
 
-  describe "#decorated_app_authentication_secret_key" do
+  describe "#decorated_secret_key" do
     it "introduces a space between every 4 characters of the secret key" do
-      allow(form).to receive(:app_authentication_secret_key).and_return(
+      allow(form).to receive(:secret_key).and_return(
         "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7",
       )
 
-      expect(form.decorated_app_authentication_secret_key)
+      expect(form.decorated_secret_key)
        .to eq "QSE5 PUJF T4ZG TBRP GOOO W3QJ WWVZ NUP7"
     end
   end

@@ -34,7 +34,7 @@ module Registration
             .permit(:mobile_number,
                     :password,
                     :full_name,
-                    :app_authentication_secret_key,
+                    :secret_key,
                     :app_authentication_code,
                     :sms_authentication,
                     :app_authentication)

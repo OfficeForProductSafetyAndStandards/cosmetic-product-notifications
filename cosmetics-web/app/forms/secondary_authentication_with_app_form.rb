@@ -21,18 +21,10 @@ class SecondaryAuthenticationWithAppForm
             if: -> { INTEGER_REGEX.match?(otp_code) }
   validate :correct_otp_validation
 
+  delegate :last_totp_at, to: :secondary_authentication
+
   def otp_code=(code)
     super(code.to_s.strip)
-  end
-
-  # As a new TOTP code is generated every 30secs, we wanto to verify the given code
-  # as soon as possible and memoize the result. Without memoization, a further check
-  # could cause a code that originally returned a valid verification timestamp to fail
-  # on the following call.
-  def last_totp_at
-    return if otp_code.blank?
-
-    @last_totp_at ||= totp.verify(otp_code.strip, drift_behind: 15)
   end
 
   def back_link?
@@ -45,13 +37,15 @@ class SecondaryAuthenticationWithAppForm
 
 private
 
-  def totp
-    @totp ||= ROTP::TOTP.new(user.totp_secret_key)
+  def secondary_authentication
+    @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user)
   end
 
   def correct_otp_validation
     return if errors.present?
 
-    errors.add(:otp_code, :incorrect) if last_totp_at.blank?
+    unless secondary_authentication.valid_otp?(otp_code)
+      errors.add(:otp_code, :incorrect)
+    end
   end
 end

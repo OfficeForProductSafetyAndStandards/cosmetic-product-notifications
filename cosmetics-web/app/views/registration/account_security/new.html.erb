@@ -24,16 +24,16 @@
       <% end %>
 
       <% authenticartion_app_setup_html = capture do %>
-        <%= hidden_field_tag 'registration_account_security_form[app_authentication_secret_key]', @account_security_form.app_authentication_secret_key %>
+        <%= hidden_field_tag 'registration_account_security_form[secret_key]', @account_security_form.secret_key %>
         <h2 class="govuk-heading-m">Set up your authentication app</h2>
         <p clas="govuk-body">Use your authentication app to scan the QR code below or manually enter the secret key into your authentication app.</p>
         <div class="govuk-grid-row">
           <p class="govuk-grid-column-one-third"></p>
           <div class="govuk-grid-column-one-third">
-            <%= image_tag @account_security_form.app_authentication_qr_code, alt: "Authentication App QR code." %>
+            <%= image_tag @account_security_form.qr_code, alt: "Authentication App QR code." %>
           </div>
         </div>
-        <p clas="govuk-body">Secret key: <b><%= @account_security_form.decorated_app_authentication_secret_key %></b></p>
+        <p clas="govuk-body">Secret key: <b><%= @account_security_form.decorated_secret_key %></b></p>
         <%= form_input @account_security_form,
                        :app_authentication_code,
                        label: { text: "Enter the access code" },
