@@ -94,7 +94,7 @@
           "volume": 4
         },
         {
-          "ingredient": "Hair dyeing agents: : Directs dyes",
+          "ingredient": "Hair dyeing agents: Direct dyes",
           "ingredientExamples": "disperse violet 1, acid violet 43, basic brown 17",
           "volume": 3
         },
@@ -137,7 +137,8 @@
           "volume": 11
         },
         {
-          "ingredient": "Silicones (including volatile silicones (cyclopentasiloxane, dimethicone, amodimethicone))",
+          "ingredient": "Silicones (including volatile silicones)",
+          "ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone",
           "volume": 10
         },
         {
@@ -190,7 +191,7 @@
         },
         {
           "ingredient": "pH adjuster, alkaline",
-          "ingredientExamples":"citric acid, ethanolamine, sodium hydroxide, ammonium hydroxide",
+          "ingredientExamples":"acid (citric acid) or alkaline (ethanolamine, sodium hydroxide, ammonium hydroxide)",
           "volume": "up to and not surpassing pH 2 - 10"
         },
         {
@@ -200,7 +201,7 @@
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type)",
+      "formulationName": "Hair colourant (permanent, oxidative type) - type 1: two components, colourant part",
       "childNumber": 4,
       "ingredients": [
         {
@@ -295,11 +296,11 @@
           "volume": "up to 100"
         }
       ],
+      "annotations": "To be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
       "extraInfo": [
         "pH value: 8 - 11.6",
         "pH value of the mixture with oxidative part: 6 - 11.6"
-      ],
-      "annotations": "*  maximum concentration of ammonium hydroxide permitted is 6 %"
+      ]
     },
     {
       "formulationName": "Hair colourant (permanent, oxidative type)",
