@@ -43,7 +43,7 @@ module SecondaryAuthentication
     end
 
     def send_secondary_authentication_code
-      SendSecondaryAuthenticationJob.perform_later(user, user.direct_otp)
+      SendSecondaryAuthenticationDirectOtpJob.perform_later(user, user.direct_otp)
     end
 
     def try_to_verify_user_mobile_number
