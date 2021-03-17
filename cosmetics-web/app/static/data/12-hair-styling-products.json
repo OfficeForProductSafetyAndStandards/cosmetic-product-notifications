@@ -27,8 +27,8 @@
 					"volume": 20
 				},
 				{
-					"ingredient": "Silicones including volatile silicones, silanes",
-					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, alcoxysilanes",
+					"ingredient": "Silicones (including volatile)",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 20
 				},
 				{
@@ -369,6 +369,18 @@
 				{
 					"ingredient": "Preservatives, antimicrobials",
 					"volume": 2
+				},
+				{
+					"ingredient": "Colourants",
+					"volume": 1
+				},
+				{
+					"ingredient": "Parfum",
+					"volume": 1
+				},
+				{
+					"ingredient": "Aqua",
+					"volume": "to 100"
 				}
 			]
 		},
