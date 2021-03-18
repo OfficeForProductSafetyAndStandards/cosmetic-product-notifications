@@ -50,8 +50,7 @@
           "volume": "to 100"
         }
       ],
-      "annotations": ["* less than 5% calculated as thioglycolic acid"],
-      "annotations": ["The pH may be between pH 11-12.7"]
+      "annotations": ["* less than 5% calculated as thioglycolic acid","The pH may be between pH 11-12.7"]
 
     },
     {
