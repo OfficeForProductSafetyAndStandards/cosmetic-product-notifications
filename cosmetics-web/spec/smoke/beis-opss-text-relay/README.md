@@ -1,4 +1,6 @@
-Simple app for relying sms for smoke test.
+# Simple app for relying sms for smoke test.
+
+## API
 
 Has 2 api endpoints:
 
@@ -13,5 +15,11 @@ GET /text
 ```
 
 Gets the last text. Used by smoketest.
+
+## INFO
+
+Text is being send to virtual number and relyied to this service.
+Always use username/password.
+
 
 Application is deployed to `staging` environment.
