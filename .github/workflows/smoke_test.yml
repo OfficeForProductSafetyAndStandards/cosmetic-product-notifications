@@ -91,6 +91,7 @@ jobs:
         SMOKE_RELAY_CODE_USER: ${{secrets.SMOKE_RELAY_CODE_USER}}
         SMOKE_RELAY_CODE_PASS: ${{secrets.SMOKE_RELAY_CODE_PASS}}
         RUN_SMOKE: "true"
+        SMOKE_PRODUCT_NAME: "Foo bar baz it should fail"
 
       run: |
         cd cosmetics-web
