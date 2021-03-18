@@ -15,14 +15,16 @@ Rails.application.routes.draw do
   get "/sign_up", to: redirect("/")
   resource :password_changed, controller: "users/password_changed", only: :show, path: "password-changed"
 
-  get "two-factor", to: "secondary_authentications#new", as: :new_secondary_authentication
-  post "two-factor", to: "secondary_authentications#create", as: :secondary_authentication
+  scope module: "secondary_authentication", path: "two-factor" do
+    get "auth", to: "secondary_authentication#new", as: :new_secondary_authentication
+    post "auth", to: "secondary_authentication#create", as: :secondary_authentication
 
-  get "text-not-received", to: "secondary_authentications/resend_code#new", as: :new_resend_secondary_authentication_code
-  post "text-not-received", to: "secondary_authentications/resend_code#create", as: :resend_secondary_authentication_code
+    get "text-not-received", to: "resend_code#new", as: :new_resend_secondary_authentication_code
+    post "text-not-received", to: "resend_code#create", as: :resend_secondary_authentication_code
 
-  get "two-factor-method", to: "secondary_authentication_method#new", as: :new_secondary_authentication_method
-  post "two-factor-method", to: "secondary_authentication_method#create", as: :secondary_authentication_method
+    get "method", to: "method#new", as: :new_secondary_authentication_method
+    post "method", to: "method#create", as: :secondary_authentication_method
+  end
 
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"

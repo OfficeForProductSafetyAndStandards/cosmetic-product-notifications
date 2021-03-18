@@ -85,8 +85,8 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         select_secondary_authentication_sms
 
         expect_to_be_on_secondary_authentication_sms_page
-        expect(page).to have_link("Back", href: "/two-factor-method")
-        expect_back_link_to("/two-factor-method")
+        expect(page).to have_link("Back", href: "/two-factor/method")
+        expect_back_link_to("/two-factor/method")
         complete_secondary_authentication_sms_with("#{otp_code} ")
 
         expect(page).to have_current_path("/declaration?redirect_path=%2Fdashboard")
@@ -105,7 +105,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         fill_in_credentials
 
         expect_to_be_on_secondary_authentication_app_page
-        expect(page).not_to have_link("Back", href: "/two-factor-method")
+        expect(page).not_to have_link("Back", href: "/two-factor/method")
         complete_secondary_authentication_app
 
         expect(page).to have_current_path("/declaration?redirect_path=%2Fdashboard")
@@ -136,7 +136,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         fill_in_credentials
 
         expect_to_be_on_secondary_authentication_sms_page
-        expect(page).not_to have_link("Back", href: "/two-factor-method")
+        expect(page).not_to have_link("Back", href: "/two-factor/method")
         complete_secondary_authentication_sms_with("#{otp_code} ")
 
         expect(page).to have_current_path("/declaration?redirect_path=%2Fdashboard")

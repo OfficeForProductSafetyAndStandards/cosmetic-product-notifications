@@ -19,7 +19,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
         request_code
 
         expect(response).to have_http_status(:ok)
-        expect(response).to render_template("secondary_authentications/resend_code/new")
+        expect(response).to render_template("secondary_authentication/resend_code/new")
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
         it "shows the submission form" do
           request_code
 
-          expect(response).to render_template("secondary_authentications/resend_code/new")
+          expect(response).to render_template("secondary_authentication/resend_code/new")
         end
 
         it "does not change the user secondary authentication code" do
@@ -116,7 +116,7 @@ RSpec.describe "User requests new secondary authentication code", type: :request
         it "shows the submission form" do
           request_code
 
-          expect(response).to render_template("secondary_authentications/resend_code/new")
+          expect(response).to render_template("secondary_authentication/resend_code/new")
         end
 
         it "does not change the user secondary authentication code" do

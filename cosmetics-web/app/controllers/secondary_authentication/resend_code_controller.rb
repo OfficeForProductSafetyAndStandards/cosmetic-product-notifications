@@ -1,4 +1,4 @@
-module SecondaryAuthentications
+module SecondaryAuthentication
   class ResendCodeController < ApplicationController
     skip_before_action :authenticate_user!,
                        :require_secondary_authentication,

@@ -59,7 +59,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       it "redirects to 2FA" do
         draft_notification
         delete responsible_person_delete_notification_path(responsible_person, draft_notification)
-        expect(response).to redirect_to("/two-factor")
+        expect(response).to redirect_to("/two-factor/auth")
       end
 
       it "redirects info page to 2FA" do

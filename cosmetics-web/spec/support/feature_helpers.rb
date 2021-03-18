@@ -48,17 +48,17 @@ def select_secondary_authentication_app
 end
 
 def expect_to_be_on_secondary_authentication_sms_page
-  expect(page).to have_current_path(/\/two-factor$/)
+  expect(page).to have_current_path("/two-factor/auth")
   expect(page).to have_h1("Check your phone")
 end
 
 def expect_to_be_on_secondary_authentication_app_page
-  expect(page).to have_current_path(/\/two-factor$/)
+  expect(page).to have_current_path("/two-factor/auth")
   expect(page).to have_h1("Enter the access code")
 end
 
 def expect_to_be_on_resend_secondary_authentication_page
-  expect(page).to have_current_path("/text-not-received")
+  expect(page).to have_current_path("/two-factor/text-not-received")
   expect(page).to have_h1("Resend security code")
 end
 

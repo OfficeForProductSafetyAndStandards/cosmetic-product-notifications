@@ -11,7 +11,8 @@ RSpec.describe "Secondary Authentication submit", :with_2fa, :with_stubbed_notif
 
     before do
       # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(SecondaryAuthenticationsController).to receive(:session).and_return(user_session)
+      allow_any_instance_of(SecondaryAuthentication::SecondaryAuthenticationController)
+        .to receive(:session).and_return(user_session)
       # rubocop:enable RSpec/AnyInstance
       sign_in(user)
     end
