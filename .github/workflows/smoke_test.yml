@@ -1,0 +1,103 @@
+name: Smoke test
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+env:
+  SEARCH_HOST: search
+  SUBMIT_HOST: submit
+  DATABASE_URL: postgres://localhost:5432/cosmetics_test
+  PGHOST: localhost
+  PGUSER: postgres
+
+jobs:
+  ruby:
+    name: "Ruby"
+    runs-on: ubuntu-latest
+
+    # Example for can be found here:
+    # https://github.com/actions/example-services/tree/master/.github/workflows
+    services:
+      postgres:
+        image: postgres:11.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      elasticsearch:
+        image: elasticsearch:7.9.2
+        ports: ["9200:9200"]
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7.x
+    - name: Set up Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.24.x
+    # required to compile pg ruby gem
+    - name: install PostgreSQL client
+      run: sudo apt-get install libpq-dev
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/vendor/bundle
+        key: ${{ runner.OS }}-gems
+        restore-keys: |
+          ${{ runner.OS }}-gems
+          ${{ runner.OS }}-gems-
+          ${{ runner.OS }}-
+    - uses: actions/cache@v1
+      with:
+        path: cosmetics-web/node_modules
+        key: ${{ runner.OS }}-node
+        restore-keys: |
+          ${{ runner.OS }}-node
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+    - name: Install Ruby Gems
+      env:
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
+        gem install bundler -v 2.1.4
+        bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+    - name: Install JavaScript dependencies
+      env:
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
+        npm install yarn -g
+        yarn install
+        bin/webpack
+    - name: Prepare application database
+      env:
+        RAILS_ENV: test
+      run: |
+        cd cosmetics-web
+        bin/rails db:setup
+    - name: Run Smoke Tests
+      env:
+        ELASTICSEARCH_URL: localhost
+        RAILS_ENV: test
+        SMOKE_ENV_URL: ${{secrets.SMOKE_ENV_URL}}
+        SMOKE_SEARCH_USER: ${{secrets.SMOKE_SEARCH_USER}}
+        SMOKE_SEARCH_PASSWORD: ${{secrets.SMOKE_SEARCH_PASSWORD}}
+        SMOKE_RELAY_CODE_URL: ${{secrets.SMOKE_RELAY_CODE_URL}}
+        SMOKE_RELAY_CODE_USER: ${{secrets.SMOKE_RELAY_CODE_USER}}
+        SMOKE_RELAY_CODE_PASS: ${{secrets.SMOKE_RELAY_CODE_PASS}}
+        RUN_SMOKE: "true"
+
+      run: |
+        cd cosmetics-web
+        bundle exec rspec spec/smoke/search_smoke_test_spec.rb
+    - uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SMOKE_SLACK_WEBHOOK_URL }} # required
+      if: always() # Pick up events even if the job fails or is canceled.
