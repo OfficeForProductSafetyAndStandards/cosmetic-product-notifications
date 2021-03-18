@@ -8,7 +8,7 @@ module SecondaryAuthentication
 
       def new
         @user = find_user
-        return render("errors/forbidden", status: :forbidden) unless @user
+        return redirect_to(root_path) unless @user
       end
 
       def create

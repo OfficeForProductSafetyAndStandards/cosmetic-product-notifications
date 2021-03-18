@@ -7,7 +7,7 @@ module SecondaryAuthentication
 
     def new
       unless session[:secondary_authentication_user_id] && secondary_authentication_user
-        return render("errors/forbidden", status: :forbidden)
+        return redirect_to(root_path)
       end
 
       @form = MethodForm.new(

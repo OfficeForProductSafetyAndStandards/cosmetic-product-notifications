@@ -19,7 +19,7 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
 
     it "cannot be directly accessed" do
       get new_secondary_authentication_sms_path
-      expect(response).to have_http_status(:forbidden)
+      expect(response).to redirect_to(root_path)
     end
 
     context "when accessed user session contains 2fa user id" do

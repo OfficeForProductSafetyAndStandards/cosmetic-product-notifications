@@ -23,12 +23,10 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
       end
     end
 
-    context "without an user session", :aggregate_failures do
-      it "shows an access denied error" do
+    context "without an user session" do
+      it "redirects the user to the homepage" do
         request_code
-
-        expect(response).to have_http_status(:forbidden)
-        expect(response).to render_template("errors/forbidden")
+        expect(response).to redirect_to(root_path)
       end
     end
   end

@@ -8,7 +8,7 @@ module SecondaryAuthentication
 
     def new
       user_id = session[:secondary_authentication_user_id]
-      return render("errors/forbidden", status: :forbidden) unless user_id
+      return redirect_to(root_path) unless user_id
 
       if user_needs_to_choose_secondary_authentication_method?
         redirect_to new_secondary_authentication_method_path
