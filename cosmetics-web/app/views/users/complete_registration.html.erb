@@ -35,8 +35,8 @@
 
       <% authenticartion_app_setup_html = capture do %>
         <%= hidden_field_tag 'registration_account_security_form[secret_key]', @account_security_form.secret_key %>
-        <h2 class="govuk-heading-m">Set up your authentication app</h2>
-        <p clas="govuk-body">Use your authentication app to scan the QR code below or manually enter the secret key into your authentication app.</p>
+        <h2 class="govuk-heading-m">Set up your authenticator app</h2>
+        <p clas="govuk-body">Use your authenticator app to scan the QR code below or manually enter the secret key into your authenticator app.</p>
         <div class="govuk-grid-row">
           <p class="govuk-grid-column-one-third"></p>
           <div class="govuk-grid-column-one-third">
@@ -47,7 +47,7 @@
         <%= form_input @account_security_form,
                        :app_authentication_code,
                        label: { text: "Enter the access code" },
-                       hint: { text: "This is the 6 digit access code shown on your authentication app." } %>
+                       hint: { text: "This is the 6 digit access code shown on your authenticator app." } %>
       <% end %>
 
       <%= render "form_components/govuk_checkboxes",
