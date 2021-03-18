@@ -147,7 +147,7 @@
           "volume": 10
         },
         {
-          "ingredient": "Hair dyeing agents : Direct dyes",
+          "ingredient": "Hair dyeing agent: Direct dyes",
           "ingredientExamples": "HC red no.3, 4-amino-3-nitrophenol, 3-nitro-p-hydroxyethylaminophenol",
           "volume": 10
         },
@@ -590,7 +590,7 @@
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type - type 2 : tow or more components, oxidative part with high level of oils",
+      "formulationName": "Hair colourant (permanent, oxidative type - type 2: tow or more components, oxidative part with high level of oils",
       "childNumber": 9,
       "ingredients": [
         {
@@ -1041,6 +1041,16 @@
       
       "ingredients": [
         {
+          "ingredient": "Soaps",
+          "ingredientExamples": "ammonium hydroxide, ethanolamine oleates",
+          "volume": 30
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "ethoxylated long chain alcohols",
+          "volume": 30
+        }
+        {
           "ingredient": "Anionic surfactants",
           "ingredientExamples": "ammonium laureth sulfate",
           "volume": 20
@@ -1055,16 +1065,8 @@
           "ingredientExamples": "betaine derivatives",
           "volume": 20
         },
-        {
-          "ingredient": "Emulsifying agents",
-          "ingredientExamples": "ethoxylated long chain alcohols",
-          "volume": 30
-        },
-        {
-          "ingredient": "Soaps",
-          "ingredientExamples": "ammonium hydroxide, ethanolamine oleates",
-          "volume": 30
-        },
+        ,
+        
         {
           "ingredient": "Solvents",
           "ingredientExamples": "propylene glycol, glycerin",
@@ -1111,7 +1113,7 @@
         },
         {
           "ingredient": "Aqua ",
-          "volume": "to 100"
+          "volume":  "to 100"
         }
       ],
       "extraInfo": [
