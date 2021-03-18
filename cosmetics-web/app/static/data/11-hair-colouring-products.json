@@ -1049,7 +1049,7 @@
           "ingredient": "Emulsifying agents",
           "ingredientExamples": "ethoxylated long chain alcohols",
           "volume": 30
-        }
+        },
         {
           "ingredient": "Anionic surfactants",
           "ingredientExamples": "ammonium laureth sulfate",
@@ -1065,8 +1065,7 @@
           "ingredientExamples": "betaine derivatives",
           "volume": 20
         },
-        ,
-        
+         
         {
           "ingredient": "Solvents",
           "ingredientExamples": "propylene glycol, glycerin",

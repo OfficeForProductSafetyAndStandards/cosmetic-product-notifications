@@ -718,12 +718,12 @@
 					"volume": "to 100"
 				}
 			],
-			"annotations": "For the reducing agent ammonium thioglycolate, this is the maximum concentration before exothermic reaction with hydrogen peroxide",
+			"annotations": ["For the reducing agent ammonium thioglycolate, this is the maximum concentration before exothermic reaction with hydrogen peroxide","before exothermic reaction with hydrogen peroxide"],
 			"extraInfo": [
-				"To be mixed prior to use with part A (12.13-2013), the mixing of parts A and B is exothermic"
+				"To be mixed prior to use with part A (12.13-2013), the mixing of parts A and B is exothermic",
 				"pH value: 7 - 9.5,pH value of the ready-to-use mixture (parts A and B): 7 - 9.5"
-			],
-			"annotation": "before exothermic reaction with hydrogen peroxide"
+			]
+			
 		},
 		{
 			"formulationName": "Permanent wave lotion - two components – based on reducing agents, part A",
