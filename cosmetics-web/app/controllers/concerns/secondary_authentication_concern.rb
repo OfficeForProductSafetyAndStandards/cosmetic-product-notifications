@@ -23,11 +23,13 @@ module SecondaryAuthenticationConcern
         session[:secondary_authentication_method] = "sms"
         auth = SecondaryAuthentication::DirectOtp.new(user)
         auth.generate_and_send_code(current_operation)
+        redirect_to new_secondary_authentication_sms_path
       elsif user_needs_to_choose_secondary_authentication_method?
-        return redirect_to new_secondary_authentication_method_path
+        redirect_to new_secondary_authentication_method_path
+      else
+        session[:secondary_authentication_method] = "app"
+        redirect_to new_secondary_authentication_app_path
       end
-
-      redirect_to new_secondary_authentication_path
     end
   end
 

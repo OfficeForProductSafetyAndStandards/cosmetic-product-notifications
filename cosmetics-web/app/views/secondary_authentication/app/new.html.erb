@@ -1,4 +1,4 @@
-<% title = "Check your phone" %>
+<% title = "Enter the access code" %>
 <% page_title(title, errors: @form.errors.any?) %>
 
 <% if @form.back_link? %>
@@ -15,29 +15,21 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <p class="govuk-body">
-      <% if @form.operation == SecondaryAuthentication::Operations::INVITE_USER %>
-        You need to confirm your identity. We have sent you a security code by text message.
-      <% else %>
-        We have sent you a security code by text message
-      <% end %>
+      This is the code that is shown on your <b>authenticator app</b> for this service.
     </p>
 
-    <%= form_with(url: secondary_authentication_path, method: :post, html: { novalidate: true }) do |f| %>
+    <%= form_with(url: secondary_authentication_app_path, method: :post, html: { novalidate: true }) do |f| %>
       <%= f.hidden_field :user_id, value: @form.user_id %>
       <%= render "form_components/govuk_input",
             key: :otp_code,
             form: f,
             classes: "govuk-input--width-5",
-            label: { text: "Enter security code" },
+            label: { text: "Access code" },
             attributes: { pattern: "[0-9]*", inputmode: "numeric" },
             errorMessage: format_errors_for(@form, @form.errors.full_messages_for(:otp_code)),
             autocomplete: "one-time-code" %>
 
       <%= govukButton(text: "Continue") %>
     <% end %>
-
-    <div class="govuk-body">
-      <%= link_to "Not received a text message?", new_resend_secondary_authentication_code_path, class: "govuk-link" %>
-    </div>
   </div>
 </div>

@@ -177,7 +177,7 @@ en:
               too_short: "Password must be at least 8 characters"
             secondary_authentication_methods:
               blank: "Select at least one method to get access codes"
-        resend_secondary_authentication_code_form:
+        secondary_authentication/sms/resend_form:
           attributes:
             mobile_number:
               blank: "Enter your mobile number"
@@ -187,7 +187,7 @@ en:
             name:
               member_of_rp_with_same_name: "You are already associated with %{attribute}"
               invited_to_rp_with_same_name: "You have already been invited to join %{attribute}. Check your email inbox for your invite"
-        secondary_authentication_with_sms_form:
+        secondary_authentication/sms_form:
           attributes:
             otp_code:
               blank: "Enter the security code"
@@ -196,7 +196,7 @@ en:
               incorrect: "Incorrect security code"
               expired: "The security code has expired. New code sent."
               numericality: "The code must be 5 numbers"
-        secondary_authentication_with_app_form:
+        secondary_authentication/app_form:
           attributes:
             otp_code:
               blank: "Enter the access code"
@@ -204,7 +204,7 @@ en:
               too_long: "You’ve entered too many numbers"
               incorrect: "Incorrect access code"
               numericality: "The code must be 6 numbers"
-        secondary_authentication_method_form:
+        secondary_authentication/method_form:
           attributes:
             authentication_method:
               blank: "Select an option"

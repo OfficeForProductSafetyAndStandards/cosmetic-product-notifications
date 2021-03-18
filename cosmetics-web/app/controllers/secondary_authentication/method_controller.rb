@@ -10,7 +10,7 @@ module SecondaryAuthentication
         return render("errors/forbidden", status: :forbidden)
       end
 
-      @form = SecondaryAuthenticationMethodForm.new(
+      @form = MethodForm.new(
         mobile_number: secondary_authentication_user.mobile_number,
       )
     end
@@ -18,7 +18,7 @@ module SecondaryAuthentication
     def create
       if form.valid?
         session[:secondary_authentication_method] = form.authentication_method
-        redirect_to new_secondary_authentication_path
+        redirect_to authentication_method_path(form.authentication_method)
       else
         render :new
       end
@@ -26,8 +26,15 @@ module SecondaryAuthentication
 
   private
 
+    def authentication_method_path(method)
+      case method
+      when "app" then new_secondary_authentication_app_path
+      when "sms" then new_secondary_authentication_sms_path
+      end
+    end
+
     def form
-      @form ||= SecondaryAuthenticationMethodForm.new(
+      @form ||= MethodForm.new(
         secondary_authentication_method_params.merge(mobile_number: secondary_authentication_user.mobile_number),
       )
     end

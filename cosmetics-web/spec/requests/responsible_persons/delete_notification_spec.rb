@@ -39,7 +39,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
     context "when 2FA time passed", :with_2fa do
       before do
         get delete_responsible_person_delete_notification_url(responsible_person, draft_notification)
-        post secondary_authentication_url,
+        post secondary_authentication_sms_url,
              params: {
                secondary_authentication_form: {
                  otp_code: user.reload.direct_otp,
@@ -59,7 +59,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       it "redirects to 2FA" do
         draft_notification
         delete responsible_person_delete_notification_path(responsible_person, draft_notification)
-        expect(response).to redirect_to("/two-factor/auth")
+        expect(response).to redirect_to("/two-factor/sms")
       end
 
       it "redirects info page to 2FA" do

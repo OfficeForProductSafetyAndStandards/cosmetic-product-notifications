@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SecondaryAuthenticationMethodForm do
+RSpec.describe SecondaryAuthentication::MethodForm do
   describe "#partially_hidden_mobile_number" do
     it "is null for forms where there is no mobile number" do
       form = described_class.new(mobile_number: nil)
