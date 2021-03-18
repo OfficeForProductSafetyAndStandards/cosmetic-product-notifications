@@ -537,8 +537,11 @@
           "volume": " to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use",
+        "instructions": ["with oxidative part (11.8-2013 or 11.9-2013)"]
+      },
       "extraInfo": [
-        "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
       ]
     },
@@ -587,8 +590,12 @@
           "volume": "to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"]
+      },
+
       "extraInfo": [
-        "To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)",
         "pH value of the mixture with colourant part: 8 - 11.6"
       ]
     },
@@ -648,7 +655,10 @@
           "volume": "to 100"
         }
       ],
-      "extraInfo" : ["To be mixed immediately prior to use with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"]
+      },
       "annotations": "pH value of the mixture with colourant part: 8 - 11.6"
     },
     {
@@ -664,6 +674,11 @@
           "volume": "to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with part B (11.11-2013))"]
+      },
+
       "extraInfo": [
         "To be mixed immediately prior to use with part B (11.11-2013)",
         "pH value: 1.5 - 2"
@@ -683,8 +698,12 @@
           "volume": " to 100"
         }
       ],
+       "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with part A (11.10-2013)"]
+      },
+
       "extraInfo": [
-        "To be mixed immediately prior to use with part A (11.10-2013)",
         "pH value: 10 - 11"
       ]
     },
