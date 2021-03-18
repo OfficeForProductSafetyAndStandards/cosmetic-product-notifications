@@ -42,7 +42,7 @@
           "volume": 5
         },  
         {
-          "ingredient": "Hair dyeing agents : Directs dyes",
+          "ingredient": "Hair dyeing agents: directs dyes",
           "ingredientExamples": "disperse violet 1, acid violet 43, basic brown 17",
           "volume": 3
         },
@@ -94,7 +94,7 @@
           "volume": 4
         },
         {
-          "ingredient": "Hair dyeing agents: Direct dyes",
+          "ingredient": "Hair dyeing agents: direct dyes",
           "ingredientExamples": "disperse violet 1, acid violet 43, basic brown 17",
           "volume": 3
         },
@@ -147,7 +147,7 @@
           "volume": 10
         },
         {
-          "ingredient": "Hair dyeing agent: Direct dyes",
+          "ingredient": "Hair dyeing agent: direct dyes",
           "ingredientExamples": "HC red no.3, 4-amino-3-nitrophenol, 3-nitro-p-hydroxyethylaminophenol",
           "volume": 10
         },
@@ -351,8 +351,8 @@
           "volume": 16
         },
         {
-          "ingredient": "Hair dyeing agents: Primary intermediates",
-          "ingedientExample": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
+          "ingredient": "Hair dyeing agents: primary intermediates",
+          "ingredientExamples": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
           "volume": 6
         },
         {
@@ -428,12 +428,12 @@
           "volume": 20
         },
         {
-          "ingredient": "Hair dyeing agent: Primary intermediates",
+          "ingredient": "Hair dyeing agent: primary intermediates",
           "ingredientExamples": "p-phenylenediamines such as p-phenylenediamine and toluene-2,5-diamine, p-aminophenols such as p-aminophenol and 4-amino-m-cresol, heterocyclic diamines such as 1-hydroxyethyl 4,5-diamino pyrazole sulfate",
           "volume": 10
         },
         {
-          "ingredient": "Hair dyeing agent: Couplers",
+          "ingredient": "Hair dyeing agent: couplers",
           "ingredientExamples": "m-aminophenols such as m-aminophenol and 4-amino-2-hydroxytoluene, m-phenylenediamines such as 2-amino-4-hydroxyethylamino-anisole, resorcinols such as resorcinol and 4-chlororesorcinol, pyridines such as 2,6-dihydroxy-3,4-dimethylpyridine, naphtols such as 1,5-naphthalenediol",
           "volume": 10
         },
