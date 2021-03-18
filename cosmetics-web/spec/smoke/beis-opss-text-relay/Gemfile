@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'cf-app-utils', '~> 0.6'
-gem 'pry'
-gem 'redis'
-gem 'sinatra'
+gem "cf-app-utils", "~> 0.6"
+gem "pry"
+gem "redis"
+gem "sinatra"

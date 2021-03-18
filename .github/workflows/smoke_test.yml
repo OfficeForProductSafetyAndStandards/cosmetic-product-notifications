@@ -84,15 +84,13 @@ jobs:
       env:
         ELASTICSEARCH_URL: localhost
         RAILS_ENV: test
-        TWO_FACTOR_AUTHENTICATION_ENABLED: false
-        CI: true
-        COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
         SMOKE_ENV_URL: ${{secrets.SMOKE_ENV_URL}}
         SMOKE_SEARCH_USER: ${{secrets.SMOKE_SEARCH_USER}}
         SMOKE_SEARCH_PASSWORD: ${{secrets.SMOKE_SEARCH_PASSWORD}}
         SMOKE_RELAY_CODE_URL: ${{secrets.SMOKE_RELAY_CODE_URL}}
         SMOKE_RELAY_CODE_USER: ${{secrets.SMOKE_RELAY_CODE_USER}}
         SMOKE_RELAY_CODE_PASS: ${{secrets.SMOKE_RELAY_CODE_PASS}}
+        RUN_SMOKE: "true"
 
       run: |
         cd cosmetics-web
@@ -102,5 +100,5 @@ jobs:
         status: ${{ job.status }}
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
       env:
-        SMOKE_SLACK_WEBHOOK_URL: ${{ secrets.SMOKE_SLACK_WEBHOOK_URL }} # required
+        SLACK_WEBHOOK_URL: ${{ secrets.SMOKE_SLACK_WEBHOOK_URL }} # required
       if: always() # Pick up events even if the job fails or is canceled.
