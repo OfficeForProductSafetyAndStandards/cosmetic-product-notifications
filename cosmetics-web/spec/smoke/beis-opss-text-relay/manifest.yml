@@ -1,0 +1,11 @@
+applications:
+- name: beis-opss-text-relay
+  buildpacks:
+    - ruby_buildpack
+  memory: 128M
+  instances: 1
+  stack: cflinuxfs3
+  command: export $(./deploy/env.sh) && rackup -p $PORT
+  services:
+    - beis-opss-text-relay-redis
+    - beis-opss-text-relay-env
