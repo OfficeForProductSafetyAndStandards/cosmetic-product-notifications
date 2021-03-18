@@ -22,7 +22,7 @@ def expect_user_to_have_received_sms_code(code, current_user = nil)
   end
   expect(notify_stub).to have_received(:send_sms).with(
     hash_including(phone_number: current_user.mobile_number, personalisation: { code: code }),
-  ).at_least(:once)
+  ).once
 end
 
 def complete_secondary_authentication_sms_with(security_code)

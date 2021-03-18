@@ -21,8 +21,6 @@ module SecondaryAuthenticationConcern
 
       if secondary_authentication_with_sms? || user.mobile_number_pending_verification?
         session[:secondary_authentication_method] = "sms"
-        auth = SecondaryAuthentication::DirectOtp.new(user)
-        auth.generate_and_send_code(current_operation)
         redirect_to new_secondary_authentication_sms_path
       elsif user_needs_to_choose_secondary_authentication_method?
         redirect_to new_secondary_authentication_method_path
