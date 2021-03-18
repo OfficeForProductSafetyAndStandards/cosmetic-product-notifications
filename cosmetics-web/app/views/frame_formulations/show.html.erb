@@ -33,16 +33,6 @@
   </div>
 
   <div class="govuk-grid-column-full">
-    <% if @subformulation["formulationNotes"].present? %>
-      <% if @subformulation["formulationNotes"].present? %>
-        <% @subformulation["formulationNotes"].each do |info| %>
-          <p><%= info %></p>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m">Frame formulation</h2>
   </div>
 
@@ -71,6 +61,17 @@
         <% end %>
       </tbody>
     </table>
+
+    <div class="govuk-grid-column-full">
+      <% if @subformulation["mixingInstruction"].present? %>
+        <h4 class="govuk-heading-s"><%= @subformulation["mixingInstruction"]["header"] %></h4>
+        <ul class="govuk-list govuk-list--bullet">
+          <% @subformulation["mixingInstruction"]["instructions"].each do |instruction| %>
+            <li><%= instruction %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
 
     <div class="govuk-grid-column-two-thirds">
       <% if @subformulation["extraInfo"].present? %>

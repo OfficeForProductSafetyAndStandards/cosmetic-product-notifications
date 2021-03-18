@@ -40,7 +40,7 @@
           "ingredient": "Cationic surfactants",
           "ingredientExamples": "stearamidopropyl dimethylamine, distearyldimonium chloride",
           "volume": 5
-        },  
+        },
         {
           "ingredient": "Hair dyeing agents: directs dyes",
           "ingredientExamples": "disperse violet 1, acid violet 43, basic brown 17",
@@ -485,8 +485,11 @@
           "volume": "to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["oxidative part (11.8-2013 or 11.9-2013)"]
+      },
       "extraInfo": [
-        "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
        "pH value: 8 - 11.6", "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
       ]
     },
@@ -1038,7 +1041,7 @@
     {
       "formulationName": "Hair bleach - alkaline part",
       "childNumber": 19,
-      
+
       "ingredients": [
         {
           "ingredient": "Soaps",
@@ -1065,7 +1068,7 @@
           "ingredientExamples": "betaine derivatives",
           "volume": 20
         },
-         
+
         {
           "ingredient": "Solvents",
           "ingredientExamples": "propylene glycol, glycerin",
