@@ -33,4 +33,8 @@ Text is being send to virtual number and relyied to this service.
 Always use username/password.
 
 
+## DEPLOY
+
 Application is deployed to `staging` environment.
+
+`cf push` for deployment
