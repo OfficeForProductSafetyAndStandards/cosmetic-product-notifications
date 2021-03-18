@@ -7,6 +7,11 @@ Has 2 api endpoints:
 ```
 POST /save
 ```
+Example:
+
+```
+curl -d "message=text-msg" -u user:pass https://beis-opss-text-relay.some-domain/save
+```
 
 Where text send by virtual phone number is being relyied.
 
@@ -15,6 +20,12 @@ GET /text
 ```
 
 Gets the last text. Used by smoketest.
+
+Example:
+
+```
+curl -u user:pass https://beis-opss-text-relay.some-domain/text
+```
 
 ## INFO
 
