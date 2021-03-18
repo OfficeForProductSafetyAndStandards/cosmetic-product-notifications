@@ -62,6 +62,9 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Enter the access code", with: "000000"
     check "Text message"
     fill_in "Mobile number", with: "07000 invalid 000000"
+
+    original_secret_key = page.find("p", text: "Secret key:").text
+
     click_button "Continue"
 
     expect(page).to have_current_path("/account-security")
@@ -77,6 +80,11 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Enter the access code", with: correct_app_code
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
+
+    # Ensure that the secret key/QR code don't change between failed attempts
+    reloaded_secret_key = page.find("p", text: "Secret key:").text
+    expect(reloaded_secret_key).to eq original_secret_key
+
     click_button "Continue"
 
     expect_to_be_on_secondary_authentication_sms_page

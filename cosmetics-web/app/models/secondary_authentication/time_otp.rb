@@ -6,10 +6,11 @@ module SecondaryAuthentication
     SUBMIT_ISSUER = "Submit Cosmetics".freeze
     SEARCH_ISSUER = "Search Cosmetics".freeze
 
-    attr_accessor :user, :last_totp_at
+    attr_accessor :user, :last_totp_at, :secret_key
 
-    def initialize(user)
+    def initialize(user, secret_key: nil)
       @user = user
+      @secret_key = (secret_key.presence || user.totp_secret_key.presence || self.class.generate_secret_key)
     end
 
     def qr_code
@@ -19,10 +20,6 @@ module SecondaryAuthentication
         .to_data_url
     end
 
-    def secret_key
-      @secret_key ||= (user.totp_secret_key || generate_secret_key)
-    end
-
     def valid_otp?(otp)
       return false if otp.blank?
 
@@ -30,14 +27,14 @@ module SecondaryAuthentication
       @last_totp_at.present?
     end
 
+    def self.generate_secret_key
+      ROTP::Base32.random
+    end
+
   private
 
     def totp
-      @totp ||= ROTP::TOTP.new(secret_key, issuer: totp_issuer)
-    end
-
-    def generate_secret_key
-      ROTP::Base32.random
+      @totp ||= ROTP::TOTP.new(@secret_key, issuer: totp_issuer)
     end
 
     def totp_issuer

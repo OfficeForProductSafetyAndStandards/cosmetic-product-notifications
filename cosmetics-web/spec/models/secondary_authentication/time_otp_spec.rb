@@ -20,18 +20,36 @@ RSpec.describe SecondaryAuthentication::TimeOtp do
   end
 
   describe "#secret_key" do
-    it "returns the user secret key when the user has one set" do
-      user = build_stubbed(:submit_user, :with_app_secondary_authentication)
-      totp = described_class.new(user)
-      expect(totp.secret_key).not_to be_nil
-      expect(totp.secret_key).to eq(user.totp_secret_key)
+    context "when user has a secret key" do
+      let(:user) { build_stubbed(:submit_user, :with_app_secondary_authentication) }
+
+      it "returns the user secret key when the user has one set and no secret key is given" do
+        totp = described_class.new(user)
+        expect(totp.secret_key).not_to be_nil
+        expect(totp.secret_key).to eq(user.totp_secret_key)
+      end
+
+      it "ignores the user secret key another secret key is given as an argument" do
+        new_secret_key = ROTP::Base32.random
+        totp = described_class.new(user, secret_key: new_secret_key)
+        expect(totp.secret_key).not_to eq user.totp_secret_key
+        expect(totp.secret_key).to eq(new_secret_key)
+      end
     end
 
-    it "generates a new secret key when the user hasn't one set" do
-      user = build_stubbed(:submit_user, :without_secondary_authentication)
-      totp = described_class.new(user)
-      expect(totp.secret_key).not_to eq(user.totp_secret_key)
-      expect(totp.secret_key.size).to eq(32)
+    context "when user does not have a secret key" do
+      let(:user) { build_stubbed(:submit_user, :without_secondary_authentication) }
+
+      it "generates a new secret key when no secret key is given" do
+        totp = described_class.new(user)
+        expect(totp.secret_key.size).to eq(32)
+      end
+
+      it "returns given secret key" do
+        given_secret_key = ROTP::Base32.random
+        totp = described_class.new(user, secret_key: given_secret_key)
+        expect(totp.secret_key).to eq(given_secret_key)
+      end
     end
   end
 
@@ -59,6 +77,17 @@ RSpec.describe SecondaryAuthentication::TimeOtp do
       first_image = totp.qr_code
       user.totp_secret_key = ROTP::Base32.random
       expect(described_class.new(user).qr_code).not_to eq first_image
+    end
+  end
+
+  describe ".generate_secret_key" do
+    it "returns a 32 chars key" do
+      expect(described_class.generate_secret_key.size).to eq 32
+    end
+
+    it "each call returns a new key" do
+      first_key = described_class.generate_secret_key
+      expect(described_class.generate_secret_key).not_to eq first_key
     end
   end
 end

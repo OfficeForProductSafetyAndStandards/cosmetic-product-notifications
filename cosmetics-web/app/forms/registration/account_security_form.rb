@@ -34,7 +34,7 @@ module Registration
                 if: :validate_uk_mobile_number?
     end
 
-    delegate :qr_code, :secret_key, to: :secondary_authentication
+    delegate :qr_code, to: :secondary_authentication
 
     def update!
       return false unless valid?
@@ -63,6 +63,15 @@ module Registration
 
     def name_required?
       user.is_a?(SearchUser) || user.name.blank?
+    end
+
+    # Generates a new key only if key is not coming from the form submission.
+    # Keeping the same key between failed form submissions is important as
+    # allows to keep the same QR code between attempts.
+    # If not the user would need to re-add the QR code into their authenticator
+    # app with each failed submission attempt.
+    def secret_key
+      @secret_key ||= (super || SecondaryAuthentication::TimeOtp.generate_secret_key)
     end
 
     def decorated_secret_key
@@ -94,7 +103,7 @@ module Registration
   private
 
     def secondary_authentication
-      @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user)
+      @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user, secret_key: secret_key)
     end
 
     def secondary_authentication_methods
