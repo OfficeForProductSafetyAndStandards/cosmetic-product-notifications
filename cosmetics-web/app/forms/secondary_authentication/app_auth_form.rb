@@ -1,5 +1,5 @@
 module SecondaryAuthentication
-  class AppForm
+  class AppAuthForm
     include ActiveModel::Model
     include ActiveModel::Attributes
 

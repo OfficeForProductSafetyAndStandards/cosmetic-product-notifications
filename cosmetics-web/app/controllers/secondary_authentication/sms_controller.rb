@@ -13,7 +13,7 @@ module SecondaryAuthentication
       if user_needs_to_choose_secondary_authentication_method?
         redirect_to new_secondary_authentication_method_path
       else
-        @form = SmsForm.new(user_id: user_id)
+        @form = Sms::AuthForm.new(user_id: user_id)
         @form.secondary_authentication.generate_and_send_code(current_operation)
       end
     end
@@ -36,7 +36,7 @@ module SecondaryAuthentication
   private
 
     def form
-      @form ||= SmsForm.new(secondary_authentication_params)
+      @form ||= Sms::AuthForm.new(secondary_authentication_params)
     end
 
     def sms_authentication

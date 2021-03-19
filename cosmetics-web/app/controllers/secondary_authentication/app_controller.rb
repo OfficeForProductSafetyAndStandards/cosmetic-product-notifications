@@ -13,7 +13,7 @@ module SecondaryAuthentication
       if user_needs_to_choose_secondary_authentication_method?
         redirect_to new_secondary_authentication_method_path
       else
-        @form = AppForm.new(user_id: user_id)
+        @form = AppAuthForm.new(user_id: user_id)
       end
     end
 
@@ -32,7 +32,7 @@ module SecondaryAuthentication
   private
 
     def form
-      @form ||= AppForm.new(secondary_authentication_params)
+      @form ||= AppAuthForm.new(secondary_authentication_params)
     end
 
     def secondary_authentication_params
