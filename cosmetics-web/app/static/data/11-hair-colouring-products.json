@@ -680,7 +680,6 @@
       },
 
       "extraInfo": [
-        "To be mixed immediately prior to use with part B (11.11-2013)",
         "pH value: 1.5 - 2"
       ]
     },
@@ -746,8 +745,11 @@
           "volume": 5
         }
       ],
+       "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with dye remover (oxidative type) - part b"]
+      },
       "extraInfo": [
-        "To be mixed immediately prior to use with dye remover (oxidative type) - part b",
         "pH value of the mixture Part A + Part B: 9.5 - 11.5"
       ]
     },
@@ -797,8 +799,11 @@
           "volume": "to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with dye remover (oxidative type) - part a"]
+      },
       "extraInfo": [
-        "To be mixed immediately prior to use with dye remover (oxidative type) - part a",
         "pH value of the mixture Part A + Part B: 9.5 - 11.5"
       ]
     },
@@ -884,11 +889,12 @@
           "volume": 5
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with aqua for use alone","or with oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)","or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)", ""]
+      },
+
       "extraInfo": [
-        "To be mixed immediately prior to use:",
-        "with aqua for use alone",
-        "or with oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)",
-        "or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)",
         "pH value at 1% powder in water: 10 - 12",
         "pH value of the different mixtures: 9.5 - 11.5"
       ]
@@ -932,10 +938,11 @@
           "volume": 5
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["with oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)", "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1", "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part" ]
+      },
       "extraInfo": [
-         "To be mixed immediately prior to use with oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
-        "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1 ",
-        "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part",
         "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
@@ -989,10 +996,11 @@
           "volume": "to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013)"," Hair bleach - alkaline part)"]
+      },
       "extraInfo": [
-        "To be mixed immediately prior to use with:",
-        "hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013 + Hair bleach - alkaline part)",
-        "hair bleach paste (11.16-2013) or hair bleach paste + alkaline part(11.16-2013 + Hair bleach - alkaline part)",
         "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
@@ -1051,10 +1059,11 @@
           "volume": "to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use",
+        "instructions": ["hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013 + Hair bleach - alkaline part)","hair bleach paste (11.16-2013) or hair bleach paste + alkaline part (11.16-2013 + Hair bleach - alkaline part)"]
+      },
       "extraInfo": [
-         "to be mixed immediately prior to use with :",
-        "hair bleach powder (11.15-2013) or hair bleach powder + alkaline part (11.15-2013 + Hair bleach - alkaline part)",
-        "hair bleach paste (11.16-2013) or hair bleach paste + alkaline part (11.16-2013 + Hair bleach - alkaline part)",
         "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
@@ -1137,11 +1146,13 @@
           "volume":  "to 100"
         }
       ],
+      "mixingInstruction" :
+      {
+        "header":"To be mixed immediately prior to use with:",
+        "instructions": "hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)", "hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)"  "oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)"
+      },
       "extraInfo": [
          "To be mixed immediately prior to use with:",
-        "- hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
-        "- hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
-        "- oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)",
         "pH value: 8 - 11.6,pH value of the different mixtures: 7.5 - 11.5"
       ]
     },
