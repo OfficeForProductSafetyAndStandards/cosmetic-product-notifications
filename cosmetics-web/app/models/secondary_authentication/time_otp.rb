@@ -3,8 +3,6 @@ module SecondaryAuthentication
     DRIFT_BEHIND_SECONDS = 15 # Seconds where previous TOTP code will still be valid after a new one has been generated.
     QR_SIZE_PX = 200
     OTP_LENGTH = 6
-    SUBMIT_ISSUER = "Submit Cosmetics".freeze
-    SEARCH_ISSUER = "Search Cosmetics".freeze
 
     attr_accessor :user, :last_totp_at, :secret_key
 
@@ -34,11 +32,7 @@ module SecondaryAuthentication
   private
 
     def totp
-      @totp ||= ROTP::TOTP.new(secret_key, issuer: totp_issuer)
-    end
-
-    def totp_issuer
-      user.is_a?(SearchUser) ? SEARCH_ISSUER : SUBMIT_ISSUER
+      @totp ||= ROTP::TOTP.new(secret_key, issuer: user.totp_issuer)
     end
   end
 end

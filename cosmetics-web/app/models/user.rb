@@ -43,6 +43,10 @@ class User < ApplicationRecord
     account_security_completed? && secondary_authentication_set?
   end
 
+  def totp_issuer
+    self.class::TOTP_ISSUER
+  end
+
 private
 
   def sms_authentication_set?
