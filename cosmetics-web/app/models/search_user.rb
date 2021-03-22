@@ -9,7 +9,7 @@ class SearchUser < User
 
   belongs_to :organisation
 
-  has_one :user_attributes, dependent: :destroy
+  has_one :user_attributes, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   attribute :skip_password_validation, :boolean, default: false
 
   enum role: {
