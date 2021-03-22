@@ -8,9 +8,9 @@ module SecondaryAuthentication
 
     attr_accessor :user, :last_totp_at, :secret_key
 
-    def initialize(user, secret_key: nil)
+    def initialize(user, secret_key)
       @user = user
-      @secret_key = (secret_key.presence || user.totp_secret_key.presence || self.class.generate_secret_key)
+      @secret_key = secret_key
     end
 
     def qr_code
@@ -34,7 +34,7 @@ module SecondaryAuthentication
   private
 
     def totp
-      @totp ||= ROTP::TOTP.new(@secret_key, issuer: totp_issuer)
+      @totp ||= ROTP::TOTP.new(secret_key, issuer: totp_issuer)
     end
 
     def totp_issuer

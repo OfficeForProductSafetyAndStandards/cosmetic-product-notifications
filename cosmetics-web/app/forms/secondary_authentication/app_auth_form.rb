@@ -39,7 +39,7 @@ module SecondaryAuthentication
   private
 
     def secondary_authentication
-      @secondary_authentication ||= TimeOtp.new(user)
+      @secondary_authentication ||= TimeOtp.new(user, user.totp_secret_key)
     end
 
     def correct_otp_validation

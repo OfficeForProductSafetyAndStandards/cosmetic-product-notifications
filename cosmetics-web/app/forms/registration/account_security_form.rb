@@ -103,7 +103,7 @@ module Registration
   private
 
     def secondary_authentication
-      @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user, secret_key: secret_key)
+      @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user, secret_key)
     end
 
     def secondary_authentication_methods
