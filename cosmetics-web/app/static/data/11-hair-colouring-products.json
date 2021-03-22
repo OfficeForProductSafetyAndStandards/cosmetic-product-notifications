@@ -1148,11 +1148,12 @@
       ],
       "mixingInstruction" :
       {
-        "header":"To be mixed immediately prior to use with:",
-        "instructions": "hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)", "hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)"  "oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)"
+        "header":"To be mixed immediately prior to use with",
+        "instructions": ["hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
+         "hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
+         "oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)"]
       },
       "extraInfo": [
-         "To be mixed immediately prior to use with:",
         "pH value: 8 - 11.6,pH value of the different mixtures: 7.5 - 11.5"
       ]
     },
