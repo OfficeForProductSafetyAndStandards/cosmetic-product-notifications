@@ -660,8 +660,8 @@
 				}
 			],
 			 "mixingInstruction": {
-        	"header": "To be mixed immediately prior to use",
-        	"instructions": ["with part B (12.14-2013), the mixing of parts A and B is exothermic"]
+        	"header": "To be mixed immediately prior to use with:",
+        	"instructions": ["part B (12.14-2013), the mixing of parts A and B is exothermic"]
      	 },
 			"extraInfo": [
 				"pH value: 2.5 - 3.5", "pH value of the ready-to-use mixture (parts A and B): 7 - 9.5"
@@ -723,8 +723,8 @@
 			],
 
 				"mixingInstruction": {
-       			 "header": "To be mixed immediately prior to use",
-        		"instructions": ["with part A (12.13-2013)","the mixing of parts A and B is exothermic"]
+       			 "header": "To be mixed immediately prior to use with:",
+        		"instructions": ["part A (12.13-2013)","the mixing of parts A and B is exothermic"]
      		 },
 
 			"annotation": ["For the reducing agent ammonium thioglycolate, this is the maximum concentration before exothermic reaction with hydrogen peroxide","before exothermic reaction with hydrogen peroxide"],
@@ -770,8 +770,8 @@
 				}
 			],
 			"mixingInstruction": {
-        	"header": "To be mixed immediately prior to use",
-       		 "instructions": ["with part B (12.16-2013)"]
+        	"header": "To be mixed immediately prior to use with",
+       		 "instructions": ["part B (12.16-2013)"]
      		 },
 
 			"extraInfo": [
@@ -846,8 +846,8 @@
 				}
 			],
 			"mixingInstruction": {
-       		 "header": "To be mixed immediately prior to use",
-       		 "instructions": ["with part A (12.15-2013)"]
+       		 "header": "To be mixed immediately prior to use with:",
+       		 "instructions": ["part A (12.15-2013)"]
      		 },
 
 			"extraInfo": [

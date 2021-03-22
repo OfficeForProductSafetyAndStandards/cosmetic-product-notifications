@@ -296,8 +296,13 @@
           "volume": "up to 100"
         }
       ],
+       "mixingInstruction": {
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["oxidative part (11.8-2013 or 11.9-2013)"]
+      },
+
       "extraInfo": [
-        "To be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9-2013)",
+        " ",
         "pH value: 8 - 11.6",
         "pH value of the mixture with oxidative part: 6 - 11.6"
       ]
@@ -407,8 +412,11 @@
           "volume": "to 100"
         }
       ],
+      "mixingInstruction": {
+        "header": "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with:",
+        "instructions": ["oxidative part (11.8-2013 or 11.9- 2013)"]
+      },
       "extraInfo": [
-        "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with oxidative part (11.8-2013 or 11.9- 2013)",
         "pH value: 8 - 11.6",
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
       ]
@@ -486,7 +494,7 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
+        "header": "To be mixed immediately prior to use with:",
         "instructions": ["oxidative part (11.8-2013 or 11.9-2013)"]
       },
       "extraInfo": [
@@ -538,8 +546,8 @@
         }
       ],
       "mixingInstruction": {
-        "header": "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use",
-        "instructions": ["with oxidative part (11.8-2013 or 11.9-2013)"]
+        "header": "Components from Part A (11.6-2013) and/or Part B (11.7-2013) to be mixed immediately prior to use with:",
+        "instructions": ["oxidative part (11.8-2013 or 11.9-2013)"]
       },
       "extraInfo": [
         "pH value of the mixture Part A, Part B and oxidative part: 8 - 11.6"
@@ -591,8 +599,8 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
-        "instructions": ["with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"]
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"]
       },
 
       "extraInfo": [
@@ -656,8 +664,8 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
-        "instructions": ["with colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"]
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"]
       },
       "annotations": "pH value of the mixture with colourant part: 8 - 11.6"
     },
@@ -698,8 +706,8 @@
         }
       ],
        "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
-        "instructions": ["with part A (11.10-2013)"]
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["part A (11.10-2013)"]
       },
 
       "extraInfo": [
@@ -746,8 +754,8 @@
         }
       ],
        "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
-        "instructions": ["with dye remover (oxidative type) - part b"]
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["dye remover (oxidative type) - part b"]
       },
       "extraInfo": [
         "pH value of the mixture Part A + Part B: 9.5 - 11.5"
@@ -800,8 +808,8 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
-        "instructions": ["with dye remover (oxidative type) - part a"]
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["dye remover (oxidative type) - part a"]
       },
       "extraInfo": [
         "pH value of the mixture Part A + Part B: 9.5 - 11.5"
@@ -890,8 +898,8 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
-        "instructions": ["with aqua for use alone","or with oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)","or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)", ""]
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["aqua for use alone","or with oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)","or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)", ""]
       },
 
       "extraInfo": [
@@ -939,7 +947,7 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
+        "header": "To be mixed immediately prior to use:",
         "instructions": ["with oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)", "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1", "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part" ]
       },
       "extraInfo": [
@@ -1148,7 +1156,7 @@
       ],
       "mixingInstruction" :
       {
-        "header":"To be mixed immediately prior to use with",
+        "header":"To be mixed immediately prior to use with:",
         "instructions": ["hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
          "hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
          "oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)"]
