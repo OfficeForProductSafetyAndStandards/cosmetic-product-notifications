@@ -90,6 +90,7 @@ jobs:
         SMOKE_RELAY_CODE_USER: ${{secrets.SMOKE_RELAY_CODE_USER}}
         SMOKE_RELAY_CODE_PASS: ${{secrets.SMOKE_RELAY_CODE_PASS}}
         RUN_SMOKE: "true"
+        SMOKE_PRODUCT_NAME: ${{secrets.SMOKE_PRODUCT_NAME}}
 
       run: |
         cd cosmetics-web
@@ -97,7 +98,7 @@ jobs:
     - uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
-        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+        fields: repo,message # selectable (default: repo,message)
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SMOKE_SLACK_WEBHOOK_URL }} # required
-      if: always() # Pick up events even if the job fails or is canceled.
+      if: failure() # Pick up events even if the job fails or is canceled.
