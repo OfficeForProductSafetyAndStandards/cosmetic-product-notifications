@@ -107,6 +107,8 @@ private
   end
 
   def otp_whitelisting_allowed?
+    return true if Rails.env.development?
+
     uris = JSON(Rails.configuration.vcap_application)["application_uris"]
     return false if uris.blank?
     return false if uris.length > 2
