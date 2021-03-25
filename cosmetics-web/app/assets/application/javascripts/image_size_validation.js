@@ -10,7 +10,7 @@ $(document).ready(() => {
     const files = this.files
     for (let i = 0; i < files.length; i++) {
       if (files[i].size > (30 * 1000 * 1000)) {
-        window.alert(`File ${files[i].name} is bigger than 30 MB. Please resize and try again.`)
+        window.alert(`File ${files[i].name} is larger than 30 MB. You must upload a smaller file.`)
         this.value = null
         break
       }
