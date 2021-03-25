@@ -39,12 +39,12 @@ RSpec.describe Notification, type: :model do
     end
   end
 
-  describe "#required_images_missing_or_with_virus?" do
-    context "when notifiying pre EU exit" do
+  describe "#images_missing_or_with_virus?" do
+    context "when notifiying pre EU exit with no images uploaded yet" do
       let(:notification) { build_stubbed(:draft_notification, :pre_brexit) }
 
-      it "does not require images" do
-        expect(notification.required_images_missing_or_with_virus?).to be false
+      it "requires images" do
+        expect(notification.images_missing_or_with_virus?).to be true
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit) }
 
       it "requires images" do
-        expect(notification.required_images_missing_or_with_virus?).to be true
+        expect(notification.images_missing_or_with_virus?).to be true
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit, image_uploads: [image_upload]) }
 
       it "does not require images" do
-        expect(notification.required_images_missing_or_with_virus?).to be false
+        expect(notification.images_missing_or_with_virus?).to be false
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit, image_uploads: [image_upload]) }
 
       it "requires images" do
-        expect(notification.required_images_missing_or_with_virus?).to be true
+        expect(notification.images_missing_or_with_virus?).to be true
       end
     end
 
@@ -79,17 +79,17 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit, image_uploads: [image_upload]) }
 
       it "does not require images" do
-        expect(notification.required_images_missing_or_with_virus?).to be false
+        expect(notification.images_missing_or_with_virus?).to be false
       end
     end
   end
 
-  describe "#required_images_missing_or_not_passed_antivirus_check?" do
-    context "when notifiying pre EU exit" do
+  describe "#images_missing_or_not_passed_antivirus_check?" do
+    context "when notifiying pre EU exit with no images uploaded yet" do
       let(:notification) { build_stubbed(:draft_notification, :pre_brexit) }
 
-      it "does not require images" do
-        expect(notification.required_images_missing_or_not_passed_antivirus_check?).to be false
+      it "requires images" do
+        expect(notification.images_missing_or_not_passed_antivirus_check?).to be true
       end
     end
 
@@ -97,7 +97,7 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit) }
 
       it "requires images" do
-        expect(notification.required_images_missing_or_not_passed_antivirus_check?).to be true
+        expect(notification.images_missing_or_not_passed_antivirus_check?).to be true
       end
     end
 
@@ -106,7 +106,7 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit, image_uploads: [image_upload]) }
 
       it "does not require images" do
-        expect(notification.required_images_missing_or_not_passed_antivirus_check?).to be true
+        expect(notification.images_missing_or_not_passed_antivirus_check?).to be true
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit, image_uploads: [image_upload]) }
 
       it "requires images" do
-        expect(notification.required_images_missing_or_not_passed_antivirus_check?).to be true
+        expect(notification.images_missing_or_not_passed_antivirus_check?).to be true
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe Notification, type: :model do
       let(:notification) { build_stubbed(:draft_notification, :post_brexit, image_uploads: [image_upload]) }
 
       it "does not require images" do
-        expect(notification.required_images_missing_or_not_passed_antivirus_check?).to be false
+        expect(notification.images_missing_or_not_passed_antivirus_check?).to be false
       end
     end
   end
@@ -135,7 +135,7 @@ RSpec.describe Notification, type: :model do
     before do
       allow(notification).to receive(:nano_material_required?).and_return(true)
       allow(notification).to receive(:formulation_required?).and_return(true)
-      allow(notification).to receive(:required_images_missing_or_not_passed_antivirus_check?).and_return(true)
+      allow(notification).to receive(:images_missing_or_not_passed_antivirus_check?).and_return(true)
     end
 
     it "has no missing information" do
@@ -155,7 +155,7 @@ RSpec.describe Notification, type: :model do
     end
 
     it "does not need a product image" do
-      allow(notification).to receive(:required_images_missing_or_not_passed_antivirus_check?).and_return(false)
+      allow(notification).to receive(:images_missing_or_not_passed_antivirus_check?).and_return(false)
 
       expect(notification).to be_missing_information
     end
@@ -164,7 +164,7 @@ RSpec.describe Notification, type: :model do
       it "has no missing information" do
         allow(notification).to receive(:nano_material_required?).and_return(false)
         allow(notification).to receive(:formulation_required?).and_return(false)
-        allow(notification).to receive(:required_images_missing_or_not_passed_antivirus_check?).and_return(false)
+        allow(notification).to receive(:images_missing_or_not_passed_antivirus_check?).and_return(false)
 
         expect(notification).not_to be_missing_information
       end
