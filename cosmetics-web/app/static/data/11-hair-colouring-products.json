@@ -608,7 +608,7 @@
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type - type 2: tow or more components, oxidative part with high level of oils",
+      "formulationName": "Hair colourant (permanent, oxidative type - type 2: two or more components, oxidative part with high level of oils",
       "childNumber": 9,
       "ingredients": [
         {
@@ -683,8 +683,8 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use",
-        "instructions": ["with part B (11.11-2013))"]
+        "header": "To be mixed immediately prior to use :",
+        "instructions": ["with part B (11.11-2013)"]
       },
 
       "extraInfo": [
