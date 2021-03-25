@@ -61,7 +61,7 @@
 
     <%= form_with(url: responsible_person_notification_product_image_upload_index_path, method: :post, multipart: true) do |form| %>
       <div class="govuk-form-group <%= "govuk-form-group--error" if @error_list.present? %>">
-        <%= form.label :image_upload, "Choose file", class: "govuk-label" %>
+        <%= form.label :image_upload, "Choose file no larger than 30 MB", class: "govuk-label" %>
 
         <% if @error_list.present? %>
           <span class="govuk-error-message">
