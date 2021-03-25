@@ -166,18 +166,10 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
         end
       end
 
-      context "when the product was notified pre-Brexit and has 2 valid component" do
-        let(:completed_notification) { create(:notification, :pre_brexit, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
-
-        it "redirects to the add 'check your answers' page" do
-          expect(response.location).to include("/responsible_persons/#{responsible_person.id}/notifications/#{completed_notification.reference_number}/build/wicked_finish")
-        end
-      end
-
-      context "when the product was notified post-Brexit and has 2 valid component" do
+      context "when the product has 2 valid component" do
         let(:completed_notification) { create(:notification, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
 
-        it "redirects to the add product image page" do
+        it "redirects to the wizard finish" do
           expect(response.status).to eq(302)
           expect(response.location).to include("/responsible_persons/#{responsible_person.id}/notifications/#{completed_notification.reference_number}/build/wicked_finish")
         end
