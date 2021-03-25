@@ -137,15 +137,6 @@ def expect_back_link_to_upload_eu_notification_files_page
   expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
 end
 
-def expect_to_be_on__was_product_notified_before_brexit_page
-  expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
-  expect(page).to have_h1("Was this product notified in the EU before 1 January 2021?")
-end
-
-def expect_back_link_to_was_product_notified_before_brexit_page
-  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
-end
-
 def expect_to_be_on__what_is_product_called_page
   expect(page.current_path).to end_with("/build/add_product_name")
   expect(page).to have_h1("What’s the product called?")
@@ -401,13 +392,22 @@ def expect_back_link_to_how_are_items_used_together_page
   expect_back_link_to(/is_mixed$/)
 end
 
-def exepct_to_be_on_upload_product_label_page
+def expect_to_be_on_upload_product_label_page
   expect(page.current_path).to end_with("/add_product_image")
   expect(page).to have_h1("Upload an image of the product label")
 end
 
 def expect_back_link_to_upload_product_label_page
   expect_back_link_to(/\/build\/add_product_image$/)
+end
+
+def expect_to_be_on_upload_item_label_page
+  expect(page.current_path).to end_with("/add_product_image")
+  expect(page).to have_h1("Upload images of the item labels")
+end
+
+def expect_back_link_to_upload_item_label_page
+  expect_back_link_to_upload_product_label_page
 end
 
 def expect_to_be_on__upload_formulation_document_page(header_text)
@@ -569,13 +569,6 @@ end
 
 def answer_do_you_have_zip_files_with(answer)
   within_fieldset("Do you have the ZIP files from your EU notification?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_was_product_notified_before_brexit_with(answer)
-  within_fieldset("Was this product notified in the EU before 1 January 2021?") do
     page.choose(answer)
   end
   click_button "Continue"

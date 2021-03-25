@@ -6,7 +6,6 @@ class ResponsiblePersons::Wizard::AddNotificationWizardController < SubmitApplic
   steps :have_products_been_notified_in_eu,
         :will_products_be_notified_in_eu,
         :do_you_have_files_from_eu_notification,
-        :was_product_on_sale_before_eu_exit,
         :register_on_eu_system
 
   def show
@@ -41,19 +40,13 @@ class ResponsiblePersons::Wizard::AddNotificationWizardController < SubmitApplic
       if answer == "yes"
         redirect_to wizard_path(:register_on_eu_system)
       else
-        redirect_to manual_journey_path(notified_before_eu_exit: false)
+        redirect_to manual_journey_path
       end
     when :do_you_have_files_from_eu_notification
       if answer == "yes"
         redirect_to bulk_upload_path
       else
-        redirect_to wizard_path(:was_product_on_sale_before_eu_exit)
-      end
-    when :was_product_on_sale_before_eu_exit
-      if answer == "yes"
-        redirect_to manual_journey_path(notified_before_eu_exit: true)
-      else
-        redirect_to manual_journey_path(notified_before_eu_exit: false)
+        redirect_to manual_journey_path
       end
     end
   end
@@ -69,8 +62,8 @@ private
     authorize @responsible_person, :show?
   end
 
-  def manual_journey_path(notified_before_eu_exit)
-    new_responsible_person_notification_path(@responsible_person, notified_before_eu_exit)
+  def manual_journey_path
+    new_responsible_person_notification_path(@responsible_person)
   end
 
   def bulk_upload_path
