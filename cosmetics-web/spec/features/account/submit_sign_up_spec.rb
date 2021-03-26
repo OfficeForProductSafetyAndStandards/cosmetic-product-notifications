@@ -54,7 +54,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     click_button "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Select at least one method to get access codes", href: "#app_authentication")
+    expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
 
     # Attempts to submit security page with invalid phone and wrong app authentication code
     fill_in "Create your password", with: "userpassword", match: :prefer_exact

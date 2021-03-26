@@ -176,7 +176,7 @@ en:
               blank: "Enter a password"
               too_short: "Password must be at least 8 characters"
             secondary_authentication_methods:
-              blank: "Select at least one method to get access codes"
+              blank: "Select how to get an access code"
         secondary_authentication/sms/resend_form:
           attributes:
             mobile_number:

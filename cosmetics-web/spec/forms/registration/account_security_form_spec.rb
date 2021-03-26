@@ -289,7 +289,7 @@ RSpec.describe Registration::AccountSecurityForm do
         form.app_authentication = "0"
         expect(form).not_to be_valid
         expect(form.errors.full_messages_for(:secondary_authentication_methods))
-          .to eq(["Select at least one method to get access codes"])
+          .to eq(["Select how to get an access code"])
       end
     end
 

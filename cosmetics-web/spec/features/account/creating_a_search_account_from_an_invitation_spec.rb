@@ -21,7 +21,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     click_button "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Select at least one method to get access codes", href: "#app_authentication")
+    expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
 
     # Second attempt selecting both methods but introducing wrong app authentication code
     fill_in_account_details_with(full_name: "Bob Jones",
