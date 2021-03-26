@@ -18,7 +18,7 @@ gem "govuk_notify_rails", "~> 2.1.0"
 gem "interactor"
 gem "jbuilder", "~> 2.9"
 gem "lograge", "~> 0.11.2"
-gem "mimemagic", "~> 0.3.6" # TODO: Remove when Rails dependency on yanked 0.3.5 version gets fixed.
+gem "mimemagic", "~> 0.3.9" # TODO: Remove when Rails dependency on yanked mimemagic version gets fixed.
 gem "mini_magick", "~> 4.9.4"
 gem "okcomputer", "~> 1.18.1"
 gem "pg", "~> 1.2"
