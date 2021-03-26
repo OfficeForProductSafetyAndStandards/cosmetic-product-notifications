@@ -7,11 +7,11 @@
 
 <div class="govuk-grid-row">
   <%= error_summary_for(@component) %>
-
+  <% name = @component.name if @component.notification.is_multicomponent? %>
   <% if @component.exact? %>
-    <%= render 'exact_concentration' %>
+    <%= render 'exact_concentration', name: name %>
   <% elsif @component.range? %>
-    <%= render 'ranges_concentration' %>
+    <%= render 'ranges_concentration', name: name %>
   <% elsif @component.predefined? %>
     <%= render 'frame_formulation_poisonous_ingredients' %>
   <% else %>
