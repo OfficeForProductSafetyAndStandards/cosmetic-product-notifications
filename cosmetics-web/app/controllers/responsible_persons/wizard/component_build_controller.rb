@@ -339,10 +339,6 @@ private
     @component.cmrs.destroy_all
   end
 
-  def after_eu_exit_steps
-    %i[contains_cmrs add_cmrs contains_special_applicator select_special_applicator_type]
-  end
-
   def model
     @component
   end
