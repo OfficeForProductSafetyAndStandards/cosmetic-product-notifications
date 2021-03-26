@@ -6,6 +6,6 @@ Rails.application.configure do
   Sentry.init do |config|
     config.breadcrumbs_logger = [:active_support_logger] # Inject Sentry logger breadcrumbs
     config.dsn = ENV["SENTRY_DSN"]
-    config.send_default_pii = true
+    config.send_default_pii = false
   end
 end
