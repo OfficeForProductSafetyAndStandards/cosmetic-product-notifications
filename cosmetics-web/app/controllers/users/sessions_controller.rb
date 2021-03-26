@@ -28,7 +28,7 @@ module Users
     def handle_authentication_success
       return redirect_to missing_mobile_number_path unless resource.mobile_number?
 
-      set_raven_context
+      set_sentry_context
       authorize_user!
       sign_in(resource_name, resource)
       respond_with resource, location: after_sign_in_path_for(resource)

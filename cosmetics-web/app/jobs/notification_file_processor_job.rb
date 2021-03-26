@@ -56,7 +56,7 @@ private
     @notification_file.update(upload_error: :unknown_error)
   rescue StandardError => e
     Sidekiq.logger.error "StandardError: #{e.message}\n #{e.backtrace}"
-    Raven.capture_exception(e)
+    Sentry.capture_exception(e)
     @notification_file.update(upload_error: :unknown_error)
   end
 
