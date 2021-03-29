@@ -18,17 +18,6 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
   before_action :set_countries, only: %i[show update]
 
   def show
-    if step == :add_product_image && @notification.was_notified_before_eu_exit?
-      if @notification.is_multicomponent?
-        return redirect_to responsible_person_notification_build_path(
-          @notification.responsible_person,
-          @notification,
-          :is_mixed,
-        )
-      else
-        return redirect_to new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
-      end
-    end
     render_wizard
   end
 
@@ -67,7 +56,6 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
 
   def previous_wizard_path
     previous_step = get_previous_step
-    previous_step = previous_step(previous_step) if skip_step?(previous_step)
 
     if step == :add_product_name
       last_step = if request.referer&.end_with? "do_you_have_files_from_eu_notification"
@@ -214,7 +202,7 @@ private
     when :for_children_under_three
       :add_internal_reference
     when :is_mixed
-      @notification.was_notified_before_eu_exit? ? :single_or_multi_component : :add_product_image
+      :add_product_image
     when :ph_range
       :is_hair_dye
     when :add_new_component
@@ -230,10 +218,6 @@ private
     when :add_product_image
       :single_or_multi_component
     end
-  end
-
-  def after_eu_exit_steps
-    %i[for_children_under_three]
   end
 
   def model

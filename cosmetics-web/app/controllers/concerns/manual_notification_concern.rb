@@ -13,24 +13,6 @@ module ManualNotificationConcern
     end
   end
 
-  def skip_step?(step = @step)
-    after_eu_exit_steps.include?(step) && notification.was_notified_before_eu_exit?
-  end
-
-  def previous_step(current_step = nil)
-    step = super(current_step)
-    return previous_step(step) if skip_step?(step)
-
-    step
-  end
-
-  def next_step(current_step = nil)
-    step = super(current_step)
-    return next_step(step) if skip_step?(step)
-
-    step
-  end
-
   def yes_no_param(param)
     params.dig(model.model_name.param_key, param)
   end
@@ -72,11 +54,6 @@ module ManualNotificationConcern
       model.errors.add param, error_message
       render step
     end
-  end
-
-  def after_eu_exit_steps
-    # If you want your controller to allow different after_eu steps, override this
-    []
   end
 
   def model

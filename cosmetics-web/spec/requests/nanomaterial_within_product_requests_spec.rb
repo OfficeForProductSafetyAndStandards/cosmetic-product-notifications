@@ -14,10 +14,10 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
   end
 
   describe "PUT #confirm_usage" do
-    context "when the notification was via ZIP file upload, pre-Brexit, and formulation included" do
+    context "when the notification was via ZIP file upload and formulation included" do
       let(:notification) do
         create(:notification,
-               :via_zip_file, :pre_brexit,
+               :via_zip_file,
                responsible_person: responsible_person)
       end
 
@@ -34,30 +34,10 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
       end
     end
 
-    context "when the notification was via ZIP file upload, pre-Brexit, using exact, and formulation missing" do
+    context "when the notification was via ZIP file upload, using exact, and formulation missing" do
       let(:notification) do
         create(:notification,
-               :via_zip_file, :pre_brexit,
-               responsible_person: responsible_person)
-      end
-
-      let(:component) { create(:component, :using_exact, notification: notification) }
-      let(:nano_material) { create(:nano_material, component: component) }
-      let(:nano_element) { create(:nano_element, nano_material: nano_material) }
-
-      before do
-        put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }
-      end
-
-      it "redirects to the Upload formulation page" do
-        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-      end
-    end
-
-    context "when the notification was via ZIP file upload, post-Brexit, using exact, and formulation missing" do
-      let(:notification) do
-        create(:notification,
-               :via_zip_file, :post_brexit,
+               :via_zip_file,
                responsible_person: responsible_person)
       end
 
@@ -76,7 +56,7 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
 
     context "when the notification was manual" do
       let(:notification) do
-        create(:notification, :manual, :pre_brexit,
+        create(:notification, :manual,
                responsible_person: responsible_person)
       end
 
@@ -95,7 +75,7 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
 
     context "when there is another nanomaterial to confirm usage for" do
       let(:notification) do
-        create(:notification, :via_zip_file, :pre_brexit,
+        create(:notification, :via_zip_file,
                responsible_person: responsible_person)
       end
 
