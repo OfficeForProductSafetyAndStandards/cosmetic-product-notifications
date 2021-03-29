@@ -17,7 +17,7 @@ RSpec.describe "Notifications delete", type: :feature do
     click_on "Incomplete (1)"
     click_on draft_notification.product_name
     click_on "Delete incomplete cosmetic product notification"
-    expect(page).to have_h1("Are you sure you want to delete #{draft_notification.product_name}")
+    expect(page).to have_h1("Are you sure you want to delete #{draft_notification.product_name}?")
     click_button "Delete notification"
 
     assert_text "#{draft_notification.product_name} notification deleted"
@@ -29,7 +29,7 @@ RSpec.describe "Notifications delete", type: :feature do
     click_on "Notified (1)"
     click_on notification.product_name
     click_on "Delete this cosmetic product notification"
-    expect(page).to have_h1("Are you sure you want to delete #{notification.product_name}")
+    expect(page).to have_h1("Are you sure you want to delete #{notification.product_name}?")
     click_button "Delete notification"
 
     assert_text "#{notification.product_name} notification deleted"

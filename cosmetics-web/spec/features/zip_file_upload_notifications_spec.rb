@@ -301,7 +301,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients")
+    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients in RangeDoc")
     expect_back_link_to_incomplete_notifications_page
     upload_formulation_file
 
@@ -317,7 +317,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients in ExactValues")
     expect_back_link_to_incomplete_notifications_page
     upload_formulation_file
 
@@ -407,7 +407,7 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
-    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients")
+    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients in RangeDoc")
     expect_back_link_to_incomplete_notifications_page
     upload_formulation_file
 

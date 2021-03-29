@@ -279,7 +279,7 @@ end
 
 def expect_to_be_on__what_is_the_purpose_of_nanomaterial_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/select_purposes")
-  expect(page).to have_h1("What is the purpose of #{nanomaterial_name}")
+  expect(page).to have_h1("What is the purpose of #{nanomaterial_name}?")
 end
 
 def expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
