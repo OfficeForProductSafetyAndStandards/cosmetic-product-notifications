@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcern
   include CacheConcern
   include HttpAuthConcern
-  include RavenConfigurationConcern
+  include SentryConfigurationConcern
   include DomainConcern
   include SecondaryAuthenticationConcern
 
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :ensure_secondary_authentication
   before_action :require_secondary_authentication
-  before_action :set_raven_context
+  before_action :set_sentry_context
   before_action :set_cache_headers
   before_action :set_service_name
 
