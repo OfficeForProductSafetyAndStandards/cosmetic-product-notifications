@@ -62,7 +62,7 @@ class Notification < ApplicationRecord
       },
     )
   end
-  aasm whiny_transitions: false, column: :state do
+  aasm whiny_transitions: false, timestamps: true, column: :state do
     state :empty, initial: true
     state :product_name_added
     state :components_complete

@@ -16,9 +16,7 @@ FactoryBot.define do
       state { :notification_file_imported }
     end
 
-    factory :registered_notification do
-      state { :notification_complete }
-    end
+    factory :registered_notification, traits: [:registered]
 
     trait :imported do
       import_country { "country:FR" }
@@ -26,6 +24,7 @@ FactoryBot.define do
 
     trait :registered do
       state { :notification_complete }
+      notification_complete_at { Time.zone.now }
     end
 
     trait :ph_values do
