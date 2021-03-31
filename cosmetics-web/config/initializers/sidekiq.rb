@@ -20,7 +20,7 @@ def create_elasticsearch_index_job
   )
   unless job.save
     Rails.logger.error "***** WARNING - Elasticsearch reindexing job was not saved! *****"
-    Rails.logger.error elasticsearch_job.errors.join("; ")
+    Rails.logger.error job.errors.join("; ")
   end
 end
 
