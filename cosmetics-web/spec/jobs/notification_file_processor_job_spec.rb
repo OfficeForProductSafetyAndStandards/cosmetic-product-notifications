@@ -130,7 +130,7 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus, :without_d
     it "does not remove the notification file" do
       expect {
         notification_file.reload
-      }.not_to raise_error(ActiveRecord::RecordNotFound)
+      }.not_to raise_error
     end
 
     it "adds an error to the file" do
