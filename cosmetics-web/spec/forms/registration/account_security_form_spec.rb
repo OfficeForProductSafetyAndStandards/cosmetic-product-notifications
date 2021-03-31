@@ -5,6 +5,7 @@ RSpec.describe Registration::AccountSecurityForm do
   let(:password) { "foobarbaz" }
   let(:mobile_number) { "07000 000 000" }
   let(:user) { build_stubbed(:submit_user) }
+  let(:secret_key) { "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7" }
 
   let(:form) do
     described_class.new(password: password,
@@ -13,7 +14,8 @@ RSpec.describe Registration::AccountSecurityForm do
                         app_authentication_code: "123456",
                         mobile_number: mobile_number,
                         full_name: full_name,
-                        user: user)
+                        user: user,
+                        secret_key: secret_key)
   end
 
   before do
@@ -146,14 +148,22 @@ RSpec.describe Registration::AccountSecurityForm do
     end
   end
 
-  describe "#decorated_app_authentication_secret_key" do
-    it "introduces a space between every 4 characters of the secret key" do
-      allow(form).to receive(:app_authentication_secret_key).and_return(
-        "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7",
-      )
+  describe "#secret_key" do
+    it "returns secret key if is already set" do
+      expect(form.secret_key).to eq secret_key
+    end
 
-      expect(form.decorated_app_authentication_secret_key)
-       .to eq "QSE5 PUJF T4ZG TBRP GOOO W3QJ WWVZ NUP7"
+    it "generates a new secret key when wasn't already set" do
+      form.secret_key = nil
+      expect(form.secret_key).not_to eq secret_key
+      expect(form.secret_key.size).to eq 32
+    end
+  end
+
+  describe "#decorated_secret_key" do
+    it "introduces a space between every 4 characters of the form secret key" do
+      form.secret_key = "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7"
+      expect(form.decorated_secret_key).to eq "QSE5 PUJF T4ZG TBRP GOOO W3QJ WWVZ NUP7"
     end
   end
 
@@ -279,7 +289,7 @@ RSpec.describe Registration::AccountSecurityForm do
         form.app_authentication = "0"
         expect(form).not_to be_valid
         expect(form.errors.full_messages_for(:secondary_authentication_methods))
-          .to eq(["Select at least one method to get access codes"])
+          .to eq(["Select how to get an access code"])
       end
     end
 

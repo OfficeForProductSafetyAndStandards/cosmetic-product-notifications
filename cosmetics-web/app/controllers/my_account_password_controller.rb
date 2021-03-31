@@ -25,6 +25,6 @@ class MyAccountPasswordController < ApplicationController
 private
 
   def current_operation
-    SecondaryAuthentication::CHANGE_PASSWORD
+    SecondaryAuthentication::Operations::CHANGE_PASSWORD
   end
 end

@@ -1,5 +1,6 @@
 class SubmitUser < User
   ALLOW_INTERNATIONAL_PHONE_NUMBER = true
+  TOTP_ISSUER = "Submit Cosmetics".freeze
 
   # Include default devise modules. Others available are:
   devise :database_authenticatable, :registerable,
