@@ -11,6 +11,10 @@ require "policy_helpers"
 # require "support/antivirus"
 # require "support/mailer"
 
+# Quiet Sidekiq's logging in test suite
+require "sidekiq/testing"
+Sidekiq.logger.level = Logger::FATAL
+
 require "simplecov"
 require "coveralls"
 require "simplecov-lcov"

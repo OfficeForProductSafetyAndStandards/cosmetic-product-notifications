@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SecondaryAuthentication do
+RSpec.describe SecondaryAuthentication::DirectOtp do
   let(:attempts) { 0 }
   let(:direct_otp) { "11111" }
   let(:direct_otp_sent_at) { Time.zone.now }
@@ -45,7 +45,7 @@ RSpec.describe SecondaryAuthentication do
       end
 
       it "sets second_factor_attempts_count after lock cooldown" do
-        travel_to(Time.zone.now + (SecondaryAuthentication::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
+        travel_to(Time.zone.now + (SecondaryAuthentication::DirectOtp::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
           expect {
             secondary_authentication.valid_otp? "123"
           }.to change { user.reload.second_factor_attempts_count }.from(0).to(1)
@@ -53,7 +53,7 @@ RSpec.describe SecondaryAuthentication do
       end
 
       it "clears second_factor_attempts_locked_at after lock cooldown" do
-        travel_to(Time.zone.now + (SecondaryAuthentication::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
+        travel_to(Time.zone.now + (SecondaryAuthentication::DirectOtp::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
           secondary_authentication.valid_otp? "123"
 
           expect(user.reload.second_factor_attempts_locked_at).to eq(nil)
@@ -174,7 +174,7 @@ RSpec.describe SecondaryAuthentication do
       end
 
       it "returns false when cooldown passed" do
-        travel_to(second_factor_attempts_locked_at + (SecondaryAuthentication::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
+        travel_to(second_factor_attempts_locked_at + (SecondaryAuthentication::DirectOtp::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
           expect(secondary_authentication.otp_locked?).to eq(false)
         end
       end

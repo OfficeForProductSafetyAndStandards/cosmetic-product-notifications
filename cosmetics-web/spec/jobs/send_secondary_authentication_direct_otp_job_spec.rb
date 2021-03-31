@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SendSecondaryAuthenticationJob do
+RSpec.describe SendSecondaryAuthenticationDirectOtpJob do
   let(:user) { create(:submit_user) }
   let(:code) { 123 }
 

@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe SecondaryAuthenticationForm, :with_stubbed_notify do
+RSpec.describe SecondaryAuthentication::Sms::AuthForm, :with_stubbed_notify do
   subject(:form) { described_class.new(otp_code: otp_code, user_id: user.id) }
 
   let(:user) { create(:submit_user, second_factor_attempts_count: attempts, direct_otp_sent_at: direct_otp_sent_at) }
 
   let(:attempts) { 0 }
   let(:direct_otp_sent_at) { Time.zone.now }
-  let(:secondary_authentication) { SecondaryAuthentication.new(user) }
+  let(:secondary_authentication) { SecondaryAuthentication::DirectOtp.new(user) }
   let(:otp_code) { user.direct_otp }
 
   describe "#valid?" do
@@ -51,7 +51,7 @@ RSpec.describe SecondaryAuthenticationForm, :with_stubbed_notify do
       end
 
       context "when the two factor code has less digits than the required ones" do
-        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::OTP_LENGTH] }
+        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::DirectOtp::OTP_LENGTH] }
 
         it "is not valid" do
           expect(form).to be_invalid
@@ -75,7 +75,7 @@ RSpec.describe SecondaryAuthenticationForm, :with_stubbed_notify do
       end
 
       context "when the two factor code has more digits than the required ones" do
-        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::OTP_LENGTH + 2] }
+        let(:otp_code) { rand.to_s[2..SecondaryAuthentication::DirectOtp::OTP_LENGTH + 2] }
 
         it "is not valid" do
           expect(form).to be_invalid
@@ -100,7 +100,7 @@ RSpec.describe SecondaryAuthenticationForm, :with_stubbed_notify do
     end
 
     context "when otp is expired" do
-      let(:direct_otp_sent_at) { (SecondaryAuthentication::OTP_EXPIRY_SECONDS * 2).seconds.ago }
+      let(:direct_otp_sent_at) { (SecondaryAuthentication::DirectOtp::OTP_EXPIRY_SECONDS * 2).seconds.ago }
 
       context "with form validation" do
         before { form.validate }
