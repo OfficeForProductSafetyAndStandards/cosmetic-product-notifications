@@ -39,7 +39,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
         visit edit_user_password_url_with_token
 
-        expect_to_be_on_secondary_authentication_page
+        select_secondary_authentication_sms
+        expect_to_be_on_secondary_authentication_sms_page
 
         # User can request the 2FA code again
         click_link "Not received a text message?"
@@ -47,8 +48,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         expect_to_be_on_resend_secondary_authentication_page
         click_button "Resend security code"
 
-        expect_to_be_on_secondary_authentication_page
-        complete_secondary_authentication_with(otp_code)
+        expect_to_be_on_secondary_authentication_sms_page
+        complete_secondary_authentication_sms_with(otp_code)
 
         # User updates its password
         expect_to_be_on_edit_user_password_page
@@ -85,8 +86,10 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
           visit edit_user_password_url_with_token
 
-          expect_to_be_on_secondary_authentication_page
-          complete_secondary_authentication_with(otp_code)
+          select_secondary_authentication_sms
+
+          expect_to_be_on_secondary_authentication_sms_page
+          complete_secondary_authentication_sms_with(otp_code)
 
           expect_to_be_on_edit_user_password_page
 
@@ -104,8 +107,10 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
           visit edit_user_password_url_with_token
 
-          expect_to_be_on_secondary_authentication_page
-          complete_secondary_authentication_with(otp_code)
+          select_secondary_authentication_sms
+
+          expect_to_be_on_secondary_authentication_sms_page
+          complete_secondary_authentication_sms_with(otp_code)
 
           expect_to_be_on_edit_user_password_page
 
@@ -138,8 +143,10 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
           click_on "Reset password for #{user.name}"
 
           # Need to pass 2FA authentication for original user
-          expect_to_be_on_secondary_authentication_page
-          complete_secondary_authentication_with(otp_code)
+          select_secondary_authentication_sms
+
+          expect_to_be_on_secondary_authentication_sms_page
+          complete_secondary_authentication_sms_with(otp_code)
 
           # Finally can change the original user password
           expect_to_be_on_edit_user_password_page

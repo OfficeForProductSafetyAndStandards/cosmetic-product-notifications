@@ -1,9 +1,13 @@
 require "rails_helper"
 
 RSpec.describe SearchUser, type: :model do
-  subject(:user) { described_class.new(id: 123, role: role) }
+  subject(:user) { build_stubbed(:search_user) }
+
+  include_examples "common user tests"
 
   describe "#can_view_product_ingredients?" do
+    subject(:user) { build_stubbed(:search_user, id: 123, role: role) }
+
     context "when MSA user" do
       let(:role) { :msa }
 
