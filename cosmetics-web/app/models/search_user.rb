@@ -1,6 +1,7 @@
 class SearchUser < User
   INVITATION_EXPIRATION_DAYS = 14
   ALLOW_INTERNATIONAL_PHONE_NUMBER = false
+  TOTP_ISSUER = "Search Cosmetics".freeze
 
   # Include default devise modules. Others available are:
   devise :database_authenticatable,
