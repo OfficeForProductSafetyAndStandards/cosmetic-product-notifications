@@ -109,6 +109,6 @@ private
 
   # See: SecondaryAuthenticationConcern
   def current_operation
-    SecondaryAuthentication::Operations::INVITE_USER
+    SecondaryAuthentication::INVITE_USER
   end
 end

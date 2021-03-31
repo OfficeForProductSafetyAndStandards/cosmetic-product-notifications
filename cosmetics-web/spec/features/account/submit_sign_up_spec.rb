@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stubbed_notify, :with_stubbed_mailer, type: :feature do
+RSpec.feature "Signing up as a submit user", :with_2fa, :with_stubbed_notify, :with_stubbed_mailer, type: :feature do
   before do
     configure_requests_for_submit_domain
   end
@@ -49,75 +49,25 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
     expect(page).to have_link("Accessibility Statement", href: "/help/accessibility-statement")
 
-    # Attempts to submit security page without selecting secondary authentication method
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    click_button "Continue"
-
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
-
-    # Attempts to submit security page with invalid phone and wrong app authentication code
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
-    fill_in "Enter the access code", with: "000000"
-    check "Text message"
+    # Attempts to submit security page with validation errors
+    expect(page).to have_current_path("/account-security")
     fill_in "Mobile number", with: "07000 invalid 000000"
-
-    original_secret_key = page.find("p", text: "Secret key:").text
-
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
     expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
-    expect(page).to have_css("span#app_authentication_code-error", text: "Enter a correct code")
     expect(page).to have_css("span#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
 
-    # New attempt setting both secondary authentication methods with no issues
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
-    fill_in "Enter the access code", with: correct_app_code
-    check "Text message"
+    # Second attempt with no validation issues
     fill_in "Mobile number", with: "07000000000"
-
-    # Ensure that the secret key/QR code don't change between failed attempts
-    reloaded_secret_key = page.find("p", text: "Secret key:").text
-    expect(reloaded_secret_key).to eq original_secret_key
-
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_sms_page
-    expect(page).not_to have_link("Back", href: "/two-factor/method")
     expect_user_to_have_received_sms_code(otp_code)
-    complete_secondary_authentication_sms_with(otp_code)
-
-    expect_to_be_on_declaration_page
-  end
-
-  scenario "user signs up with authentication app 2FA but without text message" do
-    visit "/"
-    click_on "Create an account"
-    expect(page).to have_current_path("/create-an-account")
-
-    fill_in "Full name", with: "Joe Doe"
-    fill_in "Email address", with: "signing_up@example.com"
-    click_button "Continue"
-
-    expect_to_be_on_check_your_email_page
-
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
-
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
-
-    expect(page).to have_current_path("/account-security")
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
-    fill_in "Enter the access code", with: correct_app_code
-    click_button "Continue"
+    expect_to_be_on_secondary_authentication_page
+    complete_secondary_authentication_with(otp_code)
 
     expect_to_be_on_declaration_page
   end
@@ -152,9 +102,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
     fill_in "Mobile number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
     expect_to_be_on_declaration_page
@@ -193,13 +142,12 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     visit verify_url
 
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
     fill_in "Mobile number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_sms_page
-    complete_secondary_authentication_sms_with(otp_code)
+    expect_to_be_on_secondary_authentication_page
+    complete_secondary_authentication_with(otp_code)
 
     expect_to_be_on_declaration_page
   end
@@ -256,14 +204,13 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         verify_url = email.personalization[:verify_email_url]
         visit verify_url
 
-        fill_in "Create your password", with: "userpassword", match: :prefer_exact
-        check "Text message"
         fill_in "Mobile number", with: "07000000000"
+        fill_in "Password", with: "userpassword", match: :prefer_exact
         click_button "Continue"
 
         expect_user_to_have_received_sms_code(otp_code)
-        expect_to_be_on_secondary_authentication_sms_page
-        complete_secondary_authentication_sms_with(otp_code)
+        expect_to_be_on_secondary_authentication_page
+        complete_secondary_authentication_with(otp_code)
 
         expect_to_be_on_declaration_page
       end
@@ -295,13 +242,12 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     click_on "Create new account"
 
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
     fill_in "Mobile number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_sms_page
-    complete_secondary_authentication_sms_with(otp_code("signing_up@example.com"))
+    expect_to_be_on_secondary_authentication_page
+    complete_secondary_authentication_with(otp_code("signing_up@example.com"))
 
     expect_to_be_on_declaration_page
   end
@@ -323,7 +269,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     verify_url = email.personalization[:verify_email_url]
 
-    second_user = create(:submit_user, :with_sms_secondary_authentication, :with_responsible_person)
+    second_user = create(:submit_user, :with_responsible_person)
     sign_in(second_user)
 
     # Visit the confirmation link while signed in as a different user

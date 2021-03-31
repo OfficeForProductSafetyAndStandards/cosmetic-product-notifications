@@ -12,7 +12,11 @@ class UsersController < SearchApplicationController
     return render(:expired_invitation) if @user.invitation_expired?
     return (render "errors/not_found", status: :not_found) if !params[:invitation] || (@user.invitation_token != params[:invitation])
 
-    @account_security_form = Registration::AccountSecurityForm.new(user: @user)
+    # Reset name and mobile number in case they've been remembered
+    # from a previous registration that was abandoned before the mobile number
+    # was verified via two-factor authentication.
+    @user.name = ""
+    @user.mobile_number = ""
 
     render :complete_registration
   end
@@ -26,14 +30,10 @@ class UsersController < SearchApplicationController
     @user = SearchUser.find(params[:id])
     return render("errors/forbidden", status: :forbidden) if params[:invitation] != @user.invitation_token
 
-    if account_security_form.update!
+    @user.assign_attributes(new_user_attributes.merge(account_security_completed: true))
+
+    if @user.save(context: :registration_completion)
       sign_in :search_user, @user
-      # Sets 2FA cookie for users that have set authentication APP in the account security page.
-      # If they have chosen the sms code authentication option we won't set the cookie until
-      # they confirm their mobile number with the sms code at "Check your phone" page.
-      if account_security_form.app_authentication_selected? && !account_security_form.sms_authentication_selected?
-        set_secondary_authentication_cookie(Time.zone.now.to_i) if @user.last_totp_at
-      end
       redirect_to root_path
     else
       render :complete_registration
@@ -42,23 +42,11 @@ class UsersController < SearchApplicationController
 
 private
 
+  def new_user_attributes
+    params.require(user_params_key).permit(:name, :password, :mobile_number)
+  end
+
   def signed_in_as?(user)
     current_user == user
-  end
-
-  def account_security_form
-    @account_security_form ||=
-      Registration::AccountSecurityForm.new(account_security_form_params.merge(user: @user))
-  end
-
-  def account_security_form_params
-    params.require(:registration_account_security_form)
-          .permit(:mobile_number,
-                  :password,
-                  :full_name,
-                  :secret_key,
-                  :app_authentication_code,
-                  :sms_authentication,
-                  :app_authentication)
   end
 end

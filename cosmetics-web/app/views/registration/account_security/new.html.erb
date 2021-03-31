@@ -9,58 +9,14 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    <%= error_summary(@account_security_form.errors,
-                      %i[full_name password secondary_authentication_methods app_authentication_code mobile_number],
-                      map_errors: { secondary_authentication_methods: :app_authentication }) %>
+    <%= error_summary(@account_security_form.errors, %i[full_name mobile_number password]) %>
 
     <h1 class="govuk-heading-l"><%= title %></h1>
+
     <%= form_for(@account_security_form, url: registration_create_account_security_path, html: { novalidate: true }, method: :post) do |f| %>
       <%= form_input @account_security_form, :full_name if @account_security_form.name_required? %>
-      <%= password_input @account_security_form, label: { text: "Create your password", classes: "govuk-label--m" },
-                                                 hint: { text: "Your password must contain at least 8 characters" } %>
-
-      <% mobile_number_input_html = capture do %>
-        <%= form_input @account_security_form, :mobile_number, hint: { text: "We’ll send you a security code by text message" } %>
-      <% end %>
-
-      <% authenticartion_app_setup_html = capture do %>
-        <%= hidden_field_tag 'registration_account_security_form[secret_key]', @account_security_form.secret_key %>
-        <h2 class="govuk-heading-m">Set up your authenticator app</h2>
-        <p class="govuk-body">Use your authenticator app to scan the QR code below or manually enter the secret key into your authenticator app.</p>
-        <div class="govuk-grid-row">
-          <p class="govuk-grid-column-one-third"></p>
-          <div class="govuk-grid-column-one-third">
-            <%= image_tag @account_security_form.qr_code, alt: "Authentication App QR code." %>
-          </div>
-        </div>
-        <p class="govuk-body">Secret key: <b><%= @account_security_form.decorated_secret_key %></b></p>
-        <%= form_input @account_security_form,
-                       :app_authentication_code,
-                       label: { text: "Enter the access code" },
-                       hint: { text: "This is the 6 digit access code shown on your authenticator app." } %>
-      <% end %>
-
-      <%= render "form_components/govuk_checkboxes",
-            form: f,
-            key: :secondary_authentication_methods,
-            hint: { text: "Choose one or both options" },
-            fieldset: {
-              legend: { text: "How do you want to get access codes?",
-                        classes: "govuk-label--m",
-                        isPageHeading: false }
-              },
-              items: [
-                { id: "app_authentication",
-                  key: :app_authentication,
-                  text: "Authenticator app for smartphone or tablet",
-                  conditional: { html: authenticartion_app_setup_html },
-                  checked: @account_security_form.app_authentication_selected? },
-                { id: "sms_authentication",
-                  key: :sms_authentication,
-                  text: "Text message",
-                  conditional: { html: mobile_number_input_html },
-                  checked: @account_security_form.sms_authentication_selected? }
-              ] %>
+      <%= form_input @account_security_form, :mobile_number, hint: { text: "We’ll send you a security code by text message" } %>
+      <%= password_input @account_security_form, hint: { text: 'At least 8 characters' } %>
 
       <%= govukButton(text: "Continue") %>
     <% end %>

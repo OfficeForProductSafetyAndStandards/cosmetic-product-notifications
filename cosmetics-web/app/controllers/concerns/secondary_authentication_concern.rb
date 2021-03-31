@@ -8,26 +8,21 @@ module SecondaryAuthenticationConcern
   extend ActiveSupport::Concern
 
   def require_secondary_authentication(redirect_to: request.fullpath)
-    user = secondary_authentication_user
-    return unless user && Rails.configuration.secondary_authentication_enabled
+    return unless Rails.configuration.secondary_authentication_enabled
 
-    if !user.account_security_completed?
-      redirect_to(registration_new_account_security_path)
-    elsif !secondary_authentication_present_in_session? || user.mobile_number_pending_verification?
+    if user && (!user.mobile_number_verified || !secondary_authentication_present?)
+
+      if !user.account_security_completed? || !user.mobile_number
+        return redirect_to(registration_new_account_security_path)
+      end
+
       session[:secondary_authentication_redirect_to] = redirect_to
       session[:secondary_authentication_user_id] = user_id_for_secondary_authentication
       session[:secondary_authentication_notice] = notice
       session[:secondary_authentication_confirmation] = confirmation
-
-      if secondary_authentication_with_sms? || user.mobile_number_pending_verification?
-        session[:secondary_authentication_method] = "sms"
-        redirect_to new_secondary_authentication_sms_path
-      elsif user_needs_to_choose_secondary_authentication_method?
-        redirect_to new_secondary_authentication_method_path
-      else
-        session[:secondary_authentication_method] = "app"
-        redirect_to new_secondary_authentication_app_path
-      end
+      auth = SecondaryAuthentication.new(user)
+      auth.generate_and_send_code(current_operation)
+      redirect_to new_secondary_authentication_path
     end
   end
 
@@ -37,11 +32,11 @@ module SecondaryAuthenticationConcern
   end
 
   # returns true if 2 FA not needed
-  def secondary_authentication_present_in_session?
+  def secondary_authentication_present?
     return false if get_secondary_authentication_time.nil?
 
     last_otp_time = get_secondary_authentication_time
-    (last_otp_time + SecondaryAuthentication::Operations::TIMEOUTS[current_operation].seconds) > Time.zone.now
+    (last_otp_time + SecondaryAuthentication::TIMEOUTS[current_operation].seconds) > Time.zone.now
   end
 
   # can be overrided for actions which require
@@ -53,14 +48,14 @@ module SecondaryAuthenticationConcern
   # can be overrided for actions which require
   # custom secondary authentication flow
   def current_operation
-    SecondaryAuthentication::Operations::DEFAULT
+    SecondaryAuthentication::DEFAULT_OPERATION
   end
 
   def set_secondary_authentication_cookie(timestamp)
-    user_id = (session[:secondary_authentication_user_id] || user_id_for_secondary_authentication)
-    return if user_id.blank?
-
-    cookies.signed["two-factor-#{user_id}"] = { value: timestamp, expiry: 0 }
+    cookies.signed["two-factor-#{session[:secondary_authentication_user_id]}"] = {
+      value: timestamp,
+      expiry: 0,
+    }
   end
 
   def get_secondary_authentication_time
@@ -70,26 +65,7 @@ module SecondaryAuthenticationConcern
     Time.zone.at(timestamp)
   end
 
-  def secondary_authentication_user
-    @secondary_authentication_user ||= User.find_by(
-      id: session[:secondary_authentication_user_id] || user_id_for_secondary_authentication,
-    )
-  end
-
-  def user_needs_to_choose_secondary_authentication_method?
-    return false unless secondary_authentication_user
-
-    session[:secondary_authentication_method].blank? &&
-      secondary_authentication_user.secondary_authentication_methods.size > 1
-  end
-
-  def secondary_authentication_with_sms?
-    session[:secondary_authentication_method] == "sms" ||
-      secondary_authentication_user&.secondary_authentication_methods == %w[sms]
-  end
-
-  def secondary_authentication_with_app?
-    session[:secondary_authentication_method] == "app" ||
-      secondary_authentication_user&.secondary_authentication_methods == %w[app]
+  def user
+    User.find_by(id: user_id_for_secondary_authentication)
   end
 end

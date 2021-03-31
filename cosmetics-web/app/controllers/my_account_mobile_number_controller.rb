@@ -27,6 +27,6 @@ class MyAccountMobileNumberController < SubmitApplicationController
 private
 
   def current_operation
-    SecondaryAuthentication::Operations::CHANGE_MOBILE_NUMBER
+    SecondaryAuthentication::CHANGE_MOBILE_NUMBER
   end
 end

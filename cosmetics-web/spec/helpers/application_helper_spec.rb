@@ -28,18 +28,11 @@ describe ApplicationHelper do
     end
 
     context "when no attributes order is given" do
-      it "calls for the error summary with a formatted unordered list of errors" do
-        view.error_summary(errors)
-        expect_error_summary_for([{ text: "Name cannot be blank", href: "#name" },
-                                  { text: "Email cannot be blank", href: "#email" },
-                                  { text: "Mobile number is too short", href: "#mobile_number" }])
-      end
-    end
+      let(:order) { [] }
 
-    context "when providing error mapping to other attribute" do
-      it "errors for the key on the mapping point to the value of the mapping" do
-        view.error_summary(errors, map_errors: { name: :email })
-        expect_error_summary_for([{ text: "Name cannot be blank", href: "#email" },
+      it "calls for the error summary with a formatted unordered list of errors" do
+        view.error_summary(errors, order)
+        expect_error_summary_for([{ text: "Name cannot be blank", href: "#name" },
                                   { text: "Email cannot be blank", href: "#email" },
                                   { text: "Mobile number is too short", href: "#mobile_number" }])
       end

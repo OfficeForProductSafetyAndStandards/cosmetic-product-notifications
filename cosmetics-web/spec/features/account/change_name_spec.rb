@@ -5,16 +5,15 @@ RSpec.describe "Changing name", :with_2fa, :with_stubbed_mailer, :with_stubbed_n
     before do
       visit "/sign-in"
       fill_in_credentials
-      select_secondary_authentication_sms
 
-      expect_to_be_on_secondary_authentication_sms_page
-      complete_secondary_authentication_sms_with("#{otp_code} ")
+      expect(page).to have_css("h1", text: "Check your phone")
+      fill_in "Enter security code", with: "#{otp_code} "
+      click_on "Continue"
 
       click_on "Your account"
       expect_to_be_on_my_account_page
 
       click_on "Change name"
-      expect(page).to have_css("h1", text: "Change your name")
     end
 
     it "changes name properly" do
