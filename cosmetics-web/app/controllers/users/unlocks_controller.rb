@@ -33,7 +33,7 @@ module Users
     end
 
     def current_operation
-      SecondaryAuthentication::Operations::UNLOCK
+      SecondaryAuthentication::UNLOCK_OPERATION
     end
   end
 end

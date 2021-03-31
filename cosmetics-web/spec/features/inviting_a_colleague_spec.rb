@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_notify, :with_stubbed_mailer, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_notify, :with_stubbed_mailer, :with_2fa, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person, name: "Responsible Person") }
   let(:user) { create(:submit_user) }
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
@@ -15,14 +15,11 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
-      select_secondary_authentication_sms
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-      complete_secondary_authentication_sms_with(user.direct_otp)
+      complete_secondary_authentication_for(user)
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
@@ -53,14 +50,11 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in(user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
-      select_secondary_authentication_sms
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-      complete_secondary_authentication_sms_with(user.direct_otp)
+      complete_secondary_authentication_for(user)
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
@@ -79,14 +73,11 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in(user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds) do
       click_on "Invite a team member"
 
-      select_secondary_authentication_sms
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-      complete_secondary_authentication_sms_with(user.direct_otp)
+      complete_secondary_authentication_for(user)
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
@@ -106,16 +97,13 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
 
     travel_to(Time.zone.now.utc + wait_time.seconds)
 
     click_on "Invite a team member"
 
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-    complete_secondary_authentication_sms_with(user.direct_otp)
+    complete_secondary_authentication_for(user)
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
@@ -155,10 +143,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     click_on "Resend invitation"
 
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-    complete_secondary_authentication_sms_with(user.direct_otp)
+    complete_secondary_authentication_for(user)
 
     # Extends the validity of the invitation
     expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
@@ -180,7 +165,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "re-sending an invitation to a new user that accepted the original invitation but didn't complete their user account" do
-    original_inviting_user = create(:submit_user, :with_sms_secondary_authentication)
+    original_inviting_user = create(:submit_user)
     team = create(:responsible_person, :with_a_contact_person)
     create(:responsible_person_user, user: invited_user, responsible_person: team)
 
@@ -231,10 +216,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     travel_to time_now
 
     click_on "Resend invitation"
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-    complete_secondary_authentication_sms_with(user.direct_otp)
+    complete_secondary_authentication_for(user)
 
     # Extends the validity of the invitation
     expect(invitation.reload.invitation_token_expires_at).to eq(time_now + PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR)
@@ -268,15 +250,12 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full name", with: "Joe Doe"
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
     fill_in "Mobile number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
     invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-    complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    complete_secondary_authentication_for(invited_user)
 
     expect(page).to have_current_path("/declaration", ignore_query: true)
     expect(page).to have_css("h1", text: "Responsible Person Declaration")
@@ -298,11 +277,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
                      responsible_person: responsible_person)
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     sign_in(invited_user)
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-    complete_secondary_authentication_sms_with(invited_user.direct_otp)
-
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(page).to have_css("h1", text: "Your cosmetic products")
   end
@@ -333,11 +307,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
                      responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-    complete_secondary_authentication_sms_with(invited_user.direct_otp)
-
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
@@ -362,10 +331,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     fill_in "Password", with: invited_user.password
     click_button "Continue"
 
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-    complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    complete_secondary_authentication_for(invited_user)
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
@@ -377,15 +343,12 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds)
 
     click_on "Invite a team member"
 
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-    complete_secondary_authentication_sms_with(user.direct_otp)
+    complete_secondary_authentication_for(user)
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
@@ -405,7 +368,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_out
     sign_in_as_member_of_responsible_person(responsible_person, different_user)
 
-    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    wait_time = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::INVITE_USER] + 1
     travel_to(Time.zone.now + wait_time.seconds)
     visit email.personalization[:invitation_url]
     expect(page).to have_css("h1", text: "You are already signed in")
@@ -415,15 +378,12 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full name", with: "John Doe"
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
     fill_in "Mobile number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
     invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-    complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    complete_secondary_authentication_for(invited_user)
 
     expect(page).to have_current_path("/declaration", ignore_query: true)
     expect(page).to have_css("h1", text: "Responsible Person Declaration")
@@ -456,15 +416,12 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Create an account")
 
     fill_in "Full name", with: "Joe Doe"
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
     fill_in "Mobile number", with: "07000000000"
+    fill_in "Password", with: "userpassword", match: :prefer_exact
     click_button "Continue"
 
     invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-    complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    complete_secondary_authentication_for(invited_user)
 
     expect(page).to have_current_path("/declaration", ignore_query: true)
     expect(page).to have_css("h1", text: "Responsible Person Declaration")
@@ -489,10 +446,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     fill_in "Password", with: invited_user.password
     click_button "Continue"
 
-    select_secondary_authentication_sms
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-    complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    complete_secondary_authentication_for(invited_user)
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(invited_user.responsible_persons).to include(responsible_person)
@@ -506,4 +460,10 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
     expect(page).to have_link("Sign in")
   end
+end
+
+def complete_secondary_authentication_for(user)
+  expect_to_be_on_secondary_authentication_page
+  expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
+  complete_secondary_authentication_with(user.direct_otp)
 end

@@ -1,9 +1,9 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, type: :feature do
   let!(:invited_user) { InviteSearchUser.call(email: "john.doe@example.com", name: "John Doe", role: :poison_centre).user }
-  let(:existing_user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
+  let(:existing_user) { create(:poison_centre_user) }
 
   before do
     configure_requests_for_search_domain
@@ -16,34 +16,23 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     expect_to_be_on_complete_registration_page
 
-    # First attempt not selecting a secondary authentication method
-    fill_in_account_details_with(full_name: "Bob Jones", password: "testpassword123@")
+    # Attempts to complete registration with validation errors
+    # International numbers are not accepted for Search users.
+    fill_in_account_details_with full_name: "Bob Jones", mobile_number: "+34629010101", password: "testpassword123@"
     click_button "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
+    expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
+    expect(page).to have_css("span#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
 
-    # Second attempt selecting both methods but introducing wrong app authentication code
-    fill_in_account_details_with(full_name: "Bob Jones",
-                                 password: "testpassword123@",
-                                 mobile_number: "07731123345",
-                                 app_code: "000000")
+    # Second attempt with no validation issues
+    fill_in_account_details_with full_name: "Bob Jones", mobile_number: "07731123345", password: "testpassword123@"
     click_button "Continue"
 
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
-    expect(page).to have_css("span#app_authentication_code-error", text: "Enter a correct code")
+    expect_to_be_on_secondary_authentication_page
 
-    # Third attempt introducing the correct app authentication code
-    fill_in_account_details_with(full_name: "Bob Jones",
-                                 password: "testpassword123@",
-                                 mobile_number: "07731123345",
-                                 app_code: correct_app_code)
-    click_button "Continue"
-
-    expect_to_be_on_secondary_authentication_sms_page
-    complete_secondary_authentication_sms_with(otp_code)
-
+    fill_in "Enter security code", with: otp_code
+    click_on "Continue"
     click_button "I accept"
     expect_to_be_signed_in_as_search_user
 
@@ -79,7 +68,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_sms_page
+    expect_to_be_on_secondary_authentication_page
 
     fill_in "Enter security code", with: otp_code
     click_on "Continue"
@@ -122,7 +111,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
   #     click_button "Continue"
 
-  #     expect_to_be_on_secondary_authentication_sms_page
+  #     expect_to_be_on_secondary_authentication_page
 
   #     fill_in "Enter security code", with: otp_code
   #     click_on "Continue"
@@ -142,17 +131,10 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_text("If you’re using this service for the first time")
   end
 
-  def fill_in_account_details_with(full_name:, password:, mobile_number: nil, app_code: nil)
+  def fill_in_account_details_with(full_name:, mobile_number:, password:)
     fill_in "Full name", with: full_name
+    fill_in "Mobile number", with: mobile_number
     fill_in "Password", with: password
-    if mobile_number
-      check "Text message"
-      fill_in "Mobile number", with: mobile_number
-    end
-    if app_code
-      check "Authenticator app for smartphone or tablet"
-      fill_in "Enter the access code", with: app_code
-    end
   end
 
   def otp_code
