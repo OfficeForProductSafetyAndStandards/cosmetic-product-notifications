@@ -272,6 +272,15 @@ RSpec.describe CpnpNotificationImporter do
         expect(notification.components.first.maximum_ph).to eq(2.0)
       end
     end
+
+    it "importing a draft notification does not create the notification but raises an exception" do
+      allow(cpnp_parser_basic).to receive(:notification_status).and_return("DR")
+      exporter = described_class.new(cpnp_parser_basic, responsible_person)
+
+      expect { exporter.create! }.to not_change(Notification, :count)
+                                 .and raise_error(described_class::DraftNotificationError,
+                                                  "DraftNotificationError - Draft notification uploaded")
+    end
   end
 
   def create_cpnp_parser(filename = "testExportFile.zip")
