@@ -6,14 +6,12 @@ module ComponentBuildHelper
 
   def previous_wizard_path
     previous_step = get_previous_step
-    previous_step = previous_step(previous_step) if skip_step?(previous_step)
     notification = @component.notification
 
     if step == :add_component_name
       responsible_person_notification_build_path(notification.responsible_person, notification, :add_new_component)
     elsif step == :number_of_shades && !notification.is_multicomponent?
-      last_step = notification.was_notified_before_eu_exit ? :single_or_multi_component : :add_product_image
-      responsible_person_notification_build_path(notification.responsible_person, notification, last_step)
+      responsible_person_notification_build_path(notification.responsible_person, notification, :add_product_image)
     elsif step == :select_category && @category.present?
       wizard_path(:select_category, category: Component.get_parent_category(@category))
     elsif step == :select_category && @component&.nano_material.present?
@@ -22,12 +20,8 @@ module ComponentBuildHelper
       responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, @component, last_nanoelement, nanoelement_step)
     elsif step == :select_formulation_type
       wizard_path(:select_category, category: @component.sub_category)
-    elsif step == :upload_formulation && @component.notification.was_notified_before_eu_exit?
-      edit_responsible_person_notification_path(notification.responsible_person, notification)
     elsif step == :upload_formulation && @component.predefined?
       wizard_path(:contains_poisonous_ingredients)
-    elsif step == :select_frame_formulation && @component.notification.was_notified_before_eu_exit?
-      wizard_path(:select_category, category: @component.sub_category)
     elsif previous_step.present?
       responsible_person_notification_component_build_path(notification.responsible_person, notification, @component, previous_step)
     else

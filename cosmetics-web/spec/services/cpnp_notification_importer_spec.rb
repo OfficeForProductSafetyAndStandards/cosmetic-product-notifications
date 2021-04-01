@@ -10,8 +10,7 @@ RSpec.describe CpnpNotificationImporter do
   let(:cpnp_parser_multi_component_exact_formula) { create_cpnp_parser("testMultiComponentExactFormula.zip") }
   let(:cpnp_parser_manual_ranges_trigger_rules) { create_cpnp_parser("testManualRangesTriggerRules.zip") }
   let(:cpnp_parser_nano_materials_cmr) { create_cpnp_parser("testWithNanomaterialsAndCmrs.zip") }
-  let(:cpnp_parser_formulation_not_required) { create_cpnp_parser("testFormulationRequiredExportFile.zip") }
-  let(:cpnp_parser_formulation_required) { create_cpnp_parser("testFormulationRequiredExportFilePostExit.zip") }
+  let(:cpnp_parser_formulation_required) { create_cpnp_parser("testFormulationRequiredExportFile.zip") }
   let(:cpnp_parser_before_exit) { create_cpnp_parser("testFormulationRequiredExportFile.zip") }
   let(:cpnp_parser_after_exit) { create_cpnp_parser("testFormulationRequiredExportFilePostExit.zip") }
   let(:cpnp_parser_different_language) { create_cpnp_parser("testDifferentLanguage.zip") }
@@ -160,15 +159,6 @@ RSpec.describe CpnpNotificationImporter do
 
     it "creates a notification in the draft_complete state if no formulation information is needed" do
       exporter_instance = described_class.new(cpnp_parser_basic, responsible_person)
-      exporter_instance.create!
-
-      notification = Notification.order(created_at: :asc).last
-
-      expect(notification.state).to eq("draft_complete")
-    end
-
-    it "creates a notification in the notification_file_imported state if formulation information is not required" do
-      exporter_instance = described_class.new(cpnp_parser_formulation_not_required, responsible_person)
       exporter_instance.create!
 
       notification = Notification.order(created_at: :asc).last

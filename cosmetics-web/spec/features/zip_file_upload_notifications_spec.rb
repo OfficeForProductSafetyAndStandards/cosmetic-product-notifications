@@ -26,7 +26,12 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit responsible_person_notifications_path(responsible_person)
 
     expect_to_see_incomplete_notification_with_eu_reference_number "1000094"
-    click_link "Confirm and notify"
+    click_link "Add missing information"
+
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_h1("Upload an image of the product label")
+    upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "CTPA moisture conditioner")
     expect_check_your_answers_page_to_contain(
@@ -65,7 +70,12 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit responsible_person_notifications_path(responsible_person)
 
     expect_to_see_incomplete_notification_with_eu_reference_number "1005901"
-    click_link "Confirm and notify"
+    click_link "Add missing information"
+
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_h1("Upload an image of the product label")
+    upload_product_label
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft skin whitener")
     expect_check_your_answers_page_to_contain(
@@ -107,14 +117,14 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
     click_link "Add missing information"
 
-    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
-    expect_back_link_to_incomplete_notifications_page
-    upload_formulation_file
-
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
     expect(page).to have_h1("Upload an image of the product label")
     upload_product_label
+
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
+    expect_back_link_to_incomplete_notifications_page
+    upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
     expect_back_link_to_incomplete_notifications_page
@@ -156,7 +166,16 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     visit responsible_person_notifications_path(responsible_person)
 
     expect_to_see_incomplete_notification_with_eu_reference_number "10000098"
-    click_link "Confirm and notify"
+    click_link "Add missing information"
+
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_h1("Upload an image of the product label")
+    upload_product_label
+
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
+    expect_back_link_to_incomplete_notifications_page
+    upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "Beautify Facial Night Cream")
     expect_check_your_answers_page_to_contain(
@@ -199,6 +218,11 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_see_incomplete_notification_with_eu_reference_number "1006034"
     click_link "Add missing information"
 
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_h1("Upload an image of the product label")
+    upload_product_label
+
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
@@ -210,6 +234,10 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
+
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients")
+    expect_back_link_to_incomplete_notifications_page
+    upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "SkinSoft shocking green hair dye")
     expect_back_link_to_incomplete_notifications_page
@@ -244,6 +272,11 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_see_incomplete_notification_with_eu_reference_number "100608777"
     click_link "Add missing information"
 
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_h1("Upload images of the item labels")
+    upload_product_label
+
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
@@ -268,6 +301,10 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
 
+    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients in RangeDoc")
+    expect_back_link_to_incomplete_notifications_page
+    upload_formulation_file
+
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
@@ -279,6 +316,10 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__upload_formulation_document_page("Exact concentrations of the ingredients in ExactValues")
+    expect_back_link_to_incomplete_notifications_page
+    upload_formulation_file
 
     expect_to_be_on__check_your_answers_page(product_name: "Multi-Item-RangeDoc_pHRange_ExactDoc_Nano")
     expect_back_link_to_incomplete_notifications_page
@@ -337,6 +378,11 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_see_incomplete_notification_with_eu_reference_number "1006080"
     click_link "Add missing information"
 
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_h1("Upload images of the item labels")
+    upload_product_label
+
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     expect_back_link_to_incomplete_notifications_page
     answer_what_is_purpose_of_nanomaterial_with "Colourant", nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
@@ -360,6 +406,10 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_be_on__does_nanomaterial_conform_to_restrictions_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
     answer_does_nanomaterial_conform_to_restrictions_with "Yes", nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
+
+    expect_to_be_on__upload_formulation_document_page("Concentration ranges of the ingredients in RangeDoc")
+    expect_back_link_to_incomplete_notifications_page
+    upload_formulation_file
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "METHYLENE BIS-BENZOTRIAZOLYL TETRAMETHYLBUTYLPHENOL (NANO)"
     expect_back_link_to_incomplete_notifications_page
@@ -420,6 +470,11 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_see_incomplete_notification_with_eu_reference_number "1006079"
     click_link "Add missing information"
+
+    expect(page.current_path).to end_with("/product_image_upload/new")
+    expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_h1("Upload images of the item labels")
+    upload_product_label
 
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page nanomaterial_name: "TRIS-BIPHENYL TRIAZINE / TRIS-BIPHENYL TRIAZINE (NANO)"
     expect_back_link_to_incomplete_notifications_page
