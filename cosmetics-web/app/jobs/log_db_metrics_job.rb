@@ -11,6 +11,10 @@ class LogDbMetricsJob < ApplicationJob
       submit_users_count_last_hour: SubmitUser.where("created_at >= ?", 1.hour.ago).count,
       complete_notifications_count_manual: Notification.where(state: "notification_complete").where("cpnp_reference IS NULL").count,
       complete_notifications_count_zip: Notification.where(state: "notification_complete").where("cpnp_reference IS NOT NULL").count,
+      products_notified_after_eu_exit: Notification.completed.where(was_notified_before_eu_exit: false).count,
+      products_notified_before_eu_exit: Notification.completed.where(was_notified_before_eu_exit: true).count,
+      business_rp_count: ResponsiblePerson.where(account_type: "business").count,
+      individual_rp_count: ResponsiblePerson.where(account_type: "individual").count,
     }
 
     Sidekiq.logger.info "CosmeticsStatistics #{stats.to_a.map { |x| x.join('=') }.join(' ')}"
