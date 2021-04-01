@@ -37,11 +37,6 @@ class ResponsiblePersons::Wizard::ComponentBuildController < SubmitApplicationCo
       create_required_cmrs
     when :list_nanomaterials
       setup_nano_elements
-    when :select_formulation_type
-      if @component.notification.was_notified_before_eu_exit?
-        @component.update(notification_type: "predefined")
-        jump_to(:select_frame_formulation)
-      end
     end
     render_wizard
   end
@@ -282,7 +277,7 @@ private
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    if @component.contains_poisonous_ingredients? && @component.notification.was_notified_after_eu_exit?
+    if @component.contains_poisonous_ingredients?
       redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
     else
       redirect_to finish_wizard_path
@@ -292,10 +287,7 @@ private
   def render_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
 
-    if @component.notification.was_notified_before_eu_exit?
-      @component.formulation_file.attach(formulation_file) if formulation_file.present?
-      redirect_to edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
-    elsif formulation_file.present?
+    if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
         redirect_to finish_wizard_path
@@ -345,10 +337,6 @@ private
 
   def destroy_all_cmrs
     @component.cmrs.destroy_all
-  end
-
-  def after_eu_exit_steps
-    %i[contains_cmrs add_cmrs contains_special_applicator select_special_applicator_type]
   end
 
   def model

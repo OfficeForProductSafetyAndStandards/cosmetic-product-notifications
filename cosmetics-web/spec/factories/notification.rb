@@ -33,14 +33,6 @@ FactoryBot.define do
       ph_max_value { 8 }
     end
 
-    trait :pre_brexit do
-      was_notified_before_eu_exit { true }
-    end
-
-    trait :post_brexit do
-      was_notified_before_eu_exit { false }
-    end
-
     trait :manual do
       cpnp_reference { nil }
     end
