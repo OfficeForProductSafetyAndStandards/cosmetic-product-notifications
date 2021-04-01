@@ -273,13 +273,31 @@ RSpec.describe CpnpNotificationImporter do
       end
     end
 
-    it "importing a draft notification does not create the notification but raises an exception" do
+    it "attempting to import a draft notification raises a draft error" do
       allow(cpnp_parser_basic).to receive(:notification_status).and_return("DR")
       exporter = described_class.new(cpnp_parser_basic, responsible_person)
 
       expect { exporter.create! }.to not_change(Notification, :count)
                                  .and raise_error(described_class::DraftNotificationError,
                                                   "DraftNotificationError - Draft notification uploaded")
+    end
+
+    it "attempting to import a notification that already exists for the same RP raises a duplication error" do
+      original_notification = create(:notification, responsible_person: responsible_person, cpnp_reference: "123456789")
+      allow(cpnp_parser_basic).to receive(:cpnp_reference).and_return(original_notification.cpnp_reference)
+      exporter = described_class.new(cpnp_parser_basic, responsible_person)
+
+      expect { exporter.create! }.to not_change(Notification, :count)
+        .and raise_error(described_class::DuplicateNotificationError)
+    end
+
+    it "attempting to import a notification that does not pass validation checks raises an error" do
+      stubbed_errors = instance_double(ActiveModel::Errors, messages: { foo: "bar error message", cpnp_reference: [] })
+      allow(Notification).to receive(:new).and_return(instance_double(Notification, errors: stubbed_errors).as_null_object)
+      exporter = described_class.new(cpnp_parser_basic, responsible_person)
+
+      expect { exporter.create! }.to not_change(Notification, :count)
+        .and raise_error(described_class::NotificationValidationError)
     end
   end
 
