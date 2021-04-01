@@ -42,7 +42,7 @@ private
       components_are_mixed: @cpnp_parser.components_are_mixed,
       ph_min_value: @cpnp_parser.ph_min_value,
       ph_max_value: @cpnp_parser.ph_max_value,
-      was_notified_before_eu_exit: (@cpnp_parser.cpnp_notification_date < EU_EXIT_DATE),
+      was_notified_before_eu_exit: @cpnp_parser.cpnp_notification_date&.<(EU_EXIT_DATE),
     }
   end
 

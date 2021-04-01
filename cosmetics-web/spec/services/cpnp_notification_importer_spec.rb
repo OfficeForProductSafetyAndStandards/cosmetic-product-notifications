@@ -193,6 +193,13 @@ RSpec.describe CpnpNotificationImporter do
       expect(notification.was_notified_before_eu_exit).to be_falsey
     end
 
+    it "notifications where the notification date hasn't been parsed are defaulted not to be notified before EU exit" do
+      allow(cpnp_parser_basic).to receive(:cpnp_notification_date).and_return(nil)
+      notification = described_class.new(cpnp_parser_basic, responsible_person).create!
+
+      expect(notification.was_notified_before_eu_exit?).to eq false
+    end
+
     it "creates a notification with the first language's name if there is no english name" do
       exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
       exporter_instance.create!
