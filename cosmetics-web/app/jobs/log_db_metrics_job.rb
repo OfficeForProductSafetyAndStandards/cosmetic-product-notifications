@@ -15,7 +15,7 @@ class LogDbMetricsJob < ApplicationJob
       products_notified_after_eu_exit: Notification.completed.where(was_notified_before_eu_exit: false).count,
       products_notified_before_eu_exit: Notification.completed.where(was_notified_before_eu_exit: true).count,
       business_rp_count: ResponsiblePerson.where(account_type: "business").count,
-      individual_rp_count: ResponsiblePerson.where(account_type: "individual").count
+      individual_rp_count: ResponsiblePerson.where(account_type: "individual").count,
     }
 
     Sidekiq.logger.info "CosmeticsStatistics #{stats.to_a.map { |x| x.join('=') }.join(' ')}"
