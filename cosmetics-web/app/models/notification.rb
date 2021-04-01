@@ -181,7 +181,7 @@ class Notification < ApplicationRecord
   end
 
   def can_be_deleted?
-    !notification_complete? || created_at > Notification::DELETION_PERIOD_DAYS.days.ago
+    !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
 
 private
