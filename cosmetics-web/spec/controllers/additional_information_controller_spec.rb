@@ -14,23 +14,24 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
   end
 
   describe "GET #index" do
-    it "redirects to the check your answers page if all components have complete formulations and don't require images" do
-      notification = Notification.create(responsible_person_id: responsible_person.id, was_notified_before_eu_exit: true, components: [predefined_component])
+    it "redirects to the check your answers page if all components have complete formulations and the notification has product images" do
+      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component])
       notification.image_uploads.create
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
       expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, notification))
     end
 
-    it "updates the notification state to draft_complete if all components have complete formulations and don't require images" do
+    it "updates the notification state to draft_complete if all components have complete formulations and the notification has product images" do
       notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component], state: "notification_file_imported")
+      notification.image_uploads.create
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
       expect(notification.reload.state).to eq("draft_complete")
     end
 
-    it "redirects to the formulation upload page if not all components have complete formulations or product images" do
+    it "redirects to the product image upload page if notification is missing product images" do
       notification = Notification.create(responsible_person_id: responsible_person.id, components: [ranges_component])
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
-      expect(response).to redirect_to(new_responsible_person_notification_component_formulation_path(responsible_person, notification, ranges_component))
+      expect(response).to redirect_to(new_responsible_person_notification_product_image_upload_path(responsible_person, notification))
     end
 
     it "redirects to the formulation upload page if not all components have complete formulations" do
@@ -38,12 +39,6 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
       notification.image_uploads.create
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
       expect(response).to redirect_to(new_responsible_person_notification_component_formulation_path(responsible_person, notification, ranges_component))
-    end
-
-    it "redirects to the image upload page if not all components have product images" do
-      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component])
-      get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
-      expect(response).to redirect_to(new_responsible_person_notification_product_image_upload_path(responsible_person, notification))
     end
 
     context "when the notification is already submitted" do
@@ -81,28 +76,36 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
         create(:notification, components: [first_component, second_component], responsible_person: responsible_person)
       end
 
-      context "when all components have required nano materials" do
-        it "redirects to the 2nd component's next required nano element" do
-          nano_element = second_component.nano_material.nano_elements.find(&:required?)
-          get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
-
-          expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, second_component, nano_element))
-        end
+      it "redirects to the product image upload page if notification is missing product images" do
+        get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
+        expect(response).to redirect_to(new_responsible_person_notification_product_image_upload_path(responsible_person, notification))
       end
 
-      context "when one component is complete" do
-        let(:second_nano_elements) do
-          [
-            create(:nano_element, iupac_name: "Element 1A", purposes: %w[other], confirm_toxicology_notified: "yes"),
-            create(:nano_element, iupac_name: "Element 2A", purposes: %w[other], confirm_toxicology_notified: "yes"),
-          ]
+      context "when the notification has product images" do
+        before { notification.image_uploads.create }
+
+        context "when all components have required nano materials" do
+          it "redirects to the first component required nano element" do
+            nano_element = first_component.nano_material.nano_elements.find(&:required?)
+            get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
+            expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, first_component, nano_element))
+          end
         end
 
-        it "redirects to the correct component required nano element" do
-          nano_element = first_component.nano_material.nano_elements.find(&:required?)
-          get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
+        context "when one component is complete" do
+          let(:first_nano_elements) do
+            [
+              create(:nano_element, iupac_name: "Element 1A", purposes: %w[other], confirm_toxicology_notified: "yes"),
+              create(:nano_element, iupac_name: "Element 2A", purposes: %w[other], confirm_toxicology_notified: "yes"),
+            ]
+          end
 
-          expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, first_component, nano_element))
+          it "redirects to the correct component required nano element" do
+            nano_element = second_component.nano_material.nano_elements.find(&:required?)
+            get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
+
+            expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, second_component, nano_element))
+          end
         end
       end
     end

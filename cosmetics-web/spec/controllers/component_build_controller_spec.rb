@@ -4,7 +4,6 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:component) { create(:component, notification: notification, notification_type: component_type) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
-  let(:pre_eu_exit_notification) { create(:notification, :pre_brexit, components: [component], responsible_person: responsible_person) }
   let(:component_type) { nil }
 
   let(:params) do
@@ -265,17 +264,6 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
           expect(response.status).to be(200)
           expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select yes if the product contains any of these ingredients")
         end
-      end
-    end
-
-    context "when notified pre EU-exit" do
-      before do
-        params.merge!(notification_reference_number: pre_eu_exit_notification.reference_number)
-      end
-
-      it "redirects to contains_nanomaterials if pre-eu-exit" do
-        post(:update, params: params.merge(id: :add_physical_form, component: { physical_form: "loose powder" }))
-        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, pre_eu_exit_notification, component, :contains_nanomaterials))
       end
     end
   end

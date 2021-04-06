@@ -1,6 +1,6 @@
 <div class="govuk-grid-column-two-thirds">
   <h1 class="govuk-heading-l">
-    Exact concentrations of the ingredients
+    Exact concentrations of the ingredients <%= "in #{local_assigns[:name]}" if local_assigns[:name].present? %>
   </h1>
   <p class="govuk-!-margin-bottom-3">To tell us about the exact concentrations, you need to upload a PDF which lists the ingredients in the product.</p>
   <h2 class="govuk-heading-m">

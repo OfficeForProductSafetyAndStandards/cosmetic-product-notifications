@@ -1,5 +1,6 @@
 class SubmitUser < User
   ALLOW_INTERNATIONAL_PHONE_NUMBER = true
+  TOTP_ISSUER = "Submit Cosmetics".freeze
 
   # Include default devise modules. Others available are:
   devise :database_authenticatable, :registerable,
@@ -8,13 +9,13 @@ class SubmitUser < User
 
   belongs_to :organisation
 
-  has_many :notification_files, dependent: :destroy
+  has_many :notification_files, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_persons, through: :responsible_person_users
-  has_many :pending_responsible_person_users, dependent: :destroy, foreign_key: :creator_id, inverse_of: :inviting_user
+  has_many :pending_responsible_person_users, dependent: :destroy, foreign_key: :inviting_user_id, inverse_of: :inviting_user
 
-  has_one :user_attributes, dependent: :destroy
-  validates :mobile_number, presence: true
+  has_one :user_attributes, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
+  validates :mobile_number, presence: true, if: -> { secondary_authentication_methods&.include? "sms" }
   validates :mobile_number,
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }

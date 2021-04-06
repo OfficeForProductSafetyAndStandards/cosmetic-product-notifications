@@ -9,6 +9,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       configure_requests_for_submit_domain
       visit "/sign-in"
       fill_in_credentials
+      select_secondary_authentication_sms
 
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
@@ -17,13 +18,15 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       click_on "Your account"
       expect_to_be_on_my_account_page
 
-      wait_for = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::CHANGE_EMAIL_ADDRESS]
+      wait_for = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::CHANGE_EMAIL_ADDRESS]
       travel_to((wait_for + 1).seconds.from_now)
 
       click_on "Change email address"
+      select_secondary_authentication_sms
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
       click_on "Continue"
+      expect(page).to have_css("h1", text: "Change your email address")
     end
 
     context "when the password change is fine" do
@@ -33,6 +36,7 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         click_on "Continue"
 
         expect_to_be_on_my_account_page
+        expect(page).to have_css("h1", text: "Check your email")
         expect(page).to have_text(/A message with a confirmation link has been sent to your email address/)
         email = delivered_emails.first
         expect(email.recipient).to eq "new@example.org"
@@ -105,7 +109,8 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
             travel_to((User::NEW_EMAIL_TOKEN_VALID_FOR + 1).seconds.from_now)
 
             visit confirm_url
-
+            select_secondary_authentication_sms
+            expect(page).to have_css("h1", text: "Check your phone")
             fill_in "Enter security code", with: "#{otp_code} "
             click_on "Continue"
 

@@ -1,6 +1,6 @@
 module PageMatchers
   def have_h1(text)
-    have_selector("h1", text: text)
+    have_selector("h1", text: text, exact_text: true)
   end
 
   # Matcher for items within the [Summary list](https://design-system.service.gov.uk/components/summary-list/) component.

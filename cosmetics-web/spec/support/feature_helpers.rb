@@ -22,21 +22,43 @@ def expect_user_to_have_received_sms_code(code, current_user = nil)
   end
   expect(notify_stub).to have_received(:send_sms).with(
     hash_including(phone_number: current_user.mobile_number, personalisation: { code: code }),
-  ).at_least(:once)
+  ).once
 end
 
-def complete_secondary_authentication_with(security_code)
+def complete_secondary_authentication_sms_with(security_code)
   fill_in "Enter security code", with: security_code
   click_on "Continue"
 end
 
-def expect_to_be_on_secondary_authentication_page
-  expect(page).to have_current_path(/\/two-factor/)
+def complete_secondary_authentication_app(access_code = nil)
+  fill_in "Access code", with: access_code.presence || correct_app_code
+  click_on "Continue"
+end
+
+def select_secondary_authentication_sms
+  expect(page).to have_css("h1", text: "How do you want to get an access code?")
+  choose "Text message"
+  click_on "Continue"
+end
+
+def select_secondary_authentication_app
+  expect(page).to have_css("h1", text: "How do you want to get an access code?")
+  choose "Authenticator app for smartphone or tablet"
+  click_on "Continue"
+end
+
+def expect_to_be_on_secondary_authentication_sms_page
+  expect(page).to have_current_path("/two-factor/sms")
   expect(page).to have_h1("Check your phone")
 end
 
+def expect_to_be_on_secondary_authentication_app_page
+  expect(page).to have_current_path("/two-factor/app")
+  expect(page).to have_h1("Enter the access code")
+end
+
 def expect_to_be_on_resend_secondary_authentication_page
-  expect(page).to have_current_path("/text-not-received")
+  expect(page).to have_current_path("/two-factor/sms/not-received")
   expect(page).to have_h1("Resend security code")
 end
 
@@ -135,15 +157,6 @@ end
 
 def expect_back_link_to_upload_eu_notification_files_page
   expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
-end
-
-def expect_to_be_on__was_product_notified_before_brexit_page
-  expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
-  expect(page).to have_h1("Was this product notified in the EU before 1 January 2021?")
-end
-
-def expect_back_link_to_was_product_notified_before_brexit_page
-  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/was_product_on_sale_before_eu_exit")
 end
 
 def expect_to_be_on__what_is_product_called_page
@@ -246,6 +259,10 @@ def expect_back_link_to_does_item_contain_cmrs_page
   expect_back_link_to(/\/build\/contains_cmrs$/)
 end
 
+def expect_back_link_to_add_cmrs_page
+  expect_back_link_to(/\/build\/add_cmrs$/)
+end
+
 def expect_to_be_on__does_item_contain_nanomaterial_page
   expect(page.current_path).to end_with("/build/contains_nanomaterials")
   expect(page).to have_h1("Nanomaterials")
@@ -284,7 +301,7 @@ end
 
 def expect_to_be_on__what_is_the_purpose_of_nanomaterial_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/select_purposes")
-  expect(page).to have_h1("What is the purpose of #{nanomaterial_name}")
+  expect(page).to have_h1("What is the purpose of #{nanomaterial_name}?")
 end
 
 def expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
@@ -397,7 +414,7 @@ def expect_back_link_to_how_are_items_used_together_page
   expect_back_link_to(/is_mixed$/)
 end
 
-def exepct_to_be_on_upload_product_label_page
+def expect_to_be_on_upload_product_label_page
   expect(page.current_path).to end_with("/add_product_image")
   expect(page).to have_h1("Upload an image of the product label")
 end
@@ -406,24 +423,36 @@ def expect_back_link_to_upload_product_label_page
   expect_back_link_to(/\/build\/add_product_image$/)
 end
 
+def expect_to_be_on_upload_item_label_page
+  expect(page.current_path).to end_with("/add_product_image")
+  expect(page).to have_h1("Upload images of the item labels")
+end
+
+def expect_back_link_to_upload_item_label_page
+  expect_back_link_to_upload_product_label_page
+end
+
 def expect_to_be_on__upload_formulation_document_page(header_text)
   expect(page.current_path).to end_with("/formulation/new")
   expect(page).to have_h1(header_text)
 end
 
 # rubocop:disable Naming/MethodParameterName
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs: nil, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)
 
     expect(page).to have_summary_item(key: "Number of components", value: number_of_components)
-    expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
     expect(page).to have_summary_item(key: "Nanomaterials", value: nanomaterials)
     expect(page).to have_summary_item(key: "Category of product", value: category)
     expect(page).to have_summary_item(key: "Category of #{category.downcase.singularize}", value: subcategory)
     expect(page).to have_summary_item(key: "Category of #{subcategory.downcase.singularize}", value: sub_subcategory)
     expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
+
+    if contains_cmrs
+      expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
+    end
 
     if eu_notification_date
       expect(page).to have_summary_item(key: "EU notification date", value: eu_notification_date)
@@ -466,7 +495,11 @@ def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, numbe
 
     within_table(kit_item[:name]) do
       expect(page).to have_summary_item(key: "Shades", value: kit_item[:shades])
-      expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
+
+      if kit_item[:contains_cmrs]
+        expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
+      end
+
       expect(page).to have_summary_item(key: "Nanomaterials", value: kit_item[:nanomaterials])
 
       if kit_item[:application_instruction]
@@ -558,13 +591,6 @@ end
 
 def answer_do_you_have_zip_files_with(answer)
   within_fieldset("Do you have the ZIP files from your EU notification?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_was_product_notified_before_brexit_with(answer)
-  within_fieldset("Was this product notified in the EU before 1 January 2021?") do
     page.choose(answer)
   end
   click_button "Continue"

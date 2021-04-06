@@ -1,12 +1,12 @@
-<tr class="govuk-table__row">
-  <th id="contains-cmrs" class="govuk-table__header" scope="row">
-    Contains CMR substances
-  </th>
-  <td class="govuk-table__cell" id="has-cmrs">
-    <%= component.cmrs.any? ? "Yes" : "No" %>
-  </td>
-</tr>
 <% if component.cmrs.any? %>
+  <tr class="govuk-table__row">
+    <th id="contains-cmrs" class="govuk-table__header" scope="row">
+      Contains CMR substances
+    </th>
+    <td class="govuk-table__cell" id="has-cmrs">
+      Yes
+    </td>
+  </tr>
   <tr cass="govuk-table__row" id="cmr-list">
     <th class="govuk-table__header" scope="row">CMR substances</th>
     <td class="govuk-table__cell" id="cmr-names">

@@ -15,7 +15,7 @@ class ResponsiblePersons::DeleteNotificationController < SubmitApplicationContro
 private
 
   def current_operation
-    SecondaryAuthentication::DELETE_NOTIFICATION
+    SecondaryAuthentication::Operations::DELETE_NOTIFICATION
   end
 
   def set_responsible_person

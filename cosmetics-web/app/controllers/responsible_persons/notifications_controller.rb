@@ -27,17 +27,19 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     @unfinished_notifications = get_unfinished_notifications(10)
 
     @registered_notifications = get_registered_notifications(10)
+    respond_to do |format|
+      format.html
+      format.csv do
+        @notifications = NotificationsDecorator.new(@responsible_person.notifications.completed.order(:created_at))
+        render csv: @notifications, filename: "all-notifications-#{Time.zone.now.to_s(:db)}"
+      end
+    end
   end
 
   def show; end
 
   def new
-    was_notified_before_eu_exit = params["notified_before_eu_exit"] == "true"
-
-    @notification = Notification.create(
-      responsible_person: @responsible_person,
-      was_notified_before_eu_exit: was_notified_before_eu_exit,
-    )
+    @notification = Notification.create(responsible_person: @responsible_person)
 
     redirect_to new_responsible_person_notification_build_path(@responsible_person, @notification)
   end
@@ -103,7 +105,7 @@ private
 
   def get_registered_notifications(page_size)
     @responsible_person.notifications
-      .where(state: :notification_complete)
+      .completed
       .paginate(page: params[:notified], per_page: page_size)
   end
 

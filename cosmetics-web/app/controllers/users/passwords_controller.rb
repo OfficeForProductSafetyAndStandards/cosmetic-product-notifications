@@ -121,7 +121,7 @@ module Users
     end
 
     def current_operation
-      SecondaryAuthentication::RESET_PASSWORD_OPERATION
+      SecondaryAuthentication::Operations::RESET_PASSWORD
     end
 
     def user_class

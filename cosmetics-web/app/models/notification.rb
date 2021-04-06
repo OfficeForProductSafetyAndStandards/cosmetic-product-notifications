@@ -24,13 +24,17 @@ class Notification < ApplicationRecord
       new_reference_number = SecureRandom.rand(100_000_000)
       break unless Notification.where(reference_number: new_reference_number).exists?
     end
-    self.reference_number = new_reference_number
+    self.reference_number = new_reference_number if reference_number.nil?
   end
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
 
   def self.duplicate_notification_message
     "Notification duplicated"
+  end
+
+  def self.completed
+    where(state: :notification_complete)
   end
 
   validate :all_required_attributes_must_be_set
@@ -125,7 +129,7 @@ class Notification < ApplicationRecord
   end
 
   def missing_information?
-    nano_material_required? || formulation_required? || required_images_missing_or_not_passed_antivirus_check?
+    nano_material_required? || formulation_required? || images_missing_or_not_passed_antivirus_check?
   end
 
   def nano_material_required?
@@ -144,20 +148,14 @@ class Notification < ApplicationRecord
     components.length > 1
   end
 
-  def was_notified_after_eu_exit?
-    !was_notified_before_eu_exit?
-  end
-
-  alias_method :requires_images?, :was_notified_after_eu_exit?
-
   # If any image is waiting for the antivirus check or it got a virus alert this method will be "true"
-  def required_images_missing_or_not_passed_antivirus_check?
-    requires_images? && (image_uploads.empty? || !all_images_passed_anti_virus_check?)
+  def images_missing_or_not_passed_antivirus_check?
+    image_uploads.empty? || !all_images_passed_anti_virus_check?
   end
 
   # Only will return "true" when there are no images or any image got an explicit antivirus alert
-  def required_images_missing_or_with_virus?
-    requires_images? && (image_uploads.empty? || images_failed_anti_virus_check?)
+  def images_missing_or_with_virus?
+    image_uploads.empty? || images_failed_anti_virus_check?
   end
 
   def get_valid_multicomponents

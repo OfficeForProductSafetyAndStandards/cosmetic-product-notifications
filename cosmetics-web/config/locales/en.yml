@@ -135,6 +135,9 @@ en:
               invalid: *invalid_email
             password:
               too_short: "Password must be at least 8 characters"
+            secondary_authentication_methods:
+              blank: "Select at least a secondary authentication method"
+              invalid: "Invalid method. Secondary authentication methods accepted: 'sms','app' (or both)"
         responsible_person:
           attributes:
             name:
@@ -162,15 +165,19 @@ en:
               blank: "Enter your full name"
         registration/account_security_form:
           attributes:
-            mobile_number:
-              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
-              blank: "Please enter mobile number"
-            password:
-              blank: "Please enter password"
-              too_short: "Password must be at least 8 characters"
+            app_authentication_code:
+              blank: "Enter an access code"
+              invalid: "Enter a correct code"
             full_name:
               blank: "Enter your full name"
-        resend_secondary_authentication_code_form:
+            mobile_number:
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+            password:
+              blank: "Enter a password"
+              too_short: "Password must be at least 8 characters"
+            secondary_authentication_methods:
+              blank: "Select how to get an access code"
+        secondary_authentication/sms/resend_form:
           attributes:
             mobile_number:
               blank: "Enter your mobile number"
@@ -180,7 +187,7 @@ en:
             name:
               member_of_rp_with_same_name: "You are already associated with %{attribute}"
               invited_to_rp_with_same_name: "You have already been invited to join %{attribute}. Check your email inbox for your invite"
-        secondary_authentication_form:
+        secondary_authentication/sms/auth_form:
           attributes:
             otp_code:
               blank: "Enter the security code"
@@ -189,6 +196,18 @@ en:
               incorrect: "Incorrect security code"
               expired: "The security code has expired. New code sent."
               numericality: "The code must be 5 numbers"
+        secondary_authentication/app_auth_form:
+          attributes:
+            otp_code:
+              blank: "Enter the access code"
+              too_short: "You haven’t entered enough numbers"
+              too_long: "You’ve entered too many numbers"
+              incorrect: "Incorrect access code"
+              numericality: "The code must be 6 numbers"
+        secondary_authentication/method_form:
+          attributes:
+            authentication_method:
+              blank: "Select an option"
         sign_in_form:
           attributes:
             password:

@@ -15,7 +15,7 @@ class MyAccountPasswordController < ApplicationController
     @user.password = dig_params(:password)
 
     if @user.save
-      sign_in(@user, bypass: true)
+      bypass_sign_in(@user)
       redirect_to my_account_path, confirmation: "Password changed successfully"
     else
       render "my_account/password"
@@ -25,6 +25,6 @@ class MyAccountPasswordController < ApplicationController
 private
 
   def current_operation
-    SecondaryAuthentication::CHANGE_PASSWORD
+    SecondaryAuthentication::Operations::CHANGE_PASSWORD
   end
 end
