@@ -119,7 +119,7 @@
       ]
     },
     {
-      "formulationName": "Hair colourant (temporary or semi-permanent) – liquid, cream, foam",
+      "formulationName": "Hair colourant (temporary or semi-permanent) - liquid, cream, foam",
       "childNumber": 3,
       "ingredients": [
         {
@@ -608,7 +608,7 @@
       ]
     },
     {
-      "formulationName": "Hair colourant (permanent, oxidative type - type 2: two or more components, oxidative part with high level of oils",
+      "formulationName": "Hair colourant (permanent, oxidative type) - type 2: two or more components, oxidative part with high level of oils",
       "childNumber": 9,
       "ingredients": [
         {
@@ -947,7 +947,7 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use:",
+        "header": "To be mixed immediately prior to use: ",
         "instructions": ["with oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)", "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1", "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part" ]
       },
       "extraInfo": [
