@@ -4,7 +4,7 @@ RSpec.describe "Trigger questions", type: :request do
   include RSpecHtmlMatchers
 
   let!(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let!(:notification) { create(:notification, responsible_person: responsible_person) }
+  let!(:notification) { create(:notification, responsible_person: responsible_person, state: :components_complete) }
   let(:component) { create(:predefined_component, notification: notification) }
 
   before do
@@ -106,22 +106,12 @@ RSpec.describe "Trigger questions", type: :request do
           expect(component.reload.ph).to eql("not_applicable")
         end
 
-        context "when the notification was first notified pre-Brexit" do
-          let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person, state: "components_complete") }
-
-          it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-          end
-
-          it "updates the notification state to draft_complete" do
-            expect(notification.reload.state).to eql("draft_complete")
-          end
+        it "updates the notification state to draft_complete" do
+          expect(notification.reload.state).to eql("draft_complete")
         end
 
-        context "when the notification was first notified post-Brexit" do
-          it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-          end
+        it "redirects to the add check your answers page" do
+          expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
         end
       end
 
@@ -134,18 +124,8 @@ RSpec.describe "Trigger questions", type: :request do
           expect(component.reload.ph).to eql("between_3_and_10")
         end
 
-        context "when the notification was first notified pre-Brexit" do
-          let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person) }
-
-          it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-          end
-        end
-
-        context "when the notification was first notified post-Brexit" do
-          it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-          end
+        it "redirects to the add check your answers page" do
+          expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
         end
       end
 
@@ -206,22 +186,12 @@ RSpec.describe "Trigger questions", type: :request do
           expect(component.reload.maximum_ph).to be(2.3)
         end
 
-        context "when the notification was first notified pre-Brexit" do
-          let(:notification) { create(:notification, :pre_brexit, responsible_person: responsible_person, state: "components_complete") }
-
-          it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-          end
-
-          it "updates the notification state to draft_complete" do
-            expect(notification.reload.state).to eql("draft_complete")
-          end
+        it "redirects to the add check your answers page" do
+          expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
         end
 
-        context "when the notification was first notified post-Brexit" do
-          it "redirects to the add check your answers page" do
-            expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-          end
+        it "updates the notification state to draft_complete" do
+          expect(notification.reload.state).to eql("draft_complete")
         end
       end
     end

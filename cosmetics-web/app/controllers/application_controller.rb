@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcern
   include CacheConcern
   include HttpAuthConcern
-  include RavenConfigurationConcern
+  include SentryConfigurationConcern
   include DomainConcern
   include SecondaryAuthenticationConcern
 
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :ensure_secondary_authentication
   before_action :require_secondary_authentication
-  before_action :set_raven_context
+  before_action :set_sentry_context
   before_action :set_cache_headers
   before_action :set_service_name
 
@@ -73,9 +73,7 @@ private
   def authorize_user!; end
 
   def has_accepted_declaration
-    return unless user_signed_in?
-    return unless current_user&.account_security_completed?
-    return unless current_user&.mobile_number_verified?
+    return unless current_user&.has_completed_registration?
 
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
 

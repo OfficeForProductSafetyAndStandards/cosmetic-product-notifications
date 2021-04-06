@@ -10,6 +10,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
   before do
     visit "/sign-in"
     fill_in_credentials
+    select_secondary_authentication_sms
 
     expect(page).to have_css("h1", text: "Check your phone")
     fill_in "Enter security code", with: "#{otp_code} "
@@ -18,13 +19,15 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     click_on "Your account"
     expect_to_be_on_my_account_page
 
-    wait_for = SecondaryAuthentication::TIMEOUTS[SecondaryAuthentication::CHANGE_MOBILE_NUMBER]
+    wait_for = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::CHANGE_MOBILE_NUMBER]
     travel_to((wait_for + 1).seconds.from_now)
 
     click_on "Change mobile number"
+    select_secondary_authentication_sms
     expect(page).to have_css("h1", text: "Check your phone")
     fill_in "Enter security code", with: "#{otp_code} "
     click_on "Continue"
+    expect(page).to have_css("h1", text: "Change your mobile number")
   end
 
   it "updates the mobile number" do

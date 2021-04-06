@@ -16,9 +16,9 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :w
 
         visit unlock_path
 
-        expect(page).to have_css("h1", text: "Check your phone")
-        fill_in "Enter security code", with: otp_code
-        click_on "Continue"
+        select_secondary_authentication_sms
+        expect_to_be_on_secondary_authentication_sms_page
+        complete_secondary_authentication_sms_with(otp_code)
 
         fill_in_credentials
 
@@ -32,12 +32,14 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :w
 
         visit "/sign-in"
         fill_in_credentials
-        fill_in "Enter security code", with: otp_code
-        click_on "Continue"
+        select_secondary_authentication_sms
+        expect_to_be_on_secondary_authentication_sms_page
+        complete_secondary_authentication_sms_with(otp_code)
 
         expect(page).to have_css("h1", text: expected_host_header)
 
         visit unlock_path
+        select_secondary_authentication_sms
         expect(page).to have_css("h1", text: "Check your phone")
       end
 
@@ -58,10 +60,9 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :w
         unlock_email = delivered_emails.last
         visit unlock_email.personalization_path(:edit_user_password_url_token)
 
-        expect(page).to have_css("h1", text: "Check your phone")
-
-        fill_in "Enter security code", with: otp_code
-        click_on "Continue"
+        select_secondary_authentication_sms
+        expect_to_be_on_secondary_authentication_sms_page
+        complete_secondary_authentication_sms_with(otp_code)
 
         expect(page).to have_css("h1", text: "Create a new password")
       end

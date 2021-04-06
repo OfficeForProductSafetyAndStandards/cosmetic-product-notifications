@@ -123,14 +123,14 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus, :without_d
 
     before do
       allow(Zip::File).to receive(:open).and_raise(exception)
-      allow(Raven).to receive(:capture_exception)
+      allow(Sentry).to receive(:capture_exception)
       described_class.new.perform(notification_file.id)
     end
 
     it "does not remove the notification file" do
       expect {
         notification_file.reload
-      }.not_to raise_error(ActiveRecord::RecordNotFound)
+      }.not_to raise_error
     end
 
     it "adds an error to the file" do
@@ -138,7 +138,7 @@ RSpec.describe NotificationFileProcessorJob, :with_stubbed_antivirus, :without_d
     end
 
     it "sends the error to Sentry" do
-      expect(Raven).to have_received(:capture_exception).once.with(exception)
+      expect(Sentry).to have_received(:capture_exception).once.with(exception)
     end
   end
 

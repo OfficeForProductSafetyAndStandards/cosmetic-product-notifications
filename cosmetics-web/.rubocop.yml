@@ -58,6 +58,7 @@ Rails/SaveBang:
 ExampleLength:
   Exclude:
     - 'spec/system/**/*'
+    - 'spec/smoke/**/*'
     - 'spec/features/**/*'
     - 'spec/services/notification_delete_service_spec.rb'
 
@@ -83,6 +84,7 @@ RSpec/MultipleExpectations:
   Max: 2
   Exclude:
     - 'spec/features/**/*'
+    - 'spec/smoke/**/*'
 
 RSpec/NestedGroups:
   Max: 6
