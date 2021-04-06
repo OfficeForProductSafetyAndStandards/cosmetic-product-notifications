@@ -623,7 +623,7 @@ RSpec.describe "Manual notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_to_be_on__what_is_ph_range_of_product_page
     expect_back_link_to_poisonous_ingredients_page
-    answer_what_is_ph_range_of_product_with "It does not have a pH"
+    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
 
     expect_to_be_on__kit_items_page
     expect_back_link_to_what_is_ph_range_of_product_page
