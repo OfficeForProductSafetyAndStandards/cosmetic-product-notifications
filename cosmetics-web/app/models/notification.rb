@@ -62,7 +62,7 @@ class Notification < ApplicationRecord
       },
     )
   end
-  aasm whiny_transitions: false, column: :state do
+  aasm whiny_transitions: false, timestamps: true, column: :state do
     state :empty, initial: true
     state :product_name_added
     state :components_complete
@@ -181,7 +181,7 @@ class Notification < ApplicationRecord
   end
 
   def can_be_deleted?
-    !notification_complete? || created_at > Notification::DELETION_PERIOD_DAYS.days.ago
+    !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
 
 private

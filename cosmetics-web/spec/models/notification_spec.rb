@@ -207,4 +207,25 @@ RSpec.describe Notification, type: :model do
       end
     end
   end
+
+  describe "#can_be_deleted?" do
+    it "can be deleted if the notification is not complete" do
+      notification = build_stubbed(:draft_notification)
+      expect(notification.can_be_deleted?).to eq true
+    end
+
+    context "when the notification is complete" do
+      let(:notification) { build_stubbed(:registered_notification) }
+
+      it "can be deleted if the notification was completed within the allowed deletion window" do
+        notification.notification_complete_at = Time.zone.now
+        expect(notification.can_be_deleted?).to eq true
+      end
+
+      it "can't be deleted if the notification was completed outside the allowed deletion window" do
+        notification.notification_complete_at = (described_class::DELETION_PERIOD_DAYS + 1).days.ago
+        expect(notification.can_be_deleted?).to eq false
+      end
+    end
+  end
 end
