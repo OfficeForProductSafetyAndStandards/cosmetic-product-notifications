@@ -1,0 +1,470 @@
+{
+  "number": 10,
+  "name": "Hair and scalp care products",
+  "data": [
+  {
+    "childNumber": 1,
+    "formulationName": "Shampoo – liquid, cream, paste",
+    "ingredients": [
+      {
+        "ingredient": "Anionic surfactant",
+        "ingredientExamples": "sodium or ammonium or TEA lauryl sulfates, sodium or ammonium or TEA laureth sulfates",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Amphoteric surfactants",
+        "ingredientExamples": "betaine derivatives",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Non-ionic surfactants",
+        "ingredientExamples": "fatty alkanolamides",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Hair conditioning agents",
+        "ingredientExamples": "silicones including volatile silicones (for example, cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes), cysteine derivatives, cellulose derivatives, fatty acid esters",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExamples": "UV filters, pearlescent agents, opacifying agents",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExamples": "propylene glycol, PEG",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Cationic surfactants",
+        "ingredientExamples": "stearamidopropyl dimethylamine, behentrimonium chloride",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1.5"
+      },
+      {
+        "ingredient": "Chelating agents",
+        "ingredientExamples": "disodium EDTA",
+        "volume": "0.5"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "to 100"
+      }
+    ]
+  },
+  {
+    "childNumber": 2,
+    "formulationName": "Soap shampoo",
+    "ingredients": [
+      {
+        "ingredient": "Soap base",
+        "ingredientExamples": "mixed sodium or potassium stearate and sodium or potassium laurate",
+        "volume": "70"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Plant extracts",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Essential oils",
+        "volume": "1"
+      }
+    ]
+  },
+  {
+    "childNumber": 3,
+    "formulationName": "Shampoo plus conditioner",
+    "ingredients": [
+      {
+        "ingredient": "Anionic surfactants",
+        "ingredientExamples": "sodium laureth sulfate",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Non-ionic surfactants",
+        "ingredientExamples": "alkyl polyglucosides",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Amphoteric surfactants",
+        "ingredientExamples": "betaine derivatives",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExamples": "long chain alcohols, stearyl alcohol",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Oils and waxes",
+        "ingredientExamples":"vegetable, mineral",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Silicones (including volatile silicones)",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes (for example alcoxysilanes)",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Cationic surfactants",
+        "ingredientExamples": "behentrimonium chloride",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Cationic polymers",
+        "ingredientExamples": "polyquaternium-11",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Humectants, emollients",
+        "ingredientExamples": "glycerin",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExamples": "UV filters, pearlescent agents",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1.5"
+      },
+      {
+        "ingredient": "Colourants",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Chelating agents",
+        "volume": "0.5"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "to 100"
+      }
+    ]
+  },
+  {
+    "childNumber": 4,
+    "formulationName": "Hair conditioner",
+    "ingredients": [
+      {
+        "ingredient": "Oils, waxes and fats",
+        "ingredientExamples":"vegetable, mineral, long chain alcohols",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Silicones (including volatile silicones)",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes (for example, alcoxysilanes)",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Amphoteric surfactants",
+        "ingredientExamples": "betaine derivatives",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExamples": "ceteth-30, cetyl alcohol",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emollients, humectants",
+        "ingredientExamples": "glycerin, propylene glycol",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExamples": "carbomer, hydroxyethylcellulose",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExamples": "proteins, chelating agents, pearlescent agents",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Cationic surfactants",
+        "ingredientExamples": "behentrimonium chloride",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Polymers, resins",
+        "ingredientExamples": "polyquaternium-10, polyquaternium",
+        "volume": "11,"
+      },
+      {
+        "ingredient": "butyly ester of PVM/MA copolymer",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "3"
+      },
+      {
+        "ingredient": "UV filters",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "1.5"
+      },
+      {
+        "ingredient": "Colourants",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "to 100"
+      }
+    ]
+  },
+  {
+    "childNumber": 5,
+    "formulationName": "Hair conditioner (silicone based)",
+    "ingredients": [
+      {
+        "ingredient": "Aqua",
+        "volume": "20"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExamples": "UV filters, polymers",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExamples": "ethoxylated long chain alcohols",
+        "volume": "6"
+      },
+      {
+        "ingredient": "UV filters",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Silicones (including volatile silicones)",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone)",
+        "volume": "to 100"
+      }
+    ]
+  },
+  {
+    "childNumber": 6,
+    "formulationName": "Hair / scalp care lotion",
+    "ingredients": [
+      {
+        "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+        "volume": "60"
+      },
+      {
+        "ingredient": "Polymers",
+        "ingredientExamples": "PVP",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Hair conditioning agents",
+        "ingredientExamples": "cationic polymers, cellulose derivatives",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Oils",
+        "ingredientExamples":"vegetable oil, mineral oil, long chain alcohols",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Silicones(including volatile silicones)",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes (for example, alcoxysilanes)",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExamples": "glycerin",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExamples": "vitamins, plant extracts, chelating agents, UV filters, protein hydrolysates",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Emulsifying agents",
+        "ingredientExamples": "ethoxylated long chain alcohols",
+        "volume": "3"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "3"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Colourants",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "to 100"
+      }
+    ]
+  },
+  {
+    "childNumber": 7,
+    "formulationName": "Hair / scalp bi-phase lotion",
+    "ingredients": [
+      {
+        "ingredient": "Liquid paraffin and isoparaffin",
+        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        "volume": "90"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "80"
+      },
+      {
+        "ingredient": "Oils",
+        "ingredientExamples":"vegetable oil, mineral oil, long chain alcohols",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Silicones (including volatile silicones)",
+        "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone), silanes (for example, alcoxysilanes",
+        "volume": "50"
+      },
+      {
+        "ingredient": "Isopropanol (isopropyl alcohol)",
+        "volume": "40"
+      },
+      {
+        "ingredient": "Polymers",
+        "ingredientExamples": "PVP",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Hair conditioning agents",
+        "ingredientExamples": "cationic copolymers, cellulose derivatives",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Humectants",
+        "ingredientExamples": "propylene glycol",
+        "volume": "10"
+      },
+      {
+        "ingredient": "Cationic surfactants",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExamples": "UV filters, vitamins",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+        "ingredientExamples": "ethoxylated fatty acids",
+        "volume": "3"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "3"
+      },
+      {
+        "ingredient": "Preservatives, antimicrobials",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Colourants",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Aqua",
+        "volume": "to 100"
+      }
+    ]
+  },
+  {
+    "childNumber": 8,
+    "formulationName": "Dry shampoo",
+    "ingredients": [
+      {
+        "ingredient": "Propellants",
+        "ingredientExamples": "hydrocarbons",
+        "volume": "95"
+      },
+      {
+        "ingredient": "Ethanol (alcohol, alcohol denat.)",
+        "volume": "30"
+      },
+      {
+        "ingredient": "Absorbents",
+        "ingredientExamples": "oriza sativa starch, aluminum starch octenylsuccinate",
+        "volume": "15"
+      },
+      {
+        "ingredient": "Silicones (including volatile silicones (cyclopentasiloxane, dimethicone))",
+        "volume": "5"
+      },
+      {
+        "ingredient": "Emollients",
+        "ingredientExamples": "isopropyl myristate",
+        "volume": "3"
+      },
+      {
+        "ingredient": "Anticaking agents",
+        "ingredientExamples": "silica, magnesium sulfate",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Thickeners",
+        "ingredientExamples": "stearalkonium hectorite, propylene carbonate",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Hair conditioning agents",
+        "ingredientExamples": "fatty acid ester",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Additional ingredients",
+        "ingredientExamples": "plant extracts, hair conditioning agents",
+        "volume": "2"
+      },
+      {
+        "ingredient": "Parfum",
+        "volume": "1"
+      },
+      {
+        "ingredient": "Hair dyeing agents, colourants",
+        "volume": "0.2"
+      }
+    ]
+  }
+]}

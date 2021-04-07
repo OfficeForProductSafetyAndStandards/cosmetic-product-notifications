@@ -1,0 +1,159 @@
+{
+  "number": 17,
+	"name": "Mouthwash",
+	"data": [
+		{
+			"formulationName": "Mouthwash",
+			"childNumber": 1,
+			"ingredients": [
+				{
+					"ingredient": "Ethanol (alcohol, alcohol denat.)",
+					"volume": 25
+				},
+				{
+					"ingredient": "Humectants",
+					"ingredientExamples": "sorbitol",
+					"volume": 20
+				},
+				{
+					"ingredient": "Additional ingredients",
+					"ingredientExamples": "vitamins",
+					"volume": 4
+				},
+				{
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants ",
+					"ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
+					"volume": 4
+				},
+				{
+					"ingredient": "Flavour (mostly essential oils)",
+					"ingredientExamples":"mint",
+					"volume": 3
+				},
+				{
+					"ingredient": "Colourants",
+					"volume": 3
+				},
+				{
+					"ingredient": "Preservatives, antimicrobials",
+					"volume": 1
+				},
+				{
+					"ingredient": "Oral care : deodorant",
+					"ingredientExamples": "zinc chloride",
+					"volume": 0.5
+				},
+				{
+					"ingredient": "Thickeners",
+					"ingredientExamples": "cellulose derivatives",
+					"volume": 0.5
+				},
+				{
+					"ingredient": "Oral care : sweetening agents",
+					"ingredientExamples": "sodium saccharin",
+					"volume": 0.2
+				},
+				{
+					"ingredient": "Fluoride compounds (calculated as fluorine)",
+					"volume": "0.15*"
+				},
+				{
+					"ingredient": "Aqua ",
+					"volume": "to 100"
+				}
+			],
+			"annotation": 
+				"For fluoride compounds the actual weight present will depend on the molecular weight of the fluorine donor. For example 0.15% fluorine = 1.14% monofluorophosphate (MFP) or 0.333% sodium fluoride (NaF)"
+		},
+		{
+			"formulationName": "Mouthwash (concentrate)",
+			"childNumber": 2,
+			"ingredients": [
+				{
+					"ingredient": "Humectants",
+					"ingredientExamples": "glycerin, propylene glycol",
+					"volume": 85
+				},
+				{
+					"ingredient": "Ethanol (alcohol, alcohol denat.)",
+					"volume": 80
+				},
+				{
+					"ingredient": "Flavour (mostly essential oils)",
+					"ingredientExamples":"mint",
+					"volume": 7.5
+				},
+				{
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          			"ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
+					"volume": 6
+				},
+				{
+					"ingredient": "Additional ingredients",
+					"ingredientExamples": "vitamins",
+					"volume": 5
+				},
+				{
+					"ingredient": "Thickeners",
+					"ingredientExamples": "cellulose derivatives",
+					"volume": 5
+				},
+				{
+					"ingredient": "Colourants",
+					"volume": 3
+				},
+				{
+					"ingredient": "Preservatives, antimicrobials",
+					"volume": 1
+				},
+				{
+					"ingredient": "Oral care: sweetening agents",
+					"ingredientExamples": "sodium saccharin",
+					"volume": 0.2
+				},
+				{
+					"ingredient": "Aqua ",
+					"volume": "to 100"
+				}
+			]
+		},
+		{
+			"formulationName": "Breath spray (pump spray)",
+			"childNumber": 3,
+			"ingredients": [
+				{
+					"ingredient": "Ethanol (alcohol, alcohol denat.)",
+					"volume": 99
+				},
+				{
+					"ingredient": "Humectants",
+					"ingredientExamples": "propylene glycol, glycerin",
+					"volume": 30
+				},
+				{
+					"ingredient": "Flavour (mostly essential oils) ",
+					"ingredientExamples":"mint",
+					"volume": 2
+				},
+				{
+					"ingredient": "Oral care: deodorant",
+					"ingredientExamples": "zinc chloride",
+					"volume": 0.5
+				},
+				{
+					"ingredient": "Preservatives, antimicrobials",
+					"volume": 0.2
+				},
+				{
+					"ingredient": "Oral care: sweetening agents",
+					"ingredientExamples": "sodium saccharin",
+					"volume": 0.2
+				},
+				{
+					"ingredient": "Aqua ",
+					"volume": "to 100"
+				}
+			]
+		}
+	]
+}

@@ -55,3 +55,7 @@ $govuk-assets-path: '~govuk-frontend/govuk/assets/';
     transform: rotate(360deg);
   }
 }
+
+.govuk-table__header--right {
+  text-align: right;
+}

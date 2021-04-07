@@ -1,0 +1,958 @@
+{
+  "number": 2,
+  "name": "Skin cleansing",
+  "data": [
+    {
+      "formulationName": "Foaming skin cleanser",
+      "childNumber": 1,
+      "ingredients": [
+        {
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "sodium laureth sulfate",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "ethoxylated sorbitan esters",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, sorbitol",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Abrasives",
+          "ingredientExamples": "polyethylene, walnuts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples":"hydroxyethylcellulose",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, vitamins",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Foaming skin cleanser – with high level of oils and/or humectant",
+      "childNumber": 2,
+      "ingredients": [
+        {
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "sodium laureth sulfate, disodium laureth sulfosuccinate",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
+          "ingredientExamples": "ceteth-20, ethoxylated long chain alcohols",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Abrasives",
+          "ingredientExamples": "polyethylene, walnuts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "pearlescent agents such as glycol distearate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Make-up remover - non foaming cleanser (including two-phase products)",
+      "childNumber": 3,
+      "ingredients": [
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples" : "vegetable, mineral, long chain alcohols",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "glyceryl stearate, polysorbate 60",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "gydroxyethylcellulose",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "chelating agents, plant extracts, antioxidants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Make-up remover - non foaming oil cleanser",
+      "childNumber": 4,
+      "ingredients": [
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "steareth-2, steareth-4",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "antioxidants, plant extracts, aqua",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "dextrin palmitate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable oil, mineral oil",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Gentle cleansing gel",
+      "childNumber": 5,
+      "ingredients": [
+        {
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "sodium lauroyl sarcosinate, disodium laureth sulfosuccinate",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples" :"vegetable, mineral, long chain alcohols",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
+          "ingredientExamples": "betaine derivatives, glucose derivatives",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Foam boosting agents",
+          "ingredientExamples": "cocamide MEA",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "pearlescent agents, plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "hydroxypropyl methylcellulose",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Skin cleansing cream, lotion, scrub, gel",
+      "childNumber": 6,
+      "ingredients": [
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
+          "volume": "95"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, PEG",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "sodium cocoyl isethionate, sodium laureth sulfate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, xanthan gum",
+          "volume": "12"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "talc, silica, zinc oxide, nylon powder",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Abrasives",
+          "ingredientExamples": "polyethylene, walnuts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, antioxidants, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Cationic polymers",
+          "ingredientExamples": "polyquaternium-7, polyquaternium-24",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Body scrub (gel, cream)",
+      "childNumber": 7,
+      "ingredients": [
+        {
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples" :"vegetable, mineral, long chain alcohols",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, hexylene glycol",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Abrasives",
+          "ingredientExamples": "polyethylene, walnuts",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
+          "ingredientExamples": "betaine derivatives, glucose derivatives",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Foam boosting agents",
+          "ingredientExamples": "ethoxylated long-chain alcohols, alkyl polyglucose",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "PEG-6 laurate, glyceryl cocoate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "hydroxypropyl methylcellulose, sodium chloride",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "pearlescent agents, plant extracts",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Cationic polymers",
+          "ingredientExamples": "polyquaternium-7",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Soap - toilet",
+      "childNumber": 8,
+      "ingredients": [
+        {
+          "ingredient": "Soap",
+          "ingredientExamples": "saponified vegetable oil, tallow fatty acids",
+          "volume": "99"
+        },
+        {
+          "ingredient": "Glycerin",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "propylene glycol",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Amphoteric, anionic surfactants",
+          "ingredientExamples": "cocamidopropyl betaine",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples": "vegetable oil, mineral oil",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Titanium dioxide",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Cationic polymers",
+          "ingredientExamples": "polyquaternium-7",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials, antioxidants, chelating agents",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Liquid soap",
+      "childNumber": 9,
+      "notes": "Liquid ‘soaps’ may be soap based, totally synthetic based or a combination of both soap and synthetic.",
+      "ingredients": [
+        {
+          "ingredient": "Anionic, amphoteric surfactants",
+          "ingredientExamples": "laureth sulfate, betaine",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Non-ionic surfactants",
+          "ingredientExamples": "glucose derivatives",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Soaps (sodium, potassium or triethanolamine)",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExamples": "PEG-7, glyceryl cocoate",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol, sorbitol",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "sodium chloride, hydroxycellulose derivatives",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, UV filters",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Pearlescent agents",
+          "ingredientExamples": "glycol distearate, glycol stearate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Skin conditioning agents",
+          "ingredientExamples": "cationic cellulose",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Bath and shower gel, cream, milk, paste",
+      "childNumber": 10,
+      "ingredients": [
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, hexylene glycol",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
+          "ingredientExamples": "betaine derivatives, glucose derivatives",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Foam boosting agents",
+          "ingredientExamples": "ethoxylated long-chain alcohols, alkyl polyglucose",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "PEG-6 laurate, glyceryl cocoate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "hydroxypropyl methylcellulose, sodium chloride",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "pearlescent agents, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Cationic polymers",
+          "ingredientExamples": "polyquaternium-7",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Slightly foaming shower cream, milk",
+      "childNumber": 11,
+      "ingredients": [
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "volume": "60"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, hexylene glycol",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "sodium lauroyl sarcosinate, sodium laureth sulfate, disodium laureth sulfosuccinate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Non-ionic surfactants, amphoteric surfactants",
+          "ingredientExamples": "betaine derivatives, glucose derivatives",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Foam boosting agents",
+          "ingredientExamples": "ethoxylated long-chain alcohols, alkyl polyglucose",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "PEG-6 laurate, glyceryl cocoate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "hydroxypropyl methylcellulose, sodium chloride",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "pearlescent agents, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Cationic polymers",
+          "ingredientExamples": "polyquaternium-7",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Bath salts or cubes",
+      "childNumber": 12,
+      "ingredients": [
+        {
+          "ingredient": "Sodium salts",
+          "ingredientExamples": "sodium carbonate, sodium bicarbonate, sodium sesquicarbonate, sodium chloride",
+          "volume": "99"
+        },
+        {
+          "ingredient": "Disintegrating agents (for bath cubes)",
+          "ingredientExamples": "talc, starch",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "5"
+        }, 
+        {
+          "ingredient": "Emollients",
+          "ingredientExamples": "glycerin",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "sodium dodecylbenzenesulfonate",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples": "vegetable, mineral",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Binding agents",
+          "ingredientExamples": "Silica",
+          "volume": "0.5"
+        }
+         ]
+    },
+    {
+      "formulationName": "Bath and shower oil (including bath beads)",
+      "childNumber": 13,
+      "ingredients": [
+        {
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "PEG stearate, ethers of oleyl alcohol",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Plant extracts",
+          "ingredientExamples": "ivy extract, rosemary extract",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, UV filters",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Antioxidants",
+          "volume": "0.1"
+        },
+        {
+          "ingredient": "Oils and emollients",
+           "ingredientExamples":"vegetable, mineral, glycerin, PEG, isopropyl myristate",
+          "volume": "to 100"
+        }
+      ],
+      "annotations": "In case of capsules, or beads : Nature of the capsule, for example caprolactone and cellulose derivatives, agar and plasticisers (such as glycerin, sorbitol)"
+    },
+    {
+      "formulationName": "Footbath",
+      "childNumber": 14,
+      "ingredients": [
+        {
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "sodium laureth sulfate",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "glycol stearate, butylene glycol",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "ethoxylated long chain alcohols",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Foam boosting agents",
+          "ingredientExamples": "cocamide MEA",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials, antioxidants",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Syndet bar",
+      "childNumber": 15,
+      "ingredients": [
+        {
+          "ingredient": "Anionic surfactants, nonionic surfactants, amphoteric surfactants",
+          "ingredientExamples": "sodium laureth sulfate, ethoxylated long-chain alcohols, betaine derivatives",
+          "volume": "70"
+        },
+        {
+          "ingredient": "Plasticisers, binders, emollients (glycerin, propylene glycol)",
+          "ingredientExamples":"glycerin, propylene glycol",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Fillers",
+          "ingredientExamples": "talc, kaolin, starch",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Additional Ingredients",
+          "ingredientExamples": "plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Skin Conditioning Agents",
+          "ingredientExamples": "polyquaternium-7",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Titanium dioxide",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Chelating agents",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Opacifying agents",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Combo - bar",
+      "childNumber": 16,
+      "ingredients": [
+        {
+          "ingredient": "Soaps (vegetable and tallow base: palm oil, coconut oil, palm kernel oil, tallow and their fatty acids)",
+          "volume": "85"
+        },
+        {
+          "ingredient": "Anionic surfactants",
+          "ingredientExamples": "sodium laureth sulfate",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "betaine derivatives",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Skin conditioning agents",
+          "ingredientExamples": "polyquaternium-7",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Opacifier",
+          "ingredientExamples": "titanium dioxide",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    }
+  ]
+}
