@@ -5,11 +5,17 @@ GIT
   specs:
     govuk-design-system-rails (0.5.0)
 
+GIT
+  remote: https://github.com/aasm/aasm.git
+  revision: 252ade3a20dd86abed3ec76b965f85da530e2611
+  ref: 252ade3
+  specs:
+    aasm (5.1.1)
+      concurrent-ruby (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.0.8)
-      concurrent-ruby (~> 1.0)
     actioncable (5.2.5)
       actionpack (= 5.2.5)
       nio4r (~> 2.0)
@@ -174,7 +180,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.8.9)
+    i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     interactor (3.1.2)
     jaro_winkler (1.5.4)
@@ -371,7 +377,7 @@ GEM
     rubyzip (2.3.0)
     scout_apm (4.0.4)
       parser
-    sentry-rails (4.3.3)
+    sentry-rails (4.3.4)
       railties (>= 5.0)
       sentry-ruby-core (~> 4.3.0)
     sentry-ruby (4.3.1)
@@ -476,7 +482,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm (~> 5.0.6)
+  aasm!
   active_hash (~> 2.2.1)
   activerecord-pg_enum
   aws-sdk-s3 (~> 1.60.1)
