@@ -15,7 +15,7 @@ def create_elasticsearch_index_job
   job = Sidekiq::Cron::Job.new(
     name: "Reindex Elasticsearch, every day at 1 am",
     cron: "* 1 * * *",
-    class: "ReindexElasticsearchJob",
+    class: "EnqueueReindexElasticsearchJob",
     queue: "cosmetics",
   )
   unless job.save
