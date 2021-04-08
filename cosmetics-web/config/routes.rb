@@ -182,6 +182,9 @@ Rails.application.routes.draw do
     get :privacy_notice, path: "privacy-notice"
   end
 
+  get "frame_formulations", to: "frame_formulations#index"
+  get "frame_formulations/:id/:sub_id/:name", to: "frame_formulations#show"
+
   get "invalid-account", to: "errors#invalid_account", as: :invalid_account
 
   match "/404", to: "errors#not_found", via: :all

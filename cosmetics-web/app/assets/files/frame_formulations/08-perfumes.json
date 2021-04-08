@@ -1,0 +1,207 @@
+{
+  "number": 8,
+  "name": "Perfumes",
+  "data": [
+    {
+      "childNumber": 1,
+      "formulationName": "Perfume (eau de cologne, eau de toilette, eau de parfum, extrait de parfum, parfum)",
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "98"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "PEG-60, hydrogenated castor oil",
+          "volume": "2"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "chelating agents",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Antioxidants",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "childNumber": 2,
+      "formulationName": "Perfumed powder (loose or pressed)",
+      "ingredients": [
+        {
+          "ingredient": "Mineral bulking agents",
+          "ingredientExamples": "talc, kaolin, magnesium, calcium carbonate",
+          "volume": "99"
+        },
+        {
+          "ingredient": "Other bulking agents",
+          "ingredientExamples": "starch, nylon powder, sodium polyacrylate copolymer",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Colourants, colour additives",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Binding agents",
+          "ingredientExamples": "vegetable, mineral oils, fatty acid esters",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "uv filters, vitamins, antioxidants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        }
+      ]
+    },
+    {
+      "childNumber": 3,
+      "formulationName": "Solid perfume (paste, wax)",
+      "ingredients": [
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples":"vegetable, mineral,long chain alcohols",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Colourants, colour additives",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "silica, nylon powder, starch",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, hydroxyethylcellulose",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Film forming polymers",
+          "ingredientExamples": "acrylic resin, ammonium acrylates copolymer",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, proteins, antioxidants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        }
+      ]
+    },
+    {
+      "childNumber": 4,
+      "formulationName": "Perfumed skin oil",
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Colourants, colour additives",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "silica, nylon powder, starch",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "glyceryl stearate, PEG stearate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "dextrin palmitate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "antioxidants, plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable oil, mineral oil",
+          "volume": "to 100"
+        }
+      ]
+    }
+  ]
+}

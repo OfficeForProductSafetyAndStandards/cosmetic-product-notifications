@@ -37,4 +37,14 @@ RSpec.describe "Notifications delete", type: :feature do
     log = NotificationDeleteLog.first
     expect(log.notification_product_name).to eq notification.product_name
   end
+
+  scenario "not being able to delete a submitted notification outside its deletion window" do
+    notification = create(:registered_notification,
+                          responsible_person: responsible_person,
+                          notification_complete_at: 1.month.ago)
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_on "Notified (1)"
+    click_on notification.product_name
+    expect(page).not_to have_link("Delete this cosmetic product notification")
+  end
 end
