@@ -2,6 +2,6 @@
 # By creating separate job just for sidekiq cron, we will avoid such a clash
 class EnqueueReindexElasticsearchJob < ApplicationJob
   def perform
-    ReindexElasticsearchJob.perform_async
+    ReindexElasticsearchJob.perform_later
   end
 end
