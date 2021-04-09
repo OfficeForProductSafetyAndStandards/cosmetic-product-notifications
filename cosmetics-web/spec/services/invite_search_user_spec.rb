@@ -15,7 +15,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
     end
 
     it "sets an invitation token and updates the invitation time when user hasn't invitation token set" do
-      user.update(invitation_token: nil)
+      user.update_column(:invitation_token, nil)
       expect {
         inviter.call
         user.reload
@@ -23,7 +23,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
     end
 
     it "does not update the invitation time when user was invited less than an hour ago" do
-      user.update(invited_at: 2.minutes.ago)
+      user.update_column(:invited_at, 2.minutes.ago)
       expect {
         inviter.call
         user.reload
@@ -31,7 +31,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
     end
 
     it "updates the invitation time when user was invited more than an hour ago" do
-      user.update(invited_at: 61.minutes.ago)
+      user.update_column(:invited_at, 61.minutes.ago)
       expect {
         inviter.call
         user.reload
@@ -39,11 +39,29 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
     end
 
     it "does not change the user role when the inviter is called for a different role" do
-      user.update(role: (inviter.role == "msa" ? "poison_centre" : "msa"))
+      user.update_column(:role, inviter.role == "msa" ? "poison_centre" : "msa")
       expect {
         inviter.call
         user.reload
       }.not_to change(user, :role)
+    end
+
+    context "when user has already set its account security" do
+      before do
+        user.update_columns(account_security_completed: true, invited_at: 1.week.ago)
+      end
+
+      it "doest not send an invitation email for the user" do
+        inviter.call
+        expect(delivered_emails).to be_empty
+      end
+
+      it "does not update the invitation token or its timestamp" do
+        expect {
+          inviter.call
+          user.reload
+        }.to not_change { user.invited_at.round }.and not_change(user, :invitation_token)
+      end
     end
   end
 
@@ -65,7 +83,9 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
   context "when an user is provided" do
     subject(:inviter) { described_class.new(name: "John Doe", role: "msa", user: user) }
 
-    let(:user) { create(:search_user, email: "existentuser@example.com") }
+    let(:user) do
+      create(:search_user, :registration_incomplete, email: "existentuser@example.com")
+    end
 
     include_examples "existing user"
   end
@@ -76,7 +96,9 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
     end
 
     context "when the provided email belongs to an existing user" do
-      let(:user) { create(:search_user, email: "inviteduser@example.com") }
+      let(:user) do
+        create(:search_user, :registration_incomplete, email: "inviteduser@example.com")
+      end
 
       include_examples "existing user"
     end

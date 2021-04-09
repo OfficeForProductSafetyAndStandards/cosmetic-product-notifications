@@ -25,6 +25,8 @@ private
   end
 
   def send_invite
+    return if user.account_security_completed?
+
     if !user.invitation_token || (user.invited_at < 1.hour.ago)
       user.update! invitation_token: (user.invitation_token || SecureRandom.hex(15)), invited_at: Time.zone.now
     end
