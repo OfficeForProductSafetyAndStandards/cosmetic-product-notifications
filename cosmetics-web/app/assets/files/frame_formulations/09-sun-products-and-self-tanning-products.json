@@ -1,0 +1,408 @@
+{
+  "number": 9,
+  "name": "Sun products and self tanning products",
+  "data": [
+    {
+      "childNumber": 1,
+      "formulationName": "Sunscreen cream, lotion",
+      "ingredients": [
+        {
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "volume": "70"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "40"
+        },
+        {
+          "ingredient": "Silicones(including volatile silicones)",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "glyceryl stearate, PEG-100 stearate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "talc, silica, nylon powder",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "bisabolol, vitamins",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Film forming polymers",
+          "ingredientExamples": "PVP",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer, xanthan gum",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "childNumber": 2,
+      "formulationName": "Sunscreen oil",
+      "ingredients": [
+        {
+          "ingredient": "Ethanol(alcohol, alcohol denat.)",
+          "volume": "70"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "35"
+        },
+        {
+          "ingredient": "Silicones(including volatile silicones)",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Film forming agents",
+          "ingredientExamples": "PVP",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "bisabolol",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "bentonite",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable oil, mineral oil",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "childNumber": 3,
+      "formulationName": "Sunscreen stick",
+      "ingredients": [
+        {
+          "ingredient": "Waxes, fats",
+          "ingredientExamples":"theobroma cacao seed butter, polyethylene",
+          "volume": "60"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "35"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "kaolin, nylon powder",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExamples": "cetearyl octanoate",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Silicones(including volatile silicones)",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "bisabolol",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Antioxidants",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable oil, mineral oil",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "childNumber": 4,
+      "formulationName": "Sunscreen hydrogel",
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "60"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "sorbitol",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, vitamins",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Silicones(including volatile silicones)",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "cetearyl palmitate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Polymers",
+          "ingredientExamples": "carbomer",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "childNumber": 5,
+      "formulationName": "Sunscreen gel (oil based)",
+      "ingredients": [
+        {
+          "ingredient": "Silicones(including volatile silicones)",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "40"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Film forming polymers",
+          "ingredientExamples": "pvp",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "bentonite",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, vitamins",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "2"
+        },
+           {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Antioxidants",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Oils",
+          "ingredientExamples":"vegetable oil, mineral oil",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "childNumber": 6,
+      "formulationName": "Self tan - lotion, cream",
+      "ingredients": [
+        {
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "glyceryl stearate, PEG stearate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, PEG",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "sodium cocoyl isethionate, sodium laureth sulfate",
+          "volume": "20"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Dihydroxyacetone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, vitamins, bisabolol",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials, chelating agents",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "childNumber": 7,
+      "formulationName": "Self tan – lotion, gel",
+      "ingredients": [
+        {
+          "ingredient": "Ethanols (alcohol, alcohol denat.)",
+          "volume": "60"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "glycerin, propylene glycol",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "PEG-40, hydrogenated castor oil",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Dihydroxyacetone",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "carbomer",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, allantoin, vitamins",
+          "volume": "6"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Chelating agents",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    }
+  ]
+}

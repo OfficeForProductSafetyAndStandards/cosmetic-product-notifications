@@ -1,0 +1,103 @@
+{
+  "number": 16,
+	"name": "Toothpaste",
+	"data": [
+		{
+			"formulationName": "Toothpaste",
+			"childNumber": 1,
+			"ingredients": [
+				{
+					"ingredient": "Sorbitol ",
+					"volume": 70
+				},
+				{
+					"ingredient": "Abrasives",
+					"ingredientExamples": "dicalcium phosphate dihydrate, alumina, calcium carbonate, silica, silicates",
+					"volume": 55
+				},
+				{
+					"ingredient": "Glycerin",
+					"volume": 40
+				},
+				{
+					"ingredient": "Insoluble metaphosphate (IMP)",
+					"volume": 35
+				},
+				{
+					"ingredient": "Ethanol (alcohol, alcohol denat.)",
+					"volume": 30
+				},
+				{
+					"ingredient": "Sodium pyrophosphate, potassium pyrophosphate ",
+					"volume": 15
+				},
+				{
+					"ingredient": "PEG, PPG ",
+					"volume": 10
+				},
+				{
+					"ingredient": "Oral care-protecting agents",
+					"ingredientExamples": "strontium chloride",
+					"volume": 10
+				},
+				{
+					"ingredient": "Anionic surfactants",
+					"ingredientExamples": "sodium lauryl sulfate",
+					"volume": 6
+				},
+				{
+					"ingredient": "Thickeners",
+					"ingredientExamples": "cellulose derivatives",
+					"volume": 5
+				},
+				{
+					"ingredient": "Additional ingredients",
+					"ingredientExamples": "pH stabilisers (sodium phosphate, potassium phosphate), vitamins, chelating agents",
+					"volume": 5
+				},
+				{
+					"ingredient": "Flavour (mostly essential oils)",
+					"ingredientExamples": "mint",
+					"volume": 3
+				},
+				{
+					"ingredient": "Titanium dioxide",
+					"volume": 2
+				},
+				{
+					"ingredient": "Colourants",
+					"volume": 1
+				},
+				{
+					"ingredient": "Preservatives",
+					"volume": 1
+				},
+				{
+					"ingredient": "Oral care: antiplaque",
+					"ingredientExamples": "zinc citrate",
+					"volume": 2
+				},
+				{
+					"ingredient": "Oral care: sweetening agents",
+					"ingredientExamples": "aspartame",
+					"volume": 0.5
+				},
+				{
+					"ingredient": "Calcium glycerophosphate",
+					"volume": 0.5
+				},
+				{
+					"ingredient": "Fluoride compounds (calculated as fluorine)",
+					"volume": "0.15"
+				},
+				{
+					"ingredient": "Aqua",
+					"volume": "to 100"
+				}
+			],
+			"annotations": [
+				"For fluoride compounds the actual weight present will depend on the molecular weight of the fluorine donor. For example 0.15% fluorine = 1.14% monofluorophosphate (MFP) or 0.333% sodium fluoride (NaF)"
+			]
+		}
+	]
+}

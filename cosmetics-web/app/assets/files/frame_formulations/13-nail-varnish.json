@@ -1,0 +1,76 @@
+{
+  "number": 13,
+  "name": "Nail varnish",
+  "data": [
+    {
+      "formulationName": "Nail varnish",
+      "childNumber": 1,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol, isopropanol (alcohol, alcohol denat., isopropyl alcohol)",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Solvents",
+          "ingredientExamples": "ethyl acetate, butyl acetate, diacetone alcohol, PPG-2 butyl ether",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Resins, polymers",
+          "ingredientExamples": "polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer)",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Plasticisers",
+          "ingredientExamples": "triethyl citrate",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Colourants, colour additives",
+          "ingredientExamples": "opacifying agents, pearlescent agents",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, proteins, plant extracts",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "stearalkonium hectorite, silica",
+          "volume": "5"
+        },
+        {
+          "ingredient": "UV filters",
+          "volume": "2"
+        }
+      ]
+    },
+    {
+      "formulationName": "Nail white pencil",
+      "childNumber": 2,
+      "ingredients": [
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "kaolin, magnesium carbonate, chalk",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Colourants, colour additives",
+          "ingredientExamples": "opacifying agents, titanium dioxide",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Binding agents",
+          "ingredientExamples": "waxes, stearic acid",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "bentonite",
+          "volume": "5"
+        }
+      ]
+    }
+  ]
+}
