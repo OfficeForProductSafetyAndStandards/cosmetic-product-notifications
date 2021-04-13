@@ -38,4 +38,22 @@ RSpec.describe "Guidance pages", type: :request do
       expect(response.body).to have_tag("h1", text: /\AHow to prepare images for notification/)
     end
   end
+
+  describe "'Set up your authentication app'" do
+    before do
+      get "/guidance/how-to-set-up-authenticator-app"
+    end
+
+    it "is successful" do
+      expect(response.code).to eql("200")
+    end
+
+    it "has a page title" do
+      expect(response.body).to have_tag("title", text: /\ASet up your authenticator app/)
+    end
+
+    it "has a page heading" do
+      expect(response.body).to have_tag("h1", text: /\ASet up your authenticator app/)
+    end
+  end
 end
