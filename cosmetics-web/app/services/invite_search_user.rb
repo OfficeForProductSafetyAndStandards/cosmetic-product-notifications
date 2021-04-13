@@ -16,17 +16,17 @@ class InviteSearchUser
 private
 
   def create_user
-    user = SearchUser.create!(
-      name: name,
-      email: email,
-      skip_password_validation: true,
-      role: role,
-      invite: true,
-    )
-    user
+    SearchUser.find_or_create_by!(email: email) do |user|
+      user.name = name
+      user.skip_password_validation = true
+      user.role = role
+      user.invite = true
+    end
   end
 
   def send_invite
+    return if user.account_security_completed?
+
     if !user.invitation_token || (user.invited_at < 1.hour.ago)
       user.update! invitation_token: (user.invitation_token || SecureRandom.hex(15)), invited_at: Time.zone.now
     end
