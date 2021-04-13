@@ -71,6 +71,8 @@ FactoryBot.define do
 
     factory :search_user, class: "SearchUser" do
       role {}
+      invitation_token { Devise.friendly_token }
+      invited_at { Time.zone.now }
 
       transient do
         first_login { false }
@@ -91,8 +93,6 @@ FactoryBot.define do
       trait :registration_incomplete do
         without_secondary_authentication
         password { nil }
-        invitation_token { Devise.friendly_token }
-        invited_at { Time.zone.now }
         account_security_completed { false }
         to_create { |user| user.save(validate: false) }
       end
