@@ -8,13 +8,9 @@ module SecondaryAuthentication
 
     def new
       user_id = session[:secondary_authentication_user_id]
-      return redirect_to(root_path) unless user_id
+      return redirect_to(root_path) unless user_id && app_authentication_available?
 
-      if user_needs_to_choose_secondary_authentication_method?
-        redirect_to new_secondary_authentication_method_path
-      else
-        @form = AppAuthForm.new(user_id: user_id)
-      end
+      @form = AppAuthForm.new(user_id: user_id)
     end
 
     def create
@@ -22,7 +18,6 @@ module SecondaryAuthentication
         set_secondary_authentication_cookie(Time.zone.now.to_i)
         form.user.update!(last_totp_at: form.last_totp_at)
         session[:secondary_authentication_user_id] = nil
-        session[:secondary_authentication_method] = nil
         redirect_to_saved_path
       else
         render :new

@@ -18,15 +18,12 @@ module SecondaryAuthenticationConcern
       session[:secondary_authentication_user_id] = user_id_for_secondary_authentication
       session[:secondary_authentication_notice] = notice
       session[:secondary_authentication_confirmation] = confirmation
-
-      if secondary_authentication_with_sms? || user.mobile_number_pending_verification?
-        session[:secondary_authentication_method] = "sms"
+      if use_sms_authentication?
         redirect_to new_secondary_authentication_sms_path
-      elsif user_needs_to_choose_secondary_authentication_method?
-        redirect_to new_secondary_authentication_method_path
-      else
-        session[:secondary_authentication_method] = "app"
+      elsif use_app_authentication?
         redirect_to new_secondary_authentication_app_path
+      else
+        redirect_to new_secondary_authentication_method_path
       end
     end
   end
@@ -76,20 +73,28 @@ module SecondaryAuthenticationConcern
     )
   end
 
-  def user_needs_to_choose_secondary_authentication_method?
+  def available_secondary_authentication_methods
+    return [] unless secondary_authentication_user
+
+    secondary_authentication_user.secondary_authentication_methods
+  end
+
+  def use_sms_authentication?
     return false unless secondary_authentication_user
 
-    session[:secondary_authentication_method].blank? &&
-      secondary_authentication_user.secondary_authentication_methods.size > 1
+    available_secondary_authentication_methods == %w[sms] ||
+      secondary_authentication_user.mobile_number_pending_verification?
   end
 
-  def secondary_authentication_with_sms?
-    session[:secondary_authentication_method] == "sms" ||
-      secondary_authentication_user&.secondary_authentication_methods == %w[sms]
+  def use_app_authentication?
+    available_secondary_authentication_methods == %w[app]
   end
 
-  def secondary_authentication_with_app?
-    session[:secondary_authentication_method] == "app" ||
-      secondary_authentication_user&.secondary_authentication_methods == %w[app]
+  def sms_authentication_available?
+    available_secondary_authentication_methods.include? "sms"
+  end
+
+  def app_authentication_available?
+    available_secondary_authentication_methods.include? "app"
   end
 end
