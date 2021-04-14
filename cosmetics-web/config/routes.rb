@@ -45,7 +45,7 @@ Rails.application.routes.draw do
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
       post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
-    root "search/landing_page#index"
+    root "search/landing_page#index", as: :search_root
 
     scope module: "poison_centres", as: "poison_centre" do
       resources :notifications, param: :reference_number, only: %i[index show]
@@ -79,7 +79,7 @@ Rails.application.routes.draw do
     post "account-security", to: "registration/account_security#create", as: :registration_create_account_security
     post "sign-out-before-confirming-email", to: "registration/new_accounts#sign_out_before_confirming_email"
 
-    root "submit/landing_page#index"
+    root "submit/landing_page#index", as: :submit_root
 
     resources :responsible_persons do
       collection do
@@ -174,7 +174,6 @@ Rails.application.routes.draw do
   namespace :guidance, as: "" do
     get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"
     get :how_to_prepare_images_for_notification, path: "how-to-prepare-images-for-notification"
-    get :how_to_set_up_authenticator_app, path: "how-to-set-up-authenticator-app"
   end
 
   namespace :help, as: "" do
