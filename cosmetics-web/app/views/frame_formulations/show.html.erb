@@ -1,0 +1,87 @@
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: frame_formulations_path %>
+<% end %>
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-l">Formulation name</span>
+    <h1 class="govuk-heading-l">
+      <%= @subformulation["formulationName"] %>
+    </h1>
+    <h2 class="govuk-heading-m">
+      <%= @subformulation["formulationSubheader"] %>
+    </h2>
+
+    <dl class="meta govuk-summary-list govuk-!-margin-bottom-9">
+      <div class="govuk-summary-list__row govuk-body-s">
+        <dt class="govuk-summary-list__key no-border">
+          Product category:
+        </dt>
+        <dd class="govuk-summary-list__value no-border">
+          <%= @formulation["name"] %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row govuk-body-s">
+        <dt class="govuk-summary-list__key no-border">
+        Frame formulation number:
+        </dt>
+        <dd class="govuk-summary-list__value no-border">
+        <%= @formulation["number"] %>.<%= @subformulation["childNumber"] %> - 2013
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">Frame formulation</h2>
+  </div>
+
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Ingredient</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--right">Maximum&nbsp;concentration&nbsp;(%&nbsp;w/w)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @subformulation["ingredients"].each do |ingredient| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-width-three-quarters">
+              <%= ingredient["ingredient"] %>
+              <% if ingredient["ingredientExamples"] %>
+                <br />
+                <span class="govuk-body-s">Examples: <%= ingredient["ingredientExamples"] %></span>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell govuk-!-width-one-quarter govuk-table__cell--numeric">
+              <%= ingredient["volume"] %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="govuk-grid-column-full">
+      <% if @subformulation["mixingInstruction"].present? %>
+        <h4 class="govuk-heading-s"><%= @subformulation["mixingInstruction"]["header"] %></h4>
+        <ul class="govuk-list govuk-list--bullet">
+          <% @subformulation["mixingInstruction"]["instructions"].each do |instruction| %>
+            <li><%= instruction %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+      <% if @subformulation["extraInfo"].present? %>
+        <% @subformulation["extraInfo"].each do |info| %>
+          <p><%= info %></p>
+        <% end %>
+      <% end %>
+      <% if @subformulation["annotations"] %>
+        <p><%= @subformulation["annotations"] %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

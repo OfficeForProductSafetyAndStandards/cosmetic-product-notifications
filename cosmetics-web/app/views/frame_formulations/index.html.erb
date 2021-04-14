@@ -1,0 +1,38 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Find a frame formulation
+    </h1>
+
+    <p>
+      A frame formulation is a way of giving the ingredients in a cosmetic product with a maximum concentration. For each cosmetic product category, there is a list of formulation names which have a frame formulation.
+    </p>
+
+    <p>
+      Some cosmetic products will not fall under a frame formulation, for example when a new ingredient is included. When this happens, you must notify your cosmetic product using an exact or range concentration.
+    </p>
+
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+      <% FrameFormulations::ALL.each_with_index do |formulation| %>
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <button type="button" id="accordion-default-heading-1" aria-controls="accordion-default-content-<%= formulation["number"] %>" class="govuk-accordion__section-button" aria-expanded="false">
+                <%= formulation["name"] %>
+                <span class="govuk-accordion__icon" aria-hidden="true"></span>
+              </button>
+            </h2>
+          </div>
+
+          <div id="accordion-default-content-<%= formulation["number"] %>" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-<%= formulation["number"] %>">
+            <ol class="govuk-list">
+              <% formulation["data"].each_with_index do |subformulation| %>
+                <li class="govuk-!-padding-bottom-1"><a href="<%= "/frame_formulations/#{formulation["number"]}/#{subformulation["childNumber"]}/#{name_to_url(subformulation["formulationName"])}" %>"><%= formulation["number"] %>.<%= subformulation["childNumber"] %> <%= subformulation["formulationName"]%></a></li>
+              <% end %>
+            </ol>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

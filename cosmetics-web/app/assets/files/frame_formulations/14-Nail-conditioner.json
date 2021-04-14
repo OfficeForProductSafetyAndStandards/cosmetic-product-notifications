@@ -1,0 +1,33 @@
+{
+  "number": 14,
+  "name": "Nail conditioner",
+  "data": [
+    {
+      "formulationName": "Nail conditioner (oil based)",
+      "childNumber": 1,
+      "ingredients": [
+        {
+          "ingredient": "Unsaturated fatty acids, proteins, vitamins",
+          "volume": 10
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": 1
+        },
+        {
+          "ingredient": "Antioxidants, preservatives, antimicrobials",
+          "volume": 0.5
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": 0.5
+        },
+        {
+          "ingredient": "Vegetable oils",
+          "ingredientExamples":"sesame oil",
+          "volume": "to 100"
+        }
+      ]
+    }
+  ]
+}

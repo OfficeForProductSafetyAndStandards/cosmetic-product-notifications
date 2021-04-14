@@ -193,6 +193,13 @@ RSpec.describe CpnpNotificationImporter do
       expect(notification.was_notified_before_eu_exit).to be_falsey
     end
 
+    it "notifications where the notification date hasn't been parsed are defaulted not to be notified before EU exit" do
+      allow(cpnp_parser_basic).to receive(:cpnp_notification_date).and_return(nil)
+      notification = described_class.new(cpnp_parser_basic, responsible_person).create!
+
+      expect(notification.was_notified_before_eu_exit?).to eq false
+    end
+
     it "creates a notification with the first language's name if there is no english name" do
       exporter_instance = described_class.new(cpnp_parser_different_language, responsible_person)
       exporter_instance.create!
@@ -271,6 +278,33 @@ RSpec.describe CpnpNotificationImporter do
       it "imports the single PH value as the maximum pH" do
         expect(notification.components.first.maximum_ph).to eq(2.0)
       end
+    end
+
+    it "attempting to import a draft notification raises a draft error" do
+      allow(cpnp_parser_basic).to receive(:notification_status).and_return("DR")
+      exporter = described_class.new(cpnp_parser_basic, responsible_person)
+
+      expect { exporter.create! }.to not_change(Notification, :count)
+                                 .and raise_error(described_class::DraftNotificationError,
+                                                  "DraftNotificationError - Draft notification uploaded")
+    end
+
+    it "attempting to import a notification that already exists for the same RP raises a duplication error" do
+      original_notification = create(:notification, responsible_person: responsible_person, cpnp_reference: "123456789")
+      allow(cpnp_parser_basic).to receive(:cpnp_reference).and_return(original_notification.cpnp_reference)
+      exporter = described_class.new(cpnp_parser_basic, responsible_person)
+
+      expect { exporter.create! }.to not_change(Notification, :count)
+        .and raise_error(described_class::DuplicateNotificationError)
+    end
+
+    it "attempting to import a notification that does not pass validation checks raises an error" do
+      stubbed_errors = instance_double(ActiveModel::Errors, messages: { foo: "bar error message", cpnp_reference: [] })
+      allow(Notification).to receive(:new).and_return(instance_double(Notification, errors: stubbed_errors).as_null_object)
+      exporter = described_class.new(cpnp_parser_basic, responsible_person)
+
+      expect { exporter.create! }.to not_change(Notification, :count)
+        .and raise_error(described_class::NotificationValidationError)
     end
   end
 

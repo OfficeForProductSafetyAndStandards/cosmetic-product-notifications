@@ -1,0 +1,129 @@
+{
+  "number": 3,
+  "name": "Hair removal",
+  "data": [
+    {
+      "formulationName": "Chemical depilatory - cream, gel",
+      "childNumber": 1,
+      "ingredients": [
+        {
+          "ingredient": "Alkaline agents",
+          "ingredientExamples": "calcium carbonate, sodium carbonate, potassium carbonate, sodium silicate, potassium silicate, sodium hydroxide, calcium oxide",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Oils,waxes and fats",
+          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "propylene carbonate",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "ethoxylated long chain alcohols, esters",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Emollients, humectants and",
+          "ingredientExamples": "glycerin, propylene glycol ",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Reducing agents",
+          "ingredientExamples": "thioglycerin, thioglycolic acid and its salts (less than 5% calculated as thioglycolic acid)",
+          "volume": "8"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, colorants, chelating agents",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ],
+      "annotations": ["* less than 5% calculated as thioglycolic acid","The pH may be between pH 11-12.7"]
+
+    },
+    {
+      "formulationName": "physical depilatory wax – resin based",
+      "childNumber": 2,
+      "ingredients": [
+       
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "paraffinum liquidum, glycerin",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
+          "ingredientExamples": "PEG-40 hydrogenated castor oil",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, skin conditioning agents, opacifying agents, antioxidants",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Colourants",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+         {
+          "ingredient": "Tackifying agents and thickeners",
+          "ingredientExamples": "triethylene glycol rosinate, glyceryl rosinate, polyethylene, ethylene/VA copolymer, hydrogenated microcrystalline wax, paraffin, colophonium, beeswax, silica",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationName": "Physical depilatory wax – sugar based",
+      "childNumber": 3,
+      "ingredients": [
+        {
+          "ingredient": "Tackifying agents",
+          "ingredientExamples": "sucrose",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "12"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, antioxidants, colorants",
+          "volume": "3"
+        },
+        {
+          "ingredient": "pH adjuster",
+          "ingredientExamples": "citric acid",
+          "volume": "2"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "1"
+        }
+      ]
+    }
+  ]
+}
