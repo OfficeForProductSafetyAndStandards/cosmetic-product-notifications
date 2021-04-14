@@ -7,19 +7,19 @@ module SecondaryAuthentication
                          :set_cache_headers
 
       def new
-        @user = find_user
+        @user = user_with_secondary_authentication_request
         return redirect_to(root_path) unless @user
       end
 
       def create
-        @user = find_user
+        @user = user_with_secondary_authentication_request
         return render("errors/forbidden", status: :forbidden) unless @user
-        return resend_code unless @user.mobile_number_change_allowed?
+        return redirect_to new_secondary_authentication_sms_path unless @user.mobile_number_change_allowed?
 
         @user.mobile_number = mobile_number_param
         if resend_code_form.valid?
           @user.save!
-          resend_code
+          redirect_to new_secondary_authentication_sms_path
         else
           @user.errors.merge!(resend_code_form.errors)
           render(:new)
@@ -27,12 +27,6 @@ module SecondaryAuthentication
       end
 
     private
-
-      def resend_code
-        # To avoid the user being redirected back to "Resend Security Code" page after successfully introducing
-        # the new secondary auth. code, we carry the original redirection path from where 2FA was triggered.
-        require_secondary_authentication(redirect_to: session[:secondary_authentication_redirect_to])
-      end
 
       def current_operation
         @user&.secondary_authentication_operation.presence || Operations::DEFAULT
@@ -46,8 +40,12 @@ module SecondaryAuthentication
         current_user&.id || session[:secondary_authentication_user_id]
       end
 
-      def find_user
-        current_user || User.find_by(id: session[:secondary_authentication_user_id])
+      def user_with_secondary_authentication_request
+        if current_user && current_user.id == session[:secondary_authentication_user_id]
+          current_user
+        else
+          User.find_by(id: session[:secondary_authentication_user_id])
+        end
       end
 
       def mobile_number_param
