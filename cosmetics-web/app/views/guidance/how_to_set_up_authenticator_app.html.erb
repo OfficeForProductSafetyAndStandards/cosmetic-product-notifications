@@ -1,0 +1,51 @@
+<% title = "Set up your authenticator app" %>
+
+<% content_for :page_title, title %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= title %></h1>
+
+    <p>
+      This guidance describes how to set up an authenticator app on your device as a form of
+      two‑factor authentication (2FA) and why this is important.
+    </p>
+
+    <h2 class="govuk-heading-m">Download your authenticator app</h2>
+
+    <p>
+      You can download an authenticator app on any smart device, such as a smart phone or tablet.
+      Examples of authenticator apps are the
+      <%= link_to "Google Authenticator", "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en", target: :_blank %>
+      and
+      <%= link_to "Microsoft Authenticator", "https://www.microsoft.com/en-us/account/authenticator", target: :_blank %>.
+    </p>
+
+    <h2 class="govuk-heading-m">Use your authenticator app to register on the service</h2>
+
+    <p>
+      Once your authenticator app is installed on your device, you will then need to open it
+      and scan the QR code or manually enter the supplied code.
+    </p>
+
+    <p>
+      Your authenticator app will then be set up for the service. A six-digit passcode will appear
+      in the authenticator app, this passcode can then be entered on the service.
+      You will now be able to use your authenticator app to login to your account.
+    </p>
+
+    <h2 class="govuk-heading-m">Advantages of an authenticator app for 2FA</h2>
+
+    <p>
+      2FA provides a way to ensure that you are the person you claim to be when accessing services,
+      it prevents unauthorised people from accessing your account.
+      This second method of authentication is done through something which only you will have access to.
+    </p>
+
+    <p>
+      Whilst 2FA passcodes can be received by text, the main advantage of using an authenticator app
+      for 2FA is that you do not need a mobile phone signal to receive passcodes.
+      Authenticator apps are also more secure, as passcodes sent by text are at higher risk of being intercepted.
+    </p>
+  </div>
+</div>

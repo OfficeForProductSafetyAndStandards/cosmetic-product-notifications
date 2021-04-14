@@ -174,6 +174,7 @@ Rails.application.routes.draw do
   namespace :guidance, as: "" do
     get :how_to_notify_nanomaterials, path: "how-to-notify-nanomaterials"
     get :how_to_prepare_images_for_notification, path: "how-to-prepare-images-for-notification"
+    get :how_to_set_up_authenticator_app, path: "how-to-set-up-authenticator-app"
   end
 
   namespace :help, as: "" do
