@@ -20,7 +20,7 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-!-width-one-third" scope="row">
-            Responsible person
+            Business name
           </th>
           <td class="govuk-table__cell"><%= @responsible_person.name %></td>
         </tr>
@@ -36,6 +36,10 @@
       </tbody>
     </table>
 
-    <%= render "notifications/contact_persons_list", contact_persons: @responsible_person. contact_persons %>
+    <h2 class="govuk-heading-m">Contact person</h2>
+
+    <% @responsible_person.contact_persons.each do |contact_person| %>
+      <%= render "/notifications/contact_person_details", contact_person: contact_person %>
+    <% end %>
   </div>
 </div>
