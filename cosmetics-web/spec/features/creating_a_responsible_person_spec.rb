@@ -9,7 +9,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
   end
 
   scenario "creating a resposible person as a individual sole trader" do
-    visit(root_path)
+    visit(submit_root_path)
 
     expect_to_be_on__responsible_person_declaration_page
     click_button "I confirm"
@@ -27,7 +27,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
   end
 
   scenario "creating a responsible person as a limited company" do
-    visit(root_path)
+    visit(submit_root_path)
 
     expect_to_be_on__responsible_person_declaration_page
     click_button "I confirm"
@@ -47,7 +47,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
   scenario "creating a responsible person with the same name as an existing one" do
     create(:responsible_person, :with_a_contact_person, name: "Auto-test rpuser")
 
-    visit(root_path)
+    visit(submit_root_path)
 
     expect_to_be_on__responsible_person_declaration_page
     click_button "I confirm"
@@ -88,7 +88,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     rp = create(:responsible_person, :with_a_contact_person, name: "Auto-test rpuser")
     create(:pending_responsible_person_user, responsible_person: rp, email_address: user.email)
 
-    visit(root_path)
+    visit(submit_root_path)
 
     expect_to_be_on__responsible_person_declaration_page
     click_button "I confirm"
