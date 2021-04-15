@@ -15,7 +15,7 @@ module SecondaryAuthenticationConcern
       redirect_to(registration_new_account_security_path)
     elsif !secondary_authentication_present_in_session? || user.mobile_number_pending_verification?
       session[:secondary_authentication_redirect_to] = redirect_to
-      session[:secondary_authentication_user_id] = user_id_for_secondary_authentication
+      session[:secondary_authentication_user_id] = user.id
       session[:secondary_authentication_notice] = notice
       session[:secondary_authentication_confirmation] = confirmation
       if use_sms_authentication?
