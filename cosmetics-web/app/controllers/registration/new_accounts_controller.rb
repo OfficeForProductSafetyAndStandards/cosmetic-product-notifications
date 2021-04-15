@@ -5,6 +5,7 @@ module Registration
     skip_before_action :require_secondary_authentication
 
     def new
+      sign_out
       @new_account_form = NewAccountForm.new
     end
 
