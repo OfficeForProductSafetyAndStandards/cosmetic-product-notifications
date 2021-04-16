@@ -2,7 +2,7 @@ module MyAccount
   class EmailController < SubmitApplicationController
     skip_before_action :create_or_join_responsible_person
 
-    def show
+    def edit
       @user = current_user
     end
 
@@ -11,7 +11,7 @@ module MyAccount
 
       unless @user.valid_password?(dig_params(:password))
         @user.errors.add(:password, "Password is incorrect")
-        return render :show
+        return render :edit
       end
 
       @user.new_email = dig_params(:new_email)
@@ -22,7 +22,7 @@ module MyAccount
         render "users/check_your_email/show"
       end
     rescue StandardError
-      render :show
+      render :edit
     end
 
     def confirm
