@@ -4,7 +4,6 @@ module MyAccount
 
     def show
       @user = current_user
-      render "email"
     end
 
     def update
@@ -12,7 +11,7 @@ module MyAccount
 
       unless @user.valid_password?(dig_params(:password))
         @user.errors.add(:password, "Password is incorrect")
-        return render "email"
+        return render :show
       end
 
       @user.new_email = dig_params(:new_email)
@@ -23,7 +22,7 @@ module MyAccount
         render "users/check_your_email/show"
       end
     rescue StandardError
-      render "email"
+      render :show
     end
 
     def confirm

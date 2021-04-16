@@ -2,7 +2,6 @@ module MyAccount
   class NameController < ApplicationController
     def show
       @user = current_user
-      render "name"
     end
 
     def update
@@ -13,7 +12,7 @@ module MyAccount
       if @user.save
         redirect_to my_account_path, confirmation: "Name changed successfully"
       else
-        render "name"
+        render :show
       end
     end
   end
