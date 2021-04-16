@@ -35,7 +35,10 @@ jobs:
         cf delete-service -f cosmetics-review-redis-$PR_NUMBER
         cf logout
 
-    - name: Deactivate Github deploy
+    - name: Checkout code to get deploy functions
+      uses: actions/checkout@v2
+
+    - name: Deactivate Github deployment
       env:
         GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
       run: |
