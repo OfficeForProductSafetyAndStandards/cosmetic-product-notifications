@@ -157,12 +157,14 @@ Rails.application.routes.draw do
   end
 
   resource :my_account, only: [:show], controller: :my_account do
-    resource :password, controller: :my_account_password, only: %i[show update]
-    resource :name, controller: :my_account_name, only: %i[show update]
-    resource :mobile_number, controller: :my_account_mobile_number, only: %i[show update]
-    resource :email, controller: :my_account_email, only: %i[show update] do
-      member do
-        get :confirm
+    scope module: :my_account do
+      resource :password, controller: :password, only: %i[edit update]
+      resource :name, controller: :name, only: %i[edit update]
+      resource :mobile_number, controller: :mobile_number, only: %i[edit update]
+      resource :email, controller: :email, only: %i[edit update] do
+        member do
+          get :confirm
+        end
       end
     end
   end
