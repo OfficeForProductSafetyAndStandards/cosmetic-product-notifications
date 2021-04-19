@@ -41,11 +41,7 @@ module SecondaryAuthentication
       end
 
       def user_with_secondary_authentication_request
-        if current_user && current_user.id == session[:secondary_authentication_user_id]
-          current_user
-        else
-          User.find_by(id: session[:secondary_authentication_user_id])
-        end
+        User.find_by(id: session[:secondary_authentication_user_id])
       end
 
       def mobile_number_param
