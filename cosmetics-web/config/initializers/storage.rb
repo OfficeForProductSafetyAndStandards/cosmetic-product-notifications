@@ -9,4 +9,5 @@ end
 
 # MasterAnalyzer is the only one that we pass to active_storage
 Rails.application.config.active_storage.analyzers = [MasterAnalyzer]
-Rails.application.config.active_storage.queue = :cosmetics
+Rails.application.config.active_storage.queues.analysis = :cosmetics_active_storage_analysis
+Rails.application.config.active_storage.queues.purge    = :cosmetics_active_storage_purge

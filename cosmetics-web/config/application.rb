@@ -49,5 +49,6 @@ module Cosmetics
     config.two_factor_attempts = 10
     config.whitelisted_2fa_code = ENV["WHITELISTED_2FA_CODE"]
     config.vcap_application = ENV["VCAP_APPLICATION"]
+    config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob"
   end
 end
