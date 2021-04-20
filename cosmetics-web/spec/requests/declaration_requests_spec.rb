@@ -30,7 +30,7 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
       end
 
       it "redirects to the homepage" do
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(submit_root_path)
       end
 
       it "updates the user attributes" do

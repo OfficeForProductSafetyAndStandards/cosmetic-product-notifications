@@ -11,7 +11,7 @@ class ResponsiblePersons::FormulationUploadController < SubmitApplicationControl
       if @component.save
         redirect_to responsible_person_notification_additional_information_index_path(@component.notification.responsible_person, @component.notification)
       else
-        @component.formulation_file.purge
+        @component.formulation_file.delete
         @component.errors.messages[:formulation_file].map(&method(:add_error))
         render :new
       end
