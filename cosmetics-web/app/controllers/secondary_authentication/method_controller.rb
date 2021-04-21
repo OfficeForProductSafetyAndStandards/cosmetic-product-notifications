@@ -17,7 +17,6 @@ module SecondaryAuthentication
 
     def create
       if form.valid?
-        session[:secondary_authentication_method] = form.authentication_method
         redirect_to authentication_method_path(form.authentication_method)
       else
         render :new
