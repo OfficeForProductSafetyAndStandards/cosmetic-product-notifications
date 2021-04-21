@@ -5,8 +5,9 @@ module PageMatchers
 
   # Matcher for items within the [Summary list](https://design-system.service.gov.uk/components/summary-list/) component.
   #
-  # Note: currently this expects table markup. However this should be updated to use
-  # definition list (`<dd>` and `<dt>`) markup when the template is updated.
+  # Works with both:
+  # - Old table markup (`<th>` and `<td>`).
+  # - New definition list markup (`<dt>` and `<dd>`).
   class HaveSummaryItem
     def initialize(key:, value:)
       @key = key
@@ -16,8 +17,8 @@ module PageMatchers
     def matches?(page)
       @page = page
       begin
-        @key_element = @page.find("th", text: @key, exact_text: true)
-        @sibling_element = @key_element.sibling("td", text: @value, exact_text: true)
+        @key_element = @page.find("th, dt", text: @key, exact_text: true)
+        @sibling_element = @key_element.sibling("td, dd", text: @value, exact_text: true)
       rescue StandardError
         Capybara::ElementNotFound
       end
@@ -27,9 +28,9 @@ module PageMatchers
 
     def failure_message
       if !@key_element
-        "Could not find <th> containing ‘#{@key}’ within #{@page.html}"
+        "Could not find <th> or <dt> containing ‘#{@key}’ within #{@page.html}"
       elsif !@sibling_element
-        "Could not find sibling <td> containing ‘#{@value}’ within #{@key_element.find(:xpath, '..').native}"
+        "Could not find sibling <td> or <dd> containing ‘#{@value}’ within #{@key_element.find(:xpath, '..').native}"
       end
     end
   end
