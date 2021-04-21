@@ -1,4 +1,10 @@
 class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
+  EDIT_FIELD_VIEW = {
+    "name" => :edit_name,
+    "email_address" => :edit_email_address,
+    "phone_number" => :edit_phone_number,
+  }.freeze
+
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person
   before_action :set_contact_person
@@ -7,19 +13,26 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
 
   def create
     if @contact_person.save
-      redirect_contact_person
+      redirect_to responsible_person_notifications_path(@responsible_person)
     else
       render :new
     end
   end
 
-  def edit; end
+  def edit
+    view = EDIT_FIELD_VIEW[params[:field]]
+    return redirect_to responsible_person_path(@responsible_person) unless view
+
+    render view
+  end
 
   def update
+    field = contact_person_params.keys.first
     if @contact_person.update(contact_person_params)
-      redirect_contact_person
+      redirect_to responsible_person_path(@responsible_person),
+                  confirmation: "Contact person #{field.humanize(capitalize: false)} changed successfully"
     else
-      render :edit
+      render EDIT_FIELD_VIEW[field]
     end
   end
 
@@ -44,9 +57,5 @@ private
       :phone_number,
       :name,
     )
-  end
-
-  def redirect_contact_person
-    redirect_to responsible_person_notifications_path(@responsible_person)
   end
 end

@@ -1,0 +1,23 @@
+<% title = "Change contact person name for #{@responsible_person.name}" %>
+<% content_for :page_title, title %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: responsible_person_path(@responsible_person)  %>
+<% end %>
+
+<%= form_with model: @contact_person, url: responsible_person_contact_person_path(@responsible_person, @contact_person), html: { novalidate: true }, method: :put do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <%= error_summary_for(@contact_person) %>
+
+      <h1 class="govuk-heading-l"><%= title %></h1>
+
+      <%= render "form_components/govuk_input", form: form, key: :name,
+            label: { text: "Full name" } %>
+
+      <div class="govuk-form-group">
+        <%= govukButton text: "Continue" %>
+      </div>
+    </div>
+  </div>
+<% end %>
