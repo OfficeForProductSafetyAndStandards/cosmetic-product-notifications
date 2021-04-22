@@ -309,7 +309,7 @@ RSpec.describe CpnpNotificationImporter do
   end
 
   def create_cpnp_parser(filename = "testExportFile.zip")
-    path = Rails.root.join("spec", "fixtures", filename)
+    path = Rails.root.join("spec", "fixtures", "files", filename)
     Zip::File.open(path) do |files|
       files.each do |file|
         name_regexp = /[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{16}.*\.xml/

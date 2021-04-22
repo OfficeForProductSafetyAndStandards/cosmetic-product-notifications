@@ -18,6 +18,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     # First attempt not selecting a secondary authentication method
     fill_in_account_details_with(full_name: "Bob Jones", password: "testpassword123@")
+    $debug = true
     click_button "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")

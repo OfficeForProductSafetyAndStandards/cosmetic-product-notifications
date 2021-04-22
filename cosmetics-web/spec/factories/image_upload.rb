@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :image_upload do
     notification
-    file { Rack::Test::UploadedFile.new("spec/fixtures/testPdf.pdf", "image/png") }
+    file { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "image/png") }
 
     trait :uploaded_and_virus_scanned do
       after(:stub, :create) do |image_upload|
