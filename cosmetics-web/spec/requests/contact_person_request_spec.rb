@@ -140,12 +140,12 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
   end
 
   describe "updating the contact person’s details" do
-    RSpec.shared_examples "does not update" do
+    RSpec.shared_examples "validation error" do
       it "renders a page instead of redirecting" do
         expect(response.status).to be 200
       end
 
-      it "displays an error message" do
+      it "includes a validation error message in the response" do
         expect(response.body).to include("There is a problem")
       end
 
@@ -155,6 +155,24 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
           email_address: "alpha@example.com",
           phone_number: "07711 111111",
         )
+      end
+    end
+
+    RSpec.shared_examples "not changed" do
+      it "redirects to the responsible person page" do
+        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}")
+      end
+
+      it "does not update contact person details" do
+        expect(contact_person.reload).to have_attributes(
+          name: "Alpha Person",
+          email_address: "alpha@example.com",
+          phone_number: "07711 111111",
+        )
+      end
+
+      it "does not include a confirmation message in the response" do
+        expect(response.body).not_to include("changed successfully")
       end
     end
 
@@ -188,12 +206,23 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
             phone_number: "07711 111111",
           )
         end
+
+        it "response includes a confirmation message" do
+          follow_redirect!
+          expect(response.body).to include("Contact person name changed successfully")
+        end
       end
 
       context "when name is missing" do
         let(:contact_person_params) { { name: "" } }
 
-        include_examples "does not update"
+        include_examples "validation error"
+      end
+
+      context "when the given name is the same as the current one" do
+        let(:contact_person_params) { { name: "Alpha Person" } }
+
+        include_examples "not changed"
       end
     end
 
@@ -212,12 +241,23 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
             phone_number: "07711 111111",
           )
         end
+
+        it "response includes a confirmation message" do
+          follow_redirect!
+          expect(response.body).to include("Contact person email address changed successfully")
+        end
       end
 
       context "when email address format is wrong" do
         let(:contact_person_params) { { email_address: "wrongFormat" } }
 
-        include_examples "does not update"
+        include_examples "validation error"
+      end
+
+      context "when the given email address is the same as the current one" do
+        let(:contact_person_params) { { email_address: "alpha@example.com" } }
+
+        include_examples "not changed"
       end
     end
 
@@ -236,12 +276,23 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
             phone_number: "07722 222222",
           )
         end
+
+        it "response includes a confirmation message" do
+          follow_redirect!
+          expect(response.body).to include("Contact person phone number changed successfully")
+        end
       end
 
       context "when phone number format is wrong" do
         let(:contact_person_params) { { phone_number: "000" } }
 
-        include_examples "does not update"
+        include_examples "validation error"
+      end
+
+      context "when the given phone number is the same as the current one" do
+        let(:contact_person_params) { { phone_number: "07711 111111" } }
+
+        include_examples "not changed"
       end
     end
   end

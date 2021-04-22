@@ -27,10 +27,14 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
   end
 
   def update
+    # As the edit pages have only one field per page, updates will come with a single field being updated.
+    # Possible field values: "name", "email_address", "phone_number"
     field = contact_person_params.keys.first
-    if @contact_person.update(contact_person_params)
-      redirect_to responsible_person_path(@responsible_person),
-                  confirmation: "Contact person #{field.humanize(capitalize: false)} changed successfully"
+    @contact_person.public_send("#{field}=", contact_person_params[field])
+
+    changed = @contact_person.changed?
+    if @contact_person.save
+      redirect_to(responsible_person_path(@responsible_person), confirmation: confirmation_message(field, changed))
     else
       render EDIT_FIELD_VIEW[field]
     end
@@ -57,5 +61,11 @@ private
       :phone_number,
       :name,
     )
+  end
+
+  def confirmation_message(field, changed)
+    return unless changed # Don't set confirmation message when submitted value does not change the current value
+
+    "Contact person #{field.humanize(capitalize: false)} changed successfully"
   end
 end
