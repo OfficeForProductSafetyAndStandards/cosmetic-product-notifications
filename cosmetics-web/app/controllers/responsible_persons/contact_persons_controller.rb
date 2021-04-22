@@ -44,7 +44,7 @@ private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
-    authorize @responsible_person, :show?
+    authorize @responsible_person, :update?
   end
 
   def set_contact_person
