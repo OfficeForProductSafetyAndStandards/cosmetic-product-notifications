@@ -39,4 +39,6 @@ Rails.application.configure do
   if ENV["DIRECT_UPLOAD_DOMAIN"]
     config.action_controller.default_url_options = { host: ENV["DIRECT_UPLOAD_DOMAIN"], port: ENV.fetch("PORT", "3000") }
   end
+
+  config.active_record.verbose_query_logs = true
 end
