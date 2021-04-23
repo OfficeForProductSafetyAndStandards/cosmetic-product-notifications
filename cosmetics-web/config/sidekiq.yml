@@ -3,3 +3,5 @@
 :queues:
   - cosmetics
   - cosmetics-mailers
+  - cosmetics_active_storage_analysis
+  - cosmetics_active_storage_purge
