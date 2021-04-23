@@ -66,7 +66,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
       it "registers the issue in the log" do
         allow(Rails.logger).to receive(:info)
         inviter.call
-        expect(Rails.logger).to have_received(:info).with("[InviteSearchUser] #{user.email} is already registered in the service and cannot be re-invited.")
+        expect(Rails.logger).to have_received(:info).with("[InviteSearchUser] User with id: #{user.id} is already registered in the service and cannot be re-invited.")
       end
     end
   end

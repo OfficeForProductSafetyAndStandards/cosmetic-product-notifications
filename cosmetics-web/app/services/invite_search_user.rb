@@ -26,7 +26,7 @@ private
 
   def send_invite
     if user.account_security_completed?
-      Rails.logger.info "[InviteSearchUser] #{user.email} is already registered in the service and cannot be re-invited."
+      Rails.logger.info "[InviteSearchUser] User with id: #{user.id} is already registered in the service and cannot be re-invited."
     else
       if !user.invitation_token || (user.invited_at < 1.hour.ago)
         user.update! invitation_token: (user.invitation_token || SecureRandom.hex(15)), invited_at: Time.zone.now
