@@ -1,7 +1,7 @@
 module OneOff
   class Email
     def initialize(email)
-      @email = email
+      @email = email.strip
       extract_names
     end
 
