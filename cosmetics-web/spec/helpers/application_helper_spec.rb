@@ -12,9 +12,9 @@ describe ApplicationHelper do
     let(:view) { view_class.new }
     let(:errors) do
       [
-        [:name, "Name cannot be blank"],
-        [:email, "Email cannot be blank"],
-        [:mobile_number, "Mobile number is too short"],
+        OpenStruct.new(attribute: :name, message: "Name cannot be blank"),
+        OpenStruct.new(attribute: :email, message: "Email cannot be blank"),
+        OpenStruct.new(attribute: :mobile_number, message: "Mobile number is too short"),
       ]
     end
 

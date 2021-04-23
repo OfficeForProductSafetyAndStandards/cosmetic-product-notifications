@@ -14,12 +14,11 @@ module ApplicationHelper
     ordered_errors = ActiveSupport::OrderedHash.new
     ordered_attributes.map { |attr| ordered_errors[attr] = [] }
 
-    binding.pry if $debug
     errors.map do |error|
       next if error.blank?
 
       href = if map_errors[error.attribute]
-               "##{error.message}"
+               "##{map_errors[error.attribute]}"
              else
                "##{error.attribute}"
              end
