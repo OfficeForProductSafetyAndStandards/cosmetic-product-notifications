@@ -123,6 +123,15 @@ def expect_back_link_to_incomplete_notifications_page
   expect_back_link_to("/responsible_persons/#{responsible_person.id}/notifications#incomplete")
 end
 
+def expect_to_be_on__responsible_person_page
+  expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}")
+  expect(page).to have_h1("Responsible person")
+end
+
+def expect_back_link_to_responsible_person_page
+  expect(page).to have_link("Back", href: "/responsible_persons/#{responsible_person.id}")
+end
+
 def expect_to_be_on__was_eu_notified_about_products_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/have_products_been_notified_in_eu")
   expect(page).to have_h1("Has the EU been notified about these products using CPNP?")
