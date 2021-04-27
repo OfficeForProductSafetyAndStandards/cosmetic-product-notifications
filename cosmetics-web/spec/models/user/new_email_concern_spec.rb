@@ -3,45 +3,62 @@ require "rails_helper"
 RSpec.describe User, type: :model do
   describe "change email" do
     let(:old_email) { "old@example.com" }
-    let(:user) { create(:submit_user, email: old_email) }
     let(:expected_token) { "foobar" }
     let(:new_email) { "new@example.com" }
-    let(:new_email_expiration_expiration) { Time.zone.now + User::NEW_EMAIL_TOKEN_VALID_FOR }
+    let(:new_email_expiration) { Time.zone.now + User::NEW_EMAIL_TOKEN_VALID_FOR }
 
     before do
       freeze_time
-      allow(SecureRandom).to receive(:uuid).and_return(expected_token)
-      mailer = double
-      allow(NotifyMailer).to receive(:update_email_address_notification_email).and_return(mailer)
-      allow(mailer).to receive(:deliver_later)
-
-      user.new_email = new_email
-      user.save
     end
 
     after do
       travel_back
     end
 
-    describe "#new_email=" do
+    describe "#new_email_pending_to_confirm!" do
+      let(:user) { create(:submit_user, email: old_email) }
+      let(:mailer) { double }
+
+      before do
+        allow(SecureRandom).to receive(:uuid).and_return(expected_token)
+        allow(NotifyMailer).to receive(:new_email_verification_email).and_return(mailer)
+        allow(mailer).to receive(:deliver_later)
+      end
+
       context "when successful" do
         it "saves email" do
-          expect(user.reload.new_email).to eq(new_email)
+          expect {
+            user.new_email_pending_confirmation!(new_email)
+            user.reload
+          }.to change(user, :new_email).from(nil).to(new_email)
         end
 
-        it "generate_new_email_token" do
-          expect(user.reload.new_email_confirmation_token).to eq(expected_token)
+        it "sets a token for confirming the new email" do
+          expect {
+            user.new_email_pending_confirmation!(new_email)
+            user.reload
+          }.to change(user, :new_email_confirmation_token).from(nil).to(expected_token)
         end
 
         it "sets token validity" do
-          expect(user.reload.new_email_confirmation_token_expires_at).to eq(new_email_expiration_expiration)
+          expect {
+            user.new_email_pending_confirmation!(new_email)
+            user.reload
+          }.to change(user, :new_email_confirmation_token_expires_at).from(nil).to(new_email_expiration)
+        end
+
+        it "sends a confirmation email" do
+          user.new_email_pending_confirmation!(new_email)
+          expect(mailer).to have_received(:deliver_later)
         end
       end
 
       context "with validation errors" do
         shared_examples "invalid email" do
           specify do
-            expect(user).not_to be_valid
+            expect {
+              user.new_email_pending_confirmation!(new_email)
+            }.to raise_error(ActiveRecord::RecordInvalid)
           end
         end
 
@@ -65,30 +82,12 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe "#new_email!(token)" do
-      context "when token is valid" do
-        before do
-          described_class.new_email!(expected_token)
-        end
-
-        it "changes email successfully" do
-          expect(user.reload.email).to eq(new_email)
-        end
-
-        # rubocop:disable RSpec/MultipleExpectations
-        it "clears all new_email fields" do
-          expect(user.reload.new_email).to eq(nil)
-          expect(user.reload.new_email_confirmation_token).to eq(nil)
-          expect(user.reload.new_email_confirmation_token_expires_at).to eq(nil)
-        end
-        # rubocop:enable RSpec/MultipleExpectations
-      end
-
-      context "when token is invalid" do
+    describe ".confirm_new_email!(token)" do
+      shared_examples "invalid token" do
         # rubocop:disable RSpec/ExampleLength
         it "does not change email" do
           begin
-            described_class.new_email!("token")
+            described_class.confirm_new_email!(token)
           rescue StandardError
             nil
           end
@@ -97,29 +96,60 @@ RSpec.describe User, type: :model do
         # rubocop:enable RSpec/ExampleLength
 
         it "raises ArgumentError" do
-          expect { described_class.new_email!("token") }.to raise_error(ArgumentError)
+          expect { described_class.confirm_new_email!(token) }.to raise_error(ArgumentError)
         end
       end
 
+      let(:user) do
+        create(:submit_user,
+               email: old_email,
+               new_email: new_email,
+               new_email_confirmation_token: expected_token,
+               new_email_confirmation_token_expires_at: new_email_expiration)
+      end
+      let(:mailer) { double }
+
+      before do
+        allow(NotifyMailer).to receive(:update_email_address_notification_email).and_return(mailer)
+        allow(mailer).to receive(:deliver_later)
+      end
+
+      context "when token is valid" do
+        let(:token) { expected_token }
+
+        it "changes email successfully" do
+          expect {
+            described_class.confirm_new_email!(token)
+            user.reload
+          }.to change(user, :email).from(old_email).to(new_email)
+        end
+
+        # rubocop:disable RSpec/ExampleLength
+        it "clears all new_email fields" do
+          expect {
+            described_class.confirm_new_email!(token)
+            user.reload
+          }.to change(user, :new_email).from(new_email).to(nil)
+           .and change(user, :new_email_confirmation_token).from(expected_token).to(nil)
+           .and change(user, :new_email_confirmation_token_expires_at).from(new_email_expiration).to(nil)
+        end
+        # rubocop:enable RSpec/ExampleLength
+      end
+
+      context "when token is invalid" do
+        let(:token) { "wrong-token" }
+
+        include_examples "invalid token"
+      end
+
       context "when token is expired" do
+        let(:token) { expected_token }
+
         before do
           travel_to(Time.zone.now + User::NEW_EMAIL_TOKEN_VALID_FOR + 1)
         end
 
-        # rubocop:disable RSpec/ExampleLength
-        it "does not change email" do
-          begin
-            described_class.new_email!(expected_token)
-          rescue StandardError
-            nil
-          end
-          expect(user.reload.email).to eq(old_email)
-        end
-        # rubocop:enable RSpec/ExampleLength
-
-        it "raises ArgumentError" do
-          expect { described_class.new_email!(expected_token) }.to raise_error(ArgumentError)
-        end
+        include_examples "invalid token"
       end
     end
   end
