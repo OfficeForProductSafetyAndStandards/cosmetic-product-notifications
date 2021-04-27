@@ -117,8 +117,4 @@ private
   end
   helper_method :user_password_path
 
-  def root_path
-    submit_domain? ? submit_root_path : search_root_path
-  end
-  helper_method :root_path
 end

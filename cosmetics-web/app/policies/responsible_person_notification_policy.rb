@@ -39,6 +39,10 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
 
 private
 
+  def pundit_user
+    current_submit_user
+  end
+
   def user_member_of_associated_responsible_person?
     user.responsible_persons.include?(record&.responsible_person)
   end
