@@ -14,19 +14,14 @@ module MyAccount
         return render :edit
       end
 
-      @user.new_email = dig_params(:new_email)
-
-      ActiveRecord::Base.transaction do
-        @user.save!
-        @user.reload.send_new_email_confirmation_email
-        render "users/check_your_email/show"
-      end
+      @user.new_email_pending_confirmation!(dig_params(:new_email))
+      render "users/check_your_email/show"
     rescue StandardError
       render :edit
     end
 
     def confirm
-      User.new_email!(params[:confirmation_token])
+      User.confirm_new_email!(params[:confirmation_token])
       redirect_to my_account_path, confirmation: "Email changed successfully"
     rescue ArgumentError
       redirect_to my_account_path, alert: "Email can not be changed, confirmation token is incorrect. Please try again."
