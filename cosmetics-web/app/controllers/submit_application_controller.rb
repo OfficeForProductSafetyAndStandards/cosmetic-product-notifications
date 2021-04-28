@@ -26,9 +26,4 @@ private
   def authorize_user!
     redirect_to invalid_account_path if current_user && !current_user.is_a?(SubmitUser)
   end
-
-  def root_path
-    submit_root_path
-  end
-  helper_method :root_path
 end
