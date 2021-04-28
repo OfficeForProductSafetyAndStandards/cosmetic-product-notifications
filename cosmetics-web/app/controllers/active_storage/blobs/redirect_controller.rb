@@ -8,6 +8,6 @@ class ActiveStorage::Blobs::RedirectController < ActiveStorage::BaseController
   include ActiveStorage::SetBlob
 
   def show
-    redirect_to '/'
+    redirect_to "/"
   end
 end

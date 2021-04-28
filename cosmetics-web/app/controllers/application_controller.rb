@@ -116,5 +116,4 @@ private
     submit_domain? ? submit_user_password_path : search_user_password_path
   end
   helper_method :user_password_path
-
 end

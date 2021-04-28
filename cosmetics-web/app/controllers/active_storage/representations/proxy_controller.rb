@@ -4,6 +4,6 @@
 # This is override from original rails implementation
 class ActiveStorage::Representations::ProxyController < ActiveStorage::BaseController
   def show
-    redirect_to '/'
+    redirect_to "/"
   end
 end

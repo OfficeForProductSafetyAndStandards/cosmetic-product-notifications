@@ -5,8 +5,7 @@
 # security-through-obscurity factor of the signed blob and variation reference, you'll need to implement your own
 # authenticated redirection controller.
 class ActiveStorage::Representations::RedirectController < ActiveStorage::BaseController
-
   def show
-    redirect_to '/'
+    redirect_to "/"
   end
 end
