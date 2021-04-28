@@ -1,14 +1,44 @@
-<dl class="govuk-summary-list govuk-!-margin-bottom-9">
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Business name</dt>
-    <dd class="govuk-summary-list__value"><%= contact_person.name %></dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Email address</dt>
-    <dd class="govuk-summary-list__value"><%= contact_person.email_address %></dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Phone number</dt>
-    <dd class="govuk-summary-list__value"><%= contact_person.phone_number %></dd>
-  </div>
-</dl>
+<%= govukSummaryList(
+  classes: "govuk-summary-list govuk-!-margin-bottom-9",
+  rows: [
+    {
+      key: { text: "Name" },
+      value: { text: contact_person.name },
+      actions: {
+        items: [
+          {
+            href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "name"),
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      }
+    },
+    {
+      key: { text: "Email address" },
+      value: { text: contact_person.email_address },
+      actions: {
+        items: [
+          {
+            href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "email_address"),
+            text: "Change",
+            visuallyHiddenText: "email address"
+          }
+        ]
+      }
+    },
+    {
+      key: { text: "Phone number" },
+      value: { text: contact_person.phone_number },
+      actions: {
+        items: [
+          {
+            href: edit_responsible_person_contact_person_path(contact_person.responsible_person,  contact_person, field: "phone_number"),
+            text: "Change",
+            visuallyHiddenText: "phone number"
+          }
+        ]
+      }
+    },
+  ]
+) %>

@@ -1,4 +1,10 @@
 class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
+  EDIT_FIELD_VIEW = {
+    "name" => :edit_name,
+    "email_address" => :edit_email_address,
+    "phone_number" => :edit_phone_number,
+  }.freeze
+
   skip_before_action :create_or_join_responsible_person
   before_action :set_responsible_person
   before_action :set_contact_person
@@ -7,19 +13,30 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
 
   def create
     if @contact_person.save
-      redirect_contact_person
+      redirect_to responsible_person_notifications_path(@responsible_person)
     else
       render :new
     end
   end
 
-  def edit; end
+  def edit
+    view = EDIT_FIELD_VIEW[params[:field]]
+    return redirect_to responsible_person_path(@responsible_person) unless view
+
+    render view
+  end
 
   def update
-    if @contact_person.update(contact_person_params)
-      redirect_contact_person
+    # As the edit pages have only one field per page, updates will come with a single field being updated.
+    # Possible field values: "name", "email_address", "phone_number"
+    field = contact_person_params.keys.first
+    @contact_person.public_send("#{field}=", contact_person_params[field])
+
+    changed = @contact_person.changed?
+    if @contact_person.save
+      redirect_to(responsible_person_path(@responsible_person), confirmation: confirmation_message(field, changed))
     else
-      render :edit
+      render EDIT_FIELD_VIEW[field]
     end
   end
 
@@ -27,7 +44,7 @@ private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
-    authorize @responsible_person, :show?
+    authorize @responsible_person, :update?
   end
 
   def set_contact_person
@@ -46,7 +63,9 @@ private
     )
   end
 
-  def redirect_contact_person
-    redirect_to responsible_person_notifications_path(@responsible_person)
+  def confirmation_message(field, changed)
+    return unless changed # Don't set confirmation message when submitted value does not change the current value
+
+    "Contact person #{field.humanize(capitalize: false)} changed successfully"
   end
 end

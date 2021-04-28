@@ -62,6 +62,12 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
           user.reload
         }.to not_change { user.invited_at.round }.and not_change(user, :invitation_token)
       end
+
+      it "registers the issue in the log" do
+        allow(Rails.logger).to receive(:info)
+        inviter.call
+        expect(Rails.logger).to have_received(:info).with("[InviteSearchUser] User with id: #{user.id} is already registered in the service and cannot be re-invited.")
+      end
     end
   end
 

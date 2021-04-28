@@ -104,7 +104,7 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
       end
 
       it "responds with a 404 Page not found error" do
-        expect(response.status).to be(404)
+        expect(response).to redirect_to("/404")
       end
     end
   end

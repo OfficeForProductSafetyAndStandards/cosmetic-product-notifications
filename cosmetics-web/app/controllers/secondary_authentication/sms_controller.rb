@@ -8,14 +8,10 @@ module SecondaryAuthentication
 
     def new
       user_id = session[:secondary_authentication_user_id]
-      return redirect_to(root_path) unless user_id
+      return redirect_to(root_path) unless user_id && sms_authentication_available?
 
-      if user_needs_to_choose_secondary_authentication_method?
-        redirect_to new_secondary_authentication_method_path
-      else
-        @form = Sms::AuthForm.new(user_id: user_id)
-        @form.secondary_authentication.generate_and_send_code(current_operation)
-      end
+      @form = Sms::AuthForm.new(user_id: user_id)
+      @form.secondary_authentication.generate_and_send_code(current_operation)
     end
 
     def create
@@ -23,7 +19,6 @@ module SecondaryAuthentication
         set_secondary_authentication_cookie(Time.zone.now.to_i)
         form.try_to_verify_user_mobile_number
         session[:secondary_authentication_user_id] = nil
-        session[:secondary_authentication_method] = nil
         redirect_to_saved_path
       else
         if sms_authentication.otp_expired? && !sms_authentication.otp_locked?
