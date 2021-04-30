@@ -35,7 +35,7 @@
               ]
             }
           },
-          {
+          ({
             key: { text: "Mobile number" },
             value: { text: current_user.mobile_number },
             actions: {
@@ -47,7 +47,7 @@
                 }
               ]
             }
-          },
+          } if current_user.mobile_number.present?),
           {
             key: { text: "Password" },
             value: { text: "********" },
@@ -61,7 +61,7 @@
               ]
             }
           }
-        ]
+        ].compact
       ) %>
     <% else %>
       <%= govukSummaryList(
