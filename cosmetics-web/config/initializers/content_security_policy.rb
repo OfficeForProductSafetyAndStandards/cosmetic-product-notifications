@@ -43,6 +43,8 @@ Rails.application.config.content_security_policy do |policy|
   policy.report_uri ENV.fetch("SENTRY_SECURITY_HEADER_ENDPOINT", "")
 end
 
-Rails.application.config.content_security_policy_report_only = true
+# Enable Report Only if you want the policy violations to be reported but not blocked, effectively allowing
+# the violating script execution.
+Rails.application.config.content_security_policy_report_only = false
 Rails.application.config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
 Rails.application.config.content_security_policy_nonce_directives = %w[script-src]
