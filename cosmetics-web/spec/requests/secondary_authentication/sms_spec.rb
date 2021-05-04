@@ -30,10 +30,9 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
 
         perform_enqueued_jobs
 
-        expect(notify_stub).to have_received(:send_sms)
-        #   .with(
-        #   hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
-        # )
+        expect(notify_stub).to have_received(:send_sms).with(
+          hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
+        )
       end
 
       it "displays sms authentication page" do
