@@ -83,6 +83,81 @@ RSpec.shared_examples "common user tests" do
     end
   end
 
+  describe "mobile number change callback" do
+    let(:user_factory) { user.class.to_s.underscore.to_sym }
+
+    context "when the mobile number changes" do
+      let(:new_user) { create(user_factory, :with_sms_secondary_authentication) }
+
+      before do
+        new_user.mobile_number = "07123456789"
+      end
+
+      it "sets the mobile number as not verified" do
+        expect {
+          new_user.save
+          new_user.reload
+        }.to change(new_user, :mobile_number_verified).from(true).to(false)
+      end
+
+      it "keeps sms as secondary authentication method" do
+        new_user.save
+        expect(new_user.reload.secondary_authentication_methods).to eq %w[sms]
+      end
+    end
+
+    context "when the mobile number does not change" do
+      let(:new_user) { create(user_factory, :with_sms_secondary_authentication) }
+
+      it "keeps the mobile number as verified" do
+        expect {
+          new_user.save
+          new_user.reload
+        }.not_to change(new_user, :mobile_number_verified).from(true)
+      end
+
+      it "keeps sms as secondary authentication method" do
+        new_user.save
+        expect(new_user.reload.secondary_authentication_methods).to eq %w[sms]
+      end
+    end
+
+    context "when the mobile number is set from prior null value" do
+      let(:new_user) { create(user_factory, :with_app_secondary_authentication) }
+
+      before do
+        new_user.mobile_number = "07123456789"
+      end
+
+      it "keeps the mobile number as not verified" do
+        expect {
+          new_user.save
+          new_user.reload
+        }.not_to change(new_user, :mobile_number_verified).from(false)
+      end
+
+      it "includes sms as secondary authentication method" do
+        expect {
+          new_user.save
+          new_user.reload
+        }.to change(new_user, :secondary_authentication_methods).from(%w[app]).to(%w[app sms])
+      end
+
+      context "when the verification is also changed set" do
+        before do
+          new_user.mobile_number_verified = true
+        end
+
+        it "keeps the verification change as given" do
+          expect {
+            new_user.save
+            new_user.reload
+          }.not_to change(new_user, :mobile_number_verified).from(true)
+        end
+      end
+    end
+  end
+
   describe "#mobile_number_verified?" do
     context "with secondary authentication enabled" do
       before do

@@ -16,9 +16,6 @@ module MyAccount
       end
 
       @user.mobile_number = dig_params(:mobile_number)
-      @user.mobile_number_verified = false
-      @user.enable_sms_authentication
-
       if @user.save
         redirect_to my_account_path, confirmation: "Mobile number #{previously_set ? 'changed' : 'set'} successfully"
       else
