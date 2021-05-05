@@ -19,7 +19,7 @@ gem "elasticsearch", "~> 7.9"
 gem "elasticsearch-model", "~> 7.1"
 gem "elasticsearch-rails", "~> 7.1"
 gem "govuk_notify_rails", "~> 2.1.0"
-gem 'image_processing', '~> 1.2'
+gem "image_processing", "~> 1.2"
 gem "interactor"
 gem "jbuilder", "~> 2.9"
 gem "lograge", "~> 0.11.2"
