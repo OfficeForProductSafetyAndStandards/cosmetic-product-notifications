@@ -47,8 +47,6 @@ class User < ApplicationRecord
     self.class::TOTP_ISSUER
   end
 
-private
-
   def sms_authentication_set?
     mobile_number.present? && mobile_number_verified?
   end
@@ -56,6 +54,14 @@ private
   def app_authentication_set?
     encrypted_totp_secret_key.present? && last_totp_at.present?
   end
+
+  def enable_sms_authentication
+    return if secondary_authentication_methods.include? "sms"
+
+    secondary_authentication_methods << "sms"
+  end
+
+private
 
   def secondary_authentication_set?
     !mobile_number_pending_verification? && (sms_authentication_set? || app_authentication_set?)

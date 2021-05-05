@@ -104,5 +104,26 @@
         ]
       ) %>
     <% end %>
+
+    <h2 class="govuk-heading-l">Your security preferences</h2>
+    <p class="govuk-body">This is how you get access codes.</p>
+      <%= govukSummaryList(
+        classes: "app-summary-list--key-weight-regular",
+        rows: [
+          {
+            key: { text: "Text message" },
+            value: { text: current_user.mobile_number },
+            actions: {
+              items: [
+                {
+                  href: edit_my_account_mobile_number_path,
+                  text: current_user.sms_authentication_set? ? "Update" : "Add",
+                  visuallyHiddenText: "text message"
+                }
+              ]
+            }
+          },
+        ]
+      ) %>
   </div>
 </div>
