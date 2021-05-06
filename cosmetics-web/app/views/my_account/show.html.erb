@@ -35,19 +35,6 @@
               ]
             }
           },
-          ({
-            key: { text: "Mobile number" },
-            value: { text: current_user.mobile_number },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_mobile_number_path,
-                  text: "Change",
-                  visuallyHiddenText: "mobile number"
-                }
-              ]
-            }
-          } if current_user.mobile_number.present?),
           {
             key: { text: "Password" },
             value: { text: "********" },
@@ -61,7 +48,7 @@
               ]
             }
           }
-        ].compact
+        ]
       ) %>
     <% else %>
       <%= govukSummaryList(
@@ -119,6 +106,19 @@
                   href: edit_my_account_mobile_number_path,
                   text: current_user.sms_authentication_set? ? "Update" : "Add",
                   visuallyHiddenText: "text message"
+                }
+              ]
+            }
+          },
+          {
+            key: { text: "App" },
+            value: { text: ("Authenticator App is set" if current_user.app_authentication_set?) },
+            actions: {
+              items: [
+                {
+                  href: edit_my_account_email_path,
+                  text: current_user.app_authentication_set? ? "Update" : "Add",
+                  visuallyHiddenText: "authenticator app"
                 }
               ]
             }
