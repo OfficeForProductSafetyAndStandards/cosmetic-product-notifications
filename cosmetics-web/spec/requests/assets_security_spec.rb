@@ -60,10 +60,10 @@ RSpec.describe "Asset security", type: :request do
       end
 
       context "when user is not logged in" do
-        it "redirects" do
-          get asset_url
-
-          expect(response.code.to_i).to eq(401)
+        it "raises exception" do
+          expect {
+            get asset_url
+          }.to raise_error(Pundit::NotAuthorizedError)
         end
       end
 
@@ -109,9 +109,9 @@ RSpec.describe "Asset security", type: :request do
 
       context "when user is not logged in" do
         it "redirects" do
-          get asset_url
-
-          expect(response.code.to_i).to eq(401)
+          expect {
+            get asset_url
+          }.to raise_error(Pundit::NotAuthorizedError)
         end
       end
 
