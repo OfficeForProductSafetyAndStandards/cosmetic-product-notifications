@@ -9,9 +9,14 @@ module DomainConcern
     submit_domains.include?(request.host)
   end
 
+  def root_path
+    submit_domain? ? submit_root_path : search_root_path
+  end
+
   included do
     helper_method :search_domain?
     helper_method :submit_domain?
+    helper_method :root_path
   end
 
 private

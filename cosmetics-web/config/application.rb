@@ -51,5 +51,7 @@ module Cosmetics
     config.whitelisted_2fa_code = ENV["WHITELISTED_2FA_CODE"]
     config.vcap_application = ENV["VCAP_APPLICATION"]
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob"
+
+    config.active_storage.resolve_model_to_route = :rails_storage_proxy
   end
 end
