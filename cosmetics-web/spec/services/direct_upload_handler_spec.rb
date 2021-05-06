@@ -7,8 +7,8 @@ RSpec.describe DirectUploadHandler, :with_stubbed_antivirus, :with_test_queue_ad
   let(:submit_user) { create(:submit_user) }
   let(:filename1) { "testExportWithComponentWithPHRange.zip" }
   let(:filename2) { "testExportWithComponentWithSinglePHValue.zip" }
-  let(:blob1) { ActiveStorage::Blob.create_after_upload!(filename: filename1, io: File.open(File.join("spec", "fixtures", filename1))) }
-  let(:blob2) { ActiveStorage::Blob.create_after_upload!(filename: filename2, io: File.open(File.join("spec", "fixtures", filename2))) }
+  let(:blob1) { ActiveStorage::Blob.create_and_upload!(filename: filename1, io: File.open(File.join("spec", "fixtures", "files", filename1))) }
+  let(:blob2) { ActiveStorage::Blob.create_and_upload!(filename: filename2, io: File.open(File.join("spec", "fixtures", "files", filename2))) }
 
   before do
     create(:responsible_person_user, user: submit_user, responsible_person: responsible_person)

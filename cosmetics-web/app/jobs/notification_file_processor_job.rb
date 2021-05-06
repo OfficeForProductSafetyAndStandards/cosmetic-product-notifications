@@ -7,7 +7,6 @@ class NotificationFileProcessorJob < ApplicationJob
   class UnexpectedStaticFilesError < FileUploadError; end
 
   include CpnpStaticFiles
-  include ActiveStorage::Downloading
 
   def perform(notification_file_id)
     @notification_file = NotificationFile.find(notification_file_id)
@@ -61,7 +60,7 @@ private
   end
 
   def get_product_xml_file
-    download_blob_to_tempfile do |zip_file|
+    blob.open do |zip_file|
       Zip::File.open(zip_file.path) do |files|
         valid_files = files.select { |file| file_is_valid?(file) }
         if invalid_static_files(valid_files)

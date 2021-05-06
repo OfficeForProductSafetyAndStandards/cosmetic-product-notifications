@@ -434,7 +434,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       context "when a file is selected" do
-        let(:file) { Rack::Test::UploadedFile.new("spec/fixtures/testPdf.pdf", "application/pdf", true) }
+        let(:file) { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf", true) }
         let(:params) { { nanomaterial_notification: { file: file } } }
 
         it "redirects to the Check your answers page" do

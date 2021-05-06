@@ -84,7 +84,6 @@ RSpec.describe User, type: :model do
 
     describe ".confirm_new_email!(token)" do
       shared_examples "invalid token" do
-        # rubocop:disable RSpec/ExampleLength
         it "does not change email" do
           begin
             described_class.confirm_new_email!(token)
@@ -93,7 +92,6 @@ RSpec.describe User, type: :model do
           end
           expect(user.reload.email).to eq(old_email)
         end
-        # rubocop:enable RSpec/ExampleLength
 
         it "raises ArgumentError" do
           expect { described_class.confirm_new_email!(token) }.to raise_error(ArgumentError)
@@ -124,7 +122,6 @@ RSpec.describe User, type: :model do
           }.to change(user, :email).from(old_email).to(new_email)
         end
 
-        # rubocop:disable RSpec/ExampleLength
         it "clears all new_email fields" do
           expect {
             described_class.confirm_new_email!(token)
@@ -133,7 +130,6 @@ RSpec.describe User, type: :model do
            .and change(user, :new_email_confirmation_token).from(expected_token).to(nil)
            .and change(user, :new_email_confirmation_token_expires_at).from(new_email_expiration).to(nil)
         end
-        # rubocop:enable RSpec/ExampleLength
       end
 
       context "when token is invalid" do

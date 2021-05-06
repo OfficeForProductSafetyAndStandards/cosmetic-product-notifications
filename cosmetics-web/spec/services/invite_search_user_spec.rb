@@ -113,7 +113,6 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
       expect { inviter.call }.to change(SearchUser, :count).by(1)
     end
 
-    # rubocop:disable RSpec/ExampleLength
     it "sets an invitation token and timestamp for the new user" do
       freeze_time do
         inviter.call
@@ -122,7 +121,6 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
         expect(user.invited_at).to eq Time.zone.now
       end
     end
-    # rubocop:enable RSpec/ExampleLength
 
     it "sends invitation email for the created user with the given email" do
       inviter.call

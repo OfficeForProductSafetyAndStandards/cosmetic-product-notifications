@@ -754,22 +754,22 @@ def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
 end
 
 def upload_ingredients_pdf
-  page.attach_file "spec/fixtures/testPdf.pdf"
+  page.attach_file "spec/fixtures/files/testPdf.pdf"
   click_button "Continue"
 end
 
 def upload_formulation_file
-  page.attach_file "spec/fixtures/testPdf.pdf"
+  page.attach_file "spec/fixtures/files/testPdf.pdf"
   click_button "Continue"
 end
 
 def upload_product_label
-  page.attach_file "spec/fixtures/testImage.png"
+  page.attach_file "spec/fixtures/files/testImage.png"
   click_button "Continue"
 end
 
 def upload_zip_file(zip_file_name)
-  page.attach_file "spec/fixtures/#{zip_file_name}"
+  page.attach_file "spec/fixtures/files/#{zip_file_name}"
   click_button "Continue"
 end
 

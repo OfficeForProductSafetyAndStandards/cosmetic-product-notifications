@@ -11,7 +11,7 @@ class DirectUploadHandler
     @present_names = []
     @signed_ids.each do |id|
       begin
-        uploaded_file = ActiveStorage::Blob.find_signed id
+        uploaded_file = ActiveStorage::Blob.find_signed! id
       rescue ActiveSupport::MessageVerifier::InvalidSignature
         next
       end

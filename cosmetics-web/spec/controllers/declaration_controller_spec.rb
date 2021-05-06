@@ -28,7 +28,7 @@ RSpec.describe DeclarationController, type: :controller do
 
       it "redirects to the root path" do
         post :accept
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(submit_root_path)
       end
     end
   end

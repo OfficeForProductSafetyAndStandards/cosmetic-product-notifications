@@ -6,7 +6,7 @@ FactoryBot.define do
 
     trait :submittable do
       eu_notified { false }
-      file { Rack::Test::UploadedFile.new("spec/fixtures/testPdf.pdf", "image/png") }
+      file { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "image/png") }
     end
 
     trait :not_submitted do

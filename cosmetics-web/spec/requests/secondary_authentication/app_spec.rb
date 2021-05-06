@@ -19,7 +19,7 @@ RSpec.describe "Secondary Authentication with App submit", :with_2fa, type: :req
 
     it "cannot be directly accessed" do
       get new_secondary_authentication_app_path
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(submit_root_path)
     end
 
     context "when accessed user session contains 2fa user id" do
@@ -51,7 +51,7 @@ RSpec.describe "Secondary Authentication with App submit", :with_2fa, type: :req
 
       it "redirects to the main page" do
         submit_2fa
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(submit_root_path)
       end
 
       it "user is signed in" do

@@ -96,4 +96,5 @@ RSpec.configure do |config|
   config.include LoginHelpers
   config.include Matchers
   config.include ResponsiblePersonHelpers
+  config.include ActionDispatch::TestProcess::FixtureFile
 end

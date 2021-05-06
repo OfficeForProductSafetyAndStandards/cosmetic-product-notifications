@@ -14,21 +14,21 @@ module ApplicationHelper
     ordered_errors = ActiveSupport::OrderedHash.new
     ordered_attributes.map { |attr| ordered_errors[attr] = [] }
 
-    errors.map do |attribute, error|
+    errors.map do |error|
       next if error.blank?
 
-      href = if map_errors[attribute]
-               "##{map_errors[attribute]}"
+      href = if map_errors[error.attribute]
+               "##{map_errors[error.attribute]}"
              else
-               "##{attribute}"
+               "##{error.attribute}"
              end
 
       # Errors for attributes that are not included in the ordered list will be
       # added at the end after the errors for ordered attributes.
-      if ordered_errors[attribute]
-        ordered_errors[attribute] << { text: error, href: href }
+      if ordered_errors[error.attribute]
+        ordered_errors[error.attribute] << { text: error.message, href: href }
       else
-        ordered_errors[attribute] = [{ text: error, href: href }]
+        ordered_errors[error.attribute] = [{ text: error.message, href: href }]
       end
     end
     error_list = ordered_errors.values.flatten.compact

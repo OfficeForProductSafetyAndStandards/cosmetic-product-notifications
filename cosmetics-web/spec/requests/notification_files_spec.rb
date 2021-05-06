@@ -42,10 +42,9 @@ RSpec.describe "Notification files", :with_stubbed_antivirus, type: :request do
       end
 
       it "deletes the notification file blob" do
-        blob = notification_file.uploaded_file.blob
-        expect(blob).not_to be_nil
-        delete responsible_person_notification_file_path(responsible_person, notification_file)
-        expect { blob.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        expect {
+          delete responsible_person_notification_file_path(responsible_person, notification_file)
+        }.to have_enqueued_job(ActiveStorage::PurgeJob)
       end
     end
 
@@ -94,12 +93,9 @@ RSpec.describe "Notification files", :with_stubbed_antivirus, type: :request do
       end
 
       it "deletes the attachment blobs from the deleted notification files" do
-        blob = notification_file_with_error.uploaded_file.blob
-        blob2 = notification_file2_with_error.uploaded_file.blob
-
-        delete destroy_all_responsible_person_notification_files_path(responsible_person)
-        expect { blob.reload }.to raise_error(ActiveRecord::RecordNotFound)
-        expect { blob2.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        expect {
+          delete destroy_all_responsible_person_notification_files_path(responsible_person)
+        }.to have_enqueued_job(ActiveStorage::PurgeJob).exactly(2).times
       end
     end
   end

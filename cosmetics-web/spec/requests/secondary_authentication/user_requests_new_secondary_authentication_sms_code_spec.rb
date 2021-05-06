@@ -14,7 +14,7 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
     RSpec.shared_examples "redirect to homepage" do
       it "redirects the user to the homepage" do
         request_code
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(submit_root_path)
       end
     end
 
@@ -86,6 +86,8 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
       it "sends the code to the user by sms" do
         request_code
         follow_redirect!
+
+        perform_enqueued_jobs
 
         expect(notify_stub).to have_received(:send_sms).with(
           hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
@@ -160,6 +162,9 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
         it "updates the user mobile number" do
           expect {
             request_code
+
+            perform_enqueued_jobs
+
             user.reload
           }.to change(user, :mobile_number).to(mobile_number)
         end
@@ -167,6 +172,8 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
         it "sends the code to the user by sms" do
           request_code
           follow_redirect!
+
+          perform_enqueued_jobs
 
           expect(notify_stub).to have_received(:send_sms).with(
             hash_including(phone_number: mobile_number, personalisation: { code: user.reload.direct_otp }),
