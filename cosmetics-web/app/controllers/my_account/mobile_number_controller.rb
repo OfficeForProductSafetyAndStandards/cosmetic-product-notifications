@@ -4,19 +4,15 @@ module MyAccount
 
     def edit
       @user = current_user
+      @form = MobileNumberForm.new(mobile_number: @user.mobile_number, user: @user)
     end
 
     def update
       @user = current_user
       previously_set = @user.mobile_number.present?
 
-      unless @user.valid_password?(dig_params(:password))
-        @user.errors.add(:password, "Password is incorrect")
-        return render :edit
-      end
-
-      @user.mobile_number = dig_params(:mobile_number)
-      if @user.save
+      if form.valid?
+        @user.update!(mobile_number: form.mobile_number)
         redirect_to my_account_path, confirmation: "Mobile number #{previously_set ? 'changed' : 'set'} successfully"
       else
         render :edit
@@ -27,6 +23,14 @@ module MyAccount
 
     def current_operation
       SecondaryAuthentication::Operations::CHANGE_MOBILE_NUMBER
+    end
+
+    def form
+      @form ||= MobileNumberForm.new(form_params.merge(user: current_user))
+    end
+
+    def form_params
+      params.require(:mobile_number_form).permit(:mobile_number, :password)
     end
   end
 end

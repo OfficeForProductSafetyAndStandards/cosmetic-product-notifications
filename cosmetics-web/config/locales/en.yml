@@ -159,6 +159,12 @@ en:
         postal_code: "Postcode"
     errors:
       models:
+        mobile_number_form:
+          attributes:
+            mobile_number:
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+            password:
+              invalid: "Password is incorrect"
         registration/new_account_form:
           attributes:
             full_name:

@@ -50,7 +50,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     click_on "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Password is incorrect", href: "#password")
+    expect(page).to have_link("Password is incorrect", href: "#old_password")
   end
 
   it "does not get updated when new mobile number is empty" do
@@ -59,7 +59,7 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     click_on "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Mobile number can not be blank", href: "#mobile_number")
+    expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
   end
 
   it "does not get updated when new mobile number has an incorrect format" do
@@ -68,6 +68,6 @@ RSpec.describe "Changing mobile number", :with_2fa, :with_stubbed_mailer, :with_
     click_on "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
+    expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
   end
 end

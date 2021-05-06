@@ -38,8 +38,32 @@ RSpec.feature "Setting text message authentication", :with_2fa, :with_2fa_app, :
       expect_to_be_on_secondary_authentication_app_page
       complete_secondary_authentication_app
 
-      # User sets its mobile number
       expect(page).to have_css("h1", text: "Set your mobile number")
+      # Update gets rejected when the password is wrong
+      fill_in "Password", with: "wrongPassword"
+      fill_in "New mobile number", with: "07234234234"
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Password is incorrect", href: "#old_password")
+
+      # Update gets rejected when the mobile number is empty
+      fill_in "Password", with: user.password
+      fill_in "New mobile number", with: ""
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
+
+      # Update gets rejected when the mobile number format is incorrect
+      fill_in "Password", with: user.password
+      fill_in "New mobile number", with: "12345678(wrong)9101112"
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
+
+      # User sets a correct mobile number and provides the right password
       fill_in "Password", with: user.password
       fill_in "New mobile number", with: "07234234234"
       click_on "Continue"
@@ -88,7 +112,32 @@ RSpec.feature "Setting text message authentication", :with_2fa, :with_2fa_app, :
       expect_user_to_have_received_sms_code(otp_code)
       complete_secondary_authentication_sms_with(otp_code)
 
-      # User sets its mobile number
+      expect(page).to have_css("h1", text: "Change your mobile number")
+      # Update gets rejected when the password is wrong
+      fill_in "Password", with: "wrongPassword"
+      fill_in "New mobile number", with: "07234234234"
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Password is incorrect", href: "#old_password")
+
+      # Update gets rejected when the mobile number is empty
+      fill_in "Password", with: user.password
+      fill_in "New mobile number", with: ""
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
+
+      # Update gets rejected when the mobile number format is incorrect
+      fill_in "Password", with: user.password
+      fill_in "New mobile number", with: "12345678(wrong)9101112"
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
+
+      # User sets a correct mobile number and provides the right password
       expect(page).to have_css("h1", text: "Change your mobile number")
       fill_in "Password", with: user.password
       fill_in "New mobile number", with: "07234234234"
@@ -136,7 +185,32 @@ RSpec.feature "Setting text message authentication", :with_2fa, :with_2fa_app, :
       expect_to_be_on_secondary_authentication_app_page
       complete_secondary_authentication_app
 
-      # User sets its mobile number
+      expect(page).to have_css("h1", text: "Change your mobile number")
+      # Update gets rejected when the password is wrong
+      fill_in "Password", with: "wrongPassword"
+      fill_in "New mobile number", with: "07234234234"
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Password is incorrect", href: "#old_password")
+
+      # Update gets rejected when the mobile number is empty
+      fill_in "Password", with: user.password
+      fill_in "New mobile number", with: ""
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
+
+      # Update gets rejected when the mobile number format is incorrect
+      fill_in "Password", with: user.password
+      fill_in "New mobile number", with: "12345678(wrong)9101112"
+      click_on "Continue"
+
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
+
+      # User sets a correct mobile number and provides the right password
       expect(page).to have_css("h1", text: "Change your mobile number")
       fill_in "Password", with: user.password
       fill_in "New mobile number", with: "07234234234"
