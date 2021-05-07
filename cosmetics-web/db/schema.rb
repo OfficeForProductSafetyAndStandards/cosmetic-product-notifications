@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_103858) do
+ActiveRecord::Schema.define(version: 2021_05_07_101140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -45,8 +45,6 @@ ActiveRecord::Schema.define(version: 2021_04_22_103858) do
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
@@ -98,6 +96,12 @@ ActiveRecord::Schema.define(version: 2021_04_22_103858) do
     t.datetime "updated_at", null: false
     t.bigint "component_id"
     t.index ["component_id"], name: "index_exact_formulas_on_component_id"
+  end
+
+  create_table "foo_bars", force: :cascade do |t|
+    t.string "foo"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "image_uploads", force: :cascade do |t|
@@ -189,6 +193,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_103858) do
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
+    t.tsvector "search_index"
     t.datetime "notification_complete_at"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
