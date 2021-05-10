@@ -4,15 +4,16 @@ class NotificationDecorator
   end
 
   def as_csv
-    NotificationsDecorator::ATTRIBUTES.map do |attr|
+    NotificationsDecorator::ATTRIBUTES.map { |attr|
       @notification.public_send(attr)
-    end + categories_to_csv
+    } + categories_to_csv
   end
 
-  private
+private
+
   def categories_to_csv
-    @notification.components.map do |component|
+    @notification.components.map { |component|
       [component.root_category, component.sub_category, component.sub_sub_category].map(&:to_s).map(&:humanize)
-    end.flatten
+    }.flatten
   end
 end

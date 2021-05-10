@@ -17,8 +17,7 @@ class NotificationsDecorator
                   cpnp_reference
                   cpnp_notification_date
                   industry_reference
-                  components_count
-                  ].freeze
+                  components_count].freeze
 
   def initialize(notifications)
     @notifications = notifications
@@ -33,16 +32,16 @@ class NotificationsDecorator
     end
   end
 
-  private
+private
+
   def build_extra_headers
     categories = []
     components_count = @notifications.map { |x| x.components.count }.max
 
     components_count.times do |i|
-      categories << ["Component #{i+1} root category",
-       "Component #{i+1} sub category",
-       "Component #{i+1} sub sub category"]
-
+      categories << ["Component #{i + 1} root category",
+                     "Component #{i + 1} sub category",
+                     "Component #{i + 1} sub sub category"]
     end
 
     categories.flatten

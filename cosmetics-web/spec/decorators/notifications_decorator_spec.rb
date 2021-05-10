@@ -7,7 +7,7 @@ RSpec.describe NotificationsDecorator do
 
   let(:notification1) { create(:notification, :with_component, product_name: "Product 1", reference_number: 111) }
   let(:notification2) { create(:notification, :with_component, :via_zip_file, product_name: "Product 2", reference_number: 222) }
-  let(:notification3) { create(:notification, :with_components, :via_zip_file, product_name: "Product 3", reference_number: 333, cpnp_notification_date: date, industry_reference: 'foo bar') }
+  let(:notification3) { create(:notification, :with_components, :via_zip_file, product_name: "Product 3", reference_number: 333, cpnp_notification_date: date, industry_reference: "foo bar") }
 
   let(:notifications) { [notification1, notification2, notification3] }
 

@@ -184,9 +184,7 @@ class Notification < ApplicationRecord
     !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
 
-  def components_count
-    components.count
-  end
+  delegate :count, to: :components, prefix: true
 
 private
 
