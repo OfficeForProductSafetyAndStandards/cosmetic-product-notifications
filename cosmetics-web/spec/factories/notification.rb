@@ -40,5 +40,20 @@ FactoryBot.define do
       state { :notification_file_imported }
       cpnp_reference { "123456789" }
     end
+
+    trait :with_component do
+      after(:create) do |notification|
+        create(:component, notification: notification, sub_sub_category: 'nonoxidative_hair_colour_products')
+        notification.reload
+      end
+    end
+
+    trait :with_components do
+      after(:create) do |notification|
+        create(:component, notification: notification, sub_sub_category: 'nonoxidative_hair_colour_products')
+        create(:component, notification: notification, sub_sub_category: 'nonoxidative_hair_colour_products')
+        notification.reload
+      end
+    end
   end
 end

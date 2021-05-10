@@ -184,6 +184,10 @@ class Notification < ApplicationRecord
     !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
 
+  def components_count
+    components.count
+  end
+
 private
 
   def all_required_attributes_must_be_set
