@@ -21,13 +21,16 @@ Rails.application.routes.draw do
 
     get "sms", to: "sms#new", as: :new_secondary_authentication_sms
     post "sms", to: "sms#create", as: :secondary_authentication_sms
-
-    get "app", to: "app#new", as: :new_secondary_authentication_app
-    post "app", to: "app#create", as: :secondary_authentication_app
-
     scope module: "sms", path: "sms" do
       get "not-received", to: "resend#new", as: :new_secondary_authentication_sms_resend
       post "not-received", to: "resend#create", as: :secondary_authentication_sms_resend
+    end
+
+    get "app", to: "app#new", as: :new_secondary_authentication_app
+    post "app", to: "app#create", as: :secondary_authentication_app
+    scope module: "app", path: "app" do
+      get "setup", to: "setup#new", as: :new_secondary_authentication_app_setup
+      post "setup", to: "setup#create", as: :secondary_authentication_app_setup
     end
   end
 

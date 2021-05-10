@@ -1,0 +1,37 @@
+<% title = "Set up your authenticator app" %>
+
+<% page_title(title, errors: @form.errors.any?) %>
+
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: my_account_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= error_summary(@form.errors, %i[password app_authentication_code]) %>
+
+    <h1 class="govuk-heading-l"><%= title %></h1>
+    <%= form_with model: @form, url:  secondary_authentication_app_setup_path, method: :post do |f| %>
+      <%= password_input @form,
+                         label: { text: "Password", classes: "govuk-label--m" },
+                         hint: { text: "Confirm changes with your password." } %>
+
+      <%= hidden_field_tag 'secondary_authentication_app_setup_form[secret_key]', @form.secret_key %>
+      <p class="govuk-body">Use your authenticator app to scan the QR code below or manually enter the secret key into your authenticator app.</p>
+      <div class="govuk-grid-row">
+        <p class="govuk-grid-column-one-third"></p>
+        <div class="govuk-grid-column-one-third">
+          <%= image_tag @form.qr_code, alt: "Authentication App QR code." %>
+        </div>
+      </div>
+      <p class="govuk-body">Secret key: <b><%= @form.decorated_secret_key %></b></p>
+      <%= form_input @form,
+                      :app_authentication_code,
+                      label: { text: "Enter the access code" },
+                      hint: { text: "This is the 6 digit access code shown on your authenticator app." } %>
+
+      <%= govukButton(text: "Continue") %>
+    <% end %>
+  </div>
+</div>

@@ -8,6 +8,7 @@ module SecondaryAuthentication
     CHANGE_MOBILE_NUMBER = "change_mobile_number".freeze
     CHANGE_EMAIL_ADDRESS = "change_email_address".freeze
     DELETE_NOTIFICATION = "delete_notification".freeze
+    SETUP_APP_AUTHENTICATION = "setup_app_authentication".freeze
 
     TIMEOUTS = {
       DEFAULT => 7 * 24 * 3600, # 7 days
@@ -18,6 +19,7 @@ module SecondaryAuthentication
       INVITE_USER => 300, # 5 minutes
       UNLOCK => 300, # 5 minutes
       DELETE_NOTIFICATION => 900, # 15 minutes
+      SETUP_APP_AUTHENTICATION => 300, # 5 minutes
     }.freeze
   end
 end

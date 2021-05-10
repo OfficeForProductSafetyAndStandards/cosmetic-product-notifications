@@ -116,6 +116,10 @@ def expect_to_be_on_my_account_page
   expect(page).to have_current_path(/\/my_account/)
 end
 
+def expect_back_link_to_my_account_page
+  expect_back_link_to("/my_account")
+end
+
 def expect_back_link_to(path)
   expect(page).to have_link("Back", href: path)
 end

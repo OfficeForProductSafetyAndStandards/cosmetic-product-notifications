@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Setting text message authentication", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
+RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:responsible_person) { user.responsible_persons.first }
 
   before do
