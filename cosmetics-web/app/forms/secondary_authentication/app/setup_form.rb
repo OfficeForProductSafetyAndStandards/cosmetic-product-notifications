@@ -12,7 +12,7 @@ module SecondaryAuthentication
       validates :app_authentication_code, presence: true
       validate :app_authentication_code, :validate_app_authentication_code
 
-      delegate :qr_code, to: :secondary_authentication
+      delegate :qr_code, :last_totp_at, to: :secondary_authentication
 
       validates :password, presence: true
 
@@ -36,12 +36,11 @@ module SecondaryAuthentication
         secret_key.gsub(/(.{4})/, '\1 ').strip
       end
 
+      private
+
       def secondary_authentication
         @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user, secret_key)
       end
-
-    private
-
       def correct_password
         return if errors[:password].present?
 

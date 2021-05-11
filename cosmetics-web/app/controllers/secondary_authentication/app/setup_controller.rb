@@ -13,8 +13,7 @@ module SecondaryAuthentication
         return render("errors/forbidden", status: :forbidden) unless @user
 
         if form.valid?
-          @user.update!(last_totp_at: form.secondary_authentication.last_totp_at,
-                        totp_secret_key: form.secret_key)
+          @user.update!(last_totp_at: form.last_totp_at, totp_secret_key: form.secret_key)
           redirect_to my_account_path, confirmation: "Authenticator app set successfully"
         else
           render(:new)
