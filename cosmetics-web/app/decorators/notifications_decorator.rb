@@ -39,9 +39,9 @@ private
     components_count = @notifications.map { |x| x.components.count }.max
 
     components_count.times do |i|
-      categories << ["Component #{i + 1} Level 1 category",
-                     "Component #{i + 1} Level 2 category",
-                     "Component #{i + 1} Level 3 category"]
+      categories << ["Item #{i + 1} Level 1 category",
+                     "Item #{i + 1} Level 2 category",
+                     "Item #{i + 1} Level 3 category"]
     end
 
     categories.flatten
