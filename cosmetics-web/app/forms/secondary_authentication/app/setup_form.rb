@@ -36,11 +36,12 @@ module SecondaryAuthentication
         secret_key.gsub(/(.{4})/, '\1 ').strip
       end
 
-      private
+    private
 
       def secondary_authentication
         @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user, secret_key)
       end
+
       def correct_password
         return if errors[:password].present?
 
