@@ -159,12 +159,6 @@ en:
         postal_code: "Postcode"
     errors:
       models:
-        mobile_number_form:
-          attributes:
-            mobile_number:
-              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
-            password:
-              invalid: "Password is incorrect"
         registration/new_account_form:
           attributes:
             full_name:
@@ -188,7 +182,7 @@ en:
             name:
               member_of_rp_with_same_name: "You are already associated with %{attribute}"
               invited_to_rp_with_same_name: "You have already been invited to join %{attribute}. Check your email inbox for your invite"
-        secondary_authentication/app_auth_form:
+        secondary_authentication/app/auth_form:
           attributes:
             otp_code:
               blank: "Enter the access code"
@@ -221,6 +215,12 @@ en:
             mobile_number:
               blank: "Enter your mobile number"
               invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+        secondary_authentication/sms/setup_form:
+          attributes:
+            mobile_number:
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+            password:
+              invalid: "Password is incorrect"
         sign_in_form:
           attributes:
             password:

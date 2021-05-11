@@ -8,7 +8,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
   end
 
   def force_2fa_for_mobile_number_change
-    wait_for = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::CHANGE_MOBILE_NUMBER]
+    wait_for = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::SETUP_SMS_AUTHENTICATION]
     travel_to((wait_for + 1).seconds.from_now)
   end
 

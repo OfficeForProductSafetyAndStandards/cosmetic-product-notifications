@@ -13,7 +13,7 @@
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
-    <%= form_with model: @form, url: my_account_mobile_number_path, method: :patch do |form| %>
+    <%= form_with model: @form, url: secondary_authentication_sms_setup_path, method: :post  do |form| %>
       <%= render "form_components/govuk_input",
         key: :password,
         type: :password,
