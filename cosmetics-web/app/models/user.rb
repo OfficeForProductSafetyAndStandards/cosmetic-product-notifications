@@ -19,6 +19,7 @@ class User < ApplicationRecord
     validate :secondary_authentication_methods_allowed, if: -> { secondary_authentication_methods&.any? }
   end
 
+  before_validation :update_secondary_authentication_methods, if: :secondary_authentication_info_will_change?
   before_save :ensure_mobile_number_verification, if: :will_save_change_to_mobile_number?
 
   def send_new_email_confirmation_email
@@ -76,16 +77,20 @@ private
   end
 
   def ensure_mobile_number_verification
-    return if mobile_number.blank?
+    return if will_save_change_to_mobile_number_verified? # E.G: Manually set on spec factory
 
-    unless will_save_change_to_mobile_number_verified? # E.G: Manually set on spec factory
-      self.mobile_number_verified = false
-    end
+    self.mobile_number_verified = false
+  end
 
-    if secondary_authentication_methods && !secondary_authentication_methods.include?("sms")
-      secondary_authentication_methods << "sms"
-    elsif !secondary_authentication_methods
-      self.secondary_authentication_methods = %w[sms]
-    end
+  def secondary_authentication_info_will_change?
+    will_save_change_to_mobile_number? || will_save_change_to_encrypted_totp_secret_key?
+  end
+
+  def update_secondary_authentication_methods
+    methods = []
+    methods << "app" if encrypted_totp_secret_key.present?
+    methods << "sms" if mobile_number.present?
+
+    self.secondary_authentication_methods = methods
   end
 end

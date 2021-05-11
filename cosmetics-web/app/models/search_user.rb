@@ -18,7 +18,6 @@ class SearchUser < User
     msa: "market_surveilance_authority",
   }
 
-  validates :mobile_number, presence: true, if: -> { secondary_authentication_methods&.include? "sms" }
   validates :mobile_number,
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }

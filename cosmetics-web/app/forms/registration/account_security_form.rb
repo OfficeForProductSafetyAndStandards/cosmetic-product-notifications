@@ -49,7 +49,6 @@ module Registration
         confirmed_at: Time.zone.now,
         last_totp_at: secondary_authentication.last_totp_at,
         totp_secret_key: (secret_key if app_authentication_selected?),
-        secondary_authentication_methods: secondary_authentication_methods,
       )
     end
 
@@ -106,13 +105,6 @@ module Registration
       @secondary_authentication ||= SecondaryAuthentication::TimeOtp.new(user, secret_key)
     end
 
-    def secondary_authentication_methods
-      [].tap do |methods|
-        methods << "app" if app_authentication_selected?
-        methods << "sms" if sms_authentication_selected?
-      end
-    end
-
     def validate_app_authentication_code
       return if app_authentication_code.blank?
 
@@ -122,7 +114,7 @@ module Registration
     end
 
     def secondary_authentication_methods_presence
-      if secondary_authentication_methods.none?
+      if !app_authentication_selected? && !sms_authentication_selected?
         errors.add(:secondary_authentication_methods, :blank)
       end
     end
