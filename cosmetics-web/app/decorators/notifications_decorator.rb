@@ -25,7 +25,7 @@ class NotificationsDecorator
 
   def to_csv
     CSV.generate do |csv|
-      csv << HEADER + build_extra_headers
+      csv << HEADER + categories_headers
       @notifications.each do |notification|
         csv << NotificationDecorator.new(notification).as_csv
       end
@@ -34,7 +34,7 @@ class NotificationsDecorator
 
 private
 
-  def build_extra_headers
+  def categories_headers
     categories = []
     components_count = @notifications.map { |x| x.components.count }.max
 
