@@ -184,8 +184,6 @@ class Notification < ApplicationRecord
     !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
 
-  delegate :count, to: :components, prefix: true
-
 private
 
   def all_required_attributes_must_be_set
