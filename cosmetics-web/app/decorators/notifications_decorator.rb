@@ -8,7 +8,7 @@ class NotificationsDecorator
     "EU Reference number",
     "EU Notification date",
     "Internal reference",
-    "Number of components",
+    "Number of items",
   ].freeze
 
   ATTRIBUTES = %i[product_name
