@@ -270,6 +270,9 @@ en:
     wrong_email_or_password: *invalid_email
     wrong_format: *invalid_email
     blank: "Enter your email address"
+  user_password_check_form_validation:
+    invalid: "Password is incorrect"
+    blank: "Password can not be blank"
   users:
     check_your_email:
       body: A message with a confirmation link has been sent to your email address. Please follow the link to continue.
