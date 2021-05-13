@@ -74,3 +74,5 @@ ActiveRecord::Base.transaction do
     Component.create!(component_attributes)
   end
 end
+
+ReindexElasticsearchJob.new.perform
