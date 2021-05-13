@@ -78,7 +78,7 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        bin/rails db:schema:load
+        bin/rails db:create db:schema:load
     - name: Run Tests
       env:
         ELASTICSEARCH_URL: localhost
