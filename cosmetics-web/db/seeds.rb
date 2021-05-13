@@ -30,7 +30,7 @@ ActiveRecord::Base.transaction do
 
   search_user_attributes = {
     id: "8718d008-da2d-4975-8cbf-4502afb5f4b6",
-    mobile_number: "07447809159",
+    mobile_number: "07700 900000",
     mobile_number_verified: true,
     name: "John Doe",
     has_accepted_declaration: true,
