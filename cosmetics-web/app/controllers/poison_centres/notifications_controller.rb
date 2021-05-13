@@ -1,6 +1,6 @@
 class PoisonCentres::NotificationsController < SearchApplicationController
   def index
-    @result = search_notifications(2)
+    @result = search_notifications(10)
     @notifications = @result.records
   end
 
