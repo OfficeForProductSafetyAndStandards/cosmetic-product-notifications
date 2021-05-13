@@ -1,7 +1,7 @@
 <section class="govuk-grid-column-two-thirds" id="search-results-section">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <p class="govuk-body"><%= pluralize(results.count, 'product') %> matching keyword(s) were found.</p>
+      <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> matching keyword(s) were found.</p>
     </div>
   </div>
 
@@ -13,22 +13,8 @@
             <%= render "registered_product", notification: notification %>
           <% end %>
         </ul>
-        <nav class="opss-pagination-link">
-          <ul>
-            <li class="opss-pagination-link__wrap opss-pagination-link--prev">
-              <a href="" class="govuk-link govuk-link--no-visited-state">
-                <span>Previous page</span><span class="govuk-visually-hidden">:</span> <span>Page 1 of 3</span>
-              </a>
-            </li>
-            <li class="opss-pagination-link__wrap opss-pagination-link--next">
-              <a href="" class="govuk-link govuk-link--no-visited-state">
-                <span>Next page</span><span class="govuk-visually-hidden">:</span> <span>Page 3 of 3</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <%= paginate @notifications, views_prefix: 'search' %>
       </div>
     </div>
   <% end %>
-
 </section>
