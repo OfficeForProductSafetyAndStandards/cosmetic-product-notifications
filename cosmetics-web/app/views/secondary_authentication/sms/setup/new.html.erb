@@ -1,4 +1,4 @@
-<% title = "#{@user.mobile_number.present? ? 'Change' : 'Set'} your mobile number" %>
+<% title = "#{@user.mobile_number.present? ? 'Update' : 'Set'} your mobile number" %>
 <% page_title title, errors: @form.errors.any? %>
 
 <% content_for(:after_header) do %>
@@ -29,7 +29,7 @@
         type: :text,
         form: form,
         classes: "app-!-max-width-two-thirds",
-        label: { text: "New mobile number" },
+        label: { text: "Mobile number" },
         value: nil,
         id: "new_mobile_number"
         %>
