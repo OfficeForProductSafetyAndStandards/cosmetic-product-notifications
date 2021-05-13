@@ -78,7 +78,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
 
       # Confirm App is now an available option for 2FA
       force_2fa_for_app_setup
-      click_on "Update authenticator app"
+      click_on "Change authenticator app"
       expect_to_be_on_secondary_authentication_method_selection_page
     end
   end
@@ -104,13 +104,13 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       # User attempts to update the authenticator app setup
       expect(page).to have_summary_item(key: "Authenticator app", value: "Authenticator app is set")
       force_2fa_for_app_setup
-      click_on "Update authenticator app"
+      click_on "Change authenticator app"
 
       # User needs to go through its current app access code prior to the update
       expect_to_be_on_secondary_authentication_app_page
       complete_secondary_authentication_app
 
-      expect(page).to have_css("h1", text: "Update your authenticator app")
+      expect(page).to have_css("h1", text: "Change your authenticator app")
       expect_back_link_to_my_account_page
       # Update gets rejected when the password is wrong
       fill_in "Password", with: "wrongPassword"
@@ -174,7 +174,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       # User attempts to update the authenticator app setup
       expect(page).to have_summary_item(key: "Authenticator app", value: "Authenticator app is set")
       force_2fa_for_app_setup
-      click_on "Update authenticator app"
+      click_on "Change authenticator app"
 
       # User needs to select a 2FA method and complete the 2FA check prior to the update
       expect_to_be_on_secondary_authentication_method_selection_page
@@ -182,7 +182,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       expect_to_be_on_secondary_authentication_sms_page
       complete_secondary_authentication_sms_with(otp_code)
 
-      expect(page).to have_css("h1", text: "Update your authenticator app")
+      expect(page).to have_css("h1", text: "Change your authenticator app")
       expect_back_link_to_my_account_page
       # Update gets rejected when the password is wrong
       fill_in "Password", with: "wrongPassword"
