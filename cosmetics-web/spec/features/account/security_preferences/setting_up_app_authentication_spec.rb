@@ -31,7 +31,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
 
       # User attempts to set app as secondary authentication method
       expect_to_be_on_my_account_page
-      expect(page).to have_summary_item(key: "App", value: "")
+      expect(page).to have_summary_item(key: "Authenticator app", value: "")
       force_2fa_for_app_setup
       click_on "Add authenticator app"
 
@@ -74,7 +74,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Authenticator app set successfully/)
-      expect(page).to have_summary_item(key: "App", value: "Authenticator App is set")
+      expect(page).to have_summary_item(key: "Authenticator app", value: "Authenticator app is set")
 
       # Confirm App is now an available option for 2FA
       force_2fa_for_app_setup
@@ -102,7 +102,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       click_link("Your account")
 
       # User attempts to update the authenticator app setup
-      expect(page).to have_summary_item(key: "App", value: "Authenticator App is set")
+      expect(page).to have_summary_item(key: "Authenticator app", value: "Authenticator app is set")
       force_2fa_for_app_setup
       click_on "Update authenticator app"
 
@@ -144,7 +144,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Authenticator app set successfully/)
-      expect(page).to have_summary_item(key: "App", value: "Authenticator App is set")
+      expect(page).to have_summary_item(key: "Authenticator app", value: "Authenticator app is set")
 
       # User authenticator app configuration has changed
       expect(user.reload.totp_secret_key).not_to eq(original_totp_secret_key)
@@ -172,7 +172,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       click_link("Your account")
 
       # User attempts to update the authenticator app setup
-      expect(page).to have_summary_item(key: "App", value: "Authenticator App is set")
+      expect(page).to have_summary_item(key: "Authenticator app", value: "Authenticator app is set")
       force_2fa_for_app_setup
       click_on "Update authenticator app"
 
@@ -216,7 +216,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Authenticator app set successfully/)
-      expect(page).to have_summary_item(key: "App", value: "Authenticator App is set")
+      expect(page).to have_summary_item(key: "Authenticator app", value: "Authenticator app is set")
 
       # User authenticator app configuration has changed
       expect(user.reload.totp_secret_key).not_to eq(original_totp_secret_key)
