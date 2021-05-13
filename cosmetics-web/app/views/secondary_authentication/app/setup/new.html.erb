@@ -1,4 +1,4 @@
-<% title = "Set up your authenticator app" %>
+<% title = "#{@user.app_authentication_set? ? 'Update' : 'Set up'} your authenticator app" %>
 
 <% page_title(title, errors: @form.errors.any?) %>
 
@@ -12,6 +12,14 @@
     <%= error_summary(@form.errors, %i[password app_authentication_code]) %>
 
     <h1 class="govuk-heading-l"><%= title %></h1>
+    <% if @user.app_authentication_set? %>
+      <p>
+        If you no longer have access to the authenticator app you have been using to receive access codes,
+        you can scan a new QR code or enter a new access code.
+        This can be done in your authenticator app.
+        The previous codes you have used will no longer work.
+      </p>
+    <% end %>
     <%= form_with model: @form, url:  secondary_authentication_app_setup_path, method: :post do |f| %>
       <%= password_input @form,
                          label: { text: "Password", classes: "govuk-label--m" },

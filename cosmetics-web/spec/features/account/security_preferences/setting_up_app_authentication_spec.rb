@@ -110,7 +110,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       expect_to_be_on_secondary_authentication_app_page
       complete_secondary_authentication_app
 
-      expect(page).to have_css("h1", text: "Set up your authenticator app")
+      expect(page).to have_css("h1", text: "Update your authenticator app")
       expect_back_link_to_my_account_page
       # Update gets rejected when the password is wrong
       fill_in "Password", with: "wrongPassword"
@@ -182,7 +182,7 @@ RSpec.feature "Setting up app authentication", :with_2fa, :with_2fa_app, :with_s
       expect_to_be_on_secondary_authentication_sms_page
       complete_secondary_authentication_sms_with(otp_code)
 
-      expect(page).to have_css("h1", text: "Set up your authenticator app")
+      expect(page).to have_css("h1", text: "Update your authenticator app")
       expect_back_link_to_my_account_page
       # Update gets rejected when the password is wrong
       fill_in "Password", with: "wrongPassword"
