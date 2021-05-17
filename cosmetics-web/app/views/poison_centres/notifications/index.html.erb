@@ -2,7 +2,7 @@
 
 <div class="govuk-grid-row">
   <section class="govuk-grid-column-two-thirds">
-    <%= form_with(method: :get, novalidate: true) do |form| %>
+    <%= form_with(method: :get, html: { 'novalidate' => true }) do |form| %>
       <div class="govuk-form-group">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="q">
