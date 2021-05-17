@@ -1,19 +1,24 @@
 <% content_for :page_title, "Search cosmetic products" %>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Search cosmetic products</h1>
-  </div>
-</div>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-2">
-    <div id="search-hint" class="govuk-hint">
-      Use one or more keywords to search for product notifications.
-    </div>
+  <div class="govuk-grid-column-full">
     <%= form_with(method: :get) do |form| %>
-      <div class="search-box">
-        <%= form.text_field :q, class: "govuk-input", value: params[:q] %>
-        <%= form.submit "Search", name: nil, class: "search-box--submit" %>
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="products-search">
+            Search cosmetic products
+          </label>
+        </h1>
+        <div id="search-hint" class="govuk-hint">
+          Use one or more keywords to search for product notifications.
+        </div>
+
+        <div class="govuk-input__wrapper opss-search__wrapper">
+          <%= form.text_field :q, class: "govuk-input govuk-!-width-one-half", 'aria-describedby' => "search-hint", value: params[:q] %>
+          <button class="govuk-button" data-module="govuk-button">
+            <span class="govuk-visually-hidden">Search</span>
+          </button>
+        </div>
       </div>
     <% end %>
   </div>
