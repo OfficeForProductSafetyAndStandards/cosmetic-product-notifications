@@ -35,4 +35,10 @@ module ApplicationHelper
 
     govukErrorSummary(titleText: "There is a problem", errorList: error_list)
   end
+
+  def display_keywords(keywords)
+    return if keywords.blank?
+
+    "<b>#{keywords}</b>".html_safe
+  end
 end
