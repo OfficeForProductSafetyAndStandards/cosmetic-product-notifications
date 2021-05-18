@@ -58,6 +58,10 @@ class User < ApplicationRecord
     encrypted_totp_secret_key.present? && last_totp_at.present?
   end
 
+  def multiple_secondary_authentication_methods?
+    secondary_authentication_methods.size > 1
+  end
+
 private
 
   def secondary_authentication_set?

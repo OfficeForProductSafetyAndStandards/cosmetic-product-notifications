@@ -29,10 +29,6 @@ module SecondaryAuthentication
         super(code.to_s.strip)
       end
 
-      def back_link?
-        user && user.secondary_authentication_methods.size > 1
-      end
-
       def user
         @user ||= User.find(user_id)
       end
