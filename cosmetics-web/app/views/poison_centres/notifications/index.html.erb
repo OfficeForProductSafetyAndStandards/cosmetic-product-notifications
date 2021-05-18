@@ -14,7 +14,7 @@
         </div>
 
         <div class="govuk-input__wrapper opss-search__wrapper">
-          <%= form.text_field :q, class: "govuk-input govuk-!-width-one-half", 'aria-describedby' => "search-hint", value: params[:q] %>
+          <%= form.search_field :q, class: "govuk-input govuk-!-width-one-half", 'aria-describedby' => "search-hint", value: params[:q] %>
           <button class="govuk-button" data-module="govuk-button">
             <span class="govuk-visually-hidden">Search</span>
           </button>
