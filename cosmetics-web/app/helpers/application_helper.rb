@@ -39,6 +39,12 @@ module ApplicationHelper
   def display_keywords(keywords)
     return if keywords.blank?
 
-    "<b>#{keywords}</b>".html_safe
+    keywords = keywords.split(' ')
+    keywords = keywords.join(', ')
+    keywords = keywords.gsub(",,", ",")
+
+    "<span class=\"govuk-!-font-weight-bold\">#{keywords},</span>".html_safe
+  rescue
+    keywords
   end
 end
