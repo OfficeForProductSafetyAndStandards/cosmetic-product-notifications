@@ -1,6 +1,6 @@
 module SecondaryAuthentication
   module Sms
-    class SetupController < SubmitApplicationController
+    class SetupController < ApplicationController
       def new
         @user = current_user
         return redirect_to(root_path) unless @user
