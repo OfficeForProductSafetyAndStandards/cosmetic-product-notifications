@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SecondaryAuthentication::AppAuthForm, :with_2fa_app do
+RSpec.describe SecondaryAuthentication::App::AuthForm, :with_2fa_app do
   subject(:form) { described_class.new(otp_code: otp_code, user_id: user.id) }
 
   let(:user) { create(:submit_user, :with_app_secondary_authentication) }

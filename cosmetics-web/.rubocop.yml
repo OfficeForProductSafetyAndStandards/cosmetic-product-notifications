@@ -70,14 +70,12 @@ Metrics/BlockLength:
 
 RSpec/ExpectInHook:
   Exclude:
-    - spec/features/account/change_mobile_number_spec.rb
     - spec/features/account/change_name_spec.rb
     - spec/features/account/change_password_spec.rb
     - spec/features/account/change_email_spec.rb
 
 RSpec/LetSetup:
   Exclude:
-    - spec/features/account/change_mobile_number_spec.rb
     - spec/features/account/change_name_spec.rb
     - spec/features/account/change_password_spec.rb
 
@@ -89,10 +87,6 @@ RSpec/MultipleExpectations:
 
 RSpec/NestedGroups:
   Max: 6
-
-RSpec/ScatteredSetup:
-  Exclude:
-    - spec/features/account/change_mobile_number_spec.rb
 
 Style/MethodCalledOnDoEndBlock:
   Exclude:

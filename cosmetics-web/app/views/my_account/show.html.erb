@@ -35,19 +35,6 @@
               ]
             }
           },
-          ({
-            key: { text: "Mobile number" },
-            value: { text: current_user.mobile_number },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_mobile_number_path,
-                  text: "Change",
-                  visuallyHiddenText: "mobile number"
-                }
-              ]
-            }
-          } if current_user.mobile_number.present?),
           {
             key: { text: "Password" },
             value: { text: "********" },
@@ -61,7 +48,7 @@
               ]
             }
           }
-        ].compact
+        ]
       ) %>
     <% else %>
       <%= govukSummaryList(
@@ -104,5 +91,39 @@
         ]
       ) %>
     <% end %>
+
+    <h2 class="govuk-heading-l">Your security preferences</h2>
+    <p class="govuk-body">This is how you get access codes.</p>
+      <%= govukSummaryList(
+        classes: "app-summary-list--key-weight-regular",
+        rows: [
+          {
+            key: { text: "Text message" },
+            value: { text: current_user.mobile_number },
+            actions: {
+              items: [
+                {
+                  href: new_secondary_authentication_sms_setup_path,
+                  text: current_user.sms_authentication_set? ? "Change" : "Add",
+                  visuallyHiddenText: "text message"
+                }
+              ]
+            }
+          },
+          {
+            key: { text: "Authenticator app" },
+            value: { text: ("Authenticator app is set" if current_user.app_authentication_set?) },
+            actions: {
+              items: [
+                {
+                  href: new_secondary_authentication_app_setup_path,
+                  text: current_user.app_authentication_set? ? "Change" : "Add",
+                  visuallyHiddenText: "authenticator app"
+                }
+              ]
+            }
+          },
+        ]
+      ) %>
   </div>
 </div>

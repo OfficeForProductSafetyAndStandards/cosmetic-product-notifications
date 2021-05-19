@@ -21,13 +21,18 @@ Rails.application.routes.draw do
 
     get "sms", to: "sms#new", as: :new_secondary_authentication_sms
     post "sms", to: "sms#create", as: :secondary_authentication_sms
-
-    get "app", to: "app#new", as: :new_secondary_authentication_app
-    post "app", to: "app#create", as: :secondary_authentication_app
-
     scope module: "sms", path: "sms" do
       get "not-received", to: "resend#new", as: :new_secondary_authentication_sms_resend
       post "not-received", to: "resend#create", as: :secondary_authentication_sms_resend
+      get "setup", to: "setup#new", as: :new_secondary_authentication_sms_setup
+      post "setup", to: "setup#create", as: :secondary_authentication_sms_setup
+    end
+
+    get "app", to: "app#new", as: :new_secondary_authentication_app
+    post "app", to: "app#create", as: :secondary_authentication_app
+    scope module: "app", path: "app" do
+      get "setup", to: "setup#new", as: :new_secondary_authentication_app_setup
+      post "setup", to: "setup#create", as: :secondary_authentication_app_setup
     end
   end
 
@@ -160,7 +165,6 @@ Rails.application.routes.draw do
     scope module: :my_account do
       resource :password, controller: :password, only: %i[edit update]
       resource :name, controller: :name, only: %i[edit update]
-      resource :mobile_number, controller: :mobile_number, only: %i[edit update]
       resource :email, controller: :email, only: %i[edit update] do
         member do
           get :confirm

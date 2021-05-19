@@ -177,16 +177,30 @@ en:
               too_short: "Password must be at least 8 characters"
             secondary_authentication_methods:
               blank: "Select how to get an access code"
-        secondary_authentication/sms/resend_form:
-          attributes:
-            mobile_number:
-              blank: "Enter your mobile number"
-              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
         responsible_person_details_form:
           attributes:
             name:
               member_of_rp_with_same_name: "You are already associated with %{attribute}"
               invited_to_rp_with_same_name: "You have already been invited to join %{attribute}. Check your email inbox for your invite"
+        secondary_authentication/app/auth_form:
+          attributes:
+            otp_code:
+              blank: "Enter the access code"
+              too_short: "You haven’t entered enough numbers"
+              too_long: "You’ve entered too many numbers"
+              incorrect: "Incorrect access code"
+              numericality: "The code must be 6 numbers"
+        secondary_authentication/app/setup_form:
+          attributes:
+            app_authentication_code:
+              invalid: "Access code is incorrect"
+              blank: "Enter an access code"
+            password:
+              invalid: "Password is incorrect"
+        secondary_authentication/method_form:
+          attributes:
+            authentication_method:
+              blank: "Select an option"
         secondary_authentication/sms/auth_form:
           attributes:
             otp_code:
@@ -196,18 +210,17 @@ en:
               incorrect: "Incorrect security code"
               expired: "The security code has expired. New code sent."
               numericality: "The code must be 5 numbers"
-        secondary_authentication/app_auth_form:
+        secondary_authentication/sms/resend_form:
           attributes:
-            otp_code:
-              blank: "Enter the access code"
-              too_short: "You haven’t entered enough numbers"
-              too_long: "You’ve entered too many numbers"
-              incorrect: "Incorrect access code"
-              numericality: "The code must be 6 numbers"
-        secondary_authentication/method_form:
+            mobile_number:
+              blank: "Enter your mobile number"
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+        secondary_authentication/sms/setup_form:
           attributes:
-            authentication_method:
-              blank: "Select an option"
+            mobile_number:
+              invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+            password:
+              invalid: "Password is incorrect"
         sign_in_form:
           attributes:
             password:
@@ -257,6 +270,9 @@ en:
     wrong_email_or_password: *invalid_email
     wrong_format: *invalid_email
     blank: "Enter your email address"
+  user_password_check_form_validation:
+    invalid: "Password is incorrect"
+    blank: "Password can not be blank"
   users:
     check_your_email:
       body: A message with a confirmation link has been sent to your email address. Please follow the link to continue.
