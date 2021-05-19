@@ -1,9 +1,11 @@
 <section class="govuk-grid-column-two-thirds" id="search-results-section">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> matching keyword(s) <%= display_keywords(params[:q]) %> were found.</p>
+  <% if params[:q].present? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> matching keyword(s) <%= display_keywords(params[:q]) %> were found.</p>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <% if results.present? %>
     <div class="govuk-grid-row">
