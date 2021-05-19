@@ -54,8 +54,7 @@ jobs:
         cd cosmetics-web
         npm install yarn
         yarn install
-    - name: Run linters
+    - name: Run js linters
       run: |
         cd cosmetics-web
         yarn standard
-        yarn sass-lint -c .sasslint.yml -vq 'app/**/*.scss'
