@@ -82,6 +82,7 @@ Rails.application.routes.draw do
     get "confirm-new-account", to: "registration/new_accounts#confirm", as: :registration_confirm_submit_user
     get "account-security", to: "registration/account_security#new", as: :registration_new_account_security
     post "account-security", to: "registration/account_security#create", as: :registration_create_account_security
+    delete "account-security", to: "registration/account_security#destroy", as: :registration_destroy_account_security
     post "sign-out-before-confirming-email", to: "registration/new_accounts#sign_out_before_confirming_email"
 
     root "submit/landing_page#index", as: :submit_root

@@ -350,4 +350,25 @@ RSpec.shared_examples "common user tests" do
       end
     end
   end
+
+  describe "#remove_account_security!" do
+    let(:user_factory) { user.class.to_s.underscore.to_sym }
+    let(:new_user) { create(user_factory) }
+
+    # rubocop:disable RSpec/ExampleLength
+    it "removes all the user account security information but keeps the password" do
+      expect {
+        new_user.remove_account_security!
+        new_user.reload
+      }.to change(new_user, :mobile_number).to(nil)
+       .and change(new_user, :mobile_number_verified).to(false)
+       .and change(new_user, :direct_otp).to(nil)
+       .and change(new_user, :direct_otp_sent_at).to(nil)
+       .and change(new_user, :totp_secret_key).to(nil)
+       .and change(new_user, :account_security_completed).to(false)
+       .and change(new_user, :secondary_authentication_methods).from(%w[app sms]).to([])
+       .and not_change(new_user, :encrypted_password)
+    end
+    # rubocop:enable RSpec/ExampleLength
+  end
 end

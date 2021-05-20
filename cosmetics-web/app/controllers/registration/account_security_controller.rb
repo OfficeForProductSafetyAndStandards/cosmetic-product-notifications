@@ -1,6 +1,6 @@
 module Registration
   class AccountSecurityController < SubmitApplicationController
-    before_action :check_user
+    before_action :check_user, except: :destroy
     skip_before_action :require_secondary_authentication
     skip_before_action :try_to_finish_account_setup
 
@@ -21,6 +21,13 @@ module Registration
       else
         render :new
       end
+    end
+
+    # Needed to re-display the account security form for an user that has submitted it but needs to go back.
+    # EG: Navigating back from the SMS authentication code page after selecting SMS as one of the 2FA methods.
+    def destroy
+      current_user&.remove_account_security!
+      redirect_to registration_new_account_security_path
     end
 
   private

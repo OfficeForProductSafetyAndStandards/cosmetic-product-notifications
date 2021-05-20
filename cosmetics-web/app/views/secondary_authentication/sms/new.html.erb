@@ -1,10 +1,16 @@
 <% title = "Check your phone" %>
 <% page_title(title, errors: @form.errors.any?) %>
 
-<% if @form.user&.multiple_secondary_authentication_methods? && !@form.user&.mobile_number_pending_verification? %>
-  <% content_for(:after_header) do %>
-    <%= govukBackLink(text: "Back", href: new_secondary_authentication_method_path) %>
-  <% end %>
+<% content_for(:after_header) do %>
+  <%=
+    if @form.user&.multiple_secondary_authentication_methods? && !@form.user&.mobile_number_pending_verification?
+      govukBackLink(text: "Back", href: new_secondary_authentication_method_path)
+    elsif @form.user&.mobile_number_pending_verification?
+      govukBackLink(text: "Back",
+                    href: registration_destroy_account_security_path,
+                    attributes: { method: :delete })
+    end
+  %>
 <% end %>
 
 <div class="govuk-grid-row">
