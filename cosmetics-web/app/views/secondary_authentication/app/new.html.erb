@@ -1,7 +1,7 @@
 <% title = "Enter the access code" %>
 <% page_title(title, errors: @form.errors.any?) %>
 
-<% if @form.back_link? %>
+<% if @form.user&.multiple_secondary_authentication_methods? %>
   <% content_for(:after_header) do %>
     <%= govukBackLink(text: "Back", href: new_secondary_authentication_method_path) %>
   <% end %>

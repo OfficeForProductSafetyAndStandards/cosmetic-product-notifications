@@ -1,9 +1,22 @@
-<% if results.present? %>
-  <ul class="product-list govuk-!-margin-bottom-0">
-    <% results.each do |notification| %>
-      <%= render "registered_product", notification: notification %>
-    <% end %>
-  </ul>
-<% else %>
-  <p class="govuk-!-font-weight-bold">No results found.</p>
-<% end %>
+<section class="govuk-grid-column-two-thirds" id="search-results-section">
+  <% if params[:q].present? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> matching keyword(s) <%= display_keywords(params[:q]) %> were found.</p>
+      </div>
+    </div>
+  <% end %>
+
+  <% if results.present? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order">
+        <ul class="govuk-list opss-list--borders">
+          <% results.each do |notification| %>
+            <%= render "registered_product", notification: notification %>
+          <% end %>
+        </ul>
+        <%= paginate @notifications, views_prefix: 'search' %>
+      </div>
+    </div>
+  <% end %>
+</section>

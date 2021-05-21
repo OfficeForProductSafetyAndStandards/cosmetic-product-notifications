@@ -60,7 +60,7 @@ rules:
   no-qualifying-elements:
     - 2
     - allow-element-with-attribute: true
-      allow-element-with-class: false
+      allow-element-with-class: true
       allow-element-with-id: false
   no-trailing-zero: 2
   no-transition-all: 2
