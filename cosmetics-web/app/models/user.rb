@@ -19,6 +19,9 @@ class User < ApplicationRecord
     validate :secondary_authentication_methods_allowed, if: -> { secondary_authentication_methods&.any? }
   end
 
+  before_validation :update_secondary_authentication_methods, if: :secondary_authentication_info_will_change?
+  before_save :ensure_mobile_number_verification, if: :will_save_change_to_mobile_number?
+
   def send_new_email_confirmation_email
     NotifyMailer.get_mailer(self).new_email_verification_email(self).deliver_later
   end
@@ -47,8 +50,6 @@ class User < ApplicationRecord
     self.class::TOTP_ISSUER
   end
 
-private
-
   def sms_authentication_set?
     mobile_number.present? && mobile_number_verified?
   end
@@ -56,6 +57,12 @@ private
   def app_authentication_set?
     encrypted_totp_secret_key.present? && last_totp_at.present?
   end
+
+  def multiple_secondary_authentication_methods?
+    secondary_authentication_methods.size > 1
+  end
+
+private
 
   def secondary_authentication_set?
     !mobile_number_pending_verification? && (sms_authentication_set? || app_authentication_set?)
@@ -71,5 +78,23 @@ private
     unless secondary_authentication_methods.all? { |method| SECONDARY_AUTHENTICATION_METHODS.include?(method) }
       errors.add(:secondary_authentication_methods, :invalid)
     end
+  end
+
+  def ensure_mobile_number_verification
+    return if will_save_change_to_mobile_number_verified? # E.G: Manually set on spec factory
+
+    self.mobile_number_verified = false
+  end
+
+  def secondary_authentication_info_will_change?
+    will_save_change_to_mobile_number? || will_save_change_to_encrypted_totp_secret_key?
+  end
+
+  def update_secondary_authentication_methods
+    methods = []
+    methods << "app" if encrypted_totp_secret_key.present?
+    methods << "sms" if mobile_number.present?
+
+    self.secondary_authentication_methods = methods
   end
 end

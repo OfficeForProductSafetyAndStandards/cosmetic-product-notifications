@@ -1,0 +1,35 @@
+<% notification_path = poison_centre_notification_path(notification) %>
+
+<li>
+  <h2 class="govuk-heading-s">
+    <%= link_to notification.product_name, notification_path, class: "govuk-link" %>
+  </h2>
+  <dl class="govuk-summary-list govuk-summary-list--no-border opss-summary-list opss-summary-list--small">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        First notified in the <abbr>UK</abbr>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= display_full_month_date notification.notification_complete_at %>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <abbr>UK</abbr> cosmetic product number
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= notification.reference_number_for_display %>
+      </dd>
+    </div>
+    <% if notification.cpnp_reference.present? %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        <abbr>EU</abbr> reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= notification.cpnp_reference %>
+        </dd>
+      </div>
+    <% end %>
+  </dl>
+</li>

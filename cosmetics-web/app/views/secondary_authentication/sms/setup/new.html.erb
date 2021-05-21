@@ -1,5 +1,5 @@
-<% title = "Change your mobile number" %>
-<% page_title title, errors: @user.errors.any? %>
+<% title = "#{@user.mobile_number.present? ? 'Change' : 'Set'} your mobile number" %>
+<% page_title title, errors: @form.errors.any? %>
 
 <% content_for(:after_header) do %>
   <%= govukBackLink(text: "Back", href: my_account_path) %>
@@ -7,19 +7,20 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= error_summary(@user.errors) %>
+    <%= error_summary(@form.errors,
+                      [:password, :mobile_number],
+                      map_errors: { password: :old_password, mobile_number: :new_mobile_number}) %>
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
-    <%= form_with model: @user, url: my_account_mobile_number_path, method: :patch do |form| %>
+    <%= form_with model: @form, url: secondary_authentication_sms_setup_path, method: :post  do |form| %>
       <%= render "form_components/govuk_input",
         key: :password,
         type: :password,
         form: form,
         classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "Password"
-        },
+        label: { text: "Password" },
+        hint: { text: "Confirm changes with your password." },
         value: nil,
         id: "old_password"
         %>
@@ -28,9 +29,7 @@
         type: :text,
         form: form,
         classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "New mobile number"
-        },
+        label: { text: "Mobile number" },
         value: nil,
         id: "new_mobile_number"
         %>

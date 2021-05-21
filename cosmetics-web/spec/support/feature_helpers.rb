@@ -47,6 +47,11 @@ def select_secondary_authentication_app
   click_on "Continue"
 end
 
+def expect_to_be_on_secondary_authentication_method_selection_page
+  expect(page).to have_current_path("/two-factor/method")
+  expect(page).to have_css("h1", text: "How do you want to get an access code?")
+end
+
 def expect_to_be_on_secondary_authentication_sms_page
   expect(page).to have_current_path("/two-factor/sms")
   expect(page).to have_h1("Check your phone")
@@ -109,6 +114,10 @@ end
 
 def expect_to_be_on_my_account_page
   expect(page).to have_current_path(/\/my_account/)
+end
+
+def expect_back_link_to_my_account_page
+  expect_back_link_to("/my_account")
 end
 
 def expect_back_link_to(path)

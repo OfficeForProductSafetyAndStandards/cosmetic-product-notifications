@@ -8,14 +8,22 @@ FactoryBot.define do
     with_all_secondary_authentication_methods
 
     trait :with_all_secondary_authentication_methods do
-      with_app_secondary_authentication
-      with_sms_secondary_authentication
+      last_totp_at { 1_432_703_530 }
+      totp_secret_key { ROTP::Base32.random }
+      mobile_number { "07500 000 000" }
+      mobile_number_verified { true }
+      direct_otp_sent_at { Time.zone.now }
+      direct_otp { "12345" }
       secondary_authentication_methods { %w[app sms] }
     end
 
     trait :with_app_secondary_authentication do
       last_totp_at { 1_432_703_530 }
       totp_secret_key { ROTP::Base32.random }
+      mobile_number { nil }
+      mobile_number_verified { false }
+      direct_otp_sent_at { nil }
+      direct_otp { nil }
       secondary_authentication_methods { %w[app] }
     end
 
@@ -24,6 +32,8 @@ FactoryBot.define do
       mobile_number_verified { true }
       direct_otp_sent_at { Time.zone.now }
       direct_otp { "12345" }
+      last_totp_at { nil }
+      totp_secret_key { nil }
       secondary_authentication_methods { %w[sms] }
     end
 
