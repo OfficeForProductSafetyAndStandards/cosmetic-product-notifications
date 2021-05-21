@@ -155,10 +155,15 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("Back", href: "/account-security")
     click_link("Back")
 
-    # Finally user only selects app authentication method and submits the page
     expect(page).to have_current_path("/account-security")
+    # Account Security form has the previously values pre-filled
+    expect(page).to have_checked_field("Authenticator app for smartphone or tablet")
+    expect(page).to have_checked_field("Text message")
+    expect(page).to have_field("Mobile number", with: "07000000000")
+
+    # Finally user unchecks the text message authentication and re-submits the form
+    uncheck "Text message"
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
     fill_in "Enter the access code", with: correct_app_code
     click_button "Continue"
 

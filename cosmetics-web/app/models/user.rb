@@ -62,20 +62,6 @@ class User < ApplicationRecord
     secondary_authentication_methods.size > 1
   end
 
-  def remove_account_security!
-    # Does not remove the password as doing so messes up with the user session.
-    # Still, setting the account security completion to false enforces the user
-    # having to re-submit the account security form, setting a new password there.
-    update!(
-      mobile_number: nil,
-      mobile_number_verified: false,
-      direct_otp: nil,
-      direct_otp_sent_at: nil,
-      totp_secret_key: nil,
-      account_security_completed: false,
-    )
-  end
-
 private
 
   def secondary_authentication_set?
