@@ -1,6 +1,6 @@
 module Registration
   class AccountSecurityController < SubmitApplicationController
-    before_action :check_user, except: :destroy
+    before_action :check_user, except: :reset
     skip_before_action :require_secondary_authentication
     skip_before_action :try_to_finish_account_setup
 
@@ -36,7 +36,7 @@ module Registration
     # Filter "#check_user" impedes users who completed account security to directly visit "#new" action.
     # This route allows that to happen in specific situations where we need to.
     # EG: Navigating back from the SMS code authentication page after selecting SMS as one of the 2FA methods.
-    def destroy
+    def reset
       current_user.update(account_security_completed: false)
       redirect_to registration_new_account_security_path
     end
