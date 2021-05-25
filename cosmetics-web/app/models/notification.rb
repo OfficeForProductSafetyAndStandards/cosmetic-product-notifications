@@ -1,10 +1,10 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
 
+
   DELETION_PERIOD_DAYS = 7
 
   include Searchable
-
   include AASM
   include CountriesHelper
 
@@ -49,6 +49,24 @@ class Notification < ApplicationRecord
                                           allow_nil: true
   validate :max_ph_is_greater_than_min_ph
 
+
+  settings do
+    mapping do
+      indexes :product_name, type: 'text'
+      indexes :created_at, type: 'date'
+
+      indexes :responsible_person do
+        indexes :name, type: 'text'
+      end
+
+      indexes :components, type: 'nested' do
+        indexes :display_sub_category, type: 'text'
+        indexes :display_sub_sub_category, type: 'text'
+        indexes :display_root_category, type: 'keyword'
+      end
+    end
+  end
+
   def as_indexed_json(*)
     as_json(
       only: %i[product_name],
@@ -62,6 +80,7 @@ class Notification < ApplicationRecord
       },
     )
   end
+
   aasm whiny_transitions: false, timestamps: true, column: :state do
     state :empty, initial: true
     state :product_name_added
@@ -230,3 +249,4 @@ private
 end
 
 Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search
+Notification.index_name "search-development-2"

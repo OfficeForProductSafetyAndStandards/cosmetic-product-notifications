@@ -1,5 +1,7 @@
 class PoisonCentres::NotificationsController < SearchApplicationController
+
   def index
+    @form = NotificationSearchForm.new(search_params)
     @result = search_notifications(10)
     @notifications = @result.records
   end
@@ -18,11 +20,13 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 private
 
   def search_notifications(page_size)
-    query = ElasticsearchQuery.new(query_params[:q])
+    # query = ElasticsearchQuery.new(query_params[:q], "Hair and scalp products")
+#    binding.pry
+    query = ElasticsearchQuery.new(@form.q, @form.category)
     Notification.full_search(query).paginate(page: params[:page], per_page: page_size)
   end
 
-  def query_params
-    params.permit(:q)
+  def search_params
+    params.require(:notification_search_form).permit(:q, :category)
   end
 end
