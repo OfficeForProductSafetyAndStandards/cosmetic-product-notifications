@@ -19,8 +19,8 @@ class UsersController < SearchApplicationController
     @account_security_form = Registration::AccountSecurityForm.new(
       user: @user,
       mobile_number: @user.mobile_number,
-      sms_authentication: user_authentication_method_value_for("sms"),
-      app_authentication: user_authentication_method_value_for("app"),
+      sms_authentication: @user.secondary_authentication_methods&.include?("sms"),
+      app_authentication: @user.secondary_authentication_methods&.include?("app"),
       secret_key: @user.totp_secret_key,
     )
 
@@ -77,10 +77,5 @@ private
                   :app_authentication_code,
                   :sms_authentication,
                   :app_authentication)
-  end
-
-  # Output corresponds to value coming from form checkbox when selected/not selected
-  def user_authentication_method_value_for(method)
-    @user&.secondary_authentication_methods&.include?(method) ? "1" : "0"
   end
 end

@@ -11,8 +11,8 @@ module Registration
       @account_security_form = AccountSecurityForm.new(
         user: current_user,
         mobile_number: current_user.mobile_number,
-        sms_authentication: user_authentication_method_value_for("sms"),
-        app_authentication: user_authentication_method_value_for("app"),
+        sms_authentication: current_user.secondary_authentication_methods&.include?("sms"),
+        app_authentication: current_user.secondary_authentication_methods&.include?("app"),
         secret_key: current_user.totp_secret_key,
       )
     end
@@ -71,14 +71,7 @@ module Registration
     end
 
     def check_user
-      return unless current_user.account_security_completed
-
-      redirect_to root_path
-    end
-
-    # Output corresponds to value coming from form checkbox when selected/not selected
-    def user_authentication_method_value_for(method)
-      current_user.secondary_authentication_methods&.include?(method) ? "1" : "0"
+      return (redirect_to root_path) if current_user.account_security_completed
     end
   end
 end
