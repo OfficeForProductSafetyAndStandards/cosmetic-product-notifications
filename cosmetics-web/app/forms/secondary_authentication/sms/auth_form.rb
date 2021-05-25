@@ -30,10 +30,6 @@ module SecondaryAuthentication
         super(code.to_s.strip)
       end
 
-      def back_link?
-        user && !user.mobile_number_pending_verification? && user.secondary_authentication_methods.size > 1
-      end
-
       def correct_otp_validation
         return if errors.present?
 

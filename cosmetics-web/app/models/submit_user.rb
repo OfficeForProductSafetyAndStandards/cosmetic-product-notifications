@@ -15,7 +15,7 @@ class SubmitUser < User
   has_many :pending_responsible_person_users, dependent: :destroy, foreign_key: :inviting_user_id, inverse_of: :inviting_user
 
   has_one :user_attributes, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
-  validates :mobile_number, presence: true, if: -> { secondary_authentication_methods&.include? "sms" }
+
   validates :mobile_number,
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
