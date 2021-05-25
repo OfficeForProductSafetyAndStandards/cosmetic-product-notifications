@@ -27,6 +27,10 @@ private
   end
 
   def search_params
-    params.require(:notification_search_form).permit(:q, :category)
+    if params[:notification_search_form].present?
+      params.require(:notification_search_form).permit(:q, :category)
+    else
+      {}
+    end
   end
 end
