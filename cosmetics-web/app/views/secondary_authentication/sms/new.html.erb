@@ -3,13 +3,14 @@
 
 <% content_for(:after_header) do %>
   <%=
-    if @form.user&.multiple_secondary_authentication_methods? && !@form.user&.mobile_number_pending_verification?
+    if @form.user&.mobile_number_pending_verification? && !request.referer&.end_with?("two-factor/sms/setup")
+      if submit_domain?
+        govukBackLink(text: "Back", href: registration_reset_account_security_path, attributes: { method: :delete })
+      else
+        govukBackLink(text: "Back", href: reset_complete_registration_user_path(@form.user), attributes: { method: :delete })
+      end
+    elsif !@form.user&.mobile_number_pending_verification? && @form.user&.multiple_secondary_authentication_methods?
       govukBackLink(text: "Back", href: new_secondary_authentication_method_path)
-    elsif @form.user&.mobile_number_pending_verification?
-      # Submit users come from registration "account security" page. Search users come from user "complete registration" page
-      govukBackLink(text: "Back",
-                    href: submit_domain? ? registration_reset_account_security_path : reset_complete_registration_user_path(@form.user),
-                    attributes: { method: :delete })
     end
   %>
 <% end %>
