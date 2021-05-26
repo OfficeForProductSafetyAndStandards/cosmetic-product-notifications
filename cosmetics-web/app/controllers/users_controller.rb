@@ -78,4 +78,8 @@ private
                   :sms_authentication,
                   :app_authentication)
   end
+
+  def user_id_for_secondary_authentication
+    @user&.id
+  end
 end
