@@ -42,5 +42,3 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_link("Bath Bubbles")
   end
 end
-
-

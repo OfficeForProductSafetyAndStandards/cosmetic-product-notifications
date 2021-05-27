@@ -46,8 +46,8 @@ ActiveRecord::Base.transaction do
   }
   SearchUser.create!(search_user_attributes)
   keywords = %w[cream luxury premium]
-  category_names = [:skin, :hair, :nail, :oral]
-  categories = [:face_care_products_other_than_face_mask, :shampoo, :nail_varnish_nail_makeup, :toothpaste]
+  category_names = %i[skin hair nail oral]
+  categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
   # Create Notifications
   20.times do |i|
     notification_attributes = {

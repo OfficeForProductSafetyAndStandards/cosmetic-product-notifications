@@ -1,5 +1,4 @@
 class PoisonCentres::NotificationsController < SearchApplicationController
-
   def index
     @form = NotificationSearchForm.new(search_params)
     @result = search_notifications(10)

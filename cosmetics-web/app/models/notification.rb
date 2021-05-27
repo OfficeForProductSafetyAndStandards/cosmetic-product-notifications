@@ -1,7 +1,6 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
 
-
   DELETION_PERIOD_DAYS = 7
 
   include Searchable
@@ -49,20 +48,19 @@ class Notification < ApplicationRecord
                                           allow_nil: true
   validate :max_ph_is_greater_than_min_ph
 
-
   settings do
     mapping do
-      indexes :product_name, type: 'text'
-      indexes :created_at, type: 'date'
+      indexes :product_name, type: "text"
+      indexes :created_at, type: "date"
 
       indexes :responsible_person do
-        indexes :name, type: 'text'
+        indexes :name, type: "text"
       end
 
-      indexes :components, type: 'nested' do
-        indexes :display_sub_category, type: 'text'
-        indexes :display_sub_sub_category, type: 'text'
-        indexes :display_root_category, type: 'keyword'
+      indexes :components, type: "nested" do
+        indexes :display_sub_category, type: "text"
+        indexes :display_sub_sub_category, type: "text"
+        indexes :display_root_category, type: "keyword"
       end
     end
   end

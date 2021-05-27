@@ -1,6 +1,4 @@
 class ElasticsearchQuery
-  attr_accessor :query
-
   def initialize(keyword, category)
     @keyword = keyword
     @category = category
@@ -15,9 +13,9 @@ class ElasticsearchQuery
       query: {
         bool: {
           must: search_query,
-          filter: filter_query
-        }
-      }
+          filter: filter_query,
+        },
+      },
     }
   end
 
@@ -36,12 +34,13 @@ class ElasticsearchQuery
       multi_match: {
         query: @keyword,
         fuzziness: "AUTO",
-      }
+      },
     }
   end
 
   def filter_query
     return if @category.blank?
+
     [
       {
         nested: {
@@ -49,13 +48,12 @@ class ElasticsearchQuery
           query: {
             bool: {
               should: [
-                { term: { "components.display_root_category": @category }}
-              ]
-            }
-          }
-        }
-      }
+                { term: { "components.display_root_category": @category } },
+              ],
+            },
+          },
+        },
+      },
     ]
   end
-
 end
