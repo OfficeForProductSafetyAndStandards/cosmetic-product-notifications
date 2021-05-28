@@ -77,6 +77,10 @@ def expect_to_be_on_complete_registration_page
   expect(page).to have_field("username", type: "email", with: invited_user.email, disabled: true)
 end
 
+def expect_back_link_to_complete_registration_page
+  expect_back_link_to(/\/complete-registration?.+$/)
+end
+
 def expect_to_be_on_password_changed_page
   expect(page).to have_current_path("/password-changed")
   expect(page).to have_css("h1", text: "You have changed your password successfully")

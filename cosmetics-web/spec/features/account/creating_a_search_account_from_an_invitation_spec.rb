@@ -87,6 +87,76 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect_to_be_signed_in_as_search_user
   end
 
+  scenario "Creating a Search account from an invitation selecting both text and app methods but then moving back to only use the app" do
+    email = delivered_emails.last
+    invite_url = email.personalization[:invitation_url]
+    visit invite_url
+
+    expect_to_be_on_complete_registration_page
+
+    # First attempt not selecting a secondary authentication method
+    fill_in_account_details_with(full_name: "Bob Jones", password: "testpassword123@")
+    click_button "Continue"
+
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
+
+    # Second attempt selecting both methods but introducing wrong app authentication code
+    fill_in_account_details_with(full_name: "Bob Jones",
+                                 password: "testpassword123@",
+                                 mobile_number: "07731123345",
+                                 app_code: "000000")
+    click_button "Continue"
+
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
+    expect(page).to have_css("span#app_authentication_code-error", text: "Enter a correct code")
+
+    # Third attempt introducing the correct app authentication code
+    fill_in_account_details_with(full_name: "Bob Jones",
+                                 password: "testpassword123@",
+                                 mobile_number: "07731123345",
+                                 app_code: correct_app_code)
+    click_button "Continue"
+
+    # User decides to not use text authentication and goes back to change complete registration page options
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_back_link_to_complete_registration_page
+    click_link("Back")
+
+    expect_to_be_on_complete_registration_page
+    expect(page).to have_checked_field("Authenticator app for smartphone or tablet")
+    expect(page).to have_checked_field("Text message")
+    expect(page).to have_field("Mobile number", with: "07731123345")
+
+    # Finally user unchecks the text message authentication and re-submits the form
+    uncheck "Text message"
+    fill_in_account_details_with(full_name: "Bob Jones",
+                                 password: "testpassword123@",
+                                 app_code: correct_app_code)
+    click_button "Continue"
+
+    # expect_to_be_on_declaration_page
+    click_button "I accept"
+    expect_to_be_signed_in_as_search_user
+
+    # Now sign out and use those credentials to sign back in
+    find_link("Sign out", match: :first).click
+
+    expect_to_be_on_the_search_homepage
+
+    click_link "Sign in"
+
+    fill_in "Email address", with: invited_user.email
+    fill_in "Password", with: "testpassword123@"
+    click_on "Continue"
+
+    # Skips 2FA as cookie was set to not require
+    # 2FA for 7 days.
+
+    expect_to_be_signed_in_as_search_user
+  end
+
   # TODO
   # context "when a previous registration was abandoned before verifying mobile number" do
   #   let(:invited_user) do
@@ -142,8 +212,8 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_text("If you’re using this service for the first time")
   end
 
-  def fill_in_account_details_with(full_name:, password:, mobile_number: nil, app_code: nil)
-    fill_in "Full name", with: full_name
+  def fill_in_account_details_with(full_name: nil, password:, mobile_number: nil, app_code: nil)
+    fill_in("Full name", with: full_name) if full_name
     fill_in "Password", with: password
     if mobile_number
       check "Text message"
