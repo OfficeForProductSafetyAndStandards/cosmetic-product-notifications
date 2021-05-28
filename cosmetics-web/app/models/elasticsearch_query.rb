@@ -5,10 +5,6 @@ class ElasticsearchQuery
   end
 
   def build_query
-    query
-  end
-
-  def query
     {
       query: {
         bool: {
