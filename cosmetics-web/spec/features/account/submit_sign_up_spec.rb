@@ -122,6 +122,54 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect_to_be_on_declaration_page
   end
 
+  scenario "user signs up originally selecting both text and app methods but then moving back to only use the app" do
+    visit "/"
+    click_on "Create an account"
+    expect(page).to have_current_path("/create-an-account")
+
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Email address", with: "signing_up@example.com"
+    click_button "Continue"
+
+    expect_to_be_on_check_your_email_page
+
+    email = delivered_emails.last
+    expect(email.recipient).to eq "signing_up@example.com"
+    expect(email.personalization[:name]).to eq("Joe Doe")
+
+    verify_url = email.personalization[:verify_email_url]
+    visit verify_url
+
+    # User reaches account security page and select both text and app methods
+    expect(page).to have_current_path("/account-security")
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    check "Authenticator app for smartphone or tablet"
+    fill_in "Enter the access code", with: correct_app_code
+    check "Text message"
+    fill_in "Mobile number", with: "07000000000"
+    click_button "Continue"
+
+    # User decides to not use text authentication and goes back to change the account security preferences
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(otp_code)
+    expect(page).to have_link("Back", href: "/account-security")
+    click_link("Back")
+
+    expect(page).to have_current_path("/account-security")
+    # Account Security form has the previously values pre-filled
+    expect(page).to have_checked_field("Authenticator app for smartphone or tablet")
+    expect(page).to have_checked_field("Text message")
+    expect(page).to have_field("Mobile number", with: "07000000000")
+
+    # Finally user unchecks the text message authentication and re-submits the form
+    uncheck "Text message"
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    fill_in "Enter the access code", with: correct_app_code
+    click_button "Continue"
+
+    expect_to_be_on_declaration_page
+  end
+
   scenario "user signs up and verifies its email with 2FA disabled for the environment", with_2fa: false do
     visit "/"
     click_on "Create an account"

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     resources :users, only: [:update] do
       member do
         get "complete-registration", action: :complete_registration
+        delete "complete-registration", action: :reset_complete_registration, as: :reset_complete_registration
         post "sign-out-before-accepting-invitation", action: :sign_out_before_accepting_invitation
       end
     end
@@ -82,6 +83,7 @@ Rails.application.routes.draw do
     get "confirm-new-account", to: "registration/new_accounts#confirm", as: :registration_confirm_submit_user
     get "account-security", to: "registration/account_security#new", as: :registration_new_account_security
     post "account-security", to: "registration/account_security#create", as: :registration_create_account_security
+    delete "account-security", to: "registration/account_security#reset", as: :registration_reset_account_security
     post "sign-out-before-confirming-email", to: "registration/new_accounts#sign_out_before_confirming_email"
 
     root "submit/landing_page#index", as: :submit_root

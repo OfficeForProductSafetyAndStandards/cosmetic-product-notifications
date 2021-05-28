@@ -12,7 +12,11 @@ module SecondaryAuthenticationConcern
     return unless user && Rails.configuration.secondary_authentication_enabled
 
     if !user.account_security_completed?
-      redirect_to(registration_new_account_security_path)
+      if submit_domain?
+        redirect_to registration_new_account_security_path
+      else
+        redirect_to complete_registration_user_path(user, invitation: user.invitation_token)
+      end
     elsif !secondary_authentication_present_in_session? || user.mobile_number_pending_verification?
       session[:secondary_authentication_redirect_to] = redirect_to
       session[:secondary_authentication_user_id] = user.id
