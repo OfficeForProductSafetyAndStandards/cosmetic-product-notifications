@@ -2,7 +2,7 @@
 
 <li>
   <h2 class="govuk-heading-s">
-    <%= link_to notification.product_name, notification_path, class: "govuk-link" %>
+    <%= link_to notification.product_name, poison_centre_notification_path(notification, q: params[:notification_search_form][:q], category: params[:notification_search_form][:category]), class: "govuk-link" %>
   </h2>
   <dl class="govuk-summary-list govuk-summary-list--no-border opss-summary-list opss-summary-list--small">
     <div class="govuk-summary-list__row">
