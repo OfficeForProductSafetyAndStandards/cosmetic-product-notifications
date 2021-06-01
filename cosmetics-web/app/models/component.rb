@@ -2,6 +2,7 @@ class Component < ApplicationRecord
   include AASM
   include NotificationProperties
   include NotificationPropertiesHelper
+  include CategoryHelper
   include FileUploadConcern
   set_attachment_name :formulation_file
   set_allowed_types %w[application/pdf].freeze

@@ -46,10 +46,12 @@ ActiveRecord::Base.transaction do
   }
   SearchUser.create!(search_user_attributes)
   keywords = %w[cream luxury premium]
+  category_names = %i[skin hair nail oral]
+  categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
   # Create Notifications
   20.times do |i|
     notification_attributes = {
-      product_name: "Scrub shower bubbles #{keywords[i % 3]} #{i}",
+      product_name: "Scrub shower bubbles #{keywords[i % 3]} #{i} (#{category_names[i % 4]})",
       state: "notification_complete",
       responsible_person_id: 1,
       was_notified_before_eu_exit: false,
@@ -65,7 +67,7 @@ ActiveRecord::Base.transaction do
       notification_id: 121,
       notification_type: "predefined",
       frame_formulation: "skin_care_cream_lotion_gel",
-      sub_sub_category: "face_care_products_other_than_face_mask",
+      sub_sub_category: (categories[i % 4]),
       physical_form: "other_physical_form",
       contains_poisonous_ingredients: false,
       ph: "not_applicable",

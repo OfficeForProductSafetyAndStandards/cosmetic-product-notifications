@@ -1,0 +1,31 @@
+<section class="govuk-grid-column-one-third">
+
+  <%= form_for(@form, url: poison_centre_notifications_path, method: :get, html: { 'novalidate' => true }) do |form| %>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">
+            Filter the results by<span class="govuk-visually-hidden">:</span>
+          </h2>
+        </legend>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="notification_search_form_category">
+            Product category
+          </label>
+          <%= form.select :category, @form.class::CATEGORIES, { include_blank: true },  class: "govuk-select" %>
+          <%= form.hidden_field :q %>
+        </div>
+
+      </fieldset>
+    </div>
+
+    <div class="govuk-button-group">
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Apply
+      </button>
+    </div>
+
+  <% end %>
+</section>
