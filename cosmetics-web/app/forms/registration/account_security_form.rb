@@ -78,12 +78,29 @@ module Registration
       secret_key.gsub(/(.{4})/, '\1 ').strip
     end
 
+    # SMS and App authentication attributes accept both:
+    # - Form checkbox values: "0" for unselected "1" for selected.
+    # - Manual values: true / false
     def sms_authentication_selected?
       sms_authentication == "1"
     end
 
     def app_authentication_selected?
       app_authentication == "1"
+    end
+
+    def sms_authentication
+      case super
+      when "1", true then "1"
+      else "0"
+      end
+    end
+
+    def app_authentication
+      case super
+      when "1", true then "1"
+      else "0"
+      end
     end
 
     # Following methods override attrs to discard them unless the authentication

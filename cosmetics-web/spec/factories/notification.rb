@@ -42,8 +42,12 @@ FactoryBot.define do
     end
 
     trait :with_component do
-      after(:create) do |notification|
-        create(:component, notification: notification, sub_sub_category: "nonoxidative_hair_colour_products")
+      transient do
+        category { "nonoxidative_hair_colour_products" }
+      end
+
+      after(:create) do |notification, evaluator|
+        create(:component, notification: notification, sub_sub_category: evaluator.category)
         notification.reload
       end
     end
