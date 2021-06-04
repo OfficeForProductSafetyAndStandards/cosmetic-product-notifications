@@ -1,7 +1,7 @@
 name: Smoke test
-on: [push]
-  # schedule:
-  #   - cron: "5 * * * *"
+on:
+  schedule:
+    - cron: "5 * * * *"
 env:
   SEARCH_HOST: search
   SUBMIT_HOST: submit
