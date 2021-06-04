@@ -107,6 +107,7 @@ private
     @responsible_person.notifications
       .completed
       .paginate(page: params[:notified], per_page: page_size)
+      .order(notification_complete_at: :desc)
   end
 
   def add_image_upload_errors
