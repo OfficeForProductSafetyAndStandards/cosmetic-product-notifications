@@ -229,12 +229,12 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "#cache_categories_for_csv" do
+  describe "#cache_categories_for_csv!" do
     let(:notification) { create(:notification, :with_components) }
 
     it "is saved properly" do
-      notification.cache_categories_for_csv
-      expect(notification.csv_cache).to eq [["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"], ["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"]]
+      notification.cache_categories_for_csv!
+      expect(notification.reload.csv_cache).to eq [["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"], ["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"]]
     end
   end
 
