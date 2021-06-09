@@ -68,7 +68,13 @@ module Users
       user.confirmed_at = nil
       user.account_security_completed = false
       user.save(validate: false)
-      user.resend_account_setup_link
+      if (invitation = PendingResponsiblePersonUser.where(email_address: user.email).last)
+        SubmitNotifyMailer.send_responsible_person_invite_email(
+          invitation.responsible_person, invitation, invitation.inviting_user.name
+        ).deliver_later
+      else
+        user.resend_account_setup_link
+      end
       redirect_to check_your_email_path
     end
 

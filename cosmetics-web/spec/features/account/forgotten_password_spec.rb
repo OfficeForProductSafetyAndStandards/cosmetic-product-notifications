@@ -223,6 +223,58 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         end
       end
     end
+
+    context "when user was invited to a responsible persons and followed the link but haven't completed their registration" do
+      let(:responsible_person) { create(:responsible_person, :with_a_contact_person, name: "Responsible Person") }
+      let(:invitation) do
+        create(:pending_responsible_person_user, email_address: "inviteduser@example.com", responsible_person: responsible_person)
+      end
+
+      scenario "resends the responsible person invitation email and shows the confirmation page" do
+        # Invited user visits the link from the RP invitation email
+        invitation_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
+        visit invitation_path
+        expect(page).to have_current_path("/account-security")
+        expect(page).to have_css("h1", text: "Create an account")
+        expect(page).to have_field("Full name")
+
+        # User abandons the registration process
+        click_link "Sign out"
+
+        # After a while, user tries to Sign in in the service believing it has an active account on it
+        visit "/sign-in"
+
+        # User attempts to recover their password (that they never did set up)
+        click_link "Forgot your password?"
+
+        expect(page).to have_css("h1", text: "Reset your password")
+        fill_in "Email address", with: "inviteduser@example.com"
+
+        perform_enqueued_jobs do
+          click_on "Send email"
+        end
+
+        # Instead of receiving a reset password email, user receives the invitation email again
+        expect(delivered_emails.size).to eq 1
+        email = delivered_emails.first
+
+        expect(email.recipient).to eq "inviteduser@example.com"
+        expect(email.reference).to eq "Invite user to join responsible person"
+        expect(email.template).to eq mailer::TEMPLATES[:responsible_person_invitation_for_existing_user]
+        expect(email.personalization).to eq(
+          invitation_url: "http://#{ENV.fetch('SUBMIT_HOST')}#{invitation_path}",
+          responsible_person: responsible_person.name,
+          invite_sender: invitation.inviting_user.name,
+        )
+        expect_to_be_on_check_your_email_page
+
+        # Invitation link takes the user to the account completion page
+        visit invitation_path
+        expect(page).to have_current_path("/account-security")
+        expect(page).to have_css("h1", text: "Create an account")
+        expect(page).to have_field("Full name")
+      end
+    end
   end
 
   describe "for search" do
