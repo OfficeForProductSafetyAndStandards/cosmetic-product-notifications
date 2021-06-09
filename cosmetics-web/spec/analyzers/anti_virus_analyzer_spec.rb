@@ -5,7 +5,7 @@ RSpec.describe AntiVirusAnalyzer, type: :analyzer do
     let(:analyzer) { described_class.new(blob) }
     let(:notification_file) { create(:notification_file) }
     let(:blob) do
-      ActiveStorage::Blob.create_after_upload!(
+      ActiveStorage::Blob.create_and_upload!(
         io: File.open(Rails.root.join("spec/fixtures/files/testImage.png"), "rb"),
         filename: "testImage.png",
         content_type: "image/png",
