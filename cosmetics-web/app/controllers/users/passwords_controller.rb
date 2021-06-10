@@ -69,6 +69,7 @@ module Users
       user.account_security_completed = false
       user.save(validate: false)
       if (invitation = PendingResponsiblePersonUser.where(email_address: user.email).last)
+        invitation.refresh_token_expiration!
         SubmitNotifyMailer.send_responsible_person_invite_email(
           invitation.responsible_person, invitation, invitation.inviting_user.name
         ).deliver_later
