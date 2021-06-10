@@ -108,7 +108,7 @@ class Notification < ApplicationRecord
       transitions from: :notification_file_imported, to: :draft_complete, guard: :formulation_present?
     end
 
-    event :submit_notification do
+    event :submit_notification, after: :cache_categories_for_csv! do
       transitions from: :draft_complete, to: :notification_complete,
                   after: proc { __elasticsearch__.index_document } do
         guard do
@@ -202,6 +202,13 @@ class Notification < ApplicationRecord
   end
 
   delegate :count, to: :components, prefix: true
+
+  def cache_categories_for_csv!
+    self.csv_cache = components.map do |component|
+      [component.root_category, component.sub_category, component.sub_sub_category].map(&:to_s).map(&:humanize)
+    end
+    save!
+  end
 
 private
 
