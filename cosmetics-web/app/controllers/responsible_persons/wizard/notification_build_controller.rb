@@ -65,7 +65,7 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
                   end
       responsible_person_add_notification_path(@notification.responsible_person, last_step)
     elsif step == :add_new_component && @notification.state == "draft_complete"
-      last_component = @notification.components.last
+      last_component = @notification.components.complete.last
       last_step = last_component.ph_range_not_required? ? :select_ph_range : :ph
       responsible_person_notification_component_trigger_question_path(@notification.responsible_person, @notification, last_component, last_step)
     elsif previous_step.present?
