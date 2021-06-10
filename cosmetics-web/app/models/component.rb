@@ -29,6 +29,8 @@ class Component < ApplicationRecord
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
   accepts_nested_attributes_for :nano_material
 
+  scope :complete, -> { where(state: "component_complete") }
+
   validates :physical_form, presence: {
     on: :add_physical_form,
     message: lambda do |object, _|
