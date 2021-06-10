@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_103858) do
+ActiveRecord::Schema.define(version: 2021_06_04_114734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_103858) do
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
     t.datetime "notification_complete_at"
+    t.json "csv_cache"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
