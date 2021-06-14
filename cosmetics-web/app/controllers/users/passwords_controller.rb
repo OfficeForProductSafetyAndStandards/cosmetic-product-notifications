@@ -68,7 +68,18 @@ module Users
       user.confirmed_at = nil
       user.account_security_completed = false
       user.save(validate: false)
-      user.resend_account_setup_link
+      # TODO: Remove this branch based on pending invitations once invitations
+      # contain user name (pending feature).
+      # Once that happens logic can default to resending the account setup link
+      # as done with user who registered without an invitation.
+      if (invitation = PendingResponsiblePersonUser.where(email_address: user.email).last)
+        invitation.refresh_token_expiration!
+        SubmitNotifyMailer.send_responsible_person_invite_email(
+          invitation.responsible_person, invitation, invitation.inviting_user.name
+        ).deliver_later
+      else
+        user.resend_account_setup_link
+      end
       redirect_to check_your_email_path
     end
 
