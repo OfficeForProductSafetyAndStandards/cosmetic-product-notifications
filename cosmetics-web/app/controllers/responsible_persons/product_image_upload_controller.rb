@@ -3,18 +3,38 @@ class ResponsiblePersons::ProductImageUploadController < SubmitApplicationContro
 
   def new; end
 
+  def edit; end
+
   def create
     return render_missing_file_error if params[:image_upload].blank?
 
     params[:image_upload].each { |img| @notification.add_image(img) }
     if @notification.save
       redirect_to responsible_person_notification_additional_information_index_path(
-        @notification.responsible_person,
+        @responsible_person,
         @notification,
       )
     else
       render_image_upload_errors
     end
+  end
+
+  def update
+    return render_missing_file_error if @notification.image_uploads.none? && params[:image_upload].blank?
+
+    params[:image_upload].each { |img| @notification.add_image(img) }
+    if @notification.save
+      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification)
+    else
+      render_image_upload_errors
+    end
+  end
+
+  # It is restricted to the user? (need to check if needs Pundit rule) --> Request spec
+  # Probably set models authorisation is enough
+  def destroy
+    ImageUpload.find(params[:id]).destroy
+    redirect_to action: :edit, host: ENV["SUBMIT_HOST"]
   end
 
 private
