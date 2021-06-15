@@ -56,13 +56,9 @@
       </td>
       <% if notification.image_uploads.present? %>
         <td class="govuk-table__cell">
-          <ul class="govuk-list">
-            <% notification.image_uploads.each do |image| %>
-              <li>
-                <%= link_to("Change", edit_responsible_person_notification_product_images_path(notification.responsible_person, notification)) %>
-              </li>
-            <% end %>
-          </ul>
+          <%= link_to("Change",
+                      edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
+                      class: "govuk-link--no-visited-state") %>
         </td>
       <% end %>
     </tr>
