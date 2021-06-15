@@ -37,10 +37,9 @@ class ElasticsearchQuery
   end
 
   def filter_query
-
     [
       filter_categories_query,
-      filter_dates_query
+      filter_dates_query,
     ].compact
   end
 
@@ -57,21 +56,20 @@ class ElasticsearchQuery
             ],
           },
         },
-      }
+      },
     }
   end
 
   def filter_dates_query
     return if @from_date.nil? || @to_date.nil?
 
-
     {
       range: {
         notification_complete_at: {
           gte: @from_date,
-          lte: @to_date
-        }
-      }
+          lte: @to_date,
+        },
+      },
     }
   end
 end

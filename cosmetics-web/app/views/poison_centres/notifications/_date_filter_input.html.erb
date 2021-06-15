@@ -1,2 +1,31 @@
-<%= form.label field, label, class: "govuk-label govuk-date-input__label" %>
-<%= form.text_field field, class: "govuk-input govuk-date-input__input govuk-input--width-2 #{@form.errors[field].present? ? 'govuk-input--error' : ''}" %>
+<% if @form.errors[attribute].present? %>
+  <span id="dates-error" class="govuk-error-message">
+    <% @form.errors[attribute].each do |error| %>
+      <span class="govuk-visually-hidden">Error:</span> <%= error %>
+    <% end %>
+  </span>
+<% end %>
+
+<div class="govuk-date-input" id="<%= attribute %>">
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-date-input__label" for="<% id %>-day">
+        Day
+      </label>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-2 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="by-date-from-day" value="<%= @form.public_send(attribute)&.day %>" name="notification_search_form[<%= attribute %>][day]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+  </div>
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-date-input__label" for="<% id %>-month">
+        Month
+      </label>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-2 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="by-date-from-month" value="<%= @form.public_send(attribute)&.month %>" name="notification_search_form[<%= attribute %>][month]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+  </div>
+  <div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-date-input__label" for="<% id %>-year">
+        Year
+      </label>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-4 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="by-date-from-year" value="<%= @form.public_send(attribute)&.year %>" name="notification_search_form[<%= attribute %>][year]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+  </div>
+</div>

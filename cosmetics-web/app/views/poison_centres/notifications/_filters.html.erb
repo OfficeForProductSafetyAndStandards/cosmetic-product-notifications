@@ -26,7 +26,7 @@
               Date
             </label>
           </div>
-          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-date-block-1">
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden <%= search_date_filter_group_error_class(:date_exact) %>" id="conditional-date-block-1">
             <div class="govuk-form-group">
 
               <div id="by-date-hint" class="govuk-hint govuk-!-font-size-16">
@@ -34,28 +34,7 @@
                 For example, 14 08 2019.
               </div>
 
-              <%= form.govuk_date_input :date_exact %>
-
-              <% if false %>
-              <div class="govuk-date-input" id="by-date">
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <%= search_date_filter_input(form, :date_exact_day, "Day") %>
-                  </div>
-                </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <%= search_date_filter_input(form, :date_exact_month, "Month") %>
-                  </div>
-                </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <%= search_date_filter_input(form, :date_exact_year, "Year") %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-
+              <%= render partial: 'date_filter_input', locals: { attribute: :date_exact, id: 'by-date' } %>
             </div>
           </div>
           <div class="govuk-radios__item">
@@ -65,7 +44,7 @@
             </label>
           </div>
 
-          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-date-block-2">
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden <%= search_date_filter_group_error_class(:date_from, :date_to) %>" id="conditional-date-block-2">
             <div class="govuk-form-group">
 
               <div id="by-date-range-hint" class="govuk-hint govuk-!-font-size-16">
@@ -75,55 +54,12 @@
                 From<span class="govuk-visually-hidden">:</span>
               </div>
 
-              <div class="govuk-date-input" id="by-date-from">
-                <%= form.govuk_date_input :date_from %>
-
-                <% if false %>
-                  <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                      <%#= search_date_filter_input(form, :date_from_day, "Day") %>
-                      <% # and numeric input mode %>
-                    </div>
-                  </div>
-                  <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                      <%= search_date_filter_input(form, :date_from_month, "Month") %>
-                    </div>
-                  </div>
-                  <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                      <%= search_date_filter_input(form, :date_from_year, "Year") %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-
+              <%= render partial: 'date_filter_input', locals: { attribute: :date_from, id: 'by-date-form-day' } %>
               <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
                 To<span class="govuk-visually-hidden">:</span>
               </div>
-              <%= form.govuk_date_input :date_to %>
+              <%= render partial: 'date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day' } %>
 
-              <% if false %>
-                <div class="govuk-date-input" id="by-date-to">
-                  <% if false %>
-                  <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                      <%= search_date_filter_input(form, :date_to_day, "Day") %>
-                      <% # and numeric input mode %>
-                    </div>
-                  </div>
-                  <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                      <%= search_date_filter_input(form, :date_to_month, "Month") %>
-                    </div>
-                  </div>
-                  <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                      <%= search_date_filter_input(form, :date_to_year, "Year") %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
 
             </div>
           </div>

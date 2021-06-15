@@ -21,24 +21,16 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 private
 
   def search_notifications(page_size)
-    query = ElasticsearchQuery.new(keyword: @form.q, category: @form.category, from_date: @form.from_date, to_date: @form.to_date)
+    query = ElasticsearchQuery.new(keyword: @form.q, category: @form.category, from_date: @form.date_from_for_search, to_date: @form.date_to_for_search)
     Notification.full_search(query).paginate(page: params[:page], per_page: page_size)
   end
 
   def search_params
-    date_attributes = [
-      :date_filter,
-      :date_from_day,
-      :date_from_month,
-      :date_from_year,
-      :date_to_day,
-      :date_to_month,
-      :date_to_year,
-      :date_exact_day,
-      :date_exact_month,
-      :date_exact_year
-    ]
-
-    params.fetch(:notification_search_form, {}).permit(:q, :category, *date_attributes)
+    params.fetch(:notification_search_form, {}).permit(:q,
+                                                       :category,
+                                                       { date_from: %i[day month year] },
+                                                       { date_to: %i[day month year] },
+                                                       { date_exact: %i[day month year] },
+                                                       :date_filter)
   end
 end

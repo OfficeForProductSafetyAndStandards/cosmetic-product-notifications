@@ -56,7 +56,7 @@ ActiveRecord::Base.transaction do
       responsible_person_id: 1,
       was_notified_before_eu_exit: false,
       under_three_years: false,
-      notification_complete_at: (Time.zone.now -  i.days),
+      notification_complete_at: (Time.zone.now - i.days),
       responsible_person: rp,
     }
     notification = Notification.create!(notification_attributes)
