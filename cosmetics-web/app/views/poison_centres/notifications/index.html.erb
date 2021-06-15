@@ -2,6 +2,8 @@
 
 <div class="govuk-grid-row">
   <section class="govuk-grid-column-full">
+    <%= error_summary(@form.errors) %>
+
     <%= form_for(@form, url: poison_centre_notifications_path, method: :get, html: { 'novalidate' => true }) do |form| %>
       <div class="govuk-form-group">
         <h1 class="govuk-label-wrapper">

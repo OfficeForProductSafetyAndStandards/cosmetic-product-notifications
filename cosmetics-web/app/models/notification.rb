@@ -52,6 +52,7 @@ class Notification < ApplicationRecord
     mapping do
       indexes :product_name, type: "text"
       indexes :created_at, type: "date"
+      indexes :notification_complete_at, type: "date", format: "strict_date_optional_time"
 
       indexes :responsible_person do
         indexes :name, type: "text"
@@ -67,7 +68,7 @@ class Notification < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name],
+      only: %i[product_name notification_complete_at],
       include: {
         responsible_person: {
           only: %i[name],
