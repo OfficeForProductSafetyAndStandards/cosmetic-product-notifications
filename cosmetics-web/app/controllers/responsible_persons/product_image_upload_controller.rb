@@ -30,8 +30,6 @@ class ResponsiblePersons::ProductImageUploadController < SubmitApplicationContro
     end
   end
 
-  # It is restricted to the user? (need to check if needs Pundit rule) --> Request spec
-  # Probably set models authorisation is enough
   def destroy
     ImageUpload.find(params[:id]).destroy
     redirect_to action: :edit, host: ENV["SUBMIT_HOST"]
