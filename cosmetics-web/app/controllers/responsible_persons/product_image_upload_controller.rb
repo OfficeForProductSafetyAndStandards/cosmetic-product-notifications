@@ -22,7 +22,7 @@ class ResponsiblePersons::ProductImageUploadController < SubmitApplicationContro
   def update
     return render_missing_file_error if @notification.image_uploads.none? && params[:image_upload].blank?
 
-    params[:image_upload].each { |img| @notification.add_image(img) }
+    params[:image_upload]&.each { |img| @notification.add_image(img) }
     if @notification.save
       redirect_to edit_responsible_person_notification_path(@responsible_person, @notification)
     else
