@@ -36,7 +36,7 @@ private
 
   def categories_headers
     categories = []
-    components_count = @notifications.map { |x| x.components.count }.max
+    components_count = Component.joins(:notification).where("notifications.responsible_person_id = ?", @notifications.first.responsible_person).group("notification_id").count.values.max
 
     components_count.times do |i|
       categories << ["Item #{i + 1} Level 1 category",
