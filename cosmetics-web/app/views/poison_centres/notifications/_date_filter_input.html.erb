@@ -1,5 +1,4 @@
 <% if @form.errors[attribute].present? %>
-  <% binding.pry %>
   <% @form.errors[attribute].each do |error| %>
     <span id="dates-error" class="govuk-error-message">
       <span class="govuk-visually-hidden">Error:</span> <%= error %>
