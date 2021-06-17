@@ -1,9 +1,10 @@
 <% if @form.errors[attribute].present? %>
-  <span id="dates-error" class="govuk-error-message">
-    <% @form.errors[attribute].each do |error| %>
+  <% binding.pry %>
+  <% @form.errors[attribute].each do |error| %>
+    <span id="dates-error" class="govuk-error-message">
       <span class="govuk-visually-hidden">Error:</span> <%= error %>
-    <% end %>
-  </span>
+    </span>
+  <% end %>
 <% end %>
 
 <div class="govuk-date-input" id="<%= attribute %>">
@@ -12,20 +13,20 @@
       <label class="govuk-label govuk-date-input__label" for="<% id %>-day">
         Day
       </label>
-      <input class="govuk-input govuk-date-input__input govuk-input--width-2 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="by-date-from-day" value="<%= @form.public_send(attribute)&.day %>" name="notification_search_form[<%= attribute %>][day]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-2 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="notification_search_form_<%= attribute %>_day" value="<%= @form.public_send(attribute)&.day %>" name="notification_search_form[<%= attribute %>][day]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
   </div>
   <div class="govuk-date-input__item">
     <div class="govuk-form-group">
       <label class="govuk-label govuk-date-input__label" for="<% id %>-month">
         Month
       </label>
-      <input class="govuk-input govuk-date-input__input govuk-input--width-2 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="by-date-from-month" value="<%= @form.public_send(attribute)&.month %>" name="notification_search_form[<%= attribute %>][month]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-2 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="notification_search_form_<%= attribute %>_month" value="<%= @form.public_send(attribute)&.month %>" name="notification_search_form[<%= attribute %>][month]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
   </div>
   <div class="govuk-date-input__item">
     <div class="govuk-form-group">
       <label class="govuk-label govuk-date-input__label" for="<% id %>-year">
         Year
       </label>
-      <input class="govuk-input govuk-date-input__input govuk-input--width-4 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="by-date-from-year" value="<%= @form.public_send(attribute)&.year %>" name="notification_search_form[<%= attribute %>][year]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+      <input class="govuk-input govuk-date-input__input govuk-input--width-4 <%= @form.errors[attribute].present? ? 'govuk-input--error' : '' %>" id="notification_search_form_<%= attribute %>_year" value="<%= @form.public_send(attribute)&.year %>" name="notification_search_form[<%= attribute %>][year]" type="text" pattern="[0-9]*" inputmode="numeric"></div>
   </div>
 </div>

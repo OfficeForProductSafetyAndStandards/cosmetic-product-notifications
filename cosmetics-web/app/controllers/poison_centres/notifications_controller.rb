@@ -33,4 +33,5 @@ private
                                                        { date_exact: %i[day month year] },
                                                        :date_filter)
   end
+  helper_method :search_params
 end
