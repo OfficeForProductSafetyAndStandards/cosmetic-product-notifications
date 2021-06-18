@@ -7,7 +7,7 @@
     <%= form_for(@form, url: poison_centre_notifications_path, method: :get, html: { 'novalidate' => true }) do |form| %>
       <div class="govuk-form-group">
         <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="q">
+          <label class="govuk-label govuk-label--l" for="notification_search_form_q">
             Search cosmetic products
           </label>
         </h1>
@@ -17,7 +17,11 @@
 
         <div class="govuk-input__wrapper opss-search__wrapper">
           <%= form.search_field :q, class: "govuk-input govuk-!-width-one-half", 'aria-describedby' => "search-hint" %>
-          <%= form.hidden_field :category %>
+          <%= form.hidden_field :category, id: 'notification_search_form_category_hidden' %>
+          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact } %>
+          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from } %>
+          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_to } %>
+          <%= form.hidden_field :date_filter, id: 'notification_search_form_date_filter_hidden' %>
           <button class="govuk-button" data-module="govuk-button">
             <span class="govuk-visually-hidden">Search</span>
           </button>

@@ -5,8 +5,8 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
   let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
   let(:notification1) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream") }
-  let(:notification2) { create(:notification, :registered, :with_component, notification_complete_at: 2.day.ago, product_name: "Shower Bubbles") }
-  let(:notification3) { create(:notification, :registered, :with_component, notification_complete_at: 3.day.ago, product_name: "Bath Bubbles", category: :face_care_products_other_than_face_mask) }
+  let(:notification2) { create(:notification, :registered, :with_component, notification_complete_at: 2.days.ago, product_name: "Shower Bubbles") }
+  let(:notification3) { create(:notification, :registered, :with_component, notification_complete_at: 3.days.ago, product_name: "Bath Bubbles", category: :face_care_products_other_than_face_mask) }
 
   before do
     configure_requests_for_search_domain
@@ -42,7 +42,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_link("Bath Bubbles")
   end
 
-  scenario "Searching for notifications" do
+  scenario "Searching for notifications with date filter" do
     sign_in user
 
     expect(page).to have_h1("Search cosmetic products")
@@ -52,13 +52,12 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_link("Bath Bubbles")
 
     fill_in "notification_search_form_q", with: "Bubbles"
-    select "Date"
+    choose "Date"
     fill_in "notification_search_form_date_exact_day",   with: notification3.notification_complete_at.day
     fill_in "notification_search_form_date_exact_month", with: notification3.notification_complete_at.month
     fill_in "notification_search_form_date_exact_year",  with: notification3.notification_complete_at.year
 
     click_on "Search"
-
 
     select "Skin products", from: "Product category"
     click_on "Apply"

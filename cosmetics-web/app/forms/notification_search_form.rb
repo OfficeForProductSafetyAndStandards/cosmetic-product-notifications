@@ -35,7 +35,6 @@ class NotificationSearchForm
             presence: true,
             real_date: true,
             complete_date: true,
-            not_in_future: true,
             if: :date_range?
 
   validate :date_from_lower_then_date_to
