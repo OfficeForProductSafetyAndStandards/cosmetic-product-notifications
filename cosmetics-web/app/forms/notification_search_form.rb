@@ -58,11 +58,11 @@ class NotificationSearchForm
   end
 
   def date_exact?
-    date_filter == FILTER_BY_DATE_EXACT
+    date_filter == FILTER_BY_DATE_EXACT && date_exact.present?
   end
 
   def date_range?
-    date_filter == FILTER_BY_DATE_RANGE
+    date_filter == FILTER_BY_DATE_RANGE && (date_from.present? || date_to.present?)
   end
 
   def date_from_lower_then_date_to

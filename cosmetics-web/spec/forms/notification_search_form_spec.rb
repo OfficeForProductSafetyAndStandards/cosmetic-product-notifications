@@ -160,6 +160,51 @@ RSpec.describe NotificationSearchForm do
       end
     end
 
+    context "when all date fields are blank" do
+     context "when using date range" do
+        let(:date_filter) { NotificationSearchForm::FILTER_BY_DATE_RANGE }
+
+        let(:date_from_year) {nil }
+        let(:date_from_month) {nil }
+        let(:date_from_day) {nil }
+        let(:date_to_year) {nil }
+        let(:date_to_month) {nil }
+        let(:date_to_day) {nil }
+
+        it "is valid" do
+          expect(form).to be_valid
+        end
+
+        context "if any field is present" do
+          let(:date_from_day) { "12" }
+
+          it "is invalid" do
+            expect(form).not_to be_valid
+          end
+        end
+      end
+
+     context "when using date range" do
+        let(:date_filter) { NotificationSearchForm::FILTER_BY_DATE_EXACT }
+
+        let(:date_exact_year) {nil }
+        let(:date_exact_month) {nil }
+        let(:date_exact_day) {nil }
+
+        it "is valid" do
+          expect(form).to be_valid
+        end
+
+        context "if any field is present" do
+          let(:date_exact_day) { "12" }
+
+          it "is invalid" do
+            expect(form).not_to be_valid
+          end
+        end
+      end
+    end
+
     shared_examples_for "date validation with missing field" do
       it "has error" do
         expect(form.errors[field]).to be_present
@@ -204,6 +249,8 @@ RSpec.describe NotificationSearchForm do
     context "when using from date" do
       let(:date_filter) { NotificationSearchForm::FILTER_BY_DATE_RANGE }
       let(:field)       { :date_from }
+
+
 
       context "when year is missing" do
         include_examples "date validation with missing field" do
