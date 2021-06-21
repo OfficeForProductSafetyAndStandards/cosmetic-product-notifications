@@ -1,7 +1,7 @@
 <section class="govuk-grid-column-one-third">
 
 
-   <%= form_for(@form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
+   <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
 
@@ -15,13 +15,13 @@
           <label class="govuk-label" for="notification_search_form_category">
             Product category
           </label>
-          <%= form.select :category, @form.class::CATEGORIES, { include_blank: true },  class: "govuk-select" %>
+          <%= form.select :category, @search_form.class::CATEGORIES, { include_blank: true },  class: "govuk-select" %>
           <%= form.hidden_field :q, id: :notification_search_form_q_hidden %>
         </div>
         <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="govuk-radios">
 
           <div class="govuk-radios__item">
-            <%= form.radio_button :date_filter, @form.class::FILTER_BY_DATE_EXACT, 'class' => "govuk-radios__input", 'id' => "by-date", 'aria-describedby' => "by-date-hint", 'aria-controls' => "conditional-date-block-1" %>
+            <%= form.radio_button :date_filter, @search_form.class::FILTER_BY_DATE_EXACT, 'class' => "govuk-radios__input", 'id' => "by-date", 'aria-describedby' => "by-date-hint", 'aria-controls' => "conditional-date-block-1" %>
             <label class="govuk-label govuk-radios__label" for="by-date">
               Date
             </label>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="govuk-radios__item">
-            <%= form.radio_button :date_filter, @form.class::FILTER_BY_DATE_RANGE, 'class' => "govuk-radios__input", 'id' => "by-date-range", 'aria-describedby' => "by-date-hint", 'aria-controls' => "conditional-date-block-2" %>
+            <%= form.radio_button :date_filter, @search_form.class::FILTER_BY_DATE_RANGE, 'class' => "govuk-radios__input", 'id' => "by-date-range", 'aria-describedby' => "by-date-hint", 'aria-controls' => "conditional-date-block-2" %>
             <label class="govuk-label govuk-radios__label" for="by-date-range">
               Date range
             </label>

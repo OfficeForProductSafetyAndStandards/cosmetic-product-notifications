@@ -1,7 +1,7 @@
 class PoisonCentres::NotificationsController < SearchApplicationController
   def index
-    @form = NotificationSearchForm.new(search_params)
-    @form.valid?
+    @search_form = NotificationSearchForm.new(search_params)
+    @search_form.valid?
 
     @result = search_notifications(10)
     @notifications = @result.records
@@ -21,7 +21,7 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 private
 
   def search_notifications(page_size)
-    query = ElasticsearchQuery.new(keyword: @form.q, category: @form.category, from_date: @form.date_from_for_search, to_date: @form.date_to_for_search)
+    query = ElasticsearchQuery.new(keyword: @search_form.q, category: @search_form.category, from_date: @search_form.date_from_for_search, to_date: @search_form.date_to_for_search)
     Notification.full_search(query).paginate(page: params[:page], per_page: page_size)
   end
 
