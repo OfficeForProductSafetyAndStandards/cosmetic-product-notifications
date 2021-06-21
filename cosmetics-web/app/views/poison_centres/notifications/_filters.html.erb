@@ -72,6 +72,7 @@
         Apply
       </button>
     </div>
+    <%= link_to "Clear filters", poison_centre_notifications_path(notification_search_form: { q: search_params[:q] }), class: 'govuk-link' %>
 
   <% end %>
 </section>
