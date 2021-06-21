@@ -1,5 +1,5 @@
 <section class="govuk-grid-column-two-thirds" id="search-results-section">
-  <% if params[:q].present? %>
+  <% if search_params[:q].present? %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> matching keyword(s) <%= display_keywords(params[:q]) %> were found.</p>

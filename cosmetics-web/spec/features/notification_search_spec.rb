@@ -37,6 +37,8 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     select "Skin products", from: "Product category"
     click_on "Apply"
 
+    expect(page).to have_text("1 product matching keyword(s) were found.")
+
     expect(page).not_to have_link("Cream")
     expect(page).not_to have_link("Shower Bubbles")
     expect(page).to have_link("Bath Bubbles")
