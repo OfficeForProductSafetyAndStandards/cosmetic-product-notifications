@@ -71,8 +71,10 @@
       <button type="submit" class="govuk-button" data-module="govuk-button">
         Apply
       </button>
+      <%= link_to  poison_centre_notifications_path(notification_search_form: { q: search_params[:q] }), class: 'govuk-link govuk-link--no-visited-state' do %>
+        Reset form<span class="govuk-visually-hidden"> and reload the page</span>
+      <% end %>
     </div>
-    <%= link_to "Clear filters", poison_centre_notifications_path(notification_search_form: { q: search_params[:q] }), class: 'govuk-link' %>
 
   <% end %>
 </section>
