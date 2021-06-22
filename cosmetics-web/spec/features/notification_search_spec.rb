@@ -53,16 +53,14 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_link("Shower Bubbles")
     expect(page).to have_link("Bath Bubbles")
 
-    fill_in "notification_search_form_q", with: "Bubbles"
     choose "Date"
     fill_in "notification_search_form_date_exact_day",   with: notification3.notification_complete_at.day
     fill_in "notification_search_form_date_exact_month", with: notification3.notification_complete_at.month
     fill_in "notification_search_form_date_exact_year",  with: notification3.notification_complete_at.year
 
-    click_on "Search"
-
-    select "Skin products", from: "Product category"
     click_on "Apply"
+
+    expect(page).to have_text("1 product using filters, were found.")
 
     expect(page).not_to have_link("Cream")
     expect(page).not_to have_link("Shower Bubbles")
