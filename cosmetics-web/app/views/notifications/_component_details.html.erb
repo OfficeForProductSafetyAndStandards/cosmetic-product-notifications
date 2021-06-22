@@ -1,183 +1,112 @@
-<% if component.cmrs.any? %>
-  <tr class="govuk-table__row">
-    <th id="contains-cmrs" class="govuk-table__header" scope="row">
-      Contains CMR substances
-    </th>
-    <td class="govuk-table__cell" id="has-cmrs">
-      Yes
-    </td>
-  </tr>
-  <tr cass="govuk-table__row" id="cmr-list">
-    <th class="govuk-table__header" scope="row">CMR substances</th>
-    <td class="govuk-table__cell" id="cmr-names">
-      <%= render "application/none_or_bullet_list", entities_list: component.cmrs.map(&:display_name) %>
-    </td>
-  </tr>
-<% end %>
-<tr class="govuk-table__row">
-  <th class="govuk-table__header" scope="row">Nanomaterials</th>
-  <td class="govuk-table__cell">
-    <%= render "application/none_or_bullet_list",
-      entities_list: component.nano_material&.nano_elements&.map(&:display_name) %>
-  </td>
-</tr>
-<% if component.nano_material&.nano_elements.present? %>
-  <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="row">Application instruction</th>
-    <td class="govuk-table__cell">
-      <%= get_exposure_routes_names(component.nano_material.exposure_routes) %>
-    </td>
-  </tr>
-  <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="row">Exposure condition</th>
-    <td class="govuk-table__cell">
-      <%= get_exposure_condition_name(component.nano_material.exposure_condition) %>
-    </td>
-  </tr>
-<% end %>
+<%= govukSummaryList(
+  classes: "govuk-summary-list govuk-!-margin-bottom-0 check-your-answers-table",
+  rows: [
+    if component.cmrs.any?
+      {
+        key: { text: "Contains CMR substances" },
+        value: { text: "Yes" },
+      }
+    end,
+    if component.cmrs.any?
+      {
+        key: { text: "CMR substances" },
+        value: { html: render("application/none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)) },
+      }
+    end,
+    {
+      key: { text: "Nanomaterials" },
+      value: { html: render("application/none_or_bullet_list",
+                            entities_list: component.nano_material&.nano_elements&.map(&:display_name))
+             },
+    },
+    if component.nano_material&.nano_elements.present?
+      {
+        key: { text: "Application instruction" },
+        value: { text: get_exposure_routes_names(component.nano_material.exposure_routes) },
+      }
+    end,
+    if component.nano_material&.nano_elements.present?
+      {
+        key: { text: "Exposure condition" },
+        value: { text: get_exposure_condition_name(component.nano_material.exposure_condition) },
+      }
+    end,
+    {
+      key: { text: "Category of product" },
+      value: { text: get_category_name(component.root_category) },
+    },
+    {
+      key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
+      value: { text: get_category_name(component.sub_category) },
+    },
+    {
+      key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
+      value: { text: get_category_name(component.sub_sub_category) },
+    },
+    if current_user.can_view_product_ingredients?
+      {
+        key: { text: "Formulation given as" },
+        value: { text: get_notification_type_name(component.notification_type) },
+      }
+    end,
+    if current_user.can_view_product_ingredients?
+      {
+        key: { text: "Frame formulation" },
+        value: { text: get_frame_formulation_name(component.frame_formulation) },
+      }
+    end,
+    if current_user.can_view_product_ingredients? && !component.predefined?
+      {
+        key: { text: "Formulation" },
+        value: { html: render("notifications/component_details_formulation_ingredients",
+                 component: component,
+                 allow_edits: allow_edits) },
+      }
+    end,
+    {
+      key: { text: "Physical form" },
+      value: { text: get_physical_form_name(component.physical_form) },
+    },
+    if current_user.can_view_product_ingredients?
+      {
+        key: { text: "Special applicator" },
+        value: { text: component.special_applicator.present? ? "Yes" : "No" },
+      }
+    end,
+    if current_user.can_view_product_ingredients? && component.special_applicator.present?
+      {
+        key: { text: "Applicator type" },
+        value: { text: component_special_applicator_name(component) },
+      }
+    end,
+    if current_user.can_view_product_ingredients?
+      {
+        key: { text: "Acute poisoning information" },
+        value: { text: component.acute_poisoning_info },
+      }
+    end,
+    if current_user.can_view_product_ingredients? && component.predefined?
+      {
+        key: { text: "Contains ingredients NPIS needs to know about" },
+        value: { text: component.poisonous_ingredients_answer },
+      }
+    end,
+    if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
+      {
+        key: { text: "Ingredients NPIS needs to know about" },
+        value: { html: render("notifications/component_details_poisonous_ingredients",
+                 component: component,
+                 allow_edits: allow_edits) },
+      }
+    end,
+  ].compact
+) %>
 
-<tr class="govuk-table__row">
-  <th class="govuk-table__header" scope="row">Category of product</th>
-  <td class="govuk-table__cell">
-    <%= get_category_name(component.root_category) %>
-  </td>
-</tr>
-<tr class="govuk-table__row">
-  <th class="govuk-table__header" scope="row">
-    <%= "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" %>
-  </th>
-  <td class="govuk-table__cell">
-    <%= get_category_name(component.sub_category) %>
-  </td>
-</tr>
-<tr class="govuk-table__row">
-  <th class="govuk-table__header" scope="row">
-    <%= "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" %>
-  </th>
-  <td class="govuk-table__cell">
-    <%= get_category_name(component.sub_sub_category) %>
-  </td>
-</tr>
-<% if current_user.can_view_product_ingredients? %>
-  <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="row">Formulation given as</th>
-    <td class="govuk-table__cell">
-      <%= get_notification_type_name(component.notification_type) %>
-    </td>
-  </tr>
-  <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="row">Frame formulation</th>
-    <td class="govuk-table__cell">
-      <%= get_frame_formulation_name(component.frame_formulation) %>
-    </td>
-  </tr>
-<% end %>
-<% if current_user.can_view_product_ingredients? %>
-  <% if !component.predefined? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Formulation</th>
-      <td class="govuk-table__cell">
-        <% if component.exact? && component.exact_formulas.present? %>
-          <%= render "application/none_or_bullet_list", entities_list: format_exact_formulas(component.exact_formulas),
-                  key_name: :inci_name, value_name: :quantity %>
-        <% elsif component.range? && component.range_formulas.present? %>
-          <%= render "application/none_or_bullet_list", entities_list: format_range_formulas(component.range_formulas),
-                  key_name: :inci_name, value_name: :range %>
-        <% elsif component.formulation_file.attached? %>
-          <% if component.formulation_file.metadata["safe"] %>
-            <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
-          <% elsif component.formulation_file.metadata["safe"].nil? %>
-            <%= "Processing file #{component.formulation_file.filename} ..." %>
-            <br>
-            <%= link_to "Refresh",
-                    edit_responsible_person_notification_path(@responsible_person, @notification),
-                    class: "govuk-link--no-visited-state" %>
-          <% else %>
-            <%= "The uploaded file has been flagged as a virus" %>
-          <% end %>
-        <% elsif allow_edits %>
-          <%= link_to "Add formulation document",
-                  new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
-                          @notification, component),
-                  class: "govuk-link--no-visited-state" %>
-        <% else %>
-          N/A
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-<% end %>
-
-<tr class="govuk-table__row">
-  <th class="govuk-table__header" scope="row">Physical form</th>
-  <td class="govuk-table__cell">
-    <%= get_physical_form_name(component.physical_form) %>
-  </td>
-</tr>
-
-<% if current_user.can_view_product_ingredients? %>
-  <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="row">Special applicator</th>
-    <td class="govuk-table__cell">
-      <%= component.special_applicator.present? ? "Yes" : "No" %>
-    </td>
-  </tr>
-  <% if component.special_applicator.present? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Applicator type</th>
-      <td class="govuk-table__cell">
-        <%= component_special_applicator_name(component) %>
-      </td>
-    </tr>
-  <% end %>
-  <tr class="govuk-table__row">
-    <th class="govuk-table__header" scope="row">Acute poisoning information</th>
-    <td class="govuk-table__cell">
-      <%= component.acute_poisoning_info %>
-    </td>
-  </tr>
-<% end %>
-<% if current_user.can_view_product_ingredients? %>
-  <% if component.predefined? %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header" scope="row">Contains ingredients NPIS needs to know about</th>
-      <td class="govuk-table__cell">
-        <%= component.poisonous_ingredients_answer %>
-      </td>
-    </tr>
-    <% if component.contains_poisonous_ingredients%>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="row">Ingredients NPIS needs to know about</th>
-        <td class="govuk-table__cell">
-          <% if component.formulation_file.attached? %>
-            <% if component.formulation_file.metadata["safe"] %>
-              <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
-            <% elsif component.formulation_file.metadata["safe"].nil? %>
-              <%= "Processing file #{component.formulation_file.filename} ..." %>
-              <br>
-              <%= link_to "Refresh",
-                      edit_responsible_person_notification_path(@responsible_person, @notification),
-                      class: "govuk-link--no-visited-state" %>
-            <% else %>
-              <%= "The uploaded file has been flagged as a virus" %>
-            <% end %>
-          <% elsif allow_edits %>
-            <%= link_to "Add ingredients document",
-                    responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
-                    class: "govuk-link--no-visited-state" %>
-          <% else %>
-            Not provided
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  <% end %>
-  <% if component.trigger_questions %>
-    <%= render "notifications/ph", component: component %>
-    <% component.trigger_questions.each do |question| %>
-      <% unless question.question == "please_indicate_the_ph" %>
-        <%= render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: true %>
-      <% end %>
+<% if current_user.can_view_product_ingredients? && component.trigger_questions %>
+  <%= render "notifications/ph", component: component %>
+  <% component.trigger_questions.each do |question| %>
+    <% unless question.question == "please_indicate_the_ph" %>
+      <%= render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: true %>
     <% end %>
   <% end %>
 <% end %>
