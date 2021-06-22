@@ -255,4 +255,3 @@ private
 end
 
 Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search
-Notification.index_name "search-development-2"
