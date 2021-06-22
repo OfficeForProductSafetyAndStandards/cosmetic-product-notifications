@@ -1,7 +1,7 @@
 <section class="govuk-grid-column-two-thirds" id="search-results-section">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> <%= display_keywords %> <%= display_filters_informations %> were found.</p>
+      <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> <%= display_keywords %> <%= display_filters_informations %> <%= @result.results.total == 1 ? "was found." : "were found." %></p>
     </div>
   </div>
 
