@@ -1,7 +1,11 @@
 class PoisonCentres::NotificationsController < SearchApplicationController
+  PER_PAGE = 20
+
   def index
-    @form = NotificationSearchForm.new(search_params)
-    @result = search_notifications(10)
+    @search_form = NotificationSearchForm.new(search_params)
+    @search_form.validate
+
+    @result = search_notifications(PER_PAGE)
     @notifications = @result.records
   end
 
@@ -19,11 +23,17 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 private
 
   def search_notifications(page_size)
-    query = ElasticsearchQuery.new(@form.q, @form.category)
+    query = ElasticsearchQuery.new(keyword: @search_form.q, category: @search_form.category, from_date: @search_form.date_from_for_search, to_date: @search_form.date_to_for_search)
     Notification.full_search(query).paginate(page: params[:page], per_page: page_size)
   end
 
   def search_params
-    params.fetch(:notification_search_form, {}).permit(:q, :category)
+    params.fetch(:notification_search_form, {}).permit(:q,
+                                                       :category,
+                                                       { date_from: %i[day month year] },
+                                                       { date_to: %i[day month year] },
+                                                       { date_exact: %i[day month year] },
+                                                       :date_filter)
   end
+  helper_method :search_params
 end

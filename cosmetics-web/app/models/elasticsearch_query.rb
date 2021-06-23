@@ -1,7 +1,9 @@
 class ElasticsearchQuery
-  def initialize(keyword, category)
-    @keyword = keyword
-    @category = category
+  def initialize(keyword:, category:, from_date:, to_date:)
+    @keyword   = keyword
+    @category  = category
+    @from_date = from_date
+    @to_date   = to_date
   end
 
   def build_query
@@ -35,21 +37,39 @@ class ElasticsearchQuery
   end
 
   def filter_query
+    [
+      filter_categories_query,
+      filter_dates_query,
+    ].compact
+  end
+
+  def filter_categories_query
     return if @category.blank?
 
-    [
-      {
-        nested: {
-          path: "components",
-          query: {
-            bool: {
-              should: [
-                { term: { "components.display_root_category": @category } },
-              ],
-            },
+    {
+      nested: {
+        path: "components",
+        query: {
+          bool: {
+            should: [
+              { term: { "components.display_root_category": @category } },
+            ],
           },
         },
       },
-    ]
+    }
+  end
+
+  def filter_dates_query
+    return if @from_date.nil? || @to_date.nil?
+
+    {
+      range: {
+        notification_complete_at: {
+          gte: @from_date,
+          lte: @to_date,
+        },
+      },
+    }
   end
 end
