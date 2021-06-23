@@ -33,7 +33,7 @@
         html: render("notifications/product_details_label_images", notification: notification, allow_edits: allow_edits)
       },
       actions: {
-        items: if notification.image_uploads.present?
+        items: if notification.image_uploads.present? && allow_edits
                  [
                    {
                      href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
