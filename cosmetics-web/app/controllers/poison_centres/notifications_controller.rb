@@ -3,7 +3,7 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 
   def index
     @search_form = NotificationSearchForm.new(search_params)
-    @search_form.valid?
+    @search_form.validate
 
     @result = search_notifications(PER_PAGE)
     @notifications = @result.records
