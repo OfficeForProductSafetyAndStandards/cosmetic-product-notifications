@@ -13,7 +13,7 @@ RSpec.describe "Edit draft notification label images", :with_stubbed_antivirus, 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit"
 
     expect(page).to have_summary_item(key: "Label image", value: "testImage.png")
-    expect(page).to have_summary_item(key: "Label image", value: "Change")
+    expect(page).to have_summary_item(key: "Label image", value: "Change label image")
     click_link "Change"
 
     expect(page).to have_current_path(
@@ -44,6 +44,6 @@ RSpec.describe "Edit draft notification label images", :with_stubbed_antivirus, 
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
     expect(page).to have_summary_item(key: "Label image", value: "testImage.png")
-    expect(page).to have_summary_item(key: "Label image", value: "Change")
+    expect(page).to have_summary_item(key: "Label image", value: "Change label image")
   end
 end

@@ -1,89 +1,93 @@
-<h2 class="govuk-heading-m">Product</h2>
-<%# govuk-!-margin-bottom-0 %>
-<%= govukSummaryList(
-  classes: "govuk-summary-list check-your-answers-table",
-  rows: [
-    {
-      key: { text: "Name" },
-      value: { text: notification.product_name },
-    },
-    if notification.industry_reference.present?
+<div id="product-table">
+  <h2 class="govuk-heading-m">Product</h2>
+  <%= govukSummaryList(
+    classes: "govuk-summary-list check-your-answers-table",
+    rows: [
       {
-        key: { text: "Internal reference number" },
-        value: { text: notification.industry_reference },
-      }
-    end,
-    unless notification.under_three_years.nil?
-      {
-        key: { text: "For children under 3" },
-        value: { text: notification.under_three_years ? "Yes" : "No" },
-      }
-    end,
-    {
-      key: { text: "Number of components" },
-      value: { text: notification.components.length },
-    },
-    {
-      key: { text: "Shades" },
-      value: { html: display_shades(notification) },
-    },
-    {
-      key: { text: "Label image" },
-      value: {
-        html: render("notifications/product_details_label_images", notification: notification, allow_edits: allow_edits)
+        key: { text: "Name" },
+        value: { text: notification.product_name },
       },
-      actions: {
-        items: if notification.image_uploads.present? && allow_edits
-                 [
-                   {
-                     href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
-                     text: "Change",
-                     visuallyHiddenText: "label image"
-                   }
-                 ]
-               else
-                 []
-               end
-      }
-    },
-    if notification.cpnp_notification_date.present?
-      {
-        key: { text: "EU notification date" },
-        value: { text: display_full_month_date(notification.cpnp_notification_date) },
-      }
-    end,
-    {
-      key: { text: "Are the components mixed?" },
-      value: { text: notification.components_are_mixed ? "Yes" : "No" },
-    },
-    if current_user.can_view_product_ingredients? && notification.ph_min_value.present?
-      {
-        key: { text: "Minimum pH value" },
-        value: { text: notification.ph_min_value },
-      }
-    end,
-    if current_user.can_view_product_ingredients? && notification.ph_max_value.present?
-      {
-        key: { text: "Maximum pH value" },
-        value: { text: notification.ph_max_value },
-      }
-    end,
-  ].compact
-) %>
-<% if notification.components.count == 1 %>
-  <%= render "notifications/component_details", component: notification.components.first, allow_edits: allow_edits %>
-<% else %>
-  <% notification.components.each_with_index do |component, i| %>
-    <h3 class="govuk-heading-m"><%= component.name.presence || "Component #{i + 1}" %></h3>
-    <%= govukSummaryList(
-      classes: "govuk-summary-list govuk-!-margin-bottom-0 check-your-answers-table",
-      rows: [
+      if notification.industry_reference.present?
         {
-          key: { text: "Shades" },
-          value: { html: render("none_or_bullet_list", entities_list: component.shades) },
+          key: { text: "Internal reference number" },
+          value: { text: notification.industry_reference },
+        }
+      end,
+      unless notification.under_three_years.nil?
+        {
+          key: { text: "For children under 3" },
+          value: { text: notification.under_three_years ? "Yes" : "No" },
+        }
+      end,
+      {
+        key: { text: "Number of components" },
+        value: { text: notification.components.length },
+      },
+      {
+        key: { text: "Shades" },
+        value: { html: display_shades(notification) },
+      },
+      {
+        key: { text: "Label image" },
+        value: {
+          html: render("notifications/product_details_label_images", notification: notification, allow_edits: allow_edits)
         },
-      ].compact
-    ) %>
-    <%= render "notifications/component_details", component: component, allow_edits: allow_edits %>
+        actions: {
+          items: if notification.image_uploads.present? && allow_edits
+                  [
+                    {
+                      href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
+                      text: "Change",
+                      visuallyHiddenText: "label image"
+                    }
+                  ]
+                else
+                  []
+                end
+        }
+      },
+      if notification.cpnp_notification_date.present?
+        {
+          key: { text: "EU notification date" },
+          value: { text: display_full_month_date(notification.cpnp_notification_date) },
+        }
+      end,
+      {
+        key: { text: "Are the components mixed?" },
+        value: { text: notification.components_are_mixed ? "Yes" : "No" },
+      },
+      if current_user.can_view_product_ingredients? && notification.ph_min_value.present?
+        {
+          key: { text: "Minimum pH value" },
+          value: { text: notification.ph_min_value },
+        }
+      end,
+      if current_user.can_view_product_ingredients? && notification.ph_max_value.present?
+        {
+          key: { text: "Maximum pH value" },
+          value: { text: notification.ph_max_value },
+        }
+      end,
+    ].compact
+  ) %>
+  <% if notification.components.count == 1 %>
+    <%= render "notifications/component_details", component: notification.components.first, allow_edits: allow_edits %>
+  <% else %>
+    <% notification.components.each_with_index do |component, i| %>
+      <% name = component.name.presence || "Component #{i + 1}" %>
+      <div id="<%= name.parameterize %>">
+        <h3 class="govuk-heading-m"><%= name %></h3>
+        <%= govukSummaryList(
+          classes: "govuk-summary-list govuk-!-margin-bottom-0 check-your-answers-table",
+          rows: [
+            {
+              key: { text: "Shades" },
+              value: { html: render("none_or_bullet_list", entities_list: component.shades) },
+            },
+          ].compact
+        ) %>
+        <%= render "notifications/component_details", component: component, allow_edits: allow_edits %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>
