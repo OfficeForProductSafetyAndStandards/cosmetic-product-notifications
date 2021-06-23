@@ -229,12 +229,12 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "#cache_categories_for_csv!" do
+  describe "#cache_notification_for_csv!" do
     let(:notification) { create(:notification, :with_components) }
 
     it "is saved properly" do
-      notification.cache_categories_for_csv!
-      expect(notification.reload.csv_cache).to eq [["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"], ["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"]]
+      notification.cache_notification_for_csv!
+      expect(notification.reload.csv_cache).to eq "#{notification.product_name},#{notification.reference_number_for_display},#{notification.notification_complete_at},,,,2,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products\n"
     end
   end
 
@@ -247,8 +247,8 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       notification.submit_notification!
     end
 
-    it "caches categories" do
-      expect(notification.reload.csv_cache).to eq [["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"], ["Hair and scalp products", "Hair colouring products", "Nonoxidative hair colour products"]]
+    it "caches csv" do
+      expect(notification.reload.csv_cache).to eq "#{notification.product_name},#{notification.reference_number_for_display},#{notification.notification_complete_at},,,,2,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products\n"
     end
   end
 end
