@@ -159,6 +159,23 @@ en:
         postal_code: "Postcode"
     errors:
       models:
+        notification_search_form:
+          attributes:
+            date_exact:
+              in_future: Date cannot be set for the future
+              blank: Each date field must have a value
+              must_be_real: Dates must use the correct format
+              incomplete: Each date field must have a value
+            date_from:
+              in_future: From date cannot be set for the future
+              blank: 'From date: Each date field must have a value'
+              date_from_is_later_than_date_to: The To date cannot precede the From date
+              must_be_real: 'From date: Dates must use the correct format'
+              incomplete: 'From date: Each date field must have a value'
+            date_to:
+              blank: 'To date: Each date field must have a value'
+              must_be_real: 'To date: Dates must use the correct format'
+              incomplete: 'To date: Each date field must have a value'
         registration/new_account_form:
           attributes:
             full_name:
