@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class NotificationDecorator
   def initialize(notification)
