@@ -81,6 +81,8 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
           travel_to(Time.zone.local(2021, 2, 20, 13, 1))
           create(:registered_notification, product_name: "Product 2", reference_number: 2, responsible_person: responsible_person)
 
+          Notification.all.each(&:cache_notification_for_csv!)
+
           get "/responsible_persons/#{responsible_person.id}/notifications.csv"
         end
 

@@ -13,7 +13,7 @@ class NotificationsDecorator
 
   ATTRIBUTES = %i[product_name
                   reference_number_for_display
-                  updated_at
+                  notification_complete_at
                   cpnp_reference
                   cpnp_notification_date
                   industry_reference
@@ -24,12 +24,12 @@ class NotificationsDecorator
   end
 
   def to_csv
-    CSV.generate do |csv|
-      csv << HEADER + categories_headers
-      @notifications.each do |notification|
-        csv << NotificationDecorator.new(notification).as_csv
-      end
+    csv = ""
+    csv << CSV.generate_line(HEADER + categories_headers)
+    @notifications.pluck(:csv_cache).each do |row|
+      csv << row
     end
+    csv
   end
 
 private
