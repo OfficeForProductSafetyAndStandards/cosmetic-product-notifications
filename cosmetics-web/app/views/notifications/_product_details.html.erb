@@ -34,16 +34,16 @@
         },
         actions: {
           items: if notification.image_uploads.present? && allow_edits
-                  [
-                    {
-                      href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
-                      text: "Change",
-                      visuallyHiddenText: "label image"
-                    }
-                  ]
-                else
-                  []
-                end
+                   [
+                     {
+                        href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
+                        text: "Change",
+                        visuallyHiddenText: "label image"
+                     }
+                   ]
+                 else
+                   []
+                 end
         }
       },
       if notification.cpnp_notification_date.present?
