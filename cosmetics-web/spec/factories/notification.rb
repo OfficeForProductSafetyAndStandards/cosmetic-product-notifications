@@ -63,5 +63,9 @@ FactoryBot.define do
         notification.reload
       end
     end
+
+    trait :with_label_image do
+      image_uploads { [build(:image_upload, :uploaded_and_virus_scanned)] }
+    end
   end
 end

@@ -1,105 +1,93 @@
-
-<table class="govuk-table check-your-answers-table" id="product-table">
-  <caption class="govuk-table__caption govuk-heading-m">Product</caption>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header govuk-!-width-one-third" scope="row">Name</th>
-      <td class="govuk-table__cell"><%= notification.product_name %></td>
-    </tr>
-    <% if notification.industry_reference.present? %>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header" scope="row">Internal reference number</th>
-        <td class="govuk-table__cell"><%= notification.industry_reference %></td>
-      </tr>
+<div id="product-table">
+  <h2 class="govuk-heading-m">Product</h2>
+  <%= govukSummaryList(
+    classes: "govuk-summary-list check-your-answers-table",
+    rows: [
+      {
+        key: { text: "Name" },
+        value: { text: notification.product_name },
+      },
+      if notification.industry_reference.present?
+        {
+          key: { text: "Internal reference number" },
+          value: { text: notification.industry_reference },
+        }
+      end,
+      unless notification.under_three_years.nil?
+        {
+          key: { text: "For children under 3" },
+          value: { text: notification.under_three_years ? "Yes" : "No" },
+        }
+      end,
+      {
+        key: { text: "Number of components" },
+        value: { text: notification.components.length },
+      },
+      {
+        key: { text: "Shades" },
+        value: { html: display_shades(notification) },
+      },
+      {
+        key: { text: "Label image" },
+        value: {
+          html: render("notifications/product_details_label_images", notification: notification, allow_edits: allow_edits)
+        },
+        actions: {
+          items: if notification.image_uploads.present? && allow_edits
+                   [
+                     {
+                        href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
+                        text: "Change",
+                        visuallyHiddenText: "label image"
+                     }
+                   ]
+                 else
+                   []
+                 end
+        }
+      },
+      if notification.cpnp_notification_date.present?
+        {
+          key: { text: "EU notification date" },
+          value: { text: display_full_month_date(notification.cpnp_notification_date) },
+        }
+      end,
+      {
+        key: { text: "Are the components mixed?" },
+        value: { text: notification.components_are_mixed ? "Yes" : "No" },
+      },
+      if current_user.can_view_product_ingredients? && notification.ph_min_value.present?
+        {
+          key: { text: "Minimum pH value" },
+          value: { text: notification.ph_min_value },
+        }
+      end,
+      if current_user.can_view_product_ingredients? && notification.ph_max_value.present?
+        {
+          key: { text: "Maximum pH value" },
+          value: { text: notification.ph_max_value },
+        }
+      end,
+    ].compact
+  ) %>
+  <% if notification.components.count == 1 %>
+    <%= render "notifications/component_details", component: notification.components.first, allow_edits: allow_edits %>
+  <% else %>
+    <% notification.components.each_with_index do |component, i| %>
+      <% name = component.name.presence || "Component #{i + 1}" %>
+      <div id="<%= name.parameterize %>">
+        <h3 class="govuk-heading-m"><%= name %></h3>
+        <%= govukSummaryList(
+          classes: "govuk-summary-list govuk-!-margin-bottom-0 check-your-answers-table",
+          rows: [
+            {
+              key: { text: "Shades" },
+              value: { html: render("none_or_bullet_list", entities_list: component.shades) },
+            },
+          ].compact
+        ) %>
+        <%= render "notifications/component_details", component: component, allow_edits: allow_edits %>
+      </div>
     <% end %>
-    <% unless notification.under_three_years.nil? %>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header">For children under 3</th>
-        <td class="govuk-table__cell">
-          <%= notification.under_three_years ? "Yes" : "No" %>
-        </td>
-      </tr>
-    <% end %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header">Number of components</th>
-      <td class="govuk-table__cell"><%= notification.components.length %></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header">Shades</th>
-      <td class="govuk-table__cell"><%= display_shades(notification) %></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header">Label image</th>
-      <td class="govuk-table__cell">
-        <% if notification.image_uploads.present? %>
-          <ul class="govuk-list">
-            <% notification.image_uploads.each do |image| %>
-              <% if image.passed_antivirus_check? %>
-                <li><%= link_to image.filename, url_for(image.file) %></li>
-              <% elsif image.file_exists? %>
-                <p>
-                  <%= "Processing image #{image.file.filename} ..." %>
-                  <br>
-                  <%= link_to "Refresh",
-                              edit_responsible_person_notification_path(@responsible_person, @notification),
-                              class: "govuk-link--no-visited-state" %>
-                </p>
-              <% end %>
-            <% end %>
-          </ul>
-        <% elsif allow_edits %>
-          <%= link_to "Add product images",
-            new_responsible_person_notification_product_image_upload_path(notification.responsible_person, notification) %>
-        <% else %>
-          N/A
-        <% end %>
-      </td>
-    </tr>
-    <% if notification.cpnp_notification_date.present? %>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header">EU notification date</th>
-        <td class="govuk-table__cell">
-          <%= display_full_month_date notification.cpnp_notification_date %>
-        </td>
-      </tr>
-    <% end %>
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header">Are the components mixed?</th>
-      <td class="govuk-table__cell">
-        <%= notification.components_are_mixed ? "Yes" : "No" %>
-      </td>
-    </tr>
-    <% if current_user.can_view_product_ingredients? && notification.ph_min_value.present? %>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header">Minimum pH value</th>
-        <td class="govuk-table__cell"><%= notification.ph_min_value %></td>
-      </tr>
-    <% end %>
-    <% if current_user.can_view_product_ingredients? && notification.ph_max_value.present? %>
-      <tr class="govuk-table__row">
-        <th class="govuk-table__header">Maximum pH value</th>
-        <td class="govuk-table__cell"><%= notification.ph_max_value %></td>
-      </tr>
-    <% end %>
-    <% if notification.components.count == 1 %>
-      <%= render "notifications/component_details", component: notification.components.first, allow_edits: allow_edits %>
-    <% else %>
-      <% notification.components.each_with_index do |component, i| %>
-        <table class="govuk-table check-your-answers-table">
-          <caption class="govuk-table__caption govuk-heading-m">
-            <%= component.name.presence || "Component #{i + 1}" %>
-          </caption>
-          <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header govuk-!-width-one-third" scope="row">Shades</th>
-              <td class="govuk-table__cell">
-               <%= render "none_or_bullet_list", entities_list: component.shades %>
-              </td>
-            </tr>
-          </tbody>
-          <%= render "notifications/component_details", component: component, allow_edits: allow_edits %>
-        </table>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+  <% end %>
+</div>

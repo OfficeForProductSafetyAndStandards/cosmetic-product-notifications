@@ -506,16 +506,16 @@ end
 # rubocop:enable Naming/MethodParameterName
 
 def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, number_of_components:, components_mixed:, kit_items:)
-  within_table("Product") do
+  within("#product-table") do
     expect(page).to have_summary_item(key: "Name", value: product_name)
     expect(page).to have_summary_item(key: "Number of components", value: number_of_components)
     expect(page).to have_summary_item(key: "Are the components mixed?", value: components_mixed)
   end
 
   kit_items.each do |kit_item|
-    expect(page).to have_selector("caption", text: kit_item[:name])
+    expect(page).to have_selector("h3", text: kit_item[:name])
 
-    within_table(kit_item[:name]) do
+    within("##{kit_item[:name].parameterize}") do
       expect(page).to have_summary_item(key: "Shades", value: kit_item[:shades])
 
       if kit_item[:contains_cmrs]
