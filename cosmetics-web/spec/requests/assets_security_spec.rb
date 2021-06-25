@@ -165,7 +165,7 @@ RSpec.describe "Asset security", type: :request do
 
         it "returns file" do
           get asset_url
-          expect(response.content_type).to eq("application/pdf")
+          expect(response.content_type).to eq("image/png")
           expect(response.status).to eq(200)
         end
       end
@@ -213,7 +213,7 @@ RSpec.describe "Asset security", type: :request do
 
         it "returns file" do
           get asset_url
-          expect(response.content_type).to eq("application/pdf")
+          expect(response.content_type).to eq("image/png")
           expect(response.status).to eq(200)
         end
       end

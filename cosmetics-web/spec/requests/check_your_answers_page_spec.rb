@@ -35,15 +35,11 @@ RSpec.describe "Check your answers page", type: :request do
       end
 
       it "displays that the product contains CMRs" do
-        expect(response.body).to have_tag("th#contains-cmrs")
-      end
-
-      it "displays whether CMRs are present" do
-        expect(response.body).to have_tag("td#has-cmrs")
+        expect(response.body).to have_tag("dt", text: "Contains CMR substances")
       end
 
       it "displays a list of CMRs" do
-        expect(response.body).to have_tag("td#cmr-names")
+        expect(response.body).to have_tag("dt", text: "CMR substances")
       end
     end
 
@@ -54,8 +50,8 @@ RSpec.describe "Check your answers page", type: :request do
         get edit_responsible_person_notification_path(params)
       end
 
-      it "displays a list of CMRs" do
-        expect(response.body).not_to have_tag("td#cmr-names")
+      it "does not display a list of CMRs" do
+        expect(response.body).not_to have_tag("dt", text: "CMR substances")
       end
     end
 
