@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Notification, type: :model do
+RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
   before do
     notification = described_class.create
     allow(notification)
@@ -226,6 +226,29 @@ RSpec.describe Notification, type: :model do
         notification.notification_complete_at = (described_class::DELETION_PERIOD_DAYS + 1).days.ago
         expect(notification.can_be_deleted?).to eq false
       end
+    end
+  end
+
+  describe "#cache_notification_for_csv!" do
+    let(:notification) { create(:notification, :with_components) }
+
+    it "is saved properly" do
+      notification.cache_notification_for_csv!
+      expect(notification.reload.csv_cache).to eq "#{notification.product_name},#{notification.reference_number_for_display},#{notification.notification_complete_at},,,,2,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products\n"
+    end
+  end
+
+  describe "notification submision" do
+    let(:notification) { create(:notification, :draft_complete, :with_components) }
+    let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification: notification) }
+
+    before do
+      image_upload
+      notification.submit_notification!
+    end
+
+    it "caches csv" do
+      expect(notification.reload.csv_cache).to eq "#{notification.product_name},#{notification.reference_number_for_display},#{notification.notification_complete_at},,,,2,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products\n"
     end
   end
 end

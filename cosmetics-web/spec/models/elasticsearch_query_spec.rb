@@ -7,7 +7,10 @@ RSpec.describe ElasticsearchQuery, type: :model do
     end
   end
 
-  let(:query) { described_class.new(q, category).build_query }
+  let(:from_date) { nil }
+  let(:to_date) { nil }
+
+  let(:query) { described_class.new(keyword: q, category: category, from_date: from_date, to_date: to_date).build_query }
 
   context "when search term is provided and category filter is empty" do
     it_behaves_like "correct query" do
@@ -15,7 +18,7 @@ RSpec.describe ElasticsearchQuery, type: :model do
       let(:category) { nil }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: nil, must: { multi_match: { fuzziness: "AUTO", query: "Foo bar" } } } } }
+        { query: { bool: { filter: [], must: { multi_match: { fuzziness: "AUTO", query: "Foo bar" } } } } }
       end
     end
   end
@@ -37,7 +40,7 @@ RSpec.describe ElasticsearchQuery, type: :model do
       let(:category) { nil }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: nil, must: { match_all: {} } } } }
+        { query: { bool: { filter: [], must: { match_all: {} } } } }
       end
     end
   end
@@ -49,6 +52,19 @@ RSpec.describe ElasticsearchQuery, type: :model do
 
       let(:expected_es_query) do
         { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { match_all: {} } } } }
+      end
+    end
+  end
+
+  context "when dates are provided" do
+    it_behaves_like "correct query" do
+      let(:q) { "Foo bar" }
+      let(:category) { "Bar baz" }
+      let(:from_date) { Date.new(2021, 6, 6) }
+      let(:to_date) { Date.new(2021, 6, 16) }
+
+      let(:expected_es_query) do
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }], must: { multi_match: { fuzziness: "AUTO", query: "Foo bar" } } } } }
       end
     end
   end
