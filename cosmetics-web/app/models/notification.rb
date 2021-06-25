@@ -52,6 +52,7 @@ class Notification < ApplicationRecord
     mapping do
       indexes :product_name, type: "text"
       indexes :created_at, type: "date"
+      indexes :notification_complete_at, type: "date", format: "strict_date_optional_time"
 
       indexes :responsible_person do
         indexes :name, type: "text"
@@ -67,7 +68,7 @@ class Notification < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name],
+      only: %i[product_name notification_complete_at],
       include: {
         responsible_person: {
           only: %i[name],
@@ -108,7 +109,7 @@ class Notification < ApplicationRecord
       transitions from: :notification_file_imported, to: :draft_complete, guard: :formulation_present?
     end
 
-    event :submit_notification do
+    event :submit_notification, after: :cache_notification_for_csv! do
       transitions from: :draft_complete, to: :notification_complete,
                   after: proc { __elasticsearch__.index_document } do
         guard do
@@ -203,6 +204,11 @@ class Notification < ApplicationRecord
 
   delegate :count, to: :components, prefix: true
 
+  def cache_notification_for_csv!
+    self.csv_cache = NotificationDecorator.new(self).to_csv
+    save!
+  end
+
 private
 
   def all_required_attributes_must_be_set
@@ -247,4 +253,3 @@ private
 end
 
 Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search
-Notification.index_name "search-development-2"

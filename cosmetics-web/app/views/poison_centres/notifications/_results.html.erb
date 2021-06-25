@@ -1,11 +1,9 @@
 <section class="govuk-grid-column-two-thirds" id="search-results-section">
-  <% if params[:q].present? %>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> matching keyword(s) <%= display_keywords(params[:q]) %> were found.</p>
-      </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> <%= display_keywords %> <%= display_filters_informations %> <%= @result.results.total == 1 ? "was found." : "were found." %></p>
     </div>
-  <% end %>
+  </div>
 
   <% if results.present? %>
     <div class="govuk-grid-row">

@@ -49,14 +49,14 @@ ActiveRecord::Base.transaction do
   category_names = %i[skin hair nail oral]
   categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
   # Create Notifications
-  20.times do |i|
+  30.times do |i|
     notification_attributes = {
       product_name: "Scrub shower bubbles #{keywords[i % 3]} #{i} (#{category_names[i % 4]})",
       state: "notification_complete",
       responsible_person_id: 1,
       was_notified_before_eu_exit: false,
       under_three_years: false,
-      notification_complete_at: Time.zone.now,
+      notification_complete_at: (Time.zone.now - i.days),
       responsible_person: rp,
     }
     notification = Notification.create!(notification_attributes)
