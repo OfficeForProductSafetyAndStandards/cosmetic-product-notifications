@@ -3,6 +3,8 @@ class ResponsiblePersons::FormulationUploadController < SubmitApplicationControl
 
   def new; end
 
+  def edit; end
+
   def create
     if params[:formulation_file].present?
       file_upload = params[:formulation_file]
@@ -19,6 +21,31 @@ class ResponsiblePersons::FormulationUploadController < SubmitApplicationControl
       add_error "No file selected"
       render :new
     end
+  end
+
+  def update
+    if params[:formulation_file].present?
+      file_upload = params[:formulation_file]
+      @component.formulation_file.attach(file_upload)
+
+      if @component.save
+        redirect_to edit_responsible_person_notification_path(@responsible_person, @notification)
+      else
+        @component.formulation_file.purge
+        @component.errors.messages[:formulation_file].map(&method(:add_error))
+        render :edit
+      end
+    elsif @component.formulation_file.attached?
+      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification)
+    else
+      add_error "No file selected"
+      render :edit
+    end
+  end
+
+  def destroy
+    @component.formulation_file.purge
+    redirect_to action: :edit, host: ENV["SUBMIT_HOST"]
   end
 
 private

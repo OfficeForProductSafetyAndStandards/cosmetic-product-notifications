@@ -1,30 +1,9 @@
-<% content_for :page_title, "Upload formulation document" %>
-<% content_for :after_header do %>
-  <%= govukBackLink text: "Back", href: responsible_person_notifications_path(@responsible_person, anchor: "incomplete") %>
-<% end %>
+<%= render(partial: "head",
+           locals: { back_link: responsible_person_notifications_path(@responsible_person, anchor: "incomplete") }) %>
 
-<%= form_with url: responsible_person_notification_component_formulation_index_path(@responsible_person, @notification, @component), method: :post do |form| %>
+<%= render "instructions" %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <% if @error_list.present? %>
-        <%= govukErrorSummary(titleText: "There is a problem", errorList: @error_list) %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="govuk-grid-row">
-    <% name = @component.name if @component.notification.is_multicomponent? %>
-    <% if @component.exact? %>
-      <%= render 'responsible_persons/wizard/component_build/exact_concentration', name: name %>
-    <% elsif @component.range? %>
-      <%= render 'responsible_persons/wizard/component_build/ranges_concentration', name: name %>
-    <% else %>
-      <p>This can be either as ranges or the exact concentration.</p>
-      <p>For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.</p>
-    <% end %>
-  </div>
-
+<%= form_with url: responsible_person_notification_component_formulation_file_index_path(@responsible_person, @notification, @component), method: :post do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-form-group <%= "govuk-form-group--error" if @error_list.present? %>">

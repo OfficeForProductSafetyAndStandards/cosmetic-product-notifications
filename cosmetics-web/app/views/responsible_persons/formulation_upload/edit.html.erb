@@ -1,0 +1,50 @@
+<%= render(partial: "head",
+           locals: { back_link: edit_responsible_person_notification_path(@responsible_person, @notification) }) %>
+
+
+<%= render "instructions" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @component.formulation_file.attached? %>
+      <% file = @component.formulation_file %>
+      <table class="govuk-table" id="formulation-files-table">
+        <caption class="govuk-table__caption govuk-heading-m">Upload a file</caption>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header govuk-!-width-two-thirds" scope="row">
+              <%= link_to(file.filename, url_for(file), class: "govuk-link govuk-link--no-visited-state") %>
+            </th>
+            <td class="govuk-table__cell">
+              <%= link_to("Remove",
+                          responsible_person_notification_component_formulation_file_path(@responsible_person, @notification, @component, file.id),
+                          method: :delete) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+
+<%= form_with url: responsible_person_notification_component_formulation_path(@responsible_person, @notification, @component), method: :put do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <% if !@component.formulation_file.attached? %>
+        <div class="govuk-form-group <%= "govuk-form-group--error" if @error_list.present? %>">
+          <%= form.label :formulation_file, "File type can be a ‘pdf’, ‘rtf’ or ‘txt’.", class: "govuk-label" %>
+
+          <% if @error_list.present? %>
+            <span class="govuk-error-message"><%= @error_list.first[:text] %></span>
+          <% end %>
+
+          <%= form.file_field :formulation_file, class: "govuk-file-upload", accept: Component.allowed_types.map(&method(:get_filetype_extension)).join(",") %>
+        </div>
+      <% end %>
+
+      <div class="govuk-form-group">
+        <%= govukButton text: "Continue" %>
+      </div>
+    </div>
+  </div>
+<% end %>

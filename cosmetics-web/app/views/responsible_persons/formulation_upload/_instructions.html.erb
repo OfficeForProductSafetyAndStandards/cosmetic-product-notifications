@@ -1,0 +1,11 @@
+<div class="govuk-grid-row">
+  <% name = @component.name if @component.notification.is_multicomponent? %>
+  <% if @component.exact? %>
+    <%= render 'responsible_persons/wizard/component_build/exact_concentration', name: name %>
+  <% elsif @component.range? %>
+    <%= render 'responsible_persons/wizard/component_build/ranges_concentration', name: name %>
+  <% else %>
+    <p>This can be either as ranges or the exact concentration.</p>
+    <p>For each ingredient give the International Nomenclature of Cosmetic Ingredients (INCI) name.</p>
+  <% end %>
+</div>

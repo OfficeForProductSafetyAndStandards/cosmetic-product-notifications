@@ -10,7 +10,7 @@ class ResponsiblePersons::AdditionalInformationController < SubmitApplicationCon
       return redirect_to new_responsible_person_notification_component_nanomaterial_build_path(responsible_person, @notification, component, nano_element)
     elsif @notification.formulation_required?
       component = @notification.components.order(:id).find(&:formulation_required?)
-      return redirect_to new_responsible_person_notification_component_formulation_path(responsible_person, @notification, component)
+      return redirect_to new_responsible_person_notification_component_formulation_file_path(responsible_person, @notification, component)
     else
       @notification.formulation_file_uploaded!
     end

@@ -18,7 +18,7 @@
   <% end %>
 <% elsif allow_edits %>
   <%= link_to "Add formulation document",
-          new_responsible_person_notification_component_formulation_path(@notification.responsible_person,
+          new_responsible_person_notification_component_formulation__file_path(@notification.responsible_person,
                   @notification, component),
           class: "govuk-link--no-visited-state" %>
 <% else %>
