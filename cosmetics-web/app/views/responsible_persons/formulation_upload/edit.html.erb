@@ -32,7 +32,7 @@
     <div class="govuk-grid-column-two-thirds">
       <% if !@component.formulation_file.attached? %>
         <div class="govuk-form-group <%= "govuk-form-group--error" if @error_list.present? %>">
-          <%= form.label :formulation_file, "File type can be a ‘pdf’, ‘rtf’ or ‘txt’.", class: "govuk-label" %>
+          <%= form.label :formulation_file, "File type must be a PDF.", class: "govuk-label" %>
 
           <% if @error_list.present? %>
             <span class="govuk-error-message"><%= @error_list.first[:text] %></span>
