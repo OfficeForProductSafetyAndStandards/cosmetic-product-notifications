@@ -1,9 +1,9 @@
-module.exports = function (api) {
-  const validEnv = ['development', 'test', 'production']
-  const currentEnv = api.env()
-  const isDevelopmentEnv = api.env('development')
-  const isProductionEnv = api.env('production')
-  const isTestEnv = api.env('test')
+module.exports = function(api) {
+  var validEnv = ['development', 'test', 'production']
+  var currentEnv = api.env()
+  var isDevelopmentEnv = api.env('development')
+  var isProductionEnv = api.env('production')
+  var isTestEnv = api.env('test')
 
   if (!validEnv.includes(currentEnv)) {
     throw new Error(
@@ -18,7 +18,7 @@ module.exports = function (api) {
   return {
     presets: [
       isTestEnv && [
-        require('@babel/preset-env').default,
+        '@babel/preset-env',
         {
           targets: {
             node: 'current'
@@ -26,7 +26,7 @@ module.exports = function (api) {
         }
       ],
       (isProductionEnv || isDevelopmentEnv) && [
-        require('@babel/preset-env').default,
+        '@babel/preset-env',
         {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
@@ -37,31 +37,30 @@ module.exports = function (api) {
       ]
     ].filter(Boolean),
     plugins: [
-      require('babel-plugin-macros'),
-      require('@babel/plugin-syntax-dynamic-import').default,
-      isTestEnv && require('babel-plugin-dynamic-import-node'),
-      require('@babel/plugin-transform-destructuring').default,
+      'babel-plugin-macros',
+      '@babel/plugin-syntax-dynamic-import',
+      isTestEnv && 'babel-plugin-dynamic-import-node',
+      '@babel/plugin-transform-destructuring',
       [
-        require('@babel/plugin-proposal-class-properties').default,
+        '@babel/plugin-proposal-class-properties',
         {
           loose: true
         }
       ],
       [
-        require('@babel/plugin-proposal-object-rest-spread').default,
+        '@babel/plugin-proposal-object-rest-spread',
         {
           useBuiltIns: true
         }
       ],
       [
-        require('@babel/plugin-transform-runtime').default,
+        '@babel/plugin-transform-runtime',
         {
-          helpers: false,
-          regenerator: true
+          helpers: false
         }
       ],
       [
-        require('@babel/plugin-transform-regenerator').default,
+        '@babel/plugin-transform-regenerator',
         {
           async: false
         }
