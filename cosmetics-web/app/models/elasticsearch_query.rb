@@ -1,12 +1,12 @@
 class ElasticsearchQuery
   SCORE_SORTING = "score".freeze
-  DATE_ASCENDING_SORTING  = "date_ascending"
-  DATE_DESCENDING_SORTING = "date_descending"
+  DATE_ASCENDING_SORTING  = "date_ascending".freeze
+  DATE_DESCENDING_SORTING = "date_descending".freeze
 
   # AVAILABLE_SORTING = [SCORE_SORTING, DATE_ASCENDING_SORTING, DATE_DESCENDING_SORTING]
   DEFAULT_SORT = SCORE_SORTING
 
-  def initialize(keyword:, category:, from_date:, to_date:, sort_by: )
+  def initialize(keyword:, category:, from_date:, to_date:, sort_by:)
     @keyword   = keyword
     @category  = category
     @from_date = from_date
@@ -23,8 +23,8 @@ class ElasticsearchQuery
         },
       },
       sort: [
-        sort_query
-      ]
+        sort_query,
+      ],
     }
   end
 
@@ -86,10 +86,9 @@ class ElasticsearchQuery
 
   def sort_query
     {
-        SCORE_SORTING => "_score",
-        DATE_ASCENDING_SORTING => { notification_complete_at: { order: :asc}},
-        DATE_DESCENDING_SORTING => { notification_complete_at: { order: :desc}},
+      SCORE_SORTING => "_score",
+      DATE_ASCENDING_SORTING => { notification_complete_at: { order: :asc } },
+      DATE_DESCENDING_SORTING => { notification_complete_at: { order: :desc } },
     }[@sort_by]
   end
-
 end

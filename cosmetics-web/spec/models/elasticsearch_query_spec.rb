@@ -53,19 +53,19 @@ RSpec.describe ElasticsearchQuery, type: :model do
       let(:sort_by) { ElasticsearchQuery::DATE_ASCENDING_SORTING }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :asc}}]}
+        { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :asc } }] }
       end
     end
   end
 
-  context "when using date ascending sort" do
+  context "when using date descending sort" do
     it_behaves_like "correct query" do
       let(:q) { nil }
       let(:category) { nil }
       let(:sort_by) { ElasticsearchQuery::DATE_DESCENDING_SORTING }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :desc}}]}
+        { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end

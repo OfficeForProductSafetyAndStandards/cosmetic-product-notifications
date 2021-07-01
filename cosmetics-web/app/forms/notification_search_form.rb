@@ -9,9 +9,9 @@ class NotificationSearchForm
   CATEGORIES = get_main_categories.map { |c| get_category_name(c) }
   SEARCH_OPTIONS = {
     "Revelance" => ElasticsearchQuery::SCORE_SORTING,
-    "Newest"    => ElasticsearchQuery::DATE_DESCENDING_SORTING,
-    "Oldest"    => ElasticsearchQuery::DATE_ASCENDING_SORTING,
-  }
+    "Newest" => ElasticsearchQuery::DATE_DESCENDING_SORTING,
+    "Oldest" => ElasticsearchQuery::DATE_ASCENDING_SORTING,
+  }.freeze
 
   attribute :q
   attribute :category
