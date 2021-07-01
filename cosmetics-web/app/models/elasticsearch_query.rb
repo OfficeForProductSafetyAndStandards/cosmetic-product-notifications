@@ -11,7 +11,7 @@ class ElasticsearchQuery
     @category  = category
     @from_date = from_date
     @to_date   = to_date
-    @sort_by   = (sort_by || SCORE_SORTING)
+    @sort_by   = sort_by.presence || SCORE_SORTING
   end
 
   def build_query

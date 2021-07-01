@@ -70,6 +70,18 @@ RSpec.describe ElasticsearchQuery, type: :model do
     end
   end
 
+  context "when using empty sort argument" do
+    it_behaves_like "correct query" do
+      let(:q) { nil }
+      let(:category) { nil }
+      let(:sort_by) { "" }
+
+      let(:expected_es_query) do
+        { query: { bool: { filter: [], must: { match_all: {} } } }, sort: %w[_score] }
+      end
+    end
+  end
+
   context "when no search term is provided and category filter is not empty" do
     it_behaves_like "correct query" do
       let(:q) { nil }
