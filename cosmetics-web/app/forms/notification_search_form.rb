@@ -7,6 +7,11 @@ class NotificationSearchForm
   FILTER_BY_DATE_RANGE = "by_date_range".freeze
 
   CATEGORIES = get_main_categories.map { |c| get_category_name(c) }
+  SEARCH_OPTIONS = {
+    "Revelance" => ElasticsearchQuery::SCORE_SORTING,
+    "Newest"    => ElasticsearchQuery::DATE_DESCENDING_SORTING,
+    "Oldest"    => ElasticsearchQuery::DATE_ASCENDING_SORTING,
+  }
 
   attribute :q
   attribute :category
@@ -16,6 +21,8 @@ class NotificationSearchForm
   attribute :date_from, :govuk_date
   attribute :date_to, :govuk_date
   attribute :date_exact, :govuk_date
+
+  attribute :sort_by
 
   validates :date_exact,
             presence: true,

@@ -1,7 +1,25 @@
 <section class="govuk-grid-column-two-thirds" id="search-results-section">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> <%= display_keywords %> <%= display_filters_informations %> <%= @result.results.total == 1 ? "was found." : "were found." %></p>
+    </div>
+
+    <div class="govuk-form-group opss-float-right">
+      <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_sort' }) do |form| %>
+        <label class="govuk-label govuk-body-s" for="notification_search_form_sort_by">
+          Sort by
+        </label>
+        <%= form.select :sort_by, options_for_select(@search_form.class::SEARCH_OPTIONS, @search_form.sort_by), {}, class: "govuk-select govuk-!-margin-bottom-1" %>
+        <button class="govuk-button opss-js-enabled-hidden" data-module="govuk-button">
+          Sort
+        </button>
+        <%= form.hidden_field :q, id: :notification_search_form_q_sort_hidden %>
+        <%= form.hidden_field :category, id: 'notification_search_form_category_sort_hidden' %>
+        <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact, id: :sort_form } %>
+        <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from, id: :sort_form } %>
+        <%= render partial: 'hidden_date_fields', locals: { attribute: :date_to, id: :sort_form } %>
+        <%= form.hidden_field :date_filter, id: 'notification_search_form_date_filter_sort_hidden' %>
+      <% end %>
     </div>
   </div>
 
