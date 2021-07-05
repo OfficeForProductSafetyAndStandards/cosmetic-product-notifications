@@ -61,6 +61,23 @@
         value: { html: render("notifications/component_details_formulation_ingredients",
                  component: component,
                  allow_edits: allow_edits) },
+        actions: {
+          items: if component.formulation_file.attached? && allow_edits
+                   [
+                     {
+                       href: edit_responsible_person_notification_component_formulation_path(
+                               component.notification.responsible_person,
+                               component.notification,
+                               component
+                             ),
+                       text: "Change",
+                       visuallyHiddenText: "formulation file"
+                     }
+                   ]
+                 else
+                   []
+                 end
+        }
       }
     end,
     {

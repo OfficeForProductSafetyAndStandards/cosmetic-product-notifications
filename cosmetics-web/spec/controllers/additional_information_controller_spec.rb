@@ -38,7 +38,7 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
       notification = Notification.create(responsible_person_id: responsible_person.id, components: [ranges_component])
       notification.image_uploads.create
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
-      expect(response).to redirect_to(new_responsible_person_notification_component_formulation_path(responsible_person, notification, ranges_component))
+      expect(response).to redirect_to(new_responsible_person_notification_component_formulation_file_path(responsible_person, notification, ranges_component))
     end
 
     context "when the notification is already submitted" do

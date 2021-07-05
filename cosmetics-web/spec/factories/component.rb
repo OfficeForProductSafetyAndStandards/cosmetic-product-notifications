@@ -48,5 +48,9 @@ FactoryBot.define do
         create(:exact_formula, component: component)
       end
     end
+
+    trait :with_formulation_file do
+      formulation_file { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf") }
+    end
   end
 end

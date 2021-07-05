@@ -455,7 +455,7 @@ def expect_back_link_to_upload_item_label_page
 end
 
 def expect_to_be_on__upload_formulation_document_page(header_text)
-  expect(page.current_path).to end_with("/formulation/new")
+  expect(page.current_path).to end_with("/formulation_file/new")
   expect(page).to have_h1(header_text)
 end
 
