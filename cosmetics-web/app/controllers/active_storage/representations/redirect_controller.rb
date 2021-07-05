@@ -4,7 +4,7 @@
 # /rails/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format)
 # /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)
 # We use "rails storage proxy" through ActiveStorage::Blobs::ProxyController
-class ActiveStorage::Representations::RedirectController < ActiveStorage::BaseController
+class ActiveStorage::Representations::RedirectController < ActiveStorage::Representations::BaseController
   def show
     redirect_to "/"
   end

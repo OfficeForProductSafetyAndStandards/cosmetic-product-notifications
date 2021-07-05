@@ -7,8 +7,7 @@
 #
 # This route is used for images thumbnails
 # /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)
-class ActiveStorage::Representations::ProxyController < ActiveStorage::BaseController
-  include ActiveStorage::SetBlob
+class ActiveStorage::Representations::ProxyController < ActiveStorage::Representations::BaseController
   include ActiveStorage::SetHeaders
   include ActiveStorageAccessProtectionConcern
 
@@ -16,14 +15,8 @@ class ActiveStorage::Representations::ProxyController < ActiveStorage::BaseContr
 
   def show
     http_cache_forever public: true do
-      set_content_headers_from representation.image
-      stream representation
+      set_content_headers_from @representation.image
+      stream @representation
     end
-  end
-
-private
-
-  def representation
-    @representation ||= @blob.representation(params[:variation_key]).processed
   end
 end
