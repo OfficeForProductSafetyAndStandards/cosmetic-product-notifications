@@ -18,10 +18,11 @@
         <div class="govuk-input__wrapper opss-search__wrapper">
           <%= form.search_field :q, class: "govuk-input govuk-!-width-one-half", 'aria-describedby' => "search-hint" %>
           <%= form.hidden_field :category, id: 'notification_search_form_category_hidden' %>
-          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact } %>
-          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from } %>
-          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_to } %>
+          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact, id: :keyword_form } %>
+          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from, id: :keyword_form } %>
+          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_to, id: :keyword_form } %>
           <%= form.hidden_field :date_filter, id: 'notification_search_form_date_filter_hidden' %>
+          <%= form.hidden_field :sort_by, id: 'notification_search_form_sort_by_hidden' %>
           <button class="govuk-button" data-module="govuk-button">
             <span class="govuk-visually-hidden">Search</span>
           </button>
