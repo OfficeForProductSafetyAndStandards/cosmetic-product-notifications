@@ -35,6 +35,7 @@ applications:
       command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate db:seed && bundle exec puma
       instances: 1
       memory: 1G
+      disk-quota: 2G
     - type: worker
       env:
         RAILS_MAX_THREADS: ((worker-max-threads))
@@ -42,4 +43,4 @@ applications:
       health-check-type: process
       instances: 1
       memory: 500M
-      disk: 2G
+      disk-quota: 2G
