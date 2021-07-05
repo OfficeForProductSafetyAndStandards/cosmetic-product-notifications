@@ -6,6 +6,7 @@ import '../application/javascripts/location_picker'
 import '../application/javascripts/autocomplete'
 import '../application/javascripts/bulk_file_upload_error_handling'
 import '../application/javascripts/image_size_validation'
+import '../application/javascripts/notification_search'
 
 import * as ActiveStorage from '@rails/activestorage'
 
@@ -46,16 +47,18 @@ document.addEventListener('direct-upload:error', event => {
 })
 
 document.addEventListener('DOMContentLoaded', event => {
-  document.getElementById('uploaded_files').addEventListener('change', event => {
-    try {
-      const max = 100
-      if (event.target.files.length > max) {
-        window.alert(`Please select no more than ${max} files`)
-        event.target.files = null
-        event.target.value = null
-      }
-    } catch (e) { console.log(e) }
-  })
+  if (document.getElementById('uploaded_files') !== null) {
+    document.getElementById('uploaded_files').addEventListener('change', event => {
+      try {
+        const max = 100
+        if (event.target.files.length > max) {
+          window.alert(`Please select no more than ${max} files`)
+          event.target.files = null
+          event.target.value = null
+        }
+      } catch (e) { console.log(e) }
+    })
+  }
 })
 
 ActiveStorage.start()

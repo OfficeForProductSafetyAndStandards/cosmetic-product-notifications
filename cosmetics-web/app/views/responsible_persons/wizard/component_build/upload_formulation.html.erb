@@ -20,6 +20,8 @@
 </div>
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-form-group <%= error_group_class(@component)%>">
+      <p>File type must be a PDF.</p>
+
       <%= form.label :formulation_file, "Upload a file", class: "govuk-label govuk-label--s" %>
 
       <% if @component.errors.any? %>

@@ -44,6 +44,25 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_link("Bath Bubbles")
   end
 
+  scenario "Sorting search results" do
+    sign_in user
+
+    expect(page).to have_h1("Search cosmetic products")
+
+    fill_in "notification_search_form_q", with: "Shower Bubbles"
+    click_on "Search"
+
+    links = page.all(".govuk-heading-s .govuk-link").map(&:text)
+    expect(links).to eq ["Shower Bubbles", "Bath Bubbles"]
+
+    select "Oldest", from: "Sort by"
+    click_on "Sort"
+
+    links = page.all(".govuk-heading-s .govuk-link").map(&:text)
+
+    expect(links).to eq ["Bath Bubbles", "Shower Bubbles"]
+  end
+
   scenario "Searching for notifications with date filter" do
     sign_in user
 

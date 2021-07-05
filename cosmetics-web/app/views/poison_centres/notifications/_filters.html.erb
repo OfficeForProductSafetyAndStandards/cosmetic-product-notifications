@@ -17,6 +17,7 @@
           </label>
           <%= form.select :category, @search_form.class::CATEGORIES, { include_blank: true },  class: "govuk-select" %>
           <%= form.hidden_field :q, id: :notification_search_form_q_hidden %>
+          <%= form.hidden_field :sort_by, id: 'notification_search_form_sort_by_date_filter_hidden' %>
         </div>
         <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="govuk-radios">
 
