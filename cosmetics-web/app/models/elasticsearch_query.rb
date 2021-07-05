@@ -3,7 +3,6 @@ class ElasticsearchQuery
   DATE_ASCENDING_SORTING  = "date_ascending".freeze
   DATE_DESCENDING_SORTING = "date_descending".freeze
 
-  # AVAILABLE_SORTING = [SCORE_SORTING, DATE_ASCENDING_SORTING, DATE_DESCENDING_SORTING]
   DEFAULT_SORT = SCORE_SORTING
 
   def initialize(keyword:, category:, from_date:, to_date:, sort_by:)
