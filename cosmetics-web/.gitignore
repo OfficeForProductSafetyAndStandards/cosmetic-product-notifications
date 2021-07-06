@@ -183,3 +183,10 @@ build-iPhoneSimulator/
 
 
 # End of https://www.gitignore.io/api/ruby,node,rails
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
