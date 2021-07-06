@@ -811,7 +811,7 @@ end
 
 def select_options_to_create_rp_account
   click_on "Continue"
-  expect(page).to have_h1("Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?")
+  expect(page).to have_h1("Has your Responsible Person account already been set up?")
   choose "No, I need to create an account"
   click_on "Continue"
   expect(page).to have_h1("Is the UK Responsible Person a business or an individual?")
