@@ -18,7 +18,7 @@ module MyAccount
       render "users/check_your_email/show"
     rescue ActiveRecord::RecordInvalid => e
       # We don't want to let the user know when validation failed due to new email being already registered
-      if e.message.include? "has already been taken"
+      if e.record.errors.where(:new_email, :taken).any?
         render "users/check_your_email/show"
       else
         render :edit
