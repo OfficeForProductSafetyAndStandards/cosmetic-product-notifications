@@ -22,9 +22,9 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
     visit "/responsible_persons/account/overview"
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     click_on "Continue"
-    expect(page).to have_h1("Does anyone in your organisation have an account to submit cosmetic product notifications in the UK?")
+    expect(page).to have_h1("Has your Responsible Person account already been set up?")
     choose "Yes, I or my organisation have an account"
     click_on "Continue"
-    expect(page).to have_h1("To join an existing UK responsible person account, you need to be invited by a team member of that organisation")
+    expect(page).to have_h1("To join an existing UK Responsible Person account, you need to be invited by a team member of that organisation")
   end
 end
