@@ -74,6 +74,8 @@ ActiveRecord::Base.transaction do
       notification: notification,
     }
     Component.create!(component_attributes)
+
+    notification.cache_notification_for_csv!
   end
 end
 
