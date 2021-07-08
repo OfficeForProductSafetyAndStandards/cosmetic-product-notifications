@@ -29,8 +29,8 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       expect(page).to have_css("h1", text: "Change your email address")
     end
 
-    context "when the password change is fine" do
-      it "changes password properly" do
+    context "when the email change is fine" do
+      it "changes email properly" do
         fill_in "Password", with: user.password
         fill_in "New email", with: "new@example.org"
         click_on "Continue"
@@ -75,6 +75,18 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
 
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
         expect(page).to have_link("", href: "#new_email")
+      end
+
+      it "does not send the email to update email address when given email belongs to another user" do
+        create(:submit_user, has_accepted_declaration: true, email: "previous_user@example.org")
+
+        fill_in "Password", with: user.password
+        fill_in "New email", with: "previous_user@example.org"
+        click_on "Continue"
+
+        expect_to_be_on_my_account_page
+        expect(page).to have_text(/A message with a confirmation link has been sent to your email address/)
+        expect(delivered_emails).to be_empty
       end
 
       context "when confirmation cannot be done" do

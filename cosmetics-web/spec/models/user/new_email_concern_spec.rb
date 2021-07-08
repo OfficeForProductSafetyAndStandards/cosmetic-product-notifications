@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
       travel_back
     end
 
-    describe "#new_email_pending_to_confirm!" do
+    describe "#new_email_pending_confirmation!" do
       let(:user) { create(:submit_user, email: old_email) }
       let(:mailer) { double }
 

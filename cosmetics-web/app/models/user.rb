@@ -4,14 +4,18 @@ class User < ApplicationRecord
 
   include Encryptable
   include NewEmailConcern
-  validates :email, presence: true
 
   attribute :old_password, :string
   attribute :invite, :boolean
 
   attr_encrypted :totp_secret_key
 
+  validates :email, presence: true
+  validate  :email_not_pending_change_for_other_user
   validates :new_email, email: { message: :invalid, allow_nil: true }
+  validates :new_email, uniqueness: true, allow_nil: true
+  validate  :new_email_not_registered
+
   validates :name, presence: true, unless: -> { invite }
 
   with_options if: :account_security_completed do
@@ -66,6 +70,18 @@ private
 
   def secondary_authentication_set?
     !mobile_number_pending_verification? && (sms_authentication_set? || app_authentication_set?)
+  end
+
+  def email_not_pending_change_for_other_user
+    if email.present? && self.class.where(new_email: email).where.not(id: id).any?
+      errors.add(:email, :taken)
+    end
+  end
+
+  def new_email_not_registered
+    if new_email.present? && self.class.find_by(email: new_email).present?
+      errors.add(:new_email, :taken)
+    end
   end
 
   def secondary_authentication_methods_presence
