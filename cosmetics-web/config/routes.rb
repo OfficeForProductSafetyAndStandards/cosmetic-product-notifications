@@ -98,7 +98,7 @@ Rails.application.routes.draw do
         get "change", to: "responsible_persons#change"
       end
 
-      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index new create], shallow: true do
+      resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index show new create], shallow: true do
         member do
           get :name
           patch :name, action: "update_name"
