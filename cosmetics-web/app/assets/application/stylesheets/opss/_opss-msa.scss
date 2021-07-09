@@ -16,19 +16,16 @@ abbr[title]{
   word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto;
 }
 
-
-
-
-
-.opss-float-right,
-.opss-text-align-right {
+.opss-float-right {
     @include govuk-media-query($from: tablet) {
-        text-align: right; display: inline-block; width: 100%;
-        //float: right;
+       text-align: right; display: inline-block; width: 100%;
     }
 }
-
-
+.opss-text-align-right {
+    @include govuk-media-query($from: tablet) {
+        float: right;
+    }
+}
 
 .opss-border-top, .opss-border-bottom {
     border-color: $govuk-border-colour;

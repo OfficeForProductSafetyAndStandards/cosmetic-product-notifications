@@ -5,10 +5,65 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    <h1 class="govuk-heading-l">Nanomaterials</h1>
-
-    <%= govukButton text: "Add nanomaterial", href: new_responsible_person_nanomaterial_path(@responsible_person) %>
-
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="nanomaterial-notifications-hint">
+      Nanomaterials
+    </h1>
   </div>
+  <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+    <%= link_to("Add a nanomaterial",
+                new_responsible_person_nanomaterial_path(@responsible_person),
+                class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset") %>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <p  id="nanomaterial-notifications-hint" class="govuk-hint govuk-!-width-two-thirds">
+      These are your notified nanomaterials.
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <section class="govuk-grid-column-full">
+    <ul class="govuk-list opss-list--borders govuk-!-margin-top-5">
+      <% @nanomaterial_notifications.each do |notification| %>
+        <li>
+          <h2 class="govuk-heading-s">
+            <%= notification.name %>
+          </h2>
+          <dl class="govuk-summary-list govuk-summary-list--no-border opss-summary-list opss-summary-list--small">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Notified in the <abbr>UK</abbr>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= display_full_month_date notification.submitted_at %>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Notified in the <abbr>EU</abbr>
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= if notification.eu_notified
+                      display_full_month_date notification.notified_to_eu_on
+                    else
+                      "No"
+                    end %>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+              <abbr>UK</abbr> nanomaterial number
+              </dt>
+              <dd class="govuk-summary-list__value">
+                UKN-<%= notification.id %>
+              </dd>
+            </div>
+          </dl>
+        </li>
+      <% end %>
+    </ul>
+    <%= paginate @nanomaterial_notifications, views_prefix: 'pagination' %>
+  </section>
 </div>

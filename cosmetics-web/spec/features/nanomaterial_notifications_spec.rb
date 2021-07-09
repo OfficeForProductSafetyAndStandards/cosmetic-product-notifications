@@ -4,13 +4,14 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 
   before do
+    travel_to(Time.zone.local(2021, 6, 10))
     sign_in_as_member_of_responsible_person(responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
   end
 
   scenario "submitting a nanomaterial that has not been notified to the EU", :with_stubbed_antivirus do
-    click_link "Add nanomaterial"
+    click_link "Add a nanomaterial"
 
     fill_in "What is the name of the nanomaterial?", with: "My nanomaterial"
     click_button "Continue"
@@ -27,10 +28,16 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     click_button "Accept and send"
 
     expect(page).to have_text("You’ve told us about My nanomaterial")
+    click_link "Return to Nanomaterials"
+
+    expect(page).to have_css("h2", text: "My nanomaterial")
+    expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
+    expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{NanomaterialNotification.last.id}")
   end
 
   scenario "submitting a nanomaterial which was previously notified to the EU", :with_stubbed_antivirus do
-    click_link "Add nanomaterial"
+    click_link "Add a nanomaterial"
 
     fill_in "What is the name of the nanomaterial?", with: "My EU nanomaterial"
     click_button "Continue"
@@ -50,5 +57,11 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     click_button "Accept and send"
 
     expect(page).to have_text("You’ve told us about My EU nanomaterial")
+    click_link "Return to Nanomaterials"
+
+    expect(page).to have_css("h2", text: "My EU nanomaterial")
+    expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
+    expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{NanomaterialNotification.last.id}")
   end
 end
