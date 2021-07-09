@@ -1,5 +1,5 @@
 class NanomaterialNotificationsController < SubmitApplicationController
-  PER_PAGE = 10
+  PER_PAGE = 20
 
   before_action :set_responsible_person, only: %w[index new create]
   before_action :validate_responsible_person
