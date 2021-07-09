@@ -164,8 +164,9 @@ en:
             date_exact:
               in_future: Date cannot be set for the future
               blank: Each date field must have a value
-              must_be_real: Dates must use the correct format
-              incomplete: Each date field must have a value
+              present: Enter a notification date
+              must_be_real: Notification date must be a real date
+              incomplete: Notification date must include a %{missing_date_parts}
             date_from:
               in_future: From date cannot be set for the future
               blank: 'From date: Each date field must have a value'

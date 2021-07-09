@@ -25,7 +25,7 @@ class NotificationSearchForm
   attribute :sort_by
 
   validates :date_exact,
-            presence: true,
+            date_presence: true,
             real_date: true,
             complete_date: true,
             not_in_future: true,
@@ -65,7 +65,7 @@ class NotificationSearchForm
   end
 
   def date_exact?
-    date_filter == FILTER_BY_DATE_EXACT && date_exact.present?
+    date_filter == FILTER_BY_DATE_EXACT
   end
 
   def date_range?

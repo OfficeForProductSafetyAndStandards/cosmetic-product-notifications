@@ -14,7 +14,7 @@ class DateParser
     @date = date_from_string(@date) if @date.is_a?(String)
 
     return @date            if @date.is_a?(Date) || @date.is_a?(Time)
-    return nil              if date_values.all?(&:blank?)
+    return struct_from_hash              if date_values.all?(&:blank?)
     return struct_from_hash if date_values.any?(&:blank?)
     return struct_from_hash if date_values[1].negative? || date_values[2].negative?
 
