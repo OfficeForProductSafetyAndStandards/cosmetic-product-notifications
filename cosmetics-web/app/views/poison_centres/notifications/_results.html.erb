@@ -19,7 +19,7 @@
             <%= render "registered_product", notification: notification %>
           <% end %>
         </ul>
-        <%= paginate @notifications, views_prefix: 'search' %>
+        <%= paginate @notifications, views_prefix: 'pagination' %>
       </div>
     </div>
   <% end %>

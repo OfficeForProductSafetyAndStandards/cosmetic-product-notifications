@@ -18,20 +18,31 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "GET /responsible_persons/ID/nanomaterials" do
     context "when user is associated with the responsible person" do
-      before do
-        get "/responsible_persons/#{responsible_person.id}/nanomaterials"
-      end
-
       it "is successful" do
+        get "/responsible_persons/#{responsible_person.id}/nanomaterials"
         expect(response.code).to eql("200")
       end
 
       it "has a page heading" do
-        expect(response.body).to have_h1_with_text("Nanomaterials")
+        get "/responsible_persons/#{responsible_person.id}/nanomaterials"
+        expect(response.body).to have_tag("h1", text: /Nanomaterials/)
       end
 
       it "has a page title" do
+        get "/responsible_persons/#{responsible_person.id}/nanomaterials"
         expect(response.body).to have_title("Nanomaterials")
+      end
+
+      it "lists the submitted nanomaterial notification" do
+        submitted_nanomaterial_notification
+        get "/responsible_persons/#{responsible_person.id}/nanomaterials"
+        expect(response.body).to have_tag("li h2", text: /#{submitted_nanomaterial_notification.name}/)
+      end
+
+      it "does not list a non submitted nanomaterial notification" do
+        create(:nanomaterial_notification, :not_submitted, name: "Not submitted nano", responsible_person: responsible_person)
+        get "/responsible_persons/#{responsible_person.id}/nanomaterials"
+        expect(response.body).not_to have_tag("li h2", text: /"Not submitted nano"/)
       end
     end
 
