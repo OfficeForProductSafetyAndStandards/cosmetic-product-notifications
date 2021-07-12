@@ -4,6 +4,12 @@
 # If the date is invalid, or any parts are missing, then
 # the input date is returned as a struct
 class DateParser
+  IncompleteDate = Struct.new(:year, :month, :day) do
+    def blank?
+      true
+    end
+  end
+
   def initialize(date)
     @date = date
   end
@@ -13,8 +19,8 @@ class DateParser
 
     @date = date_from_string(@date) if @date.is_a?(String)
 
-    return @date            if @date.is_a?(Date) || @date.is_a?(Time)
-    return struct_from_hash              if date_values.all?(&:blank?)
+    return @date if @date.is_a?(Date) || @date.is_a?(Time)
+    return struct_from_hash if date_values.all?(&:blank?)
     return struct_from_hash if date_values.any?(&:blank?)
     return struct_from_hash if date_values[1].negative? || date_values[2].negative?
 
@@ -28,7 +34,7 @@ class DateParser
 private
 
   def struct_from_hash
-    OpenStruct.new(year: @date[:year], month: @date[:month], day: @date[:day])
+    IncompleteDate.new(@date[:year], @date[:month], @date[:day])
   end
 
   def date_from_string(date_as_string)

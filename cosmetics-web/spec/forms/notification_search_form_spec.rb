@@ -49,14 +49,20 @@ RSpec.describe NotificationSearchForm do
 
   describe "form behaviour" do
     context "when form fields are incorrect" do
-      let(:date_exact_year) { 'foo' }
-      let(:date_exact_month) { 'bar' }
-      let(:date_exact_day) { 'baz' }
+      let(:date_exact_year) { "foo" }
+      let(:date_exact_month) { "bar" }
+      let(:date_exact_day) { "baz" }
 
-      it "is should keep them" do
-        expect(form.date_exact.year).to eq 'foo'
-        expect(form.date_exact.month).to eq 'bar'
-        expect(form.date_exact.day).to eq 'baz'
+      it "keeps year" do
+        expect(form.date_exact.year).to eq "foo"
+      end
+
+      it "keeps month" do
+        expect(form.date_exact.month).to eq "bar"
+      end
+
+      it "keeps day" do
+        expect(form.date_exact.day).to eq "baz"
       end
     end
   end
@@ -186,7 +192,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_to_day) { nil }
 
         it "is valid" do
-          expect(form).to be_valid
+          expect(form).not_to be_valid
         end
 
         context "when any field is present" do
@@ -201,9 +207,9 @@ RSpec.describe NotificationSearchForm do
       context "when using date exact" do
         let(:date_filter) { NotificationSearchForm::FILTER_BY_DATE_EXACT }
 
-        let(:date_exact_year) { '' }
-        let(:date_exact_month) { '' }
-        let(:date_exact_day) { '' }
+        let(:date_exact_year) { "" }
+        let(:date_exact_month) { "" }
+        let(:date_exact_day) { "" }
 
         context "when all fields are empty" do
           it "is valid" do
