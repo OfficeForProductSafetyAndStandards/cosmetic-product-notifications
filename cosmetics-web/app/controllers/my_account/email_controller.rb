@@ -16,8 +16,13 @@ module MyAccount
 
       @user.new_email_pending_confirmation!(dig_params(:new_email))
       render "users/check_your_email/show"
-    rescue StandardError
-      render :edit
+    rescue ActiveRecord::RecordInvalid => e
+      # We don't want to let the user know when validation failed due to new email being already registered
+      if e.record.errors.where(:new_email, :taken).any?
+        render "users/check_your_email/show"
+      else
+        render :edit
+      end
     end
 
     def confirm

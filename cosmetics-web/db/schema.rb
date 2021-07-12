@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_18_130823) do
+ActiveRecord::Schema.define(version: 2021_06_30_151659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -308,6 +308,7 @@ ActiveRecord::Schema.define(version: 2021_06_18_130823) do
     t.integer "last_totp_at"
     t.string "secondary_authentication_methods", array: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["new_email"], name: "index_users_on_new_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
