@@ -74,7 +74,7 @@ class NotificationSearchForm
 
   def date_from_lower_then_date_to
     if date_range_selected? && date_from.is_a?(Date) && date_to.is_a?(Date) && (date_from > date_to)
-      errors.add(:date_from, :date_from_is_later_than_date_to)
+      errors.add(:date_to, :date_from_is_later_than_date_to)
     end
   end
 end
