@@ -222,6 +222,7 @@ RSpec.describe NotificationSearchForm do
 
           it "is invalid" do
             expect(form).not_to be_valid
+            expect(form.errors.count).to eq 1
           end
         end
       end

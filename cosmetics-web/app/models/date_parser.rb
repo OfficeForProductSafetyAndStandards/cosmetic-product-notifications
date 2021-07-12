@@ -6,7 +6,7 @@
 class DateParser
   IncompleteDate = Struct.new(:year, :month, :day) do
     def blank?
-      true
+      year.blank? && month.blank? && day.blank?
     end
   end
 
