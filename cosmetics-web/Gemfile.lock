@@ -577,7 +577,7 @@ DEPENDENCIES
   rubocop-rails (~> 2.8)
   rubocop-rspec (~> 1.42.0)
   ruby-debug-ide (~> 0.7.0)
-  rubyzip (>= 1.2.1)
+  rubyzip (~> 2.3.0)
   scout_apm
   sentry-rails
   sentry-ruby
@@ -598,7 +598,7 @@ DEPENDENCIES
   will_paginate (= 3.2.1)
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 2.7.4
 
 BUNDLED WITH
-   2.2.11
+   2.2.22
