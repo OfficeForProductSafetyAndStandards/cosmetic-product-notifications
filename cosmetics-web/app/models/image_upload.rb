@@ -8,6 +8,8 @@ class ImageUpload < ApplicationRecord
 
   has_one_attached :file
 
+  delegate :responsible_person, to: :notification
+
   def file_exists?
     file.attachment.present?
   end

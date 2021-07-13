@@ -4,7 +4,7 @@ class NanomaterialNotificationsController < SubmitApplicationController
   before_action :set_responsible_person, only: %w[index new create]
   before_action :validate_responsible_person
 
-  before_action :set_nanomaterial_notification_from_url, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]
+  before_action :set_nanomaterial_notification_from_url, only: %i[show notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]
 
   before_action :redirect_to_confirmation_page_if_submitted, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit]
 
@@ -15,6 +15,8 @@ class NanomaterialNotificationsController < SubmitApplicationController
                                     .order(submitted_at: :desc)
                                     .paginate(page: params[:page], per_page: PER_PAGE)
   end
+
+  def show; end
 
   def new
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new

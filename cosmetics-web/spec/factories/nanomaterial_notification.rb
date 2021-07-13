@@ -14,6 +14,7 @@ FactoryBot.define do
     end
 
     trait :submitted do
+      submittable
       submitted_at { 1.hour.ago }
     end
   end

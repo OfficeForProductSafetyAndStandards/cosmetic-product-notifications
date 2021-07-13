@@ -55,6 +55,42 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
   end
 
+  describe "GET /nanomaterials/ID" do
+    context "when user is associated with the responsible person" do
+      let(:nanomaterial_notification) do
+        create(:nanomaterial_notification, :submitted, responsible_person: responsible_person)
+      end
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}"
+      end
+
+      it "is successful" do
+        expect(response.code).to eql("200")
+      end
+
+      it "has the nanomaterial page heading" do
+        expect(response.body).to have_tag("h1", text: /#{nanomaterial_notification.name}/)
+      end
+
+      it "has the nanomaterial page title" do
+        expect(response.body).to have_title(nanomaterial_notification.name)
+      end
+    end
+
+    context "when user attempts to look at a another company’s nanomaterials" do
+      let(:nanomaterial_notification) do
+        create(:nanomaterial_notification, :submitted, responsible_person: other_company)
+      end
+
+      it "raises an a 'Not authorized' error" do
+        expect {
+          get "/nanomaterials/#{nanomaterial_notification.id}"
+        }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+  end
+
   describe "GET /responsible_persons/ID/nanomaterials/new" do
     before do
       get "/responsible_persons/#{responsible_person.id}/nanomaterials/new"
