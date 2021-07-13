@@ -1,7 +1,10 @@
 <% content_for :page_title, @nanomaterial_notification.name %>
 <% content_for :after_header do %>
   <%= render "layouts/navbar" %>
-  <%= govukBackLink text: "Back", href: responsible_person_nanomaterials_path(@responsible_person) %>
+  <%= govukBackLink(
+        text: "Back",
+        href: request.referer.presence || responsible_person_nanomaterials_path(@responsible_person)
+      ) %>
 <% end %>
 
 <div class="govuk-grid-row">
