@@ -191,7 +191,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_to_month) { nil }
         let(:date_to_day) { nil }
 
-        it "is valid" do
+        it "is invalid" do
           expect(form).not_to be_valid
         end
 
