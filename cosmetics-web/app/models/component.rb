@@ -18,6 +18,8 @@ class Component < ApplicationRecord
   has_one :nano_material, dependent: :destroy
   has_one_attached :formulation_file
 
+  delegate :responsible_person, to: :notification
+
   enum ph: {
     not_applicable: "not_applicable",
     lower_than_3: "lower_than_3",
