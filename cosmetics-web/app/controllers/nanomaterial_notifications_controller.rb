@@ -4,7 +4,7 @@ class NanomaterialNotificationsController < SubmitApplicationController
   before_action :set_responsible_person, only: %w[index new create]
   before_action :validate_responsible_person
 
-  before_action :set_nanomaterial_notification_from_url, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]
+  before_action :set_nanomaterial_notification_from_url, only: %i[show notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit confirmation_page]
 
   before_action :redirect_to_confirmation_page_if_submitted, only: %i[notified_to_eu update_notified_to_eu upload_file update_file review name update_name submit]
 
@@ -13,8 +13,19 @@ class NanomaterialNotificationsController < SubmitApplicationController
                                     .nanomaterial_notifications
                                     .where.not(submitted_at: nil)
                                     .order(submitted_at: :desc)
-                                    .paginate(page: params[:page], per_page: PER_PAGE)
+
+    respond_to do |format|
+      format.html do
+        @nanomaterial_notifications = @nanomaterial_notifications.paginate(page: params[:page], per_page: PER_PAGE)
+      end
+      format.csv do
+        @notifications = NanomaterialNotificationsDecorator.new(@nanomaterial_notifications)
+        render csv: @notifications, filename: "all-nanomaterials-notifications-#{Time.zone.now.to_s(:db)}"
+      end
+    end
   end
+
+  def show; end
 
   def new
     @nanomaterial_notification = @responsible_person.nanomaterial_notifications.new

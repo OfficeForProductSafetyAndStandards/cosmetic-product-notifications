@@ -162,20 +162,21 @@ en:
         notification_search_form:
           attributes:
             date_exact:
-              in_future: Date cannot be set for the future
-              blank: Each date field must have a value
-              must_be_real: Dates must use the correct format
-              incomplete: Each date field must have a value
+              in_future: Notification date must be today or in the past
+              blank: Enter a notification date
+              must_be_real: Notification date must be a real date
+              incomplete: Notification date must include a %{missing_date_parts}
             date_from:
-              in_future: From date cannot be set for the future
-              blank: 'From date: Each date field must have a value'
-              date_from_is_later_than_date_to: The To date cannot precede the From date
-              must_be_real: 'From date: Dates must use the correct format'
-              incomplete: 'From date: Each date field must have a value'
+              blank: Enter a From date
+              in_future: From date must be today or in the past
+              must_be_real: 'From date must be a real date'
+              incomplete: From date must include a %{missing_date_parts}
             date_to:
-              blank: 'To date: Each date field must have a value'
-              must_be_real: 'To date: Dates must use the correct format'
-              incomplete: 'To date: Each date field must have a value'
+              blank: Enter a To date
+              in_future: From date cannot be set for the future
+              must_be_real: 'To date must be a real date'
+              incomplete: To date must include a %{missing_date_parts}
+              date_from_is_later_than_date_to: To date must be after From date
         registration/new_account_form:
           attributes:
             full_name:

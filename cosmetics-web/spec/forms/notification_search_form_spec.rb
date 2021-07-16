@@ -47,6 +47,26 @@ RSpec.describe NotificationSearchForm do
     }
   end
 
+  describe "form behaviour" do
+    context "when form fields are incorrect" do
+      let(:date_exact_year) { "foo" }
+      let(:date_exact_month) { "bar" }
+      let(:date_exact_day) { "baz" }
+
+      it "keeps year" do
+        expect(form.date_exact.year).to eq "foo"
+      end
+
+      it "keeps month" do
+        expect(form.date_exact.month).to eq "bar"
+      end
+
+      it "keeps day" do
+        expect(form.date_exact.day).to eq "baz"
+      end
+    end
+  end
+
   describe "#date_to_for_search" do
     context "when using range" do
       let(:date_filter) { NotificationSearchForm::FILTER_BY_DATE_RANGE }
@@ -171,8 +191,8 @@ RSpec.describe NotificationSearchForm do
         let(:date_to_month) { nil }
         let(:date_to_day) { nil }
 
-        it "is valid" do
-          expect(form).to be_valid
+        it "is invalid" do
+          expect(form).not_to be_valid
         end
 
         context "when any field is present" do
@@ -187,12 +207,14 @@ RSpec.describe NotificationSearchForm do
       context "when using date exact" do
         let(:date_filter) { NotificationSearchForm::FILTER_BY_DATE_EXACT }
 
-        let(:date_exact_year) { nil }
-        let(:date_exact_month) { nil }
-        let(:date_exact_day) { nil }
+        let(:date_exact_year) { "" }
+        let(:date_exact_month) { "" }
+        let(:date_exact_day) { "" }
 
-        it "is valid" do
-          expect(form).to be_valid
+        context "when all fields are empty" do
+          it "is valid" do
+            expect(form).not_to be_valid
+          end
         end
 
         context "when any field is present" do
@@ -200,6 +222,7 @@ RSpec.describe NotificationSearchForm do
 
           it "is invalid" do
             expect(form).not_to be_valid
+            expect(form.errors.count).to eq 1
           end
         end
       end
@@ -322,7 +345,7 @@ RSpec.describe NotificationSearchForm do
       let(:date_from_day) { "18" }
 
       it "has error" do
-        expect(form.errors[:date_from]).to be_present
+        expect(form.errors[:date_to]).to be_present
       end
     end
 
@@ -332,7 +355,7 @@ RSpec.describe NotificationSearchForm do
       let(:date_from_day) { date_to_day }
 
       it "has no error" do
-        expect(form.errors[:date_from]).to be_blank
+        expect(form.errors[:date_to]).to be_blank
       end
     end
   end

@@ -60,10 +60,12 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     let(:rp)                         { responsible_person }
     let(:user_id)                    { submit_user.id }
     let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
-    let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
+    let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
     let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id: user_id, responsible_person: rp) }
 
     before do
+      travel_to(Time.zone.local(2021, 7, 20, 13))
+
       nanomaterial_notification1
       nanomaterial_notification2
       nanomaterial_notification3
@@ -73,7 +75,9 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
     let(:expected_csv) do
       <<~CSV
-        Nanomaterial name,UKN ID,Notified on EU on,Notified on
+        Nanomaterial name,UK Nanomaterial number ,EU Notification date,Notification date
+        Zinc oxide,UKN-#{nanomaterial_notification1.id},,2021-07-20 12:00:00 +0100
+        Zinc oxide,UKN-#{nanomaterial_notification2.id},2021-07-17,2021-07-20 12:00:00 +0100
       CSV
     end
 
@@ -83,6 +87,42 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
     it "returns file with proper notifications" do
       expect(response.body).to eq expected_csv
+    end
+  end
+
+  describe "GET /nanomaterials/ID" do
+    context "when user is associated with the responsible person" do
+      let(:nanomaterial_notification) do
+        create(:nanomaterial_notification, :submitted, responsible_person: responsible_person)
+      end
+
+      before do
+        get "/nanomaterials/#{nanomaterial_notification.id}"
+      end
+
+      it "is successful" do
+        expect(response.code).to eql("200")
+      end
+
+      it "has the nanomaterial page heading" do
+        expect(response.body).to have_tag("h1", text: /#{nanomaterial_notification.name}/)
+      end
+
+      it "has the nanomaterial page title" do
+        expect(response.body).to have_title(nanomaterial_notification.name)
+      end
+    end
+
+    context "when user attempts to look at a another company’s nanomaterials" do
+      let(:nanomaterial_notification) do
+        create(:nanomaterial_notification, :submitted, responsible_person: other_company)
+      end
+
+      it "raises an a 'Not authorized' error" do
+        expect {
+          get "/nanomaterials/#{nanomaterial_notification.id}"
+        }.to raise_error(Pundit::NotAuthorizedError)
+      end
     end
   end
 

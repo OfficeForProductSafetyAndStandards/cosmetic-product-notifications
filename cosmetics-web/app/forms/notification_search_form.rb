@@ -29,52 +29,52 @@ class NotificationSearchForm
             real_date: true,
             complete_date: true,
             not_in_future: true,
-            if: :date_exact?
+            if: :date_exact_selected?
 
   validates :date_from,
             presence: true,
             real_date: true,
             complete_date: true,
             not_in_future: true,
-            if: :date_range?
+            if: :date_range_selected?
 
   validates :date_to,
             presence: true,
             real_date: true,
             complete_date: true,
-            if: :date_range?
+            if: :date_range_selected?
 
   validate :date_from_lower_then_date_to
 
   def date_from_for_search
     return unless valid?
 
-    return date_exact if date_exact?
-    return date_from if date_range?
+    return date_exact if date_exact_selected?
+    return date_from if date_range_selected?
   end
 
   def date_to_for_search
     return unless valid?
 
-    return date_exact if date_exact?
-    return date_to if date_range?
+    return date_exact if date_exact_selected?
+    return date_to if date_range_selected?
   end
 
   def [](field)
     public_send(field.to_sym)
   end
 
-  def date_exact?
-    date_filter == FILTER_BY_DATE_EXACT && date_exact.present?
+  def date_exact_selected?
+    date_filter == FILTER_BY_DATE_EXACT
   end
 
-  def date_range?
-    date_filter == FILTER_BY_DATE_RANGE && (date_from.present? || date_to.present?)
+  def date_range_selected?
+    date_filter == FILTER_BY_DATE_RANGE
   end
 
   def date_from_lower_then_date_to
-    if date_range? && date_from.is_a?(Date) && date_to.is_a?(Date) && (date_from > date_to)
-      errors.add(:date_from, :date_from_is_later_than_date_to)
+    if date_range_selected? && date_from.is_a?(Date) && date_to.is_a?(Date) && (date_from > date_to)
+      errors.add(:date_to, :date_from_is_later_than_date_to)
     end
   end
 end

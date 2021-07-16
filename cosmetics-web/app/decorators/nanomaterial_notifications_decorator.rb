@@ -1,6 +1,6 @@
 require "csv"
 
-class NotificationsDecorator
+class NanomaterialNotificationsDecorator
   HEADER = [
     "Nanomaterial name",
     "UK Nanomaterial number ",

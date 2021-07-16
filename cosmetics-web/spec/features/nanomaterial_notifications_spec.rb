@@ -10,6 +10,10 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
   end
 
+  scenario "CSV download link" do
+    expect(page).to have_selector("a", text: "Download a CSV file of notified nanomaterials")
+  end
+
   scenario "submitting a nanomaterial that has not been notified to the EU", :with_stubbed_antivirus do
     click_link "Add a nanomaterial"
 
@@ -30,10 +34,19 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_text("You’ve told us about My nanomaterial")
     click_link "Return to Nanomaterials"
 
-    expect(page).to have_css("h2", text: "My nanomaterial")
+    id = NanomaterialNotification.last.id
+    expect(page).to have_link("My nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
-    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{NanomaterialNotification.last.id}")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+
+    click_link("My nanomaterial")
+    expect(page).to have_current_path("/nanomaterials/#{id}")
+    expect(page).to have_h1("My nanomaterial")
+    expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
+    expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+    expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end
 
   scenario "submitting a nanomaterial which was previously notified to the EU", :with_stubbed_antivirus do
@@ -59,9 +72,18 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_text("You’ve told us about My EU nanomaterial")
     click_link "Return to Nanomaterials"
 
-    expect(page).to have_css("h2", text: "My EU nanomaterial")
+    id = NanomaterialNotification.last.id
+    expect(page).to have_link("My EU nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
-    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{NanomaterialNotification.last.id}")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+
+    click_link("My EU nanomaterial")
+    expect(page).to have_current_path("/nanomaterials/#{id}")
+    expect(page).to have_h1("My EU nanomaterial")
+    expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
+    expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+    expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end
 end

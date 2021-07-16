@@ -24,12 +24,20 @@
 </div>
 
 <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <a href="<%= responsible_person_nanomaterials_path(@responsible_person, :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="">
+      <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of notified nanomaterials
+    </a>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
   <section class="govuk-grid-column-full">
     <ul class="govuk-list opss-list--borders govuk-!-margin-top-5">
       <% @nanomaterial_notifications.each do |notification| %>
         <li>
           <h2 class="govuk-heading-s">
-            <%= notification.name %>
+            <%= link_to(notification.name, nanomaterial_path(notification), class: "govuk-link govuk-link--no-visited-state") %>
           </h2>
           <dl class="govuk-summary-list govuk-summary-list--no-border opss-summary-list opss-summary-list--small">
             <div class="govuk-summary-list__row">
