@@ -28,6 +28,7 @@ applications:
     - cosmetics-sidekiq-env
     - cosmetics-notify-env
     - cosmetics-devise-env
+    - cosmetics-seed-env
   processes:
     - type: web
       env:

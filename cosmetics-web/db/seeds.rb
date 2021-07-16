@@ -8,6 +8,12 @@
 
 return if ResponsiblePerson.count.positive?
 
+def get_users(env_users)
+  return [] if env_users.nil?
+
+  env_users.split(';')
+end
+
 ActiveRecord::Base.transaction do
   # Create RP
   rp_attributes = {
@@ -77,6 +83,26 @@ ActiveRecord::Base.transaction do
 
     notification.cache_notification_for_csv!
   end
+
+  get_users(ENV['SEED_USERS']).each do |user|
+    name, email = user.split(':')
+    InviteSearchUser.call name: name, email: email, role: :poison_centre
+    u = SubmitUser.create!(email: email, name: name, account_security_completed: true, password: 'password', secondary_authentication_methods: ['sms'], mobile_number: "07700 900000", mobile_number_verified: true, confirmed_at: Time.now, unique_session_id: Devise.friendly_token)
+    u.responsible_persons << rp
+  end
+
+
+  30.times do |i|
+    NanomaterialNotification.create(
+      name: "Nanomaterial #{i+1}",
+      responsible_person_id: ResponsiblePerson.first.id,
+      user_id: SubmitUser.first.id,
+      eu_notified: true,
+      notified_to_eu_on: ((Date.today - i.days) - 3.years),
+      submitted_at: (Date.today - i.days)
+    )
+  end
 end
+
 
 ReindexElasticsearchJob.new.perform
