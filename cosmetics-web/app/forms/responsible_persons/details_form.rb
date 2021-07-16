@@ -22,7 +22,7 @@ module ResponsiblePersons
       return if errors[:name].present?
 
       if user.responsible_persons.any? { |rp| rp.name.casecmp(name&.strip).zero? }
-        errors.add(:name, "You are already associated with #{name}")
+        errors.add(:name, :member_of_rp_with_same_name)
       end
     end
 
@@ -30,7 +30,7 @@ module ResponsiblePersons
       return if errors[:name].present?
 
       if active_invitations_to_rp_with_same_name.any?
-        errors.add(:name, "You have already been invited to join #{name}. Check your email inbox for your invite")
+        errors.add(:name, :invited_to_rp_with_same_name)
       end
     end
 
