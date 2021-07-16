@@ -1,5 +1,3 @@
-class ResetPasswordForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+class ResetPasswordForm < Form
   include EmailFormValidation
 end

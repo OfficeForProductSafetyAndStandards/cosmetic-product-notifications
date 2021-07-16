@@ -9,7 +9,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
   before_action :pending_invitations, if: -> { step == :pending_invitations }
   before_action :clear_session, if: -> { step == :overview }
   before_action :set_responsible_person, only: %i[show update]
-  before_action :responsible_person_details_form, if: -> { step == :enter_details }
+  before_action :responsible_persons_details_form, if: -> { step == :enter_details }
   before_action :store_responsible_person, only: %i[update]
 
   # GET /responsible_persons/account/:step
@@ -49,9 +49,9 @@ private
     @responsible_person = ResponsiblePerson.new(responsible_person_params)
   end
 
-  def responsible_person_details_form
-    @responsible_person_details_form ||=
-      ResponsiblePersonDetailsForm.new(responsible_person_details_form_params.merge(user: current_user))
+  def responsible_persons_details_form
+    @responsible_persons_details_form ||=
+      ResponsiblePersons::DetailsForm.new(responsible_persons_details_form_params.merge(user: current_user))
   end
 
   def store_responsible_person
@@ -63,7 +63,7 @@ private
   end
 
   def responsible_person_saved?
-    return false unless @responsible_person_details_form.valid?
+    return false unless @responsible_persons_details_form.valid?
 
     @responsible_person.add_user(current_user)
     @responsible_person.save
@@ -85,7 +85,7 @@ private
   def responsible_person_params
     responsible_person_session_params.merge(
       responsible_person_request_params.merge(
-        responsible_person_details_form_params,
+        responsible_persons_details_form_params,
       ),
     )
   end
@@ -98,8 +98,8 @@ private
     params.fetch(:responsible_person, {}).permit(:account_type)
   end
 
-  def responsible_person_details_form_params
-    params.fetch(:responsible_person_details_form, {}).permit(
+  def responsible_persons_details_form_params
+    params.fetch(:responsible_persons_details_form, {}).permit(
       :name,
       :address_line_1,
       :address_line_2,

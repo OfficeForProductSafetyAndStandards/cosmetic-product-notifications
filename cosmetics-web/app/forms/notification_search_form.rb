@@ -1,6 +1,4 @@
-class NotificationSearchForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+class NotificationSearchForm < Form
   extend CategoryHelper
 
   FILTER_BY_DATE_EXACT = "by_date_exact".freeze
@@ -58,10 +56,6 @@ class NotificationSearchForm
 
     return date_exact if date_exact_selected?
     return date_to if date_range_selected?
-  end
-
-  def [](field)
-    public_send(field.to_sym)
   end
 
   def date_exact_selected?

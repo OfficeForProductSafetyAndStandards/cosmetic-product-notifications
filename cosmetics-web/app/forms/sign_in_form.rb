@@ -1,6 +1,4 @@
-class SignInForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+class SignInForm < Form
   include EmailFormValidation
 
   attribute :password

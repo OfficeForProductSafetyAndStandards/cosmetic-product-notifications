@@ -153,7 +153,7 @@ en:
     attributes:
       registration/account_security_form:
         mobile_number: 'Mobile number'
-      responsible_person_details_form:
+      responsible_persons/details_form:
         address_line_1: "Building and street"
         city: "Town or city"
         postal_code: "Postcode"
@@ -195,7 +195,7 @@ en:
               too_short: "Password must be at least 8 characters"
             secondary_authentication_methods:
               blank: "Select how to get an access code"
-        responsible_person_details_form:
+        responsible_persons/details_form:
           attributes:
             name:
               member_of_rp_with_same_name: "You are already associated with %{attribute}"

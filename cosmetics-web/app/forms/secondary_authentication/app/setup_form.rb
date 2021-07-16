@@ -1,8 +1,6 @@
 module SecondaryAuthentication
   module App
-    class SetupForm
-      include ActiveModel::Model
-      include ActiveModel::Attributes
+    class SetupForm < Form
       include UserPasswordCheckFormValidation
 
       attribute :app_authentication_code
@@ -13,10 +11,6 @@ module SecondaryAuthentication
       validate :app_authentication_code, :validate_app_authentication_code
 
       delegate :qr_code, :last_totp_at, to: :secondary_authentication
-
-      def [](field)
-        public_send(field.to_sym)
-      end
 
       # Generates a new key only if key is not coming from the form submission.
       # Keeping the same key between failed form submissions is important as

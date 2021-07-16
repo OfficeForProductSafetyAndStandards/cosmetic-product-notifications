@@ -1,8 +1,5 @@
 module SecondaryAuthentication
-  class MethodForm
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-
+  class MethodForm < Form
     MOBILE_NUMBER_VISIBLE_CHARS = 4
 
     attribute :authentication_method

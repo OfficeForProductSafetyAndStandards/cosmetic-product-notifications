@@ -1,8 +1,5 @@
 module Registration
-  class AccountSecurityForm
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-
+  class AccountSecurityForm < Form
     attribute :app_authentication
     attribute :app_authentication_code
     attribute :secret_key
@@ -50,10 +47,6 @@ module Registration
         last_totp_at: secondary_authentication.last_totp_at,
         totp_secret_key: (secret_key if app_authentication_selected?),
       )
-    end
-
-    def [](field)
-      public_send(field.to_sym)
     end
 
     def full_name
