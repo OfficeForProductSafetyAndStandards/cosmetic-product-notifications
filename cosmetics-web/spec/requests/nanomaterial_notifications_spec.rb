@@ -3,13 +3,14 @@ require "rails_helper"
 RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :request do
   include RSpecHtmlMatchers
 
-  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+  let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
+  let(:submit_user) { responsible_person.responsible_person_users.first.user }
   let(:other_company) { create(:responsible_person, :with_a_contact_person) }
 
   let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
 
   before do
-    sign_in_as_member_of_responsible_person(responsible_person)
+    sign_in_as_member_of_responsible_person(responsible_person, submit_user)
   end
 
   after do
@@ -52,6 +53,36 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
           get "/responsible_persons/#{other_company.id}/nanomaterials"
         }.to raise_error(Pundit::NotAuthorizedError)
       end
+    end
+  end
+
+  describe "GET /responsible_persons/:id/nanomaterials.csv" do
+    let(:rp)                         { responsible_person }
+    let(:user_id)                    { submit_user.id }
+    let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
+    let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
+    let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id: user_id, responsible_person: rp) }
+
+    before do
+      nanomaterial_notification1
+      nanomaterial_notification2
+      nanomaterial_notification3
+
+      get "/responsible_persons/#{responsible_person.id}/nanomaterials.csv"
+    end
+
+    let(:expected_csv) do
+      <<~CSV
+        Nanomaterial name,UKN ID,Notified on EU on,Notified on
+      CSV
+    end
+
+    it "is successful" do
+      expect(response.code).to eql("200")
+    end
+
+    it "returns file with proper notifications" do
+      expect(response.body).to eq expected_csv
     end
   end
 
