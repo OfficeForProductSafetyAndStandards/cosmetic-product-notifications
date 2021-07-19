@@ -57,7 +57,14 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
   end
 
   describe "GET /responsible_persons/:id/nanomaterials.csv" do
-    let(:rp)                         { responsible_person }
+    let(:rp) { responsible_person }
+    let(:expected_csv) do
+      <<~CSV
+        Nanomaterial name,UK Nanomaterial number ,EU Notification date,Notification date
+        Zinc oxide,UKN-#{nanomaterial_notification1.id},,2021-07-20 12:00:00 +0100
+        Zinc oxide,UKN-#{nanomaterial_notification2.id},2021-07-17,2021-07-20 12:00:00 +0100
+      CSV
+    end
     let(:user_id)                    { submit_user.id }
     let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
     let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
@@ -71,14 +78,6 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       nanomaterial_notification3
 
       get "/responsible_persons/#{responsible_person.id}/nanomaterials.csv"
-    end
-
-    let(:expected_csv) do
-      <<~CSV
-        Nanomaterial name,UK Nanomaterial number ,EU Notification date,Notification date
-        Zinc oxide,UKN-#{nanomaterial_notification1.id},,2021-07-20 12:00:00 +0100
-        Zinc oxide,UKN-#{nanomaterial_notification2.id},2021-07-17,2021-07-20 12:00:00 +0100
-      CSV
     end
 
     it "is successful" do
