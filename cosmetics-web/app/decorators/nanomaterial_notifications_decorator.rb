@@ -21,7 +21,7 @@ class NanomaterialNotificationsDecorator
     csv
   end
 
-  def to_csv_row(n)
-    CSV.generate_line([n.name, "UKN-#{n.id}", n.notified_to_eu_on, n.submitted_at])
+  def to_csv_row(nano)
+    CSV.generate_line([nano.name, "UKN-#{nano.id}", nano.notified_to_eu_on, nano.submitted_at])
   end
 end

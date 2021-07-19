@@ -2,19 +2,44 @@ require "rails_helper"
 
 RSpec.describe "Nanomaterial notifications", type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
+  let(:submit_user) { responsible_person.responsible_person_users.first.user }
 
   before do
     travel_to(Time.zone.local(2021, 6, 10))
-    sign_in_as_member_of_responsible_person(responsible_person)
-
-    visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
+    sign_in_as_member_of_responsible_person(responsible_person, submit_user)
   end
 
-  scenario "CSV download link" do
-    expect(page).to have_selector("a", text: "Download a CSV file of notified nanomaterials")
+  describe "CSV download" do
+    context "when nanomaterial notications are present", :with_stubbed_antivirus do
+      let(:user_id) { submit_user.id }
+      let(:rp) { responsible_person }
+      let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
+      let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
+      let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id: user_id, responsible_person: rp) }
+
+      before do
+        nanomaterial_notification1
+        nanomaterial_notification2
+        nanomaterial_notification3
+      end
+
+      scenario "CSV download link" do
+        visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
+
+        expect(page).to have_selector("a", text: "Download a CSV file of notified nanomaterials")
+      end
+    end
+
+    scenario "CSV downloas link is invisible when no nano notifications" do
+      visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
+
+      expect(page).not_to have_selector("a", text: "Download a CSV file of notified nanomaterials")
+    end
   end
 
   scenario "submitting a nanomaterial that has not been notified to the EU", :with_stubbed_antivirus do
+    visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
+
     click_link "Add a nanomaterial"
 
     fill_in "What is the name of the nanomaterial?", with: "My nanomaterial"
@@ -50,6 +75,8 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
   end
 
   scenario "submitting a nanomaterial which was previously notified to the EU", :with_stubbed_antivirus do
+    visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
+
     click_link "Add a nanomaterial"
 
     fill_in "What is the name of the nanomaterial?", with: "My EU nanomaterial"
