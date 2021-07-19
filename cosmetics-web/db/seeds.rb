@@ -97,8 +97,8 @@ ActiveRecord::Base.transaction do
       responsible_person_id: ResponsiblePerson.first.id,
       user_id: SubmitUser.first.id,
       eu_notified: true,
-      notified_to_eu_on: ((Time.zone.now.today - i.days) - 3.years),
-      submitted_at: (Time.zone.now.today - i.days),
+      notified_to_eu_on: ((Time.zone.now.to_date - i.days) - 3.years),
+      submitted_at: (Time.zone.now.to_date - i.days),
     )
   end
 end

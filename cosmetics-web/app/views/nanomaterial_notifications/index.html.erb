@@ -23,13 +23,15 @@
   </div>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <a href="<%= responsible_person_nanomaterials_path(@responsible_person, :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="">
-      <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of notified nanomaterials
-    </a>
+<% if @nanomaterial_notifications.present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <a href="<%= responsible_person_nanomaterials_path(@responsible_person, :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="">
+        <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of notified nanomaterials
+      </a>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="govuk-grid-row">
   <section class="govuk-grid-column-full">

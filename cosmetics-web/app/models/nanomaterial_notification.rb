@@ -82,10 +82,6 @@ class NanomaterialNotification < ApplicationRecord
     can_be_made_available_on_uk_market_from <= Time.zone.now
   end
 
-  def to_csv_row
-    CSV.generate_line([name, "UKN-#{id}", notified_to_eu_on, submitted_at])
-  end
-
 private
 
   def eu_notification_date_must_be_pre_brexit
