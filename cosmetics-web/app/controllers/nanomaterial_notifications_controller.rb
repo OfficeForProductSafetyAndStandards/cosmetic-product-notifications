@@ -13,7 +13,16 @@ class NanomaterialNotificationsController < SubmitApplicationController
                                     .nanomaterial_notifications
                                     .where.not(submitted_at: nil)
                                     .order(submitted_at: :desc)
-                                    .paginate(page: params[:page], per_page: PER_PAGE)
+
+    respond_to do |format|
+      format.html do
+        @nanomaterial_notifications = @nanomaterial_notifications.paginate(page: params[:page], per_page: PER_PAGE)
+      end
+      format.csv do
+        @notifications = NanomaterialNotificationsDecorator.new(@nanomaterial_notifications)
+        render csv: @notifications, filename: "all-nanomaterial-notifications-#{Time.zone.now.to_s(:db)}"
+      end
+    end
   end
 
   def show; end
