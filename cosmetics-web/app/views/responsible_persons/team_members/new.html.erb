@@ -1,14 +1,14 @@
 <% title = "Invite a team member" %>
-<% page_title(title, errors: @team_member.errors.any?) %>
+<% page_title(title, errors: @invite_member_form.errors.any?) %>
 
 <% content_for :after_header do %>
   <%= render "layouts/navbar" %>
   <%= link_to "Back", responsible_person_team_members_path(@responsible_person), class: "govuk-back-link" %>
 <% end %>
 
-<%= form_with model: @team_member, scope: :team_member, url: responsible_person_team_members_path(@responsible_person), method: :post do |form| %>
+<%= form_with model: @invite_member_form, scope: :invite_member_form, url: responsible_person_team_members_path(@responsible_person), method: :post do |form| %>
   <div class="govuk-grid-row">
-    <%= error_summary_for(@team_member) %>
+    <%= error_summary_for(@invite_member_form) %>
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">Invite a team member</h1>
 
@@ -19,8 +19,18 @@
         <li>submit cosmetic product notifications</li>
         <li>invite team members</li>
       </ul>
-
-      <%= render "form_components/govuk_input", form: form, key: :email_address, id: "pending_responsible_person_user_email_address", type: :email_field, label: { text: "Email address" } %>
+      <%= render("form_components/govuk_input",
+        key: :name,
+        id: "responsible_persons_invite_member_form_name",
+        type: :text,
+        form: form,
+        label: { text: "Full name" }) %>
+      <%= render("form_components/govuk_input",
+        key: :email,
+        id: "responsible_persons_invite_member_form_email",
+        type: :email_field,
+        form: form,
+        label: { text: "Email address" }) %>
 
       <div class="govuk-form-group">
         <%= govukButton text: "Send invitation" %>

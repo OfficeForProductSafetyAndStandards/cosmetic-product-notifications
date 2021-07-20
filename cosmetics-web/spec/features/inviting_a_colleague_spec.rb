@@ -26,16 +26,17 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
+      # We use the wrong name when inviting the existing user
+      fill_in "Full name", with: "John DiffName"
       fill_in "Email address", with: invited_user.email
       click_on "Send invitation"
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
 
-      invitation = PendingResponsiblePersonUser.last
-
       expect(delivered_emails.size).to eq 1
       email = delivered_emails.first
 
+      invitation = PendingResponsiblePersonUser.last
       expect(email).to have_attributes(
         recipient: invited_user.email,
         reference: "Invite user to join responsible person",
@@ -64,6 +65,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
+      fill_in "Full name", with: invited_user.name
       fill_in "Email address", with: invited_user.email.upcase
       click_on "Send invitation"
 
@@ -90,6 +92,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
       expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
+      fill_in "Full name", with: invited_user.name
       fill_in "Email address", with: invited_user.email.upcase
       click_on "Send invitation"
 
@@ -119,6 +122,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
+    fill_in "Full name", with: invited_user.name
     fill_in "Email address", with: invited_user.email
     click_on "Send invitation"
 
@@ -142,7 +146,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   scenario "re-sending an invitation" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
-    invitation = create(:pending_responsible_person_user, responsible_person: responsible_person)
+    invitation = create(:pending_responsible_person_user, responsible_person: responsible_person, name: "John Doeinvited")
 
     team_path = "/responsible_persons/#{responsible_person.id}/team_members"
     visit team_path
@@ -191,6 +195,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     click_on "Invite a team member"
 
     expect(page).to have_current_path("#{team_path}/new")
+    fill_in "Full name", with: "John New User"
     fill_in "Email address", with: "newusertoregister@example.com"
     click_on "Send invitation"
 
@@ -259,21 +264,23 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for a new user when not signed in" do
-    pending = create(:pending_responsible_person_user,
-                     email_address: "newusertoregister@example.com",
-                     responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user, responsible_person: responsible_person)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
+    # User name is pre-filled with name provided in the invitation
+    expect(page).to have_css("input#full_name", text: pending.name)
+
+    # User can change the name
     fill_in "Full name", with: "Joe Doe"
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
 
-    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    invited_user = SubmitUser.find_by!(email: pending.email_address)
     expect_to_be_on_secondary_authentication_sms_page
     expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
     complete_secondary_authentication_sms_with(invited_user.direct_otp)
@@ -285,8 +292,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(page).to have_css("h1", text: "Your cosmetic products")
 
-    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
     expect(invited_user.responsible_persons).to include(responsible_person)
+    # Updated user name from account security page
+    expect(invited_user.name).to eq("Joe Doe")
   end
 
   scenario "accepting an invitation by an new user who belongs to another team" do
@@ -389,6 +397,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
 
+    fill_in "Full name", with: "John New User"
     fill_in "Email address", with: "newusertoregister@example.com"
     click_on "Send invitation"
 
@@ -413,7 +422,10 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     click_button "Create a new account"
 
     expect(page).to have_css("h1", text: "Create an account")
+    # User name is pre-filled with name provided in the invitation
+    expect(page).to have_css("input#full_name", text: "John New User")
 
+    # User can change the name
     fill_in "Full name", with: "John Doe"
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
@@ -433,6 +445,8 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_css("h1", text: "Your cosmetic products")
 
     expect(invited_user.responsible_persons).to include(responsible_person)
+    # Updated user name from account security page
+    expect(invited_user.name).to eq("Joe Doe")
   end
 
   scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
@@ -455,7 +469,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_current_path("/account-security")
     expect(page).to have_css("h1", text: "Create an account")
 
-    fill_in "Full name", with: "Joe Doe"
+    # User name is pre-filled with name provided in the invitation
+    expect(page).to have_css("input#full_name", text: pending.name)
+
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
@@ -473,7 +489,6 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
     expect(page).to have_css("h1", text: "Your cosmetic products")
 
-    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
