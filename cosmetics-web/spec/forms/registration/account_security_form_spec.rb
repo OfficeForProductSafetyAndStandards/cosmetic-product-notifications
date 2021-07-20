@@ -130,24 +130,6 @@ RSpec.describe Registration::AccountSecurityForm do
   end
   # rubocop:enable RSpec/ExampleLength
 
-  describe "#name_required?" do
-    context "when user does not have a name" do
-      let(:user) { build_stubbed(:submit_user, name: nil) }
-
-      it "returns true" do
-        expect(form).to be_name_required
-      end
-    end
-
-    context "when user does have a name" do
-      let(:user) { build_stubbed(:submit_user, name: "John Doe") }
-
-      it "returns false" do
-        expect(form).not_to be_name_required
-      end
-    end
-  end
-
   describe "#secret_key" do
     it "returns secret key if is already set" do
       expect(form.secret_key).to eq secret_key
@@ -219,8 +201,7 @@ RSpec.describe Registration::AccountSecurityForm do
                             sms_authentication: "1")
       end
 
-      context "when the user name is required but not introduced" do
-        let(:user) { build_stubbed(:submit_user, name: nil) }
+      context "when the user name is not introduced" do
         let(:full_name) { nil }
 
         it "is invalid" do
@@ -233,23 +214,8 @@ RSpec.describe Registration::AccountSecurityForm do
         end
       end
 
-      context "when the user name is required and introduced" do
-        let(:user) { build_stubbed(:submit_user, name: nil) }
+      context "when the user name is introduced" do
         let(:full_name) { "John Doe" }
-
-        it "is valid" do
-          expect(form).to be_valid
-        end
-
-        it "does not contains errors" do
-          form.valid?
-          expect(form.errors.full_messages_for(:full_name)).to be_empty
-        end
-      end
-
-      context "when the user name is not required and not introduced" do
-        let(:user) { build_stubbed(:submit_user, name: "John Doe") }
-        let(:full_name) { nil }
 
         it "is valid" do
           expect(form).to be_valid

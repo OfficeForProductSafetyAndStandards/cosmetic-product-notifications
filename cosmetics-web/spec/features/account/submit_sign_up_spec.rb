@@ -328,7 +328,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         invitation_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
         visit invitation_path
         expect(page).to have_current_path("/account-security")
-        expect(page).to have_css("h1", text: "Create an account")
+        expect(page).to have_css("h1", text: "Setup your account")
         expect(page).to have_field("Full name")
 
         # User abandons the registration process
@@ -359,7 +359,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         # Invitation link takes the user to the account completion page
         visit invitation_path
         expect(page).to have_current_path("/account-security")
-        expect(page).to have_css("h1", text: "Create an account")
+        expect(page).to have_css("h1", text: "Setup your account")
         expect(page).to have_field("Full name")
       end
     end
@@ -437,7 +437,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     sign_in(user)
     visit "/account-security"
 
-    expect(page).not_to have_css("h1", text: "Account security")
+    expect(page).not_to have_css("h1", text: "Setup your account")
     expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
   end
 

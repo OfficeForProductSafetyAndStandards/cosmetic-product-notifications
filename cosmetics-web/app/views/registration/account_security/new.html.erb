@@ -1,9 +1,4 @@
-<% if @account_security_form.name_required? %>
-  <% title = "Create an account" %>
-<% else %>
-  <% title = "Account security" %>
-<% end %>
-
+<% title = "Setup your account"%>
 <% page_title(title, errors: @account_security_form.errors.any?) %>
 
 <div class="govuk-grid-row">
@@ -15,7 +10,7 @@
 
     <h1 class="govuk-heading-l"><%= title %></h1>
     <%= form_for(@account_security_form, url: registration_create_account_security_path, html: { novalidate: true }, method: :post) do |f| %>
-      <%= form_input @account_security_form, :full_name if @account_security_form.name_required? %>
+      <%= form_input @account_security_form, :full_name %>
       <%= password_input @account_security_form, label: { text: "Create your password", classes: "govuk-label--m" },
                                                  hint: { text: "Your password must contain at least 8 characters" } %>
 

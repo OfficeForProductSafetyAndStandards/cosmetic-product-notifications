@@ -73,7 +73,7 @@ end
 
 def expect_to_be_on_complete_registration_page
   expect(page).to have_current_path(/\/complete-registration?.+$/)
-  expect(page).to have_h1("Create an account")
+  expect(page).to have_h1("Setup your account")
   expect(page).to have_field("username", type: "email", with: invited_user.email, disabled: true)
 end
 

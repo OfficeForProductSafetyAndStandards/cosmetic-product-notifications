@@ -219,7 +219,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     sign_out
     visit original_email.personalization[:invitation_url]
 
-    expect(page).to have_css("h1", text: "Create an account")
+    expect(page).to have_css("h1", text: "Setup your account")
 
     # Invited user signs out without completing the registration
     sign_out
@@ -268,10 +268,10 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/account-security")
-    expect(page).to have_css("h1", text: "Create an account")
+    expect(page).to have_css("h1", text: "Setup your account")
 
     # User name is pre-filled with name provided in the invitation
-    expect(page).to have_css("input#full_name", text: pending.name)
+    expect(page).to have_field("Full name", with: pending.name)
 
     # User can change the name
     fill_in "Full name", with: "Joe Doe"
@@ -421,12 +421,12 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     click_button "Create a new account"
 
-    expect(page).to have_css("h1", text: "Create an account")
+    expect(page).to have_css("h1", text: "Setup your account")
     # User name is pre-filled with name provided in the invitation
-    expect(page).to have_css("input#full_name", text: "John New User")
+    expect(page).to have_field("Full name", with: "John New User")
 
     # User can change the name
-    fill_in "Full name", with: "John Doe"
+    fill_in "Full name", with: "Joe Doe"
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
@@ -457,7 +457,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     # Invited user originally accepts the invitation
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/account-security")
-    expect(page).to have_css("h1", text: "Create an account")
+    expect(page).to have_css("h1", text: "Setup your account")
 
     # Abandones the service without completing its registration :(
     sign_out
@@ -467,10 +467,10 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     # Invitation is still valid and allows them to register and be added to the team
     expect(page).to have_current_path("/account-security")
-    expect(page).to have_css("h1", text: "Create an account")
+    expect(page).to have_css("h1", text: "Setup your account")
 
     # User name is pre-filled with name provided in the invitation
-    expect(page).to have_css("input#full_name", text: pending.name)
+    expect(page).to have_field("Full name", with: pending.name)
 
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Text message"

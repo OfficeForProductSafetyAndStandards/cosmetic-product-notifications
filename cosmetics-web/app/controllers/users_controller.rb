@@ -18,6 +18,7 @@ class UsersController < SearchApplicationController
     # the complete registration page and change the options.
     @account_security_form = Registration::AccountSecurityForm.new(
       user: @user,
+      full_name: @user.name,
       mobile_number: @user.mobile_number,
       sms_authentication: @user.secondary_authentication_methods&.include?("sms"),
       app_authentication: @user.secondary_authentication_methods&.include?("app"),

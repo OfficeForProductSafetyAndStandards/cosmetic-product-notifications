@@ -218,7 +218,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
             expect_to_be_on_check_your_email_page
 
             visit "/confirm-new-account?confirmation_token=#{user.confirmation_token}"
-            expect(page).to have_css("h1", text: "Account security")
+            expect(page).to have_css("h1", text: "Setup your account")
           end
         end
       end
@@ -235,7 +235,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         invitation_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
         visit invitation_path
         expect(page).to have_current_path("/account-security")
-        expect(page).to have_css("h1", text: "Create an account")
+        expect(page).to have_css("h1", text: "Setup your account")
         expect(page).to have_field("Full name")
 
         # User abandons the registration process
@@ -271,7 +271,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         # Invitation link takes the user to the account completion page
         visit invitation_path
         expect(page).to have_current_path("/account-security")
-        expect(page).to have_css("h1", text: "Create an account")
+        expect(page).to have_css("h1", text: "Setup your account")
         expect(page).to have_field("Full name")
       end
     end
