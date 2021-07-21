@@ -81,7 +81,7 @@ private
 
   def create_invitation!
     # If an existing user is invited, the name of the existing user will be used instead of the one provided in the form.
-    name = SubmitUser.find_by(email: @invite_member_form.email).try(:name) || @invite_member_form.name
+    name = SubmitUser.find_by(email: @invite_member_form.email)&.name || @invite_member_form.name
     @invitation = @responsible_person.pending_responsible_person_users.create!(
       name: name,
       email_address: @invite_member_form.email,
