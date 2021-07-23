@@ -1,9 +1,6 @@
 module SecondaryAuthentication
   module App
-    class AuthForm
-      include ActiveModel::Model
-      include ActiveModel::Attributes
-
+    class AuthForm < Form
       AUTHENTICATION_APP_CODE_LENGTH = 6
       INTEGER_REGEX = /\A\d+\z/.freeze
 

@@ -3,50 +3,88 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<div class="govuk-grid-row govuk-!-margin-bottom-6">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Team members</h1>
-    <%= link_to "Invite a team member", new_responsible_person_team_member_path, class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Team members</h1>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+        <%= link_to "Invite another team member",
+                    new_responsible_person_team_member_path,
+                    class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" %>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p id="responsible-person-hint" class="govuk-hint govuk-!-width-two-thirds">
+          A team member is someone who can notify cosmetic product notifications on behalf of the Responsible Person.
+        </p>
+        <details class="govuk-details opss-details--sm" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              Help with team members
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-!-width-three-quarters">
+            <p class="govuk-body-s">
+              When a team member has been invited, they can view all of the cosmetic product notifications that have been notified for the Responsible Person.
+              (Team members will not be able to view cosmetic product notifications for a Responsible Person they have not been invited to).
+            </p>
+            <p class="govuk-body-s">
+              To remove team member accounts email <%= mail_to t(:enquiries_email), nil, class: "govuk-link govuk-link--no-visited-state" %>.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table">
+    <table class="govuk-table opss-table opss-table--last-col-right">
+      <caption class="govuk-table__caption govuk-visually-hidden">The team members</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th class="govuk-table__header" scope="col">Name</th>
-          <th class="govuk-table__header" scope="col">Email address</th>
+          <th class="govuk-table__header govuk-!-width-one-half" scope="col">Email</th>
           <th class="govuk-table__header" scope="col">Invited by</th>
-          <th class="govuk-table__header" scope="col"></th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% @responsible_person.pending_responsible_person_users.each do |user| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">-</td>
-            <td class="govuk-table__cell"><%= user.email_address %></td>
-            <td class="govuk-table__cell"><%= user.inviting_user.name %></td>
-            <td class="govuk-table__cell"><%= link_to "Resend invitation", resend_invitation_responsible_person_team_member_path(@responsible_person, user) %></td>
-          </tr>
-        <% end %>
         <% @responsible_person.responsible_person_users.each do |user| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= user.name %></td>
-            <td class="govuk-table__cell"><%= user.email_address %></td>
+            <th scope="row" class="govuk-table__header"><%= user.name %></th>
+            <td class="govuk-table__cell">
+              <%= mail_to user.email_address, nil, class: "govuk-link govuk-link--no-visited-state" %>
+            </td>
             <td class="govuk-table__cell"></td>
-            <td class="govuk-table__cell"></td>
+          </tr>
+        <% end %>
+        <% @responsible_person.pending_responsible_person_users.each do |user| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
+              <span class="govuk-!-font-weight-regular">
+                <%= user.name %><span class="govuk-visually-hidden">:</span>
+                <br>
+                <span class="govuk-!-font-size-16">Awaiting confirmation</span>
+              </span>
+            </th>
+            <td class="govuk-table__cell">
+              <%= mail_to user.email_address, nil, class: "govuk-link govuk-link--no-visited-state" %>
+              <span class="govuk-visually-hidden"> | </span>
+              <br>
+              <%= link_to resend_invitation_responsible_person_team_member_path(@responsible_person, user),
+                  class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-16 govuk-!-font-weight-bold" do %>
+                Resend invitation <span class="govuk-visually-hidden"> to <%= user.name %></span>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell"><%= user.inviting_user.name %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
-
-  </div>
-
-  <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body">
-      For help with accounts, including removing a team member, email <%= mail_to t(:enquiries_email), nil, class: "govuk-link" %>
-    </p>
   </div>
 </div>
 

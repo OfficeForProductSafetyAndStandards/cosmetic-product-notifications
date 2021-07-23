@@ -1,8 +1,5 @@
 module Registration
-  class NewAccountForm
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-
+  class NewAccountForm < Form
     attribute :full_name
 
     validates_presence_of :full_name
@@ -19,10 +16,6 @@ module Registration
         user.save(validate: false)
         user
       end
-    end
-
-    def [](field)
-      public_send(field.to_sym)
     end
 
   private

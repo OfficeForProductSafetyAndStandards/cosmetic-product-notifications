@@ -28,36 +28,61 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
     end
   end
 
-  describe "PUT #create" do
+  describe "POST #create" do
     let(:params) { { responsible_person_id: responsible_person.id } }
+    let(:name) { "John Doe" }
 
-    it "render back to add team member form if no email address added" do
-      put(:create, params: params.merge(team_member: { email_address: "" }))
+    it "render back to add team member form if no email is provided" do
+      post(:create, params: params.merge(invite_member_form: { email: "", name: name }))
       expect(response).to render_template(:new)
     end
 
-    it "render back to add team member form if user already a member of the team" do
-      put(:create, params: params.merge(team_member: { email_address: responsible_person.responsible_person_users.first.email_address }))
+    it "render back to add team member form if no name is provided" do
+      post(:create, params: params.merge(invite_member_form: { email: email_address, name: "" }))
       expect(response).to render_template(:new)
     end
 
-    it "registers the user that created the invitation" do
+    it "render back to add team member form if user is already a member of the team" do
+      post(:create, params: params.merge(invite_member_form: {
+        email: user.email,
+        name: name,
+      }))
+      expect(response).to render_template(:new)
+    end
+
+    it "render back to add team member form if user has already been invited to the team" do
+      create(:pending_responsible_person_user, responsible_person: responsible_person, email_address: email_address)
+
+      post(:create, params: params.merge(invite_member_form: { email: email_address, name: name }))
+      expect(response).to render_template(:new)
+    end
+
+    it "creates an invitation with the given data plus the user that created the invitation" do
       expect {
-        put(:create, params: params.merge(team_member: { email_address: email_address }))
+        post(:create, params: params.merge(invite_member_form: { email: email_address, name: name }))
       }.to change(PendingResponsiblePersonUser, :count).by(1)
-      expect(PendingResponsiblePersonUser.last.inviting_user).to eq user
+      expect(PendingResponsiblePersonUser.last)
+        .to have_attributes(inviting_user: user, email_address: email_address, name: name)
+    end
+
+    it "uses the existing user name for the invitation when inviting an email belonging to an existing user" do
+      create(:submit_user, email: email_address, name: "John Original Name")
+      expect {
+        post(:create, params: params.merge(invite_member_form: { email: email_address, name: name }))
+      }.to change(PendingResponsiblePersonUser, :count).by(1)
+      expect(PendingResponsiblePersonUser.last.name).to eq("John Original Name")
     end
 
     it "sends responsible person invite email" do
       stub_notify_mailer
 
-      put(:create, params: params.merge(team_member: { email_address: email_address }))
+      post(:create, params: params.merge(invite_member_form: { email: email_address, name: name }))
 
       expect(SubmitNotifyMailer).to have_received(:send_responsible_person_invite_email)
     end
 
     it "redirects to the responsible person team members page" do
-      put(:create, params: params.merge(team_member: { email_address: email_address }))
+      post(:create, params: params.merge(invite_member_form: { email: email_address, name: name }))
       expect(response).to redirect_to(responsible_person_team_members_path(responsible_person))
     end
   end

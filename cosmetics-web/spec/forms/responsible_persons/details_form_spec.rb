@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersonDetailsForm do
+RSpec.describe ResponsiblePersons::DetailsForm do
   subject(:form) do
     described_class.new(user: user,
                         name: name,

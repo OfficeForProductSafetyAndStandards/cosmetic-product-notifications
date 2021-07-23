@@ -29,4 +29,8 @@ class ResponsiblePerson < ApplicationRecord
   def address_lines
     [address_line_1, address_line_2, city, county, postal_code].select(&:present?)
   end
+
+  def has_user_with_email?(email)
+    responsible_person_users.any? { |user| user.email_address.casecmp(email)&.zero? }
+  end
 end

@@ -1,9 +1,6 @@
 module SecondaryAuthentication
   module Sms
-    class AuthForm
-      include ActiveModel::Model
-      include ActiveModel::Attributes
-
+    class AuthForm < Form
       INTEGER_REGEX = /\A\d+\z/.freeze
 
       attribute :otp_code

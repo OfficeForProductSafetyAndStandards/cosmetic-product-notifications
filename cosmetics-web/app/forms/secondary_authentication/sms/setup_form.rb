@@ -1,8 +1,6 @@
 module SecondaryAuthentication
   module Sms
-    class SetupForm
-      include ActiveModel::Model
-      include ActiveModel::Attributes
+    class SetupForm < Form
       include StripWhitespace
       include UserPasswordCheckFormValidation
 

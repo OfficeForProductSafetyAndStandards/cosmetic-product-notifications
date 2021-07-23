@@ -1,8 +1,5 @@
 module Registration
-  class AccountSecurityForm
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-
+  class AccountSecurityForm < Form
     attribute :app_authentication
     attribute :app_authentication_code
     attribute :secret_key
@@ -13,7 +10,7 @@ module Registration
     attribute :sms_authentication
     attribute :user
 
-    validates_presence_of :full_name, if: :name_required?
+    validates_presence_of :full_name
 
     validates :password, length: { minimum: 8 }, if: -> { password.present? }
     validates :password, presence: true
@@ -50,18 +47,6 @@ module Registration
         last_totp_at: secondary_authentication.last_totp_at,
         totp_secret_key: (secret_key if app_authentication_selected?),
       )
-    end
-
-    def [](field)
-      public_send(field.to_sym)
-    end
-
-    def full_name
-      name_required? ? super : user.name
-    end
-
-    def name_required?
-      user.is_a?(SearchUser) || user.name.blank?
     end
 
     # Generates a new key only if key is not coming from the form submission.

@@ -1,5 +1,5 @@
 <% title = "UK Responsible Person details" %>
-<% page_title(title, errors: @responsible_person_details_form.errors.any?) %>
+<% page_title(title, errors: @responsible_persons_details_form.errors.any?) %>
 
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
@@ -10,11 +10,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= error_summary(@responsible_person_details_form.errors, %i[name address_line_1 address_line_2 city county postal_code]) %>
+    <%= error_summary(@responsible_persons_details_form.errors, %i[name address_line_1 address_line_2 city county postal_code]) %>
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
-    <%= form_for(@responsible_person_details_form, url: wizard_path, method: :put) do |form| %>
+    <%= form_for(@responsible_persons_details_form, url: wizard_path, method: :put) do |form| %>
       <%= render "form_components/govuk_input", form: form, key: :name, label: { text: "Business name" } %>
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">

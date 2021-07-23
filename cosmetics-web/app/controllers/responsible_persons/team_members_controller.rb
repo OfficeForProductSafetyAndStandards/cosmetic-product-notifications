@@ -1,6 +1,5 @@
 class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   before_action :set_responsible_person
-  before_action :set_team_member, only: %i[new create]
   before_action :authorize_responsible_person, only: %i[index new create]
   before_action :validate_responsible_person, except: %i[join sign_out_before_joining]
 
@@ -10,14 +9,23 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
 
   def index; end
 
-  def new; end
+  def new
+    @invite_member_form = ResponsiblePersons::InviteMemberForm.new(responsible_person: @responsible_person)
+  end
 
   def create
-    @responsible_person.save
-    return render :new if @responsible_person.errors.any?
+    @invite_member_form = ResponsiblePersons::InviteMemberForm.new(
+      invite_member_form_params.merge(responsible_person: @responsible_person),
+    )
 
-    send_invite_email
-    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{team_member_params['email_address']}"
+    if @invite_member_form.valid?
+      create_invitation!
+      send_invite_email
+      redirect_to(responsible_person_team_members_path(@responsible_person),
+                  confirmation: "Invite sent to #{@invite_member_form.email}")
+    else
+      render :new
+    end
   end
 
   def join
@@ -41,15 +49,15 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
   end
 
   def resend_invitation
-    @team_member = @responsible_person.pending_responsible_person_users.find(params[:id])
+    @invitation = @responsible_person.pending_responsible_person_users.find(params[:id])
 
     ActiveRecord::Base.transaction do
-      @team_member.refresh_token_expiration!
-      @team_member.update!(inviting_user: current_user)
+      @invitation.refresh_token_expiration!
+      @invitation.update!(inviting_user: current_user)
       send_invite_email
     end
 
-    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{@team_member.email_address}"
+    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{@invitation.email_address}"
   end
 
   def sign_out_before_joining
@@ -63,26 +71,28 @@ private
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
 
-  def set_team_member
-    @team_member = @responsible_person.pending_responsible_person_users.build(
-      team_member_params.merge(inviting_user: current_user),
-    )
-  end
-
   def authorize_responsible_person
     authorize @responsible_person, :show?
   end
 
-  def team_member_params
-    params.fetch(:team_member, {}).permit(
-      :email_address,
+  def invite_member_form_params
+    params.require(:invite_member_form).permit(:name, :email)
+  end
+
+  def create_invitation!
+    # If an existing user is invited, the name of the existing user will be used instead of the one provided in the form.
+    name = SubmitUser.find_by(email: @invite_member_form.email)&.name || @invite_member_form.name
+    @invitation = @responsible_person.pending_responsible_person_users.create!(
+      name: name,
+      email_address: @invite_member_form.email,
+      inviting_user: current_user,
     )
   end
 
   def send_invite_email
     SubmitNotifyMailer.send_responsible_person_invite_email(
       @responsible_person,
-      @team_member,
+      @invitation,
       current_user.name,
     ).deliver_later
   end
@@ -99,7 +109,7 @@ private
 
   def login_user_from_invitation?(pending_request, user)
     # User will be already set at this point if was created but not completed security details
-    user ||= SubmitUser.new(email: pending_request.email_address).tap do |u|
+    user ||= SubmitUser.new(email: pending_request.email_address, name: pending_request.name).tap do |u|
       u.dont_send_confirmation_instructions!
       u.save(validate: false)
     end

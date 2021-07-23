@@ -1,10 +1,6 @@
 module SecondaryAuthentication
   module Sms
-    # class ResendSecondaryAuthenticationCodeForm
-    class ResendForm
-      include ActiveModel::Model
-      include ActiveModel::Attributes
-
+    class ResendForm < Form
       attribute :mobile_number
       attribute :user
 

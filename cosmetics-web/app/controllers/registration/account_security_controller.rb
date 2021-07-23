@@ -10,6 +10,7 @@ module Registration
       # the account security page and change the options.
       @account_security_form = AccountSecurityForm.new(
         user: current_user,
+        full_name: current_user.name,
         mobile_number: current_user.mobile_number,
         sms_authentication: current_user.secondary_authentication_methods&.include?("sms"),
         app_authentication: current_user.secondary_authentication_methods&.include?("app"),

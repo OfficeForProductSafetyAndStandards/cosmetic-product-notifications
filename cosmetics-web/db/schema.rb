@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_151659) do
+ActiveRecord::Schema.define(version: 2021_07_15_141537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 2021_06_30_151659) do
     t.string "invitation_token"
     t.datetime "invitation_token_expires_at"
     t.uuid "inviting_user_id"
+    t.string "name"
     t.index ["invitation_token"], name: "index_pending_responsible_person_users_on_invitation_token"
     t.index ["inviting_user_id"], name: "index_pending_responsible_person_users_on_inviting_user_id"
     t.index ["responsible_person_id", "email_address"], name: "index_pending_responsible_person_users_on_rp_and_email", unique: true

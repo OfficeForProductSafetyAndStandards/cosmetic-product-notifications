@@ -36,8 +36,8 @@ private
   end
 
   def email_address_not_in_team?
-    if responsible_person.responsible_person_users.any? { |user| user.email_address.casecmp(email_address).zero? }
-      errors.add :email_address, I18n.t(:this_team, scope: EMAIL_ERROR_MESSAGE_SCOPE)
+    if responsible_person.has_user_with_email?(email_address)
+      errors.add :email_address, I18n.t(:taken_team, scope: EMAIL_ERROR_MESSAGE_SCOPE)
     end
   end
 
