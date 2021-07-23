@@ -86,8 +86,20 @@ ActiveRecord::Base.transaction do
 
   get_users(ENV["SEED_USERS"]).each do |user|
     name, email = user.split(":")
-    InviteSearchUser.call name: name, email: email, role: :poison_centre
-    u = SubmitUser.create!(email: email, name: name, account_security_completed: true, password: "password", secondary_authentication_methods: %w[sms], mobile_number: "07700 900000", mobile_number_verified: true, confirmed_at: Time.zone.now, unique_session_id: Devise.friendly_token)
+    user_params = {
+      email: email,
+      name: name,
+      account_security_completed: true,
+      password: "password",
+      secondary_authentication_methods: %w[sms],
+      mobile_number: "07700 900000",
+      mobile_number_verified: true,
+      has_accepted_declaration: true,
+      confirmed_at: Time.zone.now,
+      unique_session_id: Devise.friendly_token,
+    }
+    SearchUser.create!(user_params.merge({ role: :poison_centre, invite: true }))
+    u = SubmitUser.create!(user_params)
     u.responsible_persons << rp
   end
 
