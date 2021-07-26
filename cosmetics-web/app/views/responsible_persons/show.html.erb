@@ -3,43 +3,61 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
+
+
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6">
-    <h1 class="govuk-heading-l">Responsible person</h1>
-    <% if current_user.responsible_persons.length > 1 %>
-      <%= link_to "Switch responsible person", select_responsible_persons_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
-    <% else %>
-      <%= link_to "Add new Responsible Person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
-    <% end %>
+  <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="responsible-person-hint">
+          Responsible person
+        </h1>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+        <% if current_user.responsible_persons.length > 1 %>
+          <%= link_to "Change the responsible person", select_responsible_persons_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
+        <% else %>
+          <%= link_to "Add a responsible person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p id="responsible-person-hint" class="govuk-hint govuk-!-width-two-thirds">
+        The responsible person can be a business, individual or sole trader and has an assigned contact.
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table">
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header govuk-!-width-one-third" scope="row">
-            Business name
-          </th>
-          <td class="govuk-table__cell"><%= @responsible_person.name %></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="row">Address</th>
-          <td class="govuk-table__cell">
-            <% @responsible_person.address_lines.each do |address_line| %>
-              <%= address_line %>
-              <br>
-            <% end %>
-          </td>
-        </tr>
-      </tbody>
-    </table>
 
-    <h2 class="govuk-heading-m">Contact person</h2>
+
+    <h2 class="govuk-heading-s">Business, individual or sole trader</h2>
+
+    <%= govukSummaryList(
+      classes: "govuk-summary-list",
+      rows: [
+        {
+          key: { text: "Name" },
+          value: { text: @responsible_person.name },
+        },
+        {
+          key: { text: "Address" },
+          value: { text: wrap_summary_address(@responsible_person.address_lines) },
+        }
+      ])
+    %>
+
+    <h2 class="govuk-heading-s">Contact</h2>
 
     <% @responsible_person.contact_persons.each do |contact_person| %>
       <%= render "/notifications/contact_person_details", contact_person: contact_person %>
     <% end %>
+
   </div>
 </div>
