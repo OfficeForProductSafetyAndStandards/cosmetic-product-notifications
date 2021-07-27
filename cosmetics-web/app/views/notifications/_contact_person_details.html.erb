@@ -1,5 +1,5 @@
 <%= govukSummaryList(
-  classes: "govuk-summary-list govuk-!-margin-bottom-9",
+  classes: "govuk-!-margin-bottom-9",
   rows: [
     {
       key: { text: "Name" },
@@ -9,6 +9,7 @@
           {
             href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "name"),
             text: "Edit",
+            classes: "govuk-link--no-visited-state",
             visuallyHiddenText: "name"
           }
         ]
@@ -22,6 +23,7 @@
           {
             href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "email_address"),
             text: "Edit",
+            classes: "govuk-link--no-visited-state",
             visuallyHiddenText: "email address"
           }
         ]
@@ -35,6 +37,7 @@
           {
             href: edit_responsible_person_contact_person_path(contact_person.responsible_person,  contact_person, field: "phone_number"),
             text: "Edit",
+            classes: "govuk-link--no-visited-state",
             visuallyHiddenText: "phone number"
           }
         ]

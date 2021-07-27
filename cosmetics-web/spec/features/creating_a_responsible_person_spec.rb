@@ -74,7 +74,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect_to_be_on__responsible_person_declaration_page
     click_button "I confirm"
 
-    expect(page).to have_h1("Responsible person")
+    expect(page).to have_h1("Responsible Person")
     click_link "Add a responsible person"
     select_rp_business_account_type
 
