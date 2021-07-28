@@ -1,5 +1,4 @@
-<div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss"><div class="govuk-accordion__controls"><button type="button" class="govuk-accordion__open-all" aria-expanded="false">Open all<span class="govuk-visually-hidden"> sections</span></button></div>
-
+<div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss">
   <div class="govuk-accordion__section">
     <div class="govuk-accordion__section-header">
       <h2 class="govuk-accordion__section-heading">
@@ -56,7 +55,7 @@
               <td class="govuk-table__cell">
                 <%= form_with url: responsible_person_notification_file_path(@responsible_person, notification_file),
                         method: :delete do |form| %>
-                  <%= form.submit "Dismiss", class: "govuk-link--no-visited-state button-link", role: "link" %>
+                  <%= form.submit "Dismiss", class: "govuk-button opss-button-link", role: "link" %>
                 <% end %>
             </tr>
           <% end %>
