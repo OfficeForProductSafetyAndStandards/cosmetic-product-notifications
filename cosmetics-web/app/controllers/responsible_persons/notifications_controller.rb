@@ -106,7 +106,7 @@ private
   def get_registered_notifications(page_size)
     @responsible_person.notifications
       .completed
-      .paginate(page: params[:notified], per_page: page_size)
+      .paginate(page: params[:page], per_page: page_size)
       .order(notification_complete_at: :desc)
   end
 

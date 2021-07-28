@@ -1,0 +1,71 @@
+<div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss"><div class="govuk-accordion__controls"><button type="button" class="govuk-accordion__open-all" aria-expanded="false">Open all<span class="govuk-visually-hidden"> sections</span></button></div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+
+        <button type="button" id="accordion-opss-heading-1" aria-controls="accordion-opss-content-1" class="govuk-accordion__section-button" aria-describedby="accordion-opss-summary-1" aria-expanded="false">
+          Errors (<%= @erroneous_notification_files.count %>)
+          <span class="govuk-accordion__icon" aria-hidden="true"></span></button></h2>
+
+      <div class="govuk-accordion__section-summary govuk-body" id="accordion-opss-summary-1">
+        <p class="govuk-body govuk-!-margin-bottom-1">There are currently <%= @erroneous_notification_files.count %> notification errors.</p>
+      </div>
+
+    </div>
+    <div id="accordion-opss-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-opss-heading-1">
+
+      <div class="govuk-grid-column-full">
+        <%= form_with url: destroy_all_responsible_person_notification_files_path(@responsible_person),
+                method: :delete do |form| %>
+          <%= form.submit "Dismiss all errors", class: "govuk-link--no-visited-state button-link govuk-!-font-size-14 opss-text-align-right", role: "link" %>
+        <% end %>
+      </div>
+
+      <table class="govuk-table govuk-!-margin-bottom-4 opss-table opss-table--last-col-right opss-table--first-col-normal">
+
+        <caption class="govuk-table__caption govuk-visually-hidden">List of notification errors</caption>
+
+
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+
+            <th scope="col" class="govuk-table__header">File</th>
+
+            <th scope="col" class="govuk-table__header">Reason</th>
+
+            <th scope="col" class="govuk-table__header">Action</th>
+
+            <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Dismiss</span></th>
+
+          </tr>
+        </thead>
+
+        <tbody class="govuk-table__body">
+          <% @erroneous_notification_files.each do |notification_file| %>
+
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header"><%= notification_file.name %></th>
+              <td class="govuk-table__cell"><%= notification_file.upload_error_message %></td>
+              <td class="govuk-table__cell">
+                <a href="<%= new_responsible_person_notification_file_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state">
+                  Upload <span class="govuk-visually-hidden"><%= notification_file.name %></span>again
+                </a>
+              </td>
+
+              <td class="govuk-table__cell">
+                <%= form_with url: responsible_person_notification_file_path(@responsible_person, notification_file),
+                        method: :delete do |form| %>
+                  <%= form.submit "Dismiss", class: "govuk-link--no-visited-state button-link", role: "link" %>
+                <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+
+    </div>
+  </div>
+
+
+</div>

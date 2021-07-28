@@ -55,3 +55,78 @@
     })
   <% end -%>
 <% end %>
+
+<main class="govuk-main-wrapper " id="main-content" role="main">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+
+
+      <!-- only shown if there are errors - starts. (And only show errors accordian if there are errors) -->
+      <!-- if, in the current functionality we redirect here, we add the second refresh line (url points to self) -->
+      <%= render 'errors_banner' if @erroneous_notification_files.present? %>
+      <!-- only shown if there are errors - ends -->
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="cosmetic-products-hint">
+            Cosmetic products
+          </h1>
+        </div>
+        <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+          <a href="<% new_responsible_person_add_notification_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
+            Add a cosmetic product
+          </a>
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <p id="cosmetic-products-hint" class="govuk-hint govuk-!-width-two-thirds">
+          These are your incomplete and notified cosmetic products.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <!-- *************************************** errors starts ****************************************************** -->
+      <%= render 'errors' %>
+      <!-- *************************************** errors ends ****************************************************** -->
+
+      <!-- *************************************** incomplete starts ****************************************************** -->
+
+      <%= render 'incomplete_notifications' %>
+
+      <!-- *************************************** incomplete ends ****************************************************** -->
+
+      <!-- *************************************** notified starts ****************************************************** -->
+      <section role="region" aria-label="Notified products">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds govuk-!-margin-top-7">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+              Product notifications (<%= @registered_notifications.count %>)
+            </h2>
+            <p class="govuk-body govuk-!-margin-bottom-0">
+            There are currently <%= @registered_notifications.count %> notified cosmetic products.
+            </p>
+          </div>
+          <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2 govuk-!-margin-top-7">
+            <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="">
+              <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of your notified products
+            </a>
+          </div>
+        </div>
+
+        <%= render 'complete_notifications_table' %>
+
+        <%= paginate @registered_notifications, views_prefix: 'pagination' %>
+
+      </section>
+
+    </div>
+  </div>
+
+
+</main>
