@@ -112,9 +112,12 @@
           </p>
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2 govuk-!-margin-top-7">
-          <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="">
-            <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of your notified products
-          </a>
+
+          <% if @registered_notifications.present? %>
+            <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="">
+              <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of your notified products
+            </a>
+          <% end %>
         </div>
       </div>
 
