@@ -22,11 +22,11 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
       session[:files_uploaded_count] = nil
     end
 
-    @erroneous_notification_files = @erroneous_notification_files.paginate(page: params[:errors], per_page: 10)
+    @erroneous_notification_files = @erroneous_notification_files.paginate(page: params[:errors], per_page: 310)
 
-    @unfinished_notifications = get_unfinished_notifications(10)
+    @unfinished_notifications = get_unfinished_notifications(310)
 
-    @registered_notifications = get_registered_notifications(10)
+    @registered_notifications = get_registered_notifications(20)
     respond_to do |format|
       format.html
       format.csv do
