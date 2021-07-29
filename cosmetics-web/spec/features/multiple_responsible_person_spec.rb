@@ -28,7 +28,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
 
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
-    click_on "Switch responsible person"
+    click_on "Change the Responsible Person"
     click_on name_2
     expect_to_be_on_responsible_person_notifications_page(responsible_person_2)
   end
@@ -54,7 +54,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
 
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
-    click_on "Switch responsible person"
+    click_on "Change the Responsible Person"
     click_on "Add new Responsible Person"
 
     select_rp_business_account_type
@@ -75,7 +75,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
 
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
-    click_on "Switch responsible person"
+    click_on "Change the Responsible Person"
     click_on "Add new Responsible Person"
 
     select_rp_business_account_type
