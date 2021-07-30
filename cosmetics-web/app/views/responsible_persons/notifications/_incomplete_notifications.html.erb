@@ -44,7 +44,7 @@
               <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header"><%= notification.product_name %></th>
                 <td class="govuk-table__cell"><%= display_full_month_date notification.created_at %></td>
-                <td class="govuk-table__cell"><%= notification.reference_number_for_display %></td>
+                <td class="govuk-table__cell"><%= reference_number_for_display(notification) %></td>
                 <td class="govuk-table__cell"><a href="<%= edit_responsible_person_notification_path(@responsible_person, notification) %>" class="govuk-link govuk-link--no-visited-state">Continue<span class="govuk-visually-hidden"><%= notification.product_name %></span></a></td>
               </tr>
             <% end %>

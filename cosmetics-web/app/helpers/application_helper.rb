@@ -35,4 +35,8 @@ module ApplicationHelper
 
     govukErrorSummary(titleText: "There is a problem", errorList: error_list)
   end
+
+  def reference_number_for_display(notification)
+    sprintf("<abbr>UKCP</abbr>-%08d", notification.reference_number).html_safe
+  end
 end

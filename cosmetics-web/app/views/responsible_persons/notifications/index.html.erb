@@ -15,30 +15,9 @@
       <p>To continue to sell or give away cosmetic products that were notified to the European Union (EU) before <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %></span>, you must submit your product notifications in the UK within 90 days of the UK leaving the EU – that is by <span class="no-wrap"><%= display_full_month_date SUBMISSION_WINDOW_END_DATE %>.</span></p>
 
     <% end %>
-
-
-    <%= govukButton text: "Add cosmetics products", href: new_responsible_person_add_notification_path(@responsible_person) %>
-
   </div>
 </div>
 
-<%= render "components/govuk_tabs",
-  items: [{ id: "errors", label: "Errors (#{@erroneous_notification_files.total_entries})",
-            panel: { html: render("responsible_persons/notifications/tabs/errors") } },
-{ id: "incomplete", label: "Incomplete (#{@unfinished_notifications.total_entries})",
-  panel: { html: render("responsible_persons/notifications/tabs/incomplete") } },
-{ id: "notified", label: "Notified (#{@registered_notifications.total_entries})",
-  panel: { html: render("responsible_persons/notifications/tabs/notified") } }] %>
-
-
-
-<% if params[:tab].present? %>
-  <%= javascript_tag nonce: true do -%>
-    document.addEventListener("DOMContentLoaded", function() {
-    window.location = window.location.href.split('#')[0] + '#<%= params[:tab] %>';
-    })
-  <% end -%>
-<% end %>
 
 <% if @pending_notification_files_count.positive? %>
   <div class="govuk-grid-row">

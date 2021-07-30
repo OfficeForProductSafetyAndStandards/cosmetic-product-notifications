@@ -1,5 +1,3 @@
-require "will_paginate/array"
-
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :validate_responsible_person
@@ -21,8 +19,6 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
       @pending_notification_files_count = session[:files_uploaded_count]
       session[:files_uploaded_count] = nil
     end
-
-    @erroneous_notification_files = @erroneous_notification_files.paginate(page: params[:errors], per_page: 310)
 
     @unfinished_notifications = get_unfinished_notifications(310)
 
@@ -101,7 +97,6 @@ private
     @responsible_person.notifications
       .where(state: %i[notification_file_imported draft_complete])
       .order("created_at DESC")
-      .paginate(page: params[:incomplete], per_page: page_size)
   end
 
   def get_registered_notifications(page_size)
