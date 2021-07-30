@@ -39,4 +39,8 @@ module ApplicationHelper
   def reference_number_for_display(notification)
     sprintf("<abbr>UKCP</abbr>-%08d", notification.reference_number).html_safe
   end
+
+  def wrap_summary_address(address_array)
+    address_array.join("<span class=\"govuk-visually-hidden\">,</span><br />").html_safe
+  end
 end
