@@ -93,7 +93,7 @@ private
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
   end
 
-  def get_unfinished_notifications(page_size)
+  def get_unfinished_notifications(_page_size)
     @responsible_person.notifications
       .where(state: %i[notification_file_imported draft_complete])
       .order("created_at DESC")
