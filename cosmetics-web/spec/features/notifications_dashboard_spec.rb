@@ -13,24 +13,6 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     expect(body).to have_css("#main-content")
   end
 
-  it "has a errors tab" do
-    visit responsible_person_notifications_path(responsible_person)
-
-    expect(body).to have_css(".govuk-tabs section#errors")
-  end
-
-  it "has an incomplete tab" do
-    visit responsible_person_notifications_path(responsible_person)
-
-    expect(body).to have_css(".govuk-tabs section#incomplete")
-  end
-
-  it "has a notified tab" do
-    visit responsible_person_notifications_path(responsible_person)
-
-    expect(body).to have_css(".govuk-tabs section#notified")
-  end
-
   context "when the user has an incomplete notification" do
     let(:user) { responsible_person.responsible_person_users.first.user }
 
@@ -41,35 +23,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     it "displays the incomplete notification" do
       visit responsible_person_notifications_path(responsible_person)
 
-      expect(body).to have_css(".govuk-tabs", text: "Incomplete (1)")
-    end
-
-    context "when the notification requires no more information" do
-      before do
-        # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(Notification).to receive(:missing_information?).and_return(false)
-        # rubocop:enable RSpec/AnyInstance
-      end
-
-      it "can be confirmed and notified" do
-        visit responsible_person_notifications_path(responsible_person)
-
-        expect(body).to have_css(".add-documents .confirm-and-notify")
-      end
-    end
-
-    context "when the notification is missing information" do
-      before do
-        # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(Notification).to receive(:missing_information?).and_return(true)
-        # rubocop:enable RSpec/AnyInstance
-      end
-
-      it "can be confirmed and notified" do
-        visit responsible_person_notifications_path(responsible_person)
-
-        expect(body).to have_css(".add-documents .add-missing-info")
-      end
+      expect(body).to have_css("#incomplete-notifications", text: "Incomplete notifications (1)")
     end
   end
 end

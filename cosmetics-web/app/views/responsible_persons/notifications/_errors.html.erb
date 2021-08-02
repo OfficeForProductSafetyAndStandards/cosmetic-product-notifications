@@ -1,18 +1,18 @@
-<div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss">
+<div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="upload-errors">
   <div class="govuk-accordion__section">
     <div class="govuk-accordion__section-header">
       <h2 class="govuk-accordion__section-heading">
 
-        <button type="button" id="accordion-opss-heading-1" aria-controls="accordion-opss-content-1" class="govuk-accordion__section-button" aria-describedby="accordion-opss-summary-1" aria-expanded="false">
+        <button type="button" id="upload-errors-heading-1" aria-controls="upload-errors-content-1" class="govuk-accordion__section-button" aria-describedby="upload-errors-summary-1" aria-expanded="false">
           Errors (<%= @erroneous_notification_files.count %>)
           <span class="govuk-accordion__icon" aria-hidden="true"></span></button></h2>
 
-      <div class="govuk-accordion__section-summary govuk-body" id="accordion-opss-summary-1">
+      <div class="govuk-accordion__section-summary govuk-body" id="upload-errors-summary-1">
         <p class="govuk-body govuk-!-margin-bottom-1">There are currently <%= @erroneous_notification_files.count %> notification errors.</p>
       </div>
 
     </div>
-    <div id="accordion-opss-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-opss-heading-1">
+    <div id="upload-errors-content-1" class="govuk-accordion__section-content" aria-labelledby="upload-errors-heading-1">
 
       <div class="govuk-grid-column-full">
         <%= form_with url: destroy_all_responsible_person_notification_files_path(@responsible_person),
