@@ -20,7 +20,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
       session[:files_uploaded_count] = nil
     end
 
-    @unfinished_notifications = get_unfinished_notifications(310)
+    @unfinished_notifications = get_unfinished_notifications
 
     @registered_notifications = get_registered_notifications(20)
     respond_to do |format|
@@ -93,10 +93,10 @@ private
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
   end
 
-  def get_unfinished_notifications(_page_size)
+  def get_unfinished_notifications
     @responsible_person.notifications
       .where(state: %i[notification_file_imported draft_complete])
-      .order("created_at DESC")
+      .order("updated_at DESC")
   end
 
   def get_registered_notifications(page_size)
