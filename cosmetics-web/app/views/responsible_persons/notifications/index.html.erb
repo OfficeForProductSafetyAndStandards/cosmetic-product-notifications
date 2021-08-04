@@ -69,17 +69,22 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <!-- *************************************** errors starts ****************************************************** -->
-    <%= render 'errors' if @erroneous_notification_files.present? %>
-    <!-- *************************************** errors ends ****************************************************** -->
+    <div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss">
+      <%= render 'errors' if @erroneous_notification_files.present? %>
+      <%= render 'incomplete_notifications' %>
+    </div>
 
-    <!-- *************************************** incomplete starts ****************************************************** -->
+    <% if @unfinished_notifications.blank? %>
+      <div class="opss-border-top govuk-!-padding-top-3 opss-border-bottom">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+          Incomplete notifications (0)
+        </h2>
+        <p class="govuk-body">
+        There are currently no incomplete notifications.
+        </p>
+      </div>
+    <% end %>
 
-    <%= render 'incomplete_notifications' %>
-
-    <!-- *************************************** incomplete ends ****************************************************** -->
-
-    <!-- *************************************** notified starts ****************************************************** -->
     <section role="region" aria-label="Notified products">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds govuk-!-margin-top-7">
@@ -100,7 +105,7 @@
         </div>
       </div>
 
-      <%= render 'complete_notifications_table' %>
+      <%= render 'complete_notifications_table' if @registered_notifications.present? %>
 
       <%= paginate @registered_notifications, views_prefix: 'pagination' %>
 
