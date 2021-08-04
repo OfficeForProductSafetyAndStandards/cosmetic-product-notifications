@@ -16,7 +16,7 @@
     <div class="govuk-grid-column-full">
       <%= form_with url: destroy_all_responsible_person_notification_files_path(@responsible_person),
               method: :delete do |form| %>
-        <%= form.submit "Dismiss all errors", class: "govuk-link--no-visited-state button-link govuk-!-font-size-14 opss-text-align-right", role: "link", type: "button" %>
+        <%= form.submit "Dismiss all errors", class: "govuk-link--no-visited-state button-link govuk-!-font-size-14 opss-text-align-right", role: "button" %>
       <% end %>
     </div>
 
@@ -40,16 +40,15 @@
             <th scope="row" class="govuk-table__header"><%= notification_file.name %></th>
             <td class="govuk-table__cell"><%= notification_file.upload_error_message %></td>
             <td class="govuk-table__cell">
-              <a href="<%= new_responsible_person_notification_file_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state">
-                Upload <span class="govuk-visually-hidden"><%= notification_file.name %></span>again
-              </a>
+              <a href="<%= new_responsible_person_notification_file_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state"> Upload <span class="govuk-visually-hidden"><%= notification_file.name %> </span>again</a>
             </td>
 
             <td class="govuk-table__cell">
               <%= form_with url: responsible_person_notification_file_path(@responsible_person, notification_file),
                       method: :delete do |form| %>
-                <%= form.submit "Dismiss", class: "govuk-button opss-button-link", role: "link", type: "button" %>
+                <%= form.submit "Dismiss", class: "govuk-button opss-button-link", role: "button" %>
               <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

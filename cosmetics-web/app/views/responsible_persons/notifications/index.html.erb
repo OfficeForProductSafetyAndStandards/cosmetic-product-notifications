@@ -3,21 +3,18 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Your cosmetic products</h1>
-
-    <% if @registered_notifications.total_entries.zero? %>
-      <p><strong><%= @responsible_person.name %></strong> has not submitted any cosmetic product notifications in the UK.</p>
-
-      <p>All cosmetic products sold or given away in the UK must be notified in the UK.</p>
-
-      <p>To continue to sell or give away cosmetic products that were notified to the European Union (EU) before <span class="no-wrap"><%= display_full_month_date EU_EXIT_DATE %></span>, you must submit your product notifications in the UK within 90 days of the UK leaving the EU – that is by <span class="no-wrap"><%= display_full_month_date SUBMISSION_WINDOW_END_DATE %>.</span></p>
-
-    <% end %>
+<% if @registered_notifications.total_entries.zero? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+    <p class="govuk-body">
+      <%= @responsible_person.name %>[company name] has not submitted any cosmetic product notifications in <abbr>GB</abbr>.
+    </p>
+    <p class="govuk-body">
+      All cosmetic products sold or given away in <abbr>GB</abbr> must be notified in <abbr>GB</abbr>.
+    </p>
+    </div>
   </div>
-</div>
-
+<% end %>
 
 <% if @pending_notification_files_count.positive? %>
   <div class="govuk-grid-row">
@@ -37,13 +34,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
-
-
-    <!-- only shown if there are errors - starts. (And only show errors accordian if there are errors) -->
-    <!-- if, in the current functionality we redirect here, we add the second refresh line (url points to self) -->
     <%= render 'errors_banner' if @erroneous_notification_files.present? %>
-    <!-- only shown if there are errors - ends -->
-
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="cosmetic-products-hint">
@@ -63,7 +54,6 @@
         </p>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -100,7 +90,7 @@
         <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2 govuk-!-margin-top-7">
 
           <% if @registered_notifications.present? %>
-            <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="">
+            <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="download">
               <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of your notified products
             </a>
           <% end %>

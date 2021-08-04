@@ -25,8 +25,7 @@
         <td class="govuk-table__cell"><%= display_full_month_date notification.notification_complete_at %></td>
         <td class="govuk-table__cell"><%= reference_number_for_display(notification) %></td>
         <td class="govuk-table__cell">
-          <a href="<%= responsible_person_notification_url(@responsible_person, notification, page: params[:page]) %>" class="govuk-link govuk-link--no-visited-state">
-            View<span class="govuk-visually-hidden"><%= notification.product_name %></span>
+          <a href="<%= responsible_person_notification_url(@responsible_person, notification, page: params[:page]) %>" class="govuk-link govuk-link--no-visited-state"> View<span class="govuk-visually-hidden"><%= notification.product_name %></span>
           </a>
         </td>
       </tr>
