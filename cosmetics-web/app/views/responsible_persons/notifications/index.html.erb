@@ -69,10 +69,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss">
-      <%= render 'errors' if @erroneous_notification_files.present? %>
-      <%= render 'incomplete_notifications' %>
-    </div>
+    <% if @erroneous_notification_files.present? || @unfinished_notifications.present? %>
+      <div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss">
+        <%= render 'errors' if @erroneous_notification_files.present? %>
+        <%= render 'incomplete_notifications' if @unfinished_notifications.present? %>
+      </div>
+    <% end %>
 
     <% if @unfinished_notifications.blank? %>
       <div class="opss-border-top govuk-!-padding-top-3 opss-border-bottom">
