@@ -3,19 +3,6 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<% if @registered_notifications.total_entries.zero? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-    <p class="govuk-body">
-      <%= @responsible_person.name %> has not submitted any cosmetic product notifications in <abbr>GB</abbr>.
-    </p>
-    <p class="govuk-body">
-      All cosmetic products sold or given away in <abbr>GB</abbr> must be notified in <abbr>GB</abbr>.
-    </p>
-    </div>
-  </div>
-<% end %>
-
 <% if @pending_notification_files_count.positive? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -56,6 +43,19 @@
     </div>
   </div>
 </div>
+
+<% if @registered_notifications.total_entries.zero? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+    <p class="govuk-body">
+      <%= @responsible_person.name %> has not submitted any cosmetic product notifications in <abbr>GB</abbr>.
+    </p>
+    <p class="govuk-body">
+      All cosmetic products sold or given away in <abbr>GB</abbr> must be notified in <abbr>GB</abbr>.
+    </p>
+    </div>
+  </div>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
