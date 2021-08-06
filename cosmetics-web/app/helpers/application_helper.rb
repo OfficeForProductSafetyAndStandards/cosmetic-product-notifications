@@ -35,4 +35,8 @@ module ApplicationHelper
 
     govukErrorSummary(titleText: "There is a problem", errorList: error_list)
   end
+
+  def wrap_summary_address(address_array)
+    address_array.join("<span class=\"govuk-visually-hidden\">,</span><br />").html_safe
+  end
 end
