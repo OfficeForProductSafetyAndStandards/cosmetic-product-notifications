@@ -6,7 +6,6 @@ class PoisonCentres::NotificationsController < SearchApplicationController
     @search_form.validate
 
     @result = search_notifications(PER_PAGE)
-    binding.pry
     @notifications = @result.records
   end
 

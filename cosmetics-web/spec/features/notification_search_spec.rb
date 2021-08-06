@@ -140,7 +140,6 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
         expect(page).to have_link("Shower Bubbles")
         expect(page).to have_link("Bath Bubbles")
 
-        binding.pry
         fill_in "notification_search_form_q", with: cream.reference_number_for_display
 
         click_on "Search"
