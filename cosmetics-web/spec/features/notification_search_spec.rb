@@ -1,7 +1,7 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
   let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
   let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream") }
@@ -128,8 +128,8 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
       expect(page).not_to have_link("Bath Bubbles")
     end
 
-    context "When reference number is small" do
-      let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream", reference_number: 12345) }
+    context "when reference number is small" do
+      let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream", reference_number: 12_345) }
 
       scenario "Searching by partial number number" do
         sign_in user
@@ -144,7 +144,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
         click_on "Search"
 
-        expect(page).to have_text("1 product matching keyword(s)")
+        expect(page).to have_text("3 products matching keyword(s)")
 
         expect(page).to have_link("Cream")
       end
