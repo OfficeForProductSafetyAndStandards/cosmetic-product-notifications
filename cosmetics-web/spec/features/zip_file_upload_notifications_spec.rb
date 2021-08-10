@@ -28,8 +28,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_see_incomplete_notification_with_reference_number(Notification.first.reference_number_for_display)
     click_link "Continue"
 
-    click_link "Add product images"
-
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
     expect(page).to have_h1("Upload an image of the product label")
@@ -73,8 +71,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_see_incomplete_notification_with_reference_number Notification.first.reference_number
     click_link "Continue"
-
-    click_link "Add product images"
 
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
@@ -120,8 +116,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_see_incomplete_notification_with_reference_number Notification.first.reference_number_for_display
     click_link "Continue"
-
-    click_link "Add product images"
 
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
@@ -175,8 +169,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     click_link "Continue"
 
-    click_link "Add product images"
-
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
     expect(page).to have_h1("Upload an image of the product label")
@@ -226,8 +218,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_see_incomplete_notification_with_reference_number Notification.first.reference_number_for_display
     click_link "Continue"
-
-    click_link "Add product images"
 
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
@@ -282,8 +272,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_see_incomplete_notification_with_reference_number Notification.first.reference_number_for_display
     click_link "Continue"
-
-    click_link "Add product images"
 
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
@@ -391,8 +379,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
     expect_to_see_incomplete_notification_with_reference_number Notification.first.reference_number_for_display
     click_link "Continue"
 
-    click_link "Add product images"
-
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
     expect(page).to have_h1("Upload images of the item labels")
@@ -485,8 +471,6 @@ RSpec.feature "ZIP file upload notifications", :with_stubbed_antivirus, type: :f
 
     expect_to_see_incomplete_notification_with_reference_number Notification.first.reference_number_for_display
     click_link "Continue"
-
-    click_link "Add product images"
 
     expect(page.current_path).to end_with("/product_image_upload/new")
     expect(page).to have_link("Back", href: /responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
