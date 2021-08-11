@@ -14,7 +14,6 @@ RSpec.describe "Notifications delete", type: :feature do
   scenario "deleting draft notification" do
     draft_notification
     visit "/responsible_persons/#{responsible_person.id}/notifications"
-    click_on "Incomplete (1)"
     click_on draft_notification.product_name
     click_on "Delete incomplete cosmetic product notification"
     expect(page).to have_h1("Are you sure you want to delete #{draft_notification.product_name}?")
@@ -26,7 +25,6 @@ RSpec.describe "Notifications delete", type: :feature do
   scenario "deleting submited notification" do
     notification
     visit "/responsible_persons/#{responsible_person.id}/notifications"
-    click_on "Notified (1)"
     click_on notification.product_name
     click_on "Delete this cosmetic product notification"
     expect(page).to have_h1("Are you sure you want to delete #{notification.product_name}?")
@@ -43,7 +41,6 @@ RSpec.describe "Notifications delete", type: :feature do
                           responsible_person: responsible_person,
                           notification_complete_at: 1.month.ago)
     visit "/responsible_persons/#{responsible_person.id}/notifications"
-    click_on "Notified (1)"
     click_on notification.product_name
     expect(page).not_to have_link("Delete this cosmetic product notification")
   end

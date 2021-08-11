@@ -428,7 +428,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     click_link "Continue as #{second_user.name}"
     expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
     click_link "Your cosmetic products"
-    expect(page).to have_css("h1", text: "Your cosmetic products")
+    expect(page).to have_css("h1", text: "Cosmetic products")
   end
 
   scenario "registered user can not access account security" do

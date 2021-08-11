@@ -1,5 +1,3 @@
-require "will_paginate/array"
-
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :validate_responsible_person
@@ -22,11 +20,9 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
       session[:files_uploaded_count] = nil
     end
 
-    @erroneous_notification_files = @erroneous_notification_files.paginate(page: params[:errors], per_page: 10)
+    @unfinished_notifications = get_unfinished_notifications
 
-    @unfinished_notifications = get_unfinished_notifications(10)
-
-    @registered_notifications = get_registered_notifications(10)
+    @registered_notifications = get_registered_notifications(20)
     respond_to do |format|
       format.html
       format.csv do
@@ -97,16 +93,16 @@ private
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
   end
 
-  def get_unfinished_notifications(page_size)
+  def get_unfinished_notifications
     @responsible_person.notifications
       .where(state: %i[notification_file_imported draft_complete])
-      .paginate(page: params[:incomplete], per_page: page_size)
+      .order("updated_at DESC")
   end
 
   def get_registered_notifications(page_size)
     @responsible_person.notifications
       .completed
-      .paginate(page: params[:notified], per_page: page_size)
+      .paginate(page: params[:page], per_page: page_size)
       .order(notification_complete_at: :desc)
   end
 
