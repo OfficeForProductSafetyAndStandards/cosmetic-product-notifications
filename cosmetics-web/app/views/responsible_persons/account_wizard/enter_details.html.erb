@@ -53,6 +53,7 @@
       <%= render("form_components/govuk_input",
                  form: form,
                  key: :name,
+                 id: "name",
                  classes: "govuk-input govuk-!-width-two-thirds",
                  label: { text: "Name", classes: "govuk-label--s" },
                  hint: { text: "The name of the business, individual or sole trader named as the legal entity of Responsible Person.",
@@ -70,14 +71,21 @@
         <%= render("form_components/govuk_input",
                    form: form,
                    key: :address_line_1,
+                   id: "address_line_1",
                    classes: "govuk-!-width-three-quarters",
                    described_by: "address-hint",
                    label: { html: "Building and street <span class='govuk-visually-hidden'>line 1 of 2</span>".html_safe }) %>
 
-        <%= render("form_components/govuk_input", form: form, key: :address_line_2, classes: "govuk-!-width-three-quarters", label: { text: nil }) %>
-        <%= render "form_components/govuk_input", form: form, key: :city, classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" } %>
-        <%= render "form_components/govuk_input", form: form, key: :county, classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" } %>
-        <%= render "form_components/govuk_input", form: form, key: :postal_code, label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
+        <%= render("form_components/govuk_input",
+                   form: form,
+                   key: :address_line_2,
+                   id: "address_line_2",
+                   classes: "govuk-!-width-three-quarters",
+                   label: { html: "<span class='govuk-visually-hidden'>Building and street line 2 of 2</span>".html_safe }) %>
+
+        <%= render "form_components/govuk_input", form: form, key: :city, id: "city", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" } %>
+        <%= render "form_components/govuk_input", form: form, key: :county, id: "county", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" } %>
+        <%= render "form_components/govuk_input", form: form, key: :postal_code, id: "postal_code", label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
 
         <div class="govuk-form-group">
           <%= govukButton text: "Continue" %>
