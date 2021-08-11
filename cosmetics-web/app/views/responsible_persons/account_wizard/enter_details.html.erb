@@ -71,7 +71,7 @@
                    form: form,
                    key: :address_line_1,
                    classes: "govuk-!-width-three-quarters",
-                   attributes: { "aria-describedby" => "address-hint"},
+                   described_by: "address-hint",
                    label: { html: "Building and street <span class='govuk-visually-hidden'>line 1 of 2</span>".html_safe }) %>
 
         <%= render("form_components/govuk_input", form: form, key: :address_line_2, classes: "govuk-!-width-three-quarters", label: { text: nil }) %>
