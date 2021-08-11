@@ -826,12 +826,12 @@ def fill_in_rp_details
 end
 
 def fill_in_rp_business_details(name: "Auto-test rpuser")
-  fill_in "Business name", with: name
+  fill_in "Name", with: name
   fill_in_rp_details
 end
 
 def fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
-  fill_in "Business name", with: name
+  fill_in "Name", with: name
   fill_in_rp_details
 end
 
