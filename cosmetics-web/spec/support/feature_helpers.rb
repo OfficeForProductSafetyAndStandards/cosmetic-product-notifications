@@ -544,7 +544,7 @@ end
 
 def expect_to_be_on__your_cosmetic_products_page
   expect(page.current_path).to end_with("/responsible_persons/#{responsible_person.id}/notifications")
-  expect(page).to have_h1("Your cosmetic products")
+  expect(page).to have_h1("Cosmetic products")
 end
 
 def expect_to_see_message(message)
@@ -560,14 +560,14 @@ def expect_back_link_to_frame_formulation_select_page
   expect_back_link_to(/\/build\/select_frame_formulation$/)
 end
 
-def expect_to_see_incomplete_notification_with_eu_reference_number(eu_reference_number)
-  within("#incomplete") do
-    expect(page).to have_text("EU reference number: #{eu_reference_number}")
+def expect_to_see_incomplete_notification_with_reference_number(reference_number)
+  within("#incomplete-notifications") do
+    expect(page).to have_text(reference_number)
   end
 end
 
 def expect_to_see_notification_error(error_message)
-  within("#errors") do
+  within("#upload-errors") do
     expect(page).to have_text(error_message)
   end
 end

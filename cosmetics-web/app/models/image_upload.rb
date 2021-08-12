@@ -4,7 +4,7 @@ class ImageUpload < ApplicationRecord
   set_allowed_types %w[image/jpeg application/pdf image/png].freeze
   set_max_file_size 30.megabytes
 
-  belongs_to :notification
+  belongs_to :notification, touch: true
 
   has_one_attached :file
 
