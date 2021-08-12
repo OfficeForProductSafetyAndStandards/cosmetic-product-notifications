@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Poison centre search" do
-
   let(:results) { keyword_search(keyword) }
   let(:notifications) { results.records }
 
@@ -20,31 +19,31 @@ RSpec.describe "Poison centre search" do
 
     Notification.elasticsearch.import force: true
   end
+
   describe "Search by post code" do
-    context "Searching by full code" do
+    context "when searching by full code" do
       let(:keyword) { "N12 8AA" }
 
-      it "should find proper notifications" do
+      it "finds proper notifications" do
         expect(notifications.to_a).to eq [notification1, notification2]
       end
     end
 
-    context "Searching by part code" do
+    context "when searching by part code" do
       let(:keyword) { "N12" }
 
-      it "should find proper notifications" do
+      it "finds proper notifications" do
         expect(notifications.to_a).to eq [notification1, notification2]
       end
     end
 
-    context "Searching by different code" do
+    context "when searching by different code" do
       let(:keyword) { "LA1" }
 
-      it "should find proper notifications" do
+      it "finds proper notifications" do
         expect(notifications.to_a).to eq [notification3]
       end
     end
-
   end
 end
 
