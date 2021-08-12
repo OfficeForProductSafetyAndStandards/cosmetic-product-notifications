@@ -58,6 +58,11 @@ class Notification < ApplicationRecord
 
       indexes :responsible_person do
         indexes :name, type: "text"
+        indexes :address_line_1, type: "text"
+        indexes :address_line_2, type: "text"
+        indexes :city, type: "text"
+        indexes :county, type: "text"
+        indexes :postal_code, type: "text"
       end
 
       indexes :components, type: "nested" do
@@ -74,7 +79,7 @@ class Notification < ApplicationRecord
       methods: :reference_number_for_display,
       include: {
         responsible_person: {
-          only: %i[name],
+          only: %i[name address_line_1 address_line_2 city county postal_code],
         },
         components: {
           methods: %i[display_sub_category display_sub_sub_category display_root_category],
