@@ -48,6 +48,16 @@
         {
           key: { text: "Address" },
           value: { text: wrap_summary_address(@responsible_person.address_lines) },
+        },
+        {
+          key: { text: "Business type" },
+          value: {
+            text:
+              case @responsible_person.account_type
+              when "individual" then "Individual or sole trader"
+              when "business" then "Limited company or Limited Liability Partnership (LLP)"
+              end
+          },
         }
       ])
     %>
