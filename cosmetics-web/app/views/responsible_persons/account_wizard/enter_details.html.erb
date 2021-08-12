@@ -1,35 +1,96 @@
-<% title = "UK Responsible Person details" %>
-<% page_title(title, errors: @responsible_persons_details_form.errors.any?) %>
+<% page_title("UK Responsible Person details", errors: @responsible_persons_details_form.errors.any?) %>
 
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= error_summary(@responsible_persons_details_form.errors, %i[name address_line_1 address_line_2 city county postal_code]) %>
 
-<% address_label = @responsible_person.business? ? "UK business address" : "Address" %>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      <abbr>UK</abbr> Responsible Person details
+    </h1>
+
+    <details class="govuk-details opss-details--sm govuk-!-margin-top-4" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Help with the <abbr>UK</abbr> Responsible Person details
+        </span>
+      </summary>
+
+      <div class="govuk-details__text">
+        <p class="govuk-body-s">
+          A Responsible Person can be a business - in the law this is called a 'legal person'.
+          Or a Responsible Person can be a living person - in the law this is called a 'natural person'.
+        </p>
+
+        <p class="govuk-body-s">
+          The Responsible Person - the legal person or natural person - is a legal entity that must be established in the <abbr>UK</abbr>.
+          The address provided must be that of the legal entity named as the Responsible Person.
+          The Responsible Person must provide a <abbr>UK</abbr> address, which cannot be a <abbr title="Post Office">PO</abbr> box or mail forwarding address.
+        </p>
+
+        <p class="govuk-body-s">
+          A Responsible Person is legally bound by the obligations in the Cosmetics Regulation.
+        </p>
+      </div>
+    </details>
+
+    <div class="govuk-warning-text govuk-!-margin-top-7 govuk-!-margin-bottom-6">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        The <abbr>UK</abbr> address provided must not be a <abbr>PO</abbr> box or mail forwarding address. These are not <abbr>UK</abbr> established addresses that comply with the regulation.
+      </strong>
+    </div>
+  </div>
+</div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= error_summary(@responsible_persons_details_form.errors, %i[name address_line_1 address_line_2 city county postal_code]) %>
-
-    <h1 class="govuk-heading-l"><%= title %></h1>
-
-    <%= form_for(@responsible_persons_details_form, url: wizard_path, method: :put) do |form| %>
-      <%= render "form_components/govuk_input", form: form, key: :name, label: { text: "Business name" } %>
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <%= address_label %>
+    <%= form_for(@responsible_persons_details_form, url: wizard_path, method: :put, html: { novalidate: true }) do |form| %>
+      <%= render("form_components/govuk_input",
+                 form: form,
+                 key: :name,
+                 id: "name",
+                 classes: "govuk-input govuk-!-width-two-thirds",
+                 label: { text: "Name", classes: "govuk-label--s" },
+                 hint: { text: "The name of the business, individual or sole trader named as the legal entity of Responsible Person.",
+                         classes: "govuk-!-font-size-16 govuk-!-width-three-quarters" }) %>
+      <fieldset class="govuk-fieldset ">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <h2 class="govuk-fieldset__heading">
+            Address
+          </h2>
         </legend>
-      </fieldset>
-      <%= render "form_components/govuk_input", form: form, key: :address_line_1, label: { text: "Building and street" } %>
-      <%= render "form_components/govuk_input", form: form, key: :address_line_2, label: { text: nil } %>
-      <%= render "form_components/govuk_input", form: form, key: :city, label: { text: "Town or city" } %>
-      <%= render "form_components/govuk_input", form: form, key: :county, label: { text: "County" } %>
-      <%= render "form_components/govuk_input", form: form, key: :postal_code, label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
+        <div id="address-hint" class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-6 govuk-!-width-three-quarters">
+          The address of the legal entity named as the Responsible Person.
+        </div>
 
-      <div class="govuk-form-group">
-        <%= govukButton text: "Continue" %>
-      </div>
+        <%= render("form_components/govuk_input",
+                   form: form,
+                   key: :address_line_1,
+                   id: "address_line_1",
+                   classes: "govuk-!-width-three-quarters",
+                   described_by: "address-hint",
+                   label: { html: "Building and street <span class='govuk-visually-hidden'>line 1 of 2</span>".html_safe }) %>
+
+        <%= render("form_components/govuk_input",
+                   form: form,
+                   key: :address_line_2,
+                   id: "address_line_2",
+                   classes: "govuk-!-width-three-quarters",
+                   label: { html: "<span class='govuk-visually-hidden'>Building and street line 2 of 2</span>".html_safe }) %>
+
+        <%= render "form_components/govuk_input", form: form, key: :city, id: "city", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" } %>
+        <%= render "form_components/govuk_input", form: form, key: :county, id: "county", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" } %>
+        <%= render "form_components/govuk_input", form: form, key: :postal_code, id: "postal_code", label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
+
+        <div class="govuk-form-group">
+          <%= govukButton text: "Continue" %>
+        </div>
+      </fieldset>
     <% end %>
   </div>
 </div>

@@ -818,7 +818,7 @@ def select_options_to_create_rp_account
 end
 
 def fill_in_rp_details
-  fill_in "Building and street", with: "Auto-test-address1"
+  fill_in "Building and street", with: "Auto-test-address1", id: "address_line_1"
   fill_in "Town or city", with: "Auto-test city"
   fill_in "County", with: "auto-test-county"
   fill_in "Postcode", with: "b28 9un"
@@ -826,12 +826,12 @@ def fill_in_rp_details
 end
 
 def fill_in_rp_business_details(name: "Auto-test rpuser")
-  fill_in "Business name", with: name
+  fill_in "Name", with: name
   fill_in_rp_details
 end
 
 def fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
-  fill_in "Business name", with: name
+  fill_in "Name", with: name
   fill_in_rp_details
 end
 
