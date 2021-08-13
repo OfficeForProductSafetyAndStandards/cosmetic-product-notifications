@@ -37,7 +37,7 @@
   <div class="govuk-grid-column-full">
 
 
-    <h2 class="govuk-heading-s">Business, individual or sole trader</h2>
+    <h2 class="govuk-heading-m">Business, individual or sole trader</h2>
 
     <%= govukSummaryList(
       classes: "govuk-!-margin-bottom-8",
@@ -63,7 +63,7 @@
       ])
     %>
 
-    <h2 class="govuk-heading-s">Assigned contact</h2>
+    <h2 class="govuk-heading-m">Assigned contact</h2>
 
     <% @responsible_person.contact_persons.each do |contact_person| %>
       <%= render "/notifications/contact_person_details", contact_person: contact_person %>
