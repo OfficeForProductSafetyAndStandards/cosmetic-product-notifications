@@ -43,4 +43,19 @@ module ApplicationHelper
   def wrap_summary_address(address_array)
     address_array.join("<span class=\"govuk-visually-hidden\">,</span><br />").html_safe
   end
+
+  def error_class(search_form, attribute, part)
+    if (attr = search_form[attribute]).is_a? DateParser::IncompleteDate
+      if attr.error_fields.present?
+        search_form.errors[attribute].present? ? 'govuk-input--error'.html_safe : ''
+        if attr.error_fields.keys.include? part
+          'govuk-input--error'.html_safe
+        end
+      else
+        search_form.errors[attribute].present? ? 'govuk-input--error'.html_safe : ''
+      end
+    else
+      search_form.errors[attribute].present? ? 'govuk-input--error'.html_safe : ''
+    end
+  end
 end

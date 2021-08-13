@@ -5,8 +5,19 @@
 # the input date is returned as a struct
 class DateParser
   IncompleteDate = Struct.new(:year, :month, :day) do
+    attr_reader :error_fields
+
+    def initialize(*)
+      @error_fields = {}
+      super
+    end
+
     def blank?
       year.blank? && month.blank? && day.blank?
+    end
+
+    def error_on(part)
+      @error_fields[part] = true
     end
   end
 

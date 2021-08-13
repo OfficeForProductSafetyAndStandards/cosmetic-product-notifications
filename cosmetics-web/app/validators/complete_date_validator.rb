@@ -17,7 +17,12 @@ class CompleteDateValidator < ActiveModel::EachValidator
 
     missing_date_parts = []
     missing_date_parts << "day" if value.day.blank?
-    missing_date_parts << "month" if value.month.blank?
+
+    if value.month.blank?
+      missing_date_parts << "month"
+      value.error_on(:month)
+    end
+
     missing_date_parts << "year" if value.year.blank?
 
     if missing_date_parts.size.between?(1, 2)
