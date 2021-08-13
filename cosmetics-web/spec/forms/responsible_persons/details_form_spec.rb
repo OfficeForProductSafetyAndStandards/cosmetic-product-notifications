@@ -30,7 +30,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages_for(:name)).to eq(["Name can not be blank"])
+        expect(form.errors.full_messages_for(:name)).to eq(["Enter a name"])
       end
     end
 
@@ -138,7 +138,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages).to eq(["Building and street can not be blank"])
+        expect(form.errors.full_messages).to eq(["Enter a building and street"])
       end
     end
 
@@ -166,7 +166,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages).to eq(["Town or city can not be blank"])
+        expect(form.errors.full_messages).to eq(["Enter a town or city"])
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages).to eq(["Postcode can not be blank"])
+        expect(form.errors.full_messages).to eq(["Enter a postcode"])
       end
     end
 

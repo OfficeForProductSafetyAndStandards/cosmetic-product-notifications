@@ -51,11 +51,18 @@ class Notification < ApplicationRecord
   settings do
     mapping do
       indexes :product_name, type: "text"
+      indexes :reference_number, type: "text"
+      indexes :reference_number_for_display, type: "text"
       indexes :created_at, type: "date"
       indexes :notification_complete_at, type: "date", format: "strict_date_optional_time"
 
       indexes :responsible_person do
         indexes :name, type: "text"
+        indexes :address_line_1, type: "text"
+        indexes :address_line_2, type: "text"
+        indexes :city, type: "text"
+        indexes :county, type: "text"
+        indexes :postal_code, type: "text"
       end
 
       indexes :components, type: "nested" do
@@ -68,10 +75,11 @@ class Notification < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name notification_complete_at],
+      only: %i[product_name notification_complete_at reference_number],
+      methods: :reference_number_for_display,
       include: {
         responsible_person: {
-          only: %i[name],
+          only: %i[name address_line_1 address_line_2 city county postal_code],
         },
         components: {
           methods: %i[display_sub_category display_sub_sub_category display_root_category],
