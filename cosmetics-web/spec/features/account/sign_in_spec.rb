@@ -5,6 +5,8 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
     scenario "user tries to sign in with email address that does not belong to any user" do
       visit "/sign-in"
 
+      expect_back_link_to("/")
+
       fill_in "Email address", with: "notarealuser@example.com"
       fill_in "Password", with: "notarealpassword"
       click_button "Continue"

@@ -9,7 +9,7 @@ class Component < ApplicationRecord
   set_max_file_size 30.megabytes
 
   attr_writer :skip_name_uniqueness_on_import
-  belongs_to :notification
+  belongs_to :notification, touch: true
 
   has_many :exact_formulas, dependent: :destroy
   has_many :range_formulas, dependent: :destroy
