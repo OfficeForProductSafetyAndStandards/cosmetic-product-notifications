@@ -12,7 +12,7 @@ gem "aws-sdk-s3", "~> 1.60.1"
 gem "cf-app-utils", "~> 0.6"
 gem "devise"
 gem "devise-security"
-gem "elasticsearch", "~> 7.9"
+gem "elasticsearch", "< 7.14" # v7.14 is incompatible with Open Source version of ElasticSearch server provided by PaaS.
 gem "elasticsearch-model", "~> 7.1"
 gem "elasticsearch-rails", "~> 7.1"
 gem "govuk_notify_rails", "~> 2.1.0"
