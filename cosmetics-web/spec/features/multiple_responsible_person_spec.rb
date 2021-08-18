@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Submit user belongs to multiple responsible persons", type: :feature do
+RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa, :with_stubbed_notify, type: :feature do
   let(:name_1) { "Company 1 Ltd" }
   let(:name_2) { "Company 2 Ltd" }
   let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person, name: name_1) }
@@ -16,7 +16,8 @@ RSpec.describe "Submit user belongs to multiple responsible persons", type: :fea
     create(:responsible_person_user, user: submit_user, responsible_person: responsible_person_2)
 
     visit "/"
-
+    select_secondary_authentication_sms
+    complete_secondary_authentication_sms_with(submit_user.reload.direct_otp)
     # No current responsible person in session - so redirected to select page
     click_on name_1
   end
