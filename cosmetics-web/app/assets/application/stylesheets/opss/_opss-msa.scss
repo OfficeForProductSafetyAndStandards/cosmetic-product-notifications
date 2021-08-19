@@ -1,30 +1,35 @@
 //These are the opss MSA/Cosmetics css styles: I recommend simply copy and pasting this entire code into your local opss-msa scss file.
 //And include - copy over - the imported files in the same directory (listed at the top of this file).
 //Don't edit the local production copy as pasting this into it next/each time will overwrite your changes.
-//We can remove linting frmo this scss file - it won't run if there is a real problem anyway
+//We can remove linting from this scss file - it won't run if there is a real problem
 
-@import "opss-shared";
-@import "opss-search";
-@import "opss-pagination";
+@import "opss/opss-shared";
+@import "opss/opss-search";
+@import "opss/opss-pagination";
 
 abbr[title]{
     text-decoration: none;
 }
 
-@mixin word-wrap() {
-  overflow-wrap: break-word; word-wrap: break-word; -ms-word-break: break-all; word-break: break-all;
-  word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto;
-}
-
-.opss-float-right {
+.govuk-form-group.opss-float-right {//used for sort selects
     @include govuk-media-query($from: tablet) {
-       text-align: right; display: inline-block; width: 100%;
+       text-align: right; display: inline-block; width: 100%;//yes this is text align
     }
 }
 .opss-text-align-right {
     @include govuk-media-query($from: tablet) {
-        float: right;
+        float: right;//yes this is float
     }
+}
+
+.govuk-accordion__section-content .govuk-grid-column-full > .govuk-link.opss-text-align-right {
+    @include govuk-media-query($from: tablet) {
+        margin-right: - govuk-spacing(3);//small dismiss link on notifications Errors accordion
+    }
+}
+
+.opss-text-align-center {
+    text-align: center;
 }
 
 .opss-border-top, .opss-border-bottom {
@@ -47,11 +52,6 @@ abbr[title]{
         cursor: text;
     }
 }
-
-
-
-
-
 
 //*** top nav & std rows starts ***
 .opss-std-row {
@@ -196,13 +196,17 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
 
 .opss-list--inline {
     width: 100%;
-    text-align: right;
+
     li {
         display: inline-block;
         margin: 0;
         padding-left: govuk-spacing(1);
     }
 }
+.opss-list--right {
+    text-align: right;
+}
+
 /*tbody th  {-webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto; hyphens: auto; }*/
 .govuk-summary-list .govuk-link,
 .opss-table td a {
@@ -216,6 +220,11 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     }
     tbody tr td:last-child a {
         white-space: nowrap;
+    }
+
+    tfoot th {
+        border-top: 1px solid $govuk-border-colour;
+        border-bottom: none 0;
     }
 }
 
@@ -245,11 +254,6 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     height: 1px;
     overflow: hidden;
 }
-
-.opss-no-wrap {
-  white-space: nowrap;
-}
-
 
 
 .opss-float-left {
@@ -282,6 +286,7 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     @include word-wrap;
 }
 
+/* .opss-summary-list starts ... */
 *[class^="govuk-heading"] + .opss-summary-list {
     margin-top: - govuk-spacing(1);
 }
@@ -337,6 +342,7 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
         }
     }
 }
+/* .opss-summary-list ends */
 
 .js-enabled .opss-accordian__open-remove > div:first-child {
     @include govuk-visually-hidden;
@@ -349,4 +355,61 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     .govuk-radios__conditional.govuk-radios__conditional--hidden.govuk-form-group--error {//helps with smooth loading
         display: block !important;
     }
+}
+
+
+li.opss-task-sub {
+    @include govuk-media-query($from: tablet) {
+        /*h3 {@include opss-font-size($s: 19px, $l: 1.25); }*/
+        /*li b {@include opss-font-size($s: 12px, $l: 0.9); }*/
+        li span {
+            @include opss-font-size($s: 16px, $l: 1.5);//1.0
+        }
+
+        ul.opss-task-sub__list {
+            @include govuk-responsive-margin(6, "left");
+
+            li {
+                border-top: none;
+                border-bottom-color: rgba(76, 115, 141, 0.3);//#b1b4b6
+                padding-top: 7px;
+                padding-bottom: 6px;
+
+                span {
+                    max-width: 75%;
+                }
+            }
+        }
+    }
+
+    ul.opss-task-sub__list {
+        margin-bottom: govuk-spacing(7);
+    }
+
+    li.opss-task-sub__last {
+        border-bottom: none;
+        margin-bottom: - govuk-spacing(5) !important;
+
+        & > span {
+            width: auto;
+            max-width: none;
+            display: block;
+            float: right;
+        }
+    }
+
+    .opss-task-sub__pipe {
+        display: inline-block;
+        margin-left: govuk-spacing(1);
+        margin-right: govuk-spacing(1);
+        color: rgba(76, 115, 141, 0.5);//#b1b4b6
+    }
+}
+.app-task-list__section-number {//bug fix for mobile
+    display: inline-block;
+    min-width: govuk-spacing(5);
+}
+
+.opss-tag--red {
+    background-color: $govuk-error-colour;
 }

@@ -1,7 +1,7 @@
 //These are the opss PSD css styles: I recommend simply copy and pasting this entire code into your local opss-psd scss file.
 //And include - copy over - the imported files in the same directory (listed at the top of this file).
 //Don't edit your local copy as pasting this into it next/each time will overwrite your changes.
-//We can remove linting from this scss file - it won't run if there is a real problem anyway
+//We can remove linting from this scss file - it won't run if there is a real problem
 
 @import "opss/opss-shared";
 @import "opss/opss-search";
@@ -36,18 +36,121 @@ main.govuk-main-wrapper {
     }
 }
 
+.opss-numero {
+    @include govuk-media-query($from: desktop) {
+        font-size: 90%;
+        margin-left: 5px;
+    }
+
+        display: inline-block;
+        transform: scale(1.2, 1);
+        font-weight: 600;
+        opacity: 0.9;
+}
+
 .opss-borders {
-    border: 1px solid govuk-colour("mid-grey", $legacy: "grey-2");
-    border-radius: 5px;
+    border-color: govuk-colour("mid-grey", $legacy: "grey-2");
+    border-style: solid;
+    border-width: 0;
+
+    &.opps-borders--all {
+        @include govuk-media-query($from: tablet) {
+            border-width: 1px;
+        }
+    }
+
+    &.opss-borders--padding {
+        padding: govuk-spacing(6) govuk-spacing(5) govuk-spacing(5) govuk-spacing(6);
+    }
+
+    &.opss-borders--left {
+        @include govuk-media-query($from: tablet) {
+            border-left-width: 1px;
+        }
+    }
+
+    &.opss-borders--padding-l {
+        @include govuk-media-query($from: tablet) {
+            padding-left: govuk-spacing(6);
+        }
+    }
+
+    &.opss-borders--height-100 {
+        height: 100%;
+    }
 }
 
-.opss-borders--padding {
-    padding: govuk-spacing(6) govuk-spacing(5) govuk-spacing(5) govuk-spacing(6);
-}
+.opss-panels {
+    margin-top: govuk-spacing(7);
+    margin-bottom: govuk-spacing(2);
 
-.opss-details-img {
-    max-height: 300px;
-    max-width: 100%;
+    .opss-panels__pair {
+
+        border-width: 1px;
+        border-style: solid;
+        border-color: $govuk-brand-colour; //govuk-colour("mid-grey", $legacy: "grey-2");
+        /*border-radius: 5px;*/
+        border-image: linear-gradient(0deg, #969696, $govuk-border-colour) 1;
+        box-shadow: 3px 4px 6px 0px #ebebeb; //2px 2px 10px govuk-colour("mid-grey");
+
+        padding: govuk-spacing(6) govuk-spacing(5) govuk-spacing(8) govuk-spacing(6);
+        margin-left: govuk-spacing(0);
+        margin-right: govuk-spacing(0);
+        margin-bottom: govuk-spacing(6);
+
+        & > span {
+            text-align: center;
+            width: 100%;
+            margin-bottom: govuk-spacing(4);
+        }
+
+        h2 {
+            color: $govuk-brand-colour;
+            /*text-align: center;*/
+            width: 100%;
+        }
+
+        details div {
+            @include govuk-font($size: 16);
+        }
+
+    }
+}
+@include govuk-media-query($from: desktop) {
+    .opss-panels {
+        display: -webkit-flex; /* Safari */
+        display: flex;
+
+        .opss-panels__pair {
+            -webkit-flex: 1 auto; /* Safari */
+            -ms-flex: 1 auto; /* IE10 */
+            flex: 1 auto;
+
+            padding-bottom: govuk-spacing(6);
+
+            &.opss-panels__pair--left {
+                margin-right: govuk-spacing(2);
+                margin-left: govuk-spacing(3);
+            }
+            &.opss-panels__pair--right {
+                margin-right: govuk-spacing(3);
+                margin-left: govuk-spacing(2);
+            }
+
+        }
+    }
+}
+@include govuk-media-query($from: desktop) {
+    .opss-equal-height-container {
+        display: -webkit-flex;
+        display: flex;
+
+        .opss-equal-height__col {
+            -webkit-flex: 1 auto;
+            -ms-flex: 1 auto;
+            flex: 1 auto;
+        }
+    }
 }
 
 ul.opss-radio-list {
@@ -103,107 +206,6 @@ ul.opss-radio-list {
     @include govuk-clearfix;
 }*/
 
-.opss-table-items {
-
-    thead th:nth-child(2) {width: auto; }
-    thead th:nth-child(3) {width: auto; }
-    thead th:nth-child(4) {width: auto; }
-
-    @include govuk-media-query($from: tablet) {
-        thead th:nth-child(2) {width: 20%; }
-    }
-
-    thead th:last-child,
-    tbody td:last-child,
-    tfoot th:last-child {
-        text-align: right;
-    }
-
-    tbody td:last-child::first-letter {text-transform: uppercase; }
-
-    thead th,
-    tfoot th {
-        @include govuk-font($size: 16);
-        font-weight: 700;
-    }
-    tbody td {
-        @include govuk-font($size: 16);
-    }
-    /*tbody tr:last-child td a {
-        @include govuk-font($size: 16);
-    }*/
-    /*tbody tr:not(:first-child):not(:last-child) td, tbody tr:not(:first-child):not(:last-child) th, */
-    tbody tr:nth-child(2) th, tbody tr:nth-child(2) td {
-        padding-top: govuk-spacing(0);
-        padding-bottom: govuk-spacing(1);
-    }
-    tbody tr:nth-child(3) th, tbody tr:nth-child(3) td {
-        padding-top: govuk-spacing(1);
-        padding-bottom: govuk-spacing(2);
-    }
-    tbody tr:nth-child(4) th, tbody tr:nth-child(4) td {
-        padding-top: govuk-spacing(0);
-    }
-    /*th[colspan="3"], tfoot th {padding-top: govuk-spacing(7); }*/
-    tbody tr:first-child th,
-    tbody tr:not(:last-child) > *,
-    tfoot tr th {
-        border-bottom: 0 none;
-    }
-
-    tbody th, tbody td {
-        transition: all 0.5s ease;
-        background-color: transparent;
-    }
-    tbody.opss-bg th, tbody.opss-bg td {
-        background-color: govuk-colour("light-grey");
-    }
-    /*tbody:nth-child(odd) th, tbody:nth-child(odd) td {
-      background-color: govuk-colour("light-grey");
-    }*/
-
-    &.opss-table-items--new-item {/* the new product having been added - top tbody */
-        tbody:first-of-type {
-            border-top: 3px solid $govuk-success-colour;
-            border-bottom: 3px solid $govuk-success-colour;
-
-            tr:first-child {
-                th {
-                    color: $govuk-success-colour;
-                    /*padding-left: govuk-spacing(2);*/
-                    padding-top: govuk-spacing(3);
-                }
-            }
-            /*tr:first-child + tr {th + th {padding-left: govuk-spacing(2); } }
-            tr {
-                td:first-of-type {padding-left: govuk-spacing(2); }
-                td:last-of-type {padding-right: govuk-spacing(2); }
-            }
-            & + tbody th {padding-top: govuk-spacing(4); }*/
-        }
-    }
-    &.xyz {
-        tbody:first-of-type {
-            background-color: govuk-colour("light-grey");
-
-            tr:first-child {
-                th {
-                    color: $govuk-success-colour;
-                    padding-left: govuk-spacing(2);
-                    padding-top: govuk-spacing(3);
-                }
-            }
-            tr:first-child + tr {th + th {padding-left: govuk-spacing(2); } }
-            tr {
-                td:first-of-type {padding-left: govuk-spacing(2); }
-                td:last-of-type {padding-right: govuk-spacing(2); }
-            }
-            & + tbody th {padding-top: govuk-spacing(4); }
-        }
-    }
-
-}
-
 .opss-tag {
     font-size: 12px;
     font-size: 0.75rem;
@@ -224,18 +226,41 @@ ul.opss-radio-list {
             margin-bottom: 0;
         }
     }
+
+    &.opss-tag--risk1 {
+        border-color: govuk-colour("red");
+        color: govuk-colour("red");
+    }
+    &.opss-tag--risk2 {
+        border-color: govuk-colour("dark-grey");
+        color: govuk-colour("dark-grey");
+    }
+    &.opss-tag--covid {
+        background-color: govuk-colour("pink");
+        border-color: govuk-colour("pink");
+        color: govuk-colour("white");
+        text-transform: none;
+    }
+    &.opss-tag--std {
+        @include opss-font-size($s: 14px, $l: 1.3);
+        text-transform: none;
+        font-weight: normal;
+        color: govuk-colour("dark-grey");
+        border: 1px solid govuk-colour("mid-grey");
+        float: left;
+        margin-left: 0;
+        min-width: 64px;
+        text-align: center;
+    }
 }
-.opss-tag--risk1 {
-    border-color: govuk-colour("red");
-    color: govuk-colour("red");
-}
-.opss-tag--risk2 {
-    border-color: govuk-colour("dark-grey");
-    color: govuk-colour("dark-grey");
-}
-.opss-tag--covid {
-    background-color: govuk-colour("pink");
-    border-color: govuk-colour("pink");
-    color: govuk-colour("white");
-    text-transform: none;
+
+.opss-sub-form-group {
+    @include govuk-media-query($from: tablet) {
+        background-color: govuk-colour("light-grey");
+        padding: govuk-spacing(4) govuk-spacing(2) govuk-spacing(1) govuk-spacing(4);
+    }
+
+    label:before {
+        background: govuk-colour("white");
+    }
 }
