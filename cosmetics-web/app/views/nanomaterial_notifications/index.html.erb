@@ -4,22 +4,26 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="nanomaterial-notifications-hint">
-      Nanomaterials
-    </h1>
-  </div>
-  <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
-    <%= link_to("Add a nanomaterial",
-                new_responsible_person_nanomaterial_path(@responsible_person),
-                class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset") %>
-  </div>
-</div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <p  id="nanomaterial-notifications-hint" class="govuk-hint govuk-!-width-two-thirds">
-      These are your notified nanomaterials.
-    </p>
+  <div class="govuk-grid-column-full govuk-!-margin-top-4">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="nanomaterial-notifications-hint">
+          Nanomaterials
+        </h1>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+        <%= link_to("Add a nanomaterial",
+                    new_responsible_person_nanomaterial_path(@responsible_person),
+                    class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset") %>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p  id="nanomaterial-notifications-hint" class="govuk-hint govuk-!-width-two-thirds">
+          These are your notified nanomaterials.
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 
