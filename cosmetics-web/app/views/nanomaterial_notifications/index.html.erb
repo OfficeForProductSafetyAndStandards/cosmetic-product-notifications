@@ -39,45 +39,66 @@
 
 <div class="govuk-grid-row">
   <section class="govuk-grid-column-full">
-    <ul class="govuk-list opss-list--borders govuk-!-margin-top-5">
-      <% @nanomaterial_notifications.each do |notification| %>
-        <li>
-          <h2 class="govuk-heading-s">
-            <%= link_to(notification.name, nanomaterial_path(notification), class: "govuk-link govuk-link--no-visited-state") %>
-          </h2>
-          <dl class="govuk-summary-list govuk-summary-list--no-border opss-summary-list opss-summary-list--small">
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Notified in the <abbr>UK</abbr>
-              </dt>
-              <dd class="govuk-summary-list__value">
-                <%= display_full_month_date notification.submitted_at %>
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Notified in the <abbr>EU</abbr>
-              </dt>
-              <dd class="govuk-summary-list__value">
-                <%= if notification.eu_notified
-                      display_full_month_date notification.notified_to_eu_on
-                    else
-                      "No"
-                    end %>
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-              <abbr>UK</abbr> nanomaterial number
-              </dt>
-              <dd class="govuk-summary-list__value">
-                UKN-<%= notification.id %>
-              </dd>
-            </div>
-          </dl>
-        </li>
+    <table id="table-items" class="govuk-table opss-table-items govuk-!-margin-top-5">
+      <caption class="govuk-visually-hidden">
+          Notified Nanomaterials data: 3 columns with each nanomaterial described across 2 rows within its own table body.
+      </caption>
+
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th class="govuk-visually-hidden">&nbsp;</th>
+            <th id="uknotified" scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+            <th id="eunotified" scope="col" class="govuk-table__header"><abbr>EU</abbr> notified</th>
+            <th id="uknumber" scope="col" class="govuk-table__header"><abbr>UK</abbr> nanomaterial number</th>
+        </tr>
+      </thead>
+
+      <% @nanomaterial_notifications.each_with_index do |notification, index| %>
+        <%
+          # Element index to start from 1 instead of 0
+          item = "item-#{index + 1}"
+          meta = "meta-#{index + 1}"
+        %>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th class="govuk-visually-hidden">
+              Name
+            </th>
+            <th id="<%= item %>" colspan="3" scope="colgroup" class="govuk-table__header">
+              <%= link_to(notification.name, nanomaterial_path(notification), class: "govuk-link govuk-link--no-visited-state") %>
+            </th>
+          </tr>
+          <tr class="govuk-table__row">
+            <th headers="<%= item %>" id="<%= meta %>" class="govuk-visually-hidden">
+              Metadata
+            </th>
+            <td headers="uknotified <%= item %> <%= meta %>" class="govuk-table__cell">
+              <%= display_full_month_date notification.submitted_at %>
+            </td>
+            <td headers="eunotified <%= item %> <%= meta %>" class="govuk-table__cell">
+              <%= if notification.eu_notified
+                    display_full_month_date notification.notified_to_eu_on
+                  else
+                    "No"
+                  end %>
+            </td>
+            <td headers="uknumber <%= item %> <%= meta %>" class="govuk-table__cell">
+              <abbr>UKN</abbr>-<%= notification.id %>
+            </td>
+          </tr>
+        </tbody>
       <% end %>
-    </ul>
+      <% if @nanomaterial_notifications.size >= 12 %>
+        <tfoot class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-visually-hidden">&nbsp;</th>
+            <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</abbr></th>
+            <th scope="col" class="govuk-table__header"><abbr>EU</abbr> notified</abbr></th>
+            <th scope="col" class="govuk-table__header"><abbr>UK</abbr> nanomaterial number</th>
+          </tr>
+        </tfoot>
+      <% end %>
+    </table>
     <%= paginate @nanomaterial_notifications, views_prefix: 'pagination' %>
   </section>
 </div>
