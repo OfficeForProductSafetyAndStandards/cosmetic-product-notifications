@@ -544,7 +544,7 @@ DEPENDENCIES
   devise
   devise-security
   dotenv-rails (~> 2.7.5)
-  elasticsearch (~> 7.9)
+  elasticsearch (< 7.14)
   elasticsearch-model (~> 7.1)
   elasticsearch-rails (~> 7.1)
   factory_bot_rails
