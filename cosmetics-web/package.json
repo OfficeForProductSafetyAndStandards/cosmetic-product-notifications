@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@rails/activestorage": "6.1.4",
-    "@rails/webpacker": "5.4.0",
+    "@rails/webpacker": "5.4.2",
     "accessible-autocomplete": "2.0.3",
     "copy-webpack-plugin": "6.4.1",
     "govuk-country-and-territory-autocomplete": "1.0.1",
