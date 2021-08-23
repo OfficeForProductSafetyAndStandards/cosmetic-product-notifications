@@ -3,9 +3,9 @@
 //Don't edit the local production copy as pasting this into it next/each time will overwrite your changes.
 //We can remove linting from this scss file - it won't run if there is a real problem
 
-@import "opss/opss-shared";
-@import "opss/opss-search";
-@import "opss/opss-pagination";
+@import "opss-shared";
+@import "opss-search";
+@import "opss-pagination";
 
 abbr[title]{
     text-decoration: none;
