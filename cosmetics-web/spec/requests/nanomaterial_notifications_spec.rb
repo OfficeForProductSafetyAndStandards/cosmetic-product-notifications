@@ -37,13 +37,13 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       it "lists the submitted nanomaterial notification" do
         submitted_nanomaterial_notification
         get "/responsible_persons/#{responsible_person.id}/nanomaterials"
-        expect(response.body).to have_tag("li h2", text: /#{submitted_nanomaterial_notification.name}/)
+        expect(response.body).to have_tag("th a", text: /#{submitted_nanomaterial_notification.name}/)
       end
 
       it "does not list a non submitted nanomaterial notification" do
         create(:nanomaterial_notification, :not_submitted, name: "Not submitted nano", responsible_person: responsible_person)
         get "/responsible_persons/#{responsible_person.id}/nanomaterials"
-        expect(response.body).not_to have_tag("li h2", text: /"Not submitted nano"/)
+        expect(response.body).not_to have_tag("th a", text: /"Not submitted nano"/)
       end
     end
 
