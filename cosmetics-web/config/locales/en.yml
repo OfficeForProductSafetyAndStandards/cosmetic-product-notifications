@@ -308,6 +308,4 @@ en:
       body: A message with a confirmation link has been sent to your email address. Please follow the link to continue.
   sign_user_in:
     email:
-      wrong_email_or_password: "Enter your email address"
-    password:
-      wrong_email_or_password: "Enter your password"
+      wrong_email_or_password: "Enter correct email address and password"
