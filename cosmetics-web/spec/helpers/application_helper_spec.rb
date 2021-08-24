@@ -90,7 +90,7 @@ describe ApplicationHelper do
         ]
       end
 
-      it "does not display errors whith nil or blank messages" do
+      it "does not display errors with nil or blank messages" do
         view.error_summary(errors)
         expect_error_summary_for([{ text: "Name cannot be blank", href: "#name" }])
       end
