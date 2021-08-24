@@ -52,7 +52,7 @@ module Users
       return unless resource
 
       resource.errors.add(:email, I18n.t(:wrong_email_or_password, scope: "sign_user_in.email"))
-      resource.errors.add(:password, nil)
+      resource.errors.add(:password, I18n.t(:wrong_email_or_password, scope: "sign_user_in.password"))
     end
 
     def set_resource_as_new_user_from_params
