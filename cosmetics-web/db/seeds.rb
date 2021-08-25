@@ -111,7 +111,7 @@ ActiveRecord::Base.transaction do
       eu_notified: true,
       notified_to_eu_on: ((Time.zone.now.to_date - i.days) - 3.years),
       submitted_at: (Time.zone.now.to_date - i.days),
-    )
+    ).file.attach(io: File.open("spec/fixtures/files/testPdf.pdf"), filename: "testPdf.pdf", content_type: "application/pdf")
   end
 end
 
