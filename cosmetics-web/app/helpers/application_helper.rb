@@ -15,7 +15,7 @@ module ApplicationHelper
     ordered_attributes.map { |attr| ordered_errors[attr] = [] }
 
     errors.map do |error|
-      next if error.blank?
+      next if error.blank? || error.message.blank?
 
       href = if map_errors[error.attribute]
                "##{map_errors[error.attribute]}"

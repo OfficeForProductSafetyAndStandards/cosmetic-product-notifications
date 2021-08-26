@@ -79,5 +79,21 @@ describe ApplicationHelper do
         end
       end
     end
+
+    context "when an error is missing a message" do
+      let(:errors) do
+        [
+          OpenStruct.new(attribute: :name, message: "Name cannot be blank"),
+          OpenStruct.new(attribute: :email, message: ""),
+          OpenStruct.new(attribute: :mobile_number, message: "   "),
+          OpenStruct.new(attribute: :fax_number, message: nil),
+        ]
+      end
+
+      it "does not display errors with nil or blank messages" do
+        view.error_summary(errors)
+        expect_error_summary_for([{ text: "Name cannot be blank", href: "#name" }])
+      end
+    end
   end
 end

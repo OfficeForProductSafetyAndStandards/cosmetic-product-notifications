@@ -2,7 +2,7 @@ module ResponsiblePersonConcern
   extend ActiveSupport::Concern
 
   def create_or_join_responsible_person
-    return unless fully_signed_in_submit_user?
+    return unless current_user&.has_completed_registration?
 
     responsible_person = current_responsible_person
 
@@ -41,18 +41,6 @@ module ResponsiblePersonConcern
   end
 
 private
-
-  def fully_signed_in_submit_user?
-    if Rails.configuration.secondary_authentication_enabled
-      current_user&.has_completed_registration? && secondary_authentication_present_in_session?
-    else
-      current_user&.has_completed_registration?
-    end
-  end
-
-  def current_user_fully_registered?
-    current_user && current_user.account_security_completed?
-  end
 
   def pending_invitations
     @pending_invitations ||= PendingResponsiblePersonUser
