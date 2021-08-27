@@ -1,4 +1,4 @@
-<% content_for :page_title, title %>
+<% page_title title, errors: @error_list.present? %>
 <% content_for :after_header do %>
   <% if @notification.notification_complete? %>
     <%= govukBackLink text: "Back", href: responsible_person_notification_path(@responsible_person, @notification) %>
