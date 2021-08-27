@@ -1,9 +1,9 @@
 <% page_title_prefix = safe_join(["Was the EU notified about ", @nanomaterial_notification.name," on CPNP before "]) %>
 <% brexit_date = display_full_month_date(EU_EXIT_DATE) %>
 
-<% page_title "Was the EU notified?", errors: @nanomaterial_notification.errors.any? %>
+<% page_title = "What is the name of the nanomaterial?" %>
 
-<% content_for :page_title, safe_join([page_title_prefix, brexit_date, "?"]) %>
+<% page_title safe_join([page_title_prefix, brexit_date, "?"]), errors: @nanomaterial_notification.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink(text: "Back", href: @previous_page_path) %>
 <% end %>

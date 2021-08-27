@@ -1,5 +1,5 @@
-<% page_title "Upload details about the nanomaterial", errors: @nanomaterial_notification.errors.any? %>
-<% content_for :page_title, page_title %>
+<% page_title = "Upload details about the nanomaterial" %>
+<% page_title page_title, errors: @nanomaterial_notification.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink(text: "Back", href: @previous_page_path) %>
 <% end %>
