@@ -1,7 +1,7 @@
 <% title = "Carcinogenic, mutagenic or reprotoxic substances" %>
 <% question = "Does #{@component_name} contain category 1A or 1B CMR substances?" %>
 
-<% content_for :page_title, title %>
+<% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>

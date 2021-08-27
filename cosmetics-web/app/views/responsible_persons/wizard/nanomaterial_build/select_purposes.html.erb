@@ -4,7 +4,7 @@
     { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose) }
   } %>
 
-<% content_for :page_title, title %>
+<% page_title title, errors: @nano_element.errors.messages.include?(:purposes) %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>

@@ -1,5 +1,5 @@
 <% title = "EU notification ZIP files" %>
-<% content_for :page_title, title %>
+<% page_title title, errors: @error_text.present? %>
 <% content_for :after_header do %>
   <%= link_to "Back", wizard_path(:have_products_been_notified_in_eu), class: "govuk-back-link" %>
 <% end %>

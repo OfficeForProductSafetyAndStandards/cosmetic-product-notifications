@@ -2,7 +2,7 @@
 <% question = "How do you want to give the formulation of #{@component_name}?" %>
 <% items = formulations_types_label.map { |type_key, type_text| { text: type_text, value: type_key.to_sym } } %>
 
-<% content_for :page_title, title %>
+<% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
