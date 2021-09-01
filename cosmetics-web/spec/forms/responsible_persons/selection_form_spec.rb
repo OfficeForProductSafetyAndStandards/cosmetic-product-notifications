@@ -92,7 +92,7 @@ RSpec.describe ResponsiblePersons::SelectionForm do
       let(:available_rps) { [] }
 
       it "only returns the add a new responsible person radio item" do
-        expect(form.radio_items).to eq([{ text: "Add a new Responsible Person", value: :new }])
+        expect(form.radio_items).to eq([{ text: "Add a new Responsible Person", value: "new" }])
       end
     end
 
@@ -103,7 +103,7 @@ RSpec.describe ResponsiblePersons::SelectionForm do
         let(:previous_rp) { available_rps.first }
 
         it "only returns the add a new responsible person radio item" do
-          expect(form.radio_items).to eq([{ text: "Add a new Responsible Person", value: :new }])
+          expect(form.radio_items).to eq([{ text: "Add a new Responsible Person", value: "new" }])
         end
       end
 
@@ -115,7 +115,7 @@ RSpec.describe ResponsiblePersons::SelectionForm do
           expect(form.radio_items).to eq([
             { text: rp.name, value: rp.id },
             { divider: "or" },
-            { text: "Add a new Responsible Person", value: :new },
+            { text: "Add a new Responsible Person", value: "new" },
           ])
         end
       end
@@ -134,7 +134,7 @@ RSpec.describe ResponsiblePersons::SelectionForm do
           expect(form.radio_items).to eq([
             { text: "Responsible Person A", value: available_rps.last.id },
             { divider: "or" },
-            { text: "Add a new Responsible Person", value: :new },
+            { text: "Add a new Responsible Person", value: "new" },
           ])
         end
       end
@@ -147,7 +147,7 @@ RSpec.describe ResponsiblePersons::SelectionForm do
             { text: "Responsible Person A", value: available_rps.last.id },
             { text: "Responsible Person B", value: available_rps.first.id },
             { divider: "or" },
-            { text: "Add a new Responsible Person", value: :new },
+            { text: "Add a new Responsible Person", value: "new" },
           ])
         end
       end
