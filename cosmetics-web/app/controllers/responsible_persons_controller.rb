@@ -9,9 +9,9 @@ class ResponsiblePersonsController < SubmitApplicationController
   def select; end
 
   def change
-    render :select and return unless @responsible_persons_selection_form.valid?
-
-    if @responsible_persons_selection_form.selection == "new"
+    if @responsible_persons_selection_form.invalid?
+      render :select
+    elsif @responsible_persons_selection_form.add_new?
       redirect_to account_path(:select_type)
     else
       set_current_responsible_person(

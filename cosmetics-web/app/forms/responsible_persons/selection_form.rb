@@ -1,5 +1,7 @@
 module ResponsiblePersons
   class SelectionForm < Form
+    NEW = "new".freeze
+
     attribute :selection
     attribute :previous
     attribute :available
@@ -10,13 +12,17 @@ module ResponsiblePersons
       @radio_items ||=
         available.sort_by(&:name).map { |rp| { text: rp.name, value: rp.id } }.tap do |items|
           items << { divider: "or" } if items.any?
-          items << { text: "Add a new Responsible Person", value: :new }
+          items << { text: "Add a new Responsible Person", value: NEW }
         end
     end
 
-    # We remove the currently selected RP as a selection option
+    # Removes the currently selected RP from the selection options
     def available
-      @available ||= super.excluding(previous)
+      @available ||= super.excluding(previous) # "super" access the original attribute value
+    end
+
+    def add_new?
+      selection == NEW
     end
 
   private
