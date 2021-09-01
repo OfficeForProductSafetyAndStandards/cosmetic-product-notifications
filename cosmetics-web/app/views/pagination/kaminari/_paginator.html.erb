@@ -1,5 +1,10 @@
 <%= paginator.render do %>
-  <nav class="opss-pagination-link">
+  <%
+    # We can provide personalised "nav_class: 'css classes'" argument to "paginate" calls
+    nav_css_classes = "opss-pagination-link"
+    nav_css_classes += " #{nav_class}" if defined?(nav_class)
+  %>
+  <nav class="<%= nav_css_classes %>">
     <ul>
       <%= prev_page_tag %>
       <li class="opss-pagination-link__wrap opss-pagination-link--text govuk-body">

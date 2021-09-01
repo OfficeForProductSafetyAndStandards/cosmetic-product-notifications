@@ -61,9 +61,9 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
 
     id = NanomaterialNotification.last.id
     expect(page).to have_link("My nanomaterial")
-    expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
-    expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
-    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+    expect(page).to have_selector("td[headers='uknotified item-1 meta-1']", text: "10 June 2021")
+    expect(page).to have_selector("td[headers='eunotified item-1 meta-1']", text: "No")
+    expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: "UKN-#{id}")
 
     click_link("My nanomaterial")
     expect(page).to have_current_path("/nanomaterials/#{id}")
@@ -101,9 +101,9 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
 
     id = NanomaterialNotification.last.id
     expect(page).to have_link("My EU nanomaterial")
-    expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
-    expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
-    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+    expect(page).to have_selector("td[headers='uknotified item-1 meta-1']", text: "10 June 2021")
+    expect(page).to have_selector("td[headers='eunotified item-1 meta-1']", text: "1 February 2017")
+    expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: "UKN-#{id}")
 
     click_link("My EU nanomaterial")
     expect(page).to have_current_path("/nanomaterials/#{id}")

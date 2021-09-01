@@ -1,4 +1,4 @@
-<% content_for :page_title, "Responsible Person" %>
+<% content_for :page_title, "UK Responsible Person" %>
 <% content_for :after_header do %>
   <%= render "layouts/navbar" %>
 <% end %>
@@ -11,7 +11,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="responsible-person-hint">
-          Responsible Person
+          <abbr>UK</abbr> Responsible Person
         </h1>
       </div>
       <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
@@ -37,9 +37,10 @@
   <div class="govuk-grid-column-full">
 
 
-    <h2 class="govuk-heading-s">Business, individual or sole trader</h2>
+    <h2 class="govuk-heading-m">Business, individual or sole trader</h2>
 
     <%= govukSummaryList(
+      classes: "govuk-!-margin-bottom-8",
       rows: [
         {
           key: { text: "Name" },
@@ -48,11 +49,21 @@
         {
           key: { text: "Address" },
           value: { text: wrap_summary_address(@responsible_person.address_lines) },
+        },
+        {
+          key: { text: "Business type" },
+          value: {
+            text:
+              case @responsible_person.account_type
+              when "individual" then "Individual or sole trader"
+              when "business" then "Limited company or Limited Liability Partnership (LLP)"
+              end
+          },
         }
       ])
     %>
 
-    <h2 class="govuk-heading-s">Assigned contact</h2>
+    <h2 class="govuk-heading-m">Assigned contact</h2>
 
     <% @responsible_person.contact_persons.each do |contact_person| %>
       <%= render "/notifications/contact_person_details", contact_person: contact_person %>
