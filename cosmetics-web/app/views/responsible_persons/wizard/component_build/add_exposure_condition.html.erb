@@ -2,7 +2,7 @@
 <% question = "Is #{@component_name} intended to be rinsed off or left on?" %>
 <% items = NanoMaterial.exposure_conditions.map { |key, value| { text: get_exposure_condition_name(key), value: value } } %>
 
-<% content_for :page_title, title %>
+<% page_title title, errors: @component.errors.messages.include?(:"nano_material.exposure_condition") %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>

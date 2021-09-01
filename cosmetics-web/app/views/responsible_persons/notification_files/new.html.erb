@@ -1,4 +1,4 @@
-<% content_for :page_title, "Upload your EU notification files" %>
+<% page_title "Upload your EU notification files", errors: @errors.present? %>
 <% content_for :after_header do %>
   <%= link_to "Back", responsible_person_add_notification_path(@responsible_person, :do_you_have_files_from_eu_notification),
           class: "govuk-back-link" %>

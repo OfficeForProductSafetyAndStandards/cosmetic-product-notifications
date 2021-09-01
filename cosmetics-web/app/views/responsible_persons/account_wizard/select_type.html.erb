@@ -1,4 +1,4 @@
-<% content_for :page_title, "Responsible person type" %>
+<% page_title "Responsible person type", errors: @responsible_person.errors.any? %>
 <% content_for :after_header do %>
   <% default_back_path =  if current_user.responsible_persons.none?
                             wizard_path(:create_or_join_existing)

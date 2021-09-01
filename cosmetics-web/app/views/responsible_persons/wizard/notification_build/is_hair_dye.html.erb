@@ -1,6 +1,6 @@
 <% question = "Does the product contain hair dye?" %>
 
-<% content_for :page_title, question %>
+<% page_title question, errors: @notification.errors.any? %>
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>
