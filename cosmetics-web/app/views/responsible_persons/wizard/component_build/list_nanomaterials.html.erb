@@ -1,7 +1,7 @@
 <% title = "List nanomaterials" %>
 <% question = "List the nanomaterials in #{@component_name}" %>
 
-<% content_for :page_title, title %>
+<% page_title title, errors: @nano_material.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>

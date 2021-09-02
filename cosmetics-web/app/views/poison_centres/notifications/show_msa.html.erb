@@ -1,4 +1,4 @@
-<% content_for :page_title, "Product details" %>
+<% content_for :page_title, safe_join(["Product details: ", @notification.product_name]) %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: poison_centre_notifications_path(search_params) %>
 <% end %>
@@ -12,5 +12,3 @@
     <%= render "notifications/product_details", notification: @notification, allow_edits: false %>
   </div>
 </div>
-
-

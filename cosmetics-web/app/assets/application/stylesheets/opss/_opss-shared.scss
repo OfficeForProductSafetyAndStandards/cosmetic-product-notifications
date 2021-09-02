@@ -32,10 +32,21 @@ h1, h2, h3, h4,
 .govuk-heading-xl,
 .govuk-heading-l,
 .govuk-heading-m,
+.govuk-heading-s,
+.govuk-heading-l a,
+.govuk-heading-m a,
+.govuk-heading-s a,
 .app-task-list li,
 .app-task-list li a {
     @include word-wrap;
 }
+
+tbody th.govuk-table__header,
+tbody th.govuk-table__header a,
+tbody td a[href^="mailto:"] {
+    @include word-wrap;
+}
+
 h1.govuk-fieldset__heading,
 h1.govuk-label-wrapper label.govuk-label--l {
     overflow-wrap: normal; word-wrap: normal; word-break: normal; hyphens: unset;

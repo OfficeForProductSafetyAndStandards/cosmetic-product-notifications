@@ -19,7 +19,8 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     select_secondary_authentication_sms
     complete_secondary_authentication_sms_with(submit_user.reload.direct_otp)
     # No current responsible person in session - so redirected to select page
-    click_on name_1
+    choose name_1
+    click_on "Save and continue"
   end
 
   scenario "Changing responsible person" do
@@ -30,22 +31,23 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
     click_on "Change the Responsible Person"
-    click_on name_2
+    choose name_2
+    click_on "Save and continue"
     expect_to_be_on_responsible_person_notifications_page(responsible_person_2)
   end
 
   scenario "Attempting to visit different from current responsible person pages redirects to change responsible person page" do
     visit("/responsible_persons/#{responsible_person_2.id}/notifications")
-    expect(page).to have_css("h1", text: "Choose Responsible Person")
+    expect(page).to have_h1("Change Responsible Person")
 
     visit("/responsible_persons/#{responsible_person_2.id}/nanomaterials")
-    expect(page).to have_css("h1", text: "Choose Responsible Person")
+    expect(page).to have_h1("Change Responsible Person")
 
     visit("/responsible_persons/#{responsible_person_2.id}")
-    expect(page).to have_css("h1", text: "Choose Responsible Person")
+    expect(page).to have_h1("Change Responsible Person")
 
     visit("/responsible_persons/#{responsible_person_2.id}/team_members")
-    expect(page).to have_css("h1", text: "Choose Responsible Person")
+    expect(page).to have_h1("Change Responsible Person")
   end
 
   scenario "Adding new responsible person" do
@@ -56,7 +58,9 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
     click_on "Change the Responsible Person"
-    click_on "Add new Responsible Person"
+    expect(page).to have_h1("Change Responsible Person")
+    choose "Add a new Responsible Person"
+    click_on "Save and continue"
 
     select_rp_business_account_type
     expect(page).to have_h1("UK Responsible Person details")
@@ -77,7 +81,9 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
     click_on "Change the Responsible Person"
-    click_on "Add new Responsible Person"
+    expect(page).to have_h1("Change Responsible Person")
+    choose "Add a new Responsible Person"
+    click_on "Save and continue"
 
     select_rp_business_account_type
     expect(page).to have_h1("UK Responsible Person details")
@@ -96,7 +102,9 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
 
     visit "/responsible_persons/select"
-    click_on name_2
+    expect(page).to have_h1("Change Responsible Person")
+    choose name_2
+    click_on "Save and continue"
 
     visit "/"
     click_on "Your cosmetic products"

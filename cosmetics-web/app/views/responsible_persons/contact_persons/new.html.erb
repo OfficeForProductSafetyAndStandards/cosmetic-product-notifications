@@ -1,4 +1,4 @@
-<% content_for :page_title, "New contact person" %>
+<% page_title "New contact person", errors: @contact_person.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: account_path(:select_type) %>
 <% end %>
