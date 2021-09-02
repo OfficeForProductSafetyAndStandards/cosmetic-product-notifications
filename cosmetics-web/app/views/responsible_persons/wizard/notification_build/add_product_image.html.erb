@@ -1,6 +1,6 @@
 <% page_title = @notification.is_multicomponent? ? "Upload images of the item labels" : "Upload an image of the product label" %>
 
-<% content_for :page_title, page_title %>
+<% page_title page_title, errors: @notification.errors.messages.include?(:image_uploads) %>
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>

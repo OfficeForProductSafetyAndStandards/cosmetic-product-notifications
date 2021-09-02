@@ -2,7 +2,7 @@
 <% question = title %>
 <% items = [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }, { text: "Not sure", value: "not sure" }] %>
 
-<% content_for :page_title, title %>
+<% page_title title, errors: @nano_element.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>

@@ -212,6 +212,11 @@ en:
             email:
               taken_team: "This email address already belongs to member of this team"
               taken: "This person has already been invited to this team"
+        responsible_persons/selection_form:
+          attributes:
+            selection:
+              blank_with_rp_list: "Select a Responsible Person or add a new Responsible Person"
+              blank_without_rp_list: "Select add a new Responsible Person"
         secondary_authentication/app/auth_form:
           attributes:
             otp_code:

@@ -1,5 +1,5 @@
 <% title = "Has the EU been notified about these products using CPNP?" %>
-<% content_for :page_title, title %>
+<% page_title title, errors: @error_text.present? %>
 <% content_for :after_header do %>
   <%= link_to "Back", responsible_person_notifications_path(@responsible_person), class: "govuk-back-link" %>
 <% end %>

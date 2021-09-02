@@ -1,5 +1,5 @@
 <% title = "Internal reference" %>
-<% content_for :page_title, title %>
+<% page_title title, errors: @notification.errors.any? %>
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>
@@ -32,7 +32,3 @@
 
     </div>
   </div>
-
-
-
-

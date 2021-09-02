@@ -1,6 +1,6 @@
 <% question = "pH range of the product when mixed as instructed" %>
 
-<% content_for :page_title, question %>
+<% page_title question, errors: @notification.errors.any? %>
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>
@@ -30,4 +30,3 @@
     </div>
   </div>
 <% end %>
-
