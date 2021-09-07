@@ -9,12 +9,23 @@ describe ApplicationHelper do
       end
     end
 
+    let(:form_class) do
+      Class.new do
+        include ActiveModel::Model
+
+        def [](attr)
+        end
+      end
+    end
+
     let(:view) { view_class.new }
+    let(:form) { form_class.new }
+
     let(:errors) do
       [
-        OpenStruct.new(attribute: :name, message: "Name cannot be blank"),
-        OpenStruct.new(attribute: :email, message: "Email cannot be blank"),
-        OpenStruct.new(attribute: :mobile_number, message: "Mobile number is too short"),
+        OpenStruct.new(attribute: :name, message: "Name cannot be blank", base: form),
+        OpenStruct.new(attribute: :email, message: "Email cannot be blank", base: form),
+        OpenStruct.new(attribute: :mobile_number, message: "Mobile number is too short", base: form),
       ]
     end
 
@@ -83,10 +94,10 @@ describe ApplicationHelper do
     context "when an error is missing a message" do
       let(:errors) do
         [
-          OpenStruct.new(attribute: :name, message: "Name cannot be blank"),
-          OpenStruct.new(attribute: :email, message: ""),
-          OpenStruct.new(attribute: :mobile_number, message: "   "),
-          OpenStruct.new(attribute: :fax_number, message: nil),
+          OpenStruct.new(attribute: :name, message: "Name cannot be blank", base: form),
+          OpenStruct.new(attribute: :email, message: "", base: form),
+          OpenStruct.new(attribute: :mobile_number, message: "   ", base: form),
+          OpenStruct.new(attribute: :fax_number, message: nil, base: form),
         ]
       end
 
