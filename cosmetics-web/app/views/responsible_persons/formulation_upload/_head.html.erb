@@ -1,4 +1,4 @@
-<% content_for :page_title, "Upload formulation document" %>
+<% page_title "Upload formulation document", errors: @error_list.present? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: back_link %>
 <% end %>

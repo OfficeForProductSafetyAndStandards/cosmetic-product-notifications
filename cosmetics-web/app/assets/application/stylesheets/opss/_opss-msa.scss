@@ -11,20 +11,9 @@ abbr[title]{
     text-decoration: none;
 }
 
-.govuk-form-group.opss-float-right {//used for sort selects
-    @include govuk-media-query($from: tablet) {
-       text-align: right; display: inline-block; width: 100%;//yes this is text align
-    }
-}
 .opss-text-align-right {
     @include govuk-media-query($from: tablet) {
-        float: right;//yes this is float
-    }
-}
-
-.govuk-accordion__section-content .govuk-grid-column-full > .govuk-link.opss-text-align-right {
-    @include govuk-media-query($from: tablet) {
-        margin-right: - govuk-spacing(3);//small dismiss link on notifications Errors accordion
+        text-align: right; display: inline-block; width: 100%;
     }
 }
 
@@ -255,7 +244,6 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     overflow: hidden;
 }
 
-
 .opss-float-left {
     float: left;
 }
@@ -263,7 +251,6 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
 .opss-float-right {
     float: right;
 }
-
 
 .opss-list--borders {
     li {

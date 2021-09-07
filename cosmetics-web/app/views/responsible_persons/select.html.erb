@@ -1,10 +1,41 @@
-<h1 class="govuk-heading-l">Choose Responsible Person</h1>
+<%
+  previous_present = @responsible_persons_selection_form.previous.present?
+  prefix = if previous_present
+            @responsible_persons_selection_form.available.none? ? "Add" : "Change"
+          else
+            "Select the"
+          end
+  title = prefix + " Responsible Person"
+%>
+<% content_for :page_title, title %>
 <% content_for :after_header do %>
   <%= link_to "Back", responsible_person_path(current_responsible_person), class: "govuk-back-link" if current_responsible_person %>
 <% end %>
-<ul class="govuk-list govuk-!-margin-bottom-6">
-  <% current_user.responsible_persons.each do |rp| %>
-    <li><%= link_to rp.name, change_responsible_person_path(rp), class: 'govuk-link govuk-link--no-visited-state' %></li>
-  <% end %>
-</ul>
-<%= link_to "Add new Responsible Person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 govuk-body' %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= error_summary_for(@responsible_persons_selection_form,
+                        first_values: { selection: @responsible_persons_selection_form.radio_items.first[:value] }) %>
+    <%= form_with model: @responsible_persons_selection_form, url: select_responsible_persons_path, method: :post, html: { novalidate: true } do |form| %>
+      <% heading = capture do %>
+        <h1 class="govuk-fieldset__heading">
+          <%= title %>
+        </h1>
+      <% end %>
+
+      <%= render("form_components/govuk_radios",
+                form: form,
+                key: :selection,
+                idPrefix: "change-rp",
+                fieldset: { legend: { html: heading, classes: "govuk-fieldset__legend govuk-fieldset__legend--l" } },
+                hint: previous_present ? { text: "Replace #{ @responsible_persons_selection_form.previous.name } as the Responsible Person."  } : nil,
+                classes: "govuk-!-padding-top-3 govuk-!-padding-bottom-1",
+                items: @responsible_persons_selection_form.radio_items) %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+        <%= link_to("Cancel",
+                    responsible_person_path(current_responsible_person),
+                    class: "govuk-link govuk-link--no-visited-state") if current_responsible_person %>
+      </div>
+    <% end %>
+  </div>
+</div>

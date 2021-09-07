@@ -1,6 +1,6 @@
 <% title = "List the shades #{@component_name} is available in" %>
 
-<% content_for :page_title, title %>
+<% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
