@@ -1,6 +1,5 @@
 module GovUK
   class DateFromForm
-
     IncompleteDate = Struct.new(:year, :month, :day) do
       attr_reader :error_fields
 
@@ -48,7 +47,8 @@ module GovUK
         struct_from_hash
       end
     end
-    private
+
+  private
 
     def struct_from_hash
       IncompleteDate.new(@date[:year], @date[:month], @date[:day])

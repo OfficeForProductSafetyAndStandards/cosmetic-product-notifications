@@ -13,8 +13,7 @@ describe ApplicationHelper do
       Class.new do
         include ActiveModel::Model
 
-        def [](attr)
-        end
+        def [](attr); end
       end
     end
 

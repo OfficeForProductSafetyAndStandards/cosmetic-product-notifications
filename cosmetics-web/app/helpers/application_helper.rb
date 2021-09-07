@@ -24,7 +24,7 @@ module ApplicationHelper
                if field.respond_to?(:first_error_field) && field.first_error_field.present?
                  "#{error.attribute}_#{field.first_error_field}"
                else
-                error.attribute
+                 error.attribute
                end
              end
 
@@ -68,15 +68,15 @@ module ApplicationHelper
   def error_class(search_form, attribute, part)
     if (attr = search_form[attribute]).is_a? GovUK::DateFromForm::IncompleteDate
       if attr.error_fields.present?
-        search_form.errors[attribute].present? ? 'govuk-input--error'.html_safe : ''
-        if attr.error_fields.keys.include? part
-          'govuk-input--error'.html_safe
+        search_form.errors[attribute].present? ? "govuk-input--error".html_safe : ""
+        if attr.error_fields.key? part
+          "govuk-input--error".html_safe
         end
       else
-        search_form.errors[attribute].present? ? 'govuk-input--error'.html_safe : ''
+        search_form.errors[attribute].present? ? "govuk-input--error".html_safe : ""
       end
     else
-      search_form.errors[attribute].present? ? 'govuk-input--error'.html_safe : ''
+      search_form.errors[attribute].present? ? "govuk-input--error".html_safe : ""
     end
   end
 end
