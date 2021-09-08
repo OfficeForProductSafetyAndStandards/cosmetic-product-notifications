@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Registration::AccountSecurityForm do
   let(:full_name) { "Mr New Name" }
-  let(:password) { "foobarbaz" }
+  let(:password) { "testpassword" }
   let(:mobile_number) { "07000 000 000" }
   let(:user) { build_stubbed(:submit_user) }
   let(:secret_key) { "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7" }

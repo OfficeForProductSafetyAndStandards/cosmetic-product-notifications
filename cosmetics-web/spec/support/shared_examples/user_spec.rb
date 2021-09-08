@@ -2,6 +2,14 @@ require "rails_helper"
 
 RSpec.shared_examples "common user tests" do
   describe "validations" do
+    context "when password is too common" do
+      it "should not validate user" do
+        user.password = "password"
+        expect(user).not_to be_valid
+        expect(user.errors[:password]).to include("Choose a less frequently used password")
+      end
+    end
+
     it "requires email to be present" do
       user.email = nil
       expect(user).not_to be_valid
