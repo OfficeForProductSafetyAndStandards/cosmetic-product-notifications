@@ -8,7 +8,7 @@ RSpec.describe CommonPasswordValidator do
 
       validates :password,
                 common_password: {
-                  message: "Choose a less frequently used password",
+                  message: "Choose a less frequently used password"
                 }
 
       def self.name
@@ -17,14 +17,9 @@ RSpec.describe CommonPasswordValidator do
     }.new
   end
 
-  # To avoid tests depending on the actual file content.
-  before do
-    allow(File).to receive(:foreach).and_yield("password").and_yield("testpassword")
-  end
-
   context "with passwords listed in the common passwords file" do
     before do
-      validator.password = "testpassword"
+      validator.password = "password"
       validator.validate
     end
 
