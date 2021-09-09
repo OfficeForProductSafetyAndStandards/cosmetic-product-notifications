@@ -179,7 +179,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
   describe "validations" do
     context "when the password is too short" do
-      let(:password) { "foobar" }
+      let(:password) { "Fo)ba5" }
 
       it "is invalid" do
         expect(form).not_to be_valid
