@@ -1,6 +1,6 @@
 namespace :elastic_search do
   desc "Reindex Elastic Search"
   task reindex: :environment do
-    ReindexElasticsearchJob.perform_later
+    ReindexElasticsearchJob.perform_now
   end
 end
