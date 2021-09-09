@@ -9,18 +9,11 @@ RSpec.describe "Manual notifications", :with_stubbed_antivirus, type: :feature d
   end
 
   scenario "Manual, exact ingredients, single item, with CMRS, no nanomaterials" do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    expect_back_link_to_notifications_page
-    answer_was_eu_notified_with "No"
-
-    expect_to_be_on__are_you_likely_to_notify_eu_page
-    expect_back_link_to_was_eu_notified_about_products_page
-    answer_are_you_likely_to_notify_eu_with "No"
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_on "Add a cosmetic product"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_are_you_likely_to_notify_eu_page
+    expect_back_link_to_notifications_page
     answer_product_name_with "SkinSoft tangerine shampoo"
 
     expect_to_be_on__internal_reference_page
@@ -115,18 +108,11 @@ RSpec.describe "Manual notifications", :with_stubbed_antivirus, type: :feature d
   end
 
   scenario "Manual, exact ingredients, single item, no nanomaterials" do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    expect_back_link_to_notifications_page
-    answer_was_eu_notified_with "No"
-
-    expect_to_be_on__are_you_likely_to_notify_eu_page
-    expect_back_link_to_was_eu_notified_about_products_page
-    answer_are_you_likely_to_notify_eu_with "No"
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_on "Add a cosmetic product"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_are_you_likely_to_notify_eu_page
+    expect_back_link_to_notifications_page
     answer_product_name_with "SkinSoft tangerine shampoo"
 
     expect_to_be_on__internal_reference_page
@@ -215,18 +201,11 @@ RSpec.describe "Manual notifications", :with_stubbed_antivirus, type: :feature d
   end
 
   scenario "Manual, ingredient ranges, single item, no nanomaterials" do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    expect_back_link_to_notifications_page
-    answer_was_eu_notified_with "No"
-
-    expect_to_be_on__are_you_likely_to_notify_eu_page
-    expect_back_link_to_was_eu_notified_about_products_page
-    answer_are_you_likely_to_notify_eu_with "No"
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_on "Add a cosmetic product"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_are_you_likely_to_notify_eu_page
+    expect_back_link_to_notifications_page
     answer_product_name_with "SkinSoft tangerine shampoo"
 
     expect_to_be_on__internal_reference_page
@@ -315,18 +294,11 @@ RSpec.describe "Manual notifications", :with_stubbed_antivirus, type: :feature d
   end
 
   scenario "Manual, frame formulation, single item, no nanomaterials" do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    expect_back_link_to_notifications_page
-    answer_was_eu_notified_with "No"
-
-    expect_to_be_on__are_you_likely_to_notify_eu_page
-    expect_back_link_to_was_eu_notified_about_products_page
-    answer_are_you_likely_to_notify_eu_with "No"
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_on "Add a cosmetic product"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_are_you_likely_to_notify_eu_page
+    expect_back_link_to_notifications_page
     answer_product_name_with "SkinSoft tangerine shampoo"
 
     expect_to_be_on__internal_reference_page
@@ -419,18 +391,11 @@ RSpec.describe "Manual notifications", :with_stubbed_antivirus, type: :feature d
   end
 
   scenario "Manual, frame formulation (with poisonous ingredients), single item, no nanomaterials" do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    expect_back_link_to_notifications_page
-    answer_was_eu_notified_with "No"
-
-    expect_to_be_on__are_you_likely_to_notify_eu_page
-    expect_back_link_to_was_eu_notified_about_products_page
-    answer_are_you_likely_to_notify_eu_with "No"
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_on "Add a cosmetic product"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_are_you_likely_to_notify_eu_page
+    expect_back_link_to_notifications_page
     answer_product_name_with "SkinSoft tangerine shampoo"
 
     expect_to_be_on__internal_reference_page
@@ -529,18 +494,11 @@ RSpec.describe "Manual notifications", :with_stubbed_antivirus, type: :feature d
   end
 
   scenario "Manual, frame formulation, multi-item, no nanomaterials, no poison" do
-    visit new_responsible_person_add_notification_path(responsible_person)
-
-    expect_to_be_on__was_eu_notified_about_products_page
-    expect_back_link_to_notifications_page
-    answer_was_eu_notified_with "Yes"
-
-    expect_to_be_on__do_you_have_the_zip_files_page
-    expect_back_link_to_was_eu_notified_about_products_page
-    answer_do_you_have_zip_files_with "No, I’ll enter information manually"
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_on "Add a cosmetic product"
 
     expect_to_be_on__what_is_product_called_page
-    expect_back_link_to_do_you_have_the_zip_files_page
+    expect_back_link_to_notifications_page
     answer_product_name_with "SkinSoft strawberry blonde hair dye"
 
     expect_to_be_on__internal_reference_page
