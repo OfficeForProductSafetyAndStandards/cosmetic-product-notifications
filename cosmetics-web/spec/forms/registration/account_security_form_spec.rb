@@ -191,6 +191,17 @@ RSpec.describe Registration::AccountSecurityForm do
       end
     end
 
+    context "when password is too common" do
+      let(:password) { "passowrd" }
+
+      it "does not validate user" do
+        user.password = "password"
+        expect(form).not_to be_valid
+        expect(form.errors[:password]).to include("Choose a less frequently used password")
+      end
+    end
+
+
     describe "name validations" do
       let(:form) do
         described_class.new(password: password,
