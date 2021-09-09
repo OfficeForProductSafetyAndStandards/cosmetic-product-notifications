@@ -15,8 +15,7 @@ class User < ApplicationRecord
   validates :new_email, email: { message: :invalid, allow_nil: true }
   validates :new_email, uniqueness: true, allow_nil: true
   validate  :new_email_not_registered
-  validates :password,
-            common_password: { message: I18n.t(:too_common, scope: %i[activerecord errors models user attributes password]) }
+  validates :password, common_password: { message: :too_common }
 
   validates :name, presence: true, unless: -> { invite }
 
