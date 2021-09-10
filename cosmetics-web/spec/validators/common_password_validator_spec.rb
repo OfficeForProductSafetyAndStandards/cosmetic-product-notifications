@@ -8,7 +8,7 @@ RSpec.describe CommonPasswordValidator do
 
       validates :password,
                 common_password: {
-                  message: "Choose a less frequently used password"
+                  message: "Choose a less frequently used password",
                 }
 
       def self.name
