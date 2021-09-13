@@ -74,9 +74,9 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_link("Bath Bubbles")
 
     choose "Date"
-    fill_in "notification_search_form_date_exact_day",   with: bath_bubbles.notification_complete_at.day
-    fill_in "notification_search_form_date_exact_month", with: bath_bubbles.notification_complete_at.month
-    fill_in "notification_search_form_date_exact_year",  with: bath_bubbles.notification_complete_at.year
+    fill_in "date_exact_day",   with: bath_bubbles.notification_complete_at.day
+    fill_in "date_exact_month", with: bath_bubbles.notification_complete_at.month
+    fill_in "date_exact_year",  with: bath_bubbles.notification_complete_at.year
 
     click_on "Apply"
 

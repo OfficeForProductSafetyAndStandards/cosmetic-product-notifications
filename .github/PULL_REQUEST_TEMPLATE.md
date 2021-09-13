@@ -3,6 +3,13 @@
 ## Description
 <!--- Describe your changes in detail -->
 
+## Review apps
+
+
+<!--- Edit links after PR is created -->
+https://cosmetics-pr-xxxx-submit-web.london.cloudapps.digital/
+https://cosmetics-pr-xxxx-search-web.london.cloudapps.digital/
+
 ## Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 - [ ] Automated checks are passing locally.
