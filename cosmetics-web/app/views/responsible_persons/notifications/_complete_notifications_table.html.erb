@@ -7,11 +7,8 @@
     <tr class="govuk-table__row">
 
       <th scope="col" class="govuk-table__header">Product</th>
-
-      <th scope="col" class="govuk-table__header">Notified in the <abbr>UK</abbr></th>
-
+      <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
       <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> <span class="govuk-visually-hidden">cosmetic product </span>number</th>
-
       <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
 
     </tr>
@@ -31,4 +28,14 @@
       </tr>
     <% end %>
   </tbody>
+  <% if @registered_notifications.length > 11 %>
+    <tfoot class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Product</th>
+        <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+        <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> <span class="govuk-visually-hidden">cosmetic product </span>number</th>
+        <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
+      </tr>
+    </tfoot>
+  <% end %>
 </table>
