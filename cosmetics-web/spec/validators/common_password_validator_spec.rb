@@ -8,7 +8,7 @@ RSpec.describe CommonPasswordValidator do
 
       validates :password,
                 common_password: {
-                  message: "Choose a less frequently used password",
+                  message: "Choose a password that is harder to guess",
                 }
 
       def self.name
@@ -29,7 +29,7 @@ RSpec.describe CommonPasswordValidator do
 
     it "populates an error message" do
       expect(validator.errors.messages[:password])
-        .to eq ["Choose a less frequently used password"]
+        .to eq ["Choose a password that is harder to guess"]
     end
   end
 

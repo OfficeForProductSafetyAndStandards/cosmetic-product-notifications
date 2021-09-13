@@ -196,7 +196,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
       it "does not validate user" do
         expect(form).not_to be_valid
-        expect(form.errors[:password]).to include("Choose a less frequently used password")
+        expect(form.errors[:password]).to include("Choose a password that is harder to guess")
       end
     end
 
