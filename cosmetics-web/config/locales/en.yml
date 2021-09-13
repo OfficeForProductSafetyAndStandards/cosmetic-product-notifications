@@ -165,19 +165,19 @@ en:
             date_exact:
               in_future: Notification date must be today or in the past
               blank: Enter a notification date
-              must_be_real: Notification date must be a real date
-              incomplete: Notification date must include a %{missing_date_parts}
+              must_be_real: The notification date must be a real date
+              incomplete: The notification date must include a %{missing_date_parts}
             date_from:
               blank: Enter a From date
-              in_future: From date must be today or in the past
-              must_be_real: 'From date must be a real date'
-              incomplete: From date must include a %{missing_date_parts}
+              in_future: The From date must be today or in the past
+              must_be_real: 'The From date must be a real date'
+              incomplete: The From date must include a %{missing_date_parts}
             date_to:
               blank: Enter a To date
               in_future: From date cannot be set for the future
-              must_be_real: 'To date must be a real date'
-              incomplete: To date must include a %{missing_date_parts}
-              date_from_is_later_than_date_to: To date must be after From date
+              must_be_real: 'The To date must be a real date'
+              incomplete: The To date must include a %{missing_date_parts}
+              date_from_is_later_than_date_to: The to date must be after From date
         registration/new_account_form:
           attributes:
             full_name:
