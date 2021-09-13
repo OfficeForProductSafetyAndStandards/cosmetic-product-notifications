@@ -41,7 +41,7 @@ ActiveRecord::Base.transaction do
     name: "John Doe",
     has_accepted_declaration: true,
     email: "search@example.org",
-    password: "password",
+    password: "testpassword",
     failed_attempts: 0,
     second_factor_attempts_count: 0,
     secondary_authentication_operation: "secondary_authentication",

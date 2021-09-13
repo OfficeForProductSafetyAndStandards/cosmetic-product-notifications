@@ -14,7 +14,10 @@ class User < ApplicationRecord
   validate  :email_not_pending_change_for_other_user
   validates :new_email, email: { message: :invalid, allow_nil: true }
   validates :new_email, uniqueness: true, allow_nil: true
+
   validate  :new_email_not_registered
+
+  validates :password, common_password: { message: :too_common }
 
   validates :name, presence: true, unless: -> { invite }
 
