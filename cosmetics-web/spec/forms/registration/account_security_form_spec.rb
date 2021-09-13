@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Registration::AccountSecurityForm do
   let(:full_name) { "Mr New Name" }
-  let(:password) { "foobarbaz" }
+  let(:password) { "testpassword" }
   let(:mobile_number) { "07000 000 000" }
   let(:user) { build_stubbed(:submit_user) }
   let(:secret_key) { "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7" }
@@ -179,7 +179,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
   describe "validations" do
     context "when the password is too short" do
-      let(:password) { "foobar" }
+      let(:password) { "Fo)ba5" }
 
       it "is invalid" do
         expect(form).not_to be_valid
@@ -188,6 +188,15 @@ RSpec.describe Registration::AccountSecurityForm do
       it "contains errors" do
         form.valid?
         expect(form.errors.full_messages_for(:password)).to eq ["Password must be at least 8 characters"]
+      end
+    end
+
+    context "when password is too common" do
+      let(:password) { "password" }
+
+      it "does not validate user" do
+        expect(form).not_to be_valid
+        expect(form.errors[:password]).to include("Choose a password that is harder to guess")
       end
     end
 
