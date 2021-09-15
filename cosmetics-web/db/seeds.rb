@@ -90,7 +90,7 @@ ActiveRecord::Base.transaction do
       email: email,
       name: name,
       account_security_completed: true,
-      password: "password",
+      password: "testpassword",
       secondary_authentication_methods: %w[sms],
       mobile_number: "07700 900000",
       mobile_number_verified: true,
