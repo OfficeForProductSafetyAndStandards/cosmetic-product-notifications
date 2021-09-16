@@ -452,8 +452,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     expect(page).to have_current_path("/create-an-account")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter a valid full name", href: "#full_name")
-    expect(page).to have_css("span#full_name-error", text: "Enter a valid full name")
+    expect(page).to have_link("Enter a valid name", href: "#full_name")
+    expect(page).to have_css("span#full_name-error", text: "Enter a valid name")
   end
 
   def expect_to_be_on_check_your_email_page
