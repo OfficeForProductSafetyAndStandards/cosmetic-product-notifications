@@ -182,6 +182,7 @@ en:
           attributes:
             full_name:
               blank: "Enter your full name"
+              invalid: "Enter a valid full name"
         registration/account_security_form:
           attributes:
             app_authentication_code:
