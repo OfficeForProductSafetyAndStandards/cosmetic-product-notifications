@@ -3,6 +3,8 @@ module Registration
     attribute :full_name
 
     validates_presence_of :full_name
+    validate :full_name_not_spam
+
     include EmailFormValidation
 
     def save
@@ -34,6 +36,17 @@ module Registration
         ).deliver_later
       else
         user.resend_confirmation_instructions
+      end
+    end
+
+    def full_name_not_spam
+      return if full_name.blank?
+
+      %w[: @ /].each do |invalid|
+        if full_name.include? invalid
+          errors.add(:full_name, :invalid)
+          break
+        end
       end
     end
   end

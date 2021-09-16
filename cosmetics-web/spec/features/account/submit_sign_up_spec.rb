@@ -441,6 +441,21 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
   end
 
+  scenario "spam user attempts to sign up" do
+    visit "/"
+    click_on "Create an account"
+    expect(page).to have_current_path("/create-an-account")
+
+    fill_in "Full name", with: "Hello join http://spam.com"
+    fill_in "Email address", with: "signing_up@example.com"
+    click_button "Continue"
+
+    expect(page).to have_current_path("/create-an-account")
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Enter a valid full name", href: "#full_name")
+    expect(page).to have_css("span#full_name-error", text: "Enter a valid full name")
+  end
+
   def expect_to_be_on_check_your_email_page
     expect(page).to have_css("h1", text: "Check your email")
     expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")
