@@ -1,13 +1,13 @@
 module Registration
   class NewAccountForm < Form
-    BANNED_STRINGS = %w[: @ / http www].freeze
+    BANNED_REGEXP = /:|\/|@|www|http/.freeze
     FULL_NAME_MAX_LENGTH = 50
 
     attribute :full_name
 
     validates_presence_of :full_name
     validates :full_name, length: { maximum: FULL_NAME_MAX_LENGTH }
-    validate :full_name_not_spam
+    validate :full_name_allowed
 
     include EmailFormValidation
 
@@ -43,15 +43,10 @@ module Registration
       end
     end
 
-    def full_name_not_spam
+    def full_name_allowed
       return if full_name.blank?
 
-      BANNED_STRINGS.each do |banned|
-        if full_name.include? banned
-          errors.add(:full_name, :invalid)
-          break
-        end
-      end
+      errors.add(:full_name, :invalid) if BANNED_REGEXP.match? full_name
     end
   end
 end
