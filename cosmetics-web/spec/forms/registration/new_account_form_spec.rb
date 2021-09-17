@@ -40,7 +40,7 @@ RSpec.describe Registration::NewAccountForm do
     end
 
     context "when the name is too long" do
-      let(:full_name) { "Hey John, this is actionfraud and not an spam email so you should totally believe us and don't be suspicious" }
+      let(:full_name) { "Hey John this is actionfraud and not an spam email so you should totally believe us and don't be suspicious" }
 
       include_examples "invalid name", "Name must not exceed 50 characters"
     end
@@ -53,6 +53,9 @@ RSpec.describe Registration::NewAccountForm do
         "Money is waiting at http://spam.com/dad33424sfksd",
         "<script>alert('hello')</script>",
         "<a href='spamurl'>",
+        "Hello Jane, we have an offer for you",
+        "Hello Sarah. There is an offer for you",
+        "Welcome Jane\nYou can join us at",
       ]
 
       invalid_names.each do |invalid_name|
