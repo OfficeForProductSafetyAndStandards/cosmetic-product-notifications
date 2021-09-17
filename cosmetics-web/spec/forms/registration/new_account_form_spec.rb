@@ -51,6 +51,8 @@ RSpec.describe Registration::NewAccountForm do
         "John welcome to www.spammyaddress.com",
         "John download a file from ftp:spamurl.co/resource",
         "Money is waiting at http://spam.com/dad33424sfksd",
+        "<script>alert('hello')</script>",
+        "<a href='spamurl'>",
       ]
 
       invalid_names.each do |invalid_name|

@@ -1,6 +1,6 @@
 module Registration
   class NewAccountForm < Form
-    BANNED_REGEXP = /:|\/|@|www|http/.freeze
+    BANNED_REGEXP = /:|\/|@|www|http|<|>/.freeze
     FULL_NAME_MAX_LENGTH = 50
 
     attribute :full_name
