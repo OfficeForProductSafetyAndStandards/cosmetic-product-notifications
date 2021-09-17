@@ -1,5 +1,6 @@
 module Registration
   class NewAccountForm < Form
+    BANNED_STRINGS = %w[: @ / http www].freeze
     attribute :full_name
 
     validates_presence_of :full_name
@@ -42,8 +43,8 @@ module Registration
     def full_name_not_spam
       return if full_name.blank?
 
-      %w[: @ /].each do |invalid|
-        if full_name.include? invalid
+      BANNED_STRINGS.each do |banned|
+        if full_name.include? banned
           errors.add(:full_name, :invalid)
           break
         end
