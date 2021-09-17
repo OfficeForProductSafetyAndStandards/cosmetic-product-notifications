@@ -1,9 +1,12 @@
 module Registration
   class NewAccountForm < Form
     BANNED_STRINGS = %w[: @ / http www].freeze
+    FULL_NAME_MAX_LENGTH = 50
+
     attribute :full_name
 
     validates_presence_of :full_name
+    validates :full_name, length: { maximum: FULL_NAME_MAX_LENGTH }
     validate :full_name_not_spam
 
     include EmailFormValidation
