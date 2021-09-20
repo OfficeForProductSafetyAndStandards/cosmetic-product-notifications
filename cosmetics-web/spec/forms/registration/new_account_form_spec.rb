@@ -42,7 +42,7 @@ RSpec.describe Registration::NewAccountForm do
     context "when the name is too long" do
       let(:full_name) { "Hey John this is actionfraud and not an spam email so you should totally believe us and don't be suspicious" }
 
-      include_examples "invalid name", "Name must not exceed 50 characters"
+      include_examples "invalid name", "Full name must be 50 characters or fewer"
     end
 
     context "when name contains invalid strings" do
