@@ -182,7 +182,8 @@ en:
           attributes:
             full_name:
               blank: "Enter your full name"
-              invalid: "Enter a valid full name"
+              invalid: "Enter a valid name"
+              too_long: "Full name must be 50 characters or fewer"
         registration/account_security_form:
           attributes:
             app_authentication_code:
