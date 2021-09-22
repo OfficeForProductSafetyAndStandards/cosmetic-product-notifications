@@ -216,6 +216,10 @@ en:
             email:
               taken_team: "This email address already belongs to member of this team"
               taken: "This person has already been invited to this team"
+            name:
+              blank: "Enter the full name"
+              invalid: "Enter a valid name"
+              too_long: "Full name must be 50 characters or fewer"
         responsible_persons/selection_form:
           attributes:
             selection:

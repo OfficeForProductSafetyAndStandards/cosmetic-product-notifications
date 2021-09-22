@@ -32,7 +32,7 @@ RSpec.describe ResponsiblePersons::InviteMemberForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages_for(:name)).to eq(["Name can not be blank"])
+        expect(form.errors.full_messages_for(:name)).to eq(["Enter the full name"])
       end
     end
 

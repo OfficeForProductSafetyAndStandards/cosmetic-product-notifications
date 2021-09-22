@@ -1,11 +1,15 @@
 module ResponsiblePersons
   class InviteMemberForm < Form
+    NAME_MAX_LENGTH = 50
+
     include StripWhitespace
 
     attribute :name
     attribute :responsible_person
 
     validates_presence_of :name
+    validates :name, length: { maximum: NAME_MAX_LENGTH }, name_format: { message: :invalid }
+
     include EmailFormValidation
 
     validate :email_not_invited
