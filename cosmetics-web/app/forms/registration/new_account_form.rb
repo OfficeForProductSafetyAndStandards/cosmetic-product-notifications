@@ -1,11 +1,9 @@
 module Registration
   class NewAccountForm < Form
-    FULL_NAME_MAX_LENGTH = 50
-
     attribute :full_name
 
     validates_presence_of :full_name
-    validates :full_name, length: { maximum: FULL_NAME_MAX_LENGTH }, name_format: { message: :invalid }
+    validates :full_name, length: { maximum: User::NAME_MAX_LENGTH }, name_format: { message: :invalid }
 
     include EmailFormValidation
 
