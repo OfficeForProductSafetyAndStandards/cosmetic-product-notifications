@@ -40,7 +40,7 @@ RSpec.shared_examples "common user tests" do
       user.new_email = "wrongformat"
       expect(user).not_to be_valid
       expect(user.errors[:new_email])
-        .to include("Enter your email address in the correct format, like name@example.com")
+        .to include("Enter the email address in the correct format, like name@example.com")
     end
 
     it "does not require the secondary authentication methods when user didn't completete account security" do

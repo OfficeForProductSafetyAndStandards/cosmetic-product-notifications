@@ -59,7 +59,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     click_button "Continue"
 
     expect(page).to have_h1("Change contact person email address for Test RP")
-    expected_error = "Enter your email address in the correct format, like name@example.com"
+    expected_error = "Enter the email address in the correct format, like name@example.com"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_email_address")
     expect(page).to have_css("span#contact_person_email_address-error", text: expected_error)

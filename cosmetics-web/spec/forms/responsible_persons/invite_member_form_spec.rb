@@ -44,7 +44,7 @@ RSpec.describe ResponsiblePersons::InviteMemberForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages_for(:email)).to eq(["Enter your email address"])
+        expect(form.errors.full_messages_for(:email)).to eq(["Enter the email address"])
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe ResponsiblePersons::InviteMemberForm do
 
       it "populates an error message" do
         expect(form.errors.full_messages_for(:email))
-          .to eq(["Enter your email address in the correct format, like name@example.com"])
+          .to eq(["Enter the email address in the correct format, like name@example.com"])
       end
     end
 
