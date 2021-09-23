@@ -190,7 +190,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       it "uses #destroy!" do
         expect {
           notification.destroy_notification!(submit_user)
-        }.to change(described_class, :count).by(-1)
+        }.to change(Notification.deleted, :count).from(0).to(1)
       end
     end
 
@@ -249,6 +249,72 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
     it "caches csv" do
       expect(notification.reload.csv_cache).to eq "#{notification.product_name},#{notification.reference_number_for_display},#{notification.notification_complete_at},,,,2,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products,Hair and scalp products,Hair colouring products,Nonoxidative hair colour products\n"
+    end
+  end
+
+  describe "deletion" do
+    let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
+    let(:notification) { create(:notification, :registered, :with_components, responsible_person: responsible_person) }
+    let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification: notification) }
+    let(:deleted_notification) { DeletedNotification.first }
+
+    context "when notification is deleted" do
+      describe "deleted notification record" do
+        let!(:notification_attributes) { notification.attributes }
+        before { notification.destroy! }
+
+        it "is created with proper attributes" do
+          Notification::DELETABLE_ATTRIBUTES.each do |attribute|
+            expect(deleted_notification[attribute]).to eq(notification_attributes[attribute]), "'#{attribute}' should be set"
+          end
+        end
+
+        it "should be linked to notification" do
+          expect(deleted_notification.notification).to eq notification
+        end
+      end
+
+      describe "notification that is soft deleted" do
+        it "should remove all attributes properly" do
+          notification.destroy!
+          notification.reload
+
+          Notification::DELETABLE_ATTRIBUTES.each do |attribute|
+            expect(notification[attribute]).to eq(nil), "'#{attribute}' attribute should be empty"
+          end
+        end
+
+        it "should have deleted state" do
+          notification.destroy!
+          expect(notification.reload.state).to eq "deleted"
+        end
+
+        it "has components" do
+          components = notification.components
+          notification.destroy!
+          expect(notification.reload.components).to eq components
+        end
+
+        it "has image upload" do
+          notification.destroy!
+          expect(notification.reload.image_uploads).to eq [image_upload]
+        end
+
+        it "has components" do
+          components = notification.components
+          notification.destroy!
+          expect(notification.reload.components).to eq components
+        end
+
+        it "has responsible_person" do
+          notification.destroy!
+          expect(notification.reload.responsible_person).to eq responsible_person
+        end
+
+        it "should be linked to deleted_notification" do
+          expect(notification.deleted_notification).to eq deleted_notification
+        end
+      end
     end
   end
 end
