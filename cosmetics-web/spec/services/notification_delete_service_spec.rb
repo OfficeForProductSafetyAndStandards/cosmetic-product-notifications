@@ -10,7 +10,7 @@ RSpec.describe NotificationDeleteService do
   let(:other_user) { submit_user }
   let(:service) { described_class.new(notification, current_user) }
 
-  let(:notification_attributes) { @notification_attributes }
+  let(:notification_attributes) { @notification_attributes } # rubocop:disable RSpec/InstanceVariable
 
   before do
     freeze_time

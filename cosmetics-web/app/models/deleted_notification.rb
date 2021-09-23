@@ -1,3 +1,3 @@
-class DeletedNotification < ActiveRecord::Base
+class DeletedNotification < ApplicationRecord
   belongs_to :notification
 end

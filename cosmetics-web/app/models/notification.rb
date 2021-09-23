@@ -19,21 +19,21 @@ class Notification < ApplicationRecord
   index_name [ENV.fetch("ES_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
   scope :elasticsearch, -> { where(state: "notification_complete") }
 
-  DELETABLE_ATTRIBUTES = ["product_name",
-                          "import_country",
-                          "reference_number",
-                          "cpnp_reference",
-                          "shades",
-                          "industry_reference",
-                          "cpnp_notification_date",
-                          "was_notified_before_eu_exit",
-                          "under_three_years",
-                          "still_on_the_market",
-                          "components_are_mixed",
-                          "ph_min_value",
-                          "ph_max_value",
-                          "notification_complete_at",
-                          "csv_cache"]
+  DELETABLE_ATTRIBUTES = %w[product_name
+                            import_country
+                            reference_number
+                            cpnp_reference
+                            shades
+                            industry_reference
+                            cpnp_notification_date
+                            was_notified_before_eu_exit
+                            under_three_years
+                            still_on_the_market
+                            components_are_mixed
+                            ph_min_value
+                            ph_max_value
+                            notification_complete_at
+                            csv_cache].freeze
 
   before_create do
     new_reference_number = nil
@@ -228,14 +228,14 @@ class Notification < ApplicationRecord
 
   def destroy!
     transaction do
-      DeletedNotification.create!(self.attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self))
+      DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self))
       DELETABLE_ATTRIBUTES.each do |field|
         self[field] = nil
       end
       self.deleted_at = Time.zone.now
       self.state = :deleted
 
-      self.save!(validate: false)
+      save!(validate: false)
     end
   end
 

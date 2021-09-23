@@ -22,9 +22,9 @@ class CreateDeletedNotifications < ActiveRecord::Migration[6.1]
         t.decimal "ph_max_value"
         t.datetime "notification_complete_at"
         t.text "csv_cache"
-        t.index ["cpnp_reference", "responsible_person_id"], name: "index_deleted_notifications_on_cpnp_reference_and_rp_id", unique: true
-        t.index ["reference_number"], name: "index_deleted_notifications_on_reference_number", unique: true
-        t.index ["responsible_person_id"], name: "index_deleted_notifications_on_responsible_person_id"
+        t.index %w[cpnp_reference responsible_person_id], name: "index_deleted_notifications_on_cpnp_reference_and_rp_id", unique: true
+        t.index %w[reference_number], name: "index_deleted_notifications_on_reference_number", unique: true
+        t.index %w[responsible_person_id], name: "index_deleted_notifications_on_responsible_person_id"
       end
     end
   end

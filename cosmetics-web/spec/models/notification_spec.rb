@@ -190,7 +190,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       it "uses #destroy!" do
         expect {
           notification.destroy_notification!(submit_user)
-        }.to change(Notification.deleted, :count).from(0).to(1)
+        }.to change(described_class.deleted, :count).from(0).to(1)
       end
     end
 
@@ -261,6 +261,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     context "when notification is deleted" do
       describe "deleted notification record" do
         let!(:notification_attributes) { notification.attributes }
+
         before { notification.destroy! }
 
         it "is created with proper attributes" do
@@ -269,13 +270,13 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           end
         end
 
-        it "should be linked to notification" do
+        it "is linked to notification" do
           expect(deleted_notification.notification).to eq notification
         end
       end
 
       describe "notification that is soft deleted" do
-        it "should remove all attributes properly" do
+        it "removes all attributes properly" do
           notification.destroy!
           notification.reload
 
@@ -284,7 +285,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           end
         end
 
-        it "should have deleted state" do
+        it "has deleted state" do
           notification.destroy!
           expect(notification.reload.state).to eq "deleted"
         end
@@ -300,18 +301,12 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           expect(notification.reload.image_uploads).to eq [image_upload]
         end
 
-        it "has components" do
-          components = notification.components
-          notification.destroy!
-          expect(notification.reload.components).to eq components
-        end
-
         it "has responsible_person" do
           notification.destroy!
           expect(notification.reload.responsible_person).to eq responsible_person
         end
 
-        it "should be linked to deleted_notification" do
+        it "is linked to deleted_notification" do
           expect(notification.deleted_notification).to eq deleted_notification
         end
       end
