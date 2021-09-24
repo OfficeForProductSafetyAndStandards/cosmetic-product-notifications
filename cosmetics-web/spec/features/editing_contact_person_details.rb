@@ -26,7 +26,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect(page).to have_h1("Change contact person name for Test RP")
     expect_back_link_to_responsible_person_page
 
-    # First attempt with validation error
+    # First attempts with validation error
     fill_in "Full name", with: ""
     click_button "Continue"
 
@@ -34,6 +34,14 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Name can not be blank", href: "#contact_person_name")
     expect(page).to have_css("span#contact_person_name-error", text: "Name can not be blank")
+
+    fill_in "Full name", with: "Foo Bar www.example.org"
+    click_button "Continue"
+
+    expect(page).to have_h1("Change contact person name for Test RP")
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Name can not be blank", href: "#contact_person_name")
+    expect(page).to have_css("span#contact_person_name-error", text: "Enter a valid name")
 
     # Successful attempt
     fill_in "Full name", with: "Mr Foo Bar"
