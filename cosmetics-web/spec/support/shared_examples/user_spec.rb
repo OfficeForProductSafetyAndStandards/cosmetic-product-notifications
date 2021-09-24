@@ -30,25 +30,40 @@ RSpec.shared_examples "common user tests" do
       expect(user.errors[:name]).to be_empty
     end
 
-    describe "on create validations" do
+    describe "name database validations" do
       let(:user) { build(super().class.name.underscore) } # In case original 'user' is a 'build_stubbed' object that cannot be saved
 
-      it "does not accept a website as a part of the name" do
-        user.name = "Emma www.example.com"
-        expect(user.save).to be_falsey
-        expect(user.errors[:name]).to include("Enter a valid name")
+      RSpec.shared_examples "name format validations" do
+        it "does not accept a website as a part of the name" do
+          user.name = "Emma www.example.com"
+          expect(user.save).to be_falsey
+          expect(user.errors[:name]).to include("Enter a valid name")
+        end
+
+        it "does not accept a line break as a part of the name" do
+          user.name = "Emma\nWilliams"
+          expect(user.save).to be_falsey
+          expect(user.errors[:name]).to include("Enter a valid name")
+        end
+
+        it "does not accept a names over 50 characters" do
+          user.name = "This is a very long name that should not be accepted and should fail validation attempts"
+          expect(user.save).to be_falsey
+          expect(user.errors[:name]).to include("Name is too long (maximum is 50 characters)")
+        end
       end
 
-      it "does not accept a line break as a part of the name" do
-        user.name = "Emma\nWilliams"
-        expect(user.save).to be_falsey
-        expect(user.errors[:name]).to include("Enter a valid name")
+      context "when setting the name for first time" do
+        include_examples "name format validations"
       end
 
-      it "does not accept a names over 50 characters" do
-        user.name = "This is a very long name that should not be accepted and should fail validation attempts"
-        expect(user.save).to be_falsey
-        expect(user.errors[:name]).to include("Name is too long (maximum is 50 characters)")
+      describe "when changing the name" do
+        before do
+          user.name = "Emma McCay"
+          user.save
+        end
+
+        include_examples "name format validations"
       end
     end
 

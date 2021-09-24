@@ -21,7 +21,7 @@ class User < ApplicationRecord
   validates :password, common_password: { message: :too_common }
 
   validates :name, presence: true, unless: -> { invite }
-  validates :name, length: { maximum: NAME_MAX_LENGTH }, name_format: true, on: :create
+  validates :name, length: { maximum: NAME_MAX_LENGTH }, name_format: true, if: :name_changed?
 
   with_options if: :account_security_completed do
     validate :secondary_authentication_methods_presence
