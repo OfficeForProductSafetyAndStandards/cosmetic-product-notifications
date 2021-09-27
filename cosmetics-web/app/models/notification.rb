@@ -24,6 +24,7 @@ class Notification < ApplicationRecord
                             reference_number
                             cpnp_reference
                             shades
+                            state
                             industry_reference
                             cpnp_notification_date
                             was_notified_before_eu_exit
@@ -224,6 +225,10 @@ class Notification < ApplicationRecord
     else
       destroy!
     end
+  end
+
+  def destroy
+    destroy!
   end
 
   def destroy!

@@ -275,6 +275,13 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         end
       end
 
+      describe "#destroy" do
+        it "works as #destroy!" do
+          notification.destroy
+          expect(notification.reload.state).to eq "deleted"
+        end
+      end
+
       describe "notification that is soft deleted" do
         it "removes all attributes properly" do
           notification.destroy!
@@ -307,6 +314,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         end
 
         it "is linked to deleted_notification" do
+          notification.destroy!
           expect(notification.deleted_notification).to eq deleted_notification
         end
       end
