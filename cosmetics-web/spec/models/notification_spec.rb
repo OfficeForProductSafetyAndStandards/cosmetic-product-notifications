@@ -273,6 +273,10 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         it "is linked to notification" do
           expect(deleted_notification.notification).to eq notification
         end
+
+        it "has notification state" do
+          expect(deleted_notification.state).to eq notification_attributes['state']
+        end
       end
 
       describe "#destroy" do
@@ -290,6 +294,13 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           Notification::DELETABLE_ATTRIBUTES.each do |attribute|
             expect(notification[attribute]).to eq(nil), "'#{attribute}' attribute should be empty"
           end
+        end
+
+        it "can not be double deleted" do
+          expect do
+            notification.destroy!
+            notification.destroy!
+          end.to change { DeletedNotification.count }.by(1)
         end
 
         it "has deleted state" do

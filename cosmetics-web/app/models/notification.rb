@@ -24,7 +24,6 @@ class Notification < ApplicationRecord
                             reference_number
                             cpnp_reference
                             shades
-                            state
                             industry_reference
                             cpnp_notification_date
                             was_notified_before_eu_exit
@@ -232,11 +231,14 @@ class Notification < ApplicationRecord
   end
 
   def destroy!
+    return if deleted?
+
     transaction do
-      DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self))
+      DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self, state: state))
       DELETABLE_ATTRIBUTES.each do |field|
         self[field] = nil
       end
+
       self.deleted_at = Time.zone.now
       self.state = :deleted
 
