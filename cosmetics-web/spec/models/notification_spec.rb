@@ -275,7 +275,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         end
 
         it "has notification state" do
-          expect(deleted_notification.state).to eq notification_attributes['state']
+          expect(deleted_notification.state).to eq notification_attributes["state"]
         end
       end
 
@@ -297,10 +297,10 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         end
 
         it "can not be double deleted" do
-          expect do
+          expect {
             notification.destroy!
             notification.destroy!
-          end.to change { DeletedNotification.count }.by(1)
+          }.to change(DeletedNotification, :count).by(1)
         end
 
         it "has deleted state" do
