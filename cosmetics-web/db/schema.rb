@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_15_141537) do
+ActiveRecord::Schema.define(version: 2021_09_21_092542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -89,6 +89,32 @@ ActiveRecord::Schema.define(version: 2021_07_15_141537) do
     t.datetime "updated_at", null: false
     t.bigint "responsible_person_id"
     t.index ["responsible_person_id"], name: "index_contact_persons_on_responsible_person_id"
+  end
+
+  create_table "deleted_notifications", force: :cascade do |t|
+    t.string "product_name"
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "import_country"
+    t.bigint "responsible_person_id"
+    t.bigint "notification_id"
+    t.integer "reference_number"
+    t.string "cpnp_reference"
+    t.string "shades"
+    t.string "industry_reference"
+    t.datetime "cpnp_notification_date"
+    t.boolean "was_notified_before_eu_exit", default: false
+    t.boolean "under_three_years"
+    t.boolean "still_on_the_market"
+    t.boolean "components_are_mixed"
+    t.decimal "ph_min_value"
+    t.decimal "ph_max_value"
+    t.datetime "notification_complete_at"
+    t.text "csv_cache"
+    t.index ["cpnp_reference", "responsible_person_id"], name: "index_deleted_notifications_on_cpnp_reference_and_rp_id", unique: true
+    t.index ["reference_number"], name: "index_deleted_notifications_on_reference_number", unique: true
+    t.index ["responsible_person_id"], name: "index_deleted_notifications_on_responsible_person_id"
   end
 
   create_table "exact_formulas", force: :cascade do |t|
@@ -191,6 +217,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_141537) do
     t.decimal "ph_max_value"
     t.datetime "notification_complete_at"
     t.text "csv_cache"
+    t.datetime "deleted_at"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"

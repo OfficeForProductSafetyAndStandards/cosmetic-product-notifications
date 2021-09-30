@@ -5,20 +5,26 @@ RSpec.describe NotificationDeleteService do
   let(:responsible_person) { create(:responsible_person) }
   let(:submit_user) { create(:submit_user) }
   let(:notification) { create(:registered_notification, cpnp_reference: "123412344") }
+  let(:deleted_notification) { notification.deleted_notification }
   let(:current_user) { submit_user }
   let(:other_user) { submit_user }
   let(:service) { described_class.new(notification, current_user) }
 
+  let(:notification_attributes) { @notification_attributes } # rubocop:disable RSpec/InstanceVariable
+
   before do
     freeze_time
     notification
+    # Attributes needs to be cached after time freezing and notification creation,
+    # but before removing the notification, so instance variable has a use here.
+    @notification_attributes = OpenStruct.new(notification.attributes.merge(responsible_person: notification.responsible_person))
     create(:responsible_person_user, user: submit_user, responsible_person: responsible_person)
   end
 
   it "deletes the notification" do
     expect {
       service.call
-    }.to change(Notification, :count).by(-1)
+    }.to change(Notification.deleted, :count).by(1)
   end
 
   it "creates log" do
@@ -34,12 +40,12 @@ RSpec.describe NotificationDeleteService do
 
     expect(log).to have_attributes(
       submit_user: submit_user,
-      notification_product_name: notification.product_name,
-      responsible_person: notification.responsible_person,
-      notification_created_at: notification.created_at,
-      notification_updated_at: notification.updated_at,
-      cpnp_reference: notification.cpnp_reference,
-      reference_number: notification.reference_number,
+      notification_product_name: notification_attributes.product_name,
+      responsible_person: notification_attributes.responsible_person,
+      notification_created_at: notification_attributes.created_at,
+      notification_updated_at: notification_attributes.updated_at,
+      cpnp_reference: notification_attributes.cpnp_reference,
+      reference_number: notification_attributes.reference_number,
     )
   end
 
@@ -53,12 +59,12 @@ RSpec.describe NotificationDeleteService do
 
       expect(log).to have_attributes(
         submit_user: nil,
-        notification_product_name: notification.product_name,
-        responsible_person: notification.responsible_person,
-        notification_created_at: notification.created_at,
-        notification_updated_at: notification.updated_at,
-        cpnp_reference: notification.cpnp_reference,
-        reference_number: notification.reference_number,
+        notification_product_name: notification_attributes.product_name,
+        responsible_person: notification_attributes.responsible_person,
+        notification_created_at: notification_attributes.created_at,
+        notification_updated_at: notification_attributes.updated_at,
+        cpnp_reference: notification_attributes.cpnp_reference,
+        reference_number: notification_attributes.reference_number,
       )
     end
   end

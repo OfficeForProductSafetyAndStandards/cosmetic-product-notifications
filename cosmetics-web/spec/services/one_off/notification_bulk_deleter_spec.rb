@@ -13,7 +13,7 @@ RSpec.describe OneOff::NotificationBulkDeleter do
   it "deletes the notifications" do
     expect {
       bulk_deleter.call
-    }.to change(Notification, :count).from(5).to(0)
+    }.to change(DeletedNotification, :count).from(0).to(5)
   end
 
   describe "service logging" do

@@ -33,7 +33,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       draft_notification
       expect {
         delete responsible_person_delete_notification_url(responsible_person, draft_notification)
-      }.to change(Notification, :count).from(1).to(0)
+      }.to change(Notification.deleted, :count).from(0).to(1)
     end
 
     context "when 2FA time passed", :with_2fa do
