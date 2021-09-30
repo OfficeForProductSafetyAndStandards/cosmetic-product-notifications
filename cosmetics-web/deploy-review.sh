@@ -52,7 +52,7 @@ then
 fi
 
 # Deploy the submit app and set the hostname
-cf push $APP -f $MANIFEST_FILE --app-start-timeout 180 --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --var web-max-threads=$WEB_MAX_THREADS --var worker-max-threads=$WORKER_MAX_THREADS --strategy rolling
+cf push $APP -f $MANIFEST_FILE --app-start-timeout 180 --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --var web-max-threads=$WEB_MAX_THREADS --var web-concurrency=$WEB_CONCURRENCY --var worker-max-threads=$WORKER_MAX_THREADS --strategy rolling
 
 cf scale $APP --process worker -i 1
 
