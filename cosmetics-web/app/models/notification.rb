@@ -12,10 +12,28 @@ class Notification < ApplicationRecord
   has_many :components, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
 
+  has_one :deleted_notification
+
   accepts_nested_attributes_for :image_uploads
 
   index_name [ENV.fetch("ES_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
   scope :elasticsearch, -> { where(state: "notification_complete") }
+
+  DELETABLE_ATTRIBUTES = %w[product_name
+                            import_country
+                            reference_number
+                            cpnp_reference
+                            shades
+                            industry_reference
+                            cpnp_notification_date
+                            was_notified_before_eu_exit
+                            under_three_years
+                            still_on_the_market
+                            components_are_mixed
+                            ph_min_value
+                            ph_max_value
+                            notification_complete_at
+                            csv_cache].freeze
 
   before_create do
     new_reference_number = nil
@@ -125,6 +143,8 @@ class Notification < ApplicationRecord
         end
       end
     end
+
+    state :deleted
   end
 
   def reference_number_for_display
@@ -204,6 +224,34 @@ class Notification < ApplicationRecord
     else
       destroy!
     end
+  end
+
+  def destroy
+    destroy!
+  end
+
+  def destroy!
+    return if deleted?
+
+    transaction do
+      DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self, state: state))
+      DELETABLE_ATTRIBUTES.each do |field|
+        self[field] = nil
+      end
+
+      self.deleted_at = Time.zone.now
+      self.state = :deleted
+
+      save!(validate: false)
+    end
+  end
+
+  def delete
+    raise "Not supported"
+  end
+
+  def delete!
+    raise "Not supported"
   end
 
   def can_be_deleted?
