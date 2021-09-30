@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  NAME_MAX_LENGTH = 50
   NEW_EMAIL_TOKEN_VALID_FOR = 600 # 10 minutes
   SECONDARY_AUTHENTICATION_METHODS = %w[app sms].freeze
 
@@ -20,6 +21,7 @@ class User < ApplicationRecord
   validates :password, common_password: { message: :too_common }
 
   validates :name, presence: true, unless: -> { invite }
+  validates :name, length: { maximum: NAME_MAX_LENGTH }, name_format: true, if: :name_changed?
 
   with_options if: :account_security_completed do
     validate :secondary_authentication_methods_presence
