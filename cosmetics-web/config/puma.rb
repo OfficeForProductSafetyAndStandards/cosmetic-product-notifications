@@ -4,8 +4,8 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 1 }
-min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS")# { 1 }
+min_threads_count = ENV.fetch("RAILS_MIN_THREADS")# { max_threads_count }
 threads min_threads_count, max_threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
@@ -26,7 +26,6 @@ pidfile ENV.fetch("PIDFILE") { "tmp/server.pid" }
 # processes).
 #
 workers ENV.fetch("WEB_CONCURRENCY")# { 8 }
-workers ENV.fetch("WEB_CONCURRENCYY")# { 8 }
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
