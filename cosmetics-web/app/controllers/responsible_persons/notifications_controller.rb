@@ -4,24 +4,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_notification, only: %i[show confirm]
 
   def index
-    @erroneous_notification_files = []
-    @pending_notification_files_count = 0
-
-    @responsible_person.notification_files.where(user_id: current_user.id).each do |notification_file|
-      if notification_file.upload_error
-        @erroneous_notification_files << notification_file
-      else
-        @pending_notification_files_count += 1
-      end
-    end
-
-    if session[:files_uploaded_count].to_i > @pending_notification_files_count
-      @pending_notification_files_count = session[:files_uploaded_count]
-      session[:files_uploaded_count] = nil
-    end
-
     @unfinished_notifications = get_unfinished_notifications
-
     @registered_notifications = get_registered_notifications(20)
     respond_to do |format|
       format.html

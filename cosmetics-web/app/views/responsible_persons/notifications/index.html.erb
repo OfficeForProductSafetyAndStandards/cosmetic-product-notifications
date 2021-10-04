@@ -3,22 +3,6 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-<% if @pending_notification_files_count.positive? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <div class="govuk-error-summary loading-spinner__container">
-        <h2 class="govuk-error-summary__title">
-          <span class="loading-spinner__dot"></span>
-          Checking <%= pluralize(@pending_notification_files_count, 'notification file') %>
-        </h2>
-        <div class="govuk-error-summary__body">
-          <%= link_to "Refresh the browser to see uploaded products", url_for, class: "govuk-link--no-visited-state" %>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
     <div class="govuk-grid-row">
@@ -58,14 +42,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <% if @erroneous_notification_files.present? || @unfinished_notifications.present? %>
+    <% if @unfinished_notifications.present? %>
       <div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss">
-        <%= render 'errors' if @erroneous_notification_files.present? %>
-        <%= render 'incomplete_notifications' if @unfinished_notifications.present? %>
+        <%= render 'incomplete_notifications' %>
       </div>
-    <% end %>
-
-    <% if @unfinished_notifications.blank? %>
+    <% else %>
       <div class="opss-border-top govuk-!-padding-top-3 opss-border-bottom">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
           Incomplete notifications (0)
