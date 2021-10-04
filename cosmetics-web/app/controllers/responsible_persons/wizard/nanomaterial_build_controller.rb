@@ -43,12 +43,7 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
   def previous_wizard_path
     case step
     when :select_purposes
-      notification = @component.notification
-      if notification.via_zip_file?
-        responsible_person_notifications_path(notification.responsible_person, anchor: "incomplete")
-      else
-        responsible_person_notification_component_build_path(notification.responsible_person, notification, @component, :list_nanomaterials)
-      end
+      responsible_person_notification_component_build_path(@component.notification.responsible_person, notification, @component, :list_nanomaterials)
     when :confirm_usage
       wizard_path(:confirm_restrictions)
     when :non_standard_nanomaterial_notified
@@ -69,36 +64,6 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
 
     if next_nano_element.present?
       new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, @component, next_nano_element)
-    elsif @component.notification.via_zip_file?
-
-      if @component.formulation_required?
-        new_responsible_person_notification_component_formulation_file_path(@component.notification.responsible_person, @component.notification, @component)
-      else
-        # This calls an :formulation_file_uploaded event on the Notification model,
-        # which sets the `state` to `draft_complete`, which is required in order to be able
-        # to submit the notification. This is consistent with the logic in the
-        # AdditionalInformationController.
-        #
-        # TODO: refactor onto the model and move away from using the `state` attribute
-        # to manage required/missing information.
-        @component.notification.formulation_file_uploaded!
-
-        next_component = @component.notification.components.order(:id)
-          .where(["id > ?", @component.id]).first
-
-        if next_component
-          next_nano_element = next_component.nano_material.nano_elements.order(:id).first
-        end
-
-        if next_nano_element
-
-          new_responsible_person_notification_component_nanomaterial_build_path(@component.notification.responsible_person, @component.notification, next_component, next_nano_element)
-
-        else
-
-          edit_responsible_person_notification_path(@component.notification.responsible_person, @component.notification)
-        end
-      end
     else
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :select_category)
     end

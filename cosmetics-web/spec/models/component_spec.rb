@@ -57,31 +57,6 @@ RSpec.describe Component, type: :model do
         component.valid?
         expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
       end
-
-      context "when component was imported" do
-        let(:notification) { create(:notification, :via_zip_file) }
-
-        it "is valid when :skip_uniqueness_on_import is set to true" do
-          expect(component).to be_valid
-        end
-      end
-    end
-
-    context "when component was imported" do
-      let(:notification) { create(:notification, :via_zip_file) }
-
-      let(:component1) { build(:component, name: "Some component", notification: notification) }
-      let(:component2) { build(:component, name: "Some component", notification: notification) }
-
-      before do
-        component1.save(validate: false)
-        component2.save(validate: false)
-      end
-
-      it "does not check name validation" do
-        expect(component1).to be_valid
-        expect(component2).to be_valid
-      end
     end
 
     context "when there is already a component with no name for the same notification" do
