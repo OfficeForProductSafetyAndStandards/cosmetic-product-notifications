@@ -25,7 +25,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       expect(response).to render_template("responsible_persons/notifications/index")
     end
 
-    it "gets the correct number of unfinished notifications from manual journey" do
+    it "gets the correct number of unfinished notifications" do
       create(:draft_notification, responsible_person: responsible_person)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:unfinished_notifications).count).to eq(1)
