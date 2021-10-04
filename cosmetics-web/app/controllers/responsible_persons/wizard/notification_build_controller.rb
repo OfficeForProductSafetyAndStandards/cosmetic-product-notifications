@@ -58,12 +58,7 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
     previous_step = get_previous_step
 
     if step == :add_product_name
-      last_step = if request.referer&.end_with? "do_you_have_files_from_eu_notification"
-                    :do_you_have_files_from_eu_notification
-                  else
-                    :will_products_be_notified_in_eu
-                  end
-      responsible_person_add_notification_path(@notification.responsible_person, last_step)
+      responsible_person_notifications_path(@notification.responsible_person)
     elsif step == :add_new_component && @notification.state == "draft_complete" && (last_component = @notification.components.complete.last)
       last_step = last_component.ph_range_not_required? ? :select_ph_range : :ph
       responsible_person_notification_component_trigger_question_path(@notification.responsible_person, @notification, last_component, last_step)
