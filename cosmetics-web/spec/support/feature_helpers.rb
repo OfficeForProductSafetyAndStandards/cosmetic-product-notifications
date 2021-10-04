@@ -145,42 +145,6 @@ def expect_back_link_to_responsible_person_page
   expect(page).to have_link("Back", href: "/responsible_persons/#{responsible_person.id}")
 end
 
-def expect_to_be_on__was_eu_notified_about_products_page
-  expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/have_products_been_notified_in_eu")
-  expect(page).to have_h1("Has the EU been notified about these products using CPNP?")
-end
-
-def expect_back_link_to_was_eu_notified_about_products_page
-  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/have_products_been_notified_in_eu")
-end
-
-def expect_to_be_on__are_you_likely_to_notify_eu_page
-  expect(page.current_path).to end_with("/will_products_be_notified_in_eu")
-  expect(page).to have_h1("Are you likely to notify the EU about these products?")
-end
-
-def expect_back_link_to_are_you_likely_to_notify_eu_page
-  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/will_products_be_notified_in_eu")
-end
-
-def expect_to_be_on__do_you_have_the_zip_files_page
-  expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
-  expect(page).to have_h1("EU notification ZIP files")
-end
-
-def expect_back_link_to_do_you_have_the_zip_files_page
-  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
-end
-
-def expect_to_be_on__upload_eu_notification_files_page
-  expect(page.current_path).to end_with("/notification_files/new")
-  expect(page).to have_h1("Upload your EU notification files")
-end
-
-def expect_back_link_to_upload_eu_notification_files_page
-  expect_back_link_to("/responsible_persons/#{responsible_person.id}/add_notification/do_you_have_files_from_eu_notification")
-end
-
 def expect_to_be_on__what_is_product_called_page
   expect(page.current_path).to end_with("/build/add_product_name")
   expect(page).to have_h1("What’s the product called?")
@@ -584,40 +548,6 @@ end
 
 # ---- Page interactions ----
 
-def go_to_upload_notification_page
-  expect_to_be_on__was_eu_notified_about_products_page
-  expect_back_link_to_notifications_page
-  page.choose("Yes")
-  click_button "Continue"
-  expect_to_be_on__do_you_have_the_zip_files_page
-  expect_back_link_to_was_eu_notified_about_products_page
-  page.choose("Yes")
-  click_button "Continue"
-  expect_to_be_on__upload_eu_notification_files_page
-  expect_back_link_to_do_you_have_the_zip_files_page
-end
-
-def answer_was_eu_notified_with(answer)
-  within_fieldset("Has the EU been notified about these products using CPNP?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_are_you_likely_to_notify_eu_with(answer)
-  within_fieldset("Are you likely to notify the EU about these products?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_do_you_have_zip_files_with(answer)
-  within_fieldset("Do you have the ZIP files from your EU notification?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
 def answer_product_name_with(product_name)
   fill_in "Product name", with: product_name
   click_button "Continue"
@@ -778,11 +708,6 @@ end
 
 def upload_product_label
   page.attach_file "spec/fixtures/files/testImage.png"
-  click_button "Continue"
-end
-
-def upload_zip_file(zip_file_name)
-  page.attach_file "spec/fixtures/files/#{zip_file_name}"
   click_button "Continue"
 end
 
