@@ -30,7 +30,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
       click_on "Send email"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-      expect(page).to have_link("Enter your email address in the correct format, like name@example.com", href: "#email")
+      expect(page).to have_link("Enter the email address in the correct format, like name@example.com", href: "#email")
     end
 
     context "with a valid token" do

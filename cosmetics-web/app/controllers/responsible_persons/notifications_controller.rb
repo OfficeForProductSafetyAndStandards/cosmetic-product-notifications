@@ -42,7 +42,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
   # Check your answers page
   def edit
-    @notification = Notification.find_by reference_number: params[:reference_number]
+    @notification = Notification.where.not(state: :deleted).find_by! reference_number: params[:reference_number]
 
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification.notification_complete?
 
@@ -89,7 +89,7 @@ private
   end
 
   def set_notification
-    @notification = Notification.find_by reference_number: params[:reference_number]
+    @notification = Notification.where.not(state: :deleted).find_by! reference_number: params[:reference_number]
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
   end
 

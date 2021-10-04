@@ -6,6 +6,8 @@ module ResponsiblePersons
     attribute :responsible_person
 
     validates_presence_of :name
+    validates :name, length: { maximum: User::NAME_MAX_LENGTH }, name_format: { message: :invalid }
+
     include EmailFormValidation
 
     validate :email_not_invited

@@ -223,7 +223,33 @@ RSpec.describe Registration::AccountSecurityForm do
         end
       end
 
-      context "when the user name is introduced" do
+      context "when a user name containing a URL is introduced" do
+        let(:full_name) { "Susan www.example.com" }
+
+        it "is invalid" do
+          expect(form).not_to be_valid
+        end
+
+        it "contains errors" do
+          form.valid?
+          expect(form.errors.full_messages_for(:full_name)).to eq ["Enter a valid name"]
+        end
+      end
+
+      context "when a very long user name is introduced" do
+        let(:full_name) { "Susan thisisaveryveryveryveryveryveryveryveryveryveryveryveryveryverylongsurname" }
+
+        it "is invalid" do
+          expect(form).not_to be_valid
+        end
+
+        it "contains errors" do
+          form.valid?
+          expect(form.errors.full_messages_for(:full_name)).to eq ["Full name must be 50 characters or fewer"]
+        end
+      end
+
+      context "when a valid user name is introduced" do
         let(:full_name) { "John Doe" }
 
         it "is valid" do
