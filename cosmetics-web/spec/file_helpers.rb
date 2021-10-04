@@ -1,5 +1,5 @@
 module FileHelpers
-  def create_file_blob(filename = "testExportFile.zip", content_type = "application/zip", metadata = nil)
+  def create_file_blob(filename = "testPdf.pdf", content_type = "application/pdf", metadata = nil)
     @file = File.open(Rails.root.join("spec/fixtures/files/#{filename}"))
     ActiveStorage::Blob.create_and_upload!(io: @file, filename: filename, content_type: content_type, metadata: metadata)
   end
