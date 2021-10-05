@@ -46,31 +46,6 @@
         </ul>
 
         <div class="govuk-inset-text">The ‘responsible person’ is the individual or company responsible for ensuring the regulations are followed. Every cosmetic product placed on the GB market must have a responsible person.</div>
-
-        <h2 class="govuk-heading-m">How to tell us what’s in the cosmetic product</h2>
-
-        <p class="govuk-body">How you do this depends on whether the product was notified with the EU.</p>
-
-        <%= govukDetails(summaryText: "Cosmetic products notified with the EU before 1 January 2021") do %>
-
-          <p class="govuk-!-margin-bottom-1">You can upload the data from your EU notification. You’ll need to:</p>
-
-          <ul class="govuk-list govuk-list--bullet">
-            <li>export your data as a ZIP file for each notification – the EU's Cosmetic Products Notification Portal (CPNP) allows you to do this</li>
-            <li>upload the ZIP files - you can upload 100 files at a time</li>
-          </ul>
-
-          <p class="govuk-!-margin-bottom-1">The ZIP files will not include:</p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>the formulation of the product if it was an attached document – you must provide this separately as a PDF, RTF or TXT file</li>
-            <li>any images – you’ll need to provide them for products notified after 31 December 2020</li>
-            <li>details of any nanomaterials in the product</li>
-          </ul>
-
-        <% end %>
-
-        <%= govukDetails(summaryText: "Cosmetic products not notified with the EU", text: "You’ll need to enter information about the product manually.") %>
-
       </div>
     </div>
   </main>
