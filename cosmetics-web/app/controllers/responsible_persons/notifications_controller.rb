@@ -74,9 +74,7 @@ private
   end
 
   def get_unfinished_notifications
-    @responsible_person.notifications
-      .where(state: %i[notification_file_imported draft_complete])
-      .order("updated_at DESC")
+    @responsible_person.notifications.where(state: :draft_complete).order("updated_at DESC")
   end
 
   def get_registered_notifications(page_size)

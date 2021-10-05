@@ -111,7 +111,6 @@ class Notification < ApplicationRecord
     state :product_name_added
     state :components_complete
     state :draft_complete
-    state :notification_file_imported
     state :notification_complete
 
     event :add_product_name do
@@ -124,15 +123,6 @@ class Notification < ApplicationRecord
 
     event :complete_draft do
       transitions from: :components_complete, to: :draft_complete
-    end
-
-    event :notification_file_parsed do
-      transitions from: :empty, to: :notification_file_imported, guard: :formulation_required?
-      transitions from: :empty, to: :draft_complete
-    end
-
-    event :formulation_file_uploaded do
-      transitions from: :notification_file_imported, to: :draft_complete, guard: :formulation_present?
     end
 
     event :submit_notification, after: :cache_notification_for_csv! do
@@ -215,7 +205,7 @@ class Notification < ApplicationRecord
   # Returns true if the notification was notified via uploading
   # a ZIP file (eg from CPNP).
   def via_zip_file?
-    notification_file_imported? || cpnp_reference
+    cpnp_reference.present?
   end
 
   def destroy_notification!(submit_user)
@@ -296,8 +286,6 @@ private
       mandatory_attributes("components_complete")
     when "notification_complete"
       mandatory_attributes("draft_complete")
-    when "notification_file_imported"
-      mandatory_attributes("empty")
     end
   end
 

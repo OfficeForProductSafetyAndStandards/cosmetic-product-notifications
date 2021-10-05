@@ -13,15 +13,7 @@ FactoryBot.define do
       end
     end
 
-    factory :imported_notification do
-      state { :notification_file_imported }
-    end
-
     factory :registered_notification, traits: [:registered]
-
-    trait :imported do
-      import_country { "country:FR" }
-    end
 
     trait :registered do
       state { :notification_complete }
