@@ -57,7 +57,6 @@ class Notification < ApplicationRecord
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
                              allow_nil: true
-  validates :cpnp_reference, presence: true, on: :file_upload
   validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference" }
   validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
