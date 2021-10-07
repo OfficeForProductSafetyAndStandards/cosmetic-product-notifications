@@ -43,7 +43,7 @@ class ResponsiblePersons::Wizard::NanomaterialBuildController < SubmitApplicatio
   def previous_wizard_path
     case step
     when :select_purposes
-      responsible_person_notification_component_build_path(@component.notification.responsible_person, notification, @component, :list_nanomaterials)
+      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :list_nanomaterials)
     when :confirm_usage
       wizard_path(:confirm_restrictions)
     when :non_standard_nanomaterial_notified
