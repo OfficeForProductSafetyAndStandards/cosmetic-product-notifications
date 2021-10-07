@@ -1,5 +1,5 @@
 # Simple app for relying sms for smoke test.
-
+Do not merge. Branch created for testing purposes only
 ## API
 
 Has 2 api endpoints:
