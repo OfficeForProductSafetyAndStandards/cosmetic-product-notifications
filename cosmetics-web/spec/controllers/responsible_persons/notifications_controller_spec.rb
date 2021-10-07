@@ -25,38 +25,10 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       expect(response).to render_template("responsible_persons/notifications/index")
     end
 
-    it "counts pending notification files" do
-      create(:notification_file, responsible_person: responsible_person, user: user)
-      get :index, params: { responsible_person_id: responsible_person.id }
-      expect(assigns(:pending_notification_files_count)).to eq(1)
-    end
-
-    it "excludes pending notification files for other users" do
-      other_user = build(:submit_user, email: "other.user@example.com")
-      responsible_person.add_user(other_user)
-
-      create(:notification_file, responsible_person: responsible_person, user: other_user)
-      get :index, params: { responsible_person_id: responsible_person.id }
-      expect(assigns(:pending_notification_files_count)).to eq(0)
-    end
-
-    it "gets the correct number of unfinished notifications from manual journey" do
+    it "gets the correct number of unfinished notifications" do
       create(:draft_notification, responsible_person: responsible_person)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:unfinished_notifications).count).to eq(1)
-    end
-
-    it "gets the correct number of unfinished notifications from upload journey" do
-      create(:imported_notification, responsible_person: responsible_person)
-      get :index, params: { responsible_person_id: responsible_person.id }
-      expect(assigns(:unfinished_notifications).count).to eq(1)
-    end
-
-    it "gets the correct number of all unfinished notifications" do
-      create(:draft_notification, responsible_person: responsible_person)
-      create(:imported_notification, responsible_person: responsible_person)
-      get :index, params: { responsible_person_id: responsible_person.id }
-      expect(assigns(:unfinished_notifications).count).to eq(2)
     end
 
     it "gets the correct number of submitted notifications" do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_21_092542) do
+ActiveRecord::Schema.define(version: 2021_10_01_151352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -187,16 +187,6 @@ ActiveRecord::Schema.define(version: 2021_09_21_092542) do
     t.index ["responsible_person_id"], name: "index_notification_delete_logs_on_responsible_person_id"
   end
 
-  create_table "notification_files", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "responsible_person_id"
-    t.string "user_id"
-    t.string "upload_error"
-    t.index ["responsible_person_id"], name: "index_notification_files_on_responsible_person_id"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.string "product_name"
     t.string "state"
@@ -352,7 +342,6 @@ ActiveRecord::Schema.define(version: 2021_09_21_092542) do
   add_foreign_key "nano_elements", "nano_materials"
   add_foreign_key "nano_materials", "components"
   add_foreign_key "nanomaterial_notifications", "responsible_persons"
-  add_foreign_key "notification_files", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "users", column: "inviting_user_id"

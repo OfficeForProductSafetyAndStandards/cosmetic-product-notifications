@@ -1,4 +1,4 @@
-module CpnpNotificationTriggerRules
+module NotificationTriggerRules
   def get_trigger_rules_question(id)
     TRIGGER_RULES_QUESTION_ID[id]
   end
