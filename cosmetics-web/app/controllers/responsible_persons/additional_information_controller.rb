@@ -11,8 +11,6 @@ class ResponsiblePersons::AdditionalInformationController < SubmitApplicationCon
     elsif @notification.formulation_required?
       component = @notification.components.order(:id).find(&:formulation_required?)
       return redirect_to new_responsible_person_notification_component_formulation_file_path(responsible_person, @notification, component)
-    else
-      @notification.formulation_file_uploaded!
     end
 
     redirect_to edit_responsible_person_notification_path(responsible_person, @notification)

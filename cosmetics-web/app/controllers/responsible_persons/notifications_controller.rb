@@ -4,24 +4,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_notification, only: %i[show confirm]
 
   def index
-    @erroneous_notification_files = []
-    @pending_notification_files_count = 0
-
-    @responsible_person.notification_files.where(user_id: current_user.id).each do |notification_file|
-      if notification_file.upload_error
-        @erroneous_notification_files << notification_file
-      else
-        @pending_notification_files_count += 1
-      end
-    end
-
-    if session[:files_uploaded_count].to_i > @pending_notification_files_count
-      @pending_notification_files_count = session[:files_uploaded_count]
-      session[:files_uploaded_count] = nil
-    end
-
     @unfinished_notifications = get_unfinished_notifications
-
     @registered_notifications = get_registered_notifications(20)
     respond_to do |format|
       format.html
@@ -69,10 +52,7 @@ private
   # the 'Check your answers' page. This varies depending on the route
   # through the various sets of questions.
   def previous_path_before_check_your_answers(notification)
-    if notification.via_zip_file?
-      # Incomplete notifications dashboard
-      responsible_person_notifications_path(notification.responsible_person, anchor: "incomplete")
-    elsif notification.is_multicomponent?
+    if notification.is_multicomponent?
       # Last page is the List of components
       responsible_person_notification_build_path(notification.responsible_person, notification, :add_new_component)
     else
@@ -94,9 +74,7 @@ private
   end
 
   def get_unfinished_notifications
-    @responsible_person.notifications
-      .where(state: %i[notification_file_imported draft_complete])
-      .order("updated_at DESC")
+    @responsible_person.notifications.where(state: :draft_complete).order("updated_at DESC")
   end
 
   def get_registered_notifications(page_size)

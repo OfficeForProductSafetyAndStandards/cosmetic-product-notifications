@@ -22,7 +22,7 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
   end
 
   describe "GET #new" do
-    it "redirects to the first step of the manual web form" do
+    it "redirects to the first step of the notification submission process" do
       get(:new, params: params)
       expect(response).to redirect_to(responsible_person_notification_build_path(responsible_person, notification, :add_product_name))
     end

@@ -123,14 +123,6 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :add_notification, controller: "responsible_persons/wizard/add_notification_wizard", only: %i[show new update]
-
-      resources :notification_files, controller: "responsible_persons/notification_files", only: %i[show new create destroy] do
-        collection do
-          delete :destroy_all
-        end
-      end
-
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
         resources :build, controller: "responsible_persons/wizard/notification_build", only: %i[show update new]
         resources :additional_information, controller: "responsible_persons/additional_information", only: %i[index]

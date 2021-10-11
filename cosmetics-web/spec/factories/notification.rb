@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :notification do
     responsible_person
     sequence(:product_name) { |n| "Product #{n}" }
+    cpnp_reference { nil }
 
     factory :draft_notification do
       state { :draft_complete }
@@ -12,15 +13,7 @@ FactoryBot.define do
       end
     end
 
-    factory :imported_notification do
-      state { :notification_file_imported }
-    end
-
     factory :registered_notification, traits: [:registered]
-
-    trait :imported do
-      import_country { "country:FR" }
-    end
 
     trait :registered do
       state { :notification_complete }
@@ -34,15 +27,6 @@ FactoryBot.define do
     trait :ph_values do
       ph_min_value { 4 }
       ph_max_value { 8 }
-    end
-
-    trait :manual do
-      cpnp_reference { nil }
-    end
-
-    trait :via_zip_file do
-      state { :notification_file_imported }
-      cpnp_reference { "123456789" }
     end
 
     trait :with_component do
