@@ -1,3 +1,4 @@
+# Test review app
 class ApplicationController < ActionController::Base
   include AuthenticationConcern
   include CacheConcern
