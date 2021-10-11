@@ -1,4 +1,4 @@
-class NameFormatValidator < ActiveModel::EachValidator
+class UserNameFormatValidator < ActiveModel::EachValidator
   BANNED_REGEXP = /:|\/|@|<|>|,|\.|\n|www|http/.freeze
   DEFAULT_MESSAGE = "Enter a valid name".freeze
 

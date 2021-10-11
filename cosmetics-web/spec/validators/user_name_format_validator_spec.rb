@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NameFormatValidator do
+RSpec.describe UserNameFormatValidator do
   subject(:validator) { validator_class.new(name) }
 
   let(:error_msg) { "Enter a valid name" }
@@ -10,7 +10,7 @@ RSpec.describe NameFormatValidator do
       include ActiveModel::Validations
       attr_accessor :name
 
-      validates :name, name_format: { message: ERROR_MSG }
+      validates :name, user_name_format: { message: ERROR_MSG }
 
       def initialize(name)
         @name = name
