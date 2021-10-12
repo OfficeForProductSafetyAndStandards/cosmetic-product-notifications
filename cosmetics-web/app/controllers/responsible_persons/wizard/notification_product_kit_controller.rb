@@ -15,7 +15,7 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
 
   def show
     case step
-    when :notification_product_created
+    when :notification_product_kit_updated
       redirect_to responsible_person_notification_draft_index_path(@notification.responsible_person, @notification)
     else
       render_wizard

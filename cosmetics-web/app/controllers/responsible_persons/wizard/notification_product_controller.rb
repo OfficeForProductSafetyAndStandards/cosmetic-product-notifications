@@ -92,7 +92,6 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   def update_single_or_multi_component_step
     render_next_step @notification if @notification.components.count > 0
 
-    binding.pry
     case params.dig(:notification, :single_or_multi_component)
     when "single"
       @notification.components.create if @notification.components.empty?
