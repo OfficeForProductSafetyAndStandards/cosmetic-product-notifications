@@ -108,6 +108,6 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("Contact person phone number changed successfully")
-    expect(page).to have_summary_item(key: "Phone", value: "+44(7123456789)")
+    expect(page).to have_summary_item(key: "Telephone", value: "+44(7123456789)")
   end
 end
