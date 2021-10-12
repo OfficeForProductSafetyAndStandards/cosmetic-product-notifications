@@ -1,7 +1,7 @@
 class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicationController
   include Wicked::Wizard
   include CountriesHelper
-  include ManualNotificationConcern
+  include WizardConcern
 
   steps :add_product_name,
         :add_internal_reference,

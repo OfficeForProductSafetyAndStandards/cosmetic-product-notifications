@@ -1,7 +1,7 @@
 class ResponsiblePersons::Wizard::ComponentBuildController < SubmitApplicationController
   include Wicked::Wizard
   include CategoryHelper
-  include ManualNotificationConcern
+  include WizardConcern
   include ComponentBuildHelper
 
   # WARN: Must be in this order. There's some hacks used to manipulate the

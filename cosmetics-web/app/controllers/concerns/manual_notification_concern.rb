@@ -1,4 +1,4 @@
-module ManualNotificationConcern
+module WizardConcern
   extend ActiveSupport::Concern
   include Wicked::Wizard
 
