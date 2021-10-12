@@ -26,16 +26,19 @@ module ManualNotificationConcern
     render_wizard model
   end
 
-  def yes_no_question(param, no_is_to_skip: true, before_skip: nil, before_render: nil, steps_to_skip: 1)
-    case yes_no_param(param)
-    when no_is_to_skip ? "no" : "yes"
-      before_skip&.call
-      skip_next_steps(steps_to_skip)
-    when no_is_to_skip ? "yes" : "no"
-      before_render&.call
-      render_wizard model
-    else
+  # Value of the question is either yes or no
+  def yes_no_question(param, skip_steps_on: "no", on_skip: nil, on_next_step: nil, steps_to_skip: 1)
+    answer = yes_no_param(param)
 
+    if ["yes", "no"].include? answer
+      if skip_steps_on == answer
+        on_skip&.call
+        skip_next_steps(steps_to_skip)
+      else
+        on_next_step&.call
+        render_next_step model
+      end
+    else
       error_message = case param
                       when :is_hair_dye
                         "Select yes if the product contains a hair dye"
@@ -52,12 +55,30 @@ module ManualNotificationConcern
                       end
 
       model.errors.add param, error_message
-      render step
+      rerender_current_step
     end
+  end
+
+  # Wicked wizard method names are really misleading, lets create some better names!
+  def render_next_step(object)
+    render_wizard object
+  end
+
+  def rerender_current_step
+    render step
   end
 
   def model
     # If you want your controller to allow different after_eu steps, override this
     raise "model method should be overridden"
   end
+
+  def set_notification
+    @notification = Notification.find_by reference_number: params[:notification_reference_number]
+
+    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
+
+    authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+  end
+
 end

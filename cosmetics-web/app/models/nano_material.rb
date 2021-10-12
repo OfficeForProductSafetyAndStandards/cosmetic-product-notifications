@@ -1,6 +1,6 @@
 class NanoMaterial < ApplicationRecord
-  # TODO: make this non-optional after refactoring CpnpParser
   belongs_to :component, optional: true
+  belongs_to :notification, optional: true
 
   has_many :nano_elements, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :nano_material
   accepts_nested_attributes_for :nano_elements

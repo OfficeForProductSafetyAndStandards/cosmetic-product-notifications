@@ -1,0 +1,35 @@
+<li class="opss-task-sub">
+  <h3 class="app-task-list__section">
+    Components
+  </h3>
+
+  <ul class="app-task-list__items opss-task-sub__list">
+    <% @notification.components.each_with_index do |component, i| %>
+      <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+          <a href="#" class="govuk-link govuk-link--no-visited-state" aria-describedby="nano-01-status">
+            Item #<%= i+1 %>
+          </a>
+        </span>
+
+        <% if component.created_at != component.updated_at %>
+          <b class="govuk-tag app-task-list__tag" id="nano-01-status">Completed</b>
+        <% else %>
+          <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="nano-03-status">Not started</b>
+        <% end %>
+      </li>
+    <% end %>
+    <li class="app-task-list__item opss-task-sub__last">
+      <span class="app-task-list__task-name">
+        <a href="add-nano-step.html" class="govuk-link govuk-link--no-visited-state">
+          Add <span class="govuk-visually-hidden">another component</span>
+        </a>
+        <span class="opss-task-sub__pipe">|</span>
+        <a href="remove-nano-step.html" class="govuk-link govuk-link--no-visited-state">
+          Remove <span class="govuk-visually-hidden">a one of components</span>
+        </a>
+      </span>
+    </li>
+  </ul>
+
+</li>

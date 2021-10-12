@@ -10,6 +10,7 @@ class Notification < ApplicationRecord
   belongs_to :responsible_person
 
   has_many :components, dependent: :destroy
+  has_many :nano_materials, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
 
   has_one :deleted_notification
@@ -192,6 +193,14 @@ class Notification < ApplicationRecord
 
   def is_multicomponent?
     components.length > 1
+  end
+
+  def multi_component?
+    is_multicomponent?
+  end
+
+  def single_component?
+    !multi_component?
   end
 
   # If any image is waiting for the antivirus check or it got a virus alert this method will be "true"

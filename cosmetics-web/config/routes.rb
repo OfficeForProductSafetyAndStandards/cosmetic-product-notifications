@@ -133,7 +133,10 @@ Rails.application.routes.draw do
 
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
         resources :build, controller: "responsible_persons/wizard/notification_build", only: %i[show update new]
+        resources :product, controller: "responsible_persons/wizard/notification_product", only: %i[show update new]
+        resources :product_kit, controller: "responsible_persons/wizard/notification_product_kit", only: %i[show update new]
         resources :additional_information, controller: "responsible_persons/additional_information", only: %i[index]
+        resources :draft, controller: "responsible_persons/drafts", only: %i[index]
 
         resources :product_image_upload, controller: "responsible_persons/product_image_upload", only: %i[new create destroy]
         resource :product_image_upload, controller: "responsible_persons/product_image_upload", only: %i[edit update], as: "product_images"

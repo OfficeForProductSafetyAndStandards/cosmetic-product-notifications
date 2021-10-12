@@ -37,7 +37,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def new
     @notification = Notification.create(responsible_person: @responsible_person)
 
-    redirect_to new_responsible_person_notification_build_path(@responsible_person, @notification)
+    redirect_to new_responsible_person_notification_product_path(@responsible_person, @notification)
   end
 
   # Check your answers page
@@ -95,7 +95,9 @@ private
 
   def get_unfinished_notifications
     @responsible_person.notifications
-      .where(state: %i[notification_file_imported draft_complete])
+      .where.not(state: %i[notification_complete])
+      .where("reference_number IS NOT NULL")
+      .where("product_name IS NOT NULL")
       .order("updated_at DESC")
   end
 

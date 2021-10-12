@@ -6,8 +6,16 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
   steps :add_product_name,
         :add_internal_reference,
         :for_children_under_three,
+
+        # :contains_nanomaterials # from component wizard
+        # :add_exposure_condition # rinced or left
+        # :add_exposure_routes # how likely exposed
+
         :single_or_multi_component,
-        :add_product_image,
+        :add_product_image # only for single
+        :delete_components_warning
+        :notification_product_created
+
         :is_mixed, # only for multicomponent - at least code says so
         :is_hair_dye, # only for multicomponent - at least code says so
         :is_ph_between_3_and_10, # only for multicomponent - at least code says so
@@ -39,9 +47,9 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
       render_add_internal_reference
     else
       if @notification.update_with_context(notification_params, step)
-        render_wizard @notification
+        render_next_step @notification
       else
-        render step
+        rerender_current_step
       end
     end
   end

@@ -1,0 +1,43 @@
+<%= render 'product_info' %>
+
+
+<div class="govuk-grid-row">
+  <section class="govuk-grid-column-three-quarters govuk-!-padding-top-9" role="region" aria-label="Tasks">
+
+    <p class="govuk-body govuk-!-margin-bottom-7 govuk-!-display-block opss-text-align-center">
+    <span class="govuk-visually-hidden">The task list is </span><span class="govuk-!-font-weight-bold">Incomplete</span>: 1 of 5 sections have been completed.
+    </p>
+
+    <ol class="app-task-list">
+      <%= render 'product' %>
+      <%#= render 'nanomaterials' %>
+      <% if @notification.multi_component? %>
+        <%= render 'product_kit' %>
+        <%= render 'components' %>
+      <% else %>
+        <%= render 'product_details' %>
+      <% end %>
+      <%= render 'category_and_formulation' %>
+      <li>
+        <h2 class="app-task-list__section">
+          Accept and submit
+        </h2>
+
+        <ul class="app-task-list__items">
+          <li class="app-task-list__item">
+            <span class="app-task-list__task-name">
+              Accept and submit
+            </span>
+
+            <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="accept-status">Cannot start yet</b>
+          </li>
+        </ul>
+      </li>
+    </ol>
+
+
+  </section>
+  <div class="govuk-grid-column-one-quarter govuk-!-padding-top-9">
+    <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" %>
+  </div>
+</div>
