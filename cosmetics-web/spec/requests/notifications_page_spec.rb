@@ -41,17 +41,10 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
         # Setup notifications belonging to the company
         create(:draft_notification, responsible_person: responsible_person)
         create(:registered_notification, product_name: "Product 1", reference_number: 1, responsible_person: responsible_person)
-        create(:notification_file, responsible_person: responsible_person, user: user,
-                                   upload_error: "uploaded_file_not_a_zip")
-        create(:notification_file, responsible_person: responsible_person, user: user)
 
         # Setup notifications belonging to other companies or users
         create(:draft_notification, responsible_person: other_responsible_person)
         create(:registered_notification, responsible_person: other_responsible_person)
-        create(:notification_file, responsible_person: other_responsible_person, user: user,
-                                   upload_error: "uploaded_file_not_a_zip")
-        create(:notification_file, responsible_person: responsible_person, user: other_user)
-        create(:notification_file, responsible_person: other_responsible_person, user: other_user)
       end
 
       context "when visiting notification page" do
@@ -69,10 +62,6 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
 
         it "displays the number of completed notifications" do
           expect(response.body).to include("Product notifications (1)")
-        end
-
-        it "displays the number of notification files containing errors" do
-          expect(response.body).to include("Errors (1)")
         end
       end
 

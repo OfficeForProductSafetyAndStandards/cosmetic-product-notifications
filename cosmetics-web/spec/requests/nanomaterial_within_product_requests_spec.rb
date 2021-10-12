@@ -14,84 +14,20 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
   end
 
   describe "PUT #confirm_usage" do
-    context "when the notification was via ZIP file upload and formulation included" do
-      let(:notification) do
-        create(:notification,
-               :via_zip_file,
-               responsible_person: responsible_person)
-      end
-
-      let(:component) { create(:component, :with_range_formulas, notification: notification) }
-      let(:nano_material) { create(:nano_material, component: component) }
-      let(:nano_element) { create(:nano_element, nano_material: nano_material) }
-
-      before do
-        put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }
-      end
-
-      it "redirects to the Check your answers page" do
-        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit")
-      end
+    let(:notification) do
+      create(:notification, responsible_person: responsible_person)
     end
 
-    context "when the notification was via ZIP file upload, using exact, and formulation missing" do
-      let(:notification) do
-        create(:notification,
-               :via_zip_file,
-               responsible_person: responsible_person)
-      end
+    let(:component) { create(:component, notification: notification) }
+    let(:nano_material) { create(:nano_material, component: component) }
+    let(:nano_element) { create(:nano_element, nano_material: nano_material) }
 
-      let(:component) { create(:component, :using_exact, notification: notification) }
-      let(:nano_material) { create(:nano_material, component: component) }
-      let(:nano_element) { create(:nano_element, nano_material: nano_material) }
-
-      before do
-        put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }
-      end
-
-      it "redirects to the Upload formulation page" do
-        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/formulation_file/new")
-      end
+    before do
+      put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }
     end
 
-    context "when the notification was manual" do
-      let(:notification) do
-        create(:notification, :manual,
-               responsible_person: responsible_person)
-      end
-
-      let(:component) { create(:component, notification: notification) }
-      let(:nano_material) { create(:nano_material, component: component) }
-      let(:nano_element) { create(:nano_element, nano_material: nano_material) }
-
-      before do
-        put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }
-      end
-
-      it "redirects to the Category question page" do
-        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/select_category")
-      end
-    end
-
-    context "when there is another nanomaterial to confirm usage for" do
-      let(:notification) do
-        create(:notification, :via_zip_file,
-               responsible_person: responsible_person)
-      end
-
-      let(:component) { create(:component, notification: notification) }
-      let(:nano_material) { create(:nano_material, component: component) }
-
-      let!(:first_nano_element) { create(:nano_element, nano_material: nano_material) }
-      let!(:second_nano_element) { create(:nano_element, nano_material: nano_material) }
-
-      before do
-        put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{first_nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }
-      end
-
-      it "redirects to ‘What is the purpose’ question for the second nano material" do
-        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/nanomaterials/#{second_nano_element.id}/build/new")
-      end
+    it "redirects to the Category question page" do
+      expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/select_category")
     end
   end
 end

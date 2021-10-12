@@ -21,13 +21,6 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
       expect(response).to redirect_to(edit_responsible_person_notification_path(responsible_person, notification))
     end
 
-    it "updates the notification state to draft_complete if all components have complete formulations and the notification has product images" do
-      notification = Notification.create(responsible_person_id: responsible_person.id, components: [predefined_component], state: "notification_file_imported")
-      notification.image_uploads.create
-      get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
-      expect(notification.reload.state).to eq("draft_complete")
-    end
-
     it "redirects to the product image upload page if notification is missing product images" do
       notification = Notification.create(responsible_person_id: responsible_person.id, components: [ranges_component])
       get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
