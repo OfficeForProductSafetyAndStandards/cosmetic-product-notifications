@@ -21,6 +21,8 @@ class ResponsiblePerson < ApplicationRecord
     rp.validates :postal_code, uk_postcode: true, if: -> { postal_code.present? }
   end
 
+  validates :name, responsible_person_name_format: true, if: :name_changed?
+
   def add_user(user)
     responsible_person_users << ResponsiblePersonUser.create(user: user)
   end

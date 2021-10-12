@@ -195,6 +195,7 @@ en:
               member_of_rp_with_same_name: "You are already associated with %{value}"
               invited_to_rp_with_same_name: "You have already been invited to join %{value}. Check your email inbox for your invite"
               blank: "Enter a name"
+              invalid: "Enter a valid name"
             address_line_1:
               blank: "Enter a building and street"
             city:

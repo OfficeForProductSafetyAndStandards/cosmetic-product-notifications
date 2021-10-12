@@ -10,7 +10,7 @@ module ResponsiblePersons
     attribute :postal_code
     attribute :user
 
-    validates :name, presence: true
+    validates :name, presence: true, responsible_person_name_format: { message: :invalid }
     validates :address_line_1, presence: true
     validates :city, presence: true
     validates :postal_code, presence: true

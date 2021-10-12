@@ -34,6 +34,19 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       end
     end
 
+    context "when the name containins invalid symbols" do
+      let(:name) { "<Responsible Person Name>" }
+
+      it "is invalid" do
+        expect(form).not_to be_valid
+      end
+
+      it "populates an error message" do
+        form.valid?
+        expect(form.errors.full_messages_for(:name)).to eq ["Enter a valid name"]
+      end
+    end
+
     context "when the name is the same as another RP name where the user belongs to" do
       let(:user) { create(:submit_user) }
 
