@@ -75,7 +75,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     return render_next_step @notification if @notification.nano_materials.count > 0
 
     yes_no_question(:contains_nanomaterials,
-                    no_is_to_skip: false,
+                    skip_steps_on: "yes",
                     on_skip: proc { @notification.nano_materials.destroy },
                     on_next_step: proc { nanomaterial_count.times { @notification.nano_materials << NanoMaterial.create } if @notification.nano_materials.count.zero? })
   end

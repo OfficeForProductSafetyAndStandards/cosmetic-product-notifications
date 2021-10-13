@@ -7,8 +7,12 @@
     <% @notification.components.each_with_index do |component, i| %>
       <li class="app-task-list__item">
         <span class="app-task-list__task-name">
-          <a href="#" class="govuk-link govuk-link--no-visited-state" aria-describedby="nano-01-status">
-            Item #<%= i+1 %>
+          <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="nano-01-status">
+            <% if component.name %>
+              <%= component.name %>
+            <% else %>
+              Item #<%= i+1 %>
+            <% end %>
           </a>
         </span>
 

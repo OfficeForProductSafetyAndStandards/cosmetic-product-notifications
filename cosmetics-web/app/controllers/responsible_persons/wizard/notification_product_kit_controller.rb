@@ -51,7 +51,7 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
     if @notification.update_with_context(notification_params, step)
       unless @notification.components_are_mixed
         clear_ph_range
-        return render_step :add_product_image
+        jump_to(:add_product_image)
       end
       render_next_step @notification
     else

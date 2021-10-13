@@ -3,13 +3,20 @@
     Product details
   </h2>
 
+  <% component = @notification.components.first %>
   <ul class="app-task-list__items">
     <li class="app-task-list__item">
       <span class="app-task-list__task-name">
-        Product details
+        <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="nano-01-status">
+          Product details
+        </a>
       </span>
 
-      <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="product-details-status">Not started yet</b>
+      <% if component.created_at != component.updated_at %>
+        <b class="govuk-tag app-task-list__tag" id="nano-01-status">Completed</b>
+      <% else %>
+        <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="nano-03-status">Not started</b>
+      <% end %>
     </li>
   </ul>
 </li>
