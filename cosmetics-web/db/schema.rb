@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_160614) do
+ActiveRecord::Schema.define(version: 2021_10_13_072857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_160614) do
     t.float "minimum_ph"
     t.float "maximum_ph"
     t.text "ph"
+    t.jsonb "routing_questions_answers"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
@@ -209,6 +210,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_160614) do
     t.datetime "notification_complete_at"
     t.text "csv_cache"
     t.datetime "deleted_at"
+    t.jsonb "routing_questions_answers"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
