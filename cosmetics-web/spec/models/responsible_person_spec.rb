@@ -59,7 +59,7 @@ RSpec.describe ResponsiblePerson, type: :model do
   end
 
   describe "name database validations" do
-    RSpec.shared_examples "responsible person name format validations" do
+    RSpec.shared_examples "responsible person name validations" do
       it "fails when name includes http" do
         responsible_person.name = "Soaps http://www.example.com"
         expect(responsible_person.save).to be_falsey
@@ -77,10 +77,16 @@ RSpec.describe ResponsiblePerson, type: :model do
         expect(responsible_person.save).to be_falsey
         expect(responsible_person.errors[:name]).to include("Enter a valid name")
       end
+
+      it "fails when name is longer than 250 characters" do
+        responsible_person.name = "a" * 251
+        expect(responsible_person.save).to be_falsey
+        expect(responsible_person.errors[:name]).to include("Name must be 250 characters or fewer")
+      end
     end
 
     context "when setting the name for first time" do
-      include_examples "responsible person name format validations"
+      include_examples "responsible person name validations"
     end
 
     describe "when changing the name" do
@@ -89,7 +95,7 @@ RSpec.describe ResponsiblePerson, type: :model do
         responsible_person.save
       end
 
-      include_examples "responsible person name format validations"
+      include_examples "responsible person name validations"
     end
   end
 

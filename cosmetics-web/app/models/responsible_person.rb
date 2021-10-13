@@ -1,6 +1,8 @@
 class ResponsiblePerson < ApplicationRecord
   include StripWhitespace
 
+  NAME_MAX_LENGTH = 250
+
   has_many :notifications, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy
   has_many :pending_responsible_person_users, dependent: :destroy
@@ -21,7 +23,9 @@ class ResponsiblePerson < ApplicationRecord
     rp.validates :postal_code, uk_postcode: true, if: -> { postal_code.present? }
   end
 
-  validates :name, responsible_person_name_format: true, if: :name_changed?
+  validates :name, length: { maximum: NAME_MAX_LENGTH },
+                   responsible_person_name_format: true,
+                   if: :name_changed?
 
   def add_user(user)
     responsible_person_users << ResponsiblePersonUser.create(user: user)

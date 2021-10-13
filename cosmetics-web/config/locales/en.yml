@@ -131,6 +131,7 @@ en:
           attributes:
             name:
               taken: "This Responsible Person name is already in use"
+              too_long: "Name must be 250 characters or fewer"
         contact_person:
           attributes:
             email_address:
@@ -192,10 +193,11 @@ en:
         responsible_persons/details_form:
           attributes:
             name:
-              member_of_rp_with_same_name: "You are already associated with %{value}"
-              invited_to_rp_with_same_name: "You have already been invited to join %{value}. Check your email inbox for your invite"
               blank: "Enter a name"
               invalid: "Enter a valid name"
+              invited_to_rp_with_same_name: "You have already been invited to join %{value}. Check your email inbox for your invite"
+              member_of_rp_with_same_name: "You are already associated with %{value}"
+              too_long: "Name must be 250 characters or fewer"
             address_line_1:
               blank: "Enter a building and street"
             city:

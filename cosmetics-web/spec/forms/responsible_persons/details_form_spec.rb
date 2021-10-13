@@ -34,7 +34,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       end
     end
 
-    context "when the name containins invalid symbols" do
+    context "when the name contains invalid symbols" do
       let(:name) { "<Responsible Person Name>" }
 
       it "is invalid" do
@@ -44,6 +44,19 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       it "populates an error message" do
         form.valid?
         expect(form.errors.full_messages_for(:name)).to eq ["Enter a valid name"]
+      end
+    end
+
+    context "when the name exceeds the allowed length" do
+      let(:name) { "a" * 251 }
+
+      it "is invalid" do
+        expect(form).not_to be_valid
+      end
+
+      it "contains errors" do
+        form.valid?
+        expect(form.errors.full_messages_for(:name)).to eq ["Name must be 250 characters or fewer"]
       end
     end
 
