@@ -3,7 +3,7 @@ module Registration
     attribute :full_name
 
     validates_presence_of :full_name
-    validates :full_name, length: { maximum: User::NAME_MAX_LENGTH }, name_format: { message: :invalid }
+    validates :full_name, length: { maximum: User::NAME_MAX_LENGTH }, user_name_format: { message: :invalid }
 
     include EmailFormValidation
 
