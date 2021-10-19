@@ -9,7 +9,6 @@ class SubmitUser < User
 
   belongs_to :organisation
 
-  has_many :notification_files, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_persons, through: :responsible_person_users
   has_many :pending_responsible_person_users, dependent: :destroy, foreign_key: :inviting_user_id, inverse_of: :inviting_user

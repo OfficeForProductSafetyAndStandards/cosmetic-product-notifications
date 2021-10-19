@@ -1,7 +1,7 @@
 # Trigger questions are per componenent
 class ResponsiblePersons::Wizard::TriggerQuestionsController < SubmitApplicationController
   include Wicked::Wizard
-  include CpnpNotificationTriggerRules
+  include NotificationTriggerRules
   include TriggerRulesHelper
 
   steps :select_ph_range, :ph

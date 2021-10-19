@@ -8,7 +8,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
 
   let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
-  let(:imported_notification) { create(:imported_notification, responsible_person: responsible_person_1) }
 
   let(:distinct_notification) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "bbbb") }
   let(:similar_notification_one) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaaa") }
@@ -28,7 +27,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         rp_1_notifications
         rp_2_notifications
         draft_notification
-        imported_notification
         Notification.elasticsearch.import force: true
         get :index
       end
@@ -39,10 +37,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
       it "excludes draft notifications" do
         expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
-      end
-
-      it "excludes incomplete imported notifications" do
-        expect(assigns(:notifications).records.to_a).not_to include(imported_notification)
       end
 
       it "renders the index template" do
@@ -108,16 +102,12 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       describe "displayed information" do
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions) }
         let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-        let(:notification) { create(:notification, :imported, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
 
         render_views
 
         it "renders contact person overview" do
           expect(response.body).to match(/Contact person/)
-        end
-
-        it "does not render product imported status" do
-          expect(response.body).not_to match(/Imported/)
         end
 
         it "does not render component formulations" do
@@ -162,7 +152,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         let(:cmr) { create(:cmr) }
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
         let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-        let(:notification) { create(:notification, :imported, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
 
         render_views
 
