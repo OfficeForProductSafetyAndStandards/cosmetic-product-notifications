@@ -38,16 +38,16 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
 
   scenario "Attempting to visit different from current responsible person pages redirects to change responsible person page" do
     visit("/responsible_persons/#{responsible_person_2.id}/notifications")
-    expect(page).to have_h1("Change Responsible Person")
+    expect(page).to have_h1("Change the Responsible Person")
 
     visit("/responsible_persons/#{responsible_person_2.id}/nanomaterials")
-    expect(page).to have_h1("Change Responsible Person")
+    expect(page).to have_h1("Change the Responsible Person")
 
     visit("/responsible_persons/#{responsible_person_2.id}")
-    expect(page).to have_h1("Change Responsible Person")
+    expect(page).to have_h1("Change the Responsible Person")
 
     visit("/responsible_persons/#{responsible_person_2.id}/team_members")
-    expect(page).to have_h1("Change Responsible Person")
+    expect(page).to have_h1("Change the Responsible Person")
   end
 
   scenario "Adding new responsible person" do
@@ -58,7 +58,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
     click_on "Change the Responsible Person"
-    expect(page).to have_h1("Change Responsible Person")
+    expect(page).to have_h1("Change the Responsible Person")
     choose "Add a new Responsible Person"
     click_on "Save and continue"
 
@@ -81,7 +81,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible person"
     click_on "Change the Responsible Person"
-    expect(page).to have_h1("Change Responsible Person")
+    expect(page).to have_h1("Change the Responsible Person")
     choose "Add a new Responsible Person"
     click_on "Save and continue"
 
@@ -102,7 +102,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
 
     visit "/responsible_persons/select"
-    expect(page).to have_h1("Change Responsible Person")
+    expect(page).to have_h1("Change the Responsible Person")
     choose name_2
     click_on "Save and continue"
 
