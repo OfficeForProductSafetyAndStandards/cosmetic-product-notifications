@@ -3,8 +3,10 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   include Wicked::Wizard
   include WizardConcern
+  include CategoryHelper
 
   before_action :set_component
+  before_action :set_category, if: -> { step == :select_category }
 
   steps :add_component_name,
         :number_of_shades,
@@ -13,8 +15,12 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :contains_special_applicator,
         :select_special_applicator_type, # only if contains special applicator
         :contains_cmrs,
-        :add_cmrs
-        :component_completed
+        :add_cmrs,
+        :select_category,
+        :select_formulation_type,
+        :upload_formulation,
+        :select_frame_formulation,
+        :contains_poisonous_ingredients
 
   def show
     case step
@@ -22,9 +28,6 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
       create_required_cmrs
-    # TODO: in all new flows, remove last step and use wizard default
-    when :component_completed
-      return redirect_to responsible_person_notification_draft_index_path(@notification.responsible_person, @notification)
     end
     render_wizard
   end
@@ -38,9 +41,19 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     when :contains_special_applicator
       update_contains_special_applicator
     when :contains_cmrs
-      render_contains_cmrs
+      update_contains_cmrs
     when :add_cmrs
       update_add_cmrs
+    when :select_category
+      update_select_category_step
+    when :select_formulation_type
+      update_select_formulation_type
+    when :select_frame_formulation
+      update_frame_formulation
+    when :upload_formulation
+      update_upload_formulation
+    when :contains_poisonous_ingredients
+      update_contains_poisonous_ingredients
     else
       # Apply this since render_wizard(@component, context: :context) doesn't work as expected
       if @component.update_with_context(component_params, step)
@@ -61,6 +74,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   private
 
+  # TODO: add this in all flows
   def finish_wizard_path
     responsible_person_notification_draft_index_path(@notification.responsible_person, @notification)
   end
@@ -105,7 +119,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     yes_no_question(:contains_special_applicator, on_skip: proc { @component.special_applicator = nil })
   end
 
-  def render_contains_cmrs
+  def update_contains_cmrs
     yes_no_question(:contains_cmrs, on_skip: method(:destroy_all_cmrs))
   end
 
@@ -118,6 +132,77 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     end
   end
 
+  def update_select_category_step
+    sub_category = params.dig(:component, :sub_category)
+    if sub_category
+      if has_sub_categories(sub_category)
+        redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, category: sub_category)
+      else
+        @component.update(sub_sub_category: sub_category)
+        render_wizard @component
+      end
+    else
+      @component.errors.add :sub_category, "Choose an option"
+      rerender_current_step
+    end
+  end
+
+  def update_select_formulation_type
+    unless @component.update_with_context(component_params, step)
+      return render step
+    end
+
+    if @component.predefined?
+      @component.formulation_file.purge if @component.formulation_file.attached?
+      jump_to(next_step(:upload_formulation)) # Intended target page is select_frame_formulation - assuming the step order declared above doesn't change!
+    else
+      @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
+    end
+
+    render_wizard @component
+  end
+
+  def update_frame_formulation
+    if @component.update_with_context(component_params, :select_frame_formulation)
+      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
+    else
+      render :select_frame_formulation
+    end
+  end
+
+  def update_contains_poisonous_ingredients
+    if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
+      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
+      render :contains_poisonous_ingredients
+      return
+    end
+
+    @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
+    if @component.contains_poisonous_ingredients?
+      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
+    else
+      redirect_to finish_wizard_path
+    end
+  end
+
+  def update_upload_formulation
+    formulation_file = params.dig(:component, :formulation_file)
+
+    if formulation_file.present?
+      @component.formulation_file.attach(formulation_file)
+      if @component.valid?
+        redirect_to finish_wizard_path
+      else
+        @component.formulation_file.purge if @component.formulation_file.attached?
+        render step
+      end
+    else
+      @component.errors.add :formulation_file, "Upload a list of ingredients"
+      render step
+    end
+  end
+
+
   def component_params
     params.fetch(:component, {})
       .permit(
@@ -127,6 +212,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :other_special_applicator,
         :sub_sub_category,
         :notification_type,
+        :sub_sub_category,
+        :frame_formulation,
         cmrs_attributes: %i[id name cas_number ec_number],
         shades: [],
       )
@@ -153,5 +240,16 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   def destroy_all_cmrs
     @component.cmrs.destroy_all
   end
+
+  def set_category
+    @category = params[:category]
+    if @category.present? && !has_sub_categories(@category)
+      @component.errors.add :sub_category, "Select a valid option"
+      @category = nil
+    end
+    @sub_categories = @category.present? ? get_sub_categories(@category) : get_main_categories
+    @selected_sub_category = @sub_categories.find { |category| @component.belongs_to_category?(category) }
+  end
+
 end
 

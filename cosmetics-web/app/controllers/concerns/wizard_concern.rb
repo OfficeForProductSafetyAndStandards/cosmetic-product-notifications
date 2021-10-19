@@ -31,6 +31,7 @@ module WizardConcern
     answer = yes_no_param(param)
 
     if ["yes", "no"].include? answer
+      model.remember_answer(param => answer)
       if skip_steps_on == answer
         on_skip&.call
         skip_next_steps(steps_to_skip)

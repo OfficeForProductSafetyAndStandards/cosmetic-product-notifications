@@ -263,6 +263,12 @@ class Notification < ApplicationRecord
     save!
   end
 
+  def remember_answer(hash)
+    answers = self.routing_questions_answers || {}
+    self.routing_questions_answers = answers.merge(hash)
+    self.save
+  end
+
 private
 
   def all_required_attributes_must_be_set

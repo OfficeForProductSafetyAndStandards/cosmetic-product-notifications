@@ -105,16 +105,6 @@ private
     @nano_material = @component.nano_material
   end
 
-  def set_category
-    @category = params[:category]
-    if @category.present? && !has_sub_categories(@category)
-      @component.errors.add :sub_category, "Select a valid option"
-      @category = nil
-    end
-    @sub_categories = @category.present? ? get_sub_categories(@category) : get_main_categories
-    @selected_sub_category = @sub_categories.find { |category| @component.belongs_to_category?(category) }
-  end
-
   def component_params
     params.fetch(:component, {})
       .permit(

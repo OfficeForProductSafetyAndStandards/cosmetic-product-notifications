@@ -176,6 +176,12 @@ class Component < ApplicationRecord
     contains_poisonous_ingredients? ? "Yes" : "No"
   end
 
+  def remember_answer(hash)
+    answers = self.routing_questions_answers || {}
+    self.routing_questions_answers = answers.merge(hash)
+    self.save
+  end
+
 private
 
   # This takes any value and returns nil if the value
