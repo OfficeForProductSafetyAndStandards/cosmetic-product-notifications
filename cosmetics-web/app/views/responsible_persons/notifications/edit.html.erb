@@ -134,12 +134,14 @@
         <%= govukSummaryList(
           classes: "govuk-summary-list opss-summary-list-mixed",
           rows: [
-            {
-              key: { text: "Shades" },
-              value: { html: render("none_or_bullet_list",
-                                    entities_list: component.shades,
-                                    list_item_classes: "") },
-            },
+            if @notification.is_multicomponent?
+              {
+                key: { text: "Shades" },
+                value: { html: render("none_or_bullet_list",
+                                      entities_list: component.shades,
+                                      list_item_classes: "") },
+              }
+            end,
             {
               key: { text: "Contains CMR substances" },
               value: { text: component.cmrs.any? ? "Yes" : "No" },
