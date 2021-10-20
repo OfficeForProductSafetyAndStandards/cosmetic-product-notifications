@@ -10,28 +10,319 @@
     <% end %>
 
     <h1 class="govuk-heading-l responsible-person-notification-name">
+      <span class="govuk-caption-l">Incomplete product: </span>
       <%= @notification.product_name %>
     </h1>
-
-    <%= render "notifications/product_overview", notification: @notification %>
   </div>
-
-  <div class="govuk-grid-column-full">
-    <%= render "notifications/responsible_person_details", responsible_person: @notification.responsible_person %>
-    <%= render "notifications/contact_person_overview", contact_person: @responsible_person.contact_persons.first %>
-    <%= render "notifications/product_details", notification: @notification, allow_edits: true %>
+  <div class="govuk-grid-column-one-third">
+    <%= link_to "Delete this incomplete notification",
+        delete_responsible_person_delete_notification_path(@responsible_person, @notification),
+        class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" %>
   </div>
+</div>
 
-  <% if @notification.may_submit_notification? %>
-    <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
-  <% end %>
+<div class="govuk-grid-row">
+  <article class="govuk-grid-column-three-quarters">
+    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><abbr>UK</abbr> cosmetic product number</dt>
+        <dd class="govuk-summary-list__value"><%= @notification.reference_number_for_display %></dd>
+      </div>
 
-  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-9">
-    <p class="govuk-!-margin-bottom-1">The product information is saved in your dashboard as an incomplete notification.</p>
-    <%= link_to "Save and return to dashboard", responsible_person_notifications_path(@responsible_person, tab: 'incomplete'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
-  </div>
-  <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-!-margin-bottom-1">If the product contains wrong information, you can delete the incomplete notification.</p>
-    <%= link_to "Delete incomplete cosmetic product notification", delete_responsible_person_delete_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
-  </div>
+      <% if @notification.industry_reference.present? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Internal reference number</dt>
+          <dd class="govuk-summary-list__value"><%= @notification.industry_reference %></dd>
+        </div>
+      <% end %>
+
+      <% if @notification.cpnp_reference %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key"><abbr>EU</abbr> reference number</dt>
+          <dd class="govuk-summary-list__value"><%= @notification.cpnp_reference %></dd>
+        </div>
+      <% end %>
+
+      <% if @notification.cpnp_notification_date.present? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">First notified in the <abbr>EU</abbr></dt>
+          <dd class="govuk-summary-list__value"><%= display_full_month_date @notification.cpnp_notification_date %></dd>
+        </div>
+      <% end %>
+    </dl>
+
+    <section id="product-table" class="govuk-!-margin-top-7">
+      <h2 class="govuk-visually-hidden">The product</h2>
+
+      <%= govukSummaryList(
+        classes: "govuk-summary-list opss-summary-list-mixed",
+        rows: [
+          {
+            key: { text: "Product name" },
+            value: { text: @notification.product_name },
+          },
+          if @notification.industry_reference.present?
+            {
+              key: { text: "Internal reference number" },
+              value: { text: @notification.industry_reference },
+            }
+          end,
+          unless @notification.under_three_years.nil?
+            {
+              key: { text: "For children under 3" },
+              value: { text: @notification.under_three_years ? "Yes" : "No" },
+            }
+          end,
+          {
+            key: { text: "Number of items" },
+            value: { text: @notification.components.length },
+          },
+          {
+            key: { text: "Shades" },
+            value: { html: display_shades(@notification) },
+          },
+          {
+            key: { text: "Label image" },
+            value: {
+              html: render("notifications/product_details_label_images", notification: @notification, allow_edits: true)
+            },
+            actions: {
+              items: if @notification.image_uploads.present?
+                      [
+                        {
+                            href: edit_responsible_person_notification_product_images_path(@notification.responsible_person, @notification),
+                            text: "Change",
+                            visuallyHiddenText: "label image"
+                        }
+                      ]
+                    else
+                      []
+                    end
+            }
+          },
+          {
+            key: { text: "Are the items mixed?" },
+            value: { text: @notification.components_are_mixed ? "Yes" : "No" },
+          },
+          if current_user.can_view_product_ingredients? && @notification.ph_min_value.present?
+            {
+              key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+              value: { text: @notification.ph_min_value },
+            }
+          end,
+          if current_user.can_view_product_ingredients? && @notification.ph_max_value.present?
+            {
+              key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+              value: { text: @notification.ph_max_value },
+            }
+          end,
+        ].compact
+      ) %>
+    </section>
+
+    <% @notification.components.each_with_index do |component, i| %>
+      <%
+        item_count = "Item #{i + 1}"
+        component_title = component.name.present? ? "#{item_count}: #{component.name}" : item_count
+      %>
+      <section id=<%= component.name&.parameterize.presence || item_count.parameterize %> class="govuk-!-margin-top-9 opss-grouping">
+        <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
+        <%= govukSummaryList(
+          classes: "govuk-summary-list opss-summary-list-mixed",
+          rows: [
+            {
+              key: { text: "Shades" },
+              value: { html: render("none_or_bullet_list",
+                                    entities_list: component.shades,
+                                    list_item_classes: "") },
+            },
+            {
+              key: { text: "Contains CMR substances" },
+              value: { text: component.cmrs.any? ? "Yes" : "No" },
+            },
+            if component.cmrs.any?
+              {
+                key: { text: "CMR substances" },
+                value: { html: render("application/none_or_bullet_list",
+                                      entities_list: component.cmrs.map(&:display_name),
+                                      list_item_classes: "") },
+              }
+            end,
+            {
+              key: { text: "Nanomaterials" },
+              value: { html: render("application/none_or_bullet_list",
+                                    entities_list: component.nano_material&.nano_elements&.map(&:display_name),
+                                    list_item_classes: "") },
+            },
+            if component.nano_material&.nano_elements.present?
+              {
+                key: { text: "Application instruction" },
+                value: { text: get_exposure_routes_names(component.nano_material.exposure_routes) },
+              }
+            end,
+            if component.nano_material&.nano_elements.present?
+              {
+                key: { text: "Exposure condition" },
+                value: { text: get_exposure_condition_name(component.nano_material.exposure_condition) },
+              }
+            end,
+            {
+              key: { text: "Category of product" },
+              value: { text: get_category_name(component.root_category) },
+            },
+            {
+              key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
+              value: { text: get_category_name(component.sub_category) },
+            },
+            {
+              key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
+              value: { text: get_category_name(component.sub_sub_category) },
+            },
+            if current_user.can_view_product_ingredients?
+              {
+                key: { text: "Formulation given as" },
+                value: { text: get_notification_type_name(component.notification_type) },
+              }
+            end,
+            if current_user.can_view_product_ingredients?
+              {
+                key: { text: "Frame formulation" },
+                value: { text: get_frame_formulation_name(component.frame_formulation) },
+              }
+            end,
+            if current_user.can_view_product_ingredients? && !component.predefined?
+              {
+                key: { text: "Formulation" },
+                value: { html: render("notifications/component_details_formulation_ingredients",
+                        component: component,
+                        allow_edits: true) },
+                actions: {
+                  items: if component.formulation_file.attached?
+                          [
+                            {
+                              href: edit_responsible_person_notification_component_formulation_path(
+                                      component.notification.responsible_person,
+                                      component.notification,
+                                      component
+                                    ),
+                              text: "Change",
+                              visuallyHiddenText: "formulation file"
+                            }
+                          ]
+                        else
+                          []
+                        end
+                }
+              }
+            end,
+            {
+              key: { text: "Physical form" },
+              value: { text: get_physical_form_name(component.physical_form) },
+            },
+            if current_user.can_view_product_ingredients?
+              {
+                key: { text: "Special applicator" },
+                value: { text: component.special_applicator.present? ? "Yes" : "No" },
+              }
+            end,
+            if current_user.can_view_product_ingredients? && component.special_applicator.present?
+              {
+                key: { text: "Applicator type" },
+                value: { text: component_special_applicator_name(component) },
+              }
+            end,
+            if current_user.can_view_product_ingredients?
+              {
+                key: { text: "Acute poisoning information" },
+                value: { text: component.acute_poisoning_info },
+              }
+            end,
+            if current_user.can_view_product_ingredients? && component.predefined?
+              {
+                key: { text: "Contains ingredients NPIS needs to know about" },
+                value: { text: component.poisonous_ingredients_answer },
+              }
+            end,
+            if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
+              {
+                key: { text: "Ingredients NPIS needs to know about" },
+                value: { html: render("notifications/component_details_poisonous_ingredients",
+                        component: component,
+                        allow_edits: true) },
+              }
+            end,
+          ].compact
+        ) %>
+        <% if current_user.can_view_product_ingredients? && component.trigger_questions %>
+          <%= render "notifications/ph", component: component %>
+          <% component.trigger_questions.each do |question| %>
+            <% unless question.question == "please_indicate_the_ph" %>
+              <%= render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: true %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </section>
+    <% end %>
+
+    <section class="govuk-!-margin-top-7">
+      <% if @notification.may_submit_notification? %>
+        <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
+      <% else %>
+        <p class="govuk-!-margin-bottom-1">The product information is saved in your dashboard as an incomplete notification.</p>
+        <%= link_to "Return to Cosmetic products", responsible_person_notifications_path(@responsible_person, tab: 'incomplete'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+      <% end %>
+    </section>
+  </article>
+
+  <aside class="govuk-grid-column-one-quarter opss-desktop-padding-left-0">
+    <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+      <h2 class="govuk-heading-s opss-grouping__heading-s opss-grouping__heading--norm">
+        Responsible person
+      </h2>
+      <% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
+      <%= govukSummaryList(
+        classes: "govuk-summary-list govuk-summary-list--no-border opss-summary-list-vertical",
+        rows: [
+          {
+            key: { text: "Name", classes: key_value_classes },
+            value: { text: @notification.responsible_person.name, classes: key_value_classes },
+          },
+          {
+            key: { text: "Address", classes: key_value_classes },
+            value: {
+              html: sanitize(@notification.responsible_person.address_lines.join("<br>")),
+              classes: key_value_classes,
+            },
+          },
+        ]
+      ) %>
+    </div>
+
+    <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+      <h2 class="govuk-heading-s opss-grouping__heading-s opss-grouping__heading--norm">
+        Assigned contact
+      </h2>
+      <%
+        contact_person = @responsible_person.contact_persons.first
+        key_value_classes = "govuk-!-font-size-16"
+      %>
+      <%= govukSummaryList(
+        classes: "govuk-summary-list govuk-summary-list--no-border opss-summary-list-vertical",
+        rows: [
+          {
+            key: { text: "Name", classes: key_value_classes },
+            value: { text: contact_person.name, classes: key_value_classes },
+          },
+          {
+            key: { text: "Email", classes: key_value_classes },
+            value: { text: contact_person.email_address, classes: key_value_classes },
+          },
+          {
+            key: { text: "Telephone", classes: key_value_classes },
+            value: { text: contact_person.phone_number, classes: key_value_classes },
+          },
+        ]
+      ) %>
+    </div>
+  </aside>
 </div>

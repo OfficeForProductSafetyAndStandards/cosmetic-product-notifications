@@ -1,13 +1,15 @@
-<div class="govuk-grid-column-two-thirds">
-  <h3 class="govuk-heading-m">Declaration</h3>
+<h3 class="govuk-heading-m">Declaration</h3>
 
-  <p>By submitting this cosmetic product notification, you confirm that the details you provide are correct to the best of your knowledge.</p>
+<p class="govuk-body">
+  By submitting this cosmetic product notification, you confirm that the details you provide are correct to the best of your knowledge.
+</p>
 
-  <%= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification), method: :post do |form| %>
+<%= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification), method: :post do |form| %>
 
-    <div class="govuk-form-group">
-      <%= govukButton text: "Accept and submit" %>
-    </div>
-  <% end %>
-
-</div>
+  <div class="govuk-button-group">
+    <%= govukButton text: "Accept and submit" %>
+    <%= link_to "Return to Cosmetic products",
+                responsible_person_notifications_path(@responsible_person, tab: 'incomplete'),
+                class: 'govuk-link govuk-link--no-visited-state' %>
+  </div>
+<% end %>
