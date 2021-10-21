@@ -23,33 +23,27 @@
 
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
-    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key"><abbr>UK</abbr> cosmetic product number</dt>
-        <dd class="govuk-summary-list__value"><%= @notification.reference_number_for_display %></dd>
-      </div>
-
-      <% if @notification.industry_reference.present? %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Internal reference number</dt>
-          <dd class="govuk-summary-list__value"><%= @notification.industry_reference %></dd>
-        </div>
-      <% end %>
-
-      <% if @notification.cpnp_reference %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key"><abbr>EU</abbr> reference number</dt>
-          <dd class="govuk-summary-list__value"><%= @notification.cpnp_reference %></dd>
-        </div>
-      <% end %>
-
-      <% if @notification.cpnp_notification_date.present? %>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">First notified in the <abbr>EU</abbr></dt>
-          <dd class="govuk-summary-list__value"><%= display_full_month_date @notification.cpnp_notification_date %></dd>
-        </div>
-      <% end %>
-    </dl>
+    <%= govukSummaryList(
+      classes: "govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
+      rows: [
+        {
+          key: { html: "<abbr>UK</abbr> cosmetic product number".html_safe },
+          value: { text: @notification.reference_number_for_display },
+        },
+        if @notification.cpnp_reference.present?
+          {
+            key: { html: "<abbr>EU</abbr> reference number".html_safe },
+            value: { text: @notification.cpnp_reference },
+          }
+        end,
+        if @notification.cpnp_notification_date.present?
+          {
+            key: { html: "First notified in the <abbr>EU</abbr>".html_safe },
+            value: { text: display_full_month_date(@notification.cpnp_notification_date) },
+          }
+        end,
+      ].compact
+    ) %>
 
     <section id="product-table" class="govuk-!-margin-top-7">
       <h2 class="govuk-visually-hidden">The product</h2>
