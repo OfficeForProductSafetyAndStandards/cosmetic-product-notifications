@@ -25,24 +25,7 @@
   <article class="govuk-grid-column-three-quarters">
     <%= govukSummaryList(
       classes: "govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
-      rows: [
-        {
-          key: { html: "<abbr>UK</abbr> cosmetic product number".html_safe },
-          value: { text: @notification.reference_number_for_display },
-        },
-        if @notification.cpnp_reference.present?
-          {
-            key: { html: "<abbr>EU</abbr> reference number".html_safe },
-            value: { text: @notification.cpnp_reference },
-          }
-        end,
-        if @notification.cpnp_notification_date.present?
-          {
-            key: { html: "First notified in the <abbr>EU</abbr>".html_safe },
-            value: { text: display_full_month_date(@notification.cpnp_notification_date) },
-          }
-        end,
-      ].compact
+      rows: notification_summary_references_rows(@notification)
     ) %>
 
     <section id="product-table" class="govuk-!-margin-top-7">
@@ -50,67 +33,7 @@
 
       <%= govukSummaryList(
         classes: "govuk-summary-list opss-summary-list-mixed",
-        rows: [
-          {
-            key: { text: "Product name" },
-            value: { text: @notification.product_name },
-          },
-          if @notification.industry_reference.present?
-            {
-              key: { text: "Internal reference number" },
-              value: { text: @notification.industry_reference },
-            }
-          end,
-          unless @notification.under_three_years.nil?
-            {
-              key: { text: "For children under 3" },
-              value: { text: @notification.under_three_years ? "Yes" : "No" },
-            }
-          end,
-          {
-            key: { text: "Number of items" },
-            value: { text: @notification.components.length },
-          },
-          {
-            key: { text: "Shades" },
-            value: { html: display_shades(@notification) },
-          },
-          {
-            key: { text: "Label image" },
-            value: {
-              html: render("notifications/product_details_label_images", notification: @notification, allow_edits: true)
-            },
-            actions: {
-              items: if @notification.image_uploads.present?
-                      [
-                        {
-                            href: edit_responsible_person_notification_product_images_path(@notification.responsible_person, @notification),
-                            text: "Change",
-                            visuallyHiddenText: "label image"
-                        }
-                      ]
-                    else
-                      []
-                    end
-            }
-          },
-          {
-            key: { text: "Are the items mixed?" },
-            value: { text: @notification.components_are_mixed ? "Yes" : "No" },
-          },
-          if current_user.can_view_product_ingredients? && @notification.ph_min_value.present?
-            {
-              key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
-              value: { text: @notification.ph_min_value },
-            }
-          end,
-          if current_user.can_view_product_ingredients? && @notification.ph_max_value.present?
-            {
-              key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
-              value: { text: @notification.ph_max_value },
-            }
-          end,
-        ].compact
+        rows: notification_summary_product_rows(@notification)
       ) %>
     </section>
 
@@ -127,140 +50,8 @@
         <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
         <%= govukSummaryList(
           classes: "govuk-summary-list opss-summary-list-mixed",
-          rows: [
-            if @notification.is_multicomponent?
-              {
-                key: { text: "Shades" },
-                value: { html: render("none_or_bullet_list",
-                                      entities_list: component.shades,
-                                      list_item_classes: "") },
-              }
-            end,
-            {
-              key: { text: "Contains CMR substances" },
-              value: { text: component.cmrs.any? ? "Yes" : "No" },
-            },
-            if component.cmrs.any?
-              {
-                key: { text: "CMR substances" },
-                value: { html: render("application/none_or_bullet_list",
-                                      entities_list: component.cmrs.map(&:display_name),
-                                      list_item_classes: "") },
-              }
-            end,
-            {
-              key: { text: "Nanomaterials" },
-              value: { html: render("application/none_or_bullet_list",
-                                    entities_list: component.nano_material&.nano_elements&.map(&:display_name),
-                                    list_item_classes: "") },
-            },
-            if component.nano_material&.nano_elements.present?
-              {
-                key: { text: "Application instruction" },
-                value: { text: get_exposure_routes_names(component.nano_material.exposure_routes) },
-              }
-            end,
-            if component.nano_material&.nano_elements.present?
-              {
-                key: { text: "Exposure condition" },
-                value: { text: get_exposure_condition_name(component.nano_material.exposure_condition) },
-              }
-            end,
-            {
-              key: { text: "Category of product" },
-              value: { text: get_category_name(component.root_category) },
-            },
-            {
-              key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
-              value: { text: get_category_name(component.sub_category) },
-            },
-            {
-              key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
-              value: { text: get_category_name(component.sub_sub_category) },
-            },
-            if current_user.can_view_product_ingredients?
-              {
-                key: { text: "Formulation given as" },
-                value: { text: get_notification_type_name(component.notification_type) },
-              }
-            end,
-            if current_user.can_view_product_ingredients?
-              {
-                key: { text: "Frame formulation" },
-                value: { text: get_frame_formulation_name(component.frame_formulation) },
-              }
-            end,
-            if current_user.can_view_product_ingredients? && !component.predefined?
-              {
-                key: { text: "Formulation" },
-                value: { html: render("notifications/component_details_formulation_ingredients",
-                        component: component,
-                        allow_edits: true) },
-                actions: {
-                  items: if component.formulation_file.attached?
-                          [
-                            {
-                              href: edit_responsible_person_notification_component_formulation_path(
-                                      component.notification.responsible_person,
-                                      component.notification,
-                                      component
-                                    ),
-                              text: "Change",
-                              visuallyHiddenText: "formulation file"
-                            }
-                          ]
-                        else
-                          []
-                        end
-                }
-              }
-            end,
-            {
-              key: { text: "Physical form" },
-              value: { text: get_physical_form_name(component.physical_form) },
-            },
-            if current_user.can_view_product_ingredients?
-              {
-                key: { text: "Special applicator" },
-                value: { text: component.special_applicator.present? ? "Yes" : "No" },
-              }
-            end,
-            if current_user.can_view_product_ingredients? && component.special_applicator.present?
-              {
-                key: { text: "Applicator type" },
-                value: { text: component_special_applicator_name(component) },
-              }
-            end,
-            if current_user.can_view_product_ingredients?
-              {
-                key: { text: "Acute poisoning information" },
-                value: { text: component.acute_poisoning_info },
-              }
-            end,
-            if current_user.can_view_product_ingredients? && component.predefined?
-              {
-                key: { text: "Contains ingredients NPIS needs to know about" },
-                value: { text: component.poisonous_ingredients_answer },
-              }
-            end,
-            if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
-              {
-                key: { text: "Ingredients NPIS needs to know about" },
-                value: { html: render("notifications/component_details_poisonous_ingredients",
-                        component: component,
-                        allow_edits: true) },
-              }
-            end,
-          ].compact
+          rows: notification_summary_component_rows(component, include_shades: @notification.is_multicomponent?)
         ) %>
-        <% if current_user.can_view_product_ingredients? && component.trigger_questions %>
-          <%= render "notifications/ph", component: component %>
-          <% component.trigger_questions.each do |question| %>
-            <% unless question.question == "please_indicate_the_ph" %>
-              <%= render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: true %>
-            <% end %>
-          <% end %>
-        <% end %>
       </section>
     <% end %>
 
