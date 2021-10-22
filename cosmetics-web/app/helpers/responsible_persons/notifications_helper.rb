@@ -131,7 +131,7 @@ module ResponsiblePersons::NotificationsHelper
           value: { text: get_notification_type_name(component.notification_type) },
         }
       end,
-      if current_user.can_view_product_ingredients?
+      if current_user.can_view_product_ingredients? && component.predefined?
         {
           key: { text: "Frame formulation" },
           value: { text: get_frame_formulation_name(component.frame_formulation) },
