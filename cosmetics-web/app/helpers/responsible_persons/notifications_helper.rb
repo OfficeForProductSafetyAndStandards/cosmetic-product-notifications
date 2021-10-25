@@ -80,6 +80,7 @@ module ResponsiblePersons::NotificationsHelper
           key: { text: "Shades" },
           value: { html: render("none_or_bullet_list",
                                 entities_list: component.shades,
+                                list_classes: "",
                                 list_item_classes: "") },
         }
       end,
@@ -92,6 +93,7 @@ module ResponsiblePersons::NotificationsHelper
           key: { html: "<abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances".html_safe },
           value: { html: render("application/none_or_bullet_list",
                                 entities_list: cmrs.map(&:display_name),
+                                list_classes: "",
                                 list_item_classes: "") },
         }
       end,
@@ -99,6 +101,7 @@ module ResponsiblePersons::NotificationsHelper
         key: { text: "Nanomaterials" },
         value: { html: render("application/none_or_bullet_list",
                               entities_list: nano_material&.nano_elements&.map(&:display_name),
+                              list_classes: "",
                               list_item_classes: "") },
       },
       if nano_material&.nano_elements.present?
@@ -252,7 +255,8 @@ private
       render("none_or_bullet_list",
              entities_list: format_trigger_question_elements(elements),
              key_name: :inci_name,
-             value_name: :quantity)
+             value_name: :quantity,
+             list_classes: "")
     end
   end
 
