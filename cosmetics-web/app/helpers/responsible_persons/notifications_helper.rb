@@ -193,7 +193,8 @@ private
 
     [{ href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
        text: "Change",
-       visuallyHiddenText: "label image" }]
+       visuallyHiddenText: "label image",
+       classes: "govuk-link--no-visited-state" }]
   end
 
   def componment_formulation_actions_items(component)
@@ -202,7 +203,8 @@ private
     notification = component.notification
     [{ href: edit_responsible_person_notification_component_formulation_path(notification.responsible_person, notification, component),
        text: "Change",
-       visuallyHiddenText: "formulation file" }]
+       visuallyHiddenText: "formulation file",
+       classes: "govuk-link--no-visited-state" }]
   end
 
   def component_ph_trigger_questions_rows(component)
