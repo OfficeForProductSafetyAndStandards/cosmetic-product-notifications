@@ -1,11 +1,9 @@
 <h3 class="govuk-heading-m">Declaration</h3>
 
-<p class="govuk-body">
-  By submitting this cosmetic product notification, you confirm that the details you provide are correct to the best of your knowledge.
-</p>
-
 <%= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification), method: :post do |form| %>
-
+  <p class="govuk-body">
+    By submitting this cosmetic product notification, you confirm that the details you provide are correct to the best of your knowledge.
+  </p>
   <div class="govuk-button-group">
     <%= govukButton text: "Accept and submit" %>
     <%= link_to "Return to Cosmetic products",
