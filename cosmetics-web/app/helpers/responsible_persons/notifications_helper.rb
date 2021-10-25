@@ -2,18 +2,18 @@ module ResponsiblePersons::NotificationsHelper
   def notification_summary_references_rows(notification)
     [
       {
-        key: { html: "<abbr>UK</abbr> cosmetic product number".html_safe },
+        key: { html: "<abbr title='United Kingdom'>UK</abbr> cosmetic product number".html_safe },
         value: { text: notification.reference_number_for_display },
       },
       if notification.cpnp_reference.present?
         {
-          key: { html: "<abbr>EU</abbr> reference number".html_safe },
+          key: { html: "<abbr title='European Union'>EU</abbr> reference number".html_safe },
           value: { text: notification.cpnp_reference },
         }
       end,
       if notification.cpnp_notification_date.present?
         {
-          key: { html: "First notified in the <abbr>EU</abbr>".html_safe },
+          key: { html: "First notified in the <abbr title='European Union'>EU</abbr>".html_safe },
           value: { text: display_full_month_date(notification.cpnp_notification_date) },
         }
       end,
@@ -84,12 +84,12 @@ module ResponsiblePersons::NotificationsHelper
         }
       end,
       {
-        key: { text: "Contains CMR substances" },
+        key: { html: "Contains <abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances".html_safe },
         value: { text: cmrs.any? ? "Yes" : "No" },
       },
       if cmrs.any?
         {
-          key: { text: "CMR substances" },
+          key: { html: "<abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances".html_safe },
           value: { html: render("application/none_or_bullet_list",
                                 entities_list: cmrs.map(&:display_name),
                                 list_item_classes: "") },
@@ -170,13 +170,13 @@ module ResponsiblePersons::NotificationsHelper
       end,
       if current_user.can_view_product_ingredients? && component.predefined?
         {
-          key: { text: "Contains ingredients NPIS needs to know about" },
+          key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { text: component.poisonous_ingredients_answer },
         }
       end,
       if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
         {
-          key: { text: "Ingredients NPIS needs to know about" },
+          key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
                                 component: component,
                                 allow_edits: true) },
@@ -218,17 +218,17 @@ private
     [
       if component.ph_range_not_required?
         {
-          key: { text: "pH" },
+          key: { html: "<abbr title='Power of hydrogen'>pH</abbr>".html_safe },
           value: { text: t(component.ph, scope: %i[component_ph check_your_answers]) },
         }
       elsif component.minimum_ph == component.maximum_ph
         {
-          key: { text: "Exact pH" },
+          key: { html: "Exact <abbr title='Power of hydrogen'>pH</abbr>".html_safe },
           value: { text: component.minimum_ph },
         }
       else
         {
-          key: { text: "pH range" },
+          key: { html: "<abbr title='Power of hydrogen'>pH</abbr> range".html_safe },
           value: { text: "#{component.minimum_ph} to #{component.maximum_ph}" },
         }
       end,
