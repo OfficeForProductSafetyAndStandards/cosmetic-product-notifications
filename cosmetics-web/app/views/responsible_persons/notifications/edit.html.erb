@@ -67,9 +67,7 @@
 
   <aside class="govuk-grid-column-one-quarter opss-desktop-padding-left-0">
     <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
-      <h2 class="govuk-heading-s opss-grouping__heading-s opss-grouping__heading--norm">
-        Responsible person
-      </h2>
+      <h2 class="govuk-heading-s">Responsible person</h2>
       <% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
       <%= govukSummaryList(
         classes: "govuk-summary-list govuk-summary-list--no-border opss-summary-list-vertical",
@@ -90,9 +88,7 @@
     </div>
 
     <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
-      <h2 class="govuk-heading-s opss-grouping__heading-s opss-grouping__heading--norm">
-        Assigned contact
-      </h2>
+      <h2 class="govuk-heading-s">Assigned contact</h2>
       <%
         contact_person = @responsible_person.contact_persons.first
         key_value_classes = "govuk-!-font-size-16"
