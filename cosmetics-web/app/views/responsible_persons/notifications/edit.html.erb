@@ -83,7 +83,7 @@
           {
             key: { text: "Address", classes: key_value_classes },
             value: {
-              html: sanitize(@notification.responsible_person.address_lines.join("<br>")),
+              html: sanitize(@notification.responsible_person.address_lines.join("<span class='govuk-visually-hidden'>, </span><br>")),
               classes: key_value_classes,
             },
           },
