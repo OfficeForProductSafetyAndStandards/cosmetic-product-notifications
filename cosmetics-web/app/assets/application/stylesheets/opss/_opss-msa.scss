@@ -283,10 +283,11 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
         }
         dt + dd {
             min-width: 40%;
+            width: auto; /* 1. protects against rogue legacy psd invalid html */
         }
     }
 
-    & > span.govuk-summary-list__actions {display: none; }/* protects against rogue legacy psd invalid html */
+    & > span.govuk-summary-list__actions {display: none !important; }/* 2. protects against rogue legacy psd invalid html */
 }
 
 .js-enabled .opss-accordian__open-remove > div:first-child {
