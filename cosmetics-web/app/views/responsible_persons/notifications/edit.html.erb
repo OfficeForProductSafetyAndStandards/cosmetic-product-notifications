@@ -28,17 +28,15 @@
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
     <%= govukSummaryList(
-      classes: "govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
+      classes: "govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
       rows: notification_summary_references_rows(@notification)
     ) %>
 
     <section id="product-table" class="govuk-!-margin-top-7">
       <h2 class="govuk-visually-hidden">The product</h2>
 
-      <%= govukSummaryList(
-        classes: "govuk-summary-list opss-summary-list-mixed",
-        rows: notification_summary_product_rows(@notification)
-      ) %>
+      <%= govukSummaryList(classes: "opss-summary-list-mixed",
+                           rows: notification_summary_product_rows(@notification)) %>
     </section>
 
     <% @notification.components.each_with_index do |component, i| %>
@@ -53,7 +51,7 @@
       <section id=<%= component.name&.parameterize.presence || item_count.parameterize %> class="govuk-!-margin-top-9 opss-grouping">
         <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
         <%= govukSummaryList(
-          classes: "govuk-summary-list opss-summary-list-mixed",
+          classes: "opss-summary-list-mixed",
           rows: notification_summary_component_rows(component, include_shades: @notification.is_multicomponent?)
         ) %>
       </section>
@@ -74,7 +72,7 @@
       <h2 class="govuk-heading-s">Responsible person</h2>
       <% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
       <%= govukSummaryList(
-        classes: "govuk-summary-list govuk-summary-list--no-border opss-summary-list-vertical",
+        classes: "govuk-summary-list--no-border opss-summary-list-vertical",
         rows: [
           {
             key: { text: "Name", classes: key_value_classes },
@@ -98,7 +96,7 @@
         key_value_classes = "govuk-!-font-size-16"
       %>
       <%= govukSummaryList(
-        classes: "govuk-summary-list govuk-summary-list--no-border opss-summary-list-vertical",
+        classes: "govuk-summary-list--no-border opss-summary-list-vertical",
         rows: [
           {
             key: { text: "Name", classes: key_value_classes },
