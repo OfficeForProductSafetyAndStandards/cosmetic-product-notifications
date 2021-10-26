@@ -47,6 +47,7 @@ main.govuk-main-wrapper {
 /*tbody th  {-webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto; hyphens: auto; }*/
 .govuk-summary-list .govuk-link,
 .opss-table td a,
+.opss-table tbody tr th:first-child,
 tbody th.govuk-table__header,
 tbody th.govuk-table__header a,
 tbody td a[href^="mailto:"] {
@@ -103,8 +104,14 @@ abbr[title]{
         .opss-switch-cols &,
         .govuk-summary-list__row & {
             border-bottom: 1px dotted $govuk-secondary-text-colour;
+            cursor: help;
         }
     }
+}
+
+kbd {
+    font-family: inherit;
+    font-weight: bold;
 }
 
 .opss-text-align-center {
@@ -397,6 +404,7 @@ dl.opss-summary-list-aside {
         thead tr th:first-child,
         tbody tr th:first-child {
             width: auto;
+            max-width: $govuk-page-width / 2;
         }
     }
 }
@@ -447,7 +455,9 @@ dl.opss-summary-list-aside {
     tbody td {
         @include govuk-font($size: 19);
 
+        span > em,
         mark {
+            font-style: normal;
             font-weight: bold;
             background: none;
             color: $govuk-text-colour;
