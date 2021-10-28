@@ -1,0 +1,33 @@
+<%= govukSummaryList(
+  classes: "govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
+  rows: notification_summary_references_rows(notification)
+) %>
+
+<section id="product-table" class="govuk-!-margin-top-7">
+  <h2 class="govuk-visually-hidden">The product</h2>
+
+  <%= govukSummaryList(classes: "opss-summary-list-mixed",
+                        rows: notification_summary_product_rows(notification, allow_edits: allow_edits)) %>
+</section>
+
+<% notification.components.each_with_index do |component, i| %>
+  <%
+    item_count = "Item #{i + 1}"
+    component_title = if notification.is_multicomponent?
+                        component.name.present? ? "#{item_count}: #{component.name}" : item_count
+                      else
+                        "Details"
+                      end
+  %>
+  <section id=<%= component.name&.parameterize.presence || item_count.parameterize %> class="govuk-!-margin-top-9 opss-grouping">
+    <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
+    <%= govukSummaryList(
+      classes: "opss-summary-list-mixed",
+      rows: notification_summary_component_rows(
+        component,
+        include_shades: notification.is_multicomponent?,
+        allow_edits: allow_edits
+      )
+    ) %>
+  </section>
+<% end %>
