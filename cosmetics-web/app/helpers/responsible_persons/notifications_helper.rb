@@ -20,7 +20,7 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
-  def notification_summary_product_rows(notification)
+  def notification_summary_product_rows(notification, allow_edits: false)
     [
       {
         key: { text: "Product name" },
@@ -48,8 +48,10 @@ module ResponsiblePersons::NotificationsHelper
       },
       {
         key: { text: "Label image" },
-        value: { html: render("notifications/product_details_label_images", notification: notification, allow_edits: true) },
-        actions: { items: label_image_actions_items(notification) },
+        value: { html: render("notifications/product_details_label_images",
+                              notification: notification,
+                              allow_edits: allow_edits) },
+        actions: { items: allow_edits ? label_image_actions_items(notification) : [] },
       },
       {
         key: { text: "Are the items mixed?" },
@@ -70,7 +72,7 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
-  def notification_summary_component_rows(component, include_shades: true)
+  def notification_summary_component_rows(component, include_shades: true, allow_edits: false)
     cmrs = component.cmrs
     nano_material = component.nano_material
 
@@ -145,8 +147,8 @@ module ResponsiblePersons::NotificationsHelper
           key: { text: "Formulation" },
           value: { html: render("notifications/component_details_formulation_ingredients",
                                 component: component,
-                                allow_edits: true) },
-          actions: { items: componment_formulation_actions_items(component) },
+                                allow_edits: allow_edits) },
+          actions: { items: allow_edits ? componment_formulation_actions_items(component) : [] },
         }
       end,
       {
@@ -182,7 +184,7 @@ module ResponsiblePersons::NotificationsHelper
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
                                 component: component,
-                                allow_edits: true) },
+                                allow_edits: allow_edits) },
         }
       end,
     ].concat(component_ph_trigger_questions_rows(component))

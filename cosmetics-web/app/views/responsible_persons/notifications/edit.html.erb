@@ -36,7 +36,7 @@
       <h2 class="govuk-visually-hidden">The product</h2>
 
       <%= govukSummaryList(classes: "opss-summary-list-mixed",
-                           rows: notification_summary_product_rows(@notification)) %>
+                           rows: notification_summary_product_rows(@notification, allow_edits: true)) %>
     </section>
 
     <% @notification.components.each_with_index do |component, i| %>
@@ -52,7 +52,7 @@
         <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
         <%= govukSummaryList(
           classes: "opss-summary-list-mixed",
-          rows: notification_summary_component_rows(component, include_shades: @notification.is_multicomponent?)
+          rows: notification_summary_component_rows(component, include_shades: @notification.is_multicomponent?, allow_edits: true)
         ) %>
       </section>
     <% end %>
