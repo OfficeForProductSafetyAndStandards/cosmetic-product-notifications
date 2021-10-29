@@ -20,19 +20,18 @@
         </div>
       <% end %>
     </div>
+    <% if @notification.can_be_deleted? %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <%= govukWarningText(
+            iconFallbackText: "Warning",
+            text: "You have #{Notification::DELETION_PERIOD_DAYS} days from the date you submitted your notification to delete it. You should only do this if your notification contains wrong information."
+          )%>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
-<% if @notification.can_be_deleted? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-      <%= govukWarningText(
-        iconFallbackText: "Warning",
-        text: "You have #{Notification::DELETION_PERIOD_DAYS} days from the date you submitted your notification to delete it. You should only do this if your notification contains wrong information."
-      )%>
-    </div>
-  </div>
-<% end %>
 
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
