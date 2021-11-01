@@ -206,7 +206,7 @@ private
     notification = component.notification
     [{ href: edit_responsible_person_notification_component_formulation_path(notification.responsible_person, notification, component),
        text: "Change",
-       visuallyHiddenText: "formulation file",
+       visuallyHiddenText: "formulation document",
        classes: "govuk-link--no-visited-state" }]
   end
 

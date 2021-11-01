@@ -55,7 +55,7 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit"
 
     expect(page).to have_summary_item(key: "Formulation", value: "testPdf.pdf")
-    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation file")
+    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation document")
     click_link "Change"
 
     expect(page).to have_current_path(
@@ -78,7 +78,7 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
     expect(page).to have_summary_item(key: "Formulation", value: "testPdf.pdf")
-    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation file")
+    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation document")
 
     # User goes back to edit the formulation page
     click_link "Change"
@@ -112,6 +112,6 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
     expect(page).to have_summary_item(key: "Formulation", value: "testPdf.pdf")
-    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation file")
+    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation document")
   end
 end
