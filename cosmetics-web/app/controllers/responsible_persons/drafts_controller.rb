@@ -1,7 +1,12 @@
 class ResponsiblePersons::DraftsController < SubmitApplicationController
-  before_action :set_notification, only: %i[index]
+  before_action :set_notification
 
   def index
+  end
+
+  def add_component
+    @notification.components.create
+    redirect_to responsible_person_notification_draft_index_path @notification.responsible_person, @notification
   end
 
 private
