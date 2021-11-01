@@ -1,6 +1,6 @@
 <h3 class="govuk-heading-m">Declaration</h3>
 
-<%= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification), method: :post do |form| %>
+<%= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification), method: :post, html: { novalidate: true } do |form| %>
   <p class="govuk-body">
     By submitting this cosmetic product notification, you confirm that the details you provide are correct to the best of your knowledge.
   </p>
