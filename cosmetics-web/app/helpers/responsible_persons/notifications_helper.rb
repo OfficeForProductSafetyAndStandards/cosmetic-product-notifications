@@ -17,6 +17,12 @@ module ResponsiblePersons::NotificationsHelper
           value: { text: display_full_month_date(notification.cpnp_notification_date) },
         }
       end,
+      if notification.notification_complete_at.present?
+        {
+          key: { html: "<abbr title='United Kingdom'>UK</abbr> notified".html_safe },
+          value: { text: display_full_month_date(notification.notification_complete_at) },
+        }
+      end,
     ].compact
   end
 
