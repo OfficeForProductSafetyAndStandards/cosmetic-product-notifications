@@ -27,35 +27,7 @@
 
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
-    <%= govukSummaryList(
-      classes: "govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
-      rows: notification_summary_references_rows(@notification)
-    ) %>
-
-    <section id="product-table" class="govuk-!-margin-top-7">
-      <h2 class="govuk-visually-hidden">The product</h2>
-
-      <%= govukSummaryList(classes: "opss-summary-list-mixed",
-                           rows: notification_summary_product_rows(@notification)) %>
-    </section>
-
-    <% @notification.components.each_with_index do |component, i| %>
-      <%
-        item_count = "Item #{i + 1}"
-        component_title = if @notification.is_multicomponent?
-                            component.name.present? ? "#{item_count}: #{component.name}" : item_count
-                          else
-                            "Details"
-                          end
-      %>
-      <section id=<%= component.name&.parameterize.presence || item_count.parameterize %> class="govuk-!-margin-top-9 opss-grouping">
-        <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
-        <%= govukSummaryList(
-          classes: "opss-summary-list-mixed",
-          rows: notification_summary_component_rows(component, include_shades: @notification.is_multicomponent?)
-        ) %>
-      </section>
-    <% end %>
+    <%= render("product_details", notification: @notification, allow_edits: true) %>
 
     <section class="govuk-!-margin-top-7">
       <% if @notification.may_submit_notification? %>
@@ -67,51 +39,5 @@
     </section>
   </article>
 
-  <aside class="govuk-grid-column-one-quarter opss-desktop-padding-left-0">
-    <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
-      <h2 class="govuk-heading-s">Responsible person</h2>
-      <% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
-      <%= govukSummaryList(
-        classes: "govuk-summary-list--no-border opss-summary-list-vertical",
-        rows: [
-          {
-            key: { text: "Name", classes: key_value_classes },
-            value: { text: @notification.responsible_person.name, classes: key_value_classes },
-          },
-          {
-            key: { text: "Address", classes: key_value_classes },
-            value: {
-              html: sanitize(@notification.responsible_person.address_lines.join("<span class='govuk-visually-hidden'>, </span><br>")),
-              classes: key_value_classes,
-            },
-          },
-        ]
-      ) %>
-    </div>
-
-    <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
-      <h2 class="govuk-heading-s">Assigned contact</h2>
-      <%
-        contact_person = @responsible_person.contact_persons.first
-        key_value_classes = "govuk-!-font-size-16"
-      %>
-      <%= govukSummaryList(
-        classes: "govuk-summary-list--no-border opss-summary-list-vertical",
-        rows: [
-          {
-            key: { text: "Name", classes: key_value_classes },
-            value: { text: contact_person.name, classes: key_value_classes },
-          },
-          {
-            key: { text: "Email", classes: key_value_classes },
-            value: { text: contact_person.email_address, classes: key_value_classes },
-          },
-          {
-            key: { text: "Telephone", classes: key_value_classes },
-            value: { text: contact_person.phone_number, classes: key_value_classes },
-          },
-        ]
-      ) %>
-    </div>
-  </aside>
+  <%= render("aside_responsible_person_details", responsible_person: @responsible_person) %>
 </div>
