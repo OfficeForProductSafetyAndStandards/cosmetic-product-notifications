@@ -2,6 +2,10 @@ module WizardConcern
   extend ActiveSupport::Concern
   include Wicked::Wizard
 
+  included do
+    helper_method :next_step_path
+  end
+
   def notification
     if params[:notification_reference_number]
       Notification.find_by reference_number: params[:notification_reference_number]
@@ -67,6 +71,10 @@ module WizardConcern
 
   def rerender_current_step
     render step
+  end
+
+  def next_step_path
+    next_wizard_path
   end
 
   def model
