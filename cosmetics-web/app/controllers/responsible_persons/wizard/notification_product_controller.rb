@@ -90,14 +90,19 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
   # Run this step only when notifications does not have any components
   def update_single_or_multi_component_step
-    render_next_step @notification if @notification.components.count > 0
+    return render_next_step @notification if @notification.components.count > 1
 
     case params.dig(:notification, :single_or_multi_component)
     when "single"
       @notification.components.create if @notification.components.empty?
       render_next_step @notification
     when "multiple"
-      components_count.times { @notification.components.create }
+      if @notification.components_count > 0 && components_count < @notification.components_count
+        @notification.errors.add :single_or_multi_component, "Components count cant be lower than #{@notification.components_count}"
+        return rerender_current_step
+      end
+      required_components_count = @notification.components.present? ? components_count - 1 : components_count
+      required_components_count.times { @notification.components.create }
       render_next_step @notification
     else
       @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit"
