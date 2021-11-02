@@ -1,4 +1,6 @@
 class TriggerQuestion < ApplicationRecord
+  PH_QUESTION = "please_indicate_the_ph".freeze
+
   # TODO: make this non-optional after refactoring CpnpParser
   belongs_to :component, optional: true
 
@@ -6,4 +8,8 @@ class TriggerQuestion < ApplicationRecord
   accepts_nested_attributes_for :trigger_question_elements
 
   validates :applicable, inclusion: { in: [true, false] }, on: :update
+
+  def ph_question?
+    question == PH_QUESTION
+  end
 end

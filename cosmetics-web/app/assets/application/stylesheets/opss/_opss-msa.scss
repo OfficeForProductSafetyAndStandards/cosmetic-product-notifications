@@ -1,39 +1,14 @@
-//These are the opss MSA/Cosmetics css styles: I recommend simply copy and pasting this entire code into your local opss-msa scss file.
-//And include - copy over - the imported files in the same directory (listed at the top of this file).
-//Don't edit the local production copy as pasting this into it next/each time will overwrite your changes.
-//We can remove linting from this scss file - it won't run if there is a real problem
+//COSMETICS master css/scss styles: simply copy this content into your local COS scss file (and update the @import URLs if required).
+//Add the listed @import scss files (below) to your directory.
+//Don't edit your local copy to avoid it unsyncing with these versions.
+//We can remove linting from these scss files - they won't build if there is a real problem.
 
 @import "opss-shared";
 @import "opss-search";
 @import "opss-pagination";
 
-abbr[title]{
-    text-decoration: none;
-}
 
-.opss-text-align-right {
-    @include govuk-media-query($from: tablet) {
-        text-align: right; display: inline-block; width: 100%;
-    }
-}
 
-.opss-text-align-center {
-    text-align: center;
-}
-
-.opss-border-top, .opss-border-bottom {
-    border-color: $govuk-border-colour;
-    border-style: solid;
-    border-width: 0;
-}
-.opss-border-top {border-top-width: 1px; }
-.opss-border-bottom {border-bottom-width: 1px; }
-
-/*.govuk-accordion + .opss-border-top {border-top-width: 0; }.govuk-template__body:not(.js-enabled) .govuk-accordion + .opss-border-bottom {border-bottom-width: 0; }*/
-
-.opss-text-underline-offset {
-    text-underline-offset: 0.1em;
-}
 .opss-tel-number {
     @include govuk-media-query($from: desktop) {
         color: govuk-colour("black") !important;
@@ -196,39 +171,6 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     text-align: right;
 }
 
-/*tbody th  {-webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto; hyphens: auto; }*/
-.govuk-summary-list .govuk-link,
-.opss-table td a {
-    @include word-wrap;
-}
-
-.opss-table {
-    tbody tr:last-child th,
-    tbody tr:last-child td {
-        border-bottom: none;
-    }
-    tbody tr td:last-child a {
-        white-space: nowrap;
-    }
-
-    tfoot th {
-        border-top: 1px solid $govuk-border-colour;
-        border-bottom: none 0;
-    }
-}
-
-.opss-table--last-col-right {
-    thead tr .govuk-table__header:last-child,
-    tbody tr .govuk-table__cell:last-child {
-        text-align: right;
-    }
-}
-.opss-table--first-col-normal {
-    tbody tr th:first-child {
-        font-weight: normal;
-    }
-}
-
 .opss-tabs-min-height {
     .govuk-tabs__panel {
         min-height: 284px;
@@ -331,6 +273,23 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
 }
 /* .opss-summary-list ends */
 
+.opss-summary-list-mixed > div {/* std summary list but allows for a mixture of 2 & 3 cols in 1 list */
+    display: table;
+    width: 100%;
+
+    .govuk-grid-column-three-quarters & {
+        dt {
+            width: 40%;
+        }
+        dt + dd {
+            min-width: 40%;
+            width: auto; /* 1. protects against rogue legacy psd invalid html */
+        }
+    }
+
+    & > span.govuk-summary-list__actions {display: none !important; }/* 2. protects against rogue legacy psd invalid html */
+}
+
 .js-enabled .opss-accordian__open-remove > div:first-child {
     @include govuk-visually-hidden;
 }
@@ -392,9 +351,26 @@ li.opss-task-sub {
         color: rgba(76, 115, 141, 0.5);//#b1b4b6
     }
 }
+
 .app-task-list__section-number {//bug fix for mobile
     display: inline-block;
     min-width: govuk-spacing(5);
+}
+
+@media only screen and (max-width: 859px) {//browser window is 859px wide or less
+    .opss-switch-cols {
+        width: auto;
+        .govuk-grid-column-three-quarters.opss-switch-cols__left {width: 100%; }
+        .govuk-grid-column-one-quarter.opss-switch-cols__right {width: auto; padding-top: govuk-spacing(5) !important;
+        }
+    }
+}
+@media only screen and (min-width: 860px) {//browser window is 860px wide or more
+    .opss-switch-cols {
+        display: flex;
+        .opss-switch-cols__left {order: 1; }
+        .opss-switch-cols__right {order: 2; }
+    }
 }
 
 .opss-tag--red {
