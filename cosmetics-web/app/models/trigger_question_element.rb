@@ -1,4 +1,6 @@
 class TriggerQuestionElement < ApplicationRecord
+  ELEMENTS_GIVEN_AS_CONCENTRATION = %w[incivalue value propanol ethanol concentration].freeze
+
   # TODO: make this non-optional after refactoring CpnpParser
   belongs_to :trigger_question, optional: true
 
@@ -18,6 +20,10 @@ class TriggerQuestionElement < ApplicationRecord
     minrangevalue: "minrangevalue",
     maxrangevalue: "maxrangevalue",
   }
+
+  def value_given_as_concentration?
+    ELEMENTS_GIVEN_AS_CONCENTRATION.include? element
+  end
 
 private
 

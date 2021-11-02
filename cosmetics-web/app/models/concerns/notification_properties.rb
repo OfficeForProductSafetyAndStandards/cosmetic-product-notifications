@@ -4,7 +4,6 @@ module NotificationProperties
   include NotificationTypes
   include NotificationCategories
   include NotificationFrameFormulations
-  include NotificationTriggerRules
   include NotificationUnits
   include NotificationPhysicalForms
   include NotificationSpecialApplicators

@@ -31,7 +31,7 @@ RSpec.describe ContactPerson, type: :model do
   end
 
   describe "name database validations" do
-    RSpec.shared_examples "name format validations" do
+    RSpec.shared_examples " contact person name format validations" do
       it "does not accept a website as a part of the name" do
         contact_person.name = "Emma www.example.com"
         expect(contact_person.save).to be_falsey
@@ -52,7 +52,7 @@ RSpec.describe ContactPerson, type: :model do
     end
 
     context "when setting the name for first time" do
-      include_examples "name format validations"
+      include_examples " contact person name format validations"
     end
 
     describe "when changing the name" do
@@ -61,7 +61,7 @@ RSpec.describe ContactPerson, type: :model do
         contact_person.save
       end
 
-      include_examples "name format validations"
+      include_examples " contact person name format validations"
     end
   end
 end
