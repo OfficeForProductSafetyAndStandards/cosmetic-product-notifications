@@ -1,0 +1,26 @@
+<div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">
+    Exact concentrations of the ingredients <%= "in #{local_assigns[:name]}" if local_assigns[:name].present? %>
+  </h1>
+  <p class="govuk-!-margin-bottom-3">To tell us about the exact concentrations, you need to upload a PDF which lists the ingredients in the product.</p>
+  <h2 class="govuk-heading-m">
+    What you need to tell us
+  </h2>
+  <p class="govuk-!-margin-bottom-3">List every ingredient in order of highest to lowest concentration.</p>
+  <p class="govuk-!-margin-bottom-1">
+  For every ingredient tell us the:
+  </p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>International Nomenclature of Cosmetic Ingredients (INCI) name, where available</li>
+    <li>exact concentrations (% w/w)</li>
+  </ul>
+  <div class="govuk-inset-text">
+    The National Poisons Information Service (NPIS) needs to know about some ingredients in the product – list these first.
+  </div>
+</div>
+<%= render 'responsible_persons/wizard/component_build/ingredients_npis_needs_to_know' %>
+<div class="govuk-grid-column-full">
+  <p>
+    You must only include information about the ingredients in the product being notified. You must not upload complete assessment documents.
+  </p>
+</div>
