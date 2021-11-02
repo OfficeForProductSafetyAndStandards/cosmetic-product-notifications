@@ -12,10 +12,12 @@
     <%= entities_list.first %>
   <% end %>
 <% else %>
-  <ul class="govuk-list govuk-list--bullet entity-list">
+  <% # Does not check for presence as we want an empty assign to be able to override the default
+     ul_classes = local_assigns[:list_classes] ? local_assigns[:list_classes] : "entity-list" %>
+  <ul class="<%= "govuk-list govuk-list--bullet #{ul_classes}".strip %>" >
     <% entities_list.each do |entity| %>
       <% if local_assigns[:key_name].present? && local_assigns[:value_name].present? %>
-        <li>
+        <li <%= "class=#{local_assigns[:list_item_classes]}" if local_assigns[:list_item_classes].present? %>>
           <dl>
             <dt><%= entity[key_name] %></dt>
             <dd><%= entity[value_name] %></dd>
@@ -23,7 +25,12 @@
 
         </li>
       <% else %>
-        <li class="govuk-table__cell--numeric"><%= entity %></li>
+        <% li_classes = case local_assigns[:list_item_classes]
+                        when nil then "class=govuk-table__cell--numeric"
+                        when "" then ""
+                        else "class=#{local_assigns[:list_item_classes]}"
+                        end %>
+        <li <%= li_classes %>><%= entity %></li>
       <% end %>
     <% end %>
   </ul>
