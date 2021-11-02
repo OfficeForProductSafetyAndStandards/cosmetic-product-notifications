@@ -269,9 +269,9 @@ private
   end
 
   def trigger_question_row(trigger_question)
-    return [] if trigger_question.ph_question?
+    return if trigger_question.ph_question?
 
-    [{ key: { text: get_trigger_rules_short_question_name(trigger_question.question) },
-       value: { html: trigger_question_elements_value(trigger_question.trigger_question_elements) } }]
+    { key: { text: get_trigger_rules_short_question_name(trigger_question.question) },
+      value: { html: trigger_question_elements_value(trigger_question.trigger_question_elements) } }
   end
 end
