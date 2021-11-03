@@ -132,6 +132,12 @@ en:
             name:
               taken: "This Responsible Person name is already in use"
               too_long: "Name must be 250 characters or fewer"
+            address_line_1:
+              blank: "Enter a building and street"
+            city:
+              blank: "Enter a town or city"
+            postal_code:
+              blank: "Enter a postcode"
         contact_person:
           attributes:
             email_address:
