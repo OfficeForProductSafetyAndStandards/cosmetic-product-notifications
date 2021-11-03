@@ -15,7 +15,7 @@ class ResponsiblePerson < ApplicationRecord
 
   validates :account_type, presence: true
 
-  with_options on: %i[enter_details create] do |rp|
+  with_options on: %i[enter_details create update] do |rp|
     rp.validates :name, presence: true
     rp.validates :address_line_1, presence: true
     rp.validates :city, presence: true

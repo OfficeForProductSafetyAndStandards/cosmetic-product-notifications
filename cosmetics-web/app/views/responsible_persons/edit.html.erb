@@ -1,0 +1,63 @@
+<%
+  title = "Change UK Responsible Person address for #{@responsible_person.name}"
+  page_title(title, errors: @responsible_person.errors.any?)
+%>
+
+<% content_for :after_header do %>
+  <%= link_to "Back", responsible_person_path(@responsible_person), class: "govuk-back-link" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= error_summary(@responsible_person.errors, %i[address_line_1 address_line_2 city county postal_code]) %>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2"><%= title %></h1>
+
+    <%= govukWarningText(
+      iconFallbackText: "Warning",
+      classes: "govuk-!-margin-top-7 govuk-!-margin-bottom-6",
+      html: "The <abbr title='United Kingdom'>UK</abbr> address provided must not be a <abbr title='Post Office'>PO</abbr> box or mail forwarding address. " \
+            "These are not <abbr title='United Kingdom'>UK</abbr> established addresses that comply with the regulation.".html_safe
+    )%>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(@responsible_person, method: :put, html: { novalidate: true }) do |form| %>
+      <fieldset class="govuk-fieldset ">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <h2 class="govuk-fieldset__heading">
+            Address
+          </h2>
+        </legend>
+        <div id="address-hint" class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-6 govuk-!-width-three-quarters">
+          The address of the legal entity named as the Responsible Person.
+        </div>
+
+        <%= render("form_components/govuk_input",
+                   form: form,
+                   key: :address_line_1,
+                   id: "address_line_1",
+                   classes: "govuk-!-width-three-quarters",
+                   described_by: "address-hint",
+                   label: { html: "Building and street <span class='govuk-visually-hidden'>line 1 of 2</span>".html_safe }) %>
+
+        <%= render("form_components/govuk_input",
+                   form: form,
+                   key: :address_line_2,
+                   id: "address_line_2",
+                   classes: "govuk-!-width-three-quarters",
+                   label: { html: "<span class='govuk-visually-hidden'>Building and street line 2 of 2</span>".html_safe }) %>
+
+        <%= render "form_components/govuk_input", form: form, key: :city, id: "city", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" } %>
+        <%= render "form_components/govuk_input", form: form, key: :county, id: "county", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" } %>
+        <%= render "form_components/govuk_input", form: form, key: :postal_code, id: "postal_code", label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
+
+        <div class="govuk-form-group">
+          <%= govukButton text: "Continue" %>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
