@@ -1,6 +1,7 @@
 class ResponsiblePerson < ApplicationRecord
   include StripWhitespace
 
+  ADDRESS_FIELDS = %i[address_line_1 address_line_2 city county postal_code].freeze
   NAME_MAX_LENGTH = 250
 
   has_many :notifications, dependent: :destroy
@@ -32,7 +33,7 @@ class ResponsiblePerson < ApplicationRecord
   end
 
   def address_lines
-    [address_line_1, address_line_2, city, county, postal_code].select(&:present?)
+    ADDRESS_FIELDS.map(&method(:public_send)).select(&:present?)
   end
 
   def has_user_with_email?(email)

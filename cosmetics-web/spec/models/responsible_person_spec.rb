@@ -131,4 +131,21 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.has_user_with_email?("MeMbEr@EXAMPLE.org")).to eq true
     end
   end
+
+  describe "#address_lines" do
+    it "returns the available address files in an especific order" do
+      responsible_person.assign_attributes(
+        address_line_1: "123 Example Street", address_line_2: "Example Town", city: "Example City", county: "Example County", postal_code: "EX1 1EX",
+      )
+      expect(responsible_person.address_lines)
+        .to eq(["123 Example Street", "Example Town", "Example City", "Example County", "EX1 1EX"])
+    end
+
+    it "only returns the available fields" do
+      responsible_person.assign_attributes(
+        address_line_1: "123 Example Street", address_line_2: "", city: "Example City", county: "", postal_code: "EX1 1EX",
+      )
+      expect(responsible_person.address_lines).to eq(["123 Example Street", "Example City", "EX1 1EX"])
+    end
+  end
 end
