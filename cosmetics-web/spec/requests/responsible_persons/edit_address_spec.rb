@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Edit Responsible Person Address", type: :request, with_stubbed_notify: true do
+RSpec.describe "Edit Responsible Person Address", type: :request do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:other_responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:user) { responsible_person.users.first }

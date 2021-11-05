@@ -7,6 +7,8 @@ class SubmitNotifyMailer < NotifyMailer
       account_already_exists: "64ab6e58-12e8-4a66-89a0-84a87d49faa9", # Account creation with existing email address
       responsible_person_invitation: "aaa1ae91-c98f-492e-af58-9d44c93fe2f4", # Invitation to join Responsible Person
       responsible_person_invitation_for_existing_user: "3c677e3c-0e49-49f6-b6fa-b0c11595f439", # Invitation to join Responsible Person for existing user
+      responsible_person_address_change_for_author: "f56a1045-f6c3-417a-8c08-9c5c6da17c25", # Responsible Person address change - email notification to author
+      responsible_person_address_change_for_others: "68d707a6-2636-4313-8735-649e29263f8e", # Responsible Person address change - email notification to others
       reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", #  Reset password
       account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
       verify_new_account: "616e1eb9-4071-4343-8f18-3d2fcd7b9b47", # Verify email address
@@ -59,5 +61,34 @@ class SubmitNotifyMailer < NotifyMailer
 
     mail(to: user.email)
     Sidekiq.logger.info "Confirmation email send"
+  end
+
+  def send_responsible_person_address_change_confirmation_email(responsible_person, user, old_rp_address)
+    @host = submit_host
+    set_template(TEMPLATES[:responsible_person_address_change_for_author])
+    set_reference("Send Responsible Person address change confirmation")
+    set_personalisation(
+      name: user.name,
+      name_of_responsible_person: responsible_person.name,
+      old_rp_address: old_rp_address,
+      new_rp_address: responsible_person.address_lines.join(", "),
+    )
+    mail(to: user.email)
+    Sidekiq.logger.info "Responsible Person address change confirmation email sent"
+  end
+
+  def send_responsible_person_address_change_alert_email(responsible_person, user, author_name, old_rp_address)
+    @host = submit_host
+    set_template(TEMPLATES[:responsible_person_address_change_for_others])
+    set_reference("Send Responsible Person address change alert")
+    set_personalisation(
+      name: user.name,
+      name_of_person_who_changed_rp_address: author_name,
+      name_of_responsible_person: responsible_person.name,
+      old_rp_address: old_rp_address,
+      new_rp_address: responsible_person.address_lines.join(", "),
+    )
+    mail(to: user.email)
+    Sidekiq.logger.info "Responsible Person address change alert email sent"
   end
 end

@@ -24,7 +24,10 @@ class ResponsiblePersonsController < SubmitApplicationController
   def edit; end
 
   def update
-    if @responsible_person.update(responsible_person_address_params)
+    result = UpdateResponsiblePersonAddress.call(responsible_person: @responsible_person,
+                                                 user: current_user,
+                                                 address: responsible_person_address_params.to_h)
+    if result.success?
       redirect_to(responsible_person_path(@responsible_person),
                   confirmation: "Responsible Person address changed successfully")
     else

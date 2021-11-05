@@ -1,11 +1,13 @@
 require "rails_helper"
 
-RSpec.describe "Editing responsible person address", type: :feature do
+RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person, name: "Test RP") }
   let(:user) { create(:submit_user) }
+  let(:other_member) { create(:submit_user) }
 
   before do
     configure_requests_for_submit_domain
+    create(:responsible_person_user, user: other_member, responsible_person: responsible_person)
   end
 
   scenario "user not belonging to the responsible person cannot edit the Contact Person details" do
@@ -58,5 +60,33 @@ RSpec.describe "Editing responsible person address", type: :feature do
     expect(address_elem).to have_sibling("dd", text: "Manchester", exact_text: false)
     expect(address_elem).to have_sibling("dd", text: "Greater Manchester", exact_text: false)
     expect(address_elem).to have_sibling("dd", text: "M3 3HF", exact_text: false)
+
+    # Sends an email confirmation to the author of the address change and an alert to the other RP members
+    expect(delivered_emails.size).to eq 2
+    confirmation_email = delivered_emails.first
+    expect(confirmation_email).to have_attributes(
+      recipient: user.email,
+      reference: "Send Responsible Person address change confirmation",
+      template: SubmitNotifyMailer::TEMPLATES[:responsible_person_address_change_for_author],
+      personalization: {
+        name: user.name,
+        name_of_responsible_person: responsible_person.name,
+        old_rp_address: "Street address, City, AB12 3CD",
+        new_rp_address: "Office building name, Example street, Manchester, Greater Manchester, M3 3HF",
+      },
+    )
+    alert_email = delivered_emails.last
+    expect(alert_email).to have_attributes(
+      recipient: other_member.email,
+      reference: "Send Responsible Person address change alert",
+      template: SubmitNotifyMailer::TEMPLATES[:responsible_person_address_change_for_others],
+      personalization: {
+        name: other_member.name,
+        name_of_person_who_changed_rp_address: user.name,
+        name_of_responsible_person: responsible_person.name,
+        old_rp_address: "Street address, City, AB12 3CD",
+        new_rp_address: "Office building name, Example street, Manchester, Greater Manchester, M3 3HF",
+      },
+    )
   end
 end
