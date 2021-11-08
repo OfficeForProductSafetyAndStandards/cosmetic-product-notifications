@@ -33,7 +33,7 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
     fill_in "Town or city", with: ""
     fill_in "County", with: ""
     fill_in "Postcode", with: ""
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect(page).to have_h1("Change UK Responsible Person address for Test RP")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -50,7 +50,7 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
     fill_in "Town or city", with: "Manchester"
     fill_in "County", with: "Greater Manchester"
     fill_in "Postcode", with: "M3 3HF"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("Responsible Person address changed successfully")
