@@ -765,13 +765,13 @@ def fill_in_rp_contact_details
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@foo"
   fill_in "Phone number", with: "wowowow"
-  click_on "Continue"
+  click_on "Save and continue"
   expect(page).to have_text("Enter the email address in the correct format")
   expect(page).to have_text("Enter a valid phone number, like 0344 411 1444 or +44 7700 900 982")
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@exaple.com"
   fill_in "Phone number", with: "07984563072"
-  click_on "Continue"
+  click_on "Save and continue"
 end
 
 def select_rp_business_account_type
