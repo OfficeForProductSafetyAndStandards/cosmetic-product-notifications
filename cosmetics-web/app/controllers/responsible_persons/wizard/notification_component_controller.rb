@@ -20,7 +20,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :select_formulation_type,
         :upload_formulation,
         :select_frame_formulation,
-        :contains_poisonous_ingredients
+        :contains_poisonous_ingredients,
+        :completed
 
   def show
     case step
@@ -28,8 +29,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
       create_required_cmrs
+    when :completed
+      render 'responsible_persons/wizard/completed'
+    else
+      render_wizard
     end
-    render_wizard
   end
 
   def update
@@ -83,7 +87,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     case params.dig(:component, :number_of_shades)
     when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
-      @component.add_shades
+      @component.add_shades # makes state completed
       jump_to :add_physical_form
       render_next_step @component
     when "multiple-shades-same-notification"
@@ -175,13 +179,14 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
       render :contains_poisonous_ingredients
       return
-    end
+    else
+      jump_to :completed
+      render_next_step @component
+  end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
     if @component.contains_poisonous_ingredients?
       redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
-    else
-      redirect_to finish_wizard_path
     end
   end
 
@@ -191,7 +196,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
-        redirect_to finish_wizard_path
+        jump_to :completed
+        render_next_step @component
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
         render step

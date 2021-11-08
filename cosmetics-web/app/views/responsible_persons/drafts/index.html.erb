@@ -5,7 +5,7 @@
   <section class="govuk-grid-column-three-quarters govuk-!-padding-top-9" role="region" aria-label="Tasks">
 
     <p class="govuk-body govuk-!-margin-bottom-7 govuk-!-display-block opss-text-align-center">
-    <span class="govuk-visually-hidden">The task list is </span><span class="govuk-!-font-weight-bold">Incomplete</span>: 1 of 5 sections have been completed.
+      <%#= progress_bar %>
     </p>
 
     <ol class="app-task-list">
@@ -19,6 +19,7 @@
       <% end %>
       <li>
         <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number"><%= accept_section_number(@notification) %> </span>
           Accept and submit
         </h2>
 

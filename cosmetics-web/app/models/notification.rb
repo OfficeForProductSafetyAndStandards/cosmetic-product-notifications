@@ -109,6 +109,14 @@ class Notification < ApplicationRecord
   aasm whiny_transitions: false, timestamps: true, column: :state do
     state :empty, initial: true
     state :product_name_added
+    # state which will be used for multicomponent product
+    # state is entangled with view here, this state is used to indicate
+    # that multiitem kit step is not defined
+    state :details_complete
+
+    # indicate that component related steps can be started
+    state :ready_for_components
+
     state :components_complete
     state :draft_complete
     state :notification_complete
@@ -290,6 +298,12 @@ private
     case state
     when "empty"
       %w[product_name]
+    when "product_name_added"
+      mandatory_attributes("empty")
+    when "details_complete"
+      mandatory_attributes("empty")
+    when "ready_for_components"
+      mandatory_attributes("empty")
     when "product_name_added"
       mandatory_attributes("empty")
     when "import_country_added"

@@ -38,6 +38,12 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     end
   end
 
+  def create_for_draft
+    notification = Notification.create(responsible_person: @responsible_person)
+
+    redirect_to responsible_person_notification_draft_index_path(@responsible_person, notification)
+  end
+
   def confirm
     if @notification.submit_notification!
       redirect_to responsible_person_notifications_path(@responsible_person), confirmation: "#{@notification.product_name} notification submitted"

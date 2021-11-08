@@ -6,12 +6,11 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   steps :add_product_name,
         :add_internal_reference,
         :for_children_under_three,
-
         :contains_nanomaterials, # add info to form that later user can redefine nanomaterials, consider not showing this for edit
-
         :single_or_multi_component, # add info to form that later user can redefine components, consider not showing this for edit
         :add_product_image, # only for single
-        :notification_product_created
+        :completed
+
 
   # TODO: investigate previous path helper
   before_action :set_notification
@@ -21,8 +20,9 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     when :add_product_image
       return render_next_step @notification if @notification.multi_component?
       render_wizard
-    when :notification_product_created
-      redirect_to responsible_person_notification_draft_index_path(@notification.responsible_person, @notification)
+    when :completed
+      set_final_state_for_wizard
+      render 'responsible_persons/wizard/completed'
     else
       render_wizard
     end
@@ -52,6 +52,14 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   end
 
   private
+
+  def set_final_state_for_wizard
+    if @notification.multi_component?
+      @notification.update(state: 'details_complete')
+    else
+      @notification.update(state: 'ready_for_components')
+    end
+  end
 
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)

@@ -1,5 +1,6 @@
 <li class="opss-task-sub">
   <h3 class="app-task-list__section">
+    <span class="app-task-list__section-number">3. </span>
     Components
   </h3>
 
@@ -7,20 +8,10 @@
     <% @notification.components.each_with_index do |component, i| %>
       <li class="app-task-list__item">
         <span class="app-task-list__task-name">
-          <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="nano-01-status">
-            <% if component.name %>
-              <%= component.name %>
-            <% else %>
-              Item #<%= i+1 %>
-            <% end %>
-          </a>
+          <%= component_link(component, i) %>
         </span>
 
-        <% if component.created_at != component.updated_at %>
-          <b class="govuk-tag app-task-list__tag" id="nano-01-status">Completed</b>
-        <% else %>
-          <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="nano-03-status">Not started</b>
-        <% end %>
+        <%= component_badge(component) %>
       </li>
     <% end %>
     <li class="app-task-list__item opss-task-sub__last">

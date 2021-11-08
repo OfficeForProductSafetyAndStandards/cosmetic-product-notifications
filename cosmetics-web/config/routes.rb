@@ -147,6 +147,9 @@ Rails.application.routes.draw do
           end
         end
 
+        collection do
+          get :create_for_draft
+        end
         member do
           post :confirm
         end

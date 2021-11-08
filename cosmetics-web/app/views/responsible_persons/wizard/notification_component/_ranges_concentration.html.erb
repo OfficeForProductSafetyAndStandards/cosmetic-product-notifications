@@ -1,0 +1,41 @@
+<div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l">
+    Concentration ranges of the ingredients <%= "in #{local_assigns[:name]}" if local_assigns[:name].present? %>
+  </h1>
+  <p class="govuk-!-margin-bottom-3">To tell us about the concentration ranges, you need to upload a PDF which lists the ingredients in the product.</p>
+  <h2 class="govuk-heading-m">
+    What you need to tell us
+  </h2>
+  <p class="govuk-!-margin-bottom-3">List every ingredient in order of highest to lowest concentration range.</p>
+  <p class="govuk-!-margin-bottom-1">
+  For every ingredient in the product, you need to tell us the:
+  </p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>International Nomenclature of Cosmetic Ingredients (INCI) name, where available</li>
+    <li>concentration ranges</li>
+  </ul>
+  <div class="govuk-inset-text">
+    The National Poisons Information Service (NPIS) needs to know about some ingredients in the product – list these first with the <strong>exact</strong> concentrations, in order of highest to lowest.
+  </div>
+</div>
+<%= render 'responsible_persons/wizard/component_build/ingredients_npis_needs_to_know' %>
+<div class="govuk-grid-column-full">
+  <p class="govuk-!-margin-bottom-2">For the other ingredients, list them in order of the highest to lowest concentration.</p>
+  <h3 class="govuk-heading-s">
+    Concentration ranges
+  </h3>
+  <p class="govuk-!-margin-bottom-1">Use these concentration ranges:</p>
+  <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+    <li>above 75% w/w up to 100% w/w</li>
+    <li>above 50% w/w up to 75% w/w</li>
+    <li>above 25% w/w up to 50% w/w</li>
+    <li>above 10% w/w up to 25% w/w</li>
+    <li>above 5% w/w up to 10% w/w</li>
+    <li>above 1% w/w up to 5% w/w</li>
+    <li>above 0.1% w/w up to 1% w/w</li>
+    <li>up to and including 0.1% w/w</li>
+  </ul>
+  <p>
+    You must only include information about the ingredients in the product being notified. You must not upload complete assessment documents.
+  </p>
+</div>

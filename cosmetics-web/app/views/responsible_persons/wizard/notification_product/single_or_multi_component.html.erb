@@ -41,7 +41,7 @@
 
         <% count_input_html = capture do %>
           <%= render "form_components/govuk_input", form: form, key: :components_count,
-              label: { text: "Components count" } %>
+            label: { text: "Components count" }, value: @notification.components_count > 0 ? @notification.components_count : ''  %>
         <% end %>
         <%= render "form_components/govuk_radios", form: form, key: :single_or_multi_component,
             fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },

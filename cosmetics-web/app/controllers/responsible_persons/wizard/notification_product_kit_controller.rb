@@ -17,6 +17,8 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
     case step
     when :notification_product_kit_updated
       redirect_to responsible_person_notification_draft_index_path(@notification.responsible_person, @notification)
+    when :completed
+      render 'responsible_persons/wizard/completed'
     else
       render_wizard
     end
