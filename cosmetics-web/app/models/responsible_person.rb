@@ -9,6 +9,10 @@ class ResponsiblePerson < ApplicationRecord
   has_many :pending_responsible_person_users, dependent: :destroy
   has_many :users, through: :responsible_person_users
   has_many :contact_persons, dependent: :destroy
+  has_many :previous_addresses,
+           class_name: :ResponsiblePersonPreviousAddress,
+           inverse_of: :responsible_person,
+           dependent: :destroy
 
   has_many :nanomaterial_notifications, dependent: :destroy
 
