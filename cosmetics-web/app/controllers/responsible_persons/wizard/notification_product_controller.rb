@@ -8,7 +8,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
         :for_children_under_three,
         :contains_nanomaterials, # add info to form that later user can redefine nanomaterials, consider not showing this for edit
         :single_or_multi_component, # add info to form that later user can redefine components, consider not showing this for edit
-        :add_product_image, # only for single
+        :add_product_image,
         :completed
 
 
@@ -17,9 +17,6 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
   def show
     case step
-    when :add_product_image
-      return render_next_step @notification if @notification.multi_component?
-      render_wizard
     when :completed
       set_final_state_for_wizard
       render 'responsible_persons/wizard/completed'
@@ -36,8 +33,6 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       update_contains_nanomaterials
     when :single_or_multi_component
       update_single_or_multi_component_step
-    when :add_product_image
-      update_add_product_image_step
     else
       if @notification.update_with_context(notification_params, step)
         render_next_step @notification

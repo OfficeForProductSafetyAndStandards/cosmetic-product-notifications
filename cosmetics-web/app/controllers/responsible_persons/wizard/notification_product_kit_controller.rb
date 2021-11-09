@@ -32,8 +32,6 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
       update_is_hair_dye
     when :is_ph_between_3_and_10
       update_is_ph_between_3_and_10_step
-    when :add_product_image
-      update_add_product_image_step
     else
       if @notification.update_with_context(notification_params, step)
         render_next_step @notification
@@ -68,18 +66,6 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
   def update_is_ph_between_3_and_10_step
     yes_no_question(:is_ph_between_3_and_10, on_skip: method(:clear_ph_range))
   end
-
-  def update_add_product_image_step
-    if params[:image_upload].present?
-      params[:image_upload].each { |img| @notification.add_image(img) }
-      @notification.save
-      render_next_step @notification
-    else
-      @notification.errors.add :image_uploads, "Select an image"
-      rerender_current_step
-    end
-  end
-
 
   def clear_ph_range
     @notification.update(ph_min_value: nil, ph_max_value: nil)
