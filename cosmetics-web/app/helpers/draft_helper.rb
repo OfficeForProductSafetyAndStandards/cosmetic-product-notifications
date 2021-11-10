@@ -43,10 +43,7 @@ module DraftHelper
     if ['empty', 'product_name_added', 'details_complete'].include? component.notification.state
       text
     else
-      html = '<a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="nano-01-status">'
-      html << text
-      html << '</a>'
-      html.html_safe
+      link_to text, new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component), class: "govuk-link govuk-link--no-visited-state"
     end
   end
 

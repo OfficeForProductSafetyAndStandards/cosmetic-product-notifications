@@ -75,15 +75,24 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
   # Run this step only when notifications does not have any notifications
   def update_contains_nanomaterials
-    return render_next_step @notification if @notification.nano_materials.count > 0
+    return render_next_step @notification if @notification.nano_materials.count > 1
 
-    yes_no_question(:contains_nanomaterials,
-                    skip_steps_on: "yes",
-                    on_skip: proc { @notification.nano_materials.destroy },
-                    on_next_step: proc { nanomaterial_count.times { @notification.nano_materials << NanoMaterial.create } if @notification.nano_materials.count.zero? })
+    case params.dig(:notification, :contains_nanomaterials)
+    when "yes"
+      if @notification.nano_materials.count > 1 && nano_materials_count < @notification.nano_materials.count
+        @notification.errors.add :contains_nanomaterials, "Components count cant be lower than #{@notification.components_count}"
+        return rerender_current_step
+      end
+      required_nano_materials_count = @notification.nano_materials.present? ? nano_materials_count - 1 : nano_materials_count
+      required_nano_materials_count.times { @notification.nano_materials.create }
+      render_next_step @notification
+    else
+      @notification.errors.add :contains_nanomaterials, "Select yes if the product contains nanomaterials"
+      rerender_current_step
+    end
   end
 
-  def nanomaterial_count
+  def nano_materials_count
     if params[:notification][:contains_nanomaterials] == "yes"
       params[:notification][:nanomaterial_count].to_i
     else
