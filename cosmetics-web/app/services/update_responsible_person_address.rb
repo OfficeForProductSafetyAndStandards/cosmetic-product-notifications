@@ -10,13 +10,18 @@ class UpdateResponsiblePersonAddress
     context.fail!(error: "User does not belong to responsible person") unless user_belongs_to_responsible_person?
     context.fail!(error: "Address contains unknown fields") unless valid_address_fields?
 
-    context.original_address = responsible_person.address_lines.join(", ")
-    context.fail!(error: "Address is invalid") unless responsible_person.update(address)
+    context.previous_address = previous_address
 
-    if responsible_person.saved_changes?
-      send_confirmation_email
-      send_alert_emails
+    ActiveRecord::Base.transaction do
+      responsible_person.update!(address)
+      if responsible_person.saved_changes?
+        previous_address.save!
+        send_confirmation_email
+        send_alert_emails
+      end
     end
+  rescue ActiveRecord::RecordInvalid
+    context.fail!(error: "Address is invalid")
   end
 
 private
@@ -31,19 +36,30 @@ private
 
   def send_confirmation_email
     SubmitNotifyMailer.send_responsible_person_address_change_confirmation_email(
-      responsible_person, user, original_address
+      responsible_person, user, previous_address
     ).deliver_later
   end
 
   def send_alert_emails
     other_rp_members.each do |member|
       SubmitNotifyMailer.send_responsible_person_address_change_alert_email(
-        responsible_person, member, user.name, original_address
+        responsible_person, member, user, previous_address
       ).deliver_later
     end
   end
 
   def other_rp_members
     responsible_person.users.where.not(id: user.id)
+  end
+
+  def previous_address
+    @previous_address ||= ResponsiblePersonPreviousAddress.new(
+      responsible_person: responsible_person,
+      line_1: responsible_person.address_line_1,
+      line_2: responsible_person.address_line_2,
+      city: responsible_person.city,
+      county: responsible_person.county,
+      postal_code: responsible_person.postal_code,
+    )
   end
 end

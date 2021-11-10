@@ -70,22 +70,22 @@ class SubmitNotifyMailer < NotifyMailer
     set_personalisation(
       name: user.name,
       name_of_responsible_person: responsible_person.name,
-      old_rp_address: old_rp_address,
+      old_rp_address: old_rp_address.to_s,
       new_rp_address: responsible_person.address_lines.join(", "),
     )
     mail(to: user.email)
     Sidekiq.logger.info "Responsible Person address change confirmation email sent"
   end
 
-  def send_responsible_person_address_change_alert_email(responsible_person, user, author_name, old_rp_address)
+  def send_responsible_person_address_change_alert_email(responsible_person, user, author, old_rp_address)
     @host = submit_host
     set_template(TEMPLATES[:responsible_person_address_change_for_others])
     set_reference("Send Responsible Person address change alert")
     set_personalisation(
       name: user.name,
-      name_of_person_who_changed_rp_address: author_name,
+      name_of_person_who_changed_rp_address: author.name,
       name_of_responsible_person: responsible_person.name,
-      old_rp_address: old_rp_address,
+      old_rp_address: old_rp_address.to_s,
       new_rp_address: responsible_person.address_lines.join(", "),
     )
     mail(to: user.email)

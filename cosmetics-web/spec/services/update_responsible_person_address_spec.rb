@@ -24,7 +24,21 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
   let(:user) { create(:submit_user) }
   let(:second_member) { create(:submit_user) }
   let(:third_member) { create(:submit_user) }
-  let(:responsible_person) { create(:responsible_person, users: [user, second_member, third_member], **original_address) }
+  let(:time_service_was_called) { Time.zone.local(2021, 11, 9) }
+  let(:responsible_person) do
+    create(:responsible_person,
+           users: [user, second_member, third_member],
+           created_at: Time.zone.local(2021, 11, 6),
+           **original_address)
+  end
+
+  before do
+    travel_to time_service_was_called
+  end
+
+  after do
+    travel_back
+  end
 
   it "fails when no user is provided" do
     result = described_class.call(responsible_person: responsible_person, address: new_address)
@@ -68,64 +82,106 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
     end
 
     it "does not change the responsible person address values" do
-      responsible_person.reload
-      expect(responsible_person).to have_attributes(original_address)
+      expect(responsible_person.reload).to have_attributes(original_address)
     end
 
     it "does not send any email" do
       expect(delivered_emails).to be_empty
     end
+
+    it "does not record the original address as previous address for the responsible person" do
+      expect(responsible_person.reload.previous_addresses).to be_empty
+    end
   end
 
   context "when the provided address is different from the original one" do
-    let!(:result) do
-      described_class.call(user: user, responsible_person: responsible_person, address: new_address)
-    end
+    context "without any exception" do
+      let!(:result) do
+        described_class.call(user: user, responsible_person: responsible_person, address: new_address)
+      end
 
-    it "succeeds" do
-      expect(result).to be_success
-    end
+      it "succeeds" do
+        expect(result).to be_success
+      end
 
-    it "update the responsible person address values" do
-      responsible_person.reload
-      expect(responsible_person).to have_attributes(new_address)
-    end
+      it "update the responsible person address values" do
+        expect(responsible_person.reload).to have_attributes(new_address)
+      end
 
-    it "does send an email to all the responsible person members" do
-      expect(delivered_emails.size).to eq 3
-    end
+      it "does send an email to all the responsible person members" do
+        expect(delivered_emails.size).to eq 3
+      end
 
-    # rubocop:disable RSpec/ExampleLength
-    it "the user who made the edits receives a confirmation email" do
-      confirmation_email = delivered_emails.find { |email| email.recipient == user.email }
-      expect(confirmation_email).to have_attributes(
-        reference: "Send Responsible Person address change confirmation",
-        template: SubmitNotifyMailer::TEMPLATES[:responsible_person_address_change_for_author],
-        personalization: {
-          name: user.name,
-          name_of_responsible_person: responsible_person.name,
-          old_rp_address: "Original street, Original city, M11 7PE",
-          new_rp_address: "Office building, Fake St, FooBar City, Greater FooBar, AB12 3CD",
-        },
-      )
-    end
-
-    it "other members of the responsible person receive an alert email" do
-      [second_member, third_member].each do |member|
-        alert_email = delivered_emails.find { |email| email.recipient == member.email }
-        expect(alert_email).to have_attributes(
-          reference: "Send Responsible Person address change alert",
-          template: SubmitNotifyMailer::TEMPLATES[:responsible_person_address_change_for_others],
+      # rubocop:disable RSpec/ExampleLength
+      it "the user who made the edits receives a confirmation email" do
+        confirmation_email = delivered_emails.find { |email| email.recipient == user.email }
+        expect(confirmation_email).to have_attributes(
+          reference: "Send Responsible Person address change confirmation",
+          template: SubmitNotifyMailer::TEMPLATES[:responsible_person_address_change_for_author],
           personalization: {
-            name: member.name,
-            name_of_person_who_changed_rp_address: user.name,
+            name: user.name,
             name_of_responsible_person: responsible_person.name,
             old_rp_address: "Original street, Original city, M11 7PE",
             new_rp_address: "Office building, Fake St, FooBar City, Greater FooBar, AB12 3CD",
           },
         )
       end
+
+      it "other members of the responsible person receive an alert email" do
+        [second_member, third_member].each do |member|
+          alert_email = delivered_emails.find { |email| email.recipient == member.email }
+          expect(alert_email).to have_attributes(
+            reference: "Send Responsible Person address change alert",
+            template: SubmitNotifyMailer::TEMPLATES[:responsible_person_address_change_for_others],
+            personalization: {
+              name: member.name,
+              name_of_person_who_changed_rp_address: user.name,
+              name_of_responsible_person: responsible_person.name,
+              old_rp_address: "Original street, Original city, M11 7PE",
+              new_rp_address: "Office building, Fake St, FooBar City, Greater FooBar, AB12 3CD",
+            },
+          )
+        end
+      end
+
+      it "records the original address as previous address for the responsible person" do
+        expect(responsible_person.previous_addresses.size).to eq 1
+        expect(responsible_person.previous_addresses.first).to have_attributes(
+          line_1: original_address[:address_line_1],
+          line_2: original_address[:address_line_2],
+          city: original_address[:city],
+          county: original_address[:county],
+          postal_code: original_address[:postal_code],
+          start_date: responsible_person.created_at,
+          end_date: time_service_was_called,
+        )
+      end
+      # rubocop:enable RSpec/ExampleLength
     end
-    # rubocop:enable RSpec/ExampleLength
+
+    context "with an exception while attempting to archive the previous address" do
+      let(:previous_address_stub) { instance_double(ResponsiblePersonPreviousAddress) }
+      let(:result) do
+        described_class.call(user: user, responsible_person: responsible_person, address: new_address)
+      end
+
+      before do
+        allow(ResponsiblePersonPreviousAddress).to receive(:new).and_return(previous_address_stub)
+        allow(previous_address_stub).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
+        result
+      end
+
+      it "fails" do
+        expect(result).to be_failure
+      end
+
+      it "does not keep the Responsible Person address update" do
+        expect(responsible_person.reload).to have_attributes(original_address)
+      end
+
+      it "no emails are sent" do
+        expect(delivered_emails).to be_empty
+      end
+    end
   end
 end

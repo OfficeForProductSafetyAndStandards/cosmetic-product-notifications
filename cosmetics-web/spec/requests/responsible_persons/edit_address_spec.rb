@@ -70,26 +70,30 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
     end
 
     context "when providing the needed data" do
-      before do
-        put "/responsible_persons/#{responsible_person.id}", params: { responsible_person: params }
-      end
+      let(:update_request) { put "/responsible_persons/#{responsible_person.id}", params: { responsible_person: params } }
 
       it "redirects to the responsible person page" do
+        update_request
         expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}")
       end
 
-      it "updates the contact person’s name" do
-        expect(responsible_person.reload)
-          .to have_attributes(address_line_1: "11",
-                              address_line_2: "Fake St",
-                              city: "Fake City",
-                              county: "County",
-                              postal_code: "FA1 1FA")
+      it "updates the responsible person's address" do
+        update_request
+        expect(responsible_person.reload).to have_attributes(address_line_1: "11",
+                                                             address_line_2: "Fake St",
+                                                             city: "Fake City",
+                                                             county: "County",
+                                                             postal_code: "FA1 1FA")
       end
 
       it "response includes a confirmation message" do
+        update_request
         follow_redirect!
         expect(response.body).to include("Responsible Person address changed successfully")
+      end
+
+      it "records the previous responsible person address into DB" do
+        expect { update_request }.to change { responsible_person.reload.previous_addresses.count }.from(0).to(1)
       end
     end
 
