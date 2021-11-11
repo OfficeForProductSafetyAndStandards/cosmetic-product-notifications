@@ -18,6 +18,9 @@ class UpdateResponsiblePersonAddress
         previous_address.save!
         send_confirmation_email
         send_alert_emails
+        context.address_changed = true
+      else
+        context.address_changed = false
       end
     end
   rescue ActiveRecord::RecordInvalid
