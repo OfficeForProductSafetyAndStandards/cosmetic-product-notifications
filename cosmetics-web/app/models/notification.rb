@@ -118,15 +118,10 @@ class Notification < ApplicationRecord
     state :ready_for_components
 
     state :components_complete
-    state :draft_complete
     state :notification_complete
 
     event :add_product_name do
       transitions from: :empty, to: :product_name_added
-    end
-
-    event :set_single_or_multi_component do
-      transitions from: :product_name_added, to: :components_complete
     end
 
     event :complete_draft do
@@ -134,7 +129,7 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification, after: :cache_notification_for_csv! do
-      transitions from: :draft_complete, to: :notification_complete,
+      transitions from: :components_complete, to: :notification_complete,
                   after: proc { __elasticsearch__.index_document } do
         guard do
           !missing_information?

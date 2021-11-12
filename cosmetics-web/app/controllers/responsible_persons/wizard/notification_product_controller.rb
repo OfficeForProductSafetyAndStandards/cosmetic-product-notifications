@@ -87,7 +87,6 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       required_nano_materials_count.times { @notification.nano_materials.create }
       render_next_step @notification
     else
-      @notification.errors.add :contains_nanomaterials, "Select yes if the product contains nanomaterials"
       rerender_current_step
     end
   end
