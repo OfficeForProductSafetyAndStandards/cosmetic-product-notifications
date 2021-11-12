@@ -87,7 +87,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       required_nano_materials_count.times { @notification.nano_materials.create }
       render_next_step @notification
     else
-      rerender_current_step
+      render_next_step @notification
     end
   end
 
