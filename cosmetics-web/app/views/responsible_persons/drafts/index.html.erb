@@ -25,11 +25,16 @@
 
         <ul class="app-task-list__items">
           <li class="app-task-list__item">
-            <span class="app-task-list__task-name">
-              Accept and submit
-            </span>
+            <% if @notification.may_submit_notification? %>
+              <%= link_to "Accept and submit", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state" %>
+              <%= not_started_badge %>
+            <% else %>
+              <span class="app-task-list__task-name">
+                Accept and submit
+              </span>
+              <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="accept-status">Cannot start yet</b>
+            <% end %>
 
-            <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="accept-status">Cannot start yet</b>
           </li>
         </ul>
       </li>
