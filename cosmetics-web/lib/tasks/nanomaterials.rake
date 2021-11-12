@@ -13,7 +13,7 @@ namespace :nanomaterials do
     ::Zip::File.open(zip_file, create: true) do |zipfile|
       nanos.find_each do |nano|
         nano.file.open(tmpdir: "/tmp") do |file|
-          zipfile.add("#{nano.id}.pdf", file.path)
+          zipfile.add("#{nano.id}.pdf", file)
         end
       end
     end
