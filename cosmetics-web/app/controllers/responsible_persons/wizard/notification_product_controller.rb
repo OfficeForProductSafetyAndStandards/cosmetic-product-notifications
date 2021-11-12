@@ -33,6 +33,8 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       update_contains_nanomaterials
     when :single_or_multi_component
       update_single_or_multi_component_step
+    when :add_product_image
+      update_add_product_image_step
     else
       if @notification.update_with_context(notification_params, step)
         render_next_step @notification
@@ -49,6 +51,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   private
 
   def set_final_state_for_wizard
+    if @notification.empty? || @notification.product_name_added?
     if @notification.multi_component?
       @notification.update(state: 'details_complete')
     else

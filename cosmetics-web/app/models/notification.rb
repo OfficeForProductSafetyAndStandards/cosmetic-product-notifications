@@ -140,6 +140,14 @@ class Notification < ApplicationRecord
     state :deleted
   end
 
+  def try_to_complete_components!
+    raise "Wrong state" if state != 'ready_for_components'
+
+    if components.all? { |c| c.state == 'component_complete' }
+      update(state: 'components_complete')
+    end
+  end
+
   def reference_number_for_display
     sprintf("UKCP-%08d", reference_number)
   end

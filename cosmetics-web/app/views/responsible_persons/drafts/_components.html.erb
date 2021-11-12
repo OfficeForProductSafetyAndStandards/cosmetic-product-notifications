@@ -5,7 +5,7 @@
   </h3>
 
   <ul class="app-task-list__items opss-task-sub__list">
-    <% @notification.components.each_with_index do |component, i| %>
+    <% @notification.components.order(:created_at).each_with_index do |component, i| %>
       <li class="app-task-list__item">
         <span class="app-task-list__task-name">
           <%= component_link(component, i) %>

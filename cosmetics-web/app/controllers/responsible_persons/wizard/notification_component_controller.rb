@@ -30,6 +30,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     when :add_cmrs
       create_required_cmrs
     when :completed
+      @component.update(state: 'component_complete')
+      @component.notification.try_to_complete_components!
       render 'responsible_persons/wizard/completed'
     else
       render_wizard
@@ -87,7 +89,6 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     case params.dig(:component, :number_of_shades)
     when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
-      @component.add_shades # makes state completed
       jump_to :add_physical_form
       render_next_step @component
     when "multiple-shades-same-notification"

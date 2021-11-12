@@ -78,11 +78,7 @@ class Component < ApplicationRecord
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
-    state :component_complete, enter: :update_notification_state
-
-    event :add_shades do
-      transitions from: :empty, to: :component_complete
-    end
+    state :component_complete
   end
 
   def prune_blank_shades
@@ -199,10 +195,6 @@ private
     else
       value
     end
-  end
-
-  def update_notification_state
-    notification&.set_single_or_multi_component!
   end
 
   def other_special_applicator?
