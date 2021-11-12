@@ -18,10 +18,12 @@ namespace :nanomaterials do
       end
     end
 
-    zip_entries = Dir.entries(tmpdir) - %w[. ..]
+    input_filenames = Dir.entries(tmpdir) - %w[. ..]
+    puts input_filenames
     ::Zip::File.open(zip_file, create: true) do |zipfile|
-      zip_entries.each do |entry|
-        zipfile.add(File.basename(entry), entry)
+      input_filenames.each do |filename|
+        puts "Basename: #{File.basename(filename)}, Filename: #{filename}"
+        zipfile.add(File.basename(filename), filename)
       end
     end
 
