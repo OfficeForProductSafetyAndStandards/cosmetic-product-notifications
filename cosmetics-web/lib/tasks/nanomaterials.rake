@@ -8,12 +8,12 @@ namespace :nanomaterials do
     nanos = nanos.where("submitted_at >= '?'", initial_date) if args[:initial_date].present?
     nanos = nanos.where("submitted_at <= '?'", final_date + 1.day) if args[:final_date].present?
 
-    zip_file = "/tmp/nanomaterial_notifications.zip"
-    tmpdir = "/tmp/nanomaterial_notifications"
+    zip_file = "tmp/nanomaterial_notifications.zip"
+    tmpdir = "tmp/nanomaterial_notifications"
 
     FileUtils.mkdir_p(tmpdir)
     nanos.find_each do |nano|
-      nano.file.open(tmpdir: "/tmp") do |file|
+      nano.file.open(tmpdir: "tmp") do |file|
         FileUtils.cp(file, "#{tmpdir}/#{nano.id}.pdf")
       end
     end
