@@ -37,7 +37,7 @@ class ResponsiblePerson < ApplicationRecord
   end
 
   def address_lines
-    ADDRESS_FIELDS.map(&method(:public_send)).select(&:present?)
+    ADDRESS_FIELDS.map { |field| public_send(field) }.select(&:present?)
   end
 
   def has_user_with_email?(email)
