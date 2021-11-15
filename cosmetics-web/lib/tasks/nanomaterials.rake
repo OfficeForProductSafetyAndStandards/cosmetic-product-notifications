@@ -24,7 +24,10 @@ namespace :nanomaterials do
         zipfile.add(File.basename(filename), "#{tmpdir}/#{filename}")
       end
     end
-
     FileUtils.remove_dir(tmpdir)
+
+    puts "Zip generated at '~/app/#{zip_file}'"
+    puts "To download the file, execute in YOUR COMPUTER shell:"
+    puts "cf ssh APPNAME -c 'cat ~/app/tmp/nanomaterial_notifications.zip' > nanomaterial_notifications.zip"
   end
 end
