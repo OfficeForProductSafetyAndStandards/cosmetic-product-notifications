@@ -19,10 +19,8 @@ namespace :nanomaterials do
     end
 
     input_filenames = Dir.children(tmpdir)
-    puts input_filenames
     ::Zip::File.open(zip_file, create: true) do |zipfile|
       input_filenames.each do |filename|
-        puts "Basename: #{File.basename(filename)}, Filename: #{filename}"
         zipfile.add(File.basename(filename), "#{tmpdir}/#{filename}")
       end
     end
