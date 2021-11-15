@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.index ["component_id"], name: "index_range_formulas_on_component_id"
   end
 
-  create_table "responsible_person_previous_addresses", force: :cascade do |t|
+  create_table "responsible_person_address_logs", force: :cascade do |t|
     t.string "line_1", null: false
     t.string "line_2"
     t.string "city", null: false
@@ -248,7 +248,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "responsible_person_id", null: false
-    t.index ["responsible_person_id"], name: "index_responsible_person_previous_addresses_on_rp_id"
+    t.index ["responsible_person_id"], name: "index_responsible_person_address_logs_on_rp_id"
   end
 
   create_table "responsible_person_users", force: :cascade do |t|
@@ -360,7 +360,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
   add_foreign_key "pending_responsible_person_users", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "users", column: "inviting_user_id"
   add_foreign_key "range_formulas", "components"
-  add_foreign_key "responsible_person_previous_addresses", "responsible_persons"
+  add_foreign_key "responsible_person_address_logs", "responsible_persons"
   add_foreign_key "responsible_person_users", "responsible_persons"
   add_foreign_key "trigger_question_elements", "trigger_questions"
   add_foreign_key "trigger_questions", "components"

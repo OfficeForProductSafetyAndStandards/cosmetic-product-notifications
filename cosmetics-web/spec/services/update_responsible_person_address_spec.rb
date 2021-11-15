@@ -89,8 +89,8 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
       expect(delivered_emails).to be_empty
     end
 
-    it "does not record the original address as previous address for the responsible person" do
-      expect(responsible_person.reload.previous_addresses).to be_empty
+    it "does not record the original address for the responsible person" do
+      expect(responsible_person.reload.address_logs).to be_empty
     end
   end
 
@@ -144,9 +144,9 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
         end
       end
 
-      it "records the original address as previous address for the responsible person" do
-        expect(responsible_person.previous_addresses.size).to eq 1
-        expect(responsible_person.previous_addresses.first).to have_attributes(
+      it "records the original address for the responsible person" do
+        expect(responsible_person.address_logs.size).to eq 1
+        expect(responsible_person.address_logs.first).to have_attributes(
           line_1: original_address[:address_line_1],
           line_2: original_address[:address_line_2],
           city: original_address[:city],
@@ -160,14 +160,14 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
     end
 
     context "with an exception while attempting to archive the previous address" do
-      let(:previous_address_stub) { instance_double(ResponsiblePersonPreviousAddress) }
+      let(:address_log_stub) { instance_double(ResponsiblePersonAddressLog) }
       let(:result) do
         described_class.call(user: user, responsible_person: responsible_person, address: new_address)
       end
 
       before do
-        allow(ResponsiblePersonPreviousAddress).to receive(:new).and_return(previous_address_stub)
-        allow(previous_address_stub).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
+        allow(ResponsiblePersonAddressLog).to receive(:new).and_return(address_log_stub)
+        allow(address_log_stub).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
         result
       end
 

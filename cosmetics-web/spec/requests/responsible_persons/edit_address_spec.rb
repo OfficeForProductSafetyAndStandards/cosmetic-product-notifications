@@ -93,7 +93,7 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
       end
 
       it "records the previous responsible person address into DB" do
-        expect { update_request }.to change { responsible_person.reload.previous_addresses.count }.from(0).to(1)
+        expect { update_request }.to change { responsible_person.reload.address_logs.count }.from(0).to(1)
       end
     end
 

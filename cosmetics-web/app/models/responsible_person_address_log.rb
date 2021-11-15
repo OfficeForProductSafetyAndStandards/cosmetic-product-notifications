@@ -1,5 +1,5 @@
-class ResponsiblePersonPreviousAddress < ApplicationRecord
-  belongs_to :responsible_person, inverse_of: :previous_addresses
+class ResponsiblePersonAddressLog < ApplicationRecord
+  belongs_to :responsible_person, inverse_of: :address_logs
 
   validates :line_1, presence: true
   validates :city, presence: true
@@ -26,18 +26,18 @@ private
   end
 
   # Start date represents the date-time when this address started being used.
-  # End date represents the date when the address got replaced and archived as previous address.
+  # End date represents the date when the address got replaced and archived in the log.
   def set_dates
     self.start_date ||= calculate_start_date
     self.end_date ||= Time.zone.now
   end
 
-  # If previous addresses were set for the Responsible Person, the address was used since the latest
-  # previous address got replaced/archived/ended.
-  # If no previous addresses were set, the address was used since the creation of the responsible person.
+  # If previous address logs were set for the Responsible Person, the address was used since the latest
+  # log entry got added.
+  # If no previous address logs were set, the address was used since the creation of the Responsible Person.
   def calculate_start_date
-    if (last_previous_address = responsible_person.previous_addresses.order(end_date: :asc).last)
-      last_previous_address.end_date
+    if (last_address_log = responsible_person.address_logs.order(end_date: :asc).last)
+      last_address_log.end_date
     else
       responsible_person.created_at
     end

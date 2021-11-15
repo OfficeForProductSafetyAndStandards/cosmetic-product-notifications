@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :responsible_person_previous_address do
+  factory :responsible_person_address_log do
     responsible_person
     line_1 { "FooBar Building" }
     line_2 { "33 Fake Street" }
