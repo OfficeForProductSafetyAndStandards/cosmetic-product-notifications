@@ -33,7 +33,6 @@ class ResponsiblePersons::Wizard::ComponentBuildController < SubmitApplicationCo
   def show
     case step
     when :add_shades
-      binding.pry
       @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
       create_required_cmrs

@@ -73,7 +73,6 @@ class Component < ApplicationRecord
 
   validates :maximum_ph, numericality: { message: "Enter a value of 14 or lower for maximum pH", less_than_or_equal_to: 14 }, if: -> { maximum_ph.present? }
 
-  before_save :add_shades, if: :will_save_change_to_shades?
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
   aasm whiny_transitions: false, column: :state do

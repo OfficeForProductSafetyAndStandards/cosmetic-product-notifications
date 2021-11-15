@@ -141,11 +141,13 @@ class Notification < ApplicationRecord
   end
 
   def try_to_complete_components!
-    raise "Wrong state" if state != 'ready_for_components'
-
     if components.all? { |c| c.state == 'component_complete' }
       update(state: 'components_complete')
     end
+  end
+
+  def notification_product_wizard_completed?
+    !['empty', 'product_name_added'].include?(state)
   end
 
   def reference_number_for_display

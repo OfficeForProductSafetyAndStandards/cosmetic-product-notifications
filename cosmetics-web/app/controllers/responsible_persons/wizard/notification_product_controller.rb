@@ -51,7 +51,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   private
 
   def set_final_state_for_wizard
-    return if !@notification.empty? && !@notification.product_name_added?
+    return if @notification.notification_product_wizard_completed?
 
     if @notification.multi_component?
       @notification.update(state: 'details_complete')

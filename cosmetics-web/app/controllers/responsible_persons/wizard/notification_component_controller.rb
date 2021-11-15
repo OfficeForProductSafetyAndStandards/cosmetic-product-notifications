@@ -31,11 +31,12 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       create_required_cmrs
     when :completed
       @component.update(state: 'component_complete')
-      @component.notification.try_to_complete_components!
-      render 'responsible_persons/wizard/completed'
-    else
-      render_wizard
+      # TODO: write spec
+      @component.reload.notification.try_to_complete_components!
+      return render 'responsible_persons/wizard/completed'
     end
+
+    render_wizard
   end
 
   def update
