@@ -417,6 +417,7 @@ GEM
     ruby-vips (2.1.0)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
+    rubyzip (2.3.2)
     scout_apm (4.1.2)
       parser
     semantic_range (3.0.0)
@@ -580,6 +581,7 @@ DEPENDENCIES
   rubocop-rails (~> 2.8)
   rubocop-rspec (~> 1.42.0)
   ruby-debug-ide (~> 0.7.0)
+  rubyzip (~> 2.3.0)
   scout_apm
   sentry-rails
   sentry-ruby
