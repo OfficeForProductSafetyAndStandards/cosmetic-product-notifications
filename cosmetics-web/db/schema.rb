@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2021_10_13_072857) do
-=======
-ActiveRecord::Schema.define(version: 2021_11_08_171123) do
->>>>>>> 30d841efb13004d13ae62b9c68bcebc5181f8d9d
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -244,20 +240,6 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.index ["component_id"], name: "index_range_formulas_on_component_id"
   end
 
-  create_table "responsible_person_address_logs", force: :cascade do |t|
-    t.string "line_1", null: false
-    t.string "line_2"
-    t.string "city", null: false
-    t.string "county"
-    t.string "postal_code", null: false
-    t.datetime "start_date", null: false
-    t.datetime "end_date", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "responsible_person_id", null: false
-    t.index ["responsible_person_id"], name: "index_responsible_person_address_logs_on_rp_id"
-  end
-
   create_table "responsible_person_users", force: :cascade do |t|
     t.bigint "responsible_person_id"
     t.datetime "created_at", null: false
@@ -367,7 +349,6 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
   add_foreign_key "pending_responsible_person_users", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "users", column: "inviting_user_id"
   add_foreign_key "range_formulas", "components"
-  add_foreign_key "responsible_person_address_logs", "responsible_persons"
   add_foreign_key "responsible_person_users", "responsible_persons"
   add_foreign_key "trigger_question_elements", "trigger_questions"
   add_foreign_key "trigger_questions", "components"
