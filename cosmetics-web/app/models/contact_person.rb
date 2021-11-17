@@ -4,7 +4,7 @@ class ContactPerson < ApplicationRecord
   belongs_to :responsible_person
 
   validates :name, presence: true
-  validates :name, length: { maximum: NAME_MAX_LENGTH }, name_format: true, if: :name_changed?
+  validates :name, length: { maximum: NAME_MAX_LENGTH }, user_name_format: true, if: :name_changed?
   validates :email_address,
             presence: true,
             email: { message: :wrong_format, if: -> { email_address.present? } }

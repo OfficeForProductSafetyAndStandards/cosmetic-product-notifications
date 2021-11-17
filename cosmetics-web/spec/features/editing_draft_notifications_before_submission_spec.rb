@@ -34,12 +34,13 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     )
     expect(page).not_to have_text("Label images")
     expect(page).not_to have_summary_item(key: "testImage.png", value: "Remove")
-    click_button("Continue")
+    click_button("Save and continue")
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("No file selected", href: "#image_upload")
-    upload_product_label
 
+    page.attach_file "spec/fixtures/files/testImage.png"
+    click_button "Save and continue"
     expect(page).to have_current_path(
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
@@ -54,7 +55,7 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit"
 
     expect(page).to have_summary_item(key: "Formulation", value: "testPdf.pdf")
-    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation file")
+    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation document")
     click_link "Change"
 
     expect(page).to have_current_path(
@@ -72,12 +73,12 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     expect(page).not_to have_field("formulation_file")
 
     # User can keep the same attachment
-    click_button "Continue"
+    click_button "Save and continue"
     expect(page).to have_current_path(
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
     expect(page).to have_summary_item(key: "Formulation", value: "testPdf.pdf")
-    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation file")
+    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation document")
 
     # User goes back to edit the formulation page
     click_link "Change"
@@ -105,12 +106,12 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
 
     # User uploads a new formulation file
     page.attach_file "spec/fixtures/files/testPdf.pdf"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect(page).to have_current_path(
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
     expect(page).to have_summary_item(key: "Formulation", value: "testPdf.pdf")
-    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation file")
+    expect(page).to have_summary_item(key: "Formulation", value: "Change formulation document")
   end
 end
