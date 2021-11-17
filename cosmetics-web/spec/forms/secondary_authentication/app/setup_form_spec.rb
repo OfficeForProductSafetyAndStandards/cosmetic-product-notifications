@@ -9,7 +9,7 @@ RSpec.describe SecondaryAuthentication::App::SetupForm, :with_2fa_app do
   let(:password) { user.password }
   let(:user) { build_stubbed(:submit_user) }
 
-  RSpec.shared_examples_for "invalid form" do |field, error_message|
+  RSpec.shared_examples_for "invalid app setup form" do |field, error_message|
     it "is not valid" do
       expect(form).to be_invalid
     end
@@ -35,25 +35,25 @@ RSpec.describe SecondaryAuthentication::App::SetupForm, :with_2fa_app do
     context "when the user password is incorrect" do
       let(:password) { "wrongPassword" }
 
-      include_examples "invalid form", :password, "Password is incorrect"
+      include_examples "invalid app setup form", :password, "Password is incorrect"
     end
 
     context "when the user password is misssing" do
       let(:password) { "" }
 
-      include_examples "invalid form", :password, "Password can not be blank"
+      include_examples "invalid app setup form", :password, "Password can not be blank"
     end
 
     context "when the authentication code is missing" do
       let(:app_authentication_code) { "" }
 
-      include_examples "invalid form", :app_authentication_code, "Enter an access code"
+      include_examples "invalid app setup form", :app_authentication_code, "Enter an access code"
     end
 
     context "when the authentication code is wrong" do
       let(:app_authentication_code) { "notAphone" }
 
-      include_examples "invalid form", :app_authentication_code, "Access code is incorrect"
+      include_examples "invalid app setup form", :app_authentication_code, "Access code is incorrect"
     end
   end
 end

@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/UKGovernmentBEIS/govuk-design-system-rails
-  revision: ef5d36bb050b8b9fba6f44e7b8cb0030ca888874
-  tag: 0.7.8
+  revision: a80a606a9b01083de22f903a53a30433a626f1e1
+  tag: 0.8.0
   specs:
-    govuk-design-system-rails (0.7.8)
+    govuk-design-system-rails (0.8.0)
       slim-rails
 
 GEM
@@ -289,7 +289,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.10)
     public_suffix (4.0.6)
-    puma (4.3.8)
+    puma (4.3.10)
       nio4r (~> 2.0)
     pundit (2.1.1)
       activesupport (>= 3.0.0)

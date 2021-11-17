@@ -8,7 +8,7 @@ RSpec.describe SecondaryAuthentication::Sms::SetupForm do
   let(:password) { user.password }
   let(:mobile_number) { "07123456789" }
 
-  RSpec.shared_examples_for "invalid form" do |field, error_message|
+  RSpec.shared_examples_for "invalid sms setup form" do |field, error_message|
     it "is not valid" do
       expect(form).to be_invalid
     end
@@ -36,25 +36,25 @@ RSpec.describe SecondaryAuthentication::Sms::SetupForm do
     context "when the user password is incorrect" do
       let(:password) { "wrongPassword" }
 
-      include_examples "invalid form", :password, "Password is incorrect"
+      include_examples "invalid sms setup form", :password, "Password is incorrect"
     end
 
     context "when the user password is misssing" do
       let(:password) { "" }
 
-      include_examples "invalid form", :password, "Password can not be blank"
+      include_examples "invalid sms setup form", :password, "Password can not be blank"
     end
 
     context "when the mobile number is missing" do
       let(:mobile_number) { "" }
 
-      include_examples "invalid form", :mobile_number, "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+      include_examples "invalid sms setup form", :mobile_number, "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
     end
 
     context "when the mobile number has the wrong format" do
       let(:mobile_number) { "notAphone" }
 
-      include_examples "invalid form", :mobile_number, "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+      include_examples "invalid sms setup form", :mobile_number, "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
     end
   end
 
@@ -81,7 +81,7 @@ RSpec.describe SecondaryAuthentication::Sms::SetupForm do
       context "when the mobile number in an international number" do
         let(:mobile_number) { "+34629012345" }
 
-        include_examples "invalid form", :mobile_number, "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
+        include_examples "invalid sms setup form", :mobile_number, "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
       end
     end
   end

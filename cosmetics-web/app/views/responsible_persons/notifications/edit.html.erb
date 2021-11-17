@@ -4,34 +4,40 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <% if @errors.present? %>
-      <%= govukErrorSummary(titleText: "There is a problem", errorList: @errors) %>
-    <% end %>
-
-    <h1 class="govuk-heading-l responsible-person-notification-name">
-      <%= @notification.product_name %>
-    </h1>
-
-    <%= render "notifications/product_overview", notification: @notification %>
-  </div>
-
   <div class="govuk-grid-column-full">
-    <%= render "notifications/responsible_person_details", responsible_person: @notification.responsible_person %>
-    <%= render "notifications/contact_person_overview", contact_person: @responsible_person.contact_persons.first %>
-    <%= render "notifications/product_details", notification: @notification, allow_edits: true %>
-  </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <% if @errors.present? %>
+          <%= govukErrorSummary(titleText: "There is a problem", errorList: @errors) %>
+        <% end %>
 
-  <% if @notification.may_submit_notification? %>
-    <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
-  <% end %>
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Incomplete notification for: </span>
+          <%= @notification.product_name %>
+        </h1>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <%= link_to "Delete this incomplete notification",
+            delete_responsible_person_delete_notification_path(@responsible_person, @notification),
+            class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" %>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-9">
-    <p class="govuk-!-margin-bottom-1">The product information is saved in your dashboard as an incomplete notification.</p>
-    <%= link_to "Save and return to dashboard", responsible_person_notifications_path(@responsible_person, tab: 'incomplete'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
-  </div>
-  <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-!-margin-bottom-1">If the product contains wrong information, you can delete the incomplete notification.</p>
-    <%= link_to "Delete incomplete cosmetic product notification", delete_responsible_person_delete_notification_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
-  </div>
+<div class="govuk-grid-row">
+  <article class="govuk-grid-column-three-quarters">
+    <%= render("product_details", notification: @notification, allow_edits: true) %>
+
+    <section class="govuk-!-margin-top-7">
+      <% if @notification.may_submit_notification? %>
+        <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
+      <% else %>
+        <p class="govuk-!-margin-bottom-1">The product information is saved in your dashboard as an incomplete notification.</p>
+        <%= link_to "Return to Cosmetic products", responsible_person_notifications_path(@responsible_person, tab: 'incomplete'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+      <% end %>
+    </section>
+  </article>
+
+  <%= render("aside_responsible_person_details", responsible_person: @responsible_person) %>
 </div>
