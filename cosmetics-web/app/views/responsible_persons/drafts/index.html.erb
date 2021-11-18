@@ -43,6 +43,6 @@
 
   </section>
   <div class="govuk-grid-column-one-quarter govuk-!-padding-top-9">
-    <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" %>
+    <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" if @notification.notification_product_wizard_completed? %>
   </div>
 </div>

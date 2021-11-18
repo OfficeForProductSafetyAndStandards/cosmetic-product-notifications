@@ -150,6 +150,10 @@ class Notification < ApplicationRecord
     !['empty', 'product_name_added'].include?(state)
   end
 
+  def revert_to_details_complete
+    update(state: 'details_complete')
+  end
+
   def reference_number_for_display
     sprintf("UKCP-%08d", reference_number)
   end

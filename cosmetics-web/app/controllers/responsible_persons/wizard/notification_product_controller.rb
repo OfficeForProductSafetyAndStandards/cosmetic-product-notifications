@@ -113,14 +113,22 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       render_next_step @notification
     when "multiple"
       if @notification.components_count > 0 && components_count < @notification.components_count
-        @notification.errors.add :single_or_multi_component, "Components count cant be lower than #{@notification.components_count}"
+        @notification.errors.add :single_or_multi_component, "Items count cant be lower than #{@notification.components_count}"
         return rerender_current_step
+      end
+      if components_count > 10
+        @notification.errors.add :single_or_multi_component, "Please select less items. More items can be added later"
+        return rerender_current_step
+
+      end
+      if components_count > @notification.components.count
+        @notification.revert_to_details_complete
       end
       required_components_count = @notification.components.present? ? components_count - 1 : components_count
       required_components_count.times { @notification.components.create }
       render_next_step @notification
     else
-      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit"
+      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit, no if its single item"
       rerender_current_step
     end
   end
