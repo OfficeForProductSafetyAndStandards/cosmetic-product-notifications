@@ -26,21 +26,21 @@ RSpec.describe ResponsiblePerson, type: :model do
       responsible_person.address_line_1 = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:address_line_1]).to include("Building and street can not be blank")
+      expect(responsible_person.errors[:address_line_1]).to include("Enter a building and street")
     end
 
     it "fails if a city is not specified" do
       responsible_person.city = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:city]).to include("Town or city can not be blank")
+      expect(responsible_person.errors[:city]).to include("Enter a town or city")
     end
 
     it "fails if a postal code is not specified" do
       responsible_person.postal_code = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:postal_code]).to include("Postcode can not be blank")
+      expect(responsible_person.errors[:postal_code]).to include("Enter a postcode")
     end
 
     it "fails if postal code does not belong to UK" do
@@ -129,6 +129,23 @@ RSpec.describe ResponsiblePerson, type: :model do
 
     it "is true when given an email matching a user of the responsible person with different capitalisation" do
       expect(responsible_person.has_user_with_email?("MeMbEr@EXAMPLE.org")).to eq true
+    end
+  end
+
+  describe "#address_lines" do
+    it "returns the available address files in an especific order" do
+      responsible_person.assign_attributes(
+        address_line_1: "123 Example Street", address_line_2: "Example Town", city: "Example City", county: "Example County", postal_code: "EX1 1EX",
+      )
+      expect(responsible_person.address_lines)
+        .to eq(["123 Example Street", "Example Town", "Example City", "Example County", "EX1 1EX"])
+    end
+
+    it "only returns the available fields" do
+      responsible_person.assign_attributes(
+        address_line_1: "123 Example Street", address_line_2: "", city: "Example City", county: "", postal_code: "EX1 1EX",
+      )
+      expect(responsible_person.address_lines).to eq(["123 Example Street", "Example City", "EX1 1EX"])
     end
   end
 end

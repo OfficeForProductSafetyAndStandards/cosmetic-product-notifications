@@ -1,5 +1,5 @@
 class ResponsiblePersonsController < SubmitApplicationController
-  before_action :set_responsible_person, only: %i[show]
+  before_action :set_responsible_person, only: %i[show edit update]
   skip_before_action :create_or_join_responsible_person, only: %i[select change]
   before_action :validate_responsible_person
   before_action :responsible_persons_selection_form, only: %i[select change]
@@ -21,6 +21,20 @@ class ResponsiblePersonsController < SubmitApplicationController
     end
   end
 
+  def edit; end
+
+  def update
+    result = UpdateResponsiblePersonAddress.call(responsible_person: @responsible_person,
+                                                 user: current_user,
+                                                 address: responsible_person_address_params.to_h)
+    if result.success?
+      confirmation = "Responsible Person address changed successfully" if result.address_changed
+      redirect_to(responsible_person_path(@responsible_person), confirmation: confirmation)
+    else
+      render :edit
+    end
+  end
+
 private
 
   def set_responsible_person
@@ -36,6 +50,16 @@ private
           available: current_user.responsible_persons,
         ),
       )
+  end
+
+  def responsible_person_address_params
+    params.require(:responsible_person).permit(
+      :address_line_1,
+      :address_line_2,
+      :city,
+      :county,
+      :postal_code,
+    )
   end
 
   def responsible_persons_selection_form_params
