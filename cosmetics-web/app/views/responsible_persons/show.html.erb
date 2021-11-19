@@ -48,6 +48,16 @@
         {
           key: { text: "Address" },
           value: { text: wrap_summary_address(@responsible_person.address_lines) },
+          actions: {
+            items: [
+              {
+                href: edit_responsible_person_path(@responsible_person),
+                text: "Edit",
+                classes: "govuk-link--no-visited-state",
+                visuallyHiddenText: "the address"
+              }
+            ]
+          }
         },
         {
           key: { text: "Business type" },
