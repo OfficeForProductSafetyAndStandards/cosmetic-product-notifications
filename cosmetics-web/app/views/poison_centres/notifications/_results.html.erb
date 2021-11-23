@@ -1,4 +1,4 @@
-<section class="govuk-grid-column-two-thirds" id="search-results-section">
+<section class="govuk-grid-column-three-quarters" id="search-results-section">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> <%= display_keywords %> <%= display_filters_informations %> <%= @result.results.total == 1 ? "was found." : "were found." %></p>
@@ -19,7 +19,7 @@
             <%= render "registered_product", notification: notification %>
           <% end %>
         </ul>
-        <%= paginate @notifications, views_prefix: 'pagination' %>
+        <%= paginate @notifications, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
       </div>
     </div>
   <% end %>
