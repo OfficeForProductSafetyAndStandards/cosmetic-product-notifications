@@ -169,7 +169,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
     if @component.predefined? # predefined == frame_formulation
       @component.formulation_file.purge if @component.formulation_file.attached?
-      jump_to(:contains_poisonous_ingredients)
+      jump_to(:select_frame_formulation)
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
     end
