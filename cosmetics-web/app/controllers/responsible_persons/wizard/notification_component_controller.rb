@@ -18,9 +18,10 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :add_cmrs,
         :select_category,
         :select_formulation_type,
-        :upload_formulation,
-        :select_frame_formulation,
-        :contains_poisonous_ingredients,
+        :upload_formulation, # only for range and exact
+        :select_frame_formulation, # only for frame formulation
+        :contains_poisonous_ingredients, # only for frame formulation
+        :upload_poisonus_ingredients, # only for frame formulation
         :select_ph_option,
         :min_max_ph,
         :completed
@@ -63,6 +64,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       update_upload_formulation
     when :contains_poisonous_ingredients
       update_contains_poisonous_ingredients
+    when :upload_poisonus_ingredients
+      update_upload_poisonus_ingredients
     when :select_ph_option
       update_select_component_ph_options
     when :min_max_ph
@@ -166,7 +169,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
     if @component.predefined? # predefined == frame_formulation
       @component.formulation_file.purge if @component.formulation_file.attached?
-      jump_to(:upload_formulation)
+      jump_to(:contains_poisonous_ingredients)
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
     end
@@ -188,15 +191,13 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
       @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
       render :contains_poisonous_ingredients
-      return
-    else
-      render_next_step @component
-  end
+    end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    if @component.contains_poisonous_ingredients?
-      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
+    if !@component.contains_poisonous_ingredients?
+      jump_to(:select_ph_option)
     end
+    render_wizard @component
   end
 
   # For exact and range formulations only
@@ -206,7 +207,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
-        jump_to(:contains_poisonous_ingredients)
+        jump_to(:select_ph_option)
         render_next_step @component
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
@@ -214,9 +215,28 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       end
     else
       @component.errors.add :formulation_file, "Upload a list of ingredients"
+      rerender_current_step
+    end
+  end
+
+  # For frame formulation only
+  def update_upload_poisonus_ingredients
+    formulation_file = params.dig(:component, :formulation_file)
+
+    if formulation_file.present?
+      @component.formulation_file.attach(formulation_file)
+      if @component.valid?
+        render_next_step @component
+      else
+        @component.formulation_file.purge if @component.formulation_file.attached?
+        render step
+      end
+    else
+      @component.errors.add :formulation_file, "Upload a list of poisonous ingredients"
       render step
     end
   end
+
 
   # In views, the wording here is about range. Its confusing, as param name here is ph
   # and in next action is `ph_range`.
