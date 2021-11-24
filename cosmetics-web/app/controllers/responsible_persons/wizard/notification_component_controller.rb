@@ -21,6 +21,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :upload_formulation,
         :select_frame_formulation,
         :contains_poisonous_ingredients,
+        :select_ph_option,
+        :min_max_ph,
         :completed
 
   def show
@@ -30,7 +32,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     when :add_cmrs
       create_required_cmrs
     when :completed
-      @component.update(state: 'component_complete')
+      @component.update_state('component_complete')
       # TODO: write spec
       @component.reload.notification.try_to_complete_components!
       return render 'responsible_persons/wizard/completed'
@@ -61,6 +63,10 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       update_upload_formulation
     when :contains_poisonous_ingredients
       update_contains_poisonous_ingredients
+    when :select_ph_option
+      update_select_component_ph_options
+    when :min_max_ph
+      update_component_min_max_ph
     else
       # Apply this since render_wizard(@component, context: :context) doesn't work as expected
       if @component.update_with_context(component_params, step)
@@ -182,7 +188,6 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       render :contains_poisonous_ingredients
       return
     else
-      jump_to :completed
       render_next_step @component
   end
 
@@ -210,6 +215,29 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     end
   end
 
+  # In views, the wording here is about range. Its confusing, as param name here is ph
+  # and in next action is `ph_range`.
+  def update_select_component_ph_options
+    return rerender_current_step unless @component.update_with_context(component_params, :ph)
+
+    if @component.ph_range_not_required?
+      jump_to :completed
+      render_next_step @component
+    else
+      redirect_to wizard_path(:min_max_ph)
+    end
+  end
+
+  # In views, the wording here is about ph. Its confusing, as param name here is ph_range
+  # and wording in previous action is about range.
+  def update_component_min_max_ph
+    if @component.update_with_context(component_params, :ph_range)
+      jump_to :completed
+      render_next_step @component
+    else
+      rerender_current_step
+    end
+  end
 
   def component_params
     params.fetch(:component, {})
@@ -222,8 +250,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :notification_type,
         :sub_sub_category,
         :frame_formulation,
+        :ph,
+        :minimum_ph,
+        :maximum_ph,
         cmrs_attributes: %i[id name cas_number ec_number],
-        shades: [],
+        shades: []
       )
   end
 

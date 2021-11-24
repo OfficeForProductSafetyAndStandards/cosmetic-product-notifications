@@ -286,6 +286,10 @@ class Notification < ApplicationRecord
     self.save
   end
 
+  def update_state(state)
+    self.update(state: state)
+  end
+
 private
 
   def all_required_attributes_must_be_set

@@ -177,6 +177,9 @@ class Component < ApplicationRecord
     self.save
   end
 
+  def update_state(state)
+    self.update(state: state)
+  end
 private
 
   # This takes any value and returns nil if the value
