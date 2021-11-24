@@ -164,9 +164,9 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       return render step
     end
 
-    if @component.predefined?
+    if @component.predefined? # predefined == frame_formulation
       @component.formulation_file.purge if @component.formulation_file.attached?
-      jump_to(next_step(:upload_formulation)) # Intended target page is select_frame_formulation - assuming the step order declared above doesn't change!
+      jump_to(:upload_formulation)
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
     end
@@ -174,9 +174,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     render_wizard @component
   end
 
+  # for frame formulation only
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
-      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
+        jump_to(:contains_poisonous_ingredients)
+        render_next_step @component
     else
       render :select_frame_formulation
     end
@@ -197,12 +199,14 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     end
   end
 
+  # For exact and range formulations only
   def update_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
 
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
+        jump_to(:contains_poisonous_ingredients)
         render_next_step @component
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
