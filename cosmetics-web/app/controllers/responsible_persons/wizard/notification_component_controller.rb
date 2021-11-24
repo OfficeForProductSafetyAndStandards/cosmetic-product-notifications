@@ -203,7 +203,6 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
-        jump_to :completed
         render_next_step @component
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
