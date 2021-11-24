@@ -1,35 +1,31 @@
-<% notification_path = poison_centre_notification_path(notification) %>
+<%
+  notification_path = poison_centre_notification_path(notification)
+  cell_headers = "item-#{index} meta-#{index}"
+%>
 
-<li>
-  <h2 class="govuk-heading-s">
-    <%= link_to notification.product_name, poison_centre_notification_path(notification, notification_search_form: search_params), class: "govuk-link" %>
-  </h2>
-  <dl class="govuk-summary-list govuk-summary-list--no-border opss-summary-list opss-summary-list--small">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        First notified in the <abbr>UK</abbr>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= display_full_month_date notification.notification_complete_at %>
-      </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <abbr>UK</abbr> cosmetic product number
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= notification.reference_number_for_display %>
-      </dd>
-    </div>
-    <% if notification.cpnp_reference.present? %>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-        <abbr>EU</abbr> reference number
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= notification.cpnp_reference %>
-        </dd>
-      </div>
-    <% end %>
-  </dl>
-</li>
+<tbody class="govuk-table__body">
+  <tr class="govuk-table__row">
+    <th class="govuk-visually-hidden">
+      Name
+    </th>
+    <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
+      <%= link_to notification.product_name,
+                  poison_centre_notification_path(notification, notification_search_form: search_params),
+                  class: "govuk-link govuk-link--no-visited-state" %>
+    </th>
+  </tr>
+  <tr class="govuk-table__row">
+    <th headers="item-<%= index %>" id="meta-<%= index %>" class="govuk-visually-hidden">
+      Metadata
+    </th>
+    <td headers="uknotified <%= cell_headers %>" class="govuk-table__cell">
+      <%= display_full_month_date notification.notification_complete_at.presence || "&nbsp;".html_safe %>
+    </td>
+    <td headers="ukcosprodnumber <%= cell_headers %>" class="govuk-table__cell">
+      <%= notification.reference_number_for_display.presence || "&nbsp;".html_safe %>
+    </td>
+    <td headers="eurefnumber <%= cell_headers %>" class="govuk-table__cell">
+      <%= notification.cpnp_reference.presence || "&nbsp;".html_safe %>
+    </td>
+  </tr>
+</tbody>
