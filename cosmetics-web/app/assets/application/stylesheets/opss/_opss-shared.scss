@@ -50,15 +50,14 @@ main.govuk-main-wrapper {
 .opss-table tbody tr th:first-child,
 tbody th.govuk-table__header,
 tbody th.govuk-table__header a,
-tbody td a[href^="mailto:"] {
+tbody td a[href^="mailto:"],
+.govuk-list *[class^="govuk-heading"] .govuk-link {
     @include word-wrap;
 }
-
 h1.govuk-fieldset__heading,
 h1.govuk-label-wrapper label.govuk-label--l {
     overflow-wrap: normal; word-wrap: normal; word-break: normal; hyphens: unset;
 }
-
 /*.opss-secondary-text-colour {color: $govuk-secondary-text-colour; }
 .opss-weight-normal {font-weight: normal;
     *[class^="govuk-heading"] & {
@@ -68,21 +67,22 @@ h1.govuk-label-wrapper label.govuk-label--l {
 .opss-no-wrap {
   white-space: nowrap;
 }
-
+@include govuk-media-query($from: desktop) {
+    .opss-no-wrap-desktop {
+        white-space: nowrap;
+    }
+}
 .opss-nojs-hide {
     display: none;
 }
-
 body.js-enabled .opss-nojs-hide {
-    display: inline-block;
+    display: inline;
 }
-
 .js-enabled {
     .opss-js-enabled-hidden {
         display: none;  /* @include govuk-visually-hidden; */
     }
 }
-
 .opss-br-desktop {
     display: none;
 
@@ -90,13 +90,21 @@ body.js-enabled .opss-nojs-hide {
         display: block;
     }
 }
+.opss-float-left {
+    float: left;
+}
+.opss-float-right {
+    float: right;
+}
 
 .opss-skip-link:focus {
     &.opss-skip-link--mb {
         margin-bottom: govuk-spacing(4) !important;
     }
 }
-
+.opss-error-colour {
+    color: $govuk-error-colour;
+}
 abbr[title]{
     text-decoration: none;
 
@@ -108,10 +116,9 @@ abbr[title]{
         }
     }
 }
-
 kbd {
     font-family: inherit;
-    font-weight: bold;
+    font-weight: inherit;
 }
 
 .opss-text-align-center {
@@ -173,6 +180,7 @@ kbd {
 .opss-border-left {border-left-width: 1px; }
 .opss-border-right {border-right-width: 1px; }
 .opss-border-all {border-width: 1px; }
+.opss-border-none {border-width: 0;}
 
 .opss-details--sm {
     @include govuk-media-query($from: desktop) {
@@ -383,6 +391,8 @@ dl.opss-summary-list-aside {
 }
 
 .opss-table {/* not .opss-table-items */
+    border-collapse: initial !important;/*stops 1px border issues on laptops using 150% text scale*/
+
     tbody tr:last-child th,
     tbody tr:last-child td {
         border-bottom: none;
@@ -423,6 +433,7 @@ dl.opss-summary-list-aside {
 }
 
 .opss-table-items {
+    border-collapse: initial !important;/*stops 1px border issues on laptops using 150% text scale*/
 
     thead th:nth-child(2) {width: auto; }
     thead th:nth-child(3) {width: auto; }
@@ -509,6 +520,12 @@ dl.opss-summary-list-aside {
             padding-bottom: govuk-spacing(2) + 2;
         }
     }
+
+    &.opss-table-items--first-col-33 {
+        @include govuk-media-query($from: tablet) {
+            thead th:nth-child(2) {width: 33%; }
+        }
+    }
 }
 
 @include govuk-media-query($from: desktop) {
@@ -529,15 +546,19 @@ dl.opss-summary-list-aside {
     }
 }
 
+@media only screen and (min-width:641px) and (max-width: 961px) {/* jump to mobile sizing at tablet size for tight cols */
+    .govuk-grid-column-three-quarters .govuk-grid-column-one-third .opss-text-align-right select {
+        @include govuk-font($size: 16);
+    }
+}
+
 .opss-icon--tick {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABQUlEQVQ4jZXSMWhTURTG8V/SYkrpEwkiHZyapU4dOwkd8hydrLNL1xZ08EIo4iC8FkRwsODoLILzDbh0a8dCFaFooZuIcKGVIKVDEgivT5Kc7X7nfv/zcTgzpqisyJcb7dZeo9362euenEFtCjN8wRou8QHP61MEeDwwQx1PcDBRgqzI5/ENd0ut95Mm6FSY/6AzFpAV+RKeVrRepBB/TZLgDeZK2hHe0V/GcFKzYvoDPKyAbqUQ/8HM4OMj7DfarWaj3TrsdU8usiK/gc+4XTJ/TCHuDh+1rMhv4RiLA+03XmEBL0vmc9xLIZ4OhVnsjJihidcVsWFn1Ex/B3X9yxpXP7BbFuspxA2sYn8M4FkK8e81AKQQD3Ef64NJ5eriUxX12ilnRT6HTf3ru4keVlKIXycCjIDuYBvfU4hv//fvCi1WUVpTllRdAAAAAElFTkSuQmCC');
 }
 .opss-icon--alert {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA4klEQVQ4jaXTP0oDQRgF8B/DFlaeQYJYiIhnkFxFPImEYB1yjBwgKLZbppBgl9ZSJAQJQQu/hGV2lvXPg9fse9/33sywtHGCO9R4DdYYYVDwH1CF6QOfHdxiHN7W8Cwzb/Ac3GTaLF8yLqQtGvqioN/vxdOo9tsFW5wl3JbO9ANUuEkY/mF4j2HS8zQ9GKR/DENKWHWJOA52Ba0qPOGyIF7grafBI5xjp/1Ma1wH3wv6LkLApGCoG0l1QZ80qxxhXkgY+f6x8oYPMSNfMu04TnPptDTcxFXUW8Y9rPES31qX/QVUY2XWKh7oRgAAAABJRU5ErkJggg==');
 }
-
 .opss-icon {
-
     background-position: center center;
     background-size: contain;
     display: inline-block;
@@ -551,5 +572,4 @@ dl.opss-summary-list-aside {
         margin-bottom: -2px;
         margin-right: govuk-spacing(1) - 2;
     }
-
 }
