@@ -11,23 +11,31 @@
 
     <%= yield %>
 
-    <h2 class="govuk-heading-m">New ingredients used as colourants, UV-filters, or preservatives</h2>
-    <p>
-      For all new ingredients which are used as colourants, UV-filters, or preservatives, so not listed in Annex 4, 5 or 6, a safety dossier must be submitted to OPSS for safety assessment.
+    <h2 class="govuk-heading-m">New ingredients used as colourants, <abbr title='Ultraviolet'>UV</abbr>-filters, or preservatives</h2>
+
+    <p class="govuk-body">
+      For all new ingredients which are used as colourants, <abbr title='Ultraviolet'>UV</abbr>-filters, or preservatives,
+      so not listed in Annex 4, 5 or 6, a safety dossier must be submitted to <abbr title='Office for Product Safety and Standards'>OPSS</abbr> for safety assessment.
       This also applies to nanomaterials.
     </p>
-    <p>
+
+    <p class="govuk-body">
       There is technical guidance on what needs to be submitted in a safety dossier for nanomaterials and what needs to be submitted in a safety dossier for all other ingredients.
-      There is also a checklist detailing the information required for a safety dossier. Further information can be found
-      <%= link_to "here",
+      There is also a checklist detailing the information required for a safety dossier.
+      Further information about making cosmetic products safe for users can be found on the
+      <%= link_to "guidance page",
                   "https://www.gov.uk/guidance/making-cosmetic-products-available-to-consumers-in-great-britain#making-cosmetic-products-safe-for-users",
-                  class: "govuk-link--no-visited-state",
+                  class: "govuk-link govuk-link--no-visited-state",
                   target: "_blank" %>.
     </p>
-    <p>
-      Safety dossiers must be submitted to the OPSS Safety Assessment inbox: <%= mail_to  "opss.safetyassessment@beis.gov.uk" %>.
+
+    <p class="govuk-body">
+      Safety dossiers must be submitted to the <abbr title='Office for Product Safety and Standards'>OPSS</abbr> Safety Assessment inbox:
+      <%= mail_to "opss.safetyassessment@beis.gov.uk", nil, class: "govuk-link govuk-link--no-visited-state" %>.
     </p>
 
-    <p>Go to <%= link_to "your cosmetic products", responsible_person_notifications_path(current_responsible_person), class: "govuk-link--no-visited-state" %>.</p>
+    <p class="govuk-body">
+      Go to <%= link_to "your cosmetic products", responsible_person_notifications_path(current_responsible_person), class: "govuk-link govuk-link--no-visited-state" %>.
+    </p>
   </div>
 </div>
