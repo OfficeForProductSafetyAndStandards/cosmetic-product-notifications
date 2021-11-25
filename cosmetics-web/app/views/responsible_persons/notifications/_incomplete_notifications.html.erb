@@ -30,11 +30,7 @@
       <tbody class="govuk-table__body">
         <% @unfinished_notifications.each do |notification| %>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">
-              <a href="<%= edit_responsible_person_notification_path(@responsible_person, notification) %>" class="govuk-link govuk-link--no-visited-state">
-                <%= notification.product_name %>
-              </a>
-            </th>
+            <th scope="row" class="govuk-table__header"><%= notification.product_name %></th>
             <td class="govuk-table__cell"><%= display_full_month_date notification.created_at %></td>
             <td class="govuk-table__cell"><%= reference_number_for_display(notification) %></td>
             <td class="govuk-table__cell">
