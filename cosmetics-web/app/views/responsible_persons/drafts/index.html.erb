@@ -10,7 +10,7 @@
 
     <ol class="app-task-list">
       <%= render 'product' %>
-      <%#= render 'nanomaterials' %>
+      <%= render 'nanomaterials' if @notification.nano_materials.present? %>
       <% if @notification.multi_component? %>
         <%= render 'product_kit' %>
         <%= render 'components' %>

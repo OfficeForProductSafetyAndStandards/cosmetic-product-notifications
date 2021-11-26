@@ -33,6 +33,11 @@ module DraftHelper
     end
   end
 
+  def nanomaterial_badge(nanomaterial)
+    cannot_start_yet_badge
+  end
+
+
   def component_link(component, index)
     text = if component.name
       component.name
@@ -44,6 +49,20 @@ module DraftHelper
       text
     else
       link_to text, new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component), class: "govuk-link govuk-link--no-visited-state"
+    end
+  end
+
+  def nanomaterial_link(nano_element, index)
+    text = if nano_element.inci_name
+      nano_element.inci_name
+    else
+      "Item ##{ index+1 }"
+    end
+
+    if ['empty', 'product_name_added', 'details_complete'].include? nano_element.nano_material.notification.state
+      text
+    else
+      link_to text, new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_element), class: "govuk-link govuk-link--no-visited-state"
     end
   end
 

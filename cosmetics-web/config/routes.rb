@@ -142,9 +142,9 @@ Rails.application.routes.draw do
           resources :trigger_question, controller: "responsible_persons/wizard/trigger_questions", only: %i[show update new]
           resources :formulation_file, controller: "responsible_persons/formulation_upload", only: %i[new create destroy]
           resource :formulation, controller: "responsible_persons/formulation_upload", only: %i[edit update]
-          resources :nanomaterials, param: :nano_element_id do
-            resources :build, controller: "responsible_persons/wizard/nanomaterial_build", only: %i[show update new]
-          end
+        end
+        resources :nanomaterials, param: :nano_element_id do
+          resources :build, controller: "responsible_persons/wizard/notification_nanomaterial", only: %i[show update new]
         end
 
         collection do
