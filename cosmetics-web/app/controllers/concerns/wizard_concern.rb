@@ -69,6 +69,11 @@ module WizardConcern
     render_wizard object
   end
 
+  def jump_to_step(step)
+    jump_to(step)
+    render_next_step model
+  end
+
   def rerender_current_step
     render step
   end

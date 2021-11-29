@@ -10,6 +10,6 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <p>If you are using a nanomaterial as a colourant, preservative or UV filter it must be listed in the annexes.</p>
-    <p>Go to <%= link_to "your cosmetic products", responsible_person_notifications_path(current_responsible_person), class: "govuk-link--no-visited-state" %>.</p>
+    <p>Go to <%= link_to "the task list page", responsible_person_notification_draft_index_path(current_responsible_person, @notification), class: "govuk-link--no-visited-state" %>.</p>
   </div>
 </div>

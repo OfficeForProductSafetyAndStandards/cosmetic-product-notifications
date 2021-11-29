@@ -11,11 +11,11 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
         :confirm_usage,
         :after_standard_nanomaterial_routing, # step to check if non standard route needs to take place
         :non_standard_nanomaterial_notified, # when non standard
-        :when_products_containing_nanomaterial_can_be_placed_on_market, #FLOW TERMINATION
+        :when_products_containing_nanomaterial_can_be_placed_on_market,
         :notify_your_nanomaterial, # FLOW TERMINATION
         :must_be_listed, # used when confirm restrictions fails - FLOW TERMINATION
         :must_conform_to_restrictions, # used when confirm usage fails - FLOW TERMINATION
-        :complete
+        :completed
 
   def new
     redirect_to wizard_path(steps.first)
@@ -25,14 +25,18 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     case step
     when :after_select_purposes_routing
       if @nano_element.non_standard? && @nano_element.purposes.one?
-        jump_to(:non_standard_nanomaterial_notified)
+        return jump_to_step(:non_standard_nanomaterial_notified)
+      else
+        return jump_to_step(:confirm_restrictions)
       end
-      return render_next_step @nano_material
     when :after_standard_nanomaterial_routing
-      if @nano_element.non_standard? && @nano_element.purposes.one?
-        jump_to(:non_standard_nanomaterial_notified)
-        return render_next_step @nano_material
+      if @nano_element.non_standard?
+        return jump_to_step(:non_standard_nanomaterial_notified)
+      else
+        return jump_to_step(:completed)
       end
+    when :completed
+      return render 'responsible_persons/wizard/completed'
     end
 
     render_wizard
@@ -41,20 +45,20 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
   def update
     case step
     when :select_purposes
-      render_select_purposes_step
+      update_select_purposes_step
     when :confirm_restrictions
-      render_confirm_restrictions_step
+      update_confirm_restrictions_step
     when :confirm_usage
-      render_confirm_usage_step
+      update_confirm_usage_step
     when :non_standard_nanomaterial_notified
-      render_non_standard_nanomaterial_step
+      update_non_standard_nanomaterial_step
     when :when_products_containing_nanomaterial_can_be_placed_on_market
-      redirect_to finish_wizard_path
+      jump_to_step(:completed)
     else
       if @nano_element.update_with_context(nano_element_params, step)
         render_next_step @nano_element
       else
-        re_render_current_step
+        rerender_current_step
       end
     end
   end
@@ -83,7 +87,7 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     { purposes: selected_purposes }
   end
 
-  def render_select_purposes_step
+  def update_select_purposes_step
     if @nano_element.update_with_context(purpose_params, step)
       render_wizard @nano_element
     else
@@ -91,7 +95,7 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     end
   end
 
-  def render_confirm_restrictions_step
+  def update_confirm_restrictions_step
     confirm_restrictions = params.dig(:nano_element, :confirm_restrictions)
 
     @nano_element.update_with_context(nano_element_params, step)
@@ -106,39 +110,36 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     end
   end
 
-  def render_confirm_usage_step
+  def update_confirm_usage_step
     confirm_usage = params.dig(:nano_element, :confirm_usage)
 
     @nano_element.update_with_context(nano_element_params, step)
     case confirm_usage
     when "yes"
-      if @nano_element.non_standard?
-        redirect_to wizard_path(:non_standard_nanomaterial_notified)
-      else
-        redirect_to finish_wizard_path
-      end
+      render_next_step @nano_element
     when "no"
-      redirect_to wizard_path(:must_conform_to_restrictions)
+      jump_to(:must_conform_to_restrictions)
+      render_next_step @nano_element
     else
       @nano_element.errors.add :confirm_usage, "Select an option"
-      render step
+      rerender_current_step
     end
   end
 
-  def render_non_standard_nanomaterial_step
+  def update_non_standard_nanomaterial_step
     confirm_toxicology_notified = params.dig(:nano_element, :confirm_toxicology_notified)
 
     @nano_element.update_with_context(nano_element_params, step)
     case confirm_toxicology_notified
     when "yes"
-      redirect_to wizard_path(:when_products_containing_nanomaterial_can_be_placed_on_market)
+      jump_to_step(:when_products_containing_nanomaterial_can_be_placed_on_market)
     when "no"
-      redirect_to wizard_path(:notify_your_nanomaterial)
+      jump_to_step(:notify_your_nanomaterial)
     when "not sure"
-      redirect_to wizard_path(:notify_your_nanomaterial)
+      jump_to_step(:notify_your_nanomaterial)
     else
       @nano_element.errors.add :confirm_toxicology_notified, "Select an option"
-      render step
+      rerender_current_path
     end
   end
 
@@ -146,5 +147,11 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     @nano_element.nano_material.nano_elements.order(:id).each_cons(2) do |element, next_element|
       return next_element if element == @nano_element
     end
+  end
+
+  private
+
+  def model
+    @nano_element
   end
 end
