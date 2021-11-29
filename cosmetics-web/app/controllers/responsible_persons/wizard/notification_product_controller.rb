@@ -54,9 +54,9 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     return if @notification.notification_product_wizard_completed?
 
     if @notification.multi_component?
-      @notification.update(state: 'details_complete')
+      @notification.update_state('details_complete')
     else
-      @notification.update(state: 'ready_for_components')
+      @notification.update_state('ready_for_components')
     end
   end
 

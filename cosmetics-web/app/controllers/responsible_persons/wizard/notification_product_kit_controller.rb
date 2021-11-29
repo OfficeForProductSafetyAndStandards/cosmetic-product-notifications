@@ -15,7 +15,7 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
   def show
     case step
     when :completed
-      @notification.update(state: 'ready_for_components') if @notification.details_complete?
+      @notification.update_state('ready_for_components') if @notification.details_complete?
       render 'responsible_persons/wizard/completed'
     else
       render_wizard

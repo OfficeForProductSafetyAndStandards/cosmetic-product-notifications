@@ -109,10 +109,10 @@ class Notification < ApplicationRecord
   aasm whiny_transitions: false, timestamps: true, column: :state do
     state :empty, initial: true
     state :product_name_added
-    # state which will be used for multicomponent product
+
     # state is entangled with view here, this state is used to indicate
     # that multiitem kit step is not defined
-    state :details_complete
+    state :details_complete # only for multiitem
 
     # indicate that component related steps can be started
     state :ready_for_components
@@ -142,7 +142,7 @@ class Notification < ApplicationRecord
 
   def try_to_complete_components!
     if components.all? { |c| c.state == 'component_complete' }
-      update(state: 'components_complete')
+      update_state('components_complete')
     end
   end
 
@@ -151,7 +151,7 @@ class Notification < ApplicationRecord
   end
 
   def revert_to_details_complete
-    update(state: 'details_complete')
+    update_state('details_complete')
   end
 
   def reference_number_for_display
