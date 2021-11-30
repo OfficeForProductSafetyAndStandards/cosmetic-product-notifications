@@ -19,7 +19,9 @@
       <% end %>
       <li>
         <h2 class="app-task-list__section">
-          <span class="app-task-list__section-number"><%= accept_section_number(@notification) %> </span>
+          <span class="app-task-list__section-number">
+            <%= section_number(DraftHelper::ACCEPT_SECTION) %>
+          </span>
           Accept and submit
         </h2>
 

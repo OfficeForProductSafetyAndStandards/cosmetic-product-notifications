@@ -53,11 +53,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   def set_final_state_for_wizard
     return if @notification.notification_product_wizard_completed?
 
-    if @notification.multi_component?
-      @notification.update_state('details_complete')
-    else
-      @notification.update_state('ready_for_components')
-    end
+    @notification.set_state_on_product_wizard_completed!
   end
 
   def update_add_internal_reference
@@ -83,6 +79,15 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
     case params.dig(:notification, :contains_nanomaterials)
     when "yes"
+      if nano_materials_count > 10
+        @notification.errors.add :contains_nanomaterials, "Maximum nanomaterials count is 10. More can be added later"
+        return rerender_current_step
+
+      end
+      if nano_materials_count < 1
+        @notification.errors.add :contains_nanomaterials, "Please enter at least 1"
+        return rerender_current_step
+      end
       if @notification.nano_materials.count > 1 && nano_materials_count < @notification.nano_materials.count
         @notification.errors.add :contains_nanomaterials, "Components count cant be lower than #{@notification.components_count}"
         return rerender_current_step

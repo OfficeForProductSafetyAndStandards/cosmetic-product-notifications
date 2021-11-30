@@ -1,4 +1,9 @@
 module DraftHelper
+  PRODUCT_DETAILS_SECTION = 'product_details'
+  MULTI_ITEMS_KIT_SECTION = 'multi_item_kit'
+  ITEMS_SECTION           = 'items'
+  ACCEPT_SECTION          = 'accept'
+
   def product_badge(notification)
     if notification.state == 'empty'
       not_started_badge
@@ -56,7 +61,7 @@ module DraftHelper
     text = if nano_element.inci_name
       nano_element.inci_name
     else
-      "Item ##{ index+1 }"
+      "Nanomaterial ##{ index+1 }"
     end
 
     if ['empty', 'product_name_added', 'details_complete'].include? nano_element.nano_material.notification.state
@@ -78,15 +83,25 @@ module DraftHelper
     '<b class="govuk-tag govuk-tag--grey app-task-list__tag" id="accept-status">Cannot start yet</b>'.html_safe
   end
 
-  def accept_section_number(notification)
-    if notification.multi_component?
-      '4. '
-    else
-      '3. '
-    end
-  end
-
   def progress_bar
     '<span class="govuk-visually-hidden">The task list is </span><span class="govuk-!-font-weight-bold">Incomplete</span>: 1 of 5 sections have been completed.'.html_safe
+  end
+
+  def section_number(section)
+    if section == PRODUCT_DETAILS_SECTION
+      return @notification.nano_materials.present? ? '3.' : '2.'
+    end
+    if section == MULTI_ITEMS_KIT_SECTION
+      return @notification.nano_materials.present? ? '3.' : '2.'
+    end
+    if section == ITEMS_SECTION
+      return @notification.nano_materials.present? ? '4.' : '3.'
+    end
+    if section == ACCEPT_SECTION
+      base_number = 3 # for simple product
+      base_number += 1 if @notification.nano_materials.present?
+      base_number += 1 if @notification.multi_component?
+      return "#{base_number}."
+    end
   end
 end

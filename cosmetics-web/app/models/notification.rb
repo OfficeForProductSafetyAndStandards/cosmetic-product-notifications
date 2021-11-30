@@ -1,5 +1,6 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
+  include NotificationStateConcern
 
   DELETION_PERIOD_DAYS = 7
 
@@ -110,6 +111,7 @@ class Notification < ApplicationRecord
     state :empty, initial: true
     state :product_name_added
 
+    state :ready_for_nanomaterials
     # state is entangled with view here, this state is used to indicate
     # that multiitem kit step is not defined
     state :details_complete # only for multiitem
@@ -138,20 +140,6 @@ class Notification < ApplicationRecord
     end
 
     state :deleted
-  end
-
-  def try_to_complete_components!
-    if components.all? { |c| c.state == 'component_complete' }
-      update_state('components_complete')
-    end
-  end
-
-  def notification_product_wizard_completed?
-    !['empty', 'product_name_added'].include?(state)
-  end
-
-  def revert_to_details_complete
-    update_state('details_complete')
   end
 
   def reference_number_for_display
