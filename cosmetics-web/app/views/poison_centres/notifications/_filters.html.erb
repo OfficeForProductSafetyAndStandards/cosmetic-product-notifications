@@ -78,19 +78,3 @@
     </div>
   <% end %>
 </section>
-
-<%= javascript_tag nonce: true do -%>
-  # Clear filters reset
-  var filterForm = document.getElementById('new_notification_search_form_filters');
-  var ele1 = filterForm.querySelectorAll('.govuk-radios__conditional');
-  var ele2 = filterForm.querySelectorAll('.govuk-radios--conditional .govuk-radios__input');
-
-  document.getElementById('opss-reset').addEventListener('click', function () {//click the filter's form reset link/button
-      ele1.forEach(function(e1) {
-          e1.classList.add('govuk-radios__conditional--hidden');
-      });
-      ele2.forEach(function(e2) {
-          e2.setAttribute('aria-expanded', false);
-      });
-  }, false);
-<% end -%>
