@@ -12,6 +12,7 @@ $(function () {
   if (filterForm !== null) {
     const radioConditionalElements = filterForm.querySelectorAll('.govuk-radios__conditional')
     const radioInputs = filterForm.querySelectorAll('.govuk-radios--conditional .govuk-radios__input')
+    const dateInputs = filterForm.querySelectorAll('.govuk-radios--conditional .govuk-date-input__input');
 
     document.getElementById('opss-reset').addEventListener('click', function () { // click the filter's form reset link/button
       radioConditionalElements.forEach(function (element) {
@@ -19,6 +20,10 @@ $(function () {
       })
       radioInputs.forEach(function (element) {
         element.setAttribute('aria-expanded', false)
+        element.removeAttribute('checked');
+      })
+      dateInputs.forEach(function (element) {
+        element.setAttribute('value', '')
       })
     }, false)
   }
