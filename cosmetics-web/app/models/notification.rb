@@ -274,10 +274,6 @@ class Notification < ApplicationRecord
     self.save
   end
 
-  def update_state(state)
-    self.update(state: state)
-  end
-
 private
 
   def all_required_attributes_must_be_set
@@ -285,7 +281,6 @@ private
 
     changed.each do |attribute|
       if mandatory_attributes.include?(attribute) && self[attribute].blank?
-
         if attribute == "product_name"
           errors.add attribute, "Enter the product name"
         else
@@ -302,6 +297,8 @@ private
     when "product_name_added"
       mandatory_attributes("empty")
     when "details_complete"
+      mandatory_attributes("empty")
+    when "ready_for_nanomaterials"
       mandatory_attributes("empty")
     when "ready_for_components"
       mandatory_attributes("empty")

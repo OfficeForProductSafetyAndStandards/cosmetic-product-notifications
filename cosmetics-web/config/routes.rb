@@ -131,6 +131,7 @@ Rails.application.routes.draw do
         resources :draft, controller: "responsible_persons/drafts", only: %i[index] do
           collection do
             get :add_component
+            get :add_nano_material
           end
         end
 

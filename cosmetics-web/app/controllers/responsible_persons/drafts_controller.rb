@@ -10,6 +10,13 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     redirect_to responsible_person_notification_draft_index_path @notification.responsible_person, @notification
   end
 
+  def add_nano_material
+    nano = @notification.nano_materials.create
+    nano.nano_elements.create
+    @notification.update_state('ready_for_nanomaterials')
+    redirect_to responsible_person_notification_draft_index_path @notification.responsible_person, @notification
+  end
+
 private
 
   def responsible_person

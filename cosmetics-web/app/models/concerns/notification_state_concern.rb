@@ -1,12 +1,6 @@
 module NotificationStateConcern
   def set_state_on_product_wizard_completed!
-    if self.multi_component?
-      self.update_state('details_complete')
-    else
-      self.update_state('ready_for_components')
-    end
-    return
-    if self.nano_materials > 1
+    if self.nano_materials.count > 0
       self.update_state('ready_for_nanomaterials')
     else
       if self.multi_component?
@@ -17,11 +11,15 @@ module NotificationStateConcern
     end
   end
 
-  def set_state_on_nano_materials_complete!
-    if self.multi_component?
-      self.update_state('details_complete')
-    else
-      self.update_state('ready_for_components')
+  def try_to_complete_nanomaterials!
+    return if state != 'ready_for_nanomaterials'
+
+    if nano_materials.map(&:nano_elements).flatten.all? { |n| n.completed? }
+      if self.multi_component?
+        self.update_state('details_complete')
+      else
+        self.update_state('ready_for_components')
+      end
     end
   end
 
@@ -36,6 +34,9 @@ module NotificationStateConcern
   end
 
   def revert_to_details_complete
+    # we dont want to change state to details complete when its new notification
+    return if ['empty', 'product_name_added'].include?(self.state)
+
     self.update_state('details_complete')
   end
 
@@ -43,4 +44,7 @@ module NotificationStateConcern
     self.update_state('ready_for_nanomaterials')
   end
 
+  def update_state(state)
+    self.update(state: state)
+  end
 end

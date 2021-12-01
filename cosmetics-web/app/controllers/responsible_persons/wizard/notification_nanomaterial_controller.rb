@@ -36,6 +36,7 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
         return jump_to_step(:completed)
       end
     when :completed
+      @notification.reload.try_to_complete_nanomaterials!
       return render 'responsible_persons/wizard/completed'
     end
 

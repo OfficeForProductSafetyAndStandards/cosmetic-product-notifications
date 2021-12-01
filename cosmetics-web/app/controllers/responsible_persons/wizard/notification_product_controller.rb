@@ -51,6 +51,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   private
 
   def set_final_state_for_wizard
+    # Make sure state wont be overrided if notification is in higher state
     return if @notification.notification_product_wizard_completed?
 
     @notification.set_state_on_product_wizard_completed!
@@ -74,6 +75,8 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   end
 
   # Run this step only when notifications does not have any notifications
+  # TODO: at some point, when user changes number on nano materials,
+  # state should block all other changes to force user to add nanomaterial
   def update_contains_nanomaterials
     return render_next_step @notification if @notification.nano_materials.count > 1
 
