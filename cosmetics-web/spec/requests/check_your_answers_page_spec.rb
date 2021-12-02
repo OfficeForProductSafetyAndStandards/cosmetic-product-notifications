@@ -24,7 +24,7 @@ RSpec.describe "Check your answers page", type: :request do
     it "displays the UK cosmetics product number " do
       get edit_responsible_person_notification_path(params)
 
-      expect(response.body).to include("UK cosmetic product number:")
+      expect(response.body).to include("cosmetic product number")
     end
 
     context "when the component has CMRS" do

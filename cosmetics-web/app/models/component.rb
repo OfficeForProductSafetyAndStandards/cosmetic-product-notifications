@@ -73,16 +73,11 @@ class Component < ApplicationRecord
 
   validates :maximum_ph, numericality: { message: "Enter a value of 14 or lower for maximum pH", less_than_or_equal_to: 14 }, if: -> { maximum_ph.present? }
 
-  before_save :add_shades, if: :will_save_change_to_shades?
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
-    state :component_complete, enter: :update_notification_state
-
-    event :add_shades do
-      transitions from: :empty, to: :component_complete
-    end
+    state :component_complete
   end
 
   def prune_blank_shades
@@ -182,6 +177,9 @@ class Component < ApplicationRecord
     self.save
   end
 
+  def update_state(state)
+    self.update(state: state)
+  end
 private
 
   # This takes any value and returns nil if the value
@@ -199,10 +197,6 @@ private
     else
       value
     end
-  end
-
-  def update_notification_state
-    notification&.set_single_or_multi_component!
   end
 
   def other_special_applicator?

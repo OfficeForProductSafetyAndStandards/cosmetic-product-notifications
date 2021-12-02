@@ -13,7 +13,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     sign_in(user)
     visit "/responsible_persons/#{responsible_person.id}"
 
-    expect(page).not_to have_link("Change")
+    expect(page).not_to have_link("Edit")
   end
 
   scenario "user belonging to the responsible person can edit the contact person name" do
@@ -21,7 +21,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     visit "/responsible_persons/#{responsible_person.id}"
 
     expect_to_be_on__responsible_person_page
-    click_link("Change", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=name")
+    click_link("Edit", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=name")
 
     expect(page).to have_h1("Change contact person name for Test RP")
     expect_back_link_to_responsible_person_page
@@ -40,7 +40,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     expect(page).to have_h1("Change contact person name for Test RP")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Name can not be blank", href: "#contact_person_name")
+    expect(page).to have_link("Enter a valid name", href: "#contact_person_name")
     expect(page).to have_css("span#contact_person_name-error", text: "Enter a valid name")
 
     # Successful attempt
@@ -49,7 +49,8 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("Contact person name changed successfully")
-    expect(page).to have_summary_item(key: "Name", value: "Mr Foo Bar")
+    contact_person_name_elem = page.find_all("dt", text: "Name", exact_text: true).last
+    expect(contact_person_name_elem).to have_sibling("td, dd", text: "Mr Foo Bar", exact_text: true)
   end
 
   scenario "user belonging to the responsible person can edit the contact person email address" do
@@ -57,7 +58,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     visit "/responsible_persons/#{responsible_person.id}"
 
     expect_to_be_on__responsible_person_page
-    click_link("Change", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=email_address")
+    click_link("Edit", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=email_address")
 
     expect(page).to have_h1("Change contact person email address for Test RP")
     expect_back_link_to_responsible_person_page
@@ -78,7 +79,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("Contact person email address changed successfully")
-    expect(page).to have_summary_item(key: "Email address", value: "mrFooBar@example.com")
+    expect(page).to have_summary_item(key: "Email", value: "mrFooBar@example.com")
   end
 
   scenario "user belonging to the responsible person can edit the contact person phone number" do
@@ -86,7 +87,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     visit "/responsible_persons/#{responsible_person.id}"
 
     expect_to_be_on__responsible_person_page
-    click_link("Change", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=phone_number")
+    click_link("Edit", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=phone_number")
 
     expect(page).to have_h1("Change contact person phone number for Test RP")
     expect_back_link_to_responsible_person_page
@@ -107,6 +108,6 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("Contact person phone number changed successfully")
-    expect(page).to have_summary_item(key: "Phone number", value: "+44(7123456789)")
+    expect(page).to have_summary_item(key: "Telephone", value: "+44(7123456789)")
   end
 end

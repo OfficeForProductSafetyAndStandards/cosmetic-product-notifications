@@ -1,7 +1,7 @@
 <%
   previous_present = @responsible_persons_selection_form.previous.present?
   prefix = if previous_present
-            @responsible_persons_selection_form.available.none? ? "Add" : "Change"
+            @responsible_persons_selection_form.available.none? ? "Add" : "Change the"
           else
             "Select the"
           end

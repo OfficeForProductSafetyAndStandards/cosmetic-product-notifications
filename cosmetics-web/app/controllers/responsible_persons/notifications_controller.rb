@@ -31,11 +31,17 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
 
-    @previous_page_path = previous_path_before_check_your_answers(@notification)
+    #@previous_page_path = previous_path_before_check_your_answers(@notification)
 
     if params[:submit_failed]
       add_image_upload_errors
     end
+  end
+
+  def create_for_draft
+    notification = Notification.create(responsible_person: @responsible_person)
+
+    redirect_to responsible_person_notification_draft_index_path(@responsible_person, notification)
   end
 
   def confirm

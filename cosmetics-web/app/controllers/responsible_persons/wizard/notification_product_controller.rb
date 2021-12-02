@@ -6,23 +6,20 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   steps :add_product_name,
         :add_internal_reference,
         :for_children_under_three,
-
         :contains_nanomaterials, # add info to form that later user can redefine nanomaterials, consider not showing this for edit
-
         :single_or_multi_component, # add info to form that later user can redefine components, consider not showing this for edit
-        :add_product_image, # only for single
-        :notification_product_created
+        :add_product_image,
+        :completed
+
 
   # TODO: investigate previous path helper
   before_action :set_notification
 
   def show
     case step
-    when :add_product_image
-      return render_next_step @notification if @notification.multi_component?
-      render_wizard
-    when :notification_product_created
-      redirect_to responsible_person_notification_draft_index_path(@notification.responsible_person, @notification)
+    when :completed
+      set_final_state_for_wizard
+      render 'responsible_persons/wizard/completed'
     else
       render_wizard
     end
@@ -53,6 +50,16 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
   private
 
+  def set_final_state_for_wizard
+    return if @notification.notification_product_wizard_completed?
+
+    if @notification.multi_component?
+      @notification.update(state: 'details_complete')
+    else
+      @notification.update(state: 'ready_for_components')
+    end
+  end
+
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)
     when "yes"
@@ -72,15 +79,23 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
   # Run this step only when notifications does not have any notifications
   def update_contains_nanomaterials
-    return render_next_step @notification if @notification.nano_materials.count > 0
+    return render_next_step @notification if @notification.nano_materials.count > 1
 
-    yes_no_question(:contains_nanomaterials,
-                    skip_steps_on: "yes",
-                    on_skip: proc { @notification.nano_materials.destroy },
-                    on_next_step: proc { nanomaterial_count.times { @notification.nano_materials << NanoMaterial.create } if @notification.nano_materials.count.zero? })
+    case params.dig(:notification, :contains_nanomaterials)
+    when "yes"
+      if @notification.nano_materials.count > 1 && nano_materials_count < @notification.nano_materials.count
+        @notification.errors.add :contains_nanomaterials, "Components count cant be lower than #{@notification.components_count}"
+        return rerender_current_step
+      end
+      required_nano_materials_count = @notification.nano_materials.present? ? nano_materials_count - 1 : nano_materials_count
+      required_nano_materials_count.times { @notification.nano_materials.create }
+      render_next_step @notification
+    else
+      render_next_step @notification
+    end
   end
 
-  def nanomaterial_count
+  def nano_materials_count
     if params[:notification][:contains_nanomaterials] == "yes"
       params[:notification][:nanomaterial_count].to_i
     else
@@ -98,14 +113,26 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       render_next_step @notification
     when "multiple"
       if @notification.components_count > 0 && components_count < @notification.components_count
-        @notification.errors.add :single_or_multi_component, "Components count cant be lower than #{@notification.components_count}"
+        @notification.errors.add :single_or_multi_component, "Items count cant be lower than #{@notification.components_count}"
         return rerender_current_step
+      end
+      if components_count > 10
+        @notification.errors.add :single_or_multi_component, "Please select less items. More items can be added later"
+        return rerender_current_step
+
+      end
+      if components_count < 2
+        @notification.errors.add :single_or_multi_component, "Please enter at least 2 or select single item product."
+        return rerender_current_step
+      end
+      if components_count > @notification.components.count
+        @notification.revert_to_details_complete
       end
       required_components_count = @notification.components.present? ? components_count - 1 : components_count
       required_components_count.times { @notification.components.create }
       render_next_step @notification
     else
-      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit"
+      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit, no if its single item"
       rerender_current_step
     end
   end

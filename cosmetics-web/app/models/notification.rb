@@ -109,16 +109,19 @@ class Notification < ApplicationRecord
   aasm whiny_transitions: false, timestamps: true, column: :state do
     state :empty, initial: true
     state :product_name_added
+    # state which will be used for multicomponent product
+    # state is entangled with view here, this state is used to indicate
+    # that multiitem kit step is not defined
+    state :details_complete
+
+    # indicate that component related steps can be started
+    state :ready_for_components
+
     state :components_complete
-    state :draft_complete
     state :notification_complete
 
     event :add_product_name do
       transitions from: :empty, to: :product_name_added
-    end
-
-    event :set_single_or_multi_component do
-      transitions from: :product_name_added, to: :components_complete
     end
 
     event :complete_draft do
@@ -126,7 +129,7 @@ class Notification < ApplicationRecord
     end
 
     event :submit_notification, after: :cache_notification_for_csv! do
-      transitions from: :draft_complete, to: :notification_complete,
+      transitions from: :components_complete, to: :notification_complete,
                   after: proc { __elasticsearch__.index_document } do
         guard do
           !missing_information?
@@ -135,6 +138,20 @@ class Notification < ApplicationRecord
     end
 
     state :deleted
+  end
+
+  def try_to_complete_components!
+    if components.all? { |c| c.state == 'component_complete' }
+      update(state: 'components_complete')
+    end
+  end
+
+  def notification_product_wizard_completed?
+    !['empty', 'product_name_added'].include?(state)
+  end
+
+  def revert_to_details_complete
+    update(state: 'details_complete')
   end
 
   def reference_number_for_display
@@ -269,6 +286,10 @@ class Notification < ApplicationRecord
     self.save
   end
 
+  def update_state(state)
+    self.update(state: state)
+  end
+
 private
 
   def all_required_attributes_must_be_set
@@ -290,6 +311,12 @@ private
     case state
     when "empty"
       %w[product_name]
+    when "product_name_added"
+      mandatory_attributes("empty")
+    when "details_complete"
+      mandatory_attributes("empty")
+    when "ready_for_components"
+      mandatory_attributes("empty")
     when "product_name_added"
       mandatory_attributes("empty")
     when "import_country_added"

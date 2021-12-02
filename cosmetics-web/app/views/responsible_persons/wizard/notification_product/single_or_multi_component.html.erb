@@ -35,19 +35,21 @@
 
         <% if @notification.components.count == 1 %>
           <p class="govuk-inset-text">
-            Currently product has only 1 component. Add more components by increasing components count.
+            Currently product has only 1 item. You can cdd more items by increasing components count.
           </p>
         <% end %>
 
         <% count_input_html = capture do %>
           <%= render "form_components/govuk_input", form: form, key: :components_count,
-              label: { text: "Components count" } %>
+            label: { text: "How many items does it contain?" }, value: @notification.components_count > 0 ? @notification.components_count : ''  %>
         <% end %>
         <%= render "form_components/govuk_radios", form: form, key: :single_or_multi_component,
             fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },
             items: [{ text: "Yes", value: "multiple" , conditional: { html: count_input_html },
-                      checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple") || @notification.components.count > 0 },
-                    { text: "No, this is a single product", value: "single" }] %>
+                      checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple") || @notification.components.count > 1 },
+                    { text: "No, this is a single product", value: "single",
+                      checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "single") || (@notification.components.count == 1 && !(params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple"))},
+        ] %>
         <%= govukButton text: "Continue" %>
 
       </div>

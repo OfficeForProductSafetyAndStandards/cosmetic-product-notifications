@@ -1,3 +1,4 @@
+# OLD FLOW
 class ResponsiblePersons::Wizard::ComponentBuildController < SubmitApplicationController
   include Wicked::Wizard
   include CategoryHelper
@@ -30,10 +31,8 @@ class ResponsiblePersons::Wizard::ComponentBuildController < SubmitApplicationCo
   before_action :set_category, if: -> { step == :select_category }
 
   def show
-    binding.pry
     case step
     when :add_shades
-      binding.pry
       @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
       create_required_cmrs

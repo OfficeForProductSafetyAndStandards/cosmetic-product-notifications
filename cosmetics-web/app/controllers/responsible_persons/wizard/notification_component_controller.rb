@@ -18,9 +18,13 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :add_cmrs,
         :select_category,
         :select_formulation_type,
-        :upload_formulation,
-        :select_frame_formulation,
-        :contains_poisonous_ingredients
+        :upload_formulation, # only for range and exact
+        :select_frame_formulation, # only for frame formulation
+        :contains_poisonous_ingredients, # only for frame formulation
+        :upload_poisonus_ingredients, # only for frame formulation
+        :select_ph_option,
+        :min_max_ph,
+        :completed
 
   def show
     case step
@@ -28,7 +32,13 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
       create_required_cmrs
+    when :completed
+      @component.update_state('component_complete')
+      # TODO: write spec
+      @component.reload.notification.try_to_complete_components!
+      return render 'responsible_persons/wizard/completed'
     end
+
     render_wizard
   end
 
@@ -54,6 +64,12 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       update_upload_formulation
     when :contains_poisonous_ingredients
       update_contains_poisonous_ingredients
+    when :upload_poisonus_ingredients
+      update_upload_poisonus_ingredients
+    when :select_ph_option
+      update_select_component_ph_options
+    when :min_max_ph
+      update_component_min_max_ph
     else
       # Apply this since render_wizard(@component, context: :context) doesn't work as expected
       if @component.update_with_context(component_params, step)
@@ -83,7 +99,6 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     case params.dig(:component, :number_of_shades)
     when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
-      @component.add_shades
       jump_to :add_physical_form
       render_next_step @component
     when "multiple-shades-same-notification"
@@ -152,9 +167,9 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       return render step
     end
 
-    if @component.predefined?
+    if @component.predefined? # predefined == frame_formulation
       @component.formulation_file.purge if @component.formulation_file.attached?
-      jump_to(next_step(:upload_formulation)) # Intended target page is select_frame_formulation - assuming the step order declared above doesn't change!
+      jump_to(:select_frame_formulation)
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
     end
@@ -162,9 +177,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     render_wizard @component
   end
 
+  # for frame formulation only
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
-      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :contains_poisonous_ingredients)
+        jump_to(:contains_poisonous_ingredients)
+        render_next_step @component
     else
       render :select_frame_formulation
     end
@@ -174,34 +191,76 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
       @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
       render :contains_poisonous_ingredients
-      return
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    if @component.contains_poisonous_ingredients?
-      redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, :upload_formulation)
-    else
-      redirect_to finish_wizard_path
+    if !@component.contains_poisonous_ingredients?
+      jump_to(:select_ph_option)
     end
+    render_wizard @component
   end
 
+  # For exact and range formulations only
   def update_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
 
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
-        redirect_to finish_wizard_path
+        jump_to(:select_ph_option)
+        render_next_step @component
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
         render step
       end
     else
       @component.errors.add :formulation_file, "Upload a list of ingredients"
+      rerender_current_step
+    end
+  end
+
+  # For frame formulation only
+  def update_upload_poisonus_ingredients
+    formulation_file = params.dig(:component, :formulation_file)
+
+    if formulation_file.present?
+      @component.formulation_file.attach(formulation_file)
+      if @component.valid?
+        render_next_step @component
+      else
+        @component.formulation_file.purge if @component.formulation_file.attached?
+        render step
+      end
+    else
+      @component.errors.add :formulation_file, "Upload a list of poisonous ingredients"
       render step
     end
   end
 
+
+  # In views, the wording here is about range. Its confusing, as param name here is ph
+  # and in next action is `ph_range`.
+  def update_select_component_ph_options
+    return rerender_current_step unless @component.update_with_context(component_params, :ph)
+
+    if @component.ph_range_not_required?
+      jump_to :completed
+      render_next_step @component
+    else
+      redirect_to wizard_path(:min_max_ph)
+    end
+  end
+
+  # In views, the wording here is about ph. Its confusing, as param name here is ph_range
+  # and wording in previous action is about range.
+  def update_component_min_max_ph
+    if @component.update_with_context(component_params, :ph_range)
+      jump_to :completed
+      render_next_step @component
+    else
+      rerender_current_step
+    end
+  end
 
   def component_params
     params.fetch(:component, {})
@@ -214,8 +273,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :notification_type,
         :sub_sub_category,
         :frame_formulation,
+        :ph,
+        :minimum_ph,
+        :maximum_ph,
         cmrs_attributes: %i[id name cas_number ec_number],
-        shades: [],
+        shades: []
       )
   end
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NameFormatValidator do
+RSpec.describe ResponsiblePersonNameFormatValidator do
   subject(:validator) { validator_class.new(name) }
 
   let(:error_msg) { "Enter a valid name" }
@@ -10,7 +10,7 @@ RSpec.describe NameFormatValidator do
       include ActiveModel::Validations
       attr_accessor :name
 
-      validates :name, name_format: { message: ERROR_MSG }
+      validates :name, responsible_person_name_format: { message: ERROR_MSG }
 
       def initialize(name)
         @name = name
@@ -28,21 +28,16 @@ RSpec.describe NameFormatValidator do
   end
 
   valid_names = [
-    "John Doe",
-    "Felipe-Juan Froilan De Todos Los Santos",
-    "Nuñez de Balbóa",
-    "Ëllie Günter",
+    "Nice Soaps LTD.",
+    "www.examplesoaps.org",
+    "Nice Soaps",
+    "Süper so@ps",
   ]
 
   invalid_names = [
-    "John winmoney@example.org",
-    "John welcome to www.spammyaddress.com",
-    "John download a file from ftp:spamurl.co/resource",
     "Money is waiting at http://spam.com/dad33424sfksd",
     "<script>alert('hello')</script>",
     "<a href='spamurl'>",
-    "Hello Jane, we have an offer for you",
-    "Hello Sarah. There is an offer for you",
     "Welcome Jane\nYou can join us at",
   ]
 

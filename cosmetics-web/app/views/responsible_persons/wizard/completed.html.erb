@@ -1,0 +1,25 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          The task has been completed
+        </h3>
+        <p class="govuk-body">You can now start the next task.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body govuk-!-margin-bottom-4">Your completed tasks are saved as a Cosmetic product draft. You can complete the remaining tasks at any time.</p>
+    <p class="govuk-body">Return to the <a href="<%= responsible_person_notification_draft_index_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">tasks list page</a>.</p>
+  </div>
+</div>

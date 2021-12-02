@@ -1,5 +1,6 @@
 <li>
   <h2 class="app-task-list__section">
+    <span class="app-task-list__section-number">1. </span>
     Create the product
   </h2>
 
@@ -7,11 +8,11 @@
     <li class="app-task-list__item">
       <span class="app-task-list__task-name">
         <a href="<%= new_responsible_person_notification_product_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="product-status">
-          Change the product
+          Create the product
         </a>
       </span>
 
-      <b class="govuk-tag app-task-list__tag" id="product-status">Completed</b>
+      <%= product_badge(@notification) %>
     </li>
   </ul>
 </li>

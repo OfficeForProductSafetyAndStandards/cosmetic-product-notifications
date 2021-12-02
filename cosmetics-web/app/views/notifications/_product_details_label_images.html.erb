@@ -2,21 +2,24 @@
   <ul class="govuk-list">
     <% notification.image_uploads.each do |image| %>
       <% if image.passed_antivirus_check? %>
-        <li><%= link_to image.filename, url_for(image.file) %></li>
+        <li>
+          <%= link_to image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state" %>
+        </li>
       <% elsif image.file_exists? %>
         <p>
           <%= "Processing image #{image.file.filename} ..." %>
           <br>
           <%= link_to "Refresh",
                       edit_responsible_person_notification_path(@responsible_person, @notification),
-                      class: "govuk-link--no-visited-state" %>
+                      class: "govuk-link govuk-link--no-visited-state" %>
         </p>
       <% end %>
     <% end %>
   </ul>
 <% elsif allow_edits %>
   <%= link_to "Add product images",
-    new_responsible_person_notification_product_image_upload_path(notification.responsible_person, notification) %>
+    new_responsible_person_notification_product_image_upload_path(notification.responsible_person, notification),
+    class: "govuk-link govuk-link--no-visited-state" %>
 <% else %>
   N/A
 <% end %>

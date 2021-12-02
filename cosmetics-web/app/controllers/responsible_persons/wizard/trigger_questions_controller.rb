@@ -1,7 +1,6 @@
 # Trigger questions are per componenent
 class ResponsiblePersons::Wizard::TriggerQuestionsController < SubmitApplicationController
   include Wicked::Wizard
-  include NotificationTriggerRules
   include TriggerRulesHelper
 
   steps :select_ph_range, :ph
@@ -15,9 +14,9 @@ class ResponsiblePersons::Wizard::TriggerQuestionsController < SubmitApplication
   def update
     case step
     when :select_ph_range
-      update_component_ph_range
+      update_select_component_ph_options
     when :ph
-      update_component_ph
+      update_component_min_max_ph
     end
   end
 
@@ -44,7 +43,7 @@ private
     @component_name = @component.notification.is_multicomponent? ? @component.name : "the cosmetic product"
   end
 
-  def update_component_ph_range
+  def update_select_component_ph_options
     return re_render_step unless @component.update_with_context(ph_param, :ph)
 
     if @component.ph_range_not_required?
@@ -55,7 +54,7 @@ private
     end
   end
 
-  def update_component_ph
+  def update_component_min_max_ph
     if @component.update_with_context(component_ph_attributes, :ph_range)
       update_notification_state
       redirect_to finish_wizard_path
