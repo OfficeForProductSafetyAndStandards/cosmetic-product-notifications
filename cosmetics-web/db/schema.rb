@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_171123) do
+ActiveRecord::Schema.define(version: 2021_12_02_144553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -79,6 +79,8 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.float "maximum_ph"
     t.text "ph"
     t.jsonb "routing_questions_answers"
+    t.string "exposure_condition"
+    t.string "exposure_routes", array: true
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 

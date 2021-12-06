@@ -15,7 +15,13 @@ class Component < ApplicationRecord
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
-  has_one :nano_material, dependent: :destroy
+  #has_one :nano_material, dependent: :destroy
+  has_many :nano_materials, dependent: :nullify
+
+  # TODO:
+  # Add callback to delete nanomaterial when component is being deleted.
+  # We can't use `dependet: :destroy` on assotiation, as it removes assiciated Nanomaterial
+
   has_one_attached :formulation_file
 
   delegate :responsible_person, to: :notification
@@ -29,7 +35,6 @@ class Component < ApplicationRecord
   }, _prefix: true
 
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
-  accepts_nested_attributes_for :nano_material
 
   scope :complete, -> { where(state: "component_complete") }
 
@@ -73,12 +78,36 @@ class Component < ApplicationRecord
 
   validates :maximum_ph, numericality: { message: "Enter a value of 14 or lower for maximum pH", less_than_or_equal_to: 14 }, if: -> { maximum_ph.present? }
 
+  validates :exposure_condition, presence: {
+    on: :add_exposure_condition,
+    message: lambda do |object, _|
+      I18n.t(:missing, scope: %i[activerecord errors models component attributes exposure_condition], component_name: object.component_name)
+    end,
+  }
+  validates :exposure_routes, presence: true, on: :add_exposure_routes
+
+  enum exposure_condition: {
+    rinse_off: "rinse_off",
+    leave_on: "leave_on",
+  }
+
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :component_complete
   end
+
+  def self.exposure_routes_options
+    %i[dermal oral inhalation].freeze
+  end
+
+  # TODO: for backwards compatibi
+  # def exposure_routes
+  # end
+
+  # def exposure_condition
+  # end
 
   def prune_blank_shades
     return if self[:shades].nil?
