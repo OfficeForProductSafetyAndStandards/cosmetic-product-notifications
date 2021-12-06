@@ -1,21 +1,14 @@
-<% if notification.image_uploads.present? %>
-  <ul class="govuk-list">
-    <% notification.image_uploads.each do |image| %>
-      <% if image.passed_antivirus_check? %>
-        <li>
-          <%= link_to image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state" %>
-        </li>
-      <% elsif image.file_exists? %>
-        <p>
-          <%= "Processing image #{image.file.filename} ..." %>
-          <br>
-          <%= link_to "Refresh",
-                      edit_responsible_person_notification_path(@responsible_person, @notification),
-                      class: "govuk-link govuk-link--no-visited-state" %>
-        </p>
-      <% end %>
+<% image_uploads = notification.image_uploads %>
+<% if image_uploads.size > 1 %>
+  <ul class="govuk-list govuk-list--bullet">
+    <% image_uploads.each do |image| %>
+      <li>
+        <%= notification_summary_label_image_link(image, @responsible_person, @notification) %>
+      </li>
     <% end %>
   </ul>
+<% elsif image_uploads.one? %>
+  <%= notification_summary_label_image_link(image_uploads.first, @responsible_person, @notification) %>
 <% elsif allow_edits %>
   <%= link_to "Add product images",
     new_responsible_person_notification_product_image_upload_path(notification.responsible_person, notification),

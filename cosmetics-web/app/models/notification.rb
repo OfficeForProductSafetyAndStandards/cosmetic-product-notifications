@@ -142,6 +142,20 @@ class Notification < ApplicationRecord
     state :deleted
   end
 
+  def try_to_complete_components!
+    if components.all? { |c| c.state == 'component_complete' }
+      update(state: 'components_complete')
+    end
+  end
+
+  def notification_product_wizard_completed?
+    !['empty', 'product_name_added'].include?(state)
+  end
+
+  def revert_to_details_complete
+    update(state: 'details_complete')
+  end
+
   def reference_number_for_display
     sprintf("UKCP-%08d", reference_number)
   end
@@ -272,6 +286,10 @@ class Notification < ApplicationRecord
     answers = self.routing_questions_answers || {}
     self.routing_questions_answers = answers.merge(hash)
     self.save
+  end
+
+  def update_state(state)
+    self.update(state: state)
   end
 
 private

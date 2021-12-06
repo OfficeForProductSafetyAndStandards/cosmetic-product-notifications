@@ -200,6 +200,16 @@ module ResponsiblePersons::NotificationsHelper
      .compact
   end
 
+  def notification_summary_label_image_link(image, responsible_person, notification)
+    if image.passed_antivirus_check?
+      link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state")
+    elsif image.file_exists?
+      "Processing image #{image.file.filename}..." \
+      "<br>" \
+      "#{link_to('Refresh', edit_responsible_person_notification_path(responsible_person, notification), class: 'govuk-link govuk-link--no-visited-state')}".html_safe
+    end
+  end
+
 private
 
   def label_image_actions_items(notification)
