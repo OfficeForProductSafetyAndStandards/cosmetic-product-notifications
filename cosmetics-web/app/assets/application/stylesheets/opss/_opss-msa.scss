@@ -7,7 +7,9 @@
 @import "opss-search";
 @import "opss-pagination";
 
-
+.govuk-list *[class^="govuk-heading"] .govuk-link {
+    @include word-wrap;
+}
 
 .opss-tel-number {
     @include govuk-media-query($from: desktop) {
@@ -186,15 +188,7 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     overflow: hidden;
 }
 
-.opss-float-left {
-    float: left;
-}
-
-.opss-float-right {
-    float: right;
-}
-
-.opss-list--borders {
+/*.opss-list--borders {
     li {
         padding: govuk-spacing(4) 0 govuk-spacing(2) 0;
         border-top: 1px solid govuk-colour("mid-grey", $legacy: "grey-2");
@@ -209,13 +203,11 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     & + .opss-pagination-link {
         margin-top: - govuk-spacing(4);
     }
-}
-
-.govuk-list *[class^="govuk-heading"] .govuk-link {
-    @include word-wrap;
-}
+}*/
 
 /* .opss-summary-list starts ... */
+/*
+
 *[class^="govuk-heading"] + .opss-summary-list {
     margin-top: - govuk-spacing(1);
 }
@@ -266,11 +258,11 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
                 padding-bottom: 0;
             }
         }
-        @include govuk-media-query($from: desktop) {
-            padding-left: govuk-spacing(6);
-        }
+
     }
 }
+
+*/
 /* .opss-summary-list ends */
 
 .opss-summary-list-mixed > div {/* std summary list but allows for a mixture of 2 & 3 cols in 1 list */
@@ -287,6 +279,10 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
         }
     }
 
+    dd {
+        overflow-wrap: break-word; word-wrap: break-word; -ms-word-break: break-all; word-break: break-all; word-break: break-word; /*no adding hypens*/
+    }
+
     & > span.govuk-summary-list__actions {display: none !important; }/* 2. protects against rogue legacy psd invalid html */
 }
 
@@ -296,7 +292,7 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
 
 .govuk-radios--small.govuk-radios--conditional {
     .govuk-radios__conditional.govuk-form-group--error {
-        border-left: 4px solid govuk-colour("red");
+        border-left: 4px solid $govuk-error-colour;
     }
     .govuk-radios__conditional.govuk-radios__conditional--hidden.govuk-form-group--error {//helps with smooth loading
         display: block !important;
@@ -308,7 +304,8 @@ li.opss-task-sub {
     @include govuk-media-query($from: tablet) {
         /*h3 {@include opss-font-size($s: 19px, $l: 1.25); }*/
         /*li b {@include opss-font-size($s: 12px, $l: 0.9); }*/
-        li span {
+        li span,
+        .opss-button-link {
             @include opss-font-size($s: 16px, $l: 1.5);//1.0
         }
 
@@ -341,6 +338,11 @@ li.opss-task-sub {
             max-width: none;
             display: block;
             float: right;
+        }
+
+        .opss-button-link {
+            margin-bottom: 0;
+            top: -2px;
         }
     }
 
@@ -375,4 +377,20 @@ li.opss-task-sub {
 
 .opss-tag--red {
     background-color: $govuk-error-colour;
+}
+
+@include govuk-media-query($from: tablet) {
+    .govuk-radios--small.govuk-radios--conditional.opss-radios--tight {
+        .govuk-radios__conditional {
+            padding-left: govuk-spacing(2);
+
+            .govuk-date-input__item {
+                margin-right: govuk-spacing(1);
+
+                .govuk-label {
+                    @include opss-font-size($s: 16px, $l: 1.5);//1.0
+                }
+            }
+        }
+    }
 }
