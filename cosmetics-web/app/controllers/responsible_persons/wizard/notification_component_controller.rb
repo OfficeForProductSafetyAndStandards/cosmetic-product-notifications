@@ -34,6 +34,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   def show
     case step
+    when :select_nanomaterials
+      return jump_to_step(:number_of_shades) if @component.notification.nano_materials.blank?
     when :add_shades
       @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
@@ -100,7 +102,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     if @component.notification.is_multicomponent?
       redirect_to wizard_path(steps.first, component_id: @component.id)
     else
-      redirect_to wizard_path(:number_of_shades, component_id: @component.id)
+      if @component.notification.nano_materials.present?
+        redirect_to wizard_path(:select_nanomaterials, component_id: @component.id)
+      else
+        redirect_to wizard_path(:number_of_shades, component_id: @component.id)
+      end
     end
   end
 
