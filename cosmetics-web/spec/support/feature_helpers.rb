@@ -6,6 +6,11 @@ end
 
 # --- Page expections -----
 
+module Fspec
+  YES = "Yes"
+  No  = "No"
+end
+
 def fill_in_credentials(password_override: nil)
   fill_in "Email address", with: user.email
   if password_override
@@ -567,16 +572,12 @@ def answer_is_product_for_under_threes_with(answer)
   click_button "Continue"
 end
 
-def answer_is_product_multi_item_kit_with(answer)
+def answer_is_product_multi_item_kit_with(answer, amount: 1)
   within_fieldset("Is the product a multi-item kit?") do
     page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_does_contain_items_that_need_to_be_mixed_with(answer)
-  within_fieldset("Does the kit contain items that need to be mixed?") do
-    page.choose(answer)
+    if answer == Fspec::YES
+      fill_in "How many items does it contain?", with: amount
+    end
   end
   click_button "Continue"
 end

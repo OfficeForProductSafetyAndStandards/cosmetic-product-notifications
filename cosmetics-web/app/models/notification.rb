@@ -142,7 +142,7 @@ class Notification < ApplicationRecord
   end
 
   def nano_material_required?
-    components.any?(&:nano_material_required?)
+    false # TODO: find if we need it in new wizard
   end
 
   def formulation_required?
