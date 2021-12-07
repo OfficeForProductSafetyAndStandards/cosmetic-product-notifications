@@ -7,22 +7,27 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
+    <%
+      nano_elements = @notification.nano_materials.map(&:nano_elements).flatten
+      nano_material_items = nano_elements.map { |n|
+        { name: 'component[nano_material_ids][]',
+          text: n.inci_name,
+          value: n.nano_material.id,
+          key: :nil, # TODO: investigate design library to get rid of required key attribute
+          id: "nano_material_#{n.id}",
+          checked: (NanoElement.find(n.id).nano_material.component == @component),
+          disable_ghost: true
+        }
+      }
+    %>
     <%= form_with(model: @component, url: wizard_path, method: :put) do |form| %>
       <div class="govuk-form-group">
 
         <%= form.hidden_field :name %>
         <%= render "form_components/govuk_checkboxes", form: form, key: :nano_material_ids,
               fieldset: { legend: { text: "Select which nanomaterials are included in the item", classes: "govuk-label--l", isPageHeading: true } },
-              items: @notification.nano_materials.map(&:nano_elements).flatten.map { |n|
-                { name: 'component[nano_material_ids][]',
-                  text: n.inci_name,
-                  value: n.nano_material.id,
-                  key: :id,
-                  id: "nano_material_#{n.id}",
-                  checked: (NanoElement.find(n.id).nano_material.component == @component),
-                  disable_ghost: true
-                }
-              } %>
+              items: nano_material_items %>
+
 
         <div id="nano-hint" class="govuk-hint govuk-!-width-three-quarters">
           If a nanomaterial you require is not shown, return to the tasks list page and add it. You can then start this task again.

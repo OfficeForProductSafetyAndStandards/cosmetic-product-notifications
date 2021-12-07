@@ -51,6 +51,8 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   private
 
   def set_final_state_for_wizard
+    # TODO: for some reason, state is being set somewhere else
+    binding.pry
     # Make sure state wont be overrided if notification is in higher state
     return if @notification.notification_product_wizard_completed?
 
