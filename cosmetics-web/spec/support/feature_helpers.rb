@@ -572,16 +572,6 @@ def answer_is_product_for_under_threes_with(answer)
   click_button "Continue"
 end
 
-def answer_is_product_multi_item_kit_with(answer, amount: 1)
-  within_fieldset("Is the product a multi-item kit?") do
-    page.choose(answer)
-    if answer == Fspec::YES
-      fill_in "How many items does it contain?", with: amount
-    end
-  end
-  click_button "Continue"
-end
-
 def answer_item_name_with(item_name)
   fill_in "Item name", with: item_name
   click_button "Continue"
