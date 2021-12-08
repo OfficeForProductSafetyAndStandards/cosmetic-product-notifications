@@ -62,29 +62,33 @@
             <td class="govuk-table__cell"></td>
           </tr>
         <% end %>
-        <% @responsible_person.pending_responsible_person_users.each do |user| %>
+        <% @responsible_person.pending_responsible_person_users.each do |invitation| %>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">
               <span class="govuk-!-font-weight-regular">
-                <%= user.name %><span class="govuk-visually-hidden">:</span>
+                <%= invitation.name %><span class="govuk-visually-hidden">:</span>
                 <br>
                 <span class="govuk-!-font-size-16">Awaiting confirmation</span>
               </span>
             </th>
             <td class="govuk-table__cell">
-              <%= mail_to user.email_address, nil, class: "govuk-link govuk-link--no-visited-state" %>
+              <%= mail_to invitation.email_address, nil, class: "govuk-link govuk-link--no-visited-state" %>
               <span class="govuk-visually-hidden"> | </span>
               <br>
-              <%= link_to resend_invitation_responsible_person_team_member_path(@responsible_person, user),
-                  class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-16 govuk-!-font-weight-bold" do %>
-                Resend invitation <span class="govuk-visually-hidden"> to <%= user.name %></span>
+              <%= link_to resend_invitation_responsible_person_team_member_path(@responsible_person, invitation),
+                  class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-16 govuk-!-font-weight-bold govuk-!-margin-right-2" do %>
+                Resend invitation <span class="govuk-visually-hidden"> to <%= invitation.name %></span>
+              <% end %>
+              <span class="govuk-visually-hidden"> | </span>
+              <%= link_to cancel_responsible_person_invitation_path(@responsible_person, invitation),
+                  class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-16 govuk-!-font-weight-bold opss-no-wrap" do %>
+                Cancel invitation <span class="govuk-visually-hidden"> to <%= invitation.name %></span>
               <% end %>
             </td>
-            <td class="govuk-table__cell"><%= user.inviting_user.name %></td>
+            <td class="govuk-table__cell"><%= invitation.inviting_user.name %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 </div>
-

@@ -123,6 +123,12 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :invitations, controller: "responsible_persons/invitations", only: [:destroy] do
+        member do
+          get :cancel
+        end
+      end
+
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
         resources :build, controller: "responsible_persons/wizard/notification_build", only: %i[show update new]
         resources :additional_information, controller: "responsible_persons/additional_information", only: %i[index]

@@ -36,7 +36,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       # Invitation gets listed with the correct name for the existing invited user
       expect(page).to have_css(
         "tr",
-        text: "#{invited_user.name}: Awaiting confirmation #{invited_user.email} | Resend invitation to #{invited_user.name} #{user.name}",
+        text: "#{invited_user.name}: Awaiting confirmation #{invited_user.email} | Resend invitation to #{invited_user.name} | Cancel invitation to #{invited_user.name} #{user.name}",
       )
 
       # User receives an email with the invitation to the team
@@ -137,7 +137,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     # Invitation gets listed
     expect(page).to have_css(
       "tr",
-      text: "#{invited_user.name}: Awaiting confirmation #{invited_user.email} | Resend invitation to #{invited_user.name} #{user.name}",
+      text: "#{invited_user.name}: Awaiting confirmation #{invited_user.email} | Resend invitation to #{invited_user.name} | Cancel invitation to #{invited_user.name} #{user.name}",
     )
 
     # User receives an email with the invitation to the team
@@ -165,7 +165,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     original_inviting_user_name = invitation.inviting_user.name
     expect(page).to have_css(
       "tr",
-      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} #{original_inviting_user_name}",
+      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} | Cancel invitation to #{invited_user.name} #{original_inviting_user_name}",
     )
 
     time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
@@ -196,7 +196,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(original_inviting_user_name).not_to eq user.name
     expect(page).to have_css(
       "tr",
-      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} #{user.name}",
+      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} | Cancel invitation to #{invited_user.name} #{user.name}",
     )
   end
 
@@ -249,7 +249,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     # Still shows the invitation as pending
     expect(page).to have_css(
       "tr",
-      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} #{original_inviting_user.name}",
+      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} | Cancel invitation to #{invitation.name} #{original_inviting_user.name}",
     )
 
     time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
@@ -282,8 +282,36 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(original_inviting_user.name).not_to eq user.name
     expect(page).to have_css(
       "tr",
-      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} #{user.name}",
+      text: "#{invitation.name}: Awaiting confirmation #{invitation.email_address} | Resend invitation to #{invitation.name} | Cancel invitation to #{invitation.name} #{user.name}",
     )
+  end
+
+  scenario "cancelling an invitation" do
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+    invitation = create(:pending_responsible_person_user, responsible_person: responsible_person, name: "John Doeinvited")
+
+    team_path = "/responsible_persons/#{responsible_person.id}/team_members"
+    visit team_path
+    expect(page).to have_text("John Doeinvited")
+
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    travel_to(Time.zone.now + wait_time.seconds) do
+      click_on "Cancel invitation"
+
+      select_secondary_authentication_sms
+      expect_to_be_on_secondary_authentication_sms_page
+      expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
+      complete_secondary_authentication_sms_with(user.direct_otp)
+
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/#{invitation.id}/cancel")
+      expect(page).to have_h1("Do you want to cancel the invitation?")
+
+      page.choose("Yes")
+      click_button "Save and continue"
+      expect(page).to have_current_path(team_path)
+      expect(page).not_to have_text("John Doeinvited")
+      expect(page).to have_text("The invitation was cancelled")
+    end
   end
 
   scenario "accepting an invitation for a new user when not signed in" do
@@ -429,7 +457,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     # Invitation gets listed
     expect(page).to have_css(
       "tr",
-      text: "John New User: Awaiting confirmation newusertoregister@example.com | Resend invitation to John New User #{user.name}",
+      text: "John New User: Awaiting confirmation newusertoregister@example.com | Resend invitation to John New User | Cancel invitation to John New User #{user.name}",
     )
 
     expect(delivered_emails.size).to eq 1
