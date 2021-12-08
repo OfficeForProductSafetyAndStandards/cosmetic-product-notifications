@@ -31,8 +31,49 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     return_to_tasks_list_page
 
-    screenshot_and_save_page
-
     expect_product_task_completed
+
+    # 2. Complete product details
+    click_on "Product details"
+
+    answer_is_item_available_in_shades_with "No"
+
+    answer_what_is_physical_form_of_item_with "Liquid"
+
+    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+
+    answer_does_item_contain_cmrs_with "No"
+
+    answer_item_category_with "Hair and scalp products"
+
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+
+    answer_item_sub_subcategory_with "Shampoo"
+
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+
+    upload_ingredients_pdf
+
+    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
+    expect_task_has_been_completed_page
+
+    return_to_tasks_list_page
+    expect_product_details_task_completed
+
+    click_link "Accept and submit"
+
+    expect_check_your_answers_page_to_contain(
+      product_name: "Product no nano no items",
+      number_of_components: "1",
+      shades: "None",
+      nanomaterials: "None",
+      contains_cmrs: "No",
+      category: "Hair and scalp products",
+      subcategory: "Hair and scalp care and cleansing products",
+      sub_subcategory: "Shampoo",
+      formulation_given_as: "Exact concentration",
+      physical_form: "Liquid",
+      ph: "Between 3 and 10",
+    )
   end
 end

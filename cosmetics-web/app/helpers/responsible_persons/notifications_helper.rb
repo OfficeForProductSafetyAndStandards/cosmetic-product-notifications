@@ -115,6 +115,13 @@ module ResponsiblePersons::NotificationsHelper
                                 list_item_classes: "") },
         }
       end),
+      if nano_materials.blank?
+          {
+            key: { text: "Nanomaterials" },
+            value: { html: render("application/none_or_bullet_list",
+                                  entities_list: nil) }
+          }
+      end,
       if nano_materials.present?
         {
           key: { text: "Application instruction" },
