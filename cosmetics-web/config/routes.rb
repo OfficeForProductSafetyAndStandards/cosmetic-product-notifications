@@ -115,7 +115,6 @@ Rails.application.routes.draw do
       resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
         member do
           get "new-account", action: :new_account
-          get "resend-invitation", action: :resend_invitation
         end
         collection do
           get :join
@@ -126,6 +125,7 @@ Rails.application.routes.draw do
       resources :invitations, controller: "responsible_persons/invitations", only: [:destroy] do
         member do
           get :cancel
+          get :resend # Ideally this would be a PATCH action, but doesn't play well with redirection after 2FA triggered by the link to resend with patch method.
         end
       end
 

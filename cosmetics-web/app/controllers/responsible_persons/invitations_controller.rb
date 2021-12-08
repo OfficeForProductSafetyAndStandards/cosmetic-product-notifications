@@ -21,6 +21,16 @@ class ResponsiblePersons::InvitationsController < SubmitApplicationController
     end
   end
 
+  def resend
+    ActiveRecord::Base.transaction do
+      @invitation.refresh_token_expiration!
+      @invitation.update!(inviting_user: current_user)
+      send_invite_email
+    end
+
+    redirect_to responsible_person_team_members_path(@responsible_person), confirmation: "Invite sent to #{@invitation.email_address}"
+  end
+
 private
 
   def set_responsible_person
@@ -33,6 +43,14 @@ private
 
   def authorize_responsible_person
     authorize @responsible_person, :show?
+  end
+
+  def send_invite_email
+    SubmitNotifyMailer.send_responsible_person_invite_email(
+      @responsible_person,
+      @invitation,
+      current_user.name,
+    ).deliver_later
   end
 
   # See: SecondaryAuthenticationConcern
