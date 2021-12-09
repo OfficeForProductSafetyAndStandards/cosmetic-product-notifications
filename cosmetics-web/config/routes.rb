@@ -112,7 +112,7 @@ Rails.application.routes.draw do
       resources :contact_persons, controller: "responsible_persons/contact_persons", only: %i[new create edit update] do
       end
 
-      resources :team_members, controller: "responsible_persons/team_members", only: %i[index new create] do
+      resources :team_members, controller: "responsible_persons/team_members", only: %i[index] do
         member do
           get "new-account", action: :new_account
         end
@@ -122,7 +122,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :invitations, controller: "responsible_persons/invitations", only: [:destroy] do
+      resources :invitations, controller: "responsible_persons/invitations", only: %i[new create destroy] do
         member do
           get :cancel
           get :resend # Ideally this would be a PATCH action, but doesn't play well with redirection after 2FA triggered by the link to resend with patch method.

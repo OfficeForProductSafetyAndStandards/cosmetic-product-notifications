@@ -24,7 +24,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
       complete_secondary_authentication_sms_with(user.direct_otp)
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
 
       # We use the wrong name when inviting the existing user
       fill_in "Full name", with: "John DiffName"
@@ -69,7 +69,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
       complete_secondary_authentication_sms_with(user.direct_otp)
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
 
       fill_in "Full name", with: invited_user.name
       fill_in "Email address", with: invited_user.email.upcase
@@ -96,7 +96,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
       complete_secondary_authentication_sms_with(user.direct_otp)
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
 
       fill_in "Full name", with: invited_user.name
       fill_in "Email address", with: invited_user.email.upcase
@@ -126,7 +126,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
     complete_secondary_authentication_sms_with(user.direct_otp)
 
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
 
     fill_in "Full name", with: invited_user.name
     fill_in "Email address", with: invited_user.email
@@ -211,7 +211,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     visit team_path
     click_on "Invite another team member"
 
-    expect(page).to have_current_path("#{team_path}/new")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
     fill_in "Full name", with: "John New User"
     fill_in "Email address", with: "newusertoregister@example.com"
     click_on "Send invitation"
@@ -446,7 +446,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
     complete_secondary_authentication_sms_with(user.direct_otp)
 
-    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members/new")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
 
     fill_in "Full name", with: "John New User"
     fill_in "Email address", with: "newusertoregister@example.com"
