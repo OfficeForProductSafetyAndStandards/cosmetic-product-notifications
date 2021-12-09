@@ -34,14 +34,26 @@ def answer_what_is_purpose_of_nanomaterial_with(purposes, nanomaterial_name:)
 end
 
 def answer_is_nanomaterial_listed_in_ec_regulation_with(answer, nanomaterial_name:)
-  within_fieldset("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?") do
+  fieldset = find("fieldset")
+  legend_regex = /Is #{nanomaterial_name} listed in EC regulation 1223.2009, Annex/
+  legend_text = fieldset.find("legend h1").text
+  if legend_text !~ legend_regex
+    raise("Can not locate proper fieldset")
+  end
+  within(fieldset) do
     page.choose(answer)
   end
   click_button "Continue"
 end
 
 def answer_does_nanomaterial_conform_to_restrictions_with(answer, nanomaterial_name:)
-  within_fieldset("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?") do
+  fieldset = find("fieldset")
+  legend_regex = /Does the #{nanomaterial_name} conform to the restrictions set out in Annex/
+  legend_text = fieldset.find("legend h1").text
+  if legend_text !~ legend_regex
+    raise("Can not locate proper fieldset")
+  end
+  within(fieldset) do
     page.choose(answer)
   end
   click_button "Continue"

@@ -27,3 +27,6 @@ def expect_multi_item_kit_task_not_started
   expect_task_not_started "Define the multi-item kit"
 end
 
+def expect_multi_item_kit_task_blocked
+  expect_task_blocked "Define the multi-item kit"
+end

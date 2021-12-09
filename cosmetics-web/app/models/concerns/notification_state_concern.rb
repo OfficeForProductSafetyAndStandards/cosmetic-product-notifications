@@ -2,11 +2,11 @@ module NotificationStateConcern
   extend ActiveSupport::Concern
 
   # states which can go to previous state
-  CACHEABLE_PREVIOUS_STATES = %w(details_complete)
+  CACHEABLE_PREVIOUS_STATES = %w(ready_for_components)
   # Indicates which states can be changed
   # key is requested state, value possible state from `previous_state` column.
   STATES_OVERRIDES = {
-    "details_completed" => ["details_completed"]
+    "details_complete" => ["ready_for_components"]
   }
 
   included do
@@ -94,14 +94,10 @@ module NotificationStateConcern
   end
 
   def update_state(new_state)
-    self.update(state: new_state)
-    return
-
-    # TODO: fix bug when where user comes back to nanomaterials, the state 'resets'
     if CACHEABLE_PREVIOUS_STATES.include?(self.state)
       self.update(previous_state: self.state)
     end
-    if CACHEABLE_PREVIOUS_STATES.include?(self.state) && STATES_OVERRIDES[new_state].include?(self.previous_state)
+    if self.previous_state.present? && STATES_OVERRIDES[new_state]&.include?(self.previous_state)
       self.update(state: self.previous_state)
     else
       self.update(state: new_state)

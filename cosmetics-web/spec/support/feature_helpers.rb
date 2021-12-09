@@ -490,6 +490,8 @@ def answer_is_product_for_under_threes_with(answer)
 end
 
 def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
+  node = find("fieldset") # this page should have only one fieldset
+
   within_fieldset("Does #{item_name || 'the product'} contain nanomaterials?") do
     page.choose(answer)
   end
