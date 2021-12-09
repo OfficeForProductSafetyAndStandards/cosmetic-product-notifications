@@ -8,7 +8,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
-  scenario "Manual, exact ingredients, single item, with CMRS, no nanomaterials" do
+  xscenario "Manual, exact ingredients, single item, with CMRS, no nanomaterials" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Add a cosmetic product"
 
@@ -107,7 +107,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
 
-  scenario "Manual, exact ingredients, single item, no nanomaterials" do
+  xscenario "Manual, exact ingredients, single item, no nanomaterials" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Add a cosmetic product"
 
@@ -200,7 +200,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
 
-  scenario "Manual, ingredient ranges, single item, no nanomaterials" do
+  xscenario "Manual, ingredient ranges, single item, no nanomaterials" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Add a cosmetic product"
 
@@ -293,7 +293,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
 
-  scenario "Manual, frame formulation, single item, no nanomaterials" do
+  xscenario "Manual, frame formulation, single item, no nanomaterials" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Add a cosmetic product"
 
@@ -390,7 +390,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
 
-  scenario "Manual, frame formulation (with poisonous ingredients), single item, no nanomaterials" do
+  xscenario "Manual, frame formulation (with poisonous ingredients), single item, no nanomaterials" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Add a cosmetic product"
 
@@ -493,7 +493,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_to_see_message "SkinSoft tangerine shampoo notification submitted"
   end
 
-  scenario "Manual, frame formulation, multi-item, no nanomaterials, no poison" do
+  xscenario "Manual, frame formulation, multi-item, no nanomaterials, no poison" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Add a cosmetic product"
 
