@@ -42,7 +42,7 @@ private
   end
 
   def authorize_responsible_person
-    authorize @responsible_person, :show?
+    authorize @responsible_person, :update?
   end
 
   def send_invite_email
