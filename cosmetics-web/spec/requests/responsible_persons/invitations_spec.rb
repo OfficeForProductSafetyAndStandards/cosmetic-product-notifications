@@ -83,7 +83,54 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
     end
   end
 
-  describe "Resending invitation" do
+  describe "Resending an invitation" do
+    let!(:invitation) do
+      create(:pending_responsible_person_user, responsible_person: responsible_person, inviting_user: user)
+    end
+
+    it "does not change the invitation token" do
+      expect {
+        get resend_responsible_person_invitation_path(responsible_person, invitation)
+        invitation.reload
+      }.not_to change(invitation, :invitation_token)
+    end
+
+    it "extends the invitation token expiration" do
+      expect {
+        get resend_responsible_person_invitation_path(responsible_person, invitation)
+        invitation.reload
+      }.to change(invitation, :invitation_token_expires_at)
+    end
+
+    it "resends the invitation email" do
+      allow(SubmitNotifyMailer).to receive(:send_responsible_person_invite_email)
+        .and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+
+      get resend_responsible_person_invitation_path(responsible_person, invitation)
+
+      expect(SubmitNotifyMailer).to have_received(:send_responsible_person_invite_email)
+    end
+
+    context "when a different user resends the invitation" do
+      let(:other_user) { create(:submit_user, name: "Claire OtherUser") }
+
+      before do
+        sign_in_as_member_of_responsible_person(responsible_person, other_user)
+      end
+
+      it "changes the inviting user in the invitation" do
+        expect {
+          get resend_responsible_person_invitation_path(responsible_person, invitation)
+          invitation.reload
+        }.to change(invitation, :inviting_user).from(user).to(other_user)
+      end
+    end
+
+    it "redirects the user to the team members page" do
+      get resend_responsible_person_invitation_path(responsible_person, invitation)
+      expect(response).to redirect_to(responsible_person_team_members_path(responsible_person))
+    end
+
     context "when invitation does not belongs to responsible person" do
       let(:invitation) { create(:pending_responsible_person_user, responsible_person: other_responsible_person) }
 
