@@ -54,6 +54,14 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream one", item_number: 1, nanos: ["Nano one"])
 
+    expect_task_completed "Item #1"
+
+    click_link "Add another nanomaterial"
+    complete_nano_material_wizard("Nano four", purposes: ["Preservative"], nano_material_number: 4)
+
+    expect_multi_item_kit_task_completed
+    expect_task_completed "Item #1"
+
     expect_task_not_started "Item #2"
 
     complete_item_wizard("Cream two", item_number: 2, nanos: ["Nano two"])
