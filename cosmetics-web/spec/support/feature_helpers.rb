@@ -489,28 +489,9 @@ def answer_is_product_for_under_threes_with(answer)
   click_button "Continue"
 end
 
-def answer_item_name_with(item_name)
-  fill_in "Item name", with: item_name
-  click_button "Continue"
-end
-
 def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
   within_fieldset("Does #{item_name || 'the product'} contain nanomaterials?") do
     page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_is_item_intended_to_be_rinsed_off_or_left_on_with(answer, item_name: nil)
-  within_fieldset("Is #{item_name || 'the product'} intended to be rinsed off or left on?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_how_user_is_exposed_to_nanomaterials_with(answer)
-  within_fieldset("How is the user likely to be exposed to the nanomaterials?") do
-    page.check(answer)
   end
   click_button "Continue"
 end
@@ -521,61 +502,6 @@ def answer_nanomaterial_names_with(nanomaterial_names)
     fill_in "nano_material_nano_elements_attributes_0_inci_name", with: nanomaterial_names
   end
 
-  click_button "Continue"
-end
-
-def answer_what_is_purpose_of_nanomaterial_with(purpose, nanomaterial_name:)
-  within_fieldset("What is the purpose of #{nanomaterial_name}?") do
-    page.check(purpose)
-  end
-  click_button "Continue"
-end
-
-def answer_is_nanomaterial_listed_in_ec_regulation_with(answer, nanomaterial_name:)
-  within_fieldset("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_does_nanomaterial_conform_to_restrictions_with(answer, nanomaterial_name:)
-  within_fieldset("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_item_category_with(answer)
-  within_fieldset("What category of cosmetic product is it?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_item_subcategory_with(answer)
-  page.choose(answer)
-  click_button "Continue"
-end
-
-def answer_item_sub_subcategory_with(answer)
-  page.choose(answer)
-  click_button "Continue"
-end
-
-def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
-  within_fieldset("How do you want to give the formulation of #{item_name || 'the product'}?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def upload_ingredients_pdf
-  page.attach_file "spec/fixtures/files/testPdf.pdf"
-  click_button "Continue"
-end
-
-def upload_formulation_file
-  page.attach_file "spec/fixtures/files/testPdf.pdf"
   click_button "Continue"
 end
 

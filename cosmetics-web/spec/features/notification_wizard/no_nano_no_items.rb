@@ -8,57 +8,14 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
-  scenario "Manual, exact ingredients, single item, with CMRS, no nanomaterials" do
+  scenario "Simple notification" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
     click_on "Add a cosmetic product"
 
-    click_on "Create the product"
+    complete_product_wizard(name: "Product no nano no items")
 
-    answer_product_name_with "Product no nano no items"
-
-    answer_do_you_want_to_give_an_internal_reference_with "No"
-
-    answer_is_product_for_under_threes_with "No"
-
-    answer_does_product_contains_nanomaterials_with "No"
-
-    answer_is_product_multi_item_kit_with "No, this is a single product"
-
-    upload_product_label
-
-    expect_task_has_been_completed_page
-
-    return_to_tasks_list_page
-
-    expect_product_task_completed
-
-    # 2. Complete product details
-    click_on "Product details"
-
-    answer_is_item_available_in_shades_with "No"
-
-    answer_what_is_physical_form_of_item_with "Liquid"
-
-    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
-
-    answer_does_item_contain_cmrs_with "No"
-
-    answer_item_category_with "Hair and scalp products"
-
-    answer_item_subcategory_with "Hair and scalp care and cleansing products"
-
-    answer_item_sub_subcategory_with "Shampoo"
-
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
-
-    upload_ingredients_pdf
-
-    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-    expect_task_has_been_completed_page
-
-    return_to_tasks_list_page
-    expect_product_details_task_completed
+    complete_product_details
 
     click_link "Accept and submit"
 
@@ -75,5 +32,11 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       physical_form: "Liquid",
       ph: "Between 3 and 10",
     )
+
+    screenshot_and_save_page
+    click_button "Accept and submit"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Product no nano no items notification submitted"
   end
 end

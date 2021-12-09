@@ -12,10 +12,14 @@ def expect_task_completed(link_text)
   expect_task_status(link_text, "Completed")
 end
 
+def expect_task_not_started(link_text)
+  expect_task_status(link_text, "Not started")
+end
+
 def expect_task_status(link_text, status)
   expect do
-    page.find(:xpath, "//ancestor::span/a[contains(text(),'#{link_text}')]").find(:xpath, "../following-sibling::b[contains(text(), 'Completed')]")
-  end.not_to raise_error(Capybara::ElementNotFound)
+    page.find(:xpath, "//ancestor::span/a[contains(text(),'#{link_text}')]").find(:xpath, "../following-sibling::b[contains(text(), '#{status}')]")
+  end.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
 end
 
 # rubocop:disable Naming/MethodParameterName
