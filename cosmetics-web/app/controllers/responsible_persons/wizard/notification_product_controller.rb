@@ -141,6 +141,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
         @notification.errors.add :single_or_multi_component, "Please enter at least 2 or select single item product."
         return rerender_current_step
       end
+      # This happens only when there only one component
       if components_count > @notification.components.count
         # TODO: quite entangled
         @notification.revert_to_details_complete

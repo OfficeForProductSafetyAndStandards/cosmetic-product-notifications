@@ -87,12 +87,19 @@ module NotificationStateConcern
   end
 
   # TODO: quite entangled
+  # This method is only called on product wizard when increasing component count
+  # from 1 to n
   def revert_to_details_complete
-    # we dont want to change state to details complete when its new notification
-    # TODO: remove ready_for_nanomaterials and see what happens!
     return if ['empty', 'product_name_added', 'ready_for_nanomaterials'].include?(self.state)
 
-    self.update_state('details_complete')
+    raise("This should not be called") if self.components.count != 1
+    # we dont want to change state to details complete when its new notification
+    # TODO: remove ready_for_nanomaterials and see what happens!
+
+    # Reset first component too
+    c = self.components.first
+    c.update_state('empty')
+    self.update_state!('details_complete')
   end
 
   def revert_to_ready_for_nanomaterials
@@ -114,5 +121,9 @@ module NotificationStateConcern
     else
       self.update(state: new_state)
     end
+  end
+
+  def update_state!(new_state)
+    self.update(state: new_state)
   end
 end

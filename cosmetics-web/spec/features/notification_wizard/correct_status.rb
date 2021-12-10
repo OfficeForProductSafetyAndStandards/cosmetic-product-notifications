@@ -153,4 +153,45 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Product no nano no items notification submitted"
   end
+
+  scenario "Checking correct status - when adding extra item after single item product completed" do
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+
+    click_on "Add a cosmetic product"
+
+    complete_product_wizard(name: "Product no nano no items")
+
+    expect_product_details_task_not_started
+
+    complete_product_details
+
+    expect_product_details_task_completed
+
+    complete_product_wizard(name: "Product no nano no items", items_count: 2)
+
+    expect_multi_item_kit_task_not_started
+
+    expect_task_blocked "Item #1"
+    expect_task_blocked "Item #2"
+
+    complete_multi_item_kit_wizard
+
+    expect_task_not_started "Item #1"
+    expect_task_not_started "Item #2"
+
+    complete_item_wizard("Cream one", item_number: 1)
+
+    expect_task_completed "Cream one"
+
+    expect_task_not_started "Item #2"
+
+    complete_item_wizard("Cream two", item_number: 2)
+
+    click_link "Accept and submit"
+
+    click_button "Accept and submit"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Product no nano no items notification submitted"
+  end
 end
