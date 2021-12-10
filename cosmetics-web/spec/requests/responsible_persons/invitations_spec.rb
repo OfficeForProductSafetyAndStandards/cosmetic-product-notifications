@@ -140,4 +140,97 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
       end
     end
   end
+
+  describe "Visiting invitation cancellation page" do
+    let(:invitation) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
+
+    it "renders the cancellation page" do
+      get cancel_responsible_person_invitation_path(responsible_person, invitation)
+      expect(response).to have_http_status(:success)
+      expect(response).to render_template(:cancel)
+    end
+
+    context "when invitation does not belongs to responsible person" do
+      let(:invitation) { create(:pending_responsible_person_user, responsible_person: other_responsible_person) }
+
+      it "returns 404" do
+        get cancel_responsible_person_invitation_path(responsible_person, invitation)
+        expect(response).to redirect_to("/404")
+      end
+    end
+  end
+
+  describe "Cancelling an invitation" do
+    let!(:invitation) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
+
+    context "when the invitation cancelation is confirmed" do
+      let(:params) { { cancel_invitation: "yes" } }
+
+      it "destroys the invitation" do
+        expect {
+          delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        }.to change(PendingResponsiblePersonUser, :count).from(1).to(0)
+      end
+
+      it "redirects to the team members page" do
+        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        expect(response).to redirect_to(responsible_person_team_members_path(responsible_person))
+      end
+
+      it "adds a confirmation message to the response" do
+        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        follow_redirect!
+        expect(response.body).to include("The invitation was cancelled")
+      end
+    end
+
+    context "when the invitation cancelation is not confirmed" do
+      let(:params) { { cancel_invitation: "no" } }
+
+      it "does not destroy the invitation" do
+        expect {
+          delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        }.not_to change(PendingResponsiblePersonUser, :count)
+      end
+
+      it "redirects to the team members page" do
+        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        expect(response).to redirect_to(responsible_person_team_members_path(responsible_person))
+      end
+
+      it "does not add a confirmation message to the response" do
+        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        expect(response.body).not_to include("The invitation was cancelled")
+      end
+    end
+
+    context "when the invitation cancelation confirmation is not provided" do
+      let(:params) { {} }
+
+      it "does not destroy the invitation" do
+        expect {
+          delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        }.not_to change(PendingResponsiblePersonUser, :count)
+      end
+
+      it "render the cancellation page" do
+        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        expect(response).to render_template(:cancel)
+      end
+
+      it "includes an error message" do
+        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        expect(response.body).to include("Select yes if you want to cancel the invitation")
+      end
+    end
+
+    context "when invitation does not belongs to responsible person" do
+      let(:invitation) { create(:pending_responsible_person_user, responsible_person: other_responsible_person) }
+
+      it "returns 404" do
+        delete responsible_person_invitation_path(responsible_person, invitation)
+        expect(response).to redirect_to("/404")
+      end
+    end
+  end
 end
