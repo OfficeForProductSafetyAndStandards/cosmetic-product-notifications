@@ -84,7 +84,7 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
   end
 
   describe "Resending an invitation" do
-    let!(:invitation) do
+    let(:invitation) do
       create(:pending_responsible_person_user, responsible_person: responsible_person, inviting_user: user)
     end
 
