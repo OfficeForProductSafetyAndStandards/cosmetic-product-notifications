@@ -50,6 +50,10 @@ def answer_is_product_multi_item_kit_with(answer, amount: 1)
   click_button "Continue"
 end
 
+def expect_product_task_blocked
+  expect_task_blocked "Create the product"
+end
+
 def expect_product_task_completed
   expect_task_completed "Create the product"
 end

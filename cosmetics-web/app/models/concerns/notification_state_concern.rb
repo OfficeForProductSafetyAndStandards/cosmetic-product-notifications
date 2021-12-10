@@ -2,11 +2,14 @@ module NotificationStateConcern
   extend ActiveSupport::Concern
 
   # states which can go to previous state
-  CACHEABLE_PREVIOUS_STATES = %w(ready_for_components)
+  CACHEABLE_PREVIOUS_STATES = %w(ready_for_components components_complete)
+  #CACHEABLE_PREVIOUS_STATES = %w(ready_for_components)
+
   # Indicates which states can be changed
   # key is requested state, value possible state from `previous_state` column.
   STATES_OVERRIDES = {
-    "details_complete" => ["ready_for_components"]
+    "details_complete" => ["ready_for_components", "components_complete"],
+    "ready_for_components" => ["components_complete"]
   }
 
   included do
@@ -19,6 +22,7 @@ module NotificationStateConcern
       state :ready_for_nanomaterials
       # state is entangled with view here, this state is used to indicate
       # that multiitem kit step is not defined
+      # TODO: rename to something as product_definition_complete
       state :details_complete # only for multiitem
 
       # indicate that component related steps can be started
@@ -82,9 +86,11 @@ module NotificationStateConcern
     !['empty', 'product_name_added'].include?(self.state)
   end
 
+  # TODO: quite entangled
   def revert_to_details_complete
     # we dont want to change state to details complete when its new notification
-    return if ['empty', 'product_name_added'].include?(self.state)
+    # TODO: remove ready_for_nanomaterials and see what happens!
+    return if ['empty', 'product_name_added', 'ready_for_nanomaterials'].include?(self.state)
 
     self.update_state('details_complete')
   end
@@ -94,6 +100,12 @@ module NotificationStateConcern
   end
 
   def update_state(new_state)
+    # puts "********************", new_state, "*********************************"
+    # binding.pry if new_state == 'details_complete'
+    # self.update(state: new_state)
+    # return
+
+    puts "********************", new_state, "*********************************"
     if CACHEABLE_PREVIOUS_STATES.include?(self.state)
       self.update(previous_state: self.state)
     end

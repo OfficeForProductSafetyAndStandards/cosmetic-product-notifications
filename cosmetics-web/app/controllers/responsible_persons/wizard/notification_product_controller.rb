@@ -99,10 +99,15 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       required_nano_materials_count.times do
         nano = @notification.nano_materials.create
         nano.nano_elements.create
+        # TODO: quite entangled
+        @notification.update_state('ready_for_nanomaterials')
       end
       render_next_step @notification
-    else
+    when "no"
       render_next_step @notification
+    else
+      @notification.errors.add :contains_nanomaterials, "Select yes if the product is a multi-item kit, no if its single item"
+      rerender_current_step
     end
   end
 
@@ -137,6 +142,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
         return rerender_current_step
       end
       if components_count > @notification.components.count
+        # TODO: quite entangled
         @notification.revert_to_details_complete
       end
       required_components_count = @notification.components.present? ? components_count - 1 : components_count

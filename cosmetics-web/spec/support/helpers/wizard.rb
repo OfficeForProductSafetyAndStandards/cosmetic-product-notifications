@@ -8,6 +8,14 @@ def return_to_tasks_list_page
   click_on "tasks list page"
 end
 
+def expect_accept_and_submit_not_started
+  expect_task_not_started("Accept and submit")
+end
+
+def expect_accept_and_submit_blocked
+  expect_task_blocked("Accept and submit")
+end
+
 def expect_task_completed(link_text)
   expect_task_status(link_text, "Completed")
 end

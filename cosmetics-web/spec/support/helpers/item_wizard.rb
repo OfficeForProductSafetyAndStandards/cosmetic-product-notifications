@@ -1,7 +1,7 @@
 require "support/matchers/capybara_matchers"
 
-def complete_product_details
-  complete_item_wizard("Product details", single_item: true)
+def complete_product_details(nanos: [])
+  complete_item_wizard("Product details", single_item: true, nanos: nanos)
 end
 
 def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [])
@@ -147,6 +147,17 @@ def upload_formulation_file
   click_button "Continue"
 end
 
+def expect_product_details_task_completed
+  expect_item_task_completed("Product details")
+end
+
+def expect_product_details_task_not_started
+  expect_task_not_started("Product details")
+end
+
+def expect_product_details_task_blocked
+  expect_task_blocked("Product details")
+end
 
 def expect_item_task_completed(name)
   expect_task_completed name

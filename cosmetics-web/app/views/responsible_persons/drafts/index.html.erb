@@ -28,7 +28,9 @@
         <ul class="app-task-list__items">
           <li class="app-task-list__item">
             <% if @notification.may_submit_notification? %>
-              <%= link_to "Accept and submit", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state" %>
+              <span class="app-task-list__task-name">
+                <%= link_to "Accept and submit", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state" %>
+              </span>
               <%= not_started_badge %>
             <% else %>
               <span class="app-task-list__task-name">

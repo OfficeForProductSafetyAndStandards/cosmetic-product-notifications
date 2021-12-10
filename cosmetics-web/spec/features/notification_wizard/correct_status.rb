@@ -13,7 +13,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     click_on "Add a cosmetic product"
 
-    complete_product_wizard(name: "Product no nano two items", items_count: 2, nano_materials_count: 2)
+    complete_product_wizard(name: "Product with nano and two items", items_count: 2, nano_materials_count: 2)
 
     expect_task_not_started "Nanomaterial #1"
     expect_task_not_started "Nanomaterial #2"
@@ -40,12 +40,17 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #1"
     expect_task_blocked "Item #2"
 
+    click_link "Add another nanomaterial"
+    complete_nano_material_wizard("Nano three", purposes: ["Preservative"], nano_material_number: 3)
+
+    expect_multi_item_kit_task_not_started
+
     complete_multi_item_kit_wizard
 
     expect_multi_item_kit_task_completed
 
     click_link "Add another nanomaterial"
-    complete_nano_material_wizard("Nano three", purposes: ["Preservative"], nano_material_number: 3)
+    complete_nano_material_wizard("Nano four", purposes: ["Preservative"], nano_material_number: 4)
 
     expect_multi_item_kit_task_completed
 
@@ -57,7 +62,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_completed "Cream one"
 
     click_link "Add another nanomaterial"
-    complete_nano_material_wizard("Nano four", purposes: ["Preservative"], nano_material_number: 4)
+    complete_nano_material_wizard("Nano five", purposes: ["Preservative"], nano_material_number: 5)
 
     expect_multi_item_kit_task_completed
 
@@ -65,8 +70,87 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_task_not_started "Item #2"
 
+    expect_accept_and_submit_blocked
+
     complete_item_wizard("Cream two", item_number: 2, nanos: ["Nano two"])
 
+    expect_accept_and_submit_not_started
+
+    click_link "Add another nanomaterial"
+
+    complete_nano_material_wizard("Nano six", purposes: ["Preservative"], nano_material_number: 6)
+
+    expect_accept_and_submit_not_started
+
+    # TODO: in future, newly created nano will have to be added to item
+
     click_link "Accept and submit"
+
+    click_button "Accept and submit"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Product with nano and two items notification submitted"
+  end
+
+  scenario "Checking correct status - when updating nano after single item product completed" do
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+
+    click_on "Add a cosmetic product"
+
+    complete_product_wizard(name: "Product no nano no items", nano_materials_count: 1)
+
+    expect_product_details_task_blocked
+
+    complete_nano_material_wizard("Nano one", purposes: ["Preservative"], nano_material_number: 1)
+
+    complete_product_details(nanos: ["Nano one"])
+
+    expect_product_details_task_completed
+
+    click_link "Add another nanomaterial"
+
+    expect_product_details_task_blocked
+
+    complete_nano_material_wizard("Nano two", purposes: ["Preservative"], nano_material_number: 2)
+
+    # TODO: in future, newly created nano will have to be added to item
+
+    click_link "Accept and submit"
+
+    click_button "Accept and submit"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Product no nano no items notification submitted"
+  end
+
+  scenario "Checking correct status - when adding first nano after single item product completed" do
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+
+    click_on "Add a cosmetic product"
+
+    complete_product_wizard(name: "Product no nano no items")
+
+    expect_product_details_task_not_started
+
+    complete_product_details
+
+    expect_product_details_task_completed
+
+    complete_product_wizard(name: "Product no nano no items", nano_materials_count: 1)
+
+    expect_product_details_task_blocked
+
+    complete_nano_material_wizard("Nano one", purposes: ["Preservative"], nano_material_number: 1)
+
+    expect_product_details_task_completed
+
+    # TODO: in future, newly created nano will have to be added to item
+
+    click_link "Accept and submit"
+
+    click_button "Accept and submit"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Product no nano no items notification submitted"
   end
 end
