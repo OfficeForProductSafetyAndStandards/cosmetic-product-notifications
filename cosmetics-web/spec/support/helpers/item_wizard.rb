@@ -166,3 +166,11 @@ end
 def expect_item_task_not_started(name)
   expect_task_not_started name
 end
+
+def select_item_to_remove(answer)
+  within_fieldset("Select which item to remove") do
+    page.choose(answer)
+  end
+  click_button "Delete and continue"
+end
+
