@@ -3,6 +3,20 @@ require "rails_helper"
 RSpec.describe NanoElement, type: :model do
   subject(:nano_element) { build(:nano_element) }
 
+  context "Validation" do
+    it "is valid" do
+      expect(nano_element).to be_valid
+    end
+
+    context "inci_name" do
+      subject(:nano_element) { build(:nano_element, inci_name: "") }
+
+      it "is not valid without name" do
+        expect(nano_element).not_to be_valid
+      end
+    end
+  end
+
   describe "#attributes" do
     it "confirms purposes" do
       expect(nano_element).to have_attributes(purposes: nil)

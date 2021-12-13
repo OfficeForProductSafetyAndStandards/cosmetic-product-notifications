@@ -1,6 +1,8 @@
 class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
+  validates :inci_name, presence: true
+
   def self.purposes
     %w[colorant preservative uv_filter other].freeze
   end
