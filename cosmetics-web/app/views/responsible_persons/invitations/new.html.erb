@@ -6,7 +6,7 @@
   <%= link_to "Back", responsible_person_team_members_path(@responsible_person), class: "govuk-back-link" %>
 <% end %>
 
-<%= form_with model: @invite_member_form, scope: :invite_member_form, url: responsible_person_team_members_path(@responsible_person), method: :post do |form| %>
+<%= form_with model: @invite_member_form, scope: :invite_member_form, url: responsible_person_invitations_path(@responsible_person), method: :post do |form| %>
   <div class="govuk-grid-row">
     <%= error_summary_for(@invite_member_form) %>
     <div class="govuk-grid-column-two-thirds">
