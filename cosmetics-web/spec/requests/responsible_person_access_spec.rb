@@ -54,7 +54,7 @@ describe "Access control for actions related to responsible person" do
   end
 
   context "when visiting the responsible person add a member page" do
-    let(:url) { "/responsible_persons/#{rp1.id}/team_members/new" }
+    let(:url) { "/responsible_persons/#{rp1.id}/invitations/new" }
 
     include_examples "proper authorization"
   end
