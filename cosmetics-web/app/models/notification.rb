@@ -213,15 +213,17 @@ class Notification < ApplicationRecord
     if notification_complete?
       NotificationDeleteService.new(self, submit_user).call
     else
-      destroy!
+      soft_delete!
     end
   end
 
-  def destroy
-    destroy!
+  def delete!
+    raise "Not supported"
   end
 
-  def destroy!
+  alias_method :delete, :delete!
+
+  def soft_delete!
     return if deleted?
 
     transaction do
@@ -237,13 +239,8 @@ class Notification < ApplicationRecord
     end
   end
 
-  def delete
-    raise "Not supported"
-  end
-
-  def delete!
-    raise "Not supported"
-  end
+  alias_method :destroy, :soft_delete!
+  alias_method :destroy!, :soft_delete!
 
   def can_be_deleted?
     !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
