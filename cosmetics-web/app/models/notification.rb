@@ -27,7 +27,7 @@ class Notification < ApplicationRecord
   has_many :components, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
 
-  has_one :deleted_notification
+  has_one :deleted_notification, dependent: :destroy
 
   accepts_nested_attributes_for :image_uploads
 
@@ -208,20 +208,34 @@ class Notification < ApplicationRecord
     cpnp_reference.present?
   end
 
-  def destroy_notification!(submit_user)
-    if notification_complete?
-      NotificationDeleteService.new(self, submit_user).call
-    else
-      soft_delete!
-    end
-  end
+  # =========================================
+  # DELETING NOTIFICATIONS
+  # =========================================
+  #
+  # Notifications will be soft deleted by default. We want to avoid hard deletes unless
+  # particular cases arise.
+  # EG: We need to completely remove a Responsible Person and its associated notifications.
+  #
+  # The following code overwrites ActiveRecord methods to default to soft deletion.
+  # - Notification will be soft deleted when calling:
+  #   - soft_delete!
+  #   - destroy
+  #   - destroy!
+  # - Notification will be hard deleted when calling:
+  #   - hard_delete!
+  # - Disabled methods:
+  #   - delete
+  #   - delete!
 
-  def delete!
-    raise "Not supported"
-  end
+  # Keeps the original "ActiveRecord::Persistence#destroy" behaviour as "#hard_delete!"
+  # This sllows to still hard delete notifications after "#destroy" is overwritten
+  # to do a soft deletion.
+  alias_method :hard_delete!, :destroy
 
-  alias_method :delete, :delete!
-
+  # Soft deletion of a notification implies:
+  # - Set notification state as "deleted"
+  # - Creates an associated "deleted_notification" object containing the notification information.
+  # - Removes information from original notification object that has been "deleted".
   def soft_delete!
     return if deleted?
 
@@ -240,6 +254,20 @@ class Notification < ApplicationRecord
 
   alias_method :destroy, :soft_delete!
   alias_method :destroy!, :soft_delete!
+
+  def destroy_notification!(submit_user)
+    if notification_complete?
+      NotificationDeleteService.new(self, submit_user).call
+    else
+      soft_delete!
+    end
+  end
+
+  def delete!
+    raise "Not supported"
+  end
+
+  alias_method :delete, :delete!
 
   def can_be_deleted?
     !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago

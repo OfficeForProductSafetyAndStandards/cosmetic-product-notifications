@@ -330,5 +330,35 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         end
       end
     end
+
+    describe "#hard_delete!" do
+      it "deletes notification from database" do
+        notification
+        expect {
+          notification.hard_delete!
+        }.to change(described_class, :count).by(-1)
+        expect { notification.reload }.to raise_error ActiveRecord::RecordNotFound
+      end
+
+      it "deletes the image upload associated to the notification from database" do
+        image_upload
+        expect {
+          notification.hard_delete!
+        }.to change(ImageUpload, :count).by(-1)
+        expect { image_upload.reload }.to raise_error ActiveRecord::RecordNotFound
+      end
+
+      context "when the notification was soft deleted" do
+        let!(:notification) { create(:notification, :deleted) }
+        let(:deleted_notification) { notification.deleted_notification }
+
+        it "deletes the 'deleted notification' record from database" do
+          expect {
+            notification.hard_delete!
+          }.to change(DeletedNotification, :count).by(-1)
+          expect { deleted_notification.reload }.to raise_error ActiveRecord::RecordNotFound
+        end
+      end
+    end
   end
 end
