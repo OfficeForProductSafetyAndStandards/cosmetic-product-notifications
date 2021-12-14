@@ -65,6 +65,8 @@ class Notification < ApplicationRecord
                                           allow_nil: true
   validate :max_ph_is_greater_than_min_ph
 
+  delegate :count, to: :components, prefix: true
+
   settings do
     mapping do
       indexes :product_name, type: "text"
@@ -246,8 +248,6 @@ class Notification < ApplicationRecord
   def can_be_deleted?
     !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
-
-  delegate :count, to: :components, prefix: true
 
   def cache_notification_for_csv!
     self.csv_cache = NotificationDecorator.new(self).to_csv
