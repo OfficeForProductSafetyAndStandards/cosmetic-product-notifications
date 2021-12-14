@@ -258,11 +258,11 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification: notification) }
     let(:deleted_notification) { DeletedNotification.first }
 
-    context "when notification is deleted" do
+    describe "#soft_delete!" do
       describe "deleted notification record" do
         let!(:notification_attributes) { notification.attributes }
 
-        before { notification.destroy! }
+        before { notification.soft_delete! }
 
         it "is created with proper attributes" do
           Notification::DELETABLE_ATTRIBUTES.each do |attribute|
@@ -280,15 +280,22 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
 
       describe "#destroy" do
-        it "works as #destroy!" do
+        it "works as #soft_delete!" do
           notification.destroy
+          expect(notification.reload.state).to eq "deleted"
+        end
+      end
+
+      describe "#destroy!" do
+        it "works as #soft_delete!" do
+          notification.destroy!
           expect(notification.reload.state).to eq "deleted"
         end
       end
 
       describe "notification that is soft deleted" do
         it "removes all attributes properly" do
-          notification.destroy!
+          notification.soft_delete!
           notification.reload
 
           Notification::DELETABLE_ATTRIBUTES.each do |attribute|
@@ -298,34 +305,34 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
         it "can not be double deleted" do
           expect {
-            notification.destroy!
-            notification.destroy!
+            notification.soft_delete!
+            notification.soft_delete!
           }.to change(DeletedNotification, :count).by(1)
         end
 
         it "has deleted state" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.state).to eq "deleted"
         end
 
         it "has components" do
           components = notification.components
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.components).to eq components
         end
 
         it "has image upload" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.image_uploads).to eq [image_upload]
         end
 
         it "has responsible_person" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.responsible_person).to eq responsible_person
         end
 
         it "is linked to deleted_notification" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.deleted_notification).to eq deleted_notification
         end
       end
