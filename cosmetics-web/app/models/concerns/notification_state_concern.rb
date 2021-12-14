@@ -107,12 +107,6 @@ module NotificationStateConcern
   end
 
   def update_state(new_state)
-    # puts "********************", new_state, "*********************************"
-    # binding.pry if new_state == 'details_complete'
-    # self.update(state: new_state)
-    # return
-
-    puts "********************", new_state, "*********************************"
     if CACHEABLE_PREVIOUS_STATES.include?(self.state)
       self.update(previous_state: self.state)
     end
