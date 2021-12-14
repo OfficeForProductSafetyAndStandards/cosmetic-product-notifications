@@ -120,4 +120,8 @@ module NotificationStateConcern
   def update_state!(new_state)
     self.update(state: new_state)
   end
+
+  def reset_previous_state!
+    self.update(previous_state: nil)
+  end
 end

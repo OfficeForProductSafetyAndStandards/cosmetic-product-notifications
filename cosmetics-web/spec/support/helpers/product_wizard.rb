@@ -1,6 +1,6 @@
 require "support/matchers/capybara_matchers"
 
-def complete_product_wizard(name: "Product", items_count: 1, nano_materials_count: 0)
+def complete_product_wizard(name: "Product", items_count: 1, nano_materials_count: 0, continue_on_nano: false)
   click_on "Create the product"
 
   answer_product_name_with name
@@ -9,10 +9,16 @@ def complete_product_wizard(name: "Product", items_count: 1, nano_materials_coun
 
   answer_is_product_for_under_threes_with "No"
 
-  if nano_materials_count > 0
-    answer_does_product_contains_nanomaterials_with "Yes", amount: nano_materials_count
+  if !continue_on_nano
+    if nano_materials_count > 0
+      answer_does_product_contains_nanomaterials_with "Yes", amount: nano_materials_count
+    else
+      answer_does_product_contains_nanomaterials_with "No"
+    end
   else
-    answer_does_product_contains_nanomaterials_with "No"
+    text = "You can add and remove nanomaterials for this notification from product draft page."
+    expect(page).to have_text(text)
+    click_on "Continue"
   end
 
   if items_count > 1

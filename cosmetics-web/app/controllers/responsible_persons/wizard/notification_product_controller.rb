@@ -144,6 +144,10 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       # This happens only when there only one component
       if components_count > @notification.components.count
         # TODO: quite entangled
+
+        # We can reset previous state, as previous state functionality
+        # is to prevent messing state when nanos are added.
+        @notification.reset_previous_state!
         @notification.revert_to_details_complete
       end
       required_components_count = @notification.components.present? ? components_count - 1 : components_count
