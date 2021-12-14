@@ -48,7 +48,9 @@ class Component < ApplicationRecord
   # Currently two components with no name are immediately created for
   # a notification when the user indicates that it is a kit/multi-component,
   # so the uniquness validation has to allow non-unique null values.
-  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false }, unless: -> { notification.via_zip_file? }
+  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false },
+    unless: -> { notification.via_zip_file? },
+    presence: { if: -> { self.notification.reload.components.where.not(id: self.id).count > 0 }, on: :add_component_name }
 
   validates :special_applicator, presence: true, on: :select_special_applicator_type
 

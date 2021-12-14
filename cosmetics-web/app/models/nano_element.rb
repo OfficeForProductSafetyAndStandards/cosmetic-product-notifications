@@ -1,7 +1,8 @@
 class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
-  validates :inci_name, presence: true
+  # TODO: add uniquenes notification across notifications
+  validates :inci_name, presence: true, on: :add_nanomaterial_name
 
   def self.purposes
     %w[colorant preservative uv_filter other].freeze

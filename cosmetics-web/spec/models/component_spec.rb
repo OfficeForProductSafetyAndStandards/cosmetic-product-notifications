@@ -70,6 +70,48 @@ RSpec.describe Component, type: :model do
         expect(component).to be_valid
       end
     end
+
+    context "When component belongs to single component notification" do
+      let(:component) { described_class.new(name: "", notification: notification) }
+
+      it "is valid" do
+        expect(component).to be_valid
+      end
+
+      context "when component already exists" do
+
+        before { component.save! }
+
+        it "is valid" do
+          expect(component).to be_valid
+        end
+      end
+    end
+
+    context "When component belongs to multi component notification" do
+      let(:component) { described_class.new(name: "", notification: notification) }
+
+      before do
+        create(:component, name: "COMPONENT X", notification: notification)
+      end
+
+      context "when context is provided" do
+        it "is not valid" do
+          expect(component.valid?(:add_component_name)).to be_falsey
+        end
+
+        it "has errors on name" do
+          component.valid?(:add_component_name)
+          expect(component.errors[:name]).to eql(["Name can not be blank"])
+        end
+      end
+
+      context "when no context is provided" do
+        it "is valid" do
+          expect(component).to be_valid
+        end
+      end
+    end
   end
 
   describe "formulation_required", :with_stubbed_antivirus do

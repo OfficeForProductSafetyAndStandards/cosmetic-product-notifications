@@ -8,11 +8,24 @@ RSpec.describe NanoElement, type: :model do
       expect(nano_element).to be_valid
     end
 
-    context "inci_name" do
-      subject(:nano_element) { build(:nano_element, inci_name: "") }
+    context "without validation context" do
+      context "inci_name" do
+        subject(:nano_element) { build(:nano_element, inci_name: "") }
 
-      it "is not valid without name" do
-        expect(nano_element).not_to be_valid
+        it "is valid without name" do
+          expect(nano_element).to be_valid
+        end
+      end
+    end
+
+    context "with validation context" do
+      context "inci_name" do
+        subject(:nano_element) { build(:nano_element, inci_name: "") }
+
+        it "is valid without name" do
+          nano_element.valid?(:add_nanomaterial_name)
+          expect(nano_element.errors).to be_present
+        end
       end
     end
   end
