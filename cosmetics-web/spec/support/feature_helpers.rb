@@ -6,6 +6,11 @@ end
 
 # --- Page expections -----
 
+module Fspec
+  YES = "Yes"
+  No  = "No"
+end
+
 def fill_in_credentials(password_override: nil)
   fill_in "Email address", with: user.email
   if password_override
@@ -423,89 +428,6 @@ def expect_to_be_on__upload_formulation_document_page(header_text)
   expect(page).to have_h1(header_text)
 end
 
-# rubocop:disable Naming/MethodParameterName
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs: nil, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
-  within("#product-table") do
-    expect(page).to have_summary_item(key: "Product name", value: product_name)
-    expect(page).to have_summary_item(key: "Shades", value: shades)
-    expect(page).to have_summary_item(key: "Number of items", value: number_of_components)
-  end
-
-  expect(page).to have_summary_item(key: "Nanomaterials", value: nanomaterials)
-  expect(page).to have_summary_item(key: "Category of product", value: category)
-  expect(page).to have_summary_item(key: "Category of #{category.downcase.singularize}", value: subcategory)
-  expect(page).to have_summary_item(key: "Category of #{subcategory.downcase.singularize}", value: sub_subcategory)
-  expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
-
-  if contains_cmrs
-    expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
-  end
-
-  if eu_notification_date
-    expect(page).to have_summary_item(key: "EU notification date", value: eu_notification_date)
-  end
-
-  if frame_formulation
-    expect(page).to have_summary_item(key: "Frame formulation", value: frame_formulation)
-  end
-
-  expect(page).to have_summary_item(key: "Physical form", value: physical_form)
-
-  if poisonous_ingredients
-    expect(page).to have_summary_item(key: "Contains ingredients NPIS needs to know about", value: poisonous_ingredients)
-  end
-
-  if ph
-    expect(page).to have_summary_item(key: "pH", value: ph)
-  end
-
-  if application_instruction
-    expect(page).to have_summary_item(key: "Application instruction", value: application_instruction)
-  end
-
-  if exposure_condition
-    expect(page).to have_summary_item(key: "Exposure condition", value: exposure_condition)
-  end
-end
-# rubocop:enable Naming/MethodParameterName
-
-def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, number_of_components:, components_mixed:, kit_items:)
-  within("#product-table") do
-    expect(page).to have_summary_item(key: "Product name", value: product_name)
-    expect(page).to have_summary_item(key: "Number of items", value: number_of_components)
-    expect(page).to have_summary_item(key: "Are the items mixed?", value: components_mixed)
-  end
-
-  kit_items.each do |kit_item|
-    expect(page).to have_selector("h3", text: kit_item[:name])
-
-    within("##{kit_item[:name].parameterize}") do
-      expect(page).to have_summary_item(key: "Shades", value: kit_item[:shades])
-
-      if kit_item[:contains_cmrs]
-        expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
-      end
-
-      expect(page).to have_summary_item(key: "Nanomaterials", value: kit_item[:nanomaterials])
-
-      if kit_item[:application_instruction]
-        expect(page).to have_summary_item(key: "Application instruction", value: kit_item[:application_instruction])
-      end
-
-      if kit_item[:exposure_condition]
-        expect(page).to have_summary_item(key: "Exposure condition", value: kit_item[:exposure_condition])
-      end
-
-      expect(page).to have_summary_item(key: "Category of product", value: kit_item[:category])
-      expect(page).to have_summary_item(key: "Category of #{kit_item[:category].downcase.singularize}", value: kit_item[:subcategory])
-      expect(page).to have_summary_item(key: "Category of #{kit_item[:subcategory].downcase.singularize}", value: kit_item[:sub_subcategory])
-      expect(page).to have_summary_item(key: "Formulation given as", value: kit_item[:formulation_given_as])
-      expect(page).to have_summary_item(key: "Physical form", value: kit_item[:physical_form])
-      # expect(page).to have_summary_item(key: "pH", value: kit_item[:ph])
-    end
-  end
-end
-
 def expect_to_be_on__your_cosmetic_products_page
   expect(page.current_path).to end_with("/responsible_persons/#{responsible_person.id}/notifications")
   expect(page).to have_h1("Cosmetic products")
@@ -567,77 +489,11 @@ def answer_is_product_for_under_threes_with(answer)
   click_button "Continue"
 end
 
-def answer_is_product_multi_item_kit_with(answer)
-  within_fieldset("Is the product a multi-item kit?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_does_contain_items_that_need_to_be_mixed_with(answer)
-  within_fieldset("Does the kit contain items that need to be mixed?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_item_name_with(item_name)
-  fill_in "Item name", with: item_name
-  click_button "Continue"
-end
-
-def answer_is_item_available_in_shades_with(answer, item_name: nil)
-  within_fieldset("Is #{item_name || 'the product'} available in different shades?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_what_is_physical_form_of_item_with(answer, item_name: nil)
-  within_fieldset("What is the physical form of #{item_name || 'the product'}?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_does_item_contain_cmrs_with(answer, item_name: nil)
-  within_fieldset("Does #{item_name || 'the product'} contain category 1A or 1B CMR substances?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_what_is_product_contained_in_with(answer, item_name: nil)
-  within_fieldset("What is #{item_name || 'the product'} contained in?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_what_type_of_applicator_with(answer)
-  within_fieldset("What type of applicator?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
 def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
+  node = find("fieldset") # this page should have only one fieldset
+
   within_fieldset("Does #{item_name || 'the product'} contain nanomaterials?") do
     page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_is_item_intended_to_be_rinsed_off_or_left_on_with(answer, item_name: nil)
-  within_fieldset("Is #{item_name || 'the product'} intended to be rinsed off or left on?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_how_user_is_exposed_to_nanomaterials_with(answer)
-  within_fieldset("How is the user likely to be exposed to the nanomaterials?") do
-    page.check(answer)
   end
   click_button "Continue"
 end
@@ -648,61 +504,6 @@ def answer_nanomaterial_names_with(nanomaterial_names)
     fill_in "nano_material_nano_elements_attributes_0_inci_name", with: nanomaterial_names
   end
 
-  click_button "Continue"
-end
-
-def answer_what_is_purpose_of_nanomaterial_with(purpose, nanomaterial_name:)
-  within_fieldset("What is the purpose of #{nanomaterial_name}?") do
-    page.check(purpose)
-  end
-  click_button "Continue"
-end
-
-def answer_is_nanomaterial_listed_in_ec_regulation_with(answer, nanomaterial_name:)
-  within_fieldset("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_does_nanomaterial_conform_to_restrictions_with(answer, nanomaterial_name:)
-  within_fieldset("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_item_category_with(answer)
-  within_fieldset("What category of cosmetic product is it?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_item_subcategory_with(answer)
-  page.choose(answer)
-  click_button "Continue"
-end
-
-def answer_item_sub_subcategory_with(answer)
-  page.choose(answer)
-  click_button "Continue"
-end
-
-def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
-  within_fieldset("How do you want to give the formulation of #{item_name || 'the product'}?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def upload_ingredients_pdf
-  page.attach_file "spec/fixtures/files/testPdf.pdf"
-  click_button "Continue"
-end
-
-def upload_formulation_file
-  page.attach_file "spec/fixtures/files/testPdf.pdf"
   click_button "Continue"
 end
 

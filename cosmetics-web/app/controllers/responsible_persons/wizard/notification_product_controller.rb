@@ -51,13 +51,10 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   private
 
   def set_final_state_for_wizard
+    # Make sure state wont be overrided if notification is in higher state
     return if @notification.notification_product_wizard_completed?
 
-    if @notification.multi_component?
-      @notification.update(state: 'details_complete')
-    else
-      @notification.update(state: 'ready_for_components')
-    end
+    @notification.set_state_on_product_wizard_completed!
   end
 
   def update_add_internal_reference
@@ -78,20 +75,39 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   end
 
   # Run this step only when notifications does not have any notifications
+  # TODO: at some point, when user changes number on nano materials,
+  # state should block all other changes to force user to add nanomaterial
   def update_contains_nanomaterials
     return render_next_step @notification if @notification.nano_materials.count > 1
 
     case params.dig(:notification, :contains_nanomaterials)
     when "yes"
+      if nano_materials_count > 10
+        @notification.errors.add :contains_nanomaterials, "Maximum nanomaterials count is 10. More can be added later"
+        return rerender_current_step
+
+      end
+      if nano_materials_count < 1
+        @notification.errors.add :contains_nanomaterials, "Please enter at least 1"
+        return rerender_current_step
+      end
       if @notification.nano_materials.count > 1 && nano_materials_count < @notification.nano_materials.count
         @notification.errors.add :contains_nanomaterials, "Components count cant be lower than #{@notification.components_count}"
         return rerender_current_step
       end
       required_nano_materials_count = @notification.nano_materials.present? ? nano_materials_count - 1 : nano_materials_count
-      required_nano_materials_count.times { @notification.nano_materials.create }
+      required_nano_materials_count.times do
+        nano = @notification.nano_materials.create
+        nano.nano_elements.create
+        # TODO: quite entangled
+        @notification.update_state('ready_for_nanomaterials')
+      end
+      render_next_step @notification
+    when "no"
       render_next_step @notification
     else
-      render_next_step @notification
+      @notification.errors.add :contains_nanomaterials, "Select yes if the product is a multi-item kit, no if its single item"
+      rerender_current_step
     end
   end
 
@@ -125,7 +141,13 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
         @notification.errors.add :single_or_multi_component, "Please enter at least 2 or select single item product."
         return rerender_current_step
       end
+      # This happens only when there only one component
       if components_count > @notification.components.count
+        # TODO: quite entangled
+
+        # We can reset previous state, as previous state functionality
+        # is to prevent messing state when nanos are added.
+        @notification.reset_previous_state!
         @notification.revert_to_details_complete
       end
       required_components_count = @notification.components.present? ? components_count - 1 : components_count

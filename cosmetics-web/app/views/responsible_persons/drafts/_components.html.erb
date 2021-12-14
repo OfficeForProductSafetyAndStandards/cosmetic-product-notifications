@@ -1,6 +1,8 @@
 <li class="opss-task-sub">
   <h3 class="app-task-list__section">
-    <span class="app-task-list__section-number">3. </span>
+    <span class="app-task-list__section-number">
+      <%= section_number(DraftHelper::ITEMS_SECTION) %>
+    </span>
     Items
   </h3>
 
@@ -19,10 +21,12 @@
         <a href="<%= add_component_responsible_person_notification_draft_index_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
           Add <span class="govuk-visually-hidden">another component</span>
         </a>
-        <span class="opss-task-sub__pipe">|</span>
-        <a href="remove-nano-step.html" class="govuk-link govuk-link--no-visited-state">
-          Remove <span class="govuk-visually-hidden">a one of components</span>
-        </a>
+        <% if false %>
+          <span class="opss-task-sub__pipe">|</span>
+          <a href="remove-nano-step.html" class="govuk-link govuk-link--no-visited-state">
+            Remove <span class="govuk-visually-hidden">a one of components</span>
+          </a>
+        <% end %>
       </span>
     </li>
   </ul>

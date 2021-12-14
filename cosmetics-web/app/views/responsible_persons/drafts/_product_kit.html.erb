@@ -1,18 +1,24 @@
 <li class="opss-task-sub">
   <h2 class="app-task-list__section">
-    <span class="app-task-list__section-number">2. </span>
+    <span class="app-task-list__section-number">
+      <%= section_number(DraftHelper::MULTI_ITEMS_KIT_SECTION) %>
+    </span>
     Multi item kit
   </h2>
 
   <ul class="app-task-list__items opss-task-sub__list">
     <li class="app-task-list__item">
       <span class="app-task-list__task-name">
-        <a href="<%= new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+        <% if section_can_be_used?(DraftHelper::MULTI_ITEMS_KIT_SECTION) %>
+          <a href="<%= new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+            Define the multi-item kit
+          </a>
+        <% else %>
           Define the multi-item kit
-        </a>
+        <% end %>
       </span>
 
-      <%= product_kit_badge(@notification) %>
+      <%= multi_item_kit_badge(@notification) %>
     </li>
   </ul>
 

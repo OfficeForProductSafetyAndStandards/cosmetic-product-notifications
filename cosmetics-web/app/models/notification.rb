@@ -1,10 +1,10 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
+  include NotificationStateConcern
 
   DELETION_PERIOD_DAYS = 7
 
   include Searchable
-  include AASM
   include CountriesHelper
 
   belongs_to :responsible_person
@@ -106,52 +106,8 @@ class Notification < ApplicationRecord
     )
   end
 
-  aasm whiny_transitions: false, timestamps: true, column: :state do
-    state :empty, initial: true
-    state :product_name_added
-    # state which will be used for multicomponent product
-    # state is entangled with view here, this state is used to indicate
-    # that multiitem kit step is not defined
-    state :details_complete
-
-    # indicate that component related steps can be started
-    state :ready_for_components
-
-    state :components_complete
-    state :notification_complete
-
-    event :add_product_name do
-      transitions from: :empty, to: :product_name_added
-    end
-
-    event :complete_draft do
-      transitions from: :components_complete, to: :draft_complete
-    end
-
-    event :submit_notification, after: :cache_notification_for_csv! do
-      transitions from: :components_complete, to: :notification_complete,
-                  after: proc { __elasticsearch__.index_document } do
-        guard do
-          !missing_information?
-        end
-      end
-    end
-
-    state :deleted
-  end
-
-  def try_to_complete_components!
-    if components.all? { |c| c.state == 'component_complete' }
-      update(state: 'components_complete')
-    end
-  end
-
   def notification_product_wizard_completed?
     !['empty', 'product_name_added'].include?(state)
-  end
-
-  def revert_to_details_complete
-    update(state: 'details_complete')
   end
 
   def reference_number_for_display
@@ -186,7 +142,7 @@ class Notification < ApplicationRecord
   end
 
   def nano_material_required?
-    components.any?(&:nano_material_required?)
+    false # TODO: find if we need it in new wizard
   end
 
   def formulation_required?
@@ -286,10 +242,6 @@ class Notification < ApplicationRecord
     self.save
   end
 
-  def update_state(state)
-    self.update(state: state)
-  end
-
 private
 
   def all_required_attributes_must_be_set
@@ -297,7 +249,6 @@ private
 
     changed.each do |attribute|
       if mandatory_attributes.include?(attribute) && self[attribute].blank?
-
         if attribute == "product_name"
           errors.add attribute, "Enter the product name"
         else
@@ -314,6 +265,8 @@ private
     when "product_name_added"
       mandatory_attributes("empty")
     when "details_complete"
+      mandatory_attributes("empty")
+    when "ready_for_nanomaterials"
       mandatory_attributes("empty")
     when "ready_for_components"
       mandatory_attributes("empty")

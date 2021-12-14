@@ -80,7 +80,7 @@ module ResponsiblePersons::NotificationsHelper
 
   def notification_summary_component_rows(component, include_shades: true, allow_edits: false)
     cmrs = component.cmrs
-    nano_material = component.nano_material
+    nano_materials = component.nano_materials
 
     [
       if include_shades
@@ -105,23 +105,33 @@ module ResponsiblePersons::NotificationsHelper
                                 list_item_classes: "") },
         }
       end,
-      {
-        key: { text: "Nanomaterials" },
-        value: { html: render("application/none_or_bullet_list",
-                              entities_list: nano_material&.nano_elements&.map(&:display_name),
-                              list_classes: "",
-                              list_item_classes: "") },
-      },
-      if nano_material&.nano_elements.present?
+      # Asterisk (splat) flattens the array in place
+      *(nano_materials.map do |nano_material|
+        {
+          key: { text: "Nanomaterials" },
+          value: { html: render("application/none_or_bullet_list",
+                                entities_list: nano_material&.nano_elements&.map(&:display_name),
+                                list_classes: "",
+                                list_item_classes: "") },
+        }
+      end),
+      if nano_materials.blank?
+          {
+            key: { text: "Nanomaterials" },
+            value: { html: render("application/none_or_bullet_list",
+                                  entities_list: nil) }
+          }
+      end,
+      if nano_materials.present?
         {
           key: { text: "Application instruction" },
-          value: { text: get_exposure_routes_names(nano_material.exposure_routes) },
+          value: { text: get_exposure_routes_names(component.exposure_routes) },
         }
       end,
-      if nano_material&.nano_elements.present?
+      if nano_materials.present?
         {
           key: { text: "Exposure condition" },
-          value: { text: get_exposure_condition_name(nano_material.exposure_condition) },
+          value: { text: get_exposure_condition_name(component.exposure_condition) },
         }
       end,
       {

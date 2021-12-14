@@ -9,6 +9,12 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   before_action :set_category, if: -> { step == :select_category }
 
   steps :add_component_name,
+        # This step is included only when nanomaterials are defined
+        # in the task list
+        :select_nanomaterials,
+        :after_select_nanomaterials_routing,
+        :add_exposure_condition,
+        :add_exposure_routes,
         :number_of_shades,
         :add_shades,
         :add_physical_form,
@@ -28,10 +34,18 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   def show
     case step
+    when :select_nanomaterials
+      return jump_to_step(:number_of_shades) if @component.notification.nano_materials.blank?
     when :add_shades
       @component.shades = ["", ""] if @component.shades.nil?
     when :add_cmrs
       create_required_cmrs
+    when :after_select_nanomaterials_routing
+      if @component.nano_materials.present?
+        return render_next_step(@component)
+      else
+        return jump_to_step(:number_of_shades)
+      end
     when :completed
       @component.update_state('component_complete')
       # TODO: write spec
@@ -44,6 +58,10 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   def update
     case step
+    when :select_nanomaterials
+      update_select_nanomaterials
+    when :add_exposure_routes
+      update_add_exposure_routes
     when :number_of_shades
       update_number_of_shades
     when :add_shades
@@ -84,7 +102,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     if @component.notification.is_multicomponent?
       redirect_to wizard_path(steps.first, component_id: @component.id)
     else
-      redirect_to wizard_path(:number_of_shades, component_id: @component.id)
+      if @component.notification.nano_materials.present?
+        redirect_to wizard_path(:select_nanomaterials, component_id: @component.id)
+      else
+        redirect_to wizard_path(:number_of_shades, component_id: @component.id)
+      end
     end
   end
 
@@ -106,6 +128,24 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     else
       @component.errors.add :number_of_shades, "Select yes if the product is available in shades"
       rerender_current_step
+    end
+  end
+
+  def update_select_nanomaterials
+    ids = params.dig(:component, :nano_material_ids)
+    if @component.update(nano_material_ids: (ids || []))
+      render_next_step @component
+    else
+      render step
+    end
+  end
+
+  def update_add_exposure_routes
+    exposure_routes = params[:component].select { |_key, value| value == "1" }.keys
+    if @component.update_with_context({ exposure_routes: exposure_routes }, step)
+      render_wizard @component
+    else
+      render step
     end
   end
 
@@ -263,7 +303,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   end
 
   def component_params
-    params.fetch(:component, {})
+    params.fetch(:component)
       .permit(
         :name,
         :physical_form,
@@ -276,6 +316,9 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :ph,
         :minimum_ph,
         :maximum_ph,
+        :exposure_condition,
+        nano_material_ids: [],
+        exposure_routes: [],
         cmrs_attributes: %i[id name cas_number ec_number],
         shades: []
       )

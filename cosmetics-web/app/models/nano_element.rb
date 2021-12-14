@@ -1,6 +1,9 @@
 class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
+  # TODO: add uniquenes notification across notifications
+  validates :inci_name, presence: true, on: :add_nanomaterial_name
+
   def self.purposes
     %w[colorant preservative uv_filter other].freeze
   end
@@ -20,11 +23,20 @@ class NanoElement < ApplicationRecord
   end
 
   def standard?
-    !non_standard?
+    purposes.present? && !non_standard?
   end
 
   def non_standard?
     purposes.present? && purposes.include?("other")
+  end
+
+  def completed?
+    ((standard? && inci_name.present? && confirm_usage == "yes" && confirm_restrictions == "yes") ||
+      (purposes&.include?("other") && confirm_toxicology_notified == "yes")) && !blocked?
+  end
+
+  def blocked?
+    confirm_usage == "no" || confirm_restrictions == "no" || confirm_toxicology_notified == "no"
   end
 
 private
