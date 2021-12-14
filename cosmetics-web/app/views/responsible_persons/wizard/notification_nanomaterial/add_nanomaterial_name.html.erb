@@ -2,7 +2,7 @@
 
 <% page_title title, errors: @nano_element.errors.any? %>
 <% content_for :after_header do %>
-  <%= link_to "Back", responsible_person_notification_draft_index_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
+  <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
 
 <h1 class="govuk-heading-l">

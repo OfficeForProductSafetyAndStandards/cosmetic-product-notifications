@@ -8,7 +8,7 @@
     <%= govukButton text: "Accept and submit" %>
     <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
       Return to the
-      <%= link_to "task list page", responsible_person_notification_draft_index_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
+      <%= link_to "task list page", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
     </p>
   </div>
 <% end %>

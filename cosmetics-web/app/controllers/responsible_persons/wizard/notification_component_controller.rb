@@ -114,7 +114,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   # TODO: add this in all flows
   def finish_wizard_path
-    responsible_person_notification_draft_index_path(@notification.responsible_person, @notification)
+    responsible_person_notification_draft_path(@notification.responsible_person, @notification)
   end
 
   def update_number_of_shades

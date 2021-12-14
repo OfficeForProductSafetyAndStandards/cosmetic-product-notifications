@@ -41,7 +41,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def create_for_draft
     notification = Notification.create(responsible_person: @responsible_person)
 
-    redirect_to responsible_person_notification_draft_index_path(@responsible_person, notification)
+    redirect_to responsible_person_notification_draft_path(@responsible_person, notification)
   end
 
   def confirm

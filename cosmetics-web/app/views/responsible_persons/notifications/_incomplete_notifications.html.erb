@@ -38,7 +38,7 @@
             <td class="govuk-table__cell"><%= display_full_month_date notification.created_at %></td>
             <td class="govuk-table__cell"><%= reference_number_for_display(notification) %></td>
             <td class="govuk-table__cell">
-              <% url = responsible_person_notification_draft_index_path(@responsible_person, notification) %>
+              <% url = responsible_person_notification_draft_path(@responsible_person, notification) %>
               <a href="<%= url %>" class="govuk-link govuk-link--no-visited-state">Continue<span class="govuk-visually-hidden"> <%= notification.product_name %></span></a></td>
           </tr>
         <% end %>

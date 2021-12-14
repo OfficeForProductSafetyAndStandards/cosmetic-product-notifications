@@ -10,6 +10,6 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <p>Read <%= link_to "how to notify nanomaterials", how_to_notify_nanomaterials_path, target: '_new' %>.</p>
-    <p>Go to <%= link_to "the task list page", responsible_person_notification_draft_index_path(current_responsible_person, @notification), class: "govuk-link--no-visited-state" %>.</p>
+    <p>Go to <%= link_to "the task list page", responsible_person_notification_draft_path(current_responsible_person, @notification), class: "govuk-link--no-visited-state" %>.</p>
   </div>
 </div>
