@@ -19,8 +19,10 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [])
 
   if nanos.present?
     answer_select_which_nanomaterials_are_included_with(nanos)
-    answer_is_item_intended_to_be_rinsed_off_or_left_on_with("Rinsed off", item_name: label_name)
-    answer_how_user_is_exposed_to_nanomaterials_with("Dermal")
+    if !nanos.all?(&:nil?)
+      answer_is_item_intended_to_be_rinsed_off_or_left_on_with("Rinsed off", item_name: label_name)
+      answer_how_user_is_exposed_to_nanomaterials_with("Dermal")
+    end
   end
 
   answer_is_item_available_in_shades_with "No", item_name: label_name
@@ -54,6 +56,10 @@ def answer_item_name_with(item_name)
 end
 
 def answer_select_which_nanomaterials_are_included_with(nanos)
+  if nanos.all?(&:nil?)
+    return click_button "Continue"
+  end
+
   nanos.each do |nano|
     within_fieldset("Select which nanomaterials are included in the item") do
       page.check(nano)
@@ -173,4 +179,3 @@ def select_item_to_remove(answer)
   end
   click_button "Delete and continue"
 end
-
