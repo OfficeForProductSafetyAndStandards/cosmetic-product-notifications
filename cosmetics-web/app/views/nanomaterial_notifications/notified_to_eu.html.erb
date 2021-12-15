@@ -14,7 +14,8 @@
 
     <%= form_for @nanomaterial_notification, url: notified_to_eu_nanomaterial_path(@nanomaterial_notification), html: { novalidate: true } do |form| %>
 
-      <%= error_summary_for(@nanomaterial_notification, first_values: {eu_notified: "true"}) %>
+      <%= error_summary(@nanomaterial_notification.errors,
+                        map_errors: { eu_notified: "eu_notified_true", notified_to_eu_on: "notified_to_eu_on-notified_to_eu_on[day]" }) %>
 
       <% if @nanomaterial_notification.errors[:notified_to_eu_on].size > 0 %>
         <% errorMessage = {
@@ -55,31 +56,30 @@
           }]) %>
 
 
-      <%= render "components/govuk_radios",
-          "idPrefix": "eu_notified",
-          "name": "eu_notified",
-          "fieldset": {
-            "legend": {
-              "html": safe_join([page_title_prefix, content_tag('span', brexit_date, class: 'no-wrap'), "?"]),
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--xl"
-            }
+      <%= render "form_components/govuk_radios",
+        form: form,
+        key: :eu_notified,
+        fieldset: {
+          legend: {
+            html: safe_join([page_title_prefix, content_tag('span', brexit_date, class: 'no-wrap'), "?"]),
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        idPrefix: "eu_notified",
+        name: "eu_notified",
+        items: [
+          {
+            value: :true,
+            html: safe_join(["Yes, the EU was notified about the nanomaterial on CPNP before ", content_tag('span', display_full_month_date(EU_EXIT_DATE), class: 'no-wrap')]),
+            conditional: {html: date_notified_to_eu_html}
           },
-          "items": [
-            {
-              "value": "true",
-              "html": safe_join(["Yes, the EU was notified about the nanomaterial on CPNP before ", content_tag('span', display_full_month_date(EU_EXIT_DATE), class: 'no-wrap')]),
-              "checked": @nanomaterial_notification.eu_notified == true,
-              "conditional": {"html": date_notified_to_eu_html}
-            },
-            {
-              "value": "false",
-              "text": "No",
-              "checked": @nanomaterial_notification.eu_notified == false,
-            }
-          ]
-        %>
-
+          {
+            value: :false,
+            text: "No",
+          },
+        ]
+      %>
       <%= govukButton text: "Continue" %>
     <% end %>
 
