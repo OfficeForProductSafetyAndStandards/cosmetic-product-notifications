@@ -255,14 +255,6 @@ class Notification < ApplicationRecord
   alias_method :destroy, :soft_delete!
   alias_method :destroy!, :soft_delete!
 
-  def destroy_notification!(submit_user)
-    if notification_complete?
-      NotificationDeleteService.new(self, submit_user).call
-    else
-      soft_delete!
-    end
-  end
-
   def delete!
     raise "Not supported"
   end
