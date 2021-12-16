@@ -15,7 +15,7 @@
           <label class="govuk-label" for="notification_search_form_category">
             Product category
           </label>
-          <%= form.select :category, @search_form.class::CATEGORIES, { include_blank: true },  class: "govuk-select" %>
+          <%= form.select :category, @search_form.class::CATEGORIES, { include_blank: "All" },  class: "govuk-select" %>
           <%= form.hidden_field :q, id: :notification_search_form_q_hidden %>
           <%= form.hidden_field :sort_by, id: 'notification_search_form_sort_by_date_filter_hidden' %>
         </div>
