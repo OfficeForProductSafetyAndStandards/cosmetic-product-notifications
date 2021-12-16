@@ -133,7 +133,7 @@ Rails.application.routes.draw do
             get :add_component
             get :add_nano_material
           end
-          resource :delete_item, controller: "responsible_persons/delete_items", only: %i[show delete]
+          resource :delete_item, controller: "responsible_persons/delete_items", only: %i[show destroy]
         end
 
         resources :product_image_upload, controller: "responsible_persons/product_image_upload", only: %i[new create destroy]

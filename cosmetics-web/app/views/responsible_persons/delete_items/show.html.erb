@@ -1,19 +1,30 @@
-<% title = "" %>
+<% title = "Remove item" %>
 <% question = "Select which item to remove" %>
 
-<% page_title title, errors: @nano_element.errors.any? %>
+<% page_title title, errors: @form.errors.any? %>
 <% content_for :after_header do %>
-  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+  <%= govukBackLink text: "Back", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>
 <% end %>
 
-<%= form_with model: @nano_element, url: wizard_path, method: :delete do |form| %>
+<% items = @notification.components.order(:created_at).each_with_index.map { |c, i| { text: (c.name.present? ? c.name : "Item ##{i+1}"), value: c.id } } %>
+
+<%= form_with model: @form, url: responsible_person_notification_draft_delete_item_path(@notification.responsible_person, @notification), method: :delete do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= error_summary_for(@nano_element, first_values: {confirm_usage: "yes"}) %>
-      <%= render "form_components/govuk_radios", form: form, key: :confirm_usage,
+      <%= error_summary_for(@form) %>
+      <%= form.hidden_field :component_id %>
+      <%= render "form_components/govuk_radios",
+              form: form,
+              key: :component_id,
+              classes: "govuk-!-margin-top-7",
               fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
-              items: [{ text: "Yes", value: "yes" }, { text: "No", value: "no" }] %>
-      <%= govukButton text: "Continue" %>
+              items: items,
+              hint: { text: 'The item will be removed and deleted from this draft.', classes: 'govuk-!-width-three-quarters' } %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Delete and continue" %>
+
+        <a class="govuk-link" href="#">Cancel</a>
+      </div>
     </div>
   </div>
 <% end %>
