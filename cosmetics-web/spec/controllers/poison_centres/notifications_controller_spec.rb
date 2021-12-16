@@ -65,8 +65,9 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
     describe "GET #show" do
       let(:notification) { rp_1_notifications.first }
+      let(:reference_number) { notification.reference_number }
 
-      before { get :show, params: { reference_number: notification.reference_number } }
+      before { get :show, params: { reference_number: reference_number } }
 
       it "assigns the correct notification" do
         expect(assigns(:notification)).to eq(notification)
@@ -74,6 +75,14 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
       it "renders the show template" do
         expect(response).to render_template("notifications/show_poison_centre")
+      end
+
+      context "when the notification is not found" do
+        let(:reference_number) { "1234wrongreference" }
+
+        it "redirects to 404 page" do
+          expect(response).to redirect_to("/404")
+        end
       end
     end
   end
