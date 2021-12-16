@@ -421,18 +421,18 @@ GEM
     scout_apm (5.1.1)
       parser
     semantic_range (3.0.0)
-    sentry-rails (4.6.5)
+    sentry-rails (4.8.1)
       railties (>= 5.0)
-      sentry-ruby-core (~> 4.6.0)
-    sentry-ruby (4.6.5)
+      sentry-ruby-core (~> 4.8.1)
+    sentry-ruby (4.8.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (>= 1.0)
-      sentry-ruby-core (= 4.6.5)
-    sentry-ruby-core (4.6.5)
+      sentry-ruby-core (= 4.8.1)
+    sentry-ruby-core (4.8.1)
       concurrent-ruby
       faraday
-    sentry-sidekiq (4.6.5)
-      sentry-ruby-core (~> 4.6.0)
+    sentry-sidekiq (4.8.1)
+      sentry-ruby-core (~> 4.8.1)
       sidekiq (>= 3.0)
     sidekiq (5.2.9)
       connection_pool (~> 2.2, >= 2.2.2)
@@ -583,9 +583,9 @@ DEPENDENCIES
   ruby-debug-ide (~> 0.7.0)
   rubyzip (~> 2.3.0)
   scout_apm
-  sentry-rails
-  sentry-ruby
-  sentry-sidekiq
+  sentry-rails (~> 4.8.1)
+  sentry-ruby (~> 4.8.1)
+  sentry-sidekiq (~> 4.8.1)
   sidekiq (~> 5.2.7)
   sidekiq-cron (~> 1.1.0)
   simplecov (~> 0.21.2)
