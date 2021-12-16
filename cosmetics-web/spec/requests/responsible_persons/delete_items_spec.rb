@@ -9,6 +9,8 @@ RSpec.describe "Delete Notifications page", type: :request do
 
   let(:notification1) { create(:notification, responsible_person: responsible_person) }
   let(:component1) {create(:component, notification: notification1) }
+  let(:component1_2) {create(:component, notification: notification1) }
+  let(:component1_3) {create(:component, notification: notification1) }
 
   let(:notification2) { create(:notification, responsible_person: other_responsible_person) }
   let(:component2) {create(:component, notification: notification2) }
@@ -21,12 +23,16 @@ RSpec.describe "Delete Notifications page", type: :request do
   let(:path) { responsible_person_notification_draft_delete_item_path(responsible_person, notification1) }
 
   describe "success" do
-    it "destroys component" do
+    before do
       component1
+      component1_2
+      component1_3
+    end
 
+    it "destroys component" do
       expect {
         delete path, params: { notification_wizard_delete_component_form: { component_id: component1.id } }
-      }.to change { Component.count }.from(1).to(0)
+      }.to change { Component.count }.from(3).to(2)
     end
 
     it "redirects properly" do
