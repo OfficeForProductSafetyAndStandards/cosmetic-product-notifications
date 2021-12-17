@@ -18,6 +18,8 @@ module NotificationWizard
       raise ActiveRecord::RecordNotFound if ['notification_complete', 'deleted'].include?(notification.state)
 
       notification.nano_materials.find(nano_material_ids).each(&:destroy)
+      notification.reload.try_to_complete_nanomaterials!
+      true
     end
   end
 end

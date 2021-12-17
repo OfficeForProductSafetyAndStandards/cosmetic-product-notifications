@@ -1,48 +1,37 @@
-<% title = "Remove item" %>
-<% question = "Select which item to remove" %>
+<% title = "Remove Nanomaterial" %>
+<% question = "Select which nanomaterials to remove" %>
 
 <% page_title title, errors: @form.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>
 <% end %>
 
-<% if @notification.components.count > 2 %>
-  <% items = @notification.components.order(:created_at).each_with_index.map { |c, i| { text: (c.name.present? ? c.name : "Item ##{i+1}"), value: c.id } } %>
+<% items = @notification.nano_materials.map(&:nano_elements).flatten.each_with_index.map { |n, i|
+  { name: 'notification_wizard_delete_nano_material_form[nano_material_ids][]',
+    text: (n.inci_name.present? ? n.inci_name : "Nanomaterial ##{i+1}"),
+    value: n.nano_material.id,
+    key: :nil, # TODO: investigate design library to get rid of required key attribute
+    id: "nano-#{n.id}",
+    disable_ghost: true
+  }
+} %>
 
-  <%= form_with model: @form, url: responsible_person_notification_draft_delete_item_path(@notification.responsible_person, @notification), method: :delete do |form| %>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <%= error_summary_for(@form) %>
-        <%= form.hidden_field :component_id %>
-        <%= render "form_components/govuk_radios",
-                form: form,
-                key: :component_id,
-                classes: "govuk-!-margin-top-7",
-                fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
-                items: items,
-                hint: { text: 'The item will be removed and deleted from this draft.', classes: 'govuk-!-width-three-quarters' } %>
-        <div class="govuk-button-group">
-          <%= govukButton text: "Delete and continue" %>
+<%= form_with model: @form, url: responsible_person_notification_draft_delete_nano_material_path(@notification.responsible_person, @notification), method: :delete do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= error_summary_for(@form) %>
+      <%= render "form_components/govuk_checkboxes",
+              form: form,
+              key: :component_id,
+              classes: "govuk-!-margin-top-7",
+              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
+              items: items,
+              hint: { text: 'The selected nanomaterial(s) will be removed and deleted from this draft. If you delete all of them you can add nanomaterials to the draft by completing the first task again.', classes: 'govuk-!-width-three-quarters' } %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Delete and continue" %>
 
-          <a class="govuk-link" href="#">Cancel</a>
-        </div>
+        <a class="govuk-link" href="#">Cancel</a>
       </div>
     </div>
-  <% end %>
-<% else %>
-  <div class="govuk-grid-column-two-thirds">
-
-    <h1 class="govuk-heading-m govuk-!-margin-bottom-0">You cannot remove an item</h1>
-
-    <p class="govuk-body opss-secondary-text govuk-!-margin-bottom-7">A multi-item kit product must include 2 or more items.</p>
-
-    <p class="govuk-body">This draft product notification has defined the product as being a multi-item kit and currently includes 2 items. A product containing only 1 item (or component) is a single item product and is not a multi-item kit product.</p>
-
-    <p class="govuk-body">To remove an item you must first add a new item. <span class="govuk-!-font-weight-bold">If the product is not a multi-item kit product</span>, you will need to <a href="<%= delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">delete this draft</a>.</p>
-
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-
-    <p class="govuk-body">Return to the <a href="<%= responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">tasks list page</a>.</p>
-
   </div>
 <% end %>
