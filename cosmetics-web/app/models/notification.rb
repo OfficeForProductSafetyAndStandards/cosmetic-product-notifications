@@ -278,6 +278,8 @@ private
       mandatory_attributes("import_country_added")
     when "draft_complete"
       mandatory_attributes("components_complete")
+    when "deleted"
+      mandatory_attributes("components_complete")
     when "notification_complete"
       mandatory_attributes("draft_complete")
     end

@@ -56,8 +56,6 @@ def answer_item_name_with(item_name)
 end
 
 def answer_select_which_nanomaterials_are_included_with(nanos)
-  binding.pry if $usepry
-
   if nanos.all?(&:nil?)
     return click_button "Continue"
   end
@@ -173,4 +171,11 @@ end
 
 def expect_item_task_not_started(name)
   expect_task_not_started name
+end
+
+def select_item_and_remove(answer)
+  within_fieldset("Select which item to remove") do
+    page.choose(answer)
+  end
+  click_button "Delete and continue"
 end

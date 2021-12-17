@@ -18,15 +18,13 @@
     <% end %>
     <li class="app-task-list__item opss-task-sub__last">
       <span class="app-task-list__task-name">
-        <a href="<%= add_component_responsible_person_notification_draft_index_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+        <a href="<%= add_component_responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
           Add <span class="govuk-visually-hidden">another component</span>
         </a>
-        <% if false %>
-          <span class="opss-task-sub__pipe">|</span>
-          <a href="remove-nano-step.html" class="govuk-link govuk-link--no-visited-state">
-            Remove <span class="govuk-visually-hidden">a one of components</span>
-          </a>
-        <% end %>
+        <span class="opss-task-sub__pipe">|</span>
+        <a href="<%= responsible_person_notification_draft_delete_item_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+          Remove <span class="govuk-visually-hidden">a one of components</span>
+        </a>
       </span>
     </li>
   </ul>

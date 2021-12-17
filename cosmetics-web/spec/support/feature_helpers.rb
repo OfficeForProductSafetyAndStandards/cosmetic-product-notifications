@@ -116,6 +116,10 @@ def expect_incorrect_email_or_password
   expect(page).not_to have_link("Cases")
 end
 
+def expect_success_banner_with_text(text)
+  expect(page).to have_css("div.hmcts-banner--success", text: text)
+end
+
 def otp_code(email = nil)
   user_with_code = User.find_by(email: email) || user
   user_with_code.reload.direct_otp

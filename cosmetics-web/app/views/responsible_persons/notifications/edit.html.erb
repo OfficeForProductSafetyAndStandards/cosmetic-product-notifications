@@ -1,6 +1,6 @@
 <% content_for :page_title, "Check your answers" %>
 <% content_for :after_header do %>
-  <%= link_to "Back", responsible_person_notification_draft_index_path(@responsible_person, @notification), class: "govuk-back-link" %>
+  <%= link_to "Back", responsible_person_notification_draft_path(@responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -35,7 +35,7 @@
       <% else %>
         <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
           Return to the
-          <%= link_to "task list page", responsible_person_notification_draft_index_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
+          <%= link_to "task list page", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
         </p>
       <% end %>
     </section>
