@@ -27,20 +27,26 @@ RSpec.describe "Delete Nano material page", type: :request do
 
     it "destroys nano_material" do
       expect {
-        delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_id: nano_material1.id } }
+        delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
       }.to change { NanoMaterial.count }.from(1).to(0)
     end
 
     it "redirects properly" do
-      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_id: nano_material1.id } }
+      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
 
       expect(response).to redirect_to(responsible_person_notification_draft_path(responsible_person, notification1))
     end
   end
 
   context "when form is invalid" do
-    it "renders form again" do
-      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_id: nil } }
+    it "renders form again on nil params" do
+      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: nil } }
+
+      expect(response).to render_template("show")
+    end
+
+    it "renders form again on empty params" do
+      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [] } }
 
       expect(response).to render_template("show")
     end
@@ -49,7 +55,7 @@ RSpec.describe "Delete Nano material page", type: :request do
   it "is using proper form class" do
     expect_any_instance_of(NotificationWizard::DeleteNanoMaterialForm).to receive(:delete)
 
-    delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_id: nil } }
+    delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: nil } }
   end
 
   context "when user tries to access not his notification" do
@@ -57,13 +63,13 @@ RSpec.describe "Delete Nano material page", type: :request do
 
     it "raises an exception on delete request" do
       expect {
-        delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_id: nano_material1.id } }
+        delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
     it "raises an exception on get request" do
       expect {
-        get path, params: { notification_wizard_delete_nano_material_form: { nano_material_id: nano_material1.id } }
+        get path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
