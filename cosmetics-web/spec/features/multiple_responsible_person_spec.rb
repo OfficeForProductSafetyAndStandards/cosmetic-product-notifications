@@ -33,7 +33,8 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     click_on "Change the Responsible Person"
     choose name_2
     click_on "Save and continue"
-    expect_to_be_on_responsible_person_notifications_page(responsible_person_2)
+    expect(page).to have_h1("UK Responsible Person")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person_2.id}")
   end
 
   scenario "Attempting to visit different from current responsible person pages redirects to change responsible person page" do
