@@ -59,7 +59,6 @@ def answer_does_nanomaterial_conform_to_restrictions_with(answer, nanomaterial_n
   click_button "Continue"
 end
 
-
 def expect_nano_material_task_completed(name)
   expect_task_completed name
 end
@@ -68,3 +67,11 @@ def expect_nano_material_task_not_started(name)
   expect_task_not_started name
 end
 
+def select_nano_materials_and_remove(answers)
+  within_fieldset("Select which nanomaterials to remove") do
+    answers.each do |answer|
+      page.check(answer)
+    end
+  end
+  click_button "Delete and continue"
+end

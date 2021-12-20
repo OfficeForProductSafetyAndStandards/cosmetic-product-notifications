@@ -1,0 +1,48 @@
+<% title = "Remove Nanomaterial" %>
+<% question = "Select which nanomaterials to remove" %>
+
+<% page_title title, errors: @form.errors.any? %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>
+<% end %>
+
+<% items = @notification.nano_materials.order(:created_at).map(&:nano_elements).flatten.each_with_index.map { |n, i|
+  hint = nil
+  if n.nano_material.components.present?
+    hint = { text: "Included in item(s): #{n.nano_material.components.map(&:name).join(', ')}.", classes: 'govuk-checkboxes__hint govuk-!-font-size-16' }
+  end
+
+  { name: 'notification_wizard_delete_nano_material_form[nano_material_ids][]',
+    text: (n.inci_name.present? ? n.inci_name : "Nanomaterial ##{i+1}"),
+    value: n.nano_material.id,
+    key: :nil, # TODO: investigate design library to get rid of required key attribute
+    id: "nano-#{n.id}",
+    disable_ghost: true,
+    hint: hint }
+} %>
+
+<% hint_text = tag.p('The selected nanomaterial(s) will be removed and deleted from this draft. If you delete all of them you can add nanomaterials to the draft by completing the first task again', class: 'govuk-body opss-secondary-text') %>
+
+<% if @notification.nano_materials.any? { |n| n.components.present? } %>
+  <% hint_text += tag.p('You can complete individual item tasks again to include nanomaterials you have created.', class: 'govuk-body opss-secondary-text') %>
+<% end %>
+
+<%= form_with model: @form, url: responsible_person_notification_draft_delete_nano_material_path(@notification.responsible_person, @notification), method: :delete do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= error_summary_for(@form) %>
+      <%= render "form_components/govuk_checkboxes",
+              form: form,
+              key: :component_id,
+              classes: "govuk-!-margin-top-7",
+              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
+              items: items,
+              hint: { text: hint_text, classes: 'govuk-!-width-three-quarters' } %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Delete and continue" %>
+
+        <a class="govuk-link" href="#">Cancel</a>
+      </div>
+    </div>
+  </div>
+<% end %>

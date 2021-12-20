@@ -16,7 +16,8 @@ class Component < ApplicationRecord
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   #has_one :nano_material, dependent: :destroy
-  has_many :nano_materials, dependent: :nullify
+  has_many :component_nano_materials
+  has_many :nano_materials, through: :component_nano_materials# dependent: :nullify
 
   # TODO:
   # Add callback to delete nanomaterial when component is being deleted.

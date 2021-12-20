@@ -20,12 +20,10 @@
         <a href="<%= add_nano_material_responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
           Add <span class="govuk-visually-hidden">another nanomaterial</span>
         </a>
-        <% if false %>
-          <span class="opss-task-sub__pipe">|</span>
-          <a href="remove-nano-step.html" class="govuk-link govuk-link--no-visited-state">
-            Remove <span class="govuk-visually-hidden">a nanomaterial</span>
-          </a>
-        <% end %>
+        <span class="opss-task-sub__pipe">|</span>
+        <a href="<%= responsible_person_notification_draft_delete_nano_material_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+          Remove <span class="govuk-visually-hidden">a nanomaterial</span>
+        </a>
       </span>
     </li>
   </ul>
