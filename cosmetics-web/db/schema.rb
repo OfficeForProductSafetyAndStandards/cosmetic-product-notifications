@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_06_170321) do
+ActiveRecord::Schema.define(version: 2021_12_20_142251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -58,6 +58,13 @@ ActiveRecord::Schema.define(version: 2021_12_06_170321) do
     t.datetime "updated_at", null: false
     t.bigint "component_id"
     t.index ["component_id"], name: "index_cmrs_on_component_id"
+  end
+
+  create_table "component_nano_materials", force: :cascade do |t|
+    t.integer "component_id"
+    t.integer "nano_material_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "components", force: :cascade do |t|

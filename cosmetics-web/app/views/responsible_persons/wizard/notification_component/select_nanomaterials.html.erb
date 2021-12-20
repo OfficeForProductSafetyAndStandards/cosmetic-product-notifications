@@ -15,7 +15,7 @@
           value: n.nano_material.id,
           key: :nil, # TODO: investigate design library to get rid of required key attribute
           id: "nano_material_#{n.id}",
-          checked: (NanoElement.find(n.id).nano_material.component == @component),
+          checked: (NanoElement.find(n.id).nano_material.components.include?(@component)),
           disable_ghost: true
         }
       }
