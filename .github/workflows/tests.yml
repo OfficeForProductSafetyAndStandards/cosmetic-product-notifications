@@ -34,7 +34,7 @@ jobs:
     - name: Set up Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.7.x
+        ruby-version: 3.0.x
     - name: Set up Node
       uses: actions/setup-node@v1
       with:
