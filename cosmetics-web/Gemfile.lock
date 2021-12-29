@@ -273,6 +273,8 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
+      racc (~> 1.4)
     notifications-ruby-client (5.1.1)
       jwt (>= 1.5, < 3)
     ntlm-http (0.1.1)
@@ -529,6 +531,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   aasm (= 5.2.0)
