@@ -212,7 +212,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect(page).to have_text("If you’re using this service for the first time")
   end
 
-  def fill_in_account_details_with(full_name: nil, password:, mobile_number: nil, app_code: nil)
+  def fill_in_account_details_with(password:, full_name: nil, mobile_number: nil, app_code: nil)
     fill_in("Full name", with: full_name) if full_name
     fill_in "Password", with: password
     if mobile_number

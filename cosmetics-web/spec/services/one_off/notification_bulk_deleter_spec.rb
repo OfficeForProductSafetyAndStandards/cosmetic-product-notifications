@@ -40,13 +40,13 @@ RSpec.describe OneOff::NotificationBulkDeleter do
     it "logs the given references that didn't match any notification" do
       bulk_deleter.call
       expect(Rails.logger).to have_received(:info)
-        .with(/References not found: \[\"11111111\", \"12345678\"\]/)
+        .with(/References not found: \["11111111", "12345678"\]/)
     end
 
     it "logs the references for the deleted notifications" do
       bulk_deleter.call
       expect(Rails.logger).to have_received(:info)
-        .with(/Deleted notifications: \[\"11039162\", \"49508706\", \"16335561\", \"58914669\", \"4970943\"\]/)
+        .with(/Deleted notifications: \["11039162", "49508706", "16335561", "58914669", "4970943"\]/)
     end
   end
 end

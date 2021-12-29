@@ -34,7 +34,7 @@ module OneOff
 
     def parse_references_to_delete
       File.readlines(@filepath).map { |ref| ref.delete("^0-9") } # Our DB only stores the integer code
-                               .map { |ref| ref.sub(/^[0]*/, "") } # Removes leading "0"s as they're not stored in DB
+                               .map { |ref| ref.sub(/^0*/, "") } # Removes leading "0"s as they're not stored in DB
     end
   end
 end
