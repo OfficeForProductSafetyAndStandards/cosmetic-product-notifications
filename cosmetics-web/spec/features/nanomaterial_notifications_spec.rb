@@ -52,7 +52,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     click_button "Continue"
 
     expect(page).to have_selector("h1", text: "Upload details about the nanomaterial")
-    attach_file "Upload a file", Rails.root + "spec/fixtures/files/testPdf.pdf"
+    attach_file "Upload a file", "#{Rails.root}spec/fixtures/files/testPdf.pdf" # rubocop:todo Rails/FilePath
     click_button "Continue"
 
     expect(page).to have_selector("h1", text: "Check your answers")
@@ -92,7 +92,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     click_button "Continue"
 
     expect(page).to have_selector("h1", text: "Upload details about the nanomaterial")
-    attach_file "Upload a file", Rails.root + "spec/fixtures/files/testPdf.pdf"
+    attach_file "Upload a file", "#{Rails.root}spec/fixtures/files/testPdf.pdf" # rubocop:todo Rails/FilePath
     click_button "Continue"
 
     expect(page).to have_selector("h1", text: "Check your answers")
