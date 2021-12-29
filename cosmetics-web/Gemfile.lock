@@ -6,6 +6,14 @@ GIT
     govuk-design-system-rails (0.8.0)
       slim-rails
 
+GIT
+  remote: https://github.com/zilkey/active_hash.git
+  revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
+  ref: 1c95f99
+  specs:
+    active_hash (3.1.0)
+      activesupport (>= 5.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -49,8 +57,6 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_hash (2.2.1)
-      activesupport (>= 5.0.0)
     activejob (6.1.4.4)
       activesupport (= 6.1.4.4)
       globalid (>= 0.3.6)
@@ -539,7 +545,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (= 5.2.0)
-  active_hash (~> 2.2.1)
+  active_hash!
   activerecord-pg_enum
   aws-sdk-s3 (~> 1.60.1)
   brakeman (~> 4.7.2)
