@@ -10,9 +10,10 @@ class NotifyMailer < GovukNotifyRails::Mailer
     set_host(user)
     set_template(self.class::TEMPLATES[:reset_password_instruction])
     set_reference("Password reset")
-    reset_url = if user.is_a? SubmitUser
+    reset_url = case user
+                when SubmitUser
                   edit_submit_user_password_url(reset_password_token: token, host: @host)
-                elsif user.is_a? SearchUser
+                when SearchUser
                   edit_search_user_password_url(reset_password_token: token, host: @host)
                 end
     set_personalisation(
