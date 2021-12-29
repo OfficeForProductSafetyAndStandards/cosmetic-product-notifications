@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# rubocop:todo RSpec/MultipleMemoizedHelpers
 RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
@@ -33,15 +34,15 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
     sign_out(:submit_user)
   end
 
-  describe "GET #new" do
+  describe "GET #new" do # rubocop:todo RSpec/MultipleMemoizedHelpers
     it "redirects to the first step of the wizard" do
       get(:new, params: params)
       expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :select_purposes))
     end
   end
 
-  describe "GET #show" do
-    context "when the notification is already submitted" do
+  describe "GET #show" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the notification is already submitted" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       subject(:request) { get(:show, params: params.merge({ id: "confirm_usage" })) }
 
       let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
@@ -66,7 +67,7 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
       expect(response).to render_template(:select_purposes)
     end
 
-    describe "at wicked_finish" do
+    describe "at wicked_finish" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       it "redirects to a new nanomaterial build page, with the next nano-element, on finish" do
         get(:show, params: params.merge(id: :wicked_finish))
         expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element2))
@@ -78,7 +79,7 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
       end
     end
 
-    describe "at confirm_restrictions" do
+    describe "at confirm_restrictions" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       it "redirects to the non-standard nanomaterial path when nano-element purposes include 'other'" do
         nano_element1.update(purposes: %w[other])
         get(:show, params: params.merge(id: :confirm_restrictions))
@@ -87,8 +88,8 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
     end
   end
 
-  describe "POST #update" do
-    describe "at select_purposes"  do
+  describe "POST #update" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "at select_purposes"  do # rubocop:todo RSpec/MultipleMemoizedHelpers
       let(:select_purposes_params) { params.merge(id: :select_purposes) }
 
       it "updates the nano-element with the selected purposes" do
@@ -112,7 +113,7 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
       end
     end
 
-    describe "at confirm_restrictions" do
+    describe "at confirm_restrictions" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       let(:confirm_restrictions_params) { params.merge(id: :confirm_restrictions) }
 
       it "redirects to the next page when confirm_restrictions is 'yes'" do
@@ -132,3 +133,4 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

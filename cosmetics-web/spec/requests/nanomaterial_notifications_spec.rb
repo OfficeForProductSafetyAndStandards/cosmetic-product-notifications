@@ -56,7 +56,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
   end
 
-  describe "GET /responsible_persons/:id/nanomaterials.csv" do
+  describe "GET /responsible_persons/:id/nanomaterials.csv" do # rubocop:todo RSpec/MultipleMemoizedHelpers
     let(:rp) { responsible_person }
     let(:expected_csv) do
       <<~CSV
@@ -258,7 +258,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     context "when the user has access and notification is submittable" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person, name: "Previous name") }
 
-      context "with a valid new name" do
+      context "with a valid new name" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:name) { "Updated name" }
 
         it "redirects to the Check your answers page" do
@@ -270,7 +270,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         end
       end
 
-      context "with no new name given" do
+      context "with no new name given" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:name) { "" }
 
         it "renders the page" do
@@ -286,7 +286,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     context "when the user has access but EU question not yet answered" do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Previous name", eu_notified: nil) }
 
-      context "with a valid new name" do
+      context "with a valid new name" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:name) { "Updated name" }
 
         it "redirects to the EU notification question page" do
@@ -362,7 +362,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         patch "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu", params: nanomaterial_params
       end
 
-      context "when a valid pre-Brexit date is entered" do
+      context "when a valid pre-Brexit date is entered" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:nanomaterial_params) do
           {
             eu_notified: "true",
@@ -379,7 +379,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         end
       end
 
-      context "when the EU wasn’t notified" do
+      context "when the EU wasn’t notified" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:nanomaterial_params) do
           {
             eu_notified: "false",
@@ -391,7 +391,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         end
       end
 
-      context "when no answer was selected" do
+      context "when no answer was selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:nanomaterial_params) { {} }
 
         it "renders an error page" do
@@ -399,7 +399,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         end
       end
 
-      context "when a an invalid date is entered" do
+      context "when a an invalid date is entered" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:nanomaterial_params) do
           {
             eu_notified: "true",
@@ -428,7 +428,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         patch "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu", params: nanomaterial_params
       end
 
-      context "when a valid answer is given" do
+      context "when a valid answer is given" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:nanomaterial_params) { { eu_notified: "false" } }
 
         it "redirects to the Check your answers page" do
@@ -514,7 +514,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         patch "/nanomaterials/#{nanomaterial_notification.id}/file", params: params
       end
 
-      context "when a file is selected" do
+      context "when a file is selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:file) { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf", true) }
         let(:params) { { nanomaterial_notification: { file: file } } }
 
@@ -523,7 +523,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         end
       end
 
-      context "when no file is selected" do
+      context "when no file is selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:params) { {} }
 
         it "is renders a page" do

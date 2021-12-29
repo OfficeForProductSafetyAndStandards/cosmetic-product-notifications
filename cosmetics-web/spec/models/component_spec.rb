@@ -25,6 +25,7 @@ RSpec.describe Component, type: :model do
   end
 
   describe "name validation" do
+    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when there is already a component with the same name for the same notification" do
       let(:component) { described_class.new(name: "Component X", notification: notification) }
 
@@ -41,7 +42,9 @@ RSpec.describe Component, type: :model do
         expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
+    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when there is already a component with the same name but using uppercase for the same notification" do
       let(:component) { described_class.new(name: "Component X", notification: notification) }
 
@@ -58,7 +61,9 @@ RSpec.describe Component, type: :model do
         expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
+    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when there is already a component with no name for the same notification" do
       let(:component) { described_class.new(name: nil, notification: notification) }
 
@@ -70,6 +75,7 @@ RSpec.describe Component, type: :model do
         expect(component).to be_valid
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 
   describe "formulation_required", :with_stubbed_antivirus do
@@ -382,7 +388,7 @@ RSpec.describe Component, type: :model do
   end
 
   describe "#nano_material_required?" do
-    context "when there is no nanomaterial" do
+    context "when there is no nanomaterial" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       let(:component) { build(:component) }
 
       it "does not require nano material information" do
@@ -390,18 +396,18 @@ RSpec.describe Component, type: :model do
       end
     end
 
-    context "when there is a nano material" do
+    context "when there is a nano material" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       let(:first_nano_element) { build(:nano_element) }
       let(:nano_material) { build(:nano_material, nano_elements: [first_nano_element]) }
       let(:component) { build(:component, nano_material: nano_material) }
 
-      context "when a nano element requires information" do
+      context "when a nano element requires information" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         it "requires more information the nano_material" do
           expect(component).to be_nano_material_required
         end
       end
 
-      context "when a nano element does not require information" do
+      context "when a nano element does not require information" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:first_nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w[other]) }
 
         it "requires nano material information" do
@@ -411,7 +417,7 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "#poisonous_ingredients_answer" do
+  describe "#poisonous_ingredients_answer" do # rubocop:todo RSpec/MultipleMemoizedHelpers
     let(:component) { build(:component) }
 
     it "returns nil if contains_poisonous_ingredients is nil" do
