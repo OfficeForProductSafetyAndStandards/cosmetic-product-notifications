@@ -23,15 +23,4 @@ RSpec.describe "Team members management", type: :request, with_stubbed_notify: t
       end
     end
   end
-
-  describe "Resending invitation" do
-    context "when invitation does not belongs to responsible person" do
-      let(:invitation) { create(:pending_responsible_person_user, responsible_person: other_responsible_person) }
-
-      it "returns 404" do
-        get resend_invitation_responsible_person_team_member_path(responsible_person, invitation)
-        expect(response).to redirect_to("/404")
-      end
-    end
-  end
 end
