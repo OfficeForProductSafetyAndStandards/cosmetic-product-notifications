@@ -50,7 +50,7 @@ gem "govuk-design-system-rails", git: "https://github.com/UKGovernmentBEIS/govuk
 
 group :development, :test do
   gem "brakeman", "~> 4.7.2"
-  gem "capybara", "~> 3.30.0"
+  gem "capybara", "~> 3.36.0"
   gem "capybara-mechanize"
   gem "capybara-screenshot"
   gem "coveralls_reborn", "~> 0.22.0"
