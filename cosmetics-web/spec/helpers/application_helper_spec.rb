@@ -56,7 +56,7 @@ describe ApplicationHelper do
     end
 
     context "when providing a list with attributes order" do
-      context "with all the attributes defined in the order" do
+      context "with all the attributes defined in the order" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:order) { %i[mobile_number email name] }
 
         it "generates the error summary with an ordered and formatted list of errors" do
@@ -67,7 +67,7 @@ describe ApplicationHelper do
         end
       end
 
-      context "when some attribute is missing in the order" do
+      context "when some attribute is missing in the order" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:order) { %i[mobile_number name] }
 
         it "adds the attribute errors after the ordered ones" do
@@ -78,7 +78,7 @@ describe ApplicationHelper do
         end
       end
 
-      context "when the order includes attributes without errors" do
+      context "when the order includes attributes without errors" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:order) { %i[bar name foo mobile_number email] }
 
         it "ignores them and respects the order for the attributes with errors" do

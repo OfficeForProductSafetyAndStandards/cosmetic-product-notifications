@@ -49,8 +49,8 @@ class UsersController < SearchApplicationController
       # Sets 2FA cookie for users that have set authentication APP in the account security page.
       # If they have chosen the sms code authentication option we won't set the cookie until
       # they confirm their mobile number with the sms code at "Check your phone" page.
-      if account_security_form.app_authentication_selected? && !account_security_form.sms_authentication_selected?
-        set_secondary_authentication_cookie(Time.zone.now.to_i) if @user.last_totp_at
+      if account_security_form.app_authentication_selected? && !account_security_form.sms_authentication_selected? && @user.last_totp_at
+        set_secondary_authentication_cookie(Time.zone.now.to_i)
       end
       redirect_to root_path
     else

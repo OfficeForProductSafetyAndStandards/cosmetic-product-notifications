@@ -60,13 +60,13 @@ module GovUK
 
     def date_values
       @date_values ||= begin
-                        @date.symbolize_keys! if @date.respond_to?(:symbolize_keys!)
-                        @date.values_at(:year, :month, :day).map do |date_part|
-                          date_part.is_a?(Integer) ? date_part : Integer(date_part.delete_prefix("0"))
-                        rescue StandardError
-                          nil
-                        end
-                      end
+        @date.symbolize_keys! if @date.respond_to?(:symbolize_keys!)
+        @date.values_at(:year, :month, :day).map do |date_part|
+          date_part.is_a?(Integer) ? date_part : Integer(date_part.delete_prefix("0"))
+        rescue StandardError
+          nil
+        end
+      end
     end
   end
 end

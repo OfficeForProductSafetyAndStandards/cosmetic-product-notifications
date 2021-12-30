@@ -1,7 +1,7 @@
 module SecondaryAuthentication
   module Sms
     class AuthForm < Form
-      INTEGER_REGEX = /\A\d+\z/.freeze
+      INTEGER_REGEX = /\A\d+\z/
 
       attribute :otp_code
       attribute :user_id

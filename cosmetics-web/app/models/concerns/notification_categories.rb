@@ -113,7 +113,7 @@ module NotificationCategories
       other_oral_hygiene_products_child: "other_oral_hygiene_products_child",
     }, _prefix: :category
 
-    PARENT_OF_CATEGORY = {
+    PARENT_OF_CATEGORY = { # rubocop:todo Lint/ConstantDefinitionInBlock
       skin_care_products: :skin_products,
       face_care_products_other_than_face_mask: :skin_care_products,
       face_mask: :skin_care_products,

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe User, type: :model do
+RSpec.describe User, type: :model do # rubocop:todo RSpec/FilePath
   describe "change email" do
     let(:old_email) { "old@example.com" }
     let(:expected_token) { "foobar" }
@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
       travel_back
     end
 
-    describe "#new_email_pending_confirmation!" do
+    describe "#new_email_pending_confirmation!" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       let(:user) { create(:submit_user, email: old_email) }
       let(:mailer) { double }
 
@@ -25,7 +25,7 @@ RSpec.describe User, type: :model do
         allow(mailer).to receive(:deliver_later)
       end
 
-      context "when successful" do
+      context "when successful" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         it "saves email" do
           expect {
             user.new_email_pending_confirmation!(new_email)
@@ -53,8 +53,8 @@ RSpec.describe User, type: :model do
         end
       end
 
-      context "with validation errors" do
-        shared_examples "invalid email" do
+      context "with validation errors" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        shared_examples "invalid email" do # rubocop:todo RSpec/MultipleMemoizedHelpers
           specify do
             expect {
               user.new_email_pending_confirmation!(new_email)
@@ -62,19 +62,19 @@ RSpec.describe User, type: :model do
           end
         end
 
-        context "when email is empty" do
+        context "when email is empty" do # rubocop:todo RSpec/MultipleMemoizedHelpers
           let(:new_email) { "" }
 
           include_examples "invalid email"
         end
 
-        context "when email is missing domain" do
+        context "when email is missing domain" do # rubocop:todo RSpec/MultipleMemoizedHelpers
           let(:new_email) { "foo@bar" }
 
           include_examples "invalid email"
         end
 
-        context "when email is incorrect" do
+        context "when email is incorrect" do # rubocop:todo RSpec/MultipleMemoizedHelpers
           let(:new_email) { "foo.bar.com" }
 
           include_examples "invalid email"
@@ -82,8 +82,8 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe ".confirm_new_email!(token)" do
-      shared_examples "invalid token" do
+    describe ".confirm_new_email!(token)" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      shared_examples "invalid token" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         it "does not change email" do
           begin
             described_class.confirm_new_email!(token)
@@ -112,7 +112,7 @@ RSpec.describe User, type: :model do
         allow(mailer).to receive(:deliver_later)
       end
 
-      context "when token is valid" do
+      context "when token is valid" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:token) { expected_token }
 
         it "changes email successfully" do
@@ -132,13 +132,13 @@ RSpec.describe User, type: :model do
         end
       end
 
-      context "when token is invalid" do
+      context "when token is invalid" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:token) { "wrong-token" }
 
         include_examples "invalid token"
       end
 
-      context "when token is expired" do
+      context "when token is expired" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:token) { expected_token }
 
         before do

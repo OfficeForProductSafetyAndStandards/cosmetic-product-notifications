@@ -115,9 +115,7 @@ module CategoryHelper
   end
 
   def full_category_display_name(component)
-    component.display_root_category + ", " + \
-      component.display_sub_category + ", " + \
-      component.display_sub_sub_category
+    "#{component.display_root_category}, #{component.display_sub_category}, #{component.display_sub_sub_category}"
   end
 
   def get_full_category_name(sub_sub_category)

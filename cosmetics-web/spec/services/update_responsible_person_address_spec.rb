@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
+RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do # rubocop:todo RSpec/MultipleMemoizedHelpers
   let(:original_address) do
     {
       address_line_1: "Original street",
@@ -72,6 +72,7 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
     expect(result.error).to eq "Address contains unknown fields"
   end
 
+  # rubocop:todo RSpec/MultipleMemoizedHelpers
   context "when the provided address is the same as the original address" do
     let!(:result) do
       described_class.call(user: user, responsible_person: responsible_person, address: original_address)
@@ -93,9 +94,10 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
       expect(responsible_person.reload.address_logs).to be_empty
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-  context "when the provided address is different from the original one" do
-    context "without any exception" do
+  context "when the provided address is different from the original one" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "without any exception" do # rubocop:todo RSpec/MultipleMemoizedHelpers
       let!(:result) do
         described_class.call(user: user, responsible_person: responsible_person, address: new_address)
       end
@@ -159,6 +161,7 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
       # rubocop:enable RSpec/ExampleLength
     end
 
+    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "with an exception while attempting to archive the previous address" do
       let(:address_log_stub) { instance_double(ResponsiblePersonAddressLog) }
       let(:result) do
@@ -183,5 +186,6 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
         expect(delivered_emails).to be_empty
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 end

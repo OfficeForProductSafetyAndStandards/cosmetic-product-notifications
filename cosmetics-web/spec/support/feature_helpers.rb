@@ -319,7 +319,7 @@ end
 
 def expect_back_link_to_item_category_page(category = nil)
   if category
-    expect_back_link_to(/\/build\/select_category\?category\=#{category}/)
+    expect_back_link_to(/\/build\/select_category\?category=#{category}/)
   else
     expect_back_link_to(/\/build\/select_category/)
   end
@@ -424,7 +424,7 @@ def expect_to_be_on__upload_formulation_document_page(header_text)
 end
 
 # rubocop:disable Naming/MethodParameterName
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs: nil, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Product name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)

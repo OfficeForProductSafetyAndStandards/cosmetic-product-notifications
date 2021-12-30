@@ -158,7 +158,7 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
         post(:update, params: params.merge(id: :add_new_component, notification_reference_number: completed_notification.reference_number, commit: "continue"))
       end
 
-      context "when only 1 valid component has been added" do
+      context "when only 1 valid component has been added" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:completed_notification) { create(:notification, responsible_person: responsible_person, components: [create(:component, :with_name)]) }
 
         it "re-renders the page" do
@@ -166,7 +166,7 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationBuildController, :with_st
         end
       end
 
-      context "when the product has 2 valid component" do
+      context "when the product has 2 valid component" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:completed_notification) { create(:notification, responsible_person: responsible_person, components: [create(:component, name: "Component 1"), create(:component, name: "Component 2")]) }
 
         it "redirects to the wizard finish" do

@@ -1,3 +1,3 @@
 class UserNameFormatValidator < NameFormatValidator
-  BANNED_REGEXP = /:|\/|@|<|>|,|\.|\n|www|http/.freeze
+  BANNED_REGEXP = /:|\/|@|<|>|,|\.|\n|www|http/
 end

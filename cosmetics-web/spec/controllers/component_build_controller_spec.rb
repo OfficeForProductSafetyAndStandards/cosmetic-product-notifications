@@ -233,7 +233,7 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
     end
 
     context "when selecting whether the component contains poisonous materials" do
-      context "when an answer is provided" do
+      context "when an answer is provided" do # rubocop:todo RSpec/MultipleMemoizedHelpers
         let(:answer) { "true" }
 
         before { post(:update, params: params.merge(id: :contains_poisonous_ingredients, component: { contains_poisonous_ingredients: answer })) }
@@ -242,13 +242,13 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
           expect(assigns(:component).contains_poisonous_ingredients).to be(true)
         end
 
-        context "when the answer is true" do
+        context "when the answer is true" do # rubocop:todo RSpec/MultipleMemoizedHelpers
           it "redirects to the upload formulation page" do
             expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :upload_formulation))
           end
         end
 
-        context "when the answer is false" do
+        context "when the answer is false" do # rubocop:todo RSpec/MultipleMemoizedHelpers
           let(:answer) { "false" }
 
           it "redirects to the select pH range page" do
