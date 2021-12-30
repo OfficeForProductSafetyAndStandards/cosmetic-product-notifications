@@ -138,8 +138,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-security (0.16.0)
-      devise (>= 4.3.0, < 5.0)
+    devise-security (0.17.0)
+      devise (>= 4.3.0)
     diff-lcs (1.4.4)
     docile (1.4.0)
     domain_name (0.5.20190701)
