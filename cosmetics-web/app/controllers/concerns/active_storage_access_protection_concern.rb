@@ -1,3 +1,4 @@
+# Just for test
 module ActiveStorageAccessProtectionConcern
   extend ActiveSupport::Concern
   include Pundit
