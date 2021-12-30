@@ -178,36 +178,6 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "#destroy_notification!" do
-    before { notification }
-
-    let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
-    let(:submit_user) { responsible_person.responsible_person_users.first.user }
-
-    context "when is draft" do
-      let(:notification) { create(:draft_notification, responsible_person: responsible_person) }
-
-      it "uses #destroy!" do
-        expect {
-          notification.destroy_notification!(submit_user)
-        }.to change(described_class.deleted, :count).from(0).to(1)
-      end
-    end
-
-    context "when is completed" do
-      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
-      let(:service) { instance_double(NotificationDeleteService, call: nil) }
-
-      it "uses NotificationDeleteService" do
-        allow(NotificationDeleteService).to receive(:new).with(notification, submit_user) { service }
-
-        notification.destroy_notification!(submit_user)
-
-        expect(service).to have_received(:call)
-      end
-    end
-  end
-
   describe "#can_be_deleted?" do
     it "can be deleted if the notification is not complete" do
       notification = build_stubbed(:draft_notification)
@@ -258,11 +228,11 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification: notification) }
     let(:deleted_notification) { DeletedNotification.first }
 
-    context "when notification is deleted" do
+    describe "#soft_delete!" do
       describe "deleted notification record" do
         let!(:notification_attributes) { notification.attributes }
 
-        before { notification.destroy! }
+        before { notification.soft_delete! }
 
         it "is created with proper attributes" do
           Notification::DELETABLE_ATTRIBUTES.each do |attribute|
@@ -280,15 +250,22 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
 
       describe "#destroy" do
-        it "works as #destroy!" do
+        it "works as #soft_delete!" do
           notification.destroy
+          expect(notification.reload.state).to eq "deleted"
+        end
+      end
+
+      describe "#destroy!" do
+        it "works as #soft_delete!" do
+          notification.destroy!
           expect(notification.reload.state).to eq "deleted"
         end
       end
 
       describe "notification that is soft deleted" do
         it "removes all attributes properly" do
-          notification.destroy!
+          notification.soft_delete!
           notification.reload
 
           Notification::DELETABLE_ATTRIBUTES.each do |attribute|
@@ -298,35 +275,65 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
         it "can not be double deleted" do
           expect {
-            notification.destroy!
-            notification.destroy!
+            notification.soft_delete!
+            notification.soft_delete!
           }.to change(DeletedNotification, :count).by(1)
         end
 
         it "has deleted state" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.state).to eq "deleted"
         end
 
         it "has components" do
           components = notification.components
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.components).to eq components
         end
 
         it "has image upload" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.image_uploads).to eq [image_upload]
         end
 
         it "has responsible_person" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.reload.responsible_person).to eq responsible_person
         end
 
         it "is linked to deleted_notification" do
-          notification.destroy!
+          notification.soft_delete!
           expect(notification.deleted_notification).to eq deleted_notification
+        end
+      end
+    end
+
+    describe "#hard_delete!" do
+      it "deletes notification from database" do
+        notification
+        expect {
+          notification.hard_delete!
+        }.to change(described_class, :count).by(-1)
+        expect { notification.reload }.to raise_error ActiveRecord::RecordNotFound
+      end
+
+      it "deletes the image upload associated to the notification from database" do
+        image_upload
+        expect {
+          notification.hard_delete!
+        }.to change(ImageUpload, :count).by(-1)
+        expect { image_upload.reload }.to raise_error ActiveRecord::RecordNotFound
+      end
+
+      context "when the notification was soft deleted" do
+        let!(:notification) { create(:notification, :deleted) }
+        let(:deleted_notification) { notification.deleted_notification }
+
+        it "deletes the 'deleted notification' record from database" do
+          expect {
+            notification.hard_delete!
+          }.to change(DeletedNotification, :count).by(-1)
+          expect { deleted_notification.reload }.to raise_error ActiveRecord::RecordNotFound
         end
       end
     end
