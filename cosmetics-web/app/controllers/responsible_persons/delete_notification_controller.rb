@@ -6,7 +6,7 @@ class ResponsiblePersons::DeleteNotificationController < SubmitApplicationContro
   def delete; end
 
   def destroy
-    @notification.destroy_notification!(current_user)
+    NotificationDeleteService.new(@notification, current_user).call
 
     tab = @notification.notification_complete? ? "notified" : "incomplete"
     redirect_to responsible_person_notifications_path(@responsible_person, tab: tab), confirmation: "#{@notification.deleted_notification.product_name} notification deleted"
