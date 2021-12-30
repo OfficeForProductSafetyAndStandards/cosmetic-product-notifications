@@ -2,24 +2,24 @@ module ResponsiblePersons::NotificationsHelper
   def notification_summary_references_rows(notification)
     [
       {
-        key: { html: "<abbr title='United Kingdom'>UK</abbr> cosmetic product number".html_safe },
+        key: { html: "<abbr>UK</abbr> cosmetic product number".html_safe },
         value: { text: notification.reference_number_for_display },
       },
       if notification.cpnp_reference.present?
         {
-          key: { html: "<abbr title='European Union'>EU</abbr> reference number".html_safe },
+          key: { html: "<abbr>EU</abbr> reference number".html_safe },
           value: { text: notification.cpnp_reference },
         }
       end,
       if notification.cpnp_notification_date.present?
         {
-          key: { html: "First notified in the <abbr title='European Union'>EU</abbr>".html_safe },
+          key: { html: "First notified in the <abbr>EU</abbr>".html_safe },
           value: { text: display_full_month_date(notification.cpnp_notification_date) },
         }
       end,
       if notification.notification_complete_at.present?
         {
-          key: { html: "<abbr title='United Kingdom'>UK</abbr> notified".html_safe },
+          key: { html: "<abbr>UK</abbr> notified".html_safe },
           value: { text: display_full_month_date(notification.notification_complete_at) },
         }
       end,
