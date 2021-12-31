@@ -55,7 +55,7 @@ group :development, :test do
   # Capybara Mechanize is unmaintained and does not support Ruby 3.0+
   # https://github.com/jeroenvandijk/capybara-mechanize/issues/68
   # The following version is a fork patching the issue:
-  gem 'capybara-mechanize', github: 'tomstuart/capybara-mechanize', ref: '64073e9'
+  gem "capybara-mechanize", github: "tomstuart/capybara-mechanize", ref: "64073e9"
   gem "capybara-screenshot"
   gem "coveralls_reborn", "~> 0.22.0"
   gem "debase", "~> 0.2.5.beta2"
