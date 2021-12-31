@@ -7,6 +7,15 @@ GIT
       slim-rails
 
 GIT
+  remote: https://github.com/tomstuart/capybara-mechanize.git
+  revision: 64073e91f67a3a6d229d2527e82cd42e8d4addd9
+  ref: 64073e9
+  specs:
+    capybara-mechanize (1.11.0)
+      capybara (>= 2.4.4, < 4)
+      mechanize (~> 2.7.0)
+
+GIT
   remote: https://github.com/zilkey/active_hash.git
   revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
   ref: 1c95f99
@@ -117,9 +126,6 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    capybara-mechanize (1.11.0)
-      capybara (>= 2.4.4, < 4)
-      mechanize (~> 2.7.0)
     capybara-screenshot (1.0.25)
       capybara (>= 1.0, < 4)
       launchy
@@ -552,7 +558,7 @@ DEPENDENCIES
   aws-sdk-s3 (~> 1.60.1)
   brakeman (~> 4.7.2)
   capybara (~> 3.36.0)
-  capybara-mechanize
+  capybara-mechanize!
   capybara-screenshot
   cf-app-utils (~> 0.6)
   coveralls_reborn (~> 0.22.0)
