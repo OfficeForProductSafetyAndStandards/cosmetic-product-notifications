@@ -30,6 +30,10 @@ class NanoElement < ApplicationRecord
     purposes.present? && purposes.include?("other")
   end
 
+  def multi_purpose?
+    purposes.count > 1
+  end
+
   def completed?
     ((standard? && inci_name.present? && confirm_usage == "yes" && confirm_restrictions == "yes") ||
       (purposes&.include?("other") && confirm_toxicology_notified == "yes")) && !blocked?

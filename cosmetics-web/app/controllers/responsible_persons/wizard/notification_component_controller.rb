@@ -32,6 +32,34 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :min_max_ph,
         :completed
 
+  BACK_ROUTING = {
+    select_nanomaterials: :add_component_name,
+    add_exposure_condition: :select_nanomaterials,
+    add_exposure_routes: :add_exposure_condition,
+    number_of_shades: [:add_exposure_routes, :add_component_name],
+    add_shades: :number_of_shades,
+    add_physical_form: :number_of_shades,
+    contains_special_applicator: :add_physical_form,
+    select_special_applicator_type: :contains_special_applicator, # only if contains special applicato: :,
+    contains_cmrs: :contains_special_applicator,
+    add_cmrs: :contains_cmrs,
+    select_category: :contains_cmrs,
+    select_formulation_type: :select_category,
+    upload_formulation: :select_formulation_type, # only for range and exac: :,
+    select_frame_formulation: :select_formulation_type, # only for frame formulatio: :,
+    contains_poisonous_ingredients: :select_formulation_type, # only for frame formulatio: :,
+    upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulatio: :,
+    select_ph_option: [:contains_poisonous_ingredients, :upload_formulation],
+    min_max_ph: :select_ph_option
+  }
+
+  BACK_ROUTING_FUNCTIONS = {
+    add_exposure_routes: -> { @component.notification.nano_materials.present? },
+    add_component_name: -> { @component.notification.multi_component? },
+    contains_poisonous_ingredients: -> { @component.predefined? },
+    upload_formulation: -> { true }
+  }
+
   def show
     case step
     when :select_nanomaterials
