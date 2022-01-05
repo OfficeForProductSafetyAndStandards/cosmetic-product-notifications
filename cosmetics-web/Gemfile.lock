@@ -1,19 +1,19 @@
 GIT
-  remote: https://github.com/UKGovernmentBEIS/govuk-design-system-rails
-  revision: a80a606a9b01083de22f903a53a30433a626f1e1
-  tag: 0.8.0
-  specs:
-    govuk-design-system-rails (0.8.0)
-      slim-rails
-
-GIT
-  remote: https://github.com/tomstuart/capybara-mechanize.git
+  remote: https://github.com/UKGovernmentBEIS/capybara-mechanize.git
   revision: 64073e91f67a3a6d229d2527e82cd42e8d4addd9
   ref: 64073e9
   specs:
     capybara-mechanize (1.11.0)
       capybara (>= 2.4.4, < 4)
       mechanize (~> 2.7.0)
+
+GIT
+  remote: https://github.com/UKGovernmentBEIS/govuk-design-system-rails
+  revision: a80a606a9b01083de22f903a53a30433a626f1e1
+  tag: 0.8.0
+  specs:
+    govuk-design-system-rails (0.8.0)
+      slim-rails
 
 GIT
   remote: https://github.com/zilkey/active_hash.git
