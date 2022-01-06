@@ -2,12 +2,16 @@ require "rails_helper"
 
 RSpec.describe NotificationSearchForm do
   subject(:form) do
-    described_class.new(q: q,
-                        category: category,
-                        date_from: date_from,
-                        date_to: date_to,
-                        date_exact: date_exact,
-                        date_filter: date_filter)
+    described_class.new(form_args)
+  end
+
+  let(:form_args) do
+    { q: q,
+      category: category,
+      date_from: date_from,
+      date_to: date_to,
+      date_exact: date_exact,
+      date_filter: date_filter }
   end
 
   let(:q) { "Soap" }
@@ -48,6 +52,32 @@ RSpec.describe NotificationSearchForm do
   end
 
   describe "form behaviour" do
+    describe "sorting" do
+      RSpec.shared_examples "sorts by newest" do
+        it "sorts by newest" do
+          expect(form.sort_by).to eq("date_descending")
+        end
+      end
+
+      context "when sorting is not specified" do
+        include_examples "sorts by newest"
+      end
+
+      context "when sorting is explicitly null" do
+        let(:form_args) { super().merge(sort_by: nil) }
+
+        include_examples "sorts by newest"
+      end
+
+      context "when valid sorting is given" do
+        let(:form_args) { super().merge(sort_by: "date_descending") }
+
+        it "keeps the given sorting value" do
+          expect(form.sort_by).to eq("date_descending")
+        end
+      end
+    end
+
     context "when form fields are incorrect" do
       let(:date_exact_year) { "foo" }
       let(:date_exact_month) { "bar" }

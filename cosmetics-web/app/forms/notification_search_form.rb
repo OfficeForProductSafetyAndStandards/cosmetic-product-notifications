@@ -44,6 +44,11 @@ class NotificationSearchForm < Form
 
   validate :date_from_lower_then_date_to
 
+  def initialize(args = {})
+    super(args)
+    self.sort_by ||= SEARCH_OPTIONS["Newest"]
+  end
+
   def date_from_for_search
     return unless valid?
 
