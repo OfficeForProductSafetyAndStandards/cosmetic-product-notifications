@@ -52,7 +52,6 @@ gem "govuk-design-system-rails", git: "https://github.com/UKGovernmentBEIS/govuk
 group :development, :test do
   gem "brakeman", "~> 4.7.2"
   gem "capybara", "~> 3.36.0"
-  gem "capybara-mechanize"
   gem "capybara-screenshot"
   gem "coveralls_reborn", "~> 0.22.0"
   gem "debase", "~> 0.2.5.beta2"
@@ -73,6 +72,7 @@ group :development, :test do
   gem "rubocop-rails", "~> 2.12.4"
   gem "rubocop-rspec", "~> 2.6.0"
   gem "ruby-debug-ide", "~> 0.7.0"
+  gem "selenium-webdriver", "~> 4.1"
   gem "simplecov", "~> 0.21.2"
   gem "simplecov-console", "~> 0.6.0"
   gem "simplecov-lcov", "~> 0.7.0"
