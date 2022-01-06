@@ -85,6 +85,15 @@ RSpec/MultipleExpectations:
     - 'spec/features/**/*'
     - 'spec/smoke/**/*'
 
+# This rule is controversial.
+# We have hundreds of violations of it in our codebase, and resolve them would
+# require a lot of work refactoring our specs to break them down into separate
+# test groups.
+# The individual comments for disabling it in each case are quite noisy, so we're
+# disabling the rule.
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 RSpec/NestedGroups:
   Max: 6
 

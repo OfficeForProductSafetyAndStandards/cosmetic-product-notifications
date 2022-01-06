@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Poison centre search" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+RSpec.describe "Poison centre search" do
   let(:results) { keyword_search(keyword) }
   let(:notifications) { results.records }
 
@@ -20,8 +20,8 @@ RSpec.describe "Poison centre search" do # rubocop:todo RSpec/MultipleMemoizedHe
     Notification.elasticsearch.import force: true
   end
 
-  describe "Search by post code" do # rubocop:todo RSpec/MultipleMemoizedHelpers
-    context "when searching by full code" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "Search by post code" do
+    context "when searching by full code" do
       let(:keyword) { "N12 8AA" }
 
       it "finds proper notifications" do
@@ -29,7 +29,7 @@ RSpec.describe "Poison centre search" do # rubocop:todo RSpec/MultipleMemoizedHe
       end
     end
 
-    context "when searching by part code" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when searching by part code" do
       let(:keyword) { "N12" }
 
       it "finds proper notifications" do
@@ -37,7 +37,7 @@ RSpec.describe "Poison centre search" do # rubocop:todo RSpec/MultipleMemoizedHe
       end
     end
 
-    context "when searching by different code" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when searching by different code" do
       let(:keyword) { "LA1" }
 
       it "finds proper notifications" do

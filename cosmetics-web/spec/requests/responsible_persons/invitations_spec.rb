@@ -14,7 +14,7 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
     sign_out(:submit_user)
   end
 
-  describe "Creating an invitation" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "Creating an invitation" do
     let(:params) { { responsible_person_id: responsible_person.id } }
     let(:name) { "John Doe" }
     let(:email_address) { "user@example.com" }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NotificationsDecorator do # rubocop:todo RSpec/MultipleMemoizedHelpers
+RSpec.describe NotificationsDecorator do
   let(:date) { Time.zone.local(2020, 9, 22, 13) }
   let(:expected_csv) do
     <<~CSV
@@ -23,7 +23,7 @@ RSpec.describe NotificationsDecorator do # rubocop:todo RSpec/MultipleMemoizedHe
     notifications.each(&:cache_notification_for_csv!)
   end
 
-  describe "#to_csv" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#to_csv" do
     it "returns proper string" do
       csv = described_class.new(notifications).to_csv
 
