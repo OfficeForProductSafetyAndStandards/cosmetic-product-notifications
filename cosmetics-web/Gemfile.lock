@@ -426,9 +426,9 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
-    sentry-rails (4.8.1)
+    sentry-rails (4.8.3)
       railties (>= 5.0)
-      sentry-ruby-core (~> 4.8.1)
+      sentry-ruby-core (~> 4.8.3)
     sentry-ruby (4.8.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (~> 1.0)
@@ -499,7 +499,7 @@ GEM
       tins (~> 1.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    thor (1.1.0)
+    thor (1.2.1)
     tilt (2.0.10)
     tins (1.29.1)
       sync
@@ -531,7 +531,7 @@ GEM
       nokogiri (~> 1.8)
     yard (0.9.27)
       webrick (~> 1.7.0)
-    zeitwerk (2.5.2)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   ruby
