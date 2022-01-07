@@ -76,6 +76,12 @@ RSpec.describe NotificationSearchForm do
           expect(form.sort_by).to eq("date_descending")
         end
       end
+
+      context "when invalid sorting is given" do
+        let(:form_args) { super().merge(sort_by: "foo_bar") }
+
+        include_examples "sorts by newest"
+      end
     end
 
     context "when form fields are incorrect" do

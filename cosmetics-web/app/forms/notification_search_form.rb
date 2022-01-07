@@ -46,7 +46,9 @@ class NotificationSearchForm < Form
 
   def initialize(args = {})
     super(args)
-    self.sort_by ||= SEARCH_OPTIONS["Newest"]
+    unless sort_by.in? SEARCH_OPTIONS.values
+      self.sort_by = SEARCH_OPTIONS["Newest"]
+    end
   end
 
   def date_from_for_search
