@@ -52,38 +52,6 @@ RSpec.describe NotificationSearchForm do
   end
 
   describe "form behaviour" do
-    describe "sorting" do
-      RSpec.shared_examples "sorts by newest" do
-        it "sorts by newest" do
-          expect(form.sort_by).to eq("date_descending")
-        end
-      end
-
-      context "when sorting is not specified" do
-        include_examples "sorts by newest"
-      end
-
-      context "when sorting is explicitly null" do
-        let(:form_args) { super().merge(sort_by: nil) }
-
-        include_examples "sorts by newest"
-      end
-
-      context "when valid sorting is given" do
-        let(:form_args) { super().merge(sort_by: "date_descending") }
-
-        it "keeps the given sorting value" do
-          expect(form.sort_by).to eq("date_descending")
-        end
-      end
-
-      context "when invalid sorting is given" do
-        let(:form_args) { super().merge(sort_by: "foo_bar") }
-
-        include_examples "sorts by newest"
-      end
-    end
-
     context "when form fields are incorrect" do
       let(:date_exact_year) { "foo" }
       let(:date_exact_month) { "bar" }
@@ -100,6 +68,38 @@ RSpec.describe NotificationSearchForm do
       it "keeps day" do
         expect(form.date_exact.day).to eq "baz"
       end
+    end
+  end
+
+  describe "#sort_by" do
+    RSpec.shared_examples "sorts by newest" do
+      it "sorts by newest" do
+        expect(form.sort_by).to eq("date_descending")
+      end
+    end
+
+    context "when sorting is not specified" do
+      include_examples "sorts by newest"
+    end
+
+    context "when sorting is explicitly null" do
+      let(:form_args) { super().merge(sort_by: nil) }
+
+      include_examples "sorts by newest"
+    end
+
+    context "when valid sorting is given" do
+      let(:form_args) { super().merge(sort_by: "date_descending") }
+
+      it "keeps the given sorting value" do
+        expect(form.sort_by).to eq("date_descending")
+      end
+    end
+
+    context "when invalid sorting is given" do
+      let(:form_args) { super().merge(sort_by: "foo_bar") }
+
+      include_examples "sorts by newest"
     end
   end
 
