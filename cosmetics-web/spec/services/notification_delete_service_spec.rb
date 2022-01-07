@@ -18,7 +18,7 @@ RSpec.describe NotificationDeleteService do
     create(:responsible_person_user, user: submit_user, responsible_person: responsible_person)
   end
 
-  context "when the notification is completed" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  context "when the notification is completed" do
     let(:notification) { create(:registered_notification, cpnp_reference: "123412344") }
 
     it "deletes the notification" do
@@ -49,7 +49,7 @@ RSpec.describe NotificationDeleteService do
       )
     end
 
-    context "when submit user is not provided" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when submit user is not provided" do
       let(:current_user) { nil }
 
       it "is not saved" do
@@ -69,7 +69,7 @@ RSpec.describe NotificationDeleteService do
       end
     end
 
-    context "when 7 days passed" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when 7 days passed" do
       before do
         travel_to 8.days.from_now
       end
@@ -94,7 +94,7 @@ RSpec.describe NotificationDeleteService do
     end
   end
 
-  context "when the notification is a draft" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  context "when the notification is a draft" do
     let(:notification) { create(:draft_notification, cpnp_reference: "123412344") }
 
     it "deletes the notification" do

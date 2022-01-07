@@ -136,7 +136,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       expect(response).to redirect_to("http://submit/404")
     end
 
-    context "when the notification is already submitted" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the notification is already submitted" do
       subject(:request) { get(:edit, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }) }
 
       let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
@@ -147,7 +147,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "POST /confirm" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "POST /confirm" do
     let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
     let(:params) { { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number } }
 

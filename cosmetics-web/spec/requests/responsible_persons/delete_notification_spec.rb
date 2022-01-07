@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# rubocop:todo RSpec/MultipleMemoizedHelpers
 RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubbed_notify, type: :request do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:user) { build(:submit_user, :with_sms_secondary_authentication) }
@@ -11,7 +10,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
   let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
   let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
 
-  context "when deleting notification user notification" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  context "when deleting notification user notification" do
     before do
       sign_in_as_member_of_responsible_person(responsible_person, user)
     end
@@ -37,7 +36,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       }.to change(Notification.deleted, :count).from(0).to(1)
     end
 
-    context "when 2FA time passed", :with_2fa do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when 2FA time passed", :with_2fa do
       before do
         get delete_responsible_person_delete_notification_url(responsible_person, draft_notification)
         post secondary_authentication_sms_url,
@@ -71,7 +70,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
     end
   end
 
-  context "when deleting notification that belongs to other user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  context "when deleting notification that belongs to other user" do
     before do
       sign_in_as_member_of_responsible_person(other_responsible_person, user)
     end
@@ -83,4 +82,3 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers
