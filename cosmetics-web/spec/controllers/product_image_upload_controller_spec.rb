@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# rubocop:todo RSpec/MultipleMemoizedHelpers
 RSpec.describe ResponsiblePersons::ProductImageUploadController, :with_stubbed_antivirus, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
@@ -35,7 +34,7 @@ RSpec.describe ResponsiblePersons::ProductImageUploadController, :with_stubbed_a
     sign_out(:submit_user)
   end
 
-  describe "GET #new" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "GET #new" do
     it "assigns the correct notification model" do
       get(:new, params: params)
       expect(assigns(:notification)).to eq(notification)
@@ -47,7 +46,7 @@ RSpec.describe ResponsiblePersons::ProductImageUploadController, :with_stubbed_a
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    context "when the notification is already submitted" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the notification is already submitted" do
       subject(:request) { get(:new, params: params) }
 
       let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
@@ -58,7 +57,7 @@ RSpec.describe ResponsiblePersons::ProductImageUploadController, :with_stubbed_a
     end
   end
 
-  describe "POST #create" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "POST #create" do
     it "assigns the correct notification model" do
       post(:create, params: params)
       expect(assigns(:notification)).to eq(notification)
@@ -95,7 +94,7 @@ RSpec.describe ResponsiblePersons::ProductImageUploadController, :with_stubbed_a
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    context "when the notification is already submitted" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the notification is already submitted" do
       subject(:request) { post(:create, params: params.merge(image_upload: [image_file])) }
 
       let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
@@ -106,4 +105,3 @@ RSpec.describe ResponsiblePersons::ProductImageUploadController, :with_stubbed_a
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

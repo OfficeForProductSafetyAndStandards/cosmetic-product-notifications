@@ -224,7 +224,6 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
       end
     end
 
-    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when user was invited to a responsible persons and followed the link but haven't completed their registration" do
       let(:responsible_person) { create(:responsible_person, :with_a_contact_person, name: "Responsible Person") }
       let(:invitation) do
@@ -276,7 +275,6 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         expect(page).to have_field("Full name")
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 
   describe "for search" do

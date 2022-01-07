@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# rubocop:todo RSpec/MultipleMemoizedHelpers
 RSpec.describe "Creating an account when having pending responsible person invitations", :with_2fa, :with_stubbed_notify, :with_stubbed_mailer, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:responsible_person2) { create(:responsible_person, :with_a_contact_person) }
@@ -94,4 +93,3 @@ RSpec.describe "Creating an account when having pending responsible person invit
     complete_secondary_authentication_sms_with(otp_code)
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

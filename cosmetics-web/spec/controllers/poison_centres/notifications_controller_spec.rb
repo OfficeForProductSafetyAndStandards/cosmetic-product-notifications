@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PoisonCentres::NotificationsController, type: :controller do # rubocop:todo RSpec/MultipleMemoizedHelpers
+RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person) }
   let(:responsible_person_2) { create(:responsible_person, :with_a_contact_person) }
 
@@ -17,12 +17,12 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
     sign_out(:search_user)
   end
 
-  describe "When signed in as a Poison Centre user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "When signed in as a Poison Centre user" do
     before do
       sign_in_as_poison_centre_user
     end
 
-    describe "GET #index" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "GET #index" do
       before do
         rp_1_notifications
         rp_2_notifications
@@ -44,7 +44,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
       end
     end
 
-    describe "search on #index" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "search on #index" do
       before do
         distinct_notification
         similar_notification_one
@@ -63,7 +63,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
       end
     end
 
-    describe "GET #show" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "GET #show" do
       let(:notification) { rp_1_notifications.first }
       let(:reference_number) { notification.reference_number }
 
@@ -77,7 +77,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
         expect(response).to render_template("notifications/show_poison_centre")
       end
 
-      context "when the notification is not found" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when the notification is not found" do
         let(:reference_number) { "1234wrongreference" }
 
         it "redirects to 404 page" do
@@ -87,19 +87,19 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
     end
   end
 
-  describe "When signed in as an MSA user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "When signed in as an MSA user" do
     before do
       sign_in_as_msa_user
     end
 
-    describe "GET #index" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "GET #index" do
       it "renders the index template" do
         get :index
         expect(response).to render_template("notifications/index")
       end
     end
 
-    describe "GET #show" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "GET #show" do
       let(:notification) { rp_1_notifications.first }
 
       before { get :show, params: { reference_number: notification.reference_number } }
@@ -108,7 +108,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
         expect(response).to render_template("notifications/show_msa")
       end
 
-      describe "displayed information" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      describe "displayed information" do
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions) }
         let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
         let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
@@ -157,7 +157,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
         end
       end
 
-      describe "Notification with CMRS substances" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      describe "Notification with CMRS substances" do
         let(:cmr) { create(:cmr) }
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
         let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
@@ -172,18 +172,18 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do # ru
     end
   end
 
-  describe "When signed in as a Responsible Person user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "When signed in as a Responsible Person user" do
     before do
       sign_in_as_member_of_responsible_person(responsible_person_1)
     end
 
-    describe "GET #index" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "GET #index" do
       it "redirects to invalid account" do
         expect(get(:index)).to redirect_to("/invalid-account")
       end
     end
 
-    describe "GET #show" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "GET #show" do
       it "redirects to invalid account" do
         expect(get(:show, params: { reference_number: rp_1_notifications.first.reference_number })).to redirect_to("/invalid-account")
       end

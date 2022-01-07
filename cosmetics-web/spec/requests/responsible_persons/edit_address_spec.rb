@@ -69,7 +69,7 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    context "when providing the needed data" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when providing the needed data" do
       let(:update_request) { put "/responsible_persons/#{responsible_person.id}", params: { responsible_person: params } }
 
       it "redirects to the responsible person page" do

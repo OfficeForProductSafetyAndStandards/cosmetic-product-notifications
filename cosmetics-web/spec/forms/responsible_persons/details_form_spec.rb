@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleMemoizedHelpers
+RSpec.describe ResponsiblePersons::DetailsForm do
   subject(:form) do
     described_class.new(user: user,
                         name: name,
@@ -19,8 +19,8 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
   let(:county) { "London" }
   let(:postal_code) { "EC1 2PE" }
 
-  describe "#valid?" do # rubocop:todo RSpec/MultipleMemoizedHelpers
-    context "when the name is blank" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#valid?" do
+    context "when the name is blank" do
       let(:name) { "" }
 
       before { form.validate }
@@ -34,7 +34,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the name contains invalid symbols" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the name contains invalid symbols" do
       let(:name) { "<Responsible Person Name>" }
 
       it "is invalid" do
@@ -47,7 +47,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the name exceeds the allowed length" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the name exceeds the allowed length" do
       let(:name) { "a" * 251 }
 
       it "is invalid" do
@@ -60,7 +60,6 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when the name is the same as another RP name where the user belongs to" do
       let(:user) { create(:submit_user) }
 
@@ -78,9 +77,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
         expect(form.errors.full_messages).to eq(["You are already associated with #{name}"])
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when the name is the same with casing and leading/trailing spacing differences as another RP name where the user belongs to" do
       let(:user) { create(:submit_user) }
       let(:name) { " RESP Person Name " }
@@ -99,9 +96,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
         expect(form.errors.full_messages).to eq(["You are already associated with #{name.strip}"])
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when the name is the same as another RP name where the user has an active invitation for" do
       let(:user) { create(:submit_user) }
 
@@ -120,9 +115,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
           .to eq(["You have already been invited to join #{name}. Check your email inbox for your invite"])
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when the name is the same with casing and leading/trailing spacing differences as another RP name where the user has an active invitation for" do
       let(:user) { create(:submit_user) }
       let(:name) { " RESP Person Name " }
@@ -142,9 +135,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
           .to eq(["You have already been invited to join #{name.strip}. Check your email inbox for your invite"])
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when the name is the same as another RP name where the user has an expired invitation for" do
       let(:user) { create(:submit_user) }
 
@@ -162,9 +153,8 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
         expect(form.errors.full_messages).to be_empty
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-    context "when the first address line is blank" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the first address line is blank" do
       let(:address_line_1) { "" }
 
       before { form.validate }
@@ -178,7 +168,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the second address line is blank" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the second address line is blank" do
       let(:address_line_2) { "" }
 
       before { form.validate }
@@ -192,7 +182,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the city is blank" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the city is blank" do
       let(:city) { "" }
 
       before { form.validate }
@@ -206,7 +196,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the county is blank" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the county is blank" do
       let(:county) { "" }
 
       before { form.validate }
@@ -220,7 +210,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the postal code is blank" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the postal code is blank" do
       let(:postal_code) { "" }
 
       before { form.validate }
@@ -234,7 +224,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the postal code does not belong to UK" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the postal code does not belong to UK" do
       let(:postal_code) { "JJJJJ" }
 
       before { form.validate }
@@ -248,7 +238,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do # rubocop:todo RSpec/MultipleM
       end
     end
 
-    context "when the postal code does contains leading/trailing spaces" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the postal code does contains leading/trailing spaces" do
       let(:postal_code) { " EC1 2PE " }
 
       before { form.validate }

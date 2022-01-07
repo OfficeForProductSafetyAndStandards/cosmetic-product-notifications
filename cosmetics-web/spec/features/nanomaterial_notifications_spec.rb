@@ -10,7 +10,6 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
   end
 
   describe "CSV download" do
-    # rubocop:todo RSpec/MultipleMemoizedHelpers
     context "when nanomaterial notications are present", :with_stubbed_antivirus do
       let(:user_id) { submit_user.id }
       let(:rp) { responsible_person }
@@ -30,7 +29,6 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
         expect(page).to have_selector("a", text: "Download a CSV file of notified nanomaterials")
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
     scenario "CSV downloas link is invisible when no nano notifications" do
       visit "/responsible_persons/#{responsible_person.id}/nanomaterials"

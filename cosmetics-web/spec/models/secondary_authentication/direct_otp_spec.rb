@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/MultipleMemoizedHelpers
+RSpec.describe SecondaryAuthentication::DirectOtp do
   let(:attempts) { 0 }
   let(:direct_otp) { "11111" }
   let(:direct_otp_sent_at) { Time.zone.now }
@@ -8,7 +8,7 @@ RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/Multip
   let(:user) { create(:submit_user, second_factor_attempts_count: attempts, direct_otp_sent_at: direct_otp_sent_at, second_factor_attempts_locked_at: second_factor_attempts_locked_at, direct_otp: direct_otp) }
   let(:secondary_authentication) { described_class.new(user) }
 
-  describe "#valid_otp?" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#valid_otp?" do
     it "increase attempts when checking code" do
       expect {
         secondary_authentication.valid_otp? "123"
@@ -19,7 +19,7 @@ RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/Multip
       expect(secondary_authentication).to be_valid_otp(user.reload.direct_otp)
     end
 
-    context "when maximum attempts exceeded" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when maximum attempts exceeded" do
       let(:attempts) { 11 }
 
       before do
@@ -61,14 +61,14 @@ RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/Multip
       end
     end
 
-    context "when using WHITELISTED_2FA_CODE env" do # rubocop:todo RSpec/MultipleMemoizedHelpers
-      shared_examples_for "successful auth" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when using WHITELISTED_2FA_CODE env" do
+      shared_examples_for "successful auth" do
         specify do
           expect(secondary_authentication).to be_valid_otp(whitelisted_otp)
         end
       end
 
-      shared_examples_for "failed auth" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      shared_examples_for "failed auth" do
         specify do
           expect(secondary_authentication).not_to be_valid_otp(whitelisted_otp)
         end
@@ -87,17 +87,17 @@ RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/Multip
         allow(Rails.configuration).to receive(:vcap_application).and_return(vcap_application)
       end
 
-      context "when ENV['VCAP_APPLICATION'] doesn't exist" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when ENV['VCAP_APPLICATION'] doesn't exist" do
         it_behaves_like "failed auth"
       end
 
-      context "when ENV['VCAP_APPLICATION'] is string" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when ENV['VCAP_APPLICATION'] is string" do
         let(:vcap_application) { "foo" }
 
         it_behaves_like "failed auth"
       end
 
-      context "when ENV['VCAP_APPLICATION'] is empty hash" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when ENV['VCAP_APPLICATION'] is empty hash" do
         let(:vcap_application) do
           {}.to_json
         end
@@ -105,7 +105,6 @@ RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/Multip
         it_behaves_like "failed auth"
       end
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] does not have application_uris key" do
         let(:vcap_application) do
           { "foo" => "bar" }.to_json
@@ -113,33 +112,25 @@ RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/Multip
 
         it_behaves_like "failed auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] application_uris key is string" do
         let(:application_uris) { "foo" }
 
         it_behaves_like "failed auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] application_uris key is empty array" do
         let(:application_uris) { [] }
 
         it_behaves_like "failed auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] application_uris doesn't fit allowed url" do
         let(:application_uris) { %w[foo] }
 
         it_behaves_like "failed auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] application_uris has more than 2 values" do
         let(:application_uris) do
           ["staging-submit.cosmetic-product-notifications.service.gov.uk",
@@ -149,40 +140,33 @@ RSpec.describe SecondaryAuthentication::DirectOtp do # rubocop:todo RSpec/Multip
 
         it_behaves_like "failed auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] application_uris is production url" do
         let(:application_uris) { ["submit.cosmetic-product-notifications.service.gov.uk"] }
 
         it_behaves_like "failed auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] application_uris is staging url" do
         let(:application_uris) { ["staging-submit.cosmetic-product-notifications.service.gov.uk"] }
 
         it_behaves_like "successful auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when ENV['VCAP_APPLICATION'] application_uris is review app url" do
         let(:application_uris) { ["cosmetics-pr-1730-submit-web.london.cloudapps.digital"] }
 
         it_behaves_like "successful auth"
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
     end
   end
 
-  describe "#otp_locked?" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#otp_locked?" do
     it "returns false when second_factor_attempts_locked_at is empty" do
       expect(secondary_authentication.otp_locked?).to eq(false)
     end
 
-    context "when second_factor_attempts_locked_at is not empty" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when second_factor_attempts_locked_at is not empty" do
       let(:second_factor_attempts_locked_at) { Time.zone.now }
 
       it "returns true" do
