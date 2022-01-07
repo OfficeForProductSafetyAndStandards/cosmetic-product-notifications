@@ -44,7 +44,7 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
       end
     end
 
-    context "when a notification has multiple components" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when a notification has multiple components" do
       let(:first_nano_elements) do
         [
           create(:nano_element, iupac_name: "NanoMaterial 1"), create(:nano_element, iupac_name: "NanoMaterial 2")
@@ -74,10 +74,10 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
         expect(response).to redirect_to(new_responsible_person_notification_product_image_upload_path(responsible_person, notification))
       end
 
-      context "when the notification has product images" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when the notification has product images" do
         before { notification.image_uploads.create }
 
-        context "when all components have required nano materials" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        context "when all components have required nano materials" do
           it "redirects to the first component required nano element" do
             nano_element = first_component.nano_material.nano_elements.find(&:required?)
             get :index, params: { responsible_person_id: responsible_person.id, notification_reference_number: notification.reference_number }
@@ -85,7 +85,7 @@ RSpec.describe ResponsiblePersons::AdditionalInformationController, :with_stubbe
           end
         end
 
-        context "when one component is complete" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        context "when one component is complete" do
           let(:first_nano_elements) do
             [
               create(:nano_element, iupac_name: "Element 1A", purposes: %w[other], confirm_toxicology_notified: "yes"),

@@ -42,7 +42,7 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
     end
   end
 
-  describe "#create" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#create" do
     subject(:submit_2fa) do
       post secondary_authentication_sms_path,
            params: { otp_code: submitted_code, user_id: user.id }
@@ -71,7 +71,7 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
       sign_in(user)
     end
 
-    shared_examples_for "code not accepted" do |*errors| # rubocop:todo RSpec/MultipleMemoizedHelpers
+    shared_examples_for "code not accepted" do |*errors|
       it "does not leave the two factor form page" do
         submit_2fa
         expect(response).to render_template(:new)
@@ -85,13 +85,13 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
       end
     end
 
-    context "when code is invalid" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when code is invalid" do
       let(:submitted_code) { "" }
 
       include_examples "code not accepted", "Enter the security code"
     end
 
-    context "with correct otp" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "with correct otp" do
       it "redirects to the main page" do
         submit_2fa
         expect(response).to redirect_to(submit_root_path)
@@ -111,30 +111,30 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
       end
     end
 
-    context "with incorrect otp" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "with incorrect otp" do
       let(:submitted_code) { secondary_authentication.direct_otp.reverse }
 
       include_examples "code not accepted", "Incorrect security code"
     end
 
-    context "with expired otp" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "with expired otp" do
       let(:direct_otp_sent_at) { (SecondaryAuthentication::DirectOtp::OTP_EXPIRY_SECONDS * 2).seconds.ago }
 
       include_examples "code not accepted", "The security code has expired. New code sent."
     end
 
-    context "with too many attempts" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "with too many attempts" do
       let(:attempts) { max_attempts + 1 }
 
       include_examples "code not accepted", "Incorrect security code"
     end
 
-    context "with resending otp code" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "with resending otp code" do
       # rubocop:disable RSpec/AnyInstance
-      context "when code is expired" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when code is expired" do
         let(:direct_otp_sent_at) { (SecondaryAuthentication::DirectOtp::OTP_EXPIRY_SECONDS * 2).seconds.ago }
 
-        context "when secondary authentication is locked" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        context "when secondary authentication is locked" do
           let(:second_factor_attempts_locked_at) { Time.zone.now }
 
           it "does not send the code" do

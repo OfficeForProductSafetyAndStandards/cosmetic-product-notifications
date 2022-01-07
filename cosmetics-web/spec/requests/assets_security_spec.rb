@@ -37,7 +37,7 @@ RSpec.describe "Asset security", type: :request do
     end
   end
 
-  context "when using representations proxy controller" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  context "when using representations proxy controller" do
     # /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)      active_storage/representations/proxy#show
     let(:image_upload) do
       create(:image_upload,
@@ -51,7 +51,7 @@ RSpec.describe "Asset security", type: :request do
                                            variation_key: image_variant.variation.key)
     end
 
-    context "when user is submit user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when user is submit user" do
       let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
       let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
@@ -60,7 +60,7 @@ RSpec.describe "Asset security", type: :request do
         configure_requests_for_submit_domain
       end
 
-      context "when user is not logged in" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when user is not logged in" do
         it "raises exception" do
           expect {
             get asset_url
@@ -68,7 +68,6 @@ RSpec.describe "Asset security", type: :request do
         end
       end
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when logged as responsible person that is notification owner" do
         before do
           sign_in_as_member_of_responsible_person(responsible_person)
@@ -84,9 +83,8 @@ RSpec.describe "Asset security", type: :request do
           expect(response.status).to eq(200)
         end
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      context "when logged as different responsible person" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when logged as different responsible person" do
         before do
           sign_in_as_member_of_responsible_person(other_responsible_person)
         end
@@ -103,14 +101,14 @@ RSpec.describe "Asset security", type: :request do
       end
     end
 
-    context "when user is search user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when user is search user" do
       let(:search_user) { create(:poison_centre_user) }
 
       before do
         configure_requests_for_search_domain
       end
 
-      context "when user is not logged in" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when user is not logged in" do
         it "redirects" do
           expect {
             get asset_url
@@ -118,7 +116,7 @@ RSpec.describe "Asset security", type: :request do
         end
       end
 
-      context "when user is logged in" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when user is logged in" do
         before do
           sign_in search_user
         end
@@ -139,7 +137,7 @@ RSpec.describe "Asset security", type: :request do
   context "when using blob asset proxy" do
     let(:asset_url) { rails_storage_proxy_path(image_upload.file) }
 
-    context "when user is submit user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when user is submit user" do
       let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
       let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
@@ -148,7 +146,7 @@ RSpec.describe "Asset security", type: :request do
         configure_requests_for_submit_domain
       end
 
-      context "when user is not logged in" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when user is not logged in" do
         it "raises exception" do
           expect {
             get asset_url
@@ -156,7 +154,6 @@ RSpec.describe "Asset security", type: :request do
         end
       end
 
-      # rubocop:todo RSpec/MultipleMemoizedHelpers
       context "when logged as responsible person that is notification owner" do
         before do
           sign_in_as_member_of_responsible_person(responsible_person)
@@ -172,9 +169,8 @@ RSpec.describe "Asset security", type: :request do
           expect(response.status).to eq(200)
         end
       end
-      # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-      context "when logged as different responsible person" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when logged as different responsible person" do
         before do
           sign_in_as_member_of_responsible_person(other_responsible_person)
         end
@@ -191,14 +187,14 @@ RSpec.describe "Asset security", type: :request do
       end
     end
 
-    context "when user is search user" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when user is search user" do
       let(:search_user) { create(:poison_centre_user) }
 
       before do
         configure_requests_for_search_domain
       end
 
-      context "when user is not logged in" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when user is not logged in" do
         it "redirects" do
           expect {
             get asset_url
@@ -206,7 +202,7 @@ RSpec.describe "Asset security", type: :request do
         end
       end
 
-      context "when user is logged in" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when user is logged in" do
         before do
           sign_in search_user
         end

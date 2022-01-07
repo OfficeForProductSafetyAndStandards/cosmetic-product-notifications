@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/MultipleMemoizedHelpers
+RSpec.describe Registration::AccountSecurityForm do
   let(:full_name) { "Mr New Name" }
   let(:password) { "testpassword" }
   let(:mobile_number) { "07000 000 000" }
@@ -24,12 +24,12 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
   end
 
   # rubocop:disable RSpec/ExampleLength
-  describe "#update!" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#update!" do
     let(:user) do
       create(:submit_user, :confirmed_not_verified, :invited, name: nil)
     end
 
-    shared_examples "security attributes set" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    shared_examples "security attributes set" do
       it "sets the user security attributes" do
         expect {
           form.update!
@@ -40,7 +40,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    shared_examples "confirmation token removal" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    shared_examples "confirmation token removal" do
       it "removes the user confirmation token info" do
         expect {
           form.update!
@@ -50,8 +50,8 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    context "when the form attributes are valid" do # rubocop:todo RSpec/MultipleMemoizedHelpers
-      context "when both sms and app authentication are selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the form attributes are valid" do
+      context "when both sms and app authentication are selected" do
         include_examples "security attributes set"
         include_examples "confirmation token removal"
 
@@ -66,7 +66,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
         end
       end
 
-      context "when only the app authentication is selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when only the app authentication is selected" do
         before do
           form.assign_attributes(app_authentication: "1", sms_authentication: "0")
         end
@@ -85,7 +85,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
         end
       end
 
-      context "when only the sms authentication is selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when only the sms authentication is selected" do
         before do
           form.assign_attributes(app_authentication: "0", sms_authentication: "1")
         end
@@ -105,7 +105,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    context "when the form attributes are not valid" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when the form attributes are not valid" do
       before { form.password = "" }
 
       it "returns false" do
@@ -130,7 +130,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
   end
   # rubocop:enable RSpec/ExampleLength
 
-  describe "#secret_key" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#secret_key" do
     it "returns secret key if is already set" do
       expect(form.secret_key).to eq secret_key
     end
@@ -142,14 +142,14 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
     end
   end
 
-  describe "#decorated_secret_key" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#decorated_secret_key" do
     it "introduces a space between every 4 characters of the form secret key" do
       form.secret_key = "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7"
       expect(form.decorated_secret_key).to eq "QSE5 PUJF T4ZG TBRP GOOO W3QJ WWVZ NUP7"
     end
   end
 
-  describe "#app_authentication_code" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#app_authentication_code" do
     before { form.app_authentication_code = "123456" }
 
     it "discards the app authentication code when the app authentication is not selected" do
@@ -163,7 +163,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
     end
   end
 
-  describe "#mobile_number" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "#mobile_number" do
     before { form.mobile_number = "07123456789" }
 
     it "discards the mobile number when the sms authentication is not selected" do
@@ -177,8 +177,8 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
     end
   end
 
-  describe "validations" do # rubocop:todo RSpec/MultipleMemoizedHelpers
-    context "when the password is too short" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+  describe "validations" do
+    context "when the password is too short" do
       let(:password) { "Fo)ba5" }
 
       it "is invalid" do
@@ -191,7 +191,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    context "when password is too common" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    context "when password is too common" do
       let(:password) { "password" }
 
       it "does not validate user" do
@@ -200,7 +200,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    describe "name validations" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "name validations" do
       let(:form) do
         described_class.new(password: password,
                             mobile_number: mobile_number,
@@ -210,7 +210,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
                             sms_authentication: "1")
       end
 
-      context "when the user name is not introduced" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when the user name is not introduced" do
         let(:full_name) { nil }
 
         it "is invalid" do
@@ -223,7 +223,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
         end
       end
 
-      context "when a user name containing a URL is introduced" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when a user name containing a URL is introduced" do
         let(:full_name) { "Susan www.example.com" }
 
         it "is invalid" do
@@ -236,7 +236,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
         end
       end
 
-      context "when a very long user name is introduced" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when a very long user name is introduced" do
         let(:full_name) { "Susan thisisaveryveryveryveryveryveryveryveryveryveryveryveryveryverylongsurname" }
 
         it "is invalid" do
@@ -249,7 +249,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
         end
       end
 
-      context "when a valid user name is introduced" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when a valid user name is introduced" do
         let(:full_name) { "John Doe" }
 
         it "is valid" do
@@ -263,7 +263,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    describe "app authentication methods validations" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "app authentication methods validations" do
       it "is valid when sms is selected" do
         form.sms_authentication = "1"
         form.app_authentication = "0"
@@ -294,11 +294,11 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    describe "mobile number validations" do # rubocop:todo RSpec/MultipleMemoizedHelpers
-      context "when the sms authentication is selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "mobile number validations" do
+      context "when the sms authentication is selected" do
         before { form.sms_authentication = "1" }
 
-        shared_examples "mobile number" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        shared_examples "mobile number" do
           it "is invalid" do
             expect(form).not_to be_valid
           end
@@ -309,21 +309,21 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
           end
         end
 
-        context "when the mobile number is empty" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        context "when the mobile number is empty" do
           include_examples "mobile number" do
             let(:mobile_number) { "" }
             let(:message) { "Enter a mobile number, like 07700 900 982 or +44 7700 900 982" }
           end
         end
 
-        context "when mobile number has letters" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        context "when mobile number has letters" do
           include_examples "mobile number" do
             let(:mobile_number) { "070000assd" }
             let(:message) { "Enter a mobile number, like 07700 900 982 or +44 7700 900 982" }
           end
         end
 
-        context "when mobile number has not enough characters" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+        context "when mobile number has not enough characters" do
           include_examples "mobile number" do
             let(:mobile_number) { "0700710120" }
             let(:message) { "Enter a mobile number, like 07700 900 982 or +44 7700 900 982" }
@@ -331,7 +331,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
         end
       end
 
-      context "when the sms authentication is not selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when the sms authentication is not selected" do
         before { form.sms_authentication = "0" }
 
         it "does not require mobile number" do
@@ -348,8 +348,8 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
       end
     end
 
-    describe "app authentication code validations" do # rubocop:todo RSpec/MultipleMemoizedHelpers
-      context "when the app authentication is selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+    describe "app authentication code validations" do
+      context "when the app authentication is selected" do
         before { form.app_authentication = "1" }
 
         it "fails validation when the app authentication code is not present" do
@@ -377,7 +377,7 @@ RSpec.describe Registration::AccountSecurityForm do # rubocop:todo RSpec/Multipl
         end
       end
 
-      context "when the app authentication is not selected" do # rubocop:todo RSpec/MultipleMemoizedHelpers
+      context "when the app authentication is not selected" do
         before { form.app_authentication = "0" }
 
         it "does not require the app authentication code" do
