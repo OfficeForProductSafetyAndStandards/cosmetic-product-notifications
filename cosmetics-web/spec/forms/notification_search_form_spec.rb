@@ -89,10 +89,10 @@ RSpec.describe NotificationSearchForm do
     end
 
     context "when valid sorting is given" do
-      let(:form_args) { super().merge(sort_by: "date_descending") }
+      let(:form_args) { super().merge(sort_by: "date_ascending") }
 
       it "keeps the given sorting value" do
-        expect(form.sort_by).to eq("date_descending")
+        expect(form.sort_by).to eq("date_ascending")
       end
     end
 
