@@ -79,12 +79,6 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       else
         return jump_to_step(:number_of_shades)
       end
-    when :select_root_category
-      return render 'select_category'
-    when :select_sub_category
-      return render 'select_category'
-    when :select_sub_sub_category
-      return render 'select_category'
     when :completed
       @component.update_state('component_complete')
       # TODO: write spec
@@ -349,7 +343,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   end
 
   def component_params
-    params.fetch(:component)
+    params.fetch(:component, {})
       .permit(
         :name,
         :physical_form,
