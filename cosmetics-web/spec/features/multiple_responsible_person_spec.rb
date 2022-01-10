@@ -29,7 +29,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     click_on "Your cosmetic products"
 
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
-    click_on "Responsible person"
+    click_on "Responsible Person"
     click_on "Change the Responsible Person"
     choose name_2
     click_on "Save and continue"
@@ -57,7 +57,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     click_on "Your cosmetic products"
 
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
-    click_on "Responsible person"
+    click_on "Responsible Person"
     click_on "Change the Responsible Person"
     expect(page).to have_h1("Change the Responsible Person")
     choose "Add a new Responsible Person"
@@ -80,7 +80,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     click_on "Your cosmetic products"
 
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
-    click_on "Responsible person"
+    click_on "Responsible Person"
     click_on "Change the Responsible Person"
     expect(page).to have_h1("Change the Responsible Person")
     choose "Add a new Responsible Person"
