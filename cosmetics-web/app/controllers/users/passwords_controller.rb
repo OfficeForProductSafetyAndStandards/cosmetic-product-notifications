@@ -20,9 +20,10 @@ module Users
       user = current_user
       sign_out
 
-      if user.is_a? SubmitUser
+      case user
+      when SubmitUser
         redirect_to edit_submit_user_password_path(reset_password_token: params[:reset_password_token])
-      elsif user.is_a? SearchUser
+      when SearchUser
         redirect_to edit_search_user_password_path(reset_password_token: params[:reset_password_token])
       end
     end
@@ -106,7 +107,7 @@ module Users
     end
 
     def email_not_found_first_error?
-      resource.errors.details.dig(:email).include?(error: :not_found)
+      resource.errors.details[:email].include?(error: :not_found)
     end
 
     def reset_password_form

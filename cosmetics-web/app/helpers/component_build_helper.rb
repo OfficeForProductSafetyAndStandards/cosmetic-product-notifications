@@ -14,7 +14,7 @@ module ComponentBuildHelper
       responsible_person_notification_build_path(notification.responsible_person, notification, :add_product_image)
     elsif step == :select_category && @category.present?
       wizard_path(:select_category, category: Component.get_parent_category(@category))
-    elsif step == :select_category && @component&.nano_material.present?
+    elsif step == :select_category && @component&.nano_material&.nano_elements&.any?
       last_nanoelement = @component.nano_material.nano_elements.last
       nanoelement_step = last_nanoelement.standard? ? :confirm_usage : :when_products_containing_nanomaterial_can_be_placed_on_market
       responsible_person_notification_component_nanomaterial_build_path(notification.responsible_person, notification, @component, last_nanoelement, nanoelement_step)

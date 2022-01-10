@@ -6,7 +6,7 @@ class UkPostcodeValidator < ActiveModel::EachValidator
   # An optional space \s*
   # Finally, a digit followed by two letters: [0-9][a-zA-Z]{2}
   # Source: https://coderwall.com/p/rnucjg/regexp-how-to-validate-a-uk-postcode
-  UK_POSTCODE_REGEX = /\A[a-zA-Z]{1,2}([0-9]{1,2}|[0-9][a-zA-Z])\s*[0-9][a-zA-Z]{2}\z/.freeze
+  UK_POSTCODE_REGEX = /\A[a-zA-Z]{1,2}([0-9]{1,2}|[0-9][a-zA-Z])\s*[0-9][a-zA-Z]{2}\z/
   ERROR_MSG = "Enter a UK postcode".freeze
 
   def validate_each(record, attribute, value)

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PhoneValidator do
-  subject(:validator) { validator_class.new(phone, allow_international, allow_landline) }
+  subject(:validator) { validator_class.new(phone, allow_international, allow_landline: allow_landline) }
 
   let(:error_msg) { "Enter a mobile number, like 07700 900 982 or +44 7700 900 982" }
 
@@ -27,7 +27,7 @@ RSpec.describe PhoneValidator do
                 phone: { message: ERROR_MSG, allow_international: false, allow_landline: true },
                 if: :allow_uk_landlines_but_not_int
 
-      def initialize(phone, allow_int, allow_landline = false)
+      def initialize(phone, allow_int, allow_landline: false)
         @phone = phone
 
         @allow_int_but_no_uk_landlines = (allow_int && !allow_landline)

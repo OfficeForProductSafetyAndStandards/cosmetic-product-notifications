@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "../../../app/models/responsible_person.rb"
+require_relative "../../../app/models/responsible_person"
 
 RSpec.describe StripWhitespace, type: :model do
   context "when included in an ApplicationRecord class" do

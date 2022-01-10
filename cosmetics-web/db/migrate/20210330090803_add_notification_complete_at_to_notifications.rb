@@ -1,6 +1,7 @@
 class AddNotificationCompleteAtToNotifications < ActiveRecord::Migration[5.2]
   # rubocop:disable Rails/ApplicationRecord
   class Notification < ActiveRecord::Base; end
+
   # rubocop:enable Rails/ApplicationRecord
   def up
     add_column :notifications, :notification_complete_at, :datetime, null: true

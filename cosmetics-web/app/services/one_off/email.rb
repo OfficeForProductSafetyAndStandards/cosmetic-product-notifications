@@ -5,9 +5,7 @@ module OneOff
       extract_names
     end
 
-    attr_reader :email
-
-    attr_reader :name
+    attr_reader :email, :name
 
   private
 

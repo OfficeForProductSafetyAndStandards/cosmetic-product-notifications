@@ -2,7 +2,7 @@ module SecondaryAuthentication
   module App
     class AuthForm < Form
       AUTHENTICATION_APP_CODE_LENGTH = 6
-      INTEGER_REGEX = /\A\d+\z/.freeze
+      INTEGER_REGEX = /\A\d+\z/
 
       attribute :otp_code
       attribute :user_id

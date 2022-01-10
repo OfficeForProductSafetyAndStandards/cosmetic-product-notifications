@@ -58,7 +58,7 @@ private
   def attached_file_is_correct_type?
     attachment = send(attachment_name).attachment
     unless attachment.nil? || allowed_types.include?(send(attachment_name).blob.content_type)
-      errors.add attachment_name, "must be one of " + allowed_types.join(", ")
+      errors.add attachment_name, "must be one of #{allowed_types.join(', ')}"
     end
   end
 
