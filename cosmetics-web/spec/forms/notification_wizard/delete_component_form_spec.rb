@@ -73,7 +73,7 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
     end
 
     context "when notification is deleted" do
-      let(:notification1) { create(:deleted_notification) }
+      let(:notification1) { create(:notification, traits: [:deleted]) }
 
       let(:form) { described_class.new(notification: notification1, component_id: component1.id) }
 

@@ -14,7 +14,6 @@ FactoryBot.define do
     end
 
     factory :registered_notification, traits: [:registered]
-    factory :deleted_notification, traits: [:deleted]
 
     trait :registered do
       state { :notification_complete }
