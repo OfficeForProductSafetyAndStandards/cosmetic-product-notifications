@@ -6,7 +6,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   include CategoryHelper
 
   before_action :set_component
-  before_action :set_category, if: -> { step == :select_category }
+  before_action :set_category, if: -> { step.to_s =~ /select_(root|sub|sub_sub)_category/ }
 
   steps :add_component_name,
         # This step is included only when nanomaterials are defined
@@ -22,7 +22,9 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :select_special_applicator_type, # only if contains special applicator
         :contains_cmrs,
         :add_cmrs,
-        :select_category,
+        :select_root_category,
+        :select_sub_category,
+        :select_sub_sub_category,
         :select_formulation_type,
         :upload_formulation, # only for range and exact
         :select_frame_formulation, # only for frame formulation
@@ -33,18 +35,20 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :completed
 
   BACK_ROUTING = {
-    select_nanomaterials: :add_component_name,
+    select_nanomaterials: [:add_component_name],
     add_exposure_condition: :select_nanomaterials,
     add_exposure_routes: :add_exposure_condition,
-    number_of_shades: [:add_exposure_routes, :add_component_name],
+    number_of_shades: [:add_exposure_routes, :select_nanomaterials, :add_component_name],
     add_shades: :number_of_shades,
     add_physical_form: :number_of_shades,
     contains_special_applicator: :add_physical_form,
     select_special_applicator_type: :contains_special_applicator, # only if contains special applicato: :,
     contains_cmrs: :contains_special_applicator,
     add_cmrs: :contains_cmrs,
-    select_category: :contains_cmrs,
-    select_formulation_type: :select_category,
+    select_root_category: :contains_cmrs,
+    select_sub_category: :select_root_category,
+    select_sub_sub_category: :select_sub_category,
+    select_formulation_type: :select_sub_sub_category,
     upload_formulation: :select_formulation_type, # only for range and exac: :,
     select_frame_formulation: :select_formulation_type, # only for frame formulatio: :,
     contains_poisonous_ingredients: :select_formulation_type, # only for frame formulatio: :,
@@ -54,7 +58,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   }
 
   BACK_ROUTING_FUNCTIONS = {
-    add_exposure_routes: -> { @component.notification.nano_materials.present? },
+    add_exposure_routes: -> { @component.nano_materials.present? },
+    select_nanomaterials: -> { @component.notification.nano_materials.present? },
     add_component_name: -> { @component.notification.multi_component? },
     contains_poisonous_ingredients: -> { @component.predefined? },
     upload_formulation: -> { true }
@@ -74,6 +79,12 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       else
         return jump_to_step(:number_of_shades)
       end
+    when :select_root_category
+      return render 'select_category'
+    when :select_sub_category
+      return render 'select_category'
+    when :select_sub_sub_category
+      return render 'select_category'
     when :completed
       @component.update_state('component_complete')
       # TODO: write spec
@@ -101,6 +112,12 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     when :add_cmrs
       update_add_cmrs
     when :select_category
+      update_select_category_step
+    when :select_root_category
+      update_select_category_step
+    when :select_sub_category
+      update_select_category_step
+    when :select_sub_sub_category
       update_select_category_step
     when :select_formulation_type
       update_select_formulation_type
@@ -219,7 +236,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     sub_category = params.dig(:component, :sub_category)
     if sub_category
       if has_sub_categories(sub_category)
-        redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, category: sub_category)
+        render_wizard @component, {}, category: sub_category
+        # redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, category: sub_category)
       else
         @component.update(sub_sub_category: sub_category)
         render_wizard @component
@@ -376,6 +394,12 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   def set_category
     @category = params[:category]
+    if @category.nil? && step == :select_sub_sub_category
+      @category = @component.sub_category
+    end
+    if @category.nil? && step == :select_sub_category
+      @category = Component.get_parent_category(@component.sub_category)
+    end
     if @category.present? && !has_sub_categories(@category)
       @component.errors.add :sub_category, "Select a valid option"
       @category = nil
