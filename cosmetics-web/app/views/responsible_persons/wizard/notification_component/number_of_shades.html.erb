@@ -1,8 +1,8 @@
 <% title = "Number of shades" %>
 <%  question = "Is #{@component_name} available in different shades?" %>
 
-<% items = [{ text: "Yes", value: "multiple-shades-same-notification" },
-          { text: "No", value: "single-or-no-shades" }] %>
+<% items = [{ text: "Yes", value: "multiple-shades-same-notification", checked: answer_checked?("multiple-shades-same-notification") },
+          { text: "No", value: "single-or-no-shades", checked: answer_checked?("single-or-no-shades") }] %>
 
 
 <% page_title title, errors: @component.errors.any? %>

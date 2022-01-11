@@ -27,8 +27,8 @@
 
       <%= render "form_components/govuk_radios", form: form, key: :contains_cmrs,
               fieldset: { legend: { text: question, classes: "govuk-label--m" } },
-              items: [{ text: "Yes", value: :yes },
-                      { text: "No", value: :no }] %>
+              items: [{ text: "Yes", value: :yes, checked: answer_checked?("yes") },
+                      { text: "No", value: :no, checked: answer_checked?("no") }] %>
       <%= govukButton text: "Continue" %>
     <% end %>
   </div>

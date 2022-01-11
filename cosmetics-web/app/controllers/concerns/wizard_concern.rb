@@ -4,6 +4,7 @@ module WizardConcern
 
   included do
     helper_method :next_step_path
+    helper_method :model
   end
 
   def notification
@@ -35,7 +36,7 @@ module WizardConcern
     answer = yes_no_param(param)
 
     if ["yes", "no"].include? answer
-      model.remember_answer(param => answer)
+      model.save_routing_answer(step, answer)
       if skip_steps_on == answer
         on_skip&.call
         skip_next_steps(steps_to_skip)

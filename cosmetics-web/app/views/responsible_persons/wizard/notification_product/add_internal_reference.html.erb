@@ -23,8 +23,7 @@
         <%= render "form_components/govuk_radios", form: form, key: :add_internal_reference,
             fieldset: { legend: { text: "Do you want to add an internal reference?", classes: "govuk-label--m" } },
             items: [{ text: "Yes", value: "yes", conditional: { html: reference_input_html },
-                    checked: params[:notification].present? && \
-                      params[:notification][:add_internal_reference] == "yes" },
+                    checked: preselect_internal_reference_yes},
                     { text: "No", value: "no" }] %>
 
         <%= govukButton text: "Continue" %>

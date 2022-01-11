@@ -67,12 +67,14 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)
     when "yes"
+      model.save_routing_answer(step, "yes")
       if @notification.update_with_context(notification_params, step)
         render_wizard @notification
       else
         render step
       end
     when "no"
+      model.save_routing_answer(step, "no")
       @notification.industry_reference = nil
       render_wizard @notification
     else
