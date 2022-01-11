@@ -3,7 +3,7 @@ module NotificationWizard
     class NonEmptyArrayValidator < ActiveModel::EachValidator
       def validate_each(record, attribute, value)
         if value.blank? || value.reject(&:blank?).blank?
-          record.errors.add attribute, "can not be blank"
+          record.errors.add attribute, "Please select nanomaterial to remove"
         end
       end
     end

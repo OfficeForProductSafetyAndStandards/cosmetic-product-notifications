@@ -7,26 +7,31 @@
 # attempting to send them a 2FA code.
 class PhoneValidator < ActiveModel::EachValidator
   class InvalidPhoneError < StandardError; end
+
   class PhoneTooShortError < InvalidPhoneError
     def message
       "Not enough digits"
     end
   end
+
   class PhoneTooLongError < InvalidPhoneError
     def message
       "Too many digits"
     end
   end
+
   class InvalidCountryError < InvalidPhoneError
     def message
       "Not a valid country prefix"
     end
   end
+
   class NotUKPhoneError < InvalidPhoneError
     def message
       "Not a valid country prefix"
     end
   end
+
   class BadFormatError < InvalidPhoneError
     def message
       "Must not contain letters or symbols"

@@ -1,0 +1,34 @@
+<% title = "Do you want to cancel the invitation?" %>
+<% page_title(title, errors: @invitation.errors.any?) %>
+
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+  <%= link_to "Back", responsible_person_team_members_path(@responsible_person), class: "govuk-back-link" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <%= error_summary(@invitation.errors, map_errors: { cancel_invitation: :cancel_invitation_yes }) %>
+  <div class="govuk-grid-column-full">
+    <%= form_with model: @invitation, url: responsible_person_invitation_path(@responsible_person, @invitation), method: :delete, novalidate: true do |form| %>
+      <% heading = capture do %>
+        <h1 class="govuk-fieldset__heading">
+          <%= title %>
+        </h1>
+      <% end %>
+
+      <%= render "form_components/govuk_radios",
+              form: form,
+              key: :cancel_invitation,
+              fieldset: { legend: { html: heading, classes: "govuk-fieldset__legend--l" } },
+              idPrefix: "cancel_invitation",
+              name: "cancel_invitation",
+              hint: { text: "Invitation emails already sent to the user will not work if you cancel the invitation." },
+              classes: "govuk-!-padding-top-3",
+              items: [{ text: "Yes", value: :yes },
+                      { text: "No", value: :no }] %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+      </div>
+    <% end %>
+  </div>
+</div>

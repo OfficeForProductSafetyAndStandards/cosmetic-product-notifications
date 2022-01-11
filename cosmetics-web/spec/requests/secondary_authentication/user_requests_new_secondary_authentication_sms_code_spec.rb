@@ -11,6 +11,8 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
   end
 
   describe "viewing the form" do
+    subject(:request_code) { get new_secondary_authentication_sms_resend_path }
+
     RSpec.shared_examples "redirect to homepage" do
       it "redirects the user to the homepage" do
         request_code
@@ -26,8 +28,6 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
         expect(response).to render_template("secondary_authentication/sms/resend/new")
       end
     end
-
-    subject(:request_code) { get new_secondary_authentication_sms_resend_path }
 
     let(:user) { create(:submit_user, :with_responsible_person, :with_sms_secondary_authentication) }
 

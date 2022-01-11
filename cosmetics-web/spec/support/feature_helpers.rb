@@ -328,7 +328,7 @@ end
 
 def expect_back_link_to_item_category_page(category = nil)
   if category
-    expect_back_link_to(/\/build\/select_category\?category\=#{category}/)
+    expect_back_link_to(/\/build\/select_category\?category=#{category}/)
   else
     expect_back_link_to(/\/build\/select_category/)
   end
@@ -430,6 +430,87 @@ end
 def expect_to_be_on__upload_formulation_document_page(header_text)
   expect(page.current_path).to end_with("/formulation_file/new")
   expect(page).to have_h1(header_text)
+end
+
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
+  within("#product-table") do
+    expect(page).to have_summary_item(key: "Product name", value: product_name)
+    expect(page).to have_summary_item(key: "Shades", value: shades)
+    expect(page).to have_summary_item(key: "Number of items", value: number_of_components)
+  end
+
+  expect(page).to have_summary_item(key: "Nanomaterials", value: nanomaterials)
+  expect(page).to have_summary_item(key: "Category of product", value: category)
+  expect(page).to have_summary_item(key: "Category of #{category.downcase.singularize}", value: subcategory)
+  expect(page).to have_summary_item(key: "Category of #{subcategory.downcase.singularize}", value: sub_subcategory)
+  expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
+
+  if contains_cmrs
+    expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
+  end
+
+  if eu_notification_date
+    expect(page).to have_summary_item(key: "EU notification date", value: eu_notification_date)
+  end
+
+  if frame_formulation
+    expect(page).to have_summary_item(key: "Frame formulation", value: frame_formulation)
+  end
+
+  expect(page).to have_summary_item(key: "Physical form", value: physical_form)
+
+  if poisonous_ingredients
+    expect(page).to have_summary_item(key: "Contains ingredients NPIS needs to know about", value: poisonous_ingredients)
+  end
+
+  if ph
+    expect(page).to have_summary_item(key: "pH", value: ph)
+  end
+
+  if application_instruction
+    expect(page).to have_summary_item(key: "Application instruction", value: application_instruction)
+  end
+
+  if exposure_condition
+    expect(page).to have_summary_item(key: "Exposure condition", value: exposure_condition)
+  end
+end
+
+def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, number_of_components:, components_mixed:, kit_items:)
+  within("#product-table") do
+    expect(page).to have_summary_item(key: "Product name", value: product_name)
+    expect(page).to have_summary_item(key: "Number of items", value: number_of_components)
+    expect(page).to have_summary_item(key: "Are the items mixed?", value: components_mixed)
+  end
+
+  kit_items.each do |kit_item|
+    expect(page).to have_selector("h3", text: kit_item[:name])
+
+    within("##{kit_item[:name].parameterize}") do
+      expect(page).to have_summary_item(key: "Shades", value: kit_item[:shades])
+
+      if kit_item[:contains_cmrs]
+        expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
+      end
+
+      expect(page).to have_summary_item(key: "Nanomaterials", value: kit_item[:nanomaterials])
+
+      if kit_item[:application_instruction]
+        expect(page).to have_summary_item(key: "Application instruction", value: kit_item[:application_instruction])
+      end
+
+      if kit_item[:exposure_condition]
+        expect(page).to have_summary_item(key: "Exposure condition", value: kit_item[:exposure_condition])
+      end
+
+      expect(page).to have_summary_item(key: "Category of product", value: kit_item[:category])
+      expect(page).to have_summary_item(key: "Category of #{kit_item[:category].downcase.singularize}", value: kit_item[:subcategory])
+      expect(page).to have_summary_item(key: "Category of #{kit_item[:subcategory].downcase.singularize}", value: kit_item[:sub_subcategory])
+      expect(page).to have_summary_item(key: "Formulation given as", value: kit_item[:formulation_given_as])
+      expect(page).to have_summary_item(key: "Physical form", value: kit_item[:physical_form])
+      # expect(page).to have_summary_item(key: "pH", value: kit_item[:ph])
+    end
+  end
 end
 
 def expect_to_be_on__your_cosmetic_products_page

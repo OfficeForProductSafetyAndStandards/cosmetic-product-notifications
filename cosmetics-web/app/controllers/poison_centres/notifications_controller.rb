@@ -10,7 +10,7 @@ class PoisonCentres::NotificationsController < SearchApplicationController
   end
 
   def show
-    @notification = Notification.find_by reference_number: params[:reference_number]
+    @notification = Notification.find_by! reference_number: params[:reference_number]
     authorize @notification, policy_class: PoisonCentreNotificationPolicy
     if current_user&.poison_centre_user?
       render "show_poison_centre"

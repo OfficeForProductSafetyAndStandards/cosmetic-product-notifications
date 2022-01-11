@@ -14,7 +14,6 @@ FactoryBot.define do
     end
 
     factory :registered_notification, traits: [:registered]
-    factory :deleted_notification, traits: [:deleted]
 
     trait :registered do
       state { :notification_complete }
@@ -55,6 +54,24 @@ FactoryBot.define do
 
     trait :with_label_image do
       image_uploads { [build(:image_upload, :uploaded_and_virus_scanned)] }
+    end
+
+    trait :skip_validations do
+      to_create { |instance| instance.save(validate: false) }
+    end
+
+    trait :deleted do
+      skip_validations
+      deleted_at { Time.zone.now }
+      state { :deleted }
+      Notification::DELETABLE_ATTRIBUTES.each do |attribute|
+        send(attribute) { nil }
+      end
+
+      after(:create) do |notification|
+        create(:deleted_notification, notification: notification)
+        notification.reload
+      end
     end
   end
 end

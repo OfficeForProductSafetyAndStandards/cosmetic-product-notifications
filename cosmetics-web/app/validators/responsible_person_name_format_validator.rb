@@ -1,3 +1,3 @@
 class ResponsiblePersonNameFormatValidator < NameFormatValidator
-  BANNED_REGEXP = /<|>|\n|http/.freeze
+  BANNED_REGEXP = /<|>|\n|http/
 end

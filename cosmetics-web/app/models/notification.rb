@@ -3,23 +3,6 @@ class Notification < ApplicationRecord
   include NotificationStateConcern
 
   DELETION_PERIOD_DAYS = 7
-
-  include Searchable
-  include CountriesHelper
-
-  belongs_to :responsible_person
-
-  has_many :components, dependent: :destroy
-  has_many :nano_materials, dependent: :destroy
-  has_many :image_uploads, dependent: :destroy
-
-  has_one :deleted_notification
-
-  accepts_nested_attributes_for :image_uploads
-
-  index_name [ENV.fetch("ES_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
-  scope :elasticsearch, -> { where(state: "notification_complete") }
-
   DELETABLE_ATTRIBUTES = %w[product_name
                             import_country
                             reference_number
@@ -35,6 +18,22 @@ class Notification < ApplicationRecord
                             ph_max_value
                             notification_complete_at
                             csv_cache].freeze
+
+  include Searchable
+  include CountriesHelper
+
+  belongs_to :responsible_person
+
+  has_many :components, dependent: :destroy
+  has_many :nano_materials, dependent: :destroy
+  has_many :image_uploads, dependent: :destroy
+
+  has_one :deleted_notification, dependent: :destroy
+
+  accepts_nested_attributes_for :image_uploads
+
+  index_name [ENV.fetch("ES_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
+  scope :elasticsearch, -> { where(state: "notification_complete") }
 
   before_create do
     new_reference_number = nil
@@ -65,6 +64,8 @@ class Notification < ApplicationRecord
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 },
                                           allow_nil: true
   validate :max_ph_is_greater_than_min_ph
+
+  delegate :count, to: :components, prefix: true
 
   settings do
     mapping do
@@ -189,19 +190,35 @@ class Notification < ApplicationRecord
     cpnp_reference.present?
   end
 
-  def destroy_notification!(submit_user)
-    if notification_complete?
-      NotificationDeleteService.new(self, submit_user).call
-    else
-      destroy!
-    end
-  end
+  # =========================================
+  # DELETING NOTIFICATIONS
+  # =========================================
+  #
+  # Notifications will be soft deleted by default. We want to avoid hard deletes unless
+  # particular cases arise.
+  # EG: We need to completely remove a Responsible Person and its associated notifications.
+  #
+  # The following code overwrites ActiveRecord methods to default to soft deletion.
+  # - Notification will be soft deleted when calling:
+  #   - soft_delete!
+  #   - destroy
+  #   - destroy!
+  # - Notification will be hard deleted when calling:
+  #   - hard_delete!
+  # - Disabled methods:
+  #   - delete
+  #   - delete!
 
-  def destroy
-    destroy!
-  end
+  # Keeps the original "ActiveRecord::Persistence#destroy" behaviour as "#hard_delete!"
+  # This sllows to still hard delete notifications after "#destroy" is overwritten
+  # to do a soft deletion.
+  alias_method :hard_delete!, :destroy
 
-  def destroy!
+  # Soft deletion of a notification implies:
+  # - Set notification state as "deleted"
+  # - Creates an associated "deleted_notification" object containing the notification information.
+  # - Removes information from original notification object that has been "deleted".
+  def soft_delete!
     return if deleted?
 
     transaction do
@@ -217,19 +234,18 @@ class Notification < ApplicationRecord
     end
   end
 
-  def delete
-    raise "Not supported"
-  end
+  alias_method :destroy, :soft_delete!
+  alias_method :destroy!, :soft_delete!
 
   def delete!
     raise "Not supported"
   end
 
+  alias_method :delete, :delete!
+
   def can_be_deleted?
     !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
   end
-
-  delegate :count, to: :components, prefix: true
 
   def cache_notification_for_csv!
     self.csv_cache = NotificationDecorator.new(self).to_csv

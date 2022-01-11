@@ -6,10 +6,10 @@ Rails.application.configure do
   config.lograge.custom_payload do |controller|
     extra_payload = {}
     extra_payload[:user_id] = begin
-                                controller.current_user&.id
-                              rescue StandardError
-                                nil
-                              end
+      controller.current_user&.id
+    rescue StandardError
+      nil
+    end
     extra_payload
   end
 end

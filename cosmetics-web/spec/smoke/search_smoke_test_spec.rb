@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Search smoke test" do
-  let(:session) { Capybara::Session.new :mechanize }
+  let(:session) { Capybara::Session.new :selenium_headless }
   let(:product_name) { ENV.fetch("SMOKE_PRODUCT_NAME", "THE MASK by WOW facial hydrogel sheet face mask") }
 
   if ENV["RUN_SMOKE"] == "true"
