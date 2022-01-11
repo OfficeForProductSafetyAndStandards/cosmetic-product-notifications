@@ -5,8 +5,13 @@ class NotificationSearchForm < Form
   FILTER_BY_DATE_RANGE = "by_date_range".freeze
 
   CATEGORIES = get_main_categories.map { |c| get_category_name(c) }
-  SEARCH_OPTIONS = {
+  SORT_WITH_QUERY_OPTIONS = {
     "Relevance" => ElasticsearchQuery::SCORE_SORTING,
+    "Newest" => ElasticsearchQuery::DATE_DESCENDING_SORTING,
+    "Oldest" => ElasticsearchQuery::DATE_ASCENDING_SORTING,
+  }.freeze
+
+  SORT_WITHOUT_QUERY_OPTIONS = {
     "Newest" => ElasticsearchQuery::DATE_DESCENDING_SORTING,
     "Oldest" => ElasticsearchQuery::DATE_ASCENDING_SORTING,
   }.freeze
@@ -46,9 +51,10 @@ class NotificationSearchForm < Form
 
   def initialize(args = {})
     super(args)
-    unless sort_by.in? SEARCH_OPTIONS.values
-      self.sort_by = SEARCH_OPTIONS["Newest"]
-    end
+  end
+
+  def sorting_options
+    q.present? ? SORT_WITH_QUERY_OPTIONS : SORT_WITHOUT_QUERY_OPTIONS
   end
 
   def date_from_for_search
