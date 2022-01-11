@@ -71,38 +71,6 @@ RSpec.describe NotificationSearchForm do
     end
   end
 
-  describe "#sort_by" do
-    RSpec.shared_examples "sorts by newest" do
-      it "sorts by newest" do
-        expect(form.sort_by).to eq("date_descending")
-      end
-    end
-
-    context "when sorting is not specified" do
-      include_examples "sorts by newest"
-    end
-
-    context "when sorting is explicitly null" do
-      let(:form_args) { super().merge(sort_by: nil) }
-
-      include_examples "sorts by newest"
-    end
-
-    context "when valid sorting is given" do
-      let(:form_args) { super().merge(sort_by: "date_ascending") }
-
-      it "keeps the given sorting value" do
-        expect(form.sort_by).to eq("date_ascending")
-      end
-    end
-
-    context "when invalid sorting is given" do
-      let(:form_args) { super().merge(sort_by: "foo_bar") }
-
-      include_examples "sorts by newest"
-    end
-  end
-
   describe "#date_to_for_search" do
     context "when using range" do
       let(:date_filter) { NotificationSearchForm::FILTER_BY_DATE_RANGE }

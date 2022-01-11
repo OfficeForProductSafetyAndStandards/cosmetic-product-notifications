@@ -49,10 +49,6 @@ class NotificationSearchForm < Form
 
   validate :date_from_lower_then_date_to
 
-  def initialize(args = {})
-    super(args)
-  end
-
   def sorting_options
     q.present? ? SORT_WITH_QUERY_OPTIONS : SORT_WITHOUT_QUERY_OPTIONS
   end
