@@ -33,7 +33,7 @@ class SubmitNotifyMailer < NotifyMailer
 
   def send_responsible_person_invite_email(responsible_person, invited_team_member, inviting_user_name)
     @host = submit_host
-    set_reference("Invite user to join responsible person")
+    set_reference("Invite user to join Responsible Person")
     user = SubmitUser.find_by(email: invited_team_member.email_address)
     if user
       set_template(TEMPLATES[:responsible_person_invitation_for_existing_user])
