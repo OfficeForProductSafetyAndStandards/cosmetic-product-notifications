@@ -104,4 +104,16 @@ module WizardConcern
     authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
     @component_name = @component.notification.is_multicomponent? ? @component.name : "the product"
   end
+
+  def previous_wizard_path
+    route = self.class::BACK_ROUTING[step]
+    if route.is_a? Array
+      route = route.find { |r| instance_exec(&self.class::BACK_ROUTING_FUNCTIONS[r]) }
+      if route.nil?
+        return responsible_person_notification_draft_path(@notification.responsible_person, @notification)
+      end
+    end
+    wizard_path(route)
+  end
+
 end

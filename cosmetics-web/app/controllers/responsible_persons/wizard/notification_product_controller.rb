@@ -6,11 +6,18 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   steps :add_product_name,
         :add_internal_reference,
         :for_children_under_three,
-        :contains_nanomaterials, # add info to form that later user can redefine nanomaterials, consider not showing this for edit
-        :single_or_multi_component, # add info to form that later user can redefine components, consider not showing this for edit
+        :contains_nanomaterials,
+        :single_or_multi_component,
         :add_product_image,
         :completed
 
+  BACK_ROUTING = {
+    add_internal_reference: :add_product_name,
+    for_children_under_three: :add_internal_reference,
+    contains_nanomaterials: :for_children_under_three,
+    single_or_multi_component: :contains_nanomaterials,
+    add_product_image: :single_or_multi_component
+  }
 
   # TODO: investigate previous path helper
   before_action :set_notification

@@ -3,7 +3,7 @@
 
 <% page_title title, errors: @notification.errors.any? %>
 <% content_for :after_header do %>
-  <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
+  <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
 
 <%= form_with model: @notification, url: wizard_path, method: :put do |form| %>

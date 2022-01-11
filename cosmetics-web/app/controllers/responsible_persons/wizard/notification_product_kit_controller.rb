@@ -10,6 +10,12 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
         :ph_range, # only for mixed
         :completed
 
+  BACK_ROUTING = {
+    is_hair_dye: :is_mixed,
+    is_ph_between_3_and_10: :is_hair_dye,
+    ph_range: :is_hair_dye
+  }
+
   before_action :set_notification
 
   def show
