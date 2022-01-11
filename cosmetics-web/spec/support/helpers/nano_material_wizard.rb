@@ -1,10 +1,12 @@
 require "support/matchers/capybara_matchers"
 
-def complete_nano_material_wizard(name, nano_material_number: nil, purposes: ['Colourant'])
-  if nano_material_number
-    click_on "Nanomaterial ##{nano_material_number}"
-  else
-    click_link name
+def complete_nano_material_wizard(name, nano_material_number: nil, purposes: ['Colourant'], from_add: false)
+  unless from_add
+    if nano_material_number
+      click_on "Nanomaterial ##{nano_material_number}"
+    else
+      click_link name
+    end
   end
 
   answer_inci_name_with name

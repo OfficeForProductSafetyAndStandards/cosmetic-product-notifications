@@ -41,7 +41,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #2"
 
     click_link "Add another nanomaterial"
-    complete_nano_material_wizard("Nano three", purposes: ["Preservative"], nano_material_number: 3)
+    complete_nano_material_wizard("Nano three", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_not_started
 
@@ -50,7 +50,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_multi_item_kit_task_completed
 
     click_link "Add another nanomaterial"
-    complete_nano_material_wizard("Nano four", purposes: ["Preservative"], nano_material_number: 4)
+    complete_nano_material_wizard("Nano four", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_completed
 
@@ -62,7 +62,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_completed "Cream one"
 
     click_link "Add another nanomaterial"
-    complete_nano_material_wizard("Nano five", purposes: ["Preservative"], nano_material_number: 5)
+    complete_nano_material_wizard("Nano five", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_completed
 
@@ -78,7 +78,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     click_link "Add another nanomaterial"
 
-    complete_nano_material_wizard("Nano six", purposes: ["Preservative"], nano_material_number: 6)
+    complete_nano_material_wizard("Nano six", purposes: ["Preservative"], from_add: true)
 
     expect_accept_and_submit_not_started
 
@@ -109,9 +109,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     click_link "Add another nanomaterial"
 
-    expect_product_details_task_blocked
-
-    complete_nano_material_wizard("Nano two", purposes: ["Preservative"], nano_material_number: 2)
+    complete_nano_material_wizard("Nano two", purposes: ["Preservative"], from_add: true)
 
     # TODO: in future, newly created nano will have to be added to item
 
@@ -218,6 +216,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_accept_and_submit_not_started
 
     click_on "Add another component"
+
+    click_on "Back"
 
     expect_item_task_not_started "Item #3"
 
