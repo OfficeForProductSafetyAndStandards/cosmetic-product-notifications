@@ -87,4 +87,8 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
   def model
     @notification
   end
+
+  def minimum_state
+    NotificationStateConcern::DETAILS_COMPLETE
+  end
 end

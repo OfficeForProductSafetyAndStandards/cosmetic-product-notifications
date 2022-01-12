@@ -351,13 +351,12 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #2"
 
     click_on "Add another component"
-    click_on "Back"
 
     expect_multi_item_kit_task_blocked
 
     expect_task_blocked "Item #1"
     expect_task_blocked "Item #2"
-
+    expect_task_blocked "Item #3"
 
     complete_nano_material_wizard("Nano four", purposes: ["Preservative"], nano_material_number: 4)
 
@@ -365,7 +364,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_task_not_started "Item #1"
     expect_task_not_started "Item #2"
-    expect_item_task_not_started "Item #3"
+    expect_task_not_started "Item #3"
 
     complete_item_wizard("Cream one", item_number: 1, nanos: ["Nano one"])
 

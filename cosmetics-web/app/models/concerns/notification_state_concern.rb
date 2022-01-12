@@ -148,4 +148,9 @@ module NotificationStateConcern
   def reset_previous_state!
     self.update(previous_state: nil)
   end
+
+  def state_lower_than?(state)
+    states = self.class.aasm.states.map(&:name)
+    states.index(self.state.to_sym) < states.index(state)
+  end
 end

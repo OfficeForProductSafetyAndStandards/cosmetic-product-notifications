@@ -402,5 +402,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     @selected_sub_category = @sub_categories.find { |category| @component.belongs_to_category?(category) }
   end
 
+  def minimum_state
+    NotificationStateConcern::READY_FOR_COMPONENTS
+  end
 end
 
