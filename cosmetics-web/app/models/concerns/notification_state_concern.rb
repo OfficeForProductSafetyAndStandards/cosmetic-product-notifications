@@ -1,5 +1,13 @@
 module NotificationStateConcern
   extend ActiveSupport::Concern
+  EMPTY = :empty
+  PRODUCT_NAME_ADDED = :product_name_added
+  READY_FOR_NANOMATERIALS = :ready_for_nanomaterials
+  DETAILS_COMPLETE = :details_complete
+  READY_FOR_COMPONENTS = :ready_for_components
+  COMPONENTS_COMPLETE = :components_complete
+  NOTIFICATION_COMPLETE = :notification_complete
+  DELETED = :deleted
 
   # State cache and overrides
   #
@@ -9,27 +17,18 @@ module NotificationStateConcern
   # higher state and restoring it when certain state update is triggered.
 
   # states which can be saved as previous state column
-  CACHEABLE_PREVIOUS_STATES = %w(ready_for_components components_complete)
+  CACHEABLE_PREVIOUS_STATES = [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE]
 
   # Indicates which states can be changed
   # key is requested state, value possible state from `previous_state` column.
   STATES_OVERRIDES = {
-    "details_complete" => ["ready_for_components", "components_complete"],
-    "ready_for_components" => ["components_complete"]
+    DETAILS_COMPLETE => [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE],
+    READY_FOR_COMPONENTS => [COMPONENTS_COMPLETE]
   }
 
   DISABLED_OVERRIDES_FOR = {
-    "components_complete" => ["ready_for_components"],
+    COMPONENTS_COMPLETE => [READY_FOR_COMPONENTS],
   }
-
-  EMPTY = :empty
-  PRODUCT_NAME_ADDED = :product_name_added
-  READY_FOR_NANOMATERIALS = :ready_for_nanomaterials
-  DETAILS_COMPLETE = :details_complete
-  READY_FOR_COMPONENTS = :ready_for_components
-  COMPONENTS_COMPLETE = :components_complete
-  NOTIFICATION_COMPLETE = :notification_complete
-  DELETED = :deleted
 
   included do
     include AASM
@@ -118,23 +117,23 @@ module NotificationStateConcern
     # Reset first component too
     c = self.components.first
     c.update_state('empty')
-    self.update_state!('details_complete')
+    self.update_state!(DETAILS_COMPLETE)
   end
 
   def revert_to_ready_for_nanomaterials
-    self.update_state('ready_for_nanomaterials')
+    self.update_state(READY_FOR_NANOMATERIALS)
   end
 
   def update_state(new_state, only_downgrade: false)
     if only_downgrade
-      return if new_state == 'ready_for_components' && self.state == 'ready_for_nanomaterials'
+      return if new_state.to_sym == READY_FOR_COMPONENTS && self.state.to_sym == READY_FOR_NANOMATERIALS
     end
-    if CACHEABLE_PREVIOUS_STATES.include?(self.state)
+    if CACHEABLE_PREVIOUS_STATES.include?(self.state.to_sym)
       self.update(previous_state: self.state)
     end
     # Try to revert to previous state
-    if self.previous_state.present? && STATES_OVERRIDES[new_state]&.include?(self.previous_state) &&
-        !DISABLED_OVERRIDES_FOR[state]&.include?(new_state)
+    if self.previous_state.present? && STATES_OVERRIDES[new_state.to_sym]&.include?(self.previous_state.to_sym) &&
+        !DISABLED_OVERRIDES_FOR[state.to_sym]&.include?(new_state.to_sym)
       # but only when transision is allowed
       self.update(state: self.previous_state)
     else
