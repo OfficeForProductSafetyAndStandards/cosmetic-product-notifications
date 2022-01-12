@@ -23,11 +23,7 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 private
 
   def search_notifications(page_size)
-    query = ElasticsearchQuery.new(keyword: @search_form.q,
-                                   category: @search_form.category,
-                                   from_date: @search_form.date_from_for_search,
-                                   to_date: @search_form.date_to_for_search,
-                                   sort_by: @search_form.sort_by)
+    query = ElasticsearchQuery.new(keyword: @search_form.q, category: @search_form.category, from_date: @search_form.date_from_for_search, to_date: @search_form.date_to_for_search, sort_by: @search_form.sort_by)
     Notification.full_search(query).paginate(page: params[:page], per_page: page_size)
   end
 
