@@ -1,9 +1,15 @@
 module NotificationStateConcern
   extend ActiveSupport::Concern
 
-  # states which can go to previous state
+  # State cache and overrides
+  #
+  # Sometimes, when user changes higher state to lower - in practice, only
+  # when adding nanos after higher steps were completed, after finishing
+  # nano wizard we want to go to the previous state. This is achieved by cacheing
+  # higher state and restoring it when certain state update is triggered.
+
+  # states which can be saved as previous state column
   CACHEABLE_PREVIOUS_STATES = %w(ready_for_components components_complete)
-  #CACHEABLE_PREVIOUS_STATES = %w(ready_for_components)
 
   # Indicates which states can be changed
   # key is requested state, value possible state from `previous_state` column.
@@ -12,24 +18,37 @@ module NotificationStateConcern
     "ready_for_components" => ["components_complete"]
   }
 
+  DISABLED_OVERRIDES_FOR = {
+    "components_complete" => ["ready_for_components"],
+  }
+
+  EMPTY = :empty
+  PRODUCT_NAME_ADDED = :product_name_added
+  READY_FOR_NANOMATERIALS = :ready_for_nanomaterials
+  DETAILS_COMPLETE = :details_complete
+  READY_FOR_COMPONENTS = :ready_for_components
+  COMPONENTS_COMPLETE = :components_complete
+  NOTIFICATION_COMPLETE = :notification_complete
+  DELETED = :deleted
+
   included do
     include AASM
 
     aasm whiny_transitions: false, timestamps: true, column: :state do
-      state :empty, initial: true
-      state :product_name_added
+      state EMPTY, initial: true
+      state PRODUCT_NAME_ADDED
 
-      state :ready_for_nanomaterials
+      state READY_FOR_NANOMATERIALS
       # state is entangled with view here, this state is used to indicate
       # that multiitem kit step is not defined
       # TODO: rename to something as product_definition_complete
-      state :details_complete # only for multiitem
+      state DETAILS_COMPLETE # only for multiitem
 
       # indicate that component related steps can be started
-      state :ready_for_components
+      state READY_FOR_COMPONENTS
 
-      state :components_complete
-      state :notification_complete
+      state COMPONENTS_COMPLETE
+      state NOTIFICATION_COMPLETE
 
       event :add_product_name do
         transitions from: :empty, to: :product_name_added
@@ -48,7 +67,7 @@ module NotificationStateConcern
         end
       end
 
-      state :deleted
+      state DELETED
     end
   end
 
@@ -106,11 +125,17 @@ module NotificationStateConcern
     self.update_state('ready_for_nanomaterials')
   end
 
-  def update_state(new_state)
-   if CACHEABLE_PREVIOUS_STATES.include?(self.state)
+  def update_state(new_state, only_downgrade: false)
+    if only_downgrade
+      return if new_state == 'ready_for_components' && self.state == 'ready_for_nanomaterials'
+    end
+    if CACHEABLE_PREVIOUS_STATES.include?(self.state)
       self.update(previous_state: self.state)
     end
-    if self.previous_state.present? && STATES_OVERRIDES[new_state]&.include?(self.previous_state)
+    # Try to revert to previous state
+    if self.previous_state.present? && STATES_OVERRIDES[new_state]&.include?(self.previous_state) &&
+        !DISABLED_OVERRIDES_FOR[state]&.include?(new_state)
+      # but only when transision is allowed
       self.update(state: self.previous_state)
     else
       self.update(state: new_state)

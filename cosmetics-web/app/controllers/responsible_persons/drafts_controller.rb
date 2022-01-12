@@ -6,7 +6,7 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
 
   def add_component
     component = @notification.components.create
-    @notification.update_state!('ready_for_components')
+    @notification.update_state('ready_for_components', only_downgrade: true)
     redirect_to new_responsible_person_notification_component_build_path @notification.responsible_person, @notification, component
   end
 
