@@ -24,7 +24,7 @@
             fieldset: { legend: { text: "Do you want to add an internal reference?", classes: "govuk-label--m" } },
             items: [{ text: "Yes", value: "yes", conditional: { html: reference_input_html },
                     checked: preselect_internal_reference_yes},
-                    { text: "No", value: "no" }] %>
+                    { text: "No", value: "no", checked: answer_checked?("no") }] %>
 
         <%= govukButton text: "Continue" %>
       <% end %>

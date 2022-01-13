@@ -89,7 +89,10 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   def update_contains_nanomaterials
     return render_next_step @notification if @notification.nano_materials.count > 1
 
-    case params.dig(:notification, :contains_nanomaterials)
+    answer = params.dig(:notification, :contains_nanomaterials)
+    model.save_routing_answer(step, answer) if answer
+
+    case answer
     when "yes"
       if nano_materials_count > 10
         @notification.errors.add :contains_nanomaterials, "Maximum nanomaterials count is 10. More can be added later"
