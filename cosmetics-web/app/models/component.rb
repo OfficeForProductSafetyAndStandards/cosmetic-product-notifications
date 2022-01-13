@@ -4,6 +4,8 @@ class Component < ApplicationRecord
   include NotificationPropertiesHelper
   include CategoryHelper
   include FileUploadConcern
+  include RoutingQuestionCacheConcern
+
   set_attachment_name :formulation_file
   set_allowed_types %w[application/pdf].freeze
   set_max_file_size 30.megabytes
@@ -198,12 +200,6 @@ class Component < ApplicationRecord
     return if contains_poisonous_ingredients.nil?
 
     contains_poisonous_ingredients? ? "Yes" : "No"
-  end
-
-  def remember_answer(hash)
-    answers = self.routing_questions_answers || {}
-    self.routing_questions_answers = answers.merge(hash)
-    self.save
   end
 
   def update_state(state)

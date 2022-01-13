@@ -29,7 +29,7 @@
                 classes: "govuk-label--m" } },
                 items: [{ text: "Yes", value: "yes", conditional: { html: count_input_html },
                       checked: params[:notification].present? && params[:notification][:contains_nanomaterials] == "yes" },
-                      { text: "No", value: "no" }] %>
+                      { text: "No", value: "no", checked: answer_checked?("no") }] %>
         <%= govukButton text: "Continue" %>
 
       </div>
