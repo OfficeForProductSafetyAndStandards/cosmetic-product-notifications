@@ -50,6 +50,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_multi_item_kit_task_completed
 
     click_link "Add another nanomaterial"
+
     complete_nano_material_wizard("Nano four", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_completed
@@ -298,5 +299,107 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_to_be_on__your_cosmetic_products_page
     expect_to_see_message "Some product"
+  end
+
+  scenario "Checking correct status - when adding items after interrupted nano wizard" do
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+
+    click_on "Add a cosmetic product"
+
+    complete_product_wizard(name: "Product with nano and two items", items_count: 2, nano_materials_count: 2)
+
+    expect_task_not_started "Nanomaterial #1"
+    expect_task_not_started "Nanomaterial #2"
+
+    expect_multi_item_kit_task_blocked
+
+    expect_task_blocked "Item #1"
+    expect_task_blocked "Item #2"
+
+    complete_nano_material_wizard("Nano one", nano_material_number: 1)
+
+    expect_task_completed "Nano one"
+    expect_task_not_started "Nanomaterial #2"
+
+    expect_multi_item_kit_task_blocked
+
+    expect_task_blocked "Item #1"
+    expect_task_blocked "Item #2"
+
+    complete_nano_material_wizard("Nano two", nano_material_number: 2)
+
+    expect_multi_item_kit_task_not_started
+
+    expect_task_blocked "Item #1"
+    expect_task_blocked "Item #2"
+
+    click_link "Add another nanomaterial"
+    complete_nano_material_wizard("Nano three", purposes: ["Preservative"], from_add: true)
+
+    expect_multi_item_kit_task_not_started
+
+    complete_multi_item_kit_wizard
+
+    expect_multi_item_kit_task_completed
+
+    click_link "Add another nanomaterial"
+    click_link 'Back'
+
+    expect_multi_item_kit_task_blocked
+
+    expect_task_blocked "Item #1"
+    expect_task_blocked "Item #2"
+
+    click_on "Add another component"
+
+    expect_multi_item_kit_task_blocked
+
+    expect_task_blocked "Item #1"
+    expect_task_blocked "Item #2"
+    expect_task_blocked "Item #3"
+
+    complete_nano_material_wizard("Nano four", purposes: ["Preservative"], nano_material_number: 4)
+
+    expect_multi_item_kit_task_completed
+
+    expect_task_not_started "Item #1"
+    expect_task_not_started "Item #2"
+    expect_task_not_started "Item #3"
+
+    complete_item_wizard("Cream one", item_number: 1, nanos: ["Nano one"])
+
+    expect_task_completed "Cream one"
+
+    click_link "Add another nanomaterial"
+    complete_nano_material_wizard("Nano five", purposes: ["Preservative"], from_add: true)
+
+    expect_multi_item_kit_task_completed
+
+    expect_task_completed "Cream one"
+
+    expect_task_not_started "Item #2"
+
+    expect_accept_and_submit_blocked
+
+    complete_item_wizard("Cream two", item_number: 2, nanos: ["Nano two"])
+
+    complete_item_wizard("Cream three", item_number: 3, nanos: ["Nano three"])
+
+    expect_accept_and_submit_not_started
+
+    click_link "Add another nanomaterial"
+
+    complete_nano_material_wizard("Nano six", purposes: ["Preservative"], from_add: true)
+
+    expect_accept_and_submit_not_started
+
+    # TODO: in future, newly created nano will have to be added to item
+
+    click_link "Accept and submit"
+
+    click_button "Accept and submit"
+
+    expect_to_be_on__your_cosmetic_products_page
+    expect_to_see_message "Product with nano and two items notification submitted"
   end
 end

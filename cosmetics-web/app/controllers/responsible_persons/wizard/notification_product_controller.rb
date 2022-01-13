@@ -112,7 +112,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
         nano = @notification.nano_materials.create
         nano.nano_elements.create
         # TODO: quite entangled
-        @notification.update_state('ready_for_nanomaterials')
+        @notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
       end
       render_next_step @notification
     when "no"

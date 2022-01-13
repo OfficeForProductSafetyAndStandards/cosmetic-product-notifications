@@ -21,7 +21,7 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
   def show
     case step
     when :completed
-      @notification.update_state('ready_for_components') if @notification.details_complete?
+      @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS) if @notification.details_complete?
       render 'responsible_persons/wizard/completed'
     else
       render_wizard
@@ -86,5 +86,9 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
 
   def model
     @notification
+  end
+
+  def minimum_state
+    NotificationStateConcern::DETAILS_COMPLETE
   end
 end
