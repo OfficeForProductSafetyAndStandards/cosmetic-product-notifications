@@ -67,12 +67,14 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)
     when "yes"
+      model.save_routing_answer(step, "yes")
       if @notification.update_with_context(notification_params, step)
         render_wizard @notification
       else
         render step
       end
     when "no"
+      model.save_routing_answer(step, "no")
       @notification.industry_reference = nil
       render_wizard @notification
     else
@@ -87,7 +89,10 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   def update_contains_nanomaterials
     return render_next_step @notification if @notification.nano_materials.count > 1
 
-    case params.dig(:notification, :contains_nanomaterials)
+    answer = params.dig(:notification, :contains_nanomaterials)
+    model.save_routing_answer(step, answer) if answer
+
+    case answer
     when "yes"
       if nano_materials_count > 10
         @notification.errors.add :contains_nanomaterials, "Maximum nanomaterials count is 10. More can be added later"
