@@ -55,6 +55,11 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     redirect_to wizard_path(steps.first)
   end
 
+  def remove_product_image
+    ImageUpload.find(params[:id]).destroy
+    redirect_to :back
+  end
+
   private
 
   def set_final_state_for_wizard

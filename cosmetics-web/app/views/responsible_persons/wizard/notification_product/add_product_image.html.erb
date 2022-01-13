@@ -1,73 +1,49 @@
-<% page_title = @notification.multi_component? ? "Upload images of the item labels" : "Upload an image of the product label" %>
-
-<% page_title page_title, errors: @notification.errors.messages.include?(:image_uploads) %>
+<% title = @notification.is_multicomponent? ? "Upload images of the item labels" : "Upload an image of the product label" %>
+<% page_title title, errors: @error_list.present? %>
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= render(partial: "instructions", locals: { title: title }) %>
 
-    <% if @notification.errors.messages.include?(:image_uploads) %>
-      <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @notification.errors.messages[:image_uploads][0], href: "#image_upload"}]) %>
-    <% end %>
-
-    <h1 class="govuk-heading-l"><%= page_title %></h1>
-
-    <% if @notification.is_multicomponent? %>
-      <%= render "shared/multiple_images_upload_description" %>
-    <% else %>
-      <div class="govuk-inset-text">You must upload an image of the product label. You can also upload a photo of the product.</div>
-      <p class="govuk-body">
-        The images you provide must be in focus and all packaging text legible. If you are uploading multiple images, you must upload them all at the same time.
-        You can upload up to 10 images. Each file can be up to 30MB and must be a JPG, PNG or PDF.
-      </p>
-      <p class="govuk-body">
-        The product label and a photo of the product help the National Poisons Information Service identify the product.
-      </p>
-      <p class="govuk-body">
-       The images you need to provide depend on the type of product and how it is packaged.
-     </p>
-
-      <%= govukDetails(summaryText: 'What images are needed?') do %>
-        <h2 class="govuk-heading-s">
-          Example 1
-        </h2>
-        <p class="govuk-body">
-          The product is a standalone bottle with no secondary packaging.
-        </p>
-        <p class="govuk-body">
-          You must supply an image of the bottle label. You can also supply a photo of the bottle.
-        </p>
-        <h2 class="govuk-heading-s">
-          Example 2
-        </h2>
-        <p class="govuk-body">
-          The product is a bottle in a box.
-        </p>
-        <p class="govuk-!-margin-bottom-1">
-          You must supply an image of the bottle label. You can also supply:
-        </p>
-        <ul class="govuk-list govuk-list--bullet">
-           <li>a photo of the bottle</li>
-           <li>an image of the label on the box</li>
-           <li>a photo of the packing</li>
-        </ul>
-      <% end %>
+    <% if @notification.image_uploads.any? %>
+      <table class="govuk-table" id="label-images-table">
+        <caption class="govuk-table__caption govuk-heading-m">Label images</caption>
+        <tbody class="govuk-table__body">
+          <% @notification.image_uploads.each do |image| %>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header govuk-!-width-two-thirds" scope="row">
+                  <%= link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state") %>
+                </th>
+                <td class="govuk-table__cell">
+                  <%= link_to("Remove",
+                              responsible_person_notification_draft_delete_product_image_path(@notification.responsible_person, @notification, image_id: image.id),
+                              method: :delete) %>
+                </td>
+              </tr>
+          <% end %>
+        </tbody>
+      </table>
     <% end %>
 
     <%= form_with(url: wizard_path, method: :put, multipart: true) do |form| %>
-
-      <% classes = "govuk-form-group" %>
-      <% classes += " govuk-form-group--error" if @notification.errors.messages[:image_uploads].any? %>
-
-      <div class="<%= classes %>">
+      <div class="govuk-form-group <%= "govuk-form-group--error" if @error_list.present? %>">
         <%= form.label :image_upload, "Upload a file no larger than 30 MB", class: "govuk-label govuk-label--s" %>
-        <% if @notification.errors.messages[:image_uploads].any? %>
-          <span class="govuk-error-message"><%= @notification.errors.messages[:image_uploads][0] %></span>
+
+        <% if @error_list.present? %>
+          <span class="govuk-error-message">
+            <%= @error_list.first[:text] %>
+          </span>
         <% end %>
-        <%= form.file_field :image_upload, multiple: true, class: "govuk-file-upload", accept: ImageUpload.allowed_types.join(", ") %>
+
+        <%= form.file_field :image_upload, multiple: true, accept: ImageUpload.allowed_types.join(", "), class: "govuk-file-upload" %>
       </div>
-      <%= govukButton text: "Continue" %>
+
+      <div class="govuk-form-group">
+        <%= govukButton text: "Save and continue" %>
+      </div>
     <% end %>
   </div>
 </div>
