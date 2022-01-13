@@ -2,7 +2,7 @@
   <label class="govuk-label govuk-body-s" for="notification_search_form_sort_by">
     Sort by
   </label>
-  <%= form.select :sort_by, options_for_select(@search_form.class::SEARCH_OPTIONS, @search_form.sort_by), {}, class: "govuk-select govuk-!-margin-bottom-1" %>
+  <%= form.select :sort_by, options_for_select(@search_form.sorting_options, @search_form.sort_by), {}, class: "govuk-select govuk-!-margin-bottom-1" %>
   <button class="govuk-button opss-js-enabled-hidden" data-module="govuk-button">
     Sort
   </button>
