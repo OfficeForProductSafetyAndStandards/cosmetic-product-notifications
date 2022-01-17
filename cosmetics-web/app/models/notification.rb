@@ -138,6 +138,8 @@ class Notification < ApplicationRecord
   end
 
   def reference_number_for_display
+    return "" if reference_number.blank?
+
     sprintf("UKCP-%08d", reference_number)
   end
 

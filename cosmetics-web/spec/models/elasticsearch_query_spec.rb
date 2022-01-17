@@ -41,7 +41,7 @@ RSpec.describe ElasticsearchQuery, type: :model do
       let(:category) { nil }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort: %w[_score] }
+        { query: { bool: { filter: [], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe ElasticsearchQuery, type: :model do
       let(:sort_by) { "" }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort: %w[_score] }
+        { query: { bool: { filter: [], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end
@@ -88,7 +88,7 @@ RSpec.describe ElasticsearchQuery, type: :model do
       let(:category) { "Bar baz" }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { match_all: {} } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end

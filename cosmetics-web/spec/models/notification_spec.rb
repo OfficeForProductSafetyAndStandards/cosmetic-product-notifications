@@ -338,4 +338,16 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
     end
   end
+
+  describe "#reference_number_for_display" do
+    it "returns empty string if reference number is not set" do
+      notification = build_stubbed(:notification, reference_number: nil)
+      expect(notification.reference_number_for_display).to eq ""
+    end
+
+    it "formats the reference number" do
+      notification = build_stubbed(:notification, reference_number: "60162968")
+      expect(notification.reference_number_for_display).to eq "UKCP-60162968"
+    end
+  end
 end
