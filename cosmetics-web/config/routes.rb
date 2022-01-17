@@ -139,6 +139,7 @@ Rails.application.routes.draw do
           end
           resource :delete_item, controller: "responsible_persons/delete_items", only: %i[show destroy]
           resource :delete_product_image, controller: "responsible_persons/delete_product_image", only: %i[destroy]
+          resource :delete_formulation_file, controller: "responsible_persons/delete_formulation_file", only: %i[destroy]
           resource :delete_nano_material, controller: "responsible_persons/delete_nano_materials", only: %i[show destroy]
         end
 

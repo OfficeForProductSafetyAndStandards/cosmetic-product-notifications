@@ -18,41 +18,42 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
   <% end %>
 </div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <% if @component.formulation_file.attached? %>
-      <% file = @component.formulation_file %>
-      <table class="govuk-table" id="formulation-files-table">
-        <caption class="govuk-table__caption govuk-heading-s">Upload a file</caption>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-width-two-thirds" scope="row">
-              <%= link_to(file.filename, url_for(file), class: "govuk-link govuk-link--no-visited-state") %>
-            </th>
-            <td class="govuk-table__cell">
-              <%= link_to("Remove",
-                          responsible_person_notification_component_formulation_file_path(@responsible_person, @notification, @component, file.id),
-                          method: :delete) %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    <% end %>
-  </div>
-</div>
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
-  <div class="govuk-form-group <%= error_group_class(@component)%>">
-      <p>File type must be a PDF.</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <% if @component.formulation_file.attached? %>
+        <% file = @component.formulation_file %>
+        <table class="govuk-table" id="formulation-files-table">
+          <caption class="govuk-table__caption govuk-heading-s">Upload a file</caption>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header govuk-!-width-two-thirds" scope="row">
+                <%= link_to(file.filename, url_for(file), class: "govuk-link govuk-link--no-visited-state") %>
+              </th>
+              <td class="govuk-table__cell">
+                <%= link_to("Remove",
+                            responsible_person_notification_draft_delete_formulation_file_path(@notification.responsible_person, @notification, component_id: @component),
+                            method: :delete) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="govuk-form-group <%= error_group_class(@component)%>">
+            <p>File type must be a PDF.</p>
 
-      <%= form.label :formulation_file, "Upload a file", class: "govuk-label govuk-label--s" %>
+            <%= form.label :formulation_file, "Upload a file", class: "govuk-label govuk-label--s" %>
 
-      <% if @component.errors.any? %>
-        <span id="file-upload-1-error" class="govuk-error-message">
-          <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
-        </span>
+            <% if @component.errors.any? %>
+              <span id="file-upload-1-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
+              </span>
+            <% end %>
+            <%= form.file_field :formulation_file, class: "govuk-file-upload",
+                    accept: Component.allowed_types.join(",") %>
+        </div>
       <% end %>
-      <%= form.file_field :formulation_file, class: "govuk-file-upload",
-              accept: Component.allowed_types.join(",") %>
+    </div>
   </div>
   <%= govukButton text: "Continue" %>
 <% end %>

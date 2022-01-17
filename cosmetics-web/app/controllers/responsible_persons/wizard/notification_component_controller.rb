@@ -290,6 +290,9 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   # For exact and range formulations only
   def update_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
+    if formulation_file.blank? && @component.formulation_file.present?
+      render render_next_step @component
+    end
 
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
@@ -309,6 +312,9 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   # For frame formulation only
   def update_upload_poisonus_ingredients
     formulation_file = params.dig(:component, :formulation_file)
+    if formulation_file.blank? && @component.formulation_file.present?
+      return render_next_step @component
+    end
 
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
