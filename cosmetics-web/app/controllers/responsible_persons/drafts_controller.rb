@@ -17,12 +17,6 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     redirect_to new_responsible_person_notification_nanomaterial_build_path @notification.responsible_person, @notification, ne
   end
 
-  def remove_product_image
-    ImageUpload.find(params[:id]).destroy
-    redirect_to :back
-  end
-
-
 private
 
   def responsible_person
