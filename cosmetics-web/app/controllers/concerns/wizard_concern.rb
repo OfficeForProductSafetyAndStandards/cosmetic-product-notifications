@@ -4,6 +4,8 @@ module WizardConcern
 
   included do
     helper_method :next_step_path
+    before_action :check_minimum_state
+    helper_method :model
   end
 
   def notification
@@ -35,7 +37,7 @@ module WizardConcern
     answer = yes_no_param(param)
 
     if ["yes", "no"].include? answer
-      model.remember_answer(param => answer)
+      model.save_routing_answer(step, answer)
       if skip_steps_on == answer
         on_skip&.call
         skip_next_steps(steps_to_skip)
@@ -88,7 +90,7 @@ module WizardConcern
   end
 
   def set_notification
-    @notification = Notification.find_by reference_number: params[:notification_reference_number]
+    @notification ||= Notification.find_by reference_number: params[:notification_reference_number]
 
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
@@ -116,4 +118,17 @@ module WizardConcern
     wizard_path(route)
   end
 
+  def check_minimum_state
+    return unless minimum_state
+    set_notification
+
+    if @notification.state_lower_than?(minimum_state)
+      redirect_to responsible_person_notification_draft_path(@notification.responsible_person, @notification)
+    end
+  end
+
+  # This might be overrided in wizard controller
+  def minimum_state
+    nil
+  end
 end

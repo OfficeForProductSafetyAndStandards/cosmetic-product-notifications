@@ -6,14 +6,14 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
 
   def add_component
     component = @notification.components.create
-    @notification.update_state!('ready_for_components')
+    @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS, only_downgrade: true)
     redirect_to new_responsible_person_notification_component_build_path @notification.responsible_person, @notification, component
   end
 
   def add_nano_material
     nano = @notification.nano_materials.create
     ne = nano.nano_elements.create
-    @notification.update_state('ready_for_nanomaterials')
+    @notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
     redirect_to new_responsible_person_notification_nanomaterial_build_path @notification.responsible_person, @notification, ne
   end
 

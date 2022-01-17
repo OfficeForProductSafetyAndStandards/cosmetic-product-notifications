@@ -21,6 +21,7 @@ class Notification < ApplicationRecord
 
   include Searchable
   include CountriesHelper
+  include RoutingQuestionCacheConcern
 
   belongs_to :responsible_person
 

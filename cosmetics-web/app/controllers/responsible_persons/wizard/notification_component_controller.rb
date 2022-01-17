@@ -157,7 +157,10 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   end
 
   def update_number_of_shades
-    case params.dig(:component, :number_of_shades)
+    answer = params.dig(:component, :number_of_shades)
+
+    model.save_routing_answer(step, answer)
+    case answer
     when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
       jump_to :add_physical_form
@@ -243,6 +246,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   end
 
   def update_select_formulation_type
+    model.save_routing_answer(step, params.dig(:component, :notification_type))
+
     unless @component.update_with_context(component_params, step)
       return render step
     end
@@ -268,6 +273,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   end
 
   def update_contains_poisonous_ingredients
+    model.save_routing_answer(step, params.dig(:component, :contains_poisonous_ingredients))
+
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
       @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
       render :contains_poisonous_ingredients
@@ -402,5 +409,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     @selected_sub_category = @sub_categories.find { |category| @component.belongs_to_category?(category) }
   end
 
+  def minimum_state
+    NotificationStateConcern::READY_FOR_COMPONENTS
+  end
 end
 
