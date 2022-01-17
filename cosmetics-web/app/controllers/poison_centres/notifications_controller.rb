@@ -5,11 +5,11 @@ class PoisonCentres::NotificationsController < SearchApplicationController
     @search_form = NotificationSearchForm.new(search_params)
     @search_form.validate
 
-    @result = search_notifications(PER_PAGE)
+    @result = search_notifications
     # Notifications are only listed in ElasticSearch index when completed, but if an indexed notification gets deleted,
     # it won't be removed from the index until the next reindex is run (once per day).
     # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
-    @notifications = @result.records.completed
+    @notifications = @result.records.completed.paginate(page: params[:page], per_page: PER_PAGE)
   end
 
   def show
@@ -25,9 +25,9 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 
 private
 
-  def search_notifications(page_size)
+  def search_notifications
     query = ElasticsearchQuery.new(keyword: @search_form.q, category: @search_form.category, from_date: @search_form.date_from_for_search, to_date: @search_form.date_to_for_search, sort_by: @search_form.sort_by)
-    Notification.full_search(query).paginate(page: params[:page], per_page: page_size)
+    Notification.full_search(query)
   end
 
   def search_params
