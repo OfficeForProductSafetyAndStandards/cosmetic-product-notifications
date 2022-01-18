@@ -7,13 +7,13 @@
     end
 %>
 <% items = @sub_categories.map { |category|
-            { text: get_category_name(category), value: category, checked: category == @selected_sub_category }
+            { text: get_category_name(category), value: category, checked: (category == @selected_sub_category || (category.to_s == params[:select_category])) }
   }
 %>
 
 <% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
-  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path(select_category: params[:category]) %>
 <% end %>
 
 <% next_step = { :select_root_category => :select_sub_category, :select_sub_category => :select_sub_sub_category, :select_sub_sub_category => :select_sub_sub_category }[step] %>
