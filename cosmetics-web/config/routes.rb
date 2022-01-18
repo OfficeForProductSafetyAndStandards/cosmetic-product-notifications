@@ -133,8 +133,8 @@ Rails.application.routes.draw do
         resources :additional_information, controller: "responsible_persons/additional_information", only: %i[index]
         resource :draft, controller: "responsible_persons/drafts", only: %i[show] do
           collection do
-            get :add_component
-            get :add_nano_material
+            post :add_component
+            post :add_nano_material
           end
           resource :delete_item, controller: "responsible_persons/delete_items", only: %i[show destroy]
           resource :delete_nano_material, controller: "responsible_persons/delete_nano_materials", only: %i[show destroy]
