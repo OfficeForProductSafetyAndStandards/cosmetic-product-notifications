@@ -246,14 +246,15 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   end
 
   def update_select_formulation_type
-    model.save_routing_answer(step, params.dig(:component, :notification_type))
+    formulation_type = params.dig(:component, :notification_type)
+    model.save_routing_answer(step, formulation_type)
+    @component.update_formulation_type(formulation_type)
 
-    unless @component.update_with_context(component_params, step)
+    if @component.errors.present?
       return render step
     end
 
     if @component.predefined? # predefined == frame_formulation
-      @component.formulation_file.purge if @component.formulation_file.attached?
       jump_to(:select_frame_formulation)
     else
       @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
@@ -291,7 +292,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   def update_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
     if formulation_file.blank? && @component.formulation_file.present?
-      render render_next_step @component
+      jump_to(:select_ph_option)
+      return render_next_step @component
     end
 
     if formulation_file.present?
