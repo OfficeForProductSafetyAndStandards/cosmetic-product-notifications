@@ -211,14 +211,12 @@ class Component < ApplicationRecord
 
     self.notification_type = type
 
-    return self if !self.valid?(:select_formulation_type)
+    return if !self.valid?(:select_formulation_type)
 
     self.save!
 
     self.formulation_file.purge if self.predefined? && old_type != self.notification_type
-    self.update(frame_formulation: nil, contains_poisonous_ingredients: false) if !self.predefined?
-
-    true
+    self.update!(frame_formulation: nil, contains_poisonous_ingredients: false) if !self.predefined?
   end
 
 private
