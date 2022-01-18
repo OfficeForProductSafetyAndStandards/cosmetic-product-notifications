@@ -180,6 +180,8 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       params[:image_upload].each { |img| @notification.add_image(img) }
       @notification.save
       render_next_step @notification
+    elsif @notification.image_uploads.present?
+      render_next_step @notification
     else
       @notification.errors.add :image_uploads, "Select an image"
       rerender_current_step
