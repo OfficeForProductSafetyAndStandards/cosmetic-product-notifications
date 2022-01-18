@@ -40,7 +40,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #1"
     expect_task_blocked "Item #2"
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
     complete_nano_material_wizard("Nano three", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_not_started
@@ -49,7 +49,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_multi_item_kit_task_completed
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
 
     complete_nano_material_wizard("Nano four", purposes: ["Preservative"], from_add: true)
 
@@ -62,7 +62,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_task_completed "Cream one"
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
     complete_nano_material_wizard("Nano five", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_completed
@@ -77,7 +77,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
 
     complete_nano_material_wizard("Nano six", purposes: ["Preservative"], from_add: true)
 
@@ -108,7 +108,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_product_details_task_completed
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
 
     complete_nano_material_wizard("Nano two", purposes: ["Preservative"], from_add: true)
 
@@ -216,7 +216,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    click_on "Add another component"
+    click_on"Add another item"
 
     click_on "Back"
 
@@ -333,7 +333,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #1"
     expect_task_blocked "Item #2"
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
     complete_nano_material_wizard("Nano three", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_not_started
@@ -342,7 +342,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_multi_item_kit_task_completed
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
     click_link 'Back'
 
     expect_multi_item_kit_task_blocked
@@ -350,7 +350,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #1"
     expect_task_blocked "Item #2"
 
-    click_on "Add another component"
+    click_on"Add another item"
 
     expect_multi_item_kit_task_blocked
 
@@ -370,7 +370,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_task_completed "Cream one"
 
-    click_link "Add another nanomaterial"
+    click_on"Add another nanomaterial"
     complete_nano_material_wizard("Nano five", purposes: ["Preservative"], from_add: true)
 
     expect_multi_item_kit_task_completed
@@ -387,7 +387,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    click_link "Add another nanomaterial"
+    click_on "Add another nanomaterial"
 
     complete_nano_material_wizard("Nano six", purposes: ["Preservative"], from_add: true)
 
