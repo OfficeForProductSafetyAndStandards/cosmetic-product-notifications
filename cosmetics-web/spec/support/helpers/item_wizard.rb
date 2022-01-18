@@ -144,13 +144,14 @@ def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
 end
 
 def upload_ingredients_pdf
-  page.attach_file "spec/fixtures/files/testPdf.pdf"
+  if !page.has_css?('#formulation-files-table')
+    page.attach_file "spec/fixtures/files/testPdf.pdf"
+  end
   click_button "Continue"
 end
 
 def upload_formulation_file
-  page.attach_file "spec/fixtures/files/testPdf.pdf"
-  click_button "Continue"
+  upload_formulation_file
 end
 
 def expect_product_details_task_completed

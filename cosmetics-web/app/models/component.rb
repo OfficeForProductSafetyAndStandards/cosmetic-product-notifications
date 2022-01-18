@@ -205,6 +205,20 @@ class Component < ApplicationRecord
   def update_state(state)
     self.update(state: state)
   end
+
+  def update_formulation_type(type)
+    old_type = self.notification_type
+
+    self.notification_type = type
+
+    return if !self.valid?(:select_formulation_type)
+
+    self.save!
+
+    self.formulation_file.purge if self.predefined? && old_type != self.notification_type
+    self.update!(frame_formulation: nil, contains_poisonous_ingredients: false) if !self.predefined?
+  end
+
 private
 
   # This takes any value and returns nil if the value

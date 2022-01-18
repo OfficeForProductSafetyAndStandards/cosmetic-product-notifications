@@ -33,6 +33,7 @@ FactoryBot.define do
 
     trait :using_frame_formulation do
       notification_type { "predefined" }
+      frame_formulation { "skin_care_cream_lotion_gel_with_high_level_of_perfume" }
     end
 
     trait :with_range_formulas do
