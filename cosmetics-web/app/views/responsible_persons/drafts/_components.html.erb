@@ -17,17 +17,19 @@
           <%= component_badge(component) %>
         </li>
       <% end %>
-      <li class="app-task-list__item opss-task-sub__last">
-        <span class="app-task-list__task-name">
-            <button class="govuk-button opss-button-link">
-              Add <span class="govuk-visually-hidden">another item</span>
-            </button>
-          <span class="opss-task-sub__pipe">|</span>
-          <a href="<%= responsible_person_notification_draft_delete_item_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
-            Remove <span class="govuk-visually-hidden">a one of components</span>
-          </a>
-        </span>
-      </li>
+      <% if section_can_be_used?(DraftHelper::ITEMS_SECTION) %>
+        <li class="app-task-list__item opss-task-sub__last">
+          <span class="app-task-list__task-name">
+              <button class="govuk-button opss-button-link">
+                Add <span class="govuk-visually-hidden">another item</span>
+              </button>
+            <span class="opss-task-sub__pipe">|</span>
+            <a href="<%= responsible_person_notification_draft_delete_item_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+              Remove <span class="govuk-visually-hidden">a one of components</span>
+            </a>
+          </span>
+        </li>
+      <% end %>
     </ul>
   <% end %>
 </li>

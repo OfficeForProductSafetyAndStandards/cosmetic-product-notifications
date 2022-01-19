@@ -4,13 +4,15 @@ def complete_product_details(nanos: [])
   complete_item_wizard("Product details", single_item: true, nanos: nanos)
 end
 
-def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [])
+def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false)
   label_name = single_item ? nil : name
 
-  if item_number
-    click_on "Item ##{item_number}"
-  else
-    click_link name
+  unless from_add
+    if item_number
+      click_on "Item ##{item_number}"
+    else
+      click_link name
+    end
   end
 
   unless single_item
