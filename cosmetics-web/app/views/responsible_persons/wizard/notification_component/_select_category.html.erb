@@ -14,7 +14,7 @@
 <% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path(select_category: params[:category], category: Component.get_parent_category(params[:category])) %>
-  <% end %>
+<% end %>
 
 <% next_step = { :select_root_category => :select_sub_category, :select_sub_category => :select_sub_sub_category, :select_sub_sub_category => :select_sub_sub_category }[step] %>
 
