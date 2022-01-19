@@ -4,7 +4,11 @@ describe ResponsiblePersons::NotificationsHelper do
   let(:view_class) do
     Class.new do
       include ResponsiblePersons::NotificationsHelper
+      include ActionView::Helpers::RenderingHelper # Allows calling "#render"
+      include ApplicationController::HelperMethods # Allows calling "#current_user"
+      include Rails.application.routes.url_helpers
       include DateHelper
+      include ShadesHelper
     end
   end
 
@@ -54,6 +58,184 @@ describe ResponsiblePersons::NotificationsHelper do
         { key: { html: "<abbr>EU</abbr> reference number" }, value: { text: "3796528" } },
         { key: { html: "First notified in the <abbr>EU</abbr>" }, value: { text: "4 October 2019" } },
       ])
+    end
+  end
+
+  describe "#notification_summary_product_rows" do
+    subject(:summary_product_rows) do
+      helper.notification_summary_product_rows(notification, allow_edits: allow_edits)
+    end
+
+    let(:helper) { view_class.new }
+    let(:allow_edits) { false }
+    let(:notification) do
+      build_stubbed(:notification,
+                    :registered,
+                    reference_number: "60162968",
+                    product_name: "Product Test",
+                    industry_reference: "CPNP-3874065",
+                    cpnp_reference: "3796528",
+                    cpnp_notification_date: Time.zone.parse("2019-10-04T17:10Z"),
+                    notification_complete_at: Time.zone.parse("2021-05-03T12:08Z"))
+    end
+    let(:user) { build_stubbed(:submit_user) }
+
+    before do
+      allow(helper).to receive(:render)
+      allow(helper).to receive(:current_user).and_return(user)
+    end
+
+    it "contains the product name" do
+      expect(summary_product_rows).to include({ key: { text: "Product name" }, value: { text: "Product Test" } })
+    end
+
+    it "contains the industry reference number" do
+      expect(summary_product_rows).to include({ key: { text: "Internal reference number" }, value: { text: "CPNP-3874065" } })
+    end
+
+    it "contains the number of components associated with the notification" do
+      expect(summary_product_rows).to include({ key: { text: "Number of items" }, value: { text: 0 } })
+    end
+
+    it "contains notification shades html" do
+      allow(helper).to receive(:display_shades).and_return("Shades info")
+      expect(summary_product_rows).to include({ key: { text: "Shades" }, value: { html: "Shades info" } })
+    end
+
+    it "contains info indicating when the notification components are mixed" do
+      notification.components_are_mixed = true
+      expect(summary_product_rows).to include({ key: { text: "Are the items mixed?" }, value: { text: "Yes" } })
+    end
+
+    it "contains info indicating when the notification components are not mixed" do
+      notification.components_are_mixed = false
+      expect(summary_product_rows).to include({ key: { text: "Are the items mixed?" }, value: { text: "No" } })
+    end
+
+    describe "label image" do
+      before do
+        allow(helper).to receive(:render)
+          .with("notifications/product_details_label_images", notification: notification, allow_edits: allow_edits)
+          .and_return("Label image html")
+      end
+
+      context "when edits are not allowed" do
+        let(:allow_edits) { false }
+
+        it "contains the label image html without any actions" do
+          expect(summary_product_rows).to include(
+            { key: { text: "Label image" }, value: { html: "Label image html" }, actions: { items: [] } },
+          )
+        end
+      end
+
+      context "when edits are  allowed" do
+        let(:allow_edits) { true }
+
+        it "contains the label image html without any actions for notifications without images" do
+          allow(notification).to receive(:image_uploads).and_return([])
+          expect(summary_product_rows).to include(
+            { key: { text: "Label image" }, value: { html: "Label image html" }, actions: { items: [] } },
+          )
+        end
+
+        # rubocop:disable RSpec/ExampleLength
+        it "contains the label image html with Change action for notifications with images" do
+          allow(notification).to receive(:image_uploads).and_return(build_stubbed_list(:image_upload, 1))
+          expect(summary_product_rows).to include(
+            { key: { text: "Label image" },
+              value: { html: "Label image html" },
+              actions: { items: [{ href: "/responsible_persons/#{notification.responsible_person_id}/notifications/60162968/product_image_upload/edit",
+                                   text: "Change",
+                                   visuallyHiddenText: "label image",
+                                   classes: "govuk-link--no-visited-state" }] } },
+          )
+        end
+        # rubocop:enable RSpec/ExampleLength
+      end
+    end
+
+    describe "for children under 3" do
+      it "not included when not available for the notification" do
+        notification.under_three_years = nil
+        expect(summary_product_rows).not_to include(hash_including(key: { text: "For children under 3" }))
+      end
+
+      it "included when notification product is for children under 3" do
+        notification.under_three_years = true
+        expect(summary_product_rows).to include({ key: { text: "For children under 3" }, value: { text: "Yes" } })
+      end
+
+      it "included when notification product is not for children under 3" do
+        notification.under_three_years = false
+        expect(summary_product_rows).to include({ key: { text: "For children under 3" }, value: { text: "No" } })
+      end
+    end
+
+    describe "PH information" do
+      context "when current user can view the product ingredients" do
+        before { allow(user).to receive(:can_view_product_ingredients?).and_return(true) }
+
+        it "contains the product PH minimum value when present" do
+          notification.ph_min_value = 0.3
+          expect(summary_product_rows).to include(
+            { key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.3 } },
+          )
+        end
+
+        it "does not contain the product PH minimum value when not present" do
+          notification.ph_min_value = nil
+          expect(summary_product_rows).not_to include(
+            hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+          )
+        end
+
+        it "contains the product PH maximum value when present" do
+          notification.ph_max_value = 0.7
+          expect(summary_product_rows).to include(
+            { key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.7 } },
+          )
+        end
+
+        it "does not contain the product PH maximum value when not present" do
+          notification.ph_max_value = nil
+          expect(summary_product_rows).not_to include(
+            hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+          )
+        end
+      end
+
+      context "when the current user cannot view the product ingredients" do
+        before { allow(user).to receive(:can_view_product_ingredients?).and_return(false) }
+
+        it "does not contain the product PH minimum value even when is available" do
+          notification.ph_min_value = 0.3
+          expect(summary_product_rows).not_to include(
+            hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+          )
+        end
+
+        it "does not contain the product PH minimum value when not available" do
+          notification.ph_min_value = nil
+          expect(summary_product_rows).not_to include(
+            hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+          )
+        end
+
+        it "does not contain the product PH maximum value even when is available" do
+          notification.ph_max_value = 0.7
+          expect(summary_product_rows).not_to include(
+            hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+          )
+        end
+
+        it "does not contain the product PH maximum value when not available" do
+          notification.ph_max_value = nil
+          expect(summary_product_rows).not_to include(
+            hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+          )
+        end
+      end
     end
   end
 end
