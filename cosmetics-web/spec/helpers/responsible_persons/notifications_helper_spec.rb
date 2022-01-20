@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe ResponsiblePersons::NotificationsHelper do
-  let(:view_class) do
+  let(:helper_class) do
     Class.new do
       include ResponsiblePersons::NotificationsHelper
       include ActionView::Helpers::RenderingHelper # Allows calling "#render"
@@ -12,8 +12,31 @@ describe ResponsiblePersons::NotificationsHelper do
     end
   end
 
+  let(:helper) { helper_class.new }
+
+  describe "#notification_summary_label_image_link" do
+    subject(:label_image_link) do
+      helper.notification_summary_label_image_link(image, notification.responsible_person, notification)
+    end
+
+    let(:notification) { build_stubbed(:notification) }
+    let(:image) { build_stubbed(:image_upload, filename: "Label image") }
+
+    before do
+      allow(view).to receive(:url_for).and_return("/url/for/image")
+    end
+
+    it "returns a link to the image if has pased the antivirus check" do
+      allow(image).to receive(:passed_antivirus_check?).and_return(true)
+      allow(view).to receive_messages(link_to: "link", url_for: "url/for/image")
+
+      label_image_link
+      expect(view).to have_received(:link_to).with("Label image", "/url/for/image", class: "govuk-link govuk-link--no-visited-state")
+    end
+  end
+
   describe "#notification_summary_references_rows" do
-    subject(:summary_references_rows) { view_class.new.notification_summary_references_rows(notification) }
+    subject(:summary_references_rows) { helper.notification_summary_references_rows(notification) }
 
     let(:notification) do
       build_stubbed(:notification,
@@ -66,7 +89,7 @@ describe ResponsiblePersons::NotificationsHelper do
       helper.notification_summary_product_rows(notification, allow_edits: allow_edits)
     end
 
-    let(:helper) { view_class.new }
+    let(:helper) { helper_class.new }
     let(:allow_edits) { false }
     let(:notification) do
       build_stubbed(:notification,
