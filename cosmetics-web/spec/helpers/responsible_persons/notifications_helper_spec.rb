@@ -141,10 +141,11 @@ describe ResponsiblePersons::NotificationsHelper do
         # rubocop:disable RSpec/ExampleLength
         it "contains the label image html with Change action for notifications with images" do
           allow(notification).to receive(:image_uploads).and_return(build_stubbed_list(:image_upload, 1))
+          allow(helper).to receive(:edit_responsible_person_notification_product_images_path).and_return("/product/image/edit/path")
           expect(summary_product_rows).to include(
             { key: { text: "Label image" },
               value: { html: "Label image html" },
-              actions: { items: [{ href: "/responsible_persons/#{notification.responsible_person_id}/notifications/60162968/product_image_upload/edit",
+              actions: { items: [{ href: "/product/image/edit/path",
                                    text: "Change",
                                    visuallyHiddenText: "label image",
                                    classes: "govuk-link--no-visited-state" }] } },
