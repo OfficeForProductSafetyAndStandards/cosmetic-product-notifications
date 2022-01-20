@@ -81,8 +81,7 @@ describe ResponsiblePersons::NotificationsHelper do
     let(:user) { build_stubbed(:submit_user) }
 
     before do
-      allow(helper).to receive(:render)
-      allow(helper).to receive(:current_user).and_return(user)
+      allow(helper).to receive_messages(render: "", current_user: user)
     end
 
     it "contains the product name" do
