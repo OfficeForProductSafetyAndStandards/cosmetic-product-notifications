@@ -10,6 +10,8 @@ describe ResponsiblePersons::NotificationsHelper do
       include Rails.application.routes.url_helpers
       include DateHelper
       include ShadesHelper
+      include NotificationPropertiesHelper
+      include CategoryHelper
     end
   end
 
@@ -102,7 +104,6 @@ describe ResponsiblePersons::NotificationsHelper do
       helper.notification_summary_product_rows(notification, allow_edits: allow_edits)
     end
 
-    let(:helper) { helper_class.new }
     let(:allow_edits) { false }
     let(:notification) do
       build_stubbed(:notification,
@@ -273,5 +274,323 @@ describe ResponsiblePersons::NotificationsHelper do
         end
       end
     end
+  end
+
+  describe "#notification_summary_component_rows" do
+    subject(:summary_component_rows) do
+      helper.notification_summary_component_rows(component, include_shades: include_shades, allow_edits: allow_edits)
+    end
+
+    let(:include_shades) { false }
+    let(:allow_edits) { false }
+    let(:component) { build_stubbed(:component) }
+    let(:user) { build_stubbed(:submit_user) }
+
+    before do
+      allow(helper).to receive_messages(current_user: user, render: "")
+    end
+
+    context "when including shades flag is set to false" do
+      it "does not contain the component shades html" do
+        expect(summary_component_rows).not_to include(hash_including({ key: { text: "Shades" } }))
+      end
+    end
+
+    context "when including shades flag is set to true" do
+      let(:include_shades) { true }
+
+      it "includes the shades html" do
+        component.shades = %w[blue brown]
+        allow(helper).to receive(:render).and_return("Shades html")
+        expect(summary_component_rows).to include(hash_including({ key: { text: "Shades" }, value: { html: "Shades html" } }))
+        expect(helper).to have_received(:render).with("none_or_bullet_list", hash_including(entities_list: %w[blue brown]))
+      end
+    end
+
+    context "when containing CMR substances" do
+      let(:cmr) { build_stubbed(:cmr) }
+
+      before do
+        allow(cmr).to receive(:display_name).and_return("Test CMR,123456,654321")
+        allow(component).to receive(:cmrs).and_return([cmr])
+      end
+
+      it "includes the confirmation of containing CMR substances" do
+        expect(summary_component_rows).to include(
+          { key: { html: "Contains <abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances" },
+            value: { text: "Yes" } },
+        )
+      end
+
+      it "includes the CMR substance names" do
+        allow(helper).to receive(:render).and_return("CMR html")
+        expect(summary_component_rows).to include({ key: { html: "<abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances" },
+                                                    value: { html: "CMR html" } })
+        expect(helper).to have_received(:render).with("application/none_or_bullet_list",
+                                                      hash_including(entities_list: ["Test CMR,123456,654321"]))
+      end
+    end
+
+    describe "nanomaterials" do
+      context "when there aren't any nano elements present" do
+        it "contains a row indication that there are no nanomaterials" do
+          allow(helper).to receive(:render).and_return("None")
+          expect(summary_component_rows).to include({ key: { text: "Nanomaterials" }, value: { html: "None" } })
+          expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: nil))
+        end
+
+        it "does not contains a row with the nano material application exposure instruction" do
+          expect(summary_component_rows).not_to include(hash_including({ key: { text: "Application instruction" } }))
+        end
+
+        it "does not contains a row with the nano material application exposure condition" do
+          expect(summary_component_rows).not_to include(hash_including({ key: { text: "Exposure condition" } }))
+        end
+      end
+
+      context "when there are nano elements present" do
+        let(:nano_element) { build_stubbed(:nano_element) }
+        let(:nano_material) { build_stubbed(:nano_material, nano_elements: [nano_element]) }
+
+        before do
+          allow(component).to receive(:nano_material).and_return(nano_material)
+          allow(nano_element).to receive(:display_name).and_return("NanoEl name")
+        end
+
+        it "contains a row with the nano element names" do
+          allow(helper).to receive(:render).and_return("NanoEl name")
+          expect(summary_component_rows).to include({ key: { text: "Nanomaterials" }, value: { html: "NanoEl name" } })
+          expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: ["NanoEl name"]))
+        end
+
+        it "contains a row with the nano material application instruction" do
+          allow(helper).to receive(:get_exposure_routes_names).and_return("Route name")
+          expect(summary_component_rows).to include({ key: { text: "Application instruction" }, value: { text: "Route name" } })
+        end
+
+        it "contains a row with the nano material application exposure condition" do
+          allow(helper).to receive(:get_exposure_condition_name).and_return("Condition name")
+          expect(summary_component_rows).to include({ key: { text: "Exposure condition" }, value: { text: "Condition name" } })
+        end
+      end
+    end
+
+    describe "component categories" do
+      before do
+        allow(component).to receive_messages(
+          root_category: "Category",
+          sub_category: "SubCategory",
+          sub_sub_category: "SubSubCategory",
+        )
+        allow(helper).to receive(:get_category_name).with("Category").and_return("Category name")
+        allow(helper).to receive(:get_category_name).with("SubCategory").and_return("SubCategory name")
+        allow(helper).to receive(:get_category_name).with("SubSubCategory").and_return("SubSubCategory name")
+      end
+
+      it "contains a row with the component category" do
+        expect(summary_component_rows).to include({ key: { text: "Category of product" }, value: { text: "Category name" } })
+      end
+
+      it "contains a row with the component subcategory" do
+        expect(summary_component_rows).to include({ key: { text: "Category of category name" }, value: { text: "SubCategory name" } })
+      end
+
+      it "contains a row with the component subsubcategory" do
+        expect(summary_component_rows).to include({ key: { text: "Category of subcategory name" }, value: { text: "SubSubCategory name" } })
+      end
+    end
+
+    context "when user can view product ingredients" do
+      before do
+        allow(user).to receive(:can_view_product_ingredients?).and_return(true)
+      end
+
+      it "includes the component notification type" do
+        allow(helper).to receive(:get_notification_type_name).and_return("Notification type name")
+        expect(summary_component_rows).to include(
+          { key: { text: "Formulation given as" }, value: { text: "Notification type name" } },
+        )
+      end
+
+      it "includes the frame formulation for predefined components" do
+        allow(component).to receive(:predefined?).and_return(true)
+        allow(helper).to receive(:get_frame_formulation_name).and_return("Frame formulation name")
+        expect(summary_component_rows).to include(
+          { key: { text: "Frame formulation" }, value: { text: "Frame formulation name" } },
+        )
+      end
+
+      describe "non predefined documents" do
+        before do
+          allow(component).to receive(:predefined?).and_return(false)
+          allow(helper).to receive(:render).with(
+            "notifications/component_details_formulation_ingredients",
+            component: component,
+            allow_edits: allow_edits,
+          ).and_return("Formulation html")
+        end
+
+        context "when edits are allowed" do
+          let(:allow_edits) { true }
+
+          it "includes the formulation html with formulation actions" do
+            allow(helper).to receive(:componment_formulation_actions_items).and_return(%(Edit Delete))
+            expect(summary_component_rows).to include(
+              { key: { text: "Formulation" },
+                value: { html: "Formulation html" },
+                actions: { items: %(Edit Delete) } },
+            )
+          end
+        end
+
+        context "when edits are not allowed" do
+          let(:allow_edits) { false }
+
+          it "includes the formulation html without formulation actions" do
+            allow(helper).to receive(:componment_formulation_actions_items).and_return(%(Edit Delete))
+            expect(summary_component_rows).to include(
+              { key: { text: "Formulation" },
+                value: { html: "Formulation html" },
+                actions: { items: [] } },
+            )
+          end
+        end
+      end
+
+      it "indicates when the special applicator is used for the component" do
+        allow(component).to receive(:special_applicator).and_return("Very special")
+        expect(summary_component_rows).to include(
+          { key: { text: "Special applicator" }, value: { text: "Yes" } },
+        )
+      end
+
+      it "indicates when the special applicator is not used for the component" do
+        allow(component).to receive(:special_applicator).and_return(nil)
+        expect(summary_component_rows).to include(
+          { key: { text: "Special applicator" }, value: { text: "No" } },
+        )
+      end
+
+      it "includes the applicator type when the special application is present" do
+        allow(component).to receive(:special_applicator).and_return("Very special")
+        allow(helper).to receive(:component_special_applicator_name).and_return("SuperApplicator")
+        expect(summary_component_rows).to include(
+          { key: { text: "Applicator type" }, value: { text: "SuperApplicator" } },
+        )
+      end
+
+      it "includes the acute poisoning information" do
+        allow(component).to receive(:acute_poisoning_info).and_return("Poisonous")
+        expect(summary_component_rows).to include(
+          { key: { text: "Acute poisoning information" }, value: { text: "Poisonous" } },
+        )
+      end
+
+      it "includes information about NPIS ingredients if is predefined" do
+        allow(component).to receive_messages(predefined?: true,
+                                             poisonous_ingredients_answer: "Yes it does")
+        expect(summary_component_rows).to include(
+          { key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" },
+            value: { text: "Yes it does" } },
+        )
+      end
+
+      it "does not include information about NPIS ingredients if is not predefined" do
+        allow(component).to receive(:predefined?).and_return(false)
+        expect(summary_component_rows).not_to include(
+          hash_including(
+            { key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" } },
+          ),
+        )
+      end
+
+      # rubocop:disable RSpec/ExampleLength
+      it "includes the NPIS ingredients if is predefined and contains poisonous ingredients" do
+        allow(component).to receive_messages(predefined?: true, contains_poisonous_ingredients: true)
+        allow(helper).to receive(:render)
+                     .with("notifications/component_details_poisonous_ingredients", anything)
+                     .and_return("Poisonous ingredients HTML")
+        expect(summary_component_rows).to include(
+          { key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" },
+            value: { html: "Poisonous ingredients HTML" } },
+        )
+      end
+      # rubocop:enable RSpec/ExampleLength
+
+      it "does not include the NPIS ingredients if they're not available" do
+        allow(component).to receive_messages(predefined?: true, contains_poisonous_ingredients: false)
+        expect(summary_component_rows).not_to include(
+          hash_including(
+            { key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" } },
+          ),
+        )
+      end
+    end
+
+    context "when user can not view product ingredients" do
+      before do
+        allow(user).to receive(:can_view_product_ingredients?).and_return(false)
+      end
+
+      it "does not include the component notification type" do
+        expect(summary_component_rows).not_to include(hash_including({ key: { text: "Formulation given as" } }))
+      end
+
+      it "does not include the frame formulation for predefined components" do
+        allow(component).to receive(:predefined?).and_return(true)
+        expect(summary_component_rows).not_to include(hash_including({ key: { text: "Frame formulation" } }))
+      end
+
+      it "does not include the formulation for non predefined components" do
+        allow(component).to receive(:predefined?).and_return(false)
+        expect(summary_component_rows).not_to include(hash_including({ key: { text: "Formulation" } }))
+      end
+
+      it "does not indicate when the special applicator is used for the component" do
+        allow(component).to receive(:special_applicator).and_return("Very special")
+        expect(summary_component_rows).not_to include(hash_including({ key: { text: "Special applicator" } }))
+      end
+
+      it "does not includes the applicator type" do
+        allow(component).to receive(:special_applicator).and_return("Very special")
+        expect(summary_component_rows).not_to include(hash_including({ key: { text: "Applicator type" } }))
+      end
+
+      it "does not include the acute poisoning information" do
+        allow(component).to receive(:acute_poisoning_info).and_return("Poisonous")
+        expect(summary_component_rows).not_to include(hash_including({ key: { text: "Acute poisoning information" } }))
+      end
+
+      it "does not include information about NPIS ingredients even if is predefined" do
+        allow(component).to receive(:predefined?).and_return(true)
+        expect(summary_component_rows).not_to include(
+          hash_including(
+            { key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" } },
+          ),
+        )
+      end
+
+      it "does not include the NPIS ingredients even if they're available" do
+        allow(component).to receive_messages(predefined?: true, contains_poisonous_ingredients: true)
+        expect(summary_component_rows).not_to include(
+          hash_including(
+            { key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" } },
+          ),
+        )
+      end
+    end
+
+    it "includes a row with the component physycal form" do
+      allow(helper).to receive(:get_physical_form_name).and_return("Physical form name")
+      expect(summary_component_rows).to include({ key: { text: "Physical form" }, value: { text: "Physical form name" } })
+    end
+
+    # describe "pH" do
+    #   it "shows the pH selection when pH range is not required" do
+    #     allow(component).to receive_messages(ph_range_not_required?: true, ph: :not_given)
+    #     expect(summary_component_rows).to include({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr>" },
+    #                                                 value: { text: "Not given" } })
+    #   end
+    # end
   end
 end
