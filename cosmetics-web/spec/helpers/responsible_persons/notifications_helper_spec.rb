@@ -5,6 +5,7 @@ describe ResponsiblePersons::NotificationsHelper do
     Class.new do
       include ResponsiblePersons::NotificationsHelper
       include ActionView::Helpers::RenderingHelper # Allows calling "#render"
+      include ActionView::Helpers::UrlHelper       # Allows calling "#link_to"
       include ApplicationController::HelperMethods # Allows calling "#current_user"
       include Rails.application.routes.url_helpers
       include DateHelper
@@ -23,15 +24,27 @@ describe ResponsiblePersons::NotificationsHelper do
     let(:image) { build_stubbed(:image_upload, filename: "Label image") }
 
     before do
-      allow(view).to receive(:url_for).and_return("/url/for/image")
+      allow(helper).to receive(:url_for).and_return("/url/for/image")
     end
 
     it "returns a link to the image if has pased the antivirus check" do
       allow(image).to receive(:passed_antivirus_check?).and_return(true)
-      allow(view).to receive_messages(link_to: "link", url_for: "url/for/image")
+      allow(helper).to receive(:link_to).and_return("<a href='/url/for/image'>Label image</a>")
+      expect(label_image_link).to eq("<a href='/url/for/image'>Label image</a>")
+      expect(helper).to have_received(:link_to).with("Label image", "/url/for/image", class: "govuk-link govuk-link--no-visited-state")
+    end
 
-      label_image_link
-      expect(view).to have_received(:link_to).with("Label image", "/url/for/image", class: "govuk-link govuk-link--no-visited-state")
+    it "returns a processing message with a refresh link if image is waiting for antivirus check" do
+      allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: true)
+      allow(helper).to receive_messages(link_to: "<a href='/edit/path'>Refresh</a>",
+                                        edit_responsible_person_notification_path: "/edit/path")
+      expect(label_image_link).to eq("Processing image testImage.png...<br><a href='/edit/path'>Refresh</a>")
+      expect(helper).to have_received(:link_to).with("Refresh", "/edit/path", class: "govuk-link govuk-link--no-visited-state")
+    end
+
+    it "returns nil when the image file does not exist" do
+      allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: false)
+      expect(label_image_link).to eq(nil)
     end
   end
 
