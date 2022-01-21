@@ -110,7 +110,7 @@ describe ResponsiblePersons::NotificationsHelper do
                     cpnp_notification_date: Time.zone.parse("2019-10-04T17:10Z"),
                     notification_complete_at: Time.zone.parse("2021-05-03T12:08Z"))
     end
-    let(:user) { build_stubbed(:submit_user) }
+    let(:user) { instance_double(SubmitUser, can_view_product_ingredients?: true) }
 
     before do
       allow(helper).to receive_messages(render: "", current_user: user)
@@ -172,7 +172,7 @@ describe ResponsiblePersons::NotificationsHelper do
 
         # rubocop:disable RSpec/ExampleLength
         it "contains the label image html with Change action for notifications with images" do
-          allow(notification).to receive(:image_uploads).and_return(build_stubbed_list(:image_upload, 1))
+          allow(notification).to receive(:image_uploads).and_return([instance_double(ImageUpload)])
           allow(helper).to receive(:edit_responsible_person_notification_product_images_path).and_return("/product/image/edit/path")
           expect(summary_product_rows).to include(
             { key: { text: "Label image" },
@@ -279,7 +279,7 @@ describe ResponsiblePersons::NotificationsHelper do
     let(:include_shades) { false }
     let(:allow_edits) { false }
     let(:component) { build_stubbed(:component) }
-    let(:user) { build_stubbed(:submit_user) }
+    let(:user) { instance_double(SubmitUser, can_view_product_ingredients?: true) }
 
     before do
       allow(helper).to receive_messages(current_user: user, render: "")
@@ -303,10 +303,9 @@ describe ResponsiblePersons::NotificationsHelper do
     end
 
     context "when containing CMR substances" do
-      let(:cmr) { build_stubbed(:cmr) }
+      let(:cmr) { instance_double(Cmr, display_name: "Test CMR,123456,654321") }
 
       before do
-        allow(cmr).to receive(:display_name).and_return("Test CMR,123456,654321")
         allow(component).to receive(:cmrs).and_return([cmr])
       end
 
@@ -344,12 +343,15 @@ describe ResponsiblePersons::NotificationsHelper do
       end
 
       context "when there are nano elements present" do
-        let(:nano_element) { build_stubbed(:nano_element) }
-        let(:nano_material) { build_stubbed(:nano_material, nano_elements: [nano_element]) }
+        let(:nano_material) do
+          instance_double(NanoMaterial,
+                          nano_elements: [instance_double(NanoElement, display_name: "NanoEl name")],
+                          exposure_routes: %w[Route],
+                          exposure_condition: "Condition")
+        end
 
         before do
           allow(component).to receive(:nano_material).and_return(nano_material)
-          allow(nano_element).to receive(:display_name).and_return("NanoEl name")
         end
 
         it "contains a row with the nano element names" do
@@ -359,12 +361,12 @@ describe ResponsiblePersons::NotificationsHelper do
         end
 
         it "contains a row with the nano material application instruction" do
-          allow(helper).to receive(:get_exposure_routes_names).and_return("Route name")
+          allow(helper).to receive(:get_exposure_routes_names).with(%w[Route]).and_return("Route name")
           expect(summary_component_rows).to include({ key: { text: "Application instruction" }, value: { text: "Route name" } })
         end
 
         it "contains a row with the nano material application exposure condition" do
-          allow(helper).to receive(:get_exposure_condition_name).and_return("Condition name")
+          allow(helper).to receive(:get_exposure_condition_name).with("Condition").and_return("Condition name")
           expect(summary_component_rows).to include({ key: { text: "Exposure condition" }, value: { text: "Condition name" } })
         end
       end
