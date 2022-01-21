@@ -5,13 +5,8 @@ describe ResponsiblePersons::NotificationsHelper do
     Class.new do
       include ApplicationHelper
       include ActionView::Helpers
-      # include ResponsiblePersons::NotificationsHelper
       include ApplicationController::HelperMethods # Allows calling "#current_user"
       include Rails.application.routes.url_helpers
-      # include DateHelper
-      # include ShadesHelper
-      # include NotificationPropertiesHelper
-      # include CategoryHelper
     end
   end
 
