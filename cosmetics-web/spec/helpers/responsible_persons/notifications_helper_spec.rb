@@ -6,10 +6,7 @@ describe ResponsiblePersons::NotificationsHelper do
       include ApplicationHelper
       include ActionView::Helpers
       # include ResponsiblePersons::NotificationsHelper
-      # include ActionView::Helpers::RenderingHelper   # Allows calling "#render"
-      # include ActionView::Helpers::UrlHelper         # Allows calling "#link_to"
-      # include ActionView::Helpers::TranslationHelper # Allows calls to "#t"
-      include ApplicationController::HelperMethods     # Allows calling "#current_user"
+      include ApplicationController::HelperMethods # Allows calling "#current_user"
       include Rails.application.routes.url_helpers
       # include DateHelper
       # include ShadesHelper
@@ -589,11 +586,108 @@ describe ResponsiblePersons::NotificationsHelper do
     end
 
     describe "pH" do
-      it "shows the pH selection when pH range is not required" do
-        allow(component).to receive_messages(ph_range_not_required?: true, ph: :not_given)
-        expect(summary_component_rows).to include({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr>" },
-                                                    value: { text: "Not given" } })
+      before do
+        allow(component).to receive_messages(ph_range_not_required?: false)
       end
+
+      context "when user can view product ingredients" do
+        before do
+          allow(user).to receive(:can_view_product_ingredients?).and_return(true)
+        end
+
+        it "includes a row with the pH selection when pH range is not required" do
+          allow(component).to receive_messages(ph_range_not_required?: true, ph: :not_given)
+          expect(summary_component_rows).to include({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr>" },
+                                                      value: { text: "Not given" } })
+        end
+
+        it "includes a row with a single pH value when minimum and maximum pH match" do
+          component.minimum_ph = 0.7
+          component.maximum_ph = 0.7
+          expect(summary_component_rows).to include({ key: { html: "Exact <abbr title='Power of hydrogen'>pH</abbr>" },
+                                                      value: { text: 0.7 } })
+        end
+
+        it "includes a row withboth pH valus when minimum and maximum pH differ" do
+          component.minimum_ph = 0.7
+          component.maximum_ph = 1.0
+          expect(summary_component_rows).to include({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr> range" },
+                                                      value: { text: "0.7 to 1.0" } })
+        end
+      end
+
+      it "does not include a row with the pH selection or value if user can not view ingredients" do
+        allow(user).to receive(:can_view_product_ingredients?).and_return(false)
+        component.minimum_ph = 0.7
+        component.maximum_ph = 0.7
+        expect(summary_component_rows).to not_include(
+          hash_including({ key: { html: "Exact <abbr title='Power of hydrogen'>pH</abbr>" } }),
+        ).and not_include(hash_including({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr> range" } }))
+      end
+    end
+
+    describe "trigger questions" do
+      let(:element) do
+        instance_double(TriggerQuestionElement, answer: "66")
+      end
+      let(:trigger_question) do
+        instance_double(TriggerQuestion,
+                        ph_question?: false,
+                        question: "please_indicate_the_total_level_of_essential_oils",
+                        trigger_question_elements: [element])
+      end
+
+      before do
+        allow(component).to receive(:trigger_questions).and_return([trigger_question])
+        allow(helper).to receive_messages(
+          get_trigger_rules_short_question_name: "Indicate the total level of essential oils",
+        )
+      end
+
+      it "does not include a row with the trigger question if is a ph question" do
+        allow(trigger_question).to receive(:ph_question?).and_return(true)
+        expect(summary_component_rows).to not_include(
+          hash_including({ key: { text: "Indicate the total level of essential oils" } }),
+        )
+      end
+
+      it "includes a row with element concentration for a single element given as concentration" do
+        allow(element).to receive(:value_given_as_concentration?).and_return(true)
+        allow(helper).to receive(:display_concentration).and_return("66% w/w")
+        expect(summary_component_rows).to include(
+          { key: { text: "Indicate the total level of essential oils" },
+            value: { html: "66% w/w" } },
+        )
+      end
+
+      it "includes a row with formatted element for a single element not given as concentration" do
+        allow(element).to receive(:value_given_as_concentration?).and_return(false)
+        allow(helper).to receive(:format_trigger_question_answers).and_return("66")
+        expect(summary_component_rows).to include(
+          { key: { text: "Indicate the total level of essential oils" },
+            value: { html: "66" } },
+        )
+      end
+
+      # rubocop:disable RSpec/ExampleLength
+      it "renders a row with html for the elements value for trigger question with multiple elements" do
+        entities_list = { inci_name: "ethanol", quantity: "66" }
+        allow(trigger_question).to receive(:trigger_question_elements)
+          .and_return([instance_double(TriggerQuestionElement), element])
+        allow(helper).to receive(:format_trigger_question_elements).and_return(entities_list)
+        allow(helper).to receive(:render).with("none_or_bullet_list",
+                                               entities_list: entities_list,
+                                               key_name: :inci_name,
+                                               value_name: :quantity,
+                                               list_classes: "")
+                                         .and_return("Bullet list of elements")
+
+        expect(summary_component_rows).to include(
+          { key: { text: "Indicate the total level of essential oils" },
+            value: { html: "Bullet list of elements" } },
+        )
+      end
+      # rubocop:enable RSpec/ExampleLength
     end
   end
 end
