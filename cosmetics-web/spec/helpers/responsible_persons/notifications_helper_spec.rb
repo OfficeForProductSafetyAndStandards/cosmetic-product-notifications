@@ -3,15 +3,18 @@ require "rails_helper"
 describe ResponsiblePersons::NotificationsHelper do
   let(:helper_class) do
     Class.new do
-      include ResponsiblePersons::NotificationsHelper
-      include ActionView::Helpers::RenderingHelper # Allows calling "#render"
-      include ActionView::Helpers::UrlHelper       # Allows calling "#link_to"
-      include ApplicationController::HelperMethods # Allows calling "#current_user"
+      include ApplicationHelper
+      include ActionView::Helpers
+      # include ResponsiblePersons::NotificationsHelper
+      # include ActionView::Helpers::RenderingHelper   # Allows calling "#render"
+      # include ActionView::Helpers::UrlHelper         # Allows calling "#link_to"
+      # include ActionView::Helpers::TranslationHelper # Allows calls to "#t"
+      include ApplicationController::HelperMethods     # Allows calling "#current_user"
       include Rails.application.routes.url_helpers
-      include DateHelper
-      include ShadesHelper
-      include NotificationPropertiesHelper
-      include CategoryHelper
+      # include DateHelper
+      # include ShadesHelper
+      # include NotificationPropertiesHelper
+      # include CategoryHelper
     end
   end
 
@@ -585,12 +588,12 @@ describe ResponsiblePersons::NotificationsHelper do
       expect(summary_component_rows).to include({ key: { text: "Physical form" }, value: { text: "Physical form name" } })
     end
 
-    # describe "pH" do
-    #   it "shows the pH selection when pH range is not required" do
-    #     allow(component).to receive_messages(ph_range_not_required?: true, ph: :not_given)
-    #     expect(summary_component_rows).to include({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr>" },
-    #                                                 value: { text: "Not given" } })
-    #   end
-    # end
+    describe "pH" do
+      it "shows the pH selection when pH range is not required" do
+        allow(component).to receive_messages(ph_range_not_required?: true, ph: :not_given)
+        expect(summary_component_rows).to include({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr>" },
+                                                    value: { text: "Not given" } })
+      end
+    end
   end
 end
