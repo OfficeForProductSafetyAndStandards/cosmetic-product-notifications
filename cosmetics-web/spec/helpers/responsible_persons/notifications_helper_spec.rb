@@ -577,7 +577,7 @@ describe ResponsiblePersons::NotificationsHelper do
       end
     end
 
-    it "includes a row with the component physycal form" do
+    it "includes a row with the component physical form" do
       allow(helper).to receive(:get_physical_form_name).and_return("Physical form name")
       expect(summary_component_rows).to include({ key: { text: "Physical form" }, value: { text: "Physical form name" } })
     end
