@@ -21,7 +21,7 @@
     hint: hint }
 } %>
 
-<% hint_text = tag.p('The selected nanomaterial(s) will be removed and deleted from this draft. If you delete all of them you can add nanomaterials to the draft by completing the first task again', class: 'govuk-body opss-secondary-text') %>
+<% hint_text = tag.p('The selected nanomaterial(s) will be removed and deleted from this draft. If you delete all of them you can add nanomaterials to the draft by completing the first task again.', class: 'govuk-body opss-secondary-text') %>
 
 <% if @notification.nano_materials.any? { |n| n.components.present? } %>
   <% hint_text += tag.p('You can complete individual item tasks again to include nanomaterials you have created.', class: 'govuk-body opss-secondary-text') %>
@@ -30,11 +30,13 @@
 <%= form_with model: @form, url: responsible_person_notification_draft_delete_nano_material_path(@notification.responsible_person, @notification), method: :delete do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <%= error_summary_for(@form) %>
+      <% if @form.errors.present? %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @form.errors.messages[:nano_material_ids][0], href: "#nano-#{@notification.nano_materials.map(&:nano_elements).flatten.first.id}"}] ) %>
+      <% end %>
       <%= form.hidden_field "nano_material_ids[]" %>
       <%= render "form_components/govuk_checkboxes",
               form: form,
-              key: :component_id,
+              key: :nano_material_ids,
               classes: "govuk-!-margin-top-7",
               fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
               items: items,
