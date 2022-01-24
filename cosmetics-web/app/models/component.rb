@@ -216,7 +216,7 @@ class Component < ApplicationRecord
     self.save!
 
     self.formulation_file.purge if self.predefined? && old_type != self.notification_type
-    self.update!(frame_formulation: nil, contains_poisonous_ingredients: false) if !self.predefined?
+    self.update!(frame_formulation: nil, contains_poisonous_ingredients: nil) if !self.predefined?
   end
 
 private

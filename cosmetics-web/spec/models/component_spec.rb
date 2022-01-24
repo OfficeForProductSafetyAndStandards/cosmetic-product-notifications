@@ -524,7 +524,7 @@ RSpec.describe Component, type: :model do
       it "removes information about poisonus ingredients" do
         component.update_formulation_type("range")
 
-        expect(component.reload.contains_poisonous_ingredients).to be_falsey
+        expect(component.reload.contains_poisonous_ingredients).to eq nil
       end
     end
 
