@@ -30,7 +30,9 @@
 <%= form_with model: @form, url: responsible_person_notification_draft_delete_nano_material_path(@notification.responsible_person, @notification), method: :delete do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @form.errors.messages[:nano_material_ids][0], href: "#nano-#{@notification.nano_materials.map(&:nano_elements).flatten.first.id}"}] ) %>
+      <% if @form.errors.present? %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @form.errors.messages[:nano_material_ids][0], href: "#nano-#{@notification.nano_materials.map(&:nano_elements).flatten.first.id}"}] ) %>
+      <% end %>
       <%= form.hidden_field "nano_material_ids[]" %>
       <%= render "form_components/govuk_checkboxes",
               form: form,
