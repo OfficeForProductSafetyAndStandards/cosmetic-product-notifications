@@ -21,7 +21,7 @@
     hint: hint }
 } %>
 
-<% hint_text = tag.p('The selected nanomaterial(s) will be removed and deleted from this draft. If you delete all of them you can add nanomaterials to the draft by completing the first task again', class: 'govuk-body opss-secondary-text') %>
+<% hint_text = tag.p('The selected nanomaterial(s) will be removed and deleted from this draft. If you delete all of them you can add nanomaterials to the draft by completing the first task again.', class: 'govuk-body opss-secondary-text') %>
 
 <% if @notification.nano_materials.any? { |n| n.components.present? } %>
   <% hint_text += tag.p('You can complete individual item tasks again to include nanomaterials you have created.', class: 'govuk-body opss-secondary-text') %>
