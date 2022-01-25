@@ -46,7 +46,6 @@ services:
       - elasticsearch
       - redis
       - cosmetics-worker
-        #      - cosmetics-webpack
     expose:
       - "3000"
     ports:
@@ -58,11 +57,12 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - REDIS_URL=redis://redis:6379
       - SEARCH_HOST=search-cosmetics
-      - SUBMIT_HOST=submitcosmetics
+      - SUBMIT_HOST=submit-cosmetics
       - WEBPACKER_SERVER=cosmetics-webpack
       - COSMETICS_HOST=submit-cosmetics
       - ANTIVIRUS_ENABLED=false
 
+  # Currently not used, needs improvements
   cosmetics-webpack:
     command: ["./bin/webpack-dev-server"]
     build:
@@ -86,11 +86,11 @@ services:
       - TEST_DATABASE_URL=postgres://db/cosmetics_test?user=postgres
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit_cosmetics
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
       - ANTIVIRUS_ENABLED=false
-
 
   cosmetics-worker:
     build:
@@ -106,10 +106,11 @@ services:
       - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit_cosmetics
       - ANTIVIRUS_ENABLED=false
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
     depends_on:
       - db
       - elasticsearch
