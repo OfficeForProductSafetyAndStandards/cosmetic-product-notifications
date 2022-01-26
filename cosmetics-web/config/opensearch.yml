@@ -9,9 +9,6 @@ development:
 
 test:
   <<: *default
-  :transport_options:
-    :request:
-      :timeout: 3000
 
 production:
   :url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"] %>

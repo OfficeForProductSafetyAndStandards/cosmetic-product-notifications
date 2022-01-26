@@ -27,6 +27,8 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       opensearch:
         image: opensearch:1.2.x
+        env:
+          DISABLE_SECURITY_PLUGIN: true
         ports: ["9200:9200"]
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
