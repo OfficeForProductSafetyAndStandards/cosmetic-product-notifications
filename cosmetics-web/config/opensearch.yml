@@ -1,5 +1,5 @@
 default: &default
-  :url: <%= ENV.fetch('ELASTICSEARCH_URL', 'http://elasticsearch:9200') %>
+  :url: <%= ENV.fetch('OPENSEARCH_URL', 'http://opensearch:9200') %>
   :transport_options:
     :request:
       :timeout: 5
@@ -14,4 +14,4 @@ test:
       :timeout: 3000
 
 production:
-  :url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-elasticsearch-7")["uri"] %>
+  :url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"] %>

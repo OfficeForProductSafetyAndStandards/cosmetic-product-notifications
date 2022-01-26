@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ElasticsearchQuery, type: :model do
+RSpec.describe OpensearchQuery, type: :model do
   shared_examples_for "correct query" do
     specify do
       expect(query).to eq expected_es_query
@@ -50,7 +50,7 @@ RSpec.describe ElasticsearchQuery, type: :model do
     it_behaves_like "correct query" do
       let(:q) { nil }
       let(:category) { nil }
-      let(:sort_by) { ElasticsearchQuery::DATE_ASCENDING_SORTING }
+      let(:sort_by) { OpensearchQuery::DATE_ASCENDING_SORTING }
 
       let(:expected_es_query) do
         { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :asc } }] }
@@ -62,7 +62,7 @@ RSpec.describe ElasticsearchQuery, type: :model do
     it_behaves_like "correct query" do
       let(:q) { nil }
       let(:category) { nil }
-      let(:sort_by) { ElasticsearchQuery::DATE_DESCENDING_SORTING }
+      let(:sort_by) { OpensearchQuery::DATE_DESCENDING_SORTING }
 
       let(:expected_es_query) do
         { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :desc } }] }

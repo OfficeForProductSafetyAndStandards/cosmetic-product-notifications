@@ -15,7 +15,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     shower_bubbles
     bath_bubbles
 
-    Notification.elasticsearch.import force: true
+    Notification.opensearch.import force: true
   end
 
   scenario "Searching for notifications" do
@@ -155,7 +155,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     17.times do |i|
       create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion #{i}")
     end
-    Notification.elasticsearch.import force: true
+    Notification.opensearch.import force: true
     sign_in user
 
     expect(page).to have_h1("Search cosmetic products")
@@ -171,7 +171,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     # With 21 results, we should see the pagination
     create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion 17")
-    Notification.elasticsearch.import force: true
+    Notification.opensearch.import force: true
 
     visit "/notifications"
 
