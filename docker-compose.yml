@@ -10,7 +10,7 @@ services:
       - "5432:5432"
 
   opensearch:
-    image: opensearchproject/opensearch:latest
+    image: opensearchproject/opensearch:1.2.x
     environment:
       - "discovery.type=single-node"
       - "OPENSEARCH_JAVA_OPTS=-Xms750m -Xmx750m"
