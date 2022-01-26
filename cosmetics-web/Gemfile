@@ -16,9 +16,9 @@ gem "devise"
 gem "devise-security"
 # ES gems won't work with OpenSearch once ES and OS codebases start diverging:
 # https://github.com/elastic/elasticsearch-rails/issues/1010
-gem "elasticsearch", "< 7.14" # v7.14 is incompatible with Open Source version of ElasticSearch server provided by PaaS.
-gem "elasticsearch-model", "~> 7.1"
-gem "elasticsearch-rails", "~> 7.1"
+gem "elasticsearch"
+gem "elasticsearch-model"
+gem "elasticsearch-rails"
 gem "govuk_notify_rails", "~> 2.1.0"
 gem "image_processing", "~> 1.2"
 gem "interactor"
