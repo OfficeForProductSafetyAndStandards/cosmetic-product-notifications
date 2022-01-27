@@ -6,6 +6,7 @@ env:
   SEARCH_HOST: search
   SUBMIT_HOST: submit
   DATABASE_URL: postgres://localhost:5432/cosmetics_test
+  OPENSEARCH_URL: http://localhost:9200
   PGHOST: localhost
   PGUSER: postgres
   RAILS_ENV: test
@@ -78,7 +79,6 @@ jobs:
         bin/rails db:create db:schema:load
     - name: Run Tests
       env:
-        OPENSEARCH_URL: localhost
         TWO_FACTOR_AUTHENTICATION_ENABLED: false
         CI: true
         COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
