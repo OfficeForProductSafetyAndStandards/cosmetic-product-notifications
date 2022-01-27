@@ -28,6 +28,26 @@ Run docker compose:
 
 Go to app on [submit_cosmetics:3000](http://submit_cosmetics:3000)
 
+### Working with docker compose
+
+To start application, run:
+
+```
+docker-compose up cosmetics-web
+```
+
+To run typical rails command eg. migration, run
+
+```
+docker-compose run cosmetics-web rake db:migrate
+```
+
+or tests:
+
+```
+docker-compose run cosmetics-web rspec spec/some_specs
+```
+
 ### Long read
 
 Install Docker: https://docs.docker.com/install/.

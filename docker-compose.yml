@@ -45,17 +45,53 @@ services:
       - db
       - elasticsearch
       - redis
+      - cosmetics-worker
+    expose:
+      - "3000"
     ports:
       - "3000:3000"
     environment:
       - NOTIFY_API_KEY=
       - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
+      - TEST_DATABASE_URL=postgres://db/cosmetics_test?user=postgres
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit_cosmetics
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
       - ANTIVIRUS_ENABLED=false
+
+  # Currently not used, needs improvements
+  cosmetics-webpack:
+    command: ["./bin/webpack-dev-server"]
+    build:
+      context: .
+      dockerfile: ./cosmetics-web/Dockerfile
+    volumes:
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/cosmetics-web:/cosmetics-web
+      - bundle-cache:/usr/local/bundle
+    depends_on:
+      - db
+      - elasticsearch
+      - redis
+    expose:
+      - "3035"
+    ports:
+      - "3035:3035"
+    environment:
+      - NOTIFY_API_KEY=
+      - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
+      - TEST_DATABASE_URL=postgres://db/cosmetics_test?user=postgres
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - REDIS_URL=redis://redis:6379
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
+      - ANTIVIRUS_ENABLED=false
+
   cosmetics-worker:
     build:
       context: .
@@ -70,10 +106,11 @@ services:
       - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit_cosmetics
       - ANTIVIRUS_ENABLED=false
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
     depends_on:
       - db
       - elasticsearch

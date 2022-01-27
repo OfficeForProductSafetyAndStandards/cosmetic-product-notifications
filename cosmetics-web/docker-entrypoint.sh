@@ -8,6 +8,7 @@ bin/bundle check || bin/bundle install
 yarn install
 
 bin/webpack-dev-server --progress &
+yarn upgrade
 
 # Run the passed in command
 exec "$@"
