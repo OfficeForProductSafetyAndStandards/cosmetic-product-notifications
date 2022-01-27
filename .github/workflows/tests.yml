@@ -8,6 +8,7 @@ env:
   DATABASE_URL: postgres://localhost:5432/cosmetics_test
   PGHOST: localhost
   PGUSER: postgres
+  RAILS_ENV: test
 
 jobs:
   ruby:
@@ -61,30 +62,23 @@ jobs:
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     - name: Install Ruby Gems
-      env:
-        RAILS_ENV: test
       run: |
         cd cosmetics-web
         gem install bundler -v 2.1.4
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Install JavaScript dependencies
-      env:
-        RAILS_ENV: test
       run: |
         cd cosmetics-web
         npm install yarn -g
         yarn install
         bin/webpack
     - name: Prepare application database
-      env:
-        RAILS_ENV: test
       run: |
         cd cosmetics-web
         bin/rails db:create db:schema:load
     - name: Run Tests
       env:
         OPENSEARCH_URL: localhost
-        RAILS_ENV: test
         TWO_FACTOR_AUTHENTICATION_ENABLED: false
         CI: true
         COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
