@@ -1,5 +1,5 @@
 default: &default
-  :url: <%= ENV.fetch('OPENSEARCH_URL', 'http://opensearch:9200') %>
+  :url: <%= ENV.fetch('OPENSEARCH_URL', 'http://localhost:9200') %>
   :transport_options:
     :request:
       :timeout: 5
