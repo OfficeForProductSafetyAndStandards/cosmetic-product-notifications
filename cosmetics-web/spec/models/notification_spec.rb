@@ -398,7 +398,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
 
       it "is not valid" do
-        expect(notification.valid?(:confirm_and_accept)).to eq false
+        expect(notification.valid?(:accept_and_submit)).to eq false
       end
 
       it "is valid" do
@@ -407,7 +407,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
 
       it "has proper error messages" do
-        notification.valid?(:confirm_and_accept)
+        notification.valid?(:accept_and_submit)
 
         expect(notification.errors.messages[:base]).to eq (["Nano 1 is not included in any items", "Nano 2 is not included in any items"])
       end

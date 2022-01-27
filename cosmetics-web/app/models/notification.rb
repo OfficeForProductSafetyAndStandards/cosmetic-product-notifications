@@ -66,7 +66,7 @@ class Notification < ApplicationRecord
                                           allow_nil: true
   validate :max_ph_is_greater_than_min_ph
 
-  validates_with ConfirmAndAcceptValidator, on: :confirm_and_accept
+  validates_with ConfirmAndAcceptValidator, on: :accept_and_submit
 
   delegate :count, to: :components, prefix: true
 

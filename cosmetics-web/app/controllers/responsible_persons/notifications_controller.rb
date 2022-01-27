@@ -31,8 +31,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
 
-    @notification.valid?(:confirm_and_accept)
-    #@previous_page_path = previous_path_before_check_your_answers(@notification)
+    @notification.valid?(:accept_and_submit)
 
     if params[:submit_failed]
       add_image_upload_errors
