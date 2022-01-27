@@ -31,7 +31,7 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
-  index_name [ENV.fetch("ES_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
+  index_name [ENV.fetch("OS_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
   scope :opensearch, -> { where(state: "notification_complete") }
 
   before_create do
