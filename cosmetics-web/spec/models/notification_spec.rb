@@ -155,6 +155,47 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
+  describe "#nano_material_required?" do
+    let(:nano_element) { create(:nano_element, nano_material: nano_material) }
+
+    before do
+      component
+    end
+
+    context "when notification does not have nano materials" do
+      let(:notification) { create(:notification) }
+      let(:component) { create(:component, notification: notification) }
+
+      it "returns false" do
+        expect(notification).not_to be_nano_material_required
+      end
+    end
+
+    context "when notification does have nano material but component doesn't" do
+      let(:notification) { create(:notification) }
+      let(:nano_material) { create(:nano_material, notification: notification) }
+      let(:component) { create(:component, notification: notification) }
+
+      before { nano_material }
+
+      it "returns true" do
+        expect(notification).to be_nano_material_required
+      end
+    end
+
+    context "when notification and component does have nano material" do
+      let(:notification) { create(:notification) }
+      let(:nano_material) { create(:nano_material, notification: notification) }
+      let(:component) { create(:component, notification: notification, with_nano_materials: [nano_material]) }
+
+      before { nano_material }
+
+      it "returns false" do
+        expect(notification).not_to be_nano_material_required
+      end
+    end
+  end
+
   describe "#may_submit_notification?", :with_stubbed_antivirus do
     let(:nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w[other]) }
     let(:nano_material) { build(:nano_material, nano_elements: [nano_element]) }
@@ -335,6 +376,40 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           }.to change(DeletedNotification, :count).by(-1)
           expect { deleted_notification.reload }.to raise_error ActiveRecord::RecordNotFound
         end
+      end
+    end
+  end
+
+  describe "confirm and accept validation" do
+    context "when there is nano material not assigned to component" do
+      let(:notification) { create(:notification) }
+
+      let(:nano_material1) { create(:nano_material, notification: notification) }
+      let(:nano_element1) { create(:nano_element, nano_material: nano_material1, inci_name: "Nano 1") }
+
+      let(:nano_material2) { create(:nano_material, notification: notification) }
+      let(:nano_element2) { create(:nano_element, nano_material: nano_material2, inci_name: "Nano 2") }
+
+      let(:component) { create(:component, notification: notification) }
+
+      before do
+        nano_element1
+        nano_element2
+      end
+
+      it "is not valid" do
+        expect(notification.valid?(:confirm_and_accept)).to eq false
+      end
+
+      it "is valid" do
+        expect(notification.valid?).to eq true
+      end
+
+
+      it "has proper error messages" do
+        notification.valid?(:confirm_and_accept)
+
+        expect(notification.errors.messages[:base]).to eq (["Nano 1 is not included in any items", "Nano 2 is not included in any items"])
       end
     end
   end
