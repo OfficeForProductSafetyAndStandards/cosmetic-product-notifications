@@ -1,4 +1,4 @@
-class ConfirmAndAcceptValidator < ActiveModel::Validator
+class AcceptAndSubmitValidator < ActiveModel::Validator
   def validate(record)
     missing_nano_materials = record.missing_nano_materials
     if missing_nano_materials.present?
