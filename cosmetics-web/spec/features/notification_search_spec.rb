@@ -150,4 +150,51 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       end
     end
   end
+
+  describe "Results pagination" do
+    before do
+      17.times do |i|
+        create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion #{i}")
+      end
+    end
+
+    scenario "Does not display pagination with 20 results" do
+      Notification.elasticsearch.import force: true
+      sign_in user
+
+      expect(page).to have_h1("Search cosmetic products")
+      expect(page).to have_link("Cream")
+      expect(page).to have_link("Shower Bubbles")
+      expect(page).to have_link("Bath Bubbles")
+      17.times do |i|
+        expect(page).to have_link("Sun Lotion #{i}")
+      end
+
+      expect(page).not_to have_text("Page 1")
+      expect(page).not_to have_link("Next page")
+    end
+
+    scenario "Displays pagination with 21 results" do
+      create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion 17")
+      Notification.elasticsearch.import force: true
+      sign_in user
+
+      expect(page).to have_h1("Search cosmetic products")
+      expect(page).to have_link("Cream")
+      expect(page).to have_link("Shower Bubbles")
+      expect(page).to have_link("Bath Bubbles")
+      (1..16).each do |i|
+        expect(page).to have_link("Sun Lotion #{i}")
+      end
+      expect(page).not_to have_link("Sun Lotion 0")
+      expect(page).to have_text("Page 1")
+      expect(page).to have_link("Next page")
+
+      click_link("Next page")
+      expect(page).to have_h1("Search cosmetic products")
+      expect(page).to have_link("Sun Lotion 0")
+      expect(page).to have_text("Page 2")
+      expect(page).to have_link("Previous page")
+    end
+  end
 end

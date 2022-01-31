@@ -1,7 +1,7 @@
 <section class="govuk-grid-column-three-quarters" id="search-results-section">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body"><%= pluralize(@result.results.total, 'product') %> <%= display_keywords %> <%= display_filters_informations %> <%= @result.results.total == 1 ? "was found." : "were found." %></p>
+      <p class="govuk-body"><%= pluralize(search_response.results.total, 'product') %> <%= display_keywords %> <%= display_filters_informations %> <%= search_response.results.total == 1 ? "was found." : "were found." %></p>
     </div>
 
     <div class="govuk-grid-column-one-third">
@@ -40,7 +40,7 @@
             </tfoot>
           <% end %>
         </table>
-        <%= paginate @notifications, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
+        <%= paginate search_response, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
       </div>
     </div>
   <% end %>
