@@ -16,7 +16,7 @@ class NanomaterialNotificationsController < SubmitApplicationController
 
     respond_to do |format|
       format.html do
-        @nanomaterial_notifications = @nanomaterial_notifications.paginate(page: params[:page], per_page: PER_PAGE)
+        @nanomaterial_notifications = @nanomaterial_notifications.page(params[:page]).per(PER_PAGE)
       end
       format.csv do
         @notifications = NanomaterialNotificationsDecorator.new(@nanomaterial_notifications)

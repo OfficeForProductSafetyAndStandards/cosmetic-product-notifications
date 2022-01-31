@@ -9,7 +9,7 @@ class PoisonCentres::NotificationsController < SearchApplicationController
     # Notifications are only listed in ElasticSearch index when completed, but if an indexed notification gets deleted,
     # it won't be removed from the index until the next reindex is run (once per day).
     # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
-    @notifications = @result.records.completed.paginate(page: params[:page], per_page: PER_PAGE)
+    @notifications = @result.records.completed.page(params[:page]).per(PER_PAGE)
   end
 
   def show
