@@ -93,17 +93,17 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect_back_link_to_responsible_person_page
 
     # First attempt with validation error
-    fill_in "Phone number", with: "000"
+    fill_in "Telephone number", with: "000"
     click_button "Continue"
 
     expect(page).to have_h1("Change contact person phone number for Test RP")
-    expected_error = "Enter a valid phone number, like 0344 411 1444 or +44 7700 900 982"
+    expected_error = "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_phone_number")
     expect(page).to have_css("span#contact_person_phone_number-error", text: expected_error)
 
     # Successful attempt
-    fill_in "Phone number", with: "+44(7123456789)"
+    fill_in "Telephone number", with: "+44(7123456789)"
     click_button "Continue"
 
     expect_to_be_on__responsible_person_page
