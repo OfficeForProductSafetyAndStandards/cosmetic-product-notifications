@@ -27,7 +27,7 @@
   </div>
 </div>
 
-<% if @registered_notifications.total_entries.zero? %>
+<% if @registered_notifications.total_count.zero? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
     <p class="govuk-body">
@@ -61,10 +61,10 @@
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds govuk-!-margin-top-7">
           <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-            Product notifications (<%= @registered_notifications.count %>)
+            Product notifications (<%= @registered_notifications.total_count %>)
           </h2>
           <p class="govuk-body govuk-!-margin-bottom-0">
-          There are currently <%= (count = @registered_notifications.count) > 0 ? count : 'no' %> notified cosmetic products.
+          There are currently <%= (count = @registered_notifications.total_count) > 0 ? count : 'no' %> notified cosmetic products.
           </p>
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2 govuk-!-margin-top-7">
