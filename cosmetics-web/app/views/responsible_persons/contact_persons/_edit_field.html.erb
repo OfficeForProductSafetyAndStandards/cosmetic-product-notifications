@@ -1,4 +1,4 @@
-<% title = "Change contact person #{field} for #{@responsible_person.name}" %>
+<% title = "Edit the assigned contact #{field}" %>
 <% page_title title, errors: @contact_person.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: responsible_person_path(@responsible_person)  %>
