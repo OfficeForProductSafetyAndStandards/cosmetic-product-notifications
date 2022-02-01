@@ -28,4 +28,8 @@ class NanoMaterial < ApplicationRecord
   def self.exposure_routes_options
     %i[dermal oral inhalation].freeze
   end
+
+  def name
+    nano_elements.first.inci_name
+  end
 end

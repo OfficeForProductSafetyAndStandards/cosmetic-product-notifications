@@ -66,6 +66,8 @@ class Notification < ApplicationRecord
                                           allow_nil: true
   validate :max_ph_is_greater_than_min_ph
 
+  validates_with AcceptAndSubmitValidator, on: :accept_and_submit
+
   delegate :count, to: :components, prefix: true
 
   settings do
@@ -144,7 +146,15 @@ class Notification < ApplicationRecord
   end
 
   def nano_material_required?
-    false # TODO: find if we need it in new wizard
+    missing_nano_materials.present?
+  end
+
+  def missing_nano_materials
+    # return nano_material that is in the notification, but not in the component
+    notification_nano_ids = self.nano_materials.pluck(:id).sort
+    components_nano_ids = self.components.map(&:nano_materials).flatten.map(&:id).sort
+    ids = notification_nano_ids - components_nano_ids
+    ids.map { |id| self.nano_materials.find(id) }
   end
 
   def formulation_required?

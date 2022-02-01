@@ -53,5 +53,15 @@ FactoryBot.define do
     trait :with_formulation_file do
       formulation_file { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf") }
     end
+
+    transient do
+      with_nano_materials { [] }
+    end
+
+    after(:create) do |component, evaluator|
+      evaluator.with_nano_materials.each do |nano_material|
+        component.nano_materials << nano_material
+      end
+    end
   end
 end
