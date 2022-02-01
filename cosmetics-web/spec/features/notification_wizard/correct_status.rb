@@ -83,7 +83,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    # TODO: in future, newly created nano will have to be added to item
+    complete_item_wizard("Cream one", nanos: ["Nano three", "Nano four", "Nano five", "Nano six"])
 
     click_link "Accept and submit"
 
@@ -100,7 +100,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product no nano no items", nano_materials_count: 1)
 
-    expect_progress(1,4)
+    
+    ress(1,4)
 
     expect_product_details_task_blocked
 
@@ -118,7 +119,13 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_nano_material_wizard("Nano two", purposes: ["Preservative"], from_add: true)
 
-    # TODO: in future, newly created nano will have to be added to item
+    click_link "Accept and submit"
+
+    expect(page).to have_css("li", text: "Nano two is not included in any items")
+
+    click_link "Return to the tasks list page"
+
+    complete_product_details(nanos: ["Nano two"])
 
     click_link "Accept and submit"
 
@@ -154,6 +161,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     complete_nano_material_wizard("Nano one", purposes: ["Preservative"], nano_material_number: 1)
 
     expect_product_details_task_completed
+
+    complete_product_details(nanos: ["Nano one"])
 
     expect_progress(3,4)
 
@@ -427,7 +436,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    # TODO: in future, newly created nano will have to be added to item
+    complete_item_wizard("Cream one", nanos: ["Nano four", "Nano five", "Nano six"])
 
     click_link "Accept and submit"
 
