@@ -40,16 +40,16 @@ class NanoElement < ApplicationRecord
   end
 
   def blocked?
-    confirm_usage == "no" || confirm_restrictions == "no" || confirm_toxicology_notified == "no"
+    confirm_usage == "no" || confirm_restrictions == "no" || confirm_toxicology_notified == "no" || confirm_toxicology_notified == "not sure"
   end
-
-private
 
   def toxicology_required?
     confirm_toxicology_notified.nil? ||
       confirm_toxicology_notified == "not sure" ||
       confirm_toxicology_notified == "no"
   end
+
+private
 
   def restrictions_confirmed_required?
     confirm_restrictions.nil? ||

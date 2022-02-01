@@ -135,10 +135,6 @@ module DraftHelper
     '<b class="govuk-tag opss-tag--red app-task-list__tag">Blocked</b>'.html_safe
   end
 
-  def progress_bar
-    '<span class="govuk-visually-hidden">The task list is </span><span class="govuk-!-font-weight-bold">Incomplete</span>: 1 of 5 sections have been completed.'.html_safe
-  end
-
   def section_number(section)
     if section == PRODUCT_DETAILS_SECTION
       return @notification.nano_materials.present? ? '3.' : '2.'
@@ -154,6 +150,64 @@ module DraftHelper
       base_number += 1 if @notification.nano_materials.present?
       base_number += 1 if @notification.multi_component?
       return "#{base_number}."
+    end
+  end
+
+  def nano_materials_blocked?
+    @notification.nano_materials.map(&:nano_elements).flatten.any? { |n| n.blocked? }
+  end
+
+  def nano_material_should_be_notified?
+    @notification.nano_materials.map(&:nano_elements).flatten.any? { |n| n.toxicology_required? }
+  end
+
+  def first_blocked_nanomaterial_name
+    nano = @notification.nano_materials.map(&:nano_elements).flatten.first { |n| n.toxicology_required? }
+    nano.inci_name
+  end
+
+  def progress_bar
+    "<span class=\"govuk-visually-hidden\">The task list is </span><span class=\"govuk-!-font-weight-bold\">Incomplete</span>: #{sections_completed} of #{total_sections_count} sections have been completed.".html_safe
+  end
+
+  def total_sections_count
+    if @notification.nano_materials.present? && @notification.multi_component?
+      return 5
+    end
+    if @notification.nano_materials.present? || @notification.multi_component?
+      return 4
+    end
+    3
+  end
+
+  def sections_completed
+    case @notification.state.to_sym
+    when NotificationStateConcern::EMPTY
+      0
+    when NotificationStateConcern::READY_FOR_NANOMATERIALS
+      1
+    when NotificationStateConcern::DETAILS_COMPLETE
+      if @notification.nano_materials.present?
+        2
+      else
+        1
+      end
+    when NotificationStateConcern::READY_FOR_COMPONENTS
+      if @notification.nano_materials.present? && @notification.multi_component?
+        3
+      elsif @notification.nano_materials.present? || @notification.multi_component?
+        2
+      else
+        1
+      end
+    when NotificationStateConcern::COMPONENTS_COMPLETE
+      if @notification.nano_materials.present? && @notification.multi_component?
+        4
+      elsif @notification.nano_materials.present? || @notification.multi_component?
+        3
+      else
+        2
+      end
     end
   end
 end
