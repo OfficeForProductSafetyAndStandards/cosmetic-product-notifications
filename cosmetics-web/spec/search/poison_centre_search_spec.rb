@@ -17,7 +17,7 @@ RSpec.describe "Poison centre search" do
     notification2
     notification3
 
-    Notification.elasticsearch.import force: true
+    Notification.opensearch.import force: true
   end
 
   describe "Search by post code" do
@@ -48,6 +48,6 @@ RSpec.describe "Poison centre search" do
 end
 
 def keyword_search(keyword)
-  query = ElasticsearchQuery.new(keyword: keyword, category: nil, from_date: nil, to_date: nil, sort_by: nil)
+  query = OpensearchQuery.new(keyword: keyword, category: nil, from_date: nil, to_date: nil, sort_by: nil)
   Notification.full_search(query)
 end

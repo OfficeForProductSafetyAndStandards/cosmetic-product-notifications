@@ -115,4 +115,4 @@ ActiveRecord::Base.transaction do
   end
 end
 
-ReindexElasticsearchJob.new.perform
+ReindexOpensearchJob.new.perform

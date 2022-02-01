@@ -29,8 +29,8 @@ jobs:
         cf auth
         cf target -o 'beis-opss' -s $SPACE
         cf stop cosmetics-pr-$PR_NUMBER
-        cf run-task cosmetics-pr-$PR_NUMBER --command "./env/delete-elasticsearch-indexes.sh" --name delete-elasticsearch-indexes
-        task_status=0; until [ $task_status = "SUCCEEDED" ]; do task_status="$(cf tasks cosmetics-pr-$PR_NUMBER | grep delete-elasticsearch-indexes | awk '{print $3}')" && if [ "$task_status" = "FAILED" ]; then break; else echo "waiting" && sleep 10; fi; done;
+        cf run-task cosmetics-pr-$PR_NUMBER --command "./env/delete-opensearch-indexes.sh" --name delete-opensearch-indexes
+        task_status=0; until [ $task_status = "SUCCEEDED" ]; do task_status="$(cf tasks cosmetics-pr-$PR_NUMBER | grep delete-opensearch-indexes | awk '{print $3}')" && if [ "$task_status" = "FAILED" ]; then break; else echo "waiting" && sleep 10; fi; done;
         cf delete -f -r cosmetics-pr-$PR_NUMBER
         cf delete-service -f cosmetics-review-redis-$PR_NUMBER
         cf logout
