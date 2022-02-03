@@ -4,6 +4,12 @@ class NanoElement < ApplicationRecord
   # TODO: add uniquenes notification across notifications
   validates :inci_name, presence: true, on: :add_nanomaterial_name
 
+  after_save do
+    if self.blocked?
+      notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
+    end
+  end
+
   def self.purposes
     %w[colorant preservative uv_filter other].freeze
   end
@@ -66,5 +72,9 @@ private
 
   def usage_confirmed_required?
     confirm_usage.nil?
+  end
+
+  def notification
+    nano_material.notification
   end
 end
