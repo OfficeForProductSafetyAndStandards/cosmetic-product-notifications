@@ -27,7 +27,7 @@ RSpec.describe ContactPerson, type: :model do
     contact_person.email_address = "invalid_format"
 
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:email_address]).to include("Enter the email address in the correct format, like name@example.com")
+    expect(contact_person.errors[:email_address]).to include("Enter an email address in the correct format, like name@example.com")
   end
 
   describe "name database validations" do

@@ -116,7 +116,7 @@ en:
         user:
           attributes:
             email:
-              invalid: &invalid_email "Enter the email address in the correct format, like name@example.com"
+              invalid: &invalid_email "Enter an email address in the correct format, like name@example.com"
             mobile_number:
               invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
             new_email:
