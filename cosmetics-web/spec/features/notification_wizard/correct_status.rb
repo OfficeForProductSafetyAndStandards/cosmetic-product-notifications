@@ -100,11 +100,17 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product no nano no items", nano_materials_count: 1)
 
+    expect_progress(1,4)
+
     expect_product_details_task_blocked
 
     complete_nano_material_wizard("Nano one", purposes: ["Preservative"], nano_material_number: 1)
 
+    expect_progress(2,4)
+
     complete_product_details(nanos: ["Nano one"])
+
+    expect_progress(3,4)
 
     expect_product_details_task_completed
 
@@ -135,13 +141,19 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product no nano no items")
 
+    expect_progress(1,3)
+
     expect_product_details_task_not_started
 
     complete_product_details
 
+    expect_progress(2,3)
+
     expect_product_details_task_completed
 
     complete_product_wizard(name: "Product no nano no items", nano_materials_count: 1)
+
+    expect_progress(1,4)
 
     expect_product_details_task_blocked
 
@@ -150,6 +162,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_product_details_task_completed
 
     complete_product_details(nanos: ["Nano one"])
+
+    expect_progress(3,4)
 
     click_link "Accept and submit"
 
@@ -166,13 +180,19 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product no nano no items")
 
+    expect_progress(1,3)
+
     expect_product_details_task_not_started
 
     complete_product_details
 
+    expect_progress(2,3)
+
     expect_product_details_task_completed
 
     complete_product_wizard(name: "Product no nano no items", items_count: 2)
+
+    expect_progress(1,4)
 
     expect_multi_item_kit_task_not_started
 
@@ -180,6 +200,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #2"
 
     complete_multi_item_kit_wizard
+
+    expect_progress(2,4)
 
     expect_task_not_started "Item #1"
     expect_task_not_started "Item #2"
@@ -191,6 +213,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_not_started "Item #2"
 
     complete_item_wizard("Cream two", item_number: 2)
+
+    expect_progress(3,4)
 
     click_link "Accept and submit"
 
@@ -249,15 +273,21 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Some product")
 
+    expect_progress(1,3)
+
     expect_product_details_task_not_started
 
     complete_product_details
+
+    expect_progress(2,3)
 
     expect_product_details_task_completed
 
     expect_accept_and_submit_not_started
 
     complete_product_wizard(name: "Some product", nano_materials_count: 1)
+
+    expect_progress(1,4)
 
     expect_task_not_started "Nanomaterial #1"
 
@@ -267,11 +297,15 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_nano_material_wizard("Nano one", purposes: ["Preservative"], nano_material_number: 1)
 
+    expect_progress(3,4)
+
     expect_product_details_task_completed
 
     expect_accept_and_submit_not_started
 
     complete_product_wizard(name: "Some product", items_count: 2, continue_on_nano: true)
+
+    expect_progress(2,5)
 
     expect_multi_item_kit_task_not_started
 
@@ -282,6 +316,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #2"
 
     complete_multi_item_kit_wizard
+
+    expect_progress(3,5)
 
     expect_accept_and_submit_blocked
 
@@ -296,6 +332,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_item_task_not_started "Item #2"
 
     complete_item_wizard("Cream two", item_number: 2, nanos: [nil])
+
+    expect_progress(4,5)
 
     expect_accept_and_submit_not_started
 
@@ -314,6 +352,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product with nano and two items", items_count: 2, nano_materials_count: 2)
 
+    expect_progress(1,5)
+
     expect_task_not_started "Nanomaterial #1"
     expect_task_not_started "Nanomaterial #2"
 
@@ -324,6 +364,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_nano_material_wizard("Nano one", nano_material_number: 1)
 
+    expect_progress(1,5)
+
     expect_task_completed "Nano one"
     expect_task_not_started "Nanomaterial #2"
 
@@ -333,6 +375,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_blocked "Item #2"
 
     complete_nano_material_wizard("Nano two", nano_material_number: 2)
+
+    expect_progress(2,5)
 
     expect_multi_item_kit_task_not_started
 

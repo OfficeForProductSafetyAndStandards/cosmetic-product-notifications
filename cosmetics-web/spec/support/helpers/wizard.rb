@@ -37,6 +37,10 @@ def expect_task_status(link_text, status)
   end.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
 end
 
+def expect_progress(current, total)
+ expect(page).to have_text("Incomplete: #{current} of #{total} sections have been completed")
+end
+
 # rubocop:disable Naming/MethodParameterName
 def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs: nil, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
   within("#product-table") do
