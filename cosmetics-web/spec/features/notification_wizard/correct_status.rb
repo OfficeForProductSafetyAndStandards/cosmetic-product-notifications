@@ -100,8 +100,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product no nano no items", nano_materials_count: 1)
 
-    
-    ress(1,4)
+    expect_progress(1,4)
 
     expect_product_details_task_blocked
 

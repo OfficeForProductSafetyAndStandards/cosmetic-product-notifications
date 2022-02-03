@@ -49,6 +49,10 @@ class NanoElement < ApplicationRecord
       confirm_toxicology_notified == "no"
   end
 
+  def conforms_to_restrictions?
+    confirm_restrictions != "no" && confirm_usage != "no"
+  end
+
 private
 
   def restrictions_confirmed_required?
