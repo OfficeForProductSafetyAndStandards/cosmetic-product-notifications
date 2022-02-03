@@ -41,6 +41,11 @@ until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp
 # Copy files from infrastructure env
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
+if [ -z "$WEB_CONCURRENCY" ]
+then
+  WEB_CONCURRENCY=1
+fi
+
 if [ -z "$WEB_MAX_THREADS" ]
 then
   WEB_MAX_THREADS=5

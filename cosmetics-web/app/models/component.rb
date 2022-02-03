@@ -133,17 +133,17 @@ class Component < ApplicationRecord
     [root_category, sub_category, sub_sub_category&.to_sym].include?(category)
   end
 
-  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  # This method is a temporary solution for opensearch indexing, until we implement filtering by categories
   def display_sub_category
     get_category_name(sub_category)
   end
 
-  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  # This method is a temporary solution for opensearch indexing, until we implement filtering by categories
   def display_sub_sub_category
     get_category_name(sub_sub_category)
   end
 
-  # This method is a temporary solution for elasticsearch indexing, until we implement filtering by categories
+  # This method is a temporary solution for opensearch indexing, until we implement filtering by categories
   def display_root_category
     get_category_name(root_category)
   end

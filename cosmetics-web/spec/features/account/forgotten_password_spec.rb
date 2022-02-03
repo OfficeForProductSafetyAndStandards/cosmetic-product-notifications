@@ -259,7 +259,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         email = delivered_emails.first
 
         expect(email.recipient).to eq "inviteduser@example.com"
-        expect(email.reference).to eq "Invite user to join responsible person"
+        expect(email.reference).to eq "Invite user to join Responsible Person"
         expect(email.template).to eq mailer::TEMPLATES[:responsible_person_invitation_for_existing_user]
         expect(email.personalization).to eq(
           invitation_url: "http://#{ENV.fetch('SUBMIT_HOST')}#{invitation_path}",

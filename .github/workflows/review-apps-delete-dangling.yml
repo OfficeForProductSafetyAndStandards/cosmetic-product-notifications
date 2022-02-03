@@ -77,8 +77,8 @@ jobs:
         for dangling in ${DANGLING_REVIEW_APPS[@]}; do
           echo "Deleting ${dangling}"
           cf stop ${dangling}
-          cf run-task ${dangling} --command "./env/delete-elasticsearch-indexes.sh" --name delete-elasticsearch-indexes
-          task_status=0; until [ $task_status = "SUCCEEDED" ]; do task_status="$(cf tasks cosmetics-pr-${dangling} | grep delete-elasticsearch-indexes | awk '{print $3}')" && if [ "$task_status" = "FAILED" ]; then break; else echo "waiting" && sleep 10; fi; done;
+          cf run-task ${dangling} --command "./env/delete-opensearch-indexes.sh" --name delete-opensearch-indexes
+          task_status=0; until [ $task_status = "SUCCEEDED" ]; do task_status="$(cf tasks cosmetics-pr-${dangling} | grep delete-opensearch-indexes | awk '{print $3}')" && if [ "$task_status" = "FAILED" ]; then break; else echo "waiting" && sleep 10; fi; done;
           cf delete -f -r ${dangling}
           cf delete-service -f cosmetics-review-redis-${dangling:13} # Substring from 13th char contains the PR number
         done

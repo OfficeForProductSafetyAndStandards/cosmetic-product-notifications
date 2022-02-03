@@ -9,20 +9,22 @@ services:
     ports:
       - "5432:5432"
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.2
+  opensearch:
+    image: opensearchproject/opensearch:1.2.4
     environment:
       - "discovery.type=single-node"
-      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+      - "OPENSEARCH_JAVA_OPTS=-Xms750m -Xmx750m"
+      - "DISABLE_SECURITY_PLUGIN=true"
     volumes:
-      - elasticsearch-volume:/usr/share/elasticsearch/data
+      - opensearch-volume:/usr/share/opensearch/data
+    hostname: opensearch
     ports:
       - "9200:9200"
 
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:7.9.2
     environment:
-      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
+      - "ELASTICSEARCH_HOSTS=http://opensearch:9200"
     ports:
       - "5601:5601"
 
@@ -43,19 +45,55 @@ services:
       - bundle-cache:/usr/local/bundle
     depends_on:
       - db
-      - elasticsearch
+      - opensearch
       - redis
+      - cosmetics-worker
+    expose:
+      - "3000"
     ports:
       - "3000:3000"
     environment:
       - NOTIFY_API_KEY=
       - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - TEST_DATABASE_URL=postgres://db/cosmetics_test?user=postgres
+      - OPENSEARCH_URL=http://opensearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit_cosmetics
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
       - ANTIVIRUS_ENABLED=false
+
+  # Currently not used, needs improvements
+  cosmetics-webpack:
+    command: ["./bin/webpack-dev-server"]
+    build:
+      context: .
+      dockerfile: ./cosmetics-web/Dockerfile
+    volumes:
+      # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
+      - ${PWD-.}/cosmetics-web:/cosmetics-web
+      - bundle-cache:/usr/local/bundle
+    depends_on:
+      - db
+      - opensearch
+      - redis
+    expose:
+      - "3035"
+    ports:
+      - "3035:3035"
+    environment:
+      - NOTIFY_API_KEY=
+      - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
+      - TEST_DATABASE_URL=postgres://db/cosmetics_test?user=postgres
+      - OPENSEARCH_URL=http://opensearch:9200
+      - REDIS_URL=redis://redis:6379
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
+      - ANTIVIRUS_ENABLED=false
+
   cosmetics-worker:
     build:
       context: .
@@ -68,18 +106,19 @@ services:
     environment:
       - NOTIFY_API_KEY=
       - DATABASE_URL=postgres://db/cosmetics_dev?user=postgres
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - OPENSEARCH_URL=http://opensearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit_cosmetics
       - ANTIVIRUS_ENABLED=false
+      - SEARCH_HOST=search-cosmetics
+      - SUBMIT_HOST=submit-cosmetics
+      - WEBPACKER_SERVER=cosmetics-webpack
+      - COSMETICS_HOST=submit-cosmetics
     depends_on:
       - db
-      - elasticsearch
+      - opensearch
       - redis
 
 volumes:
   postgres-volume:
-  elasticsearch-volume:
+  opensearch-volume:
   bundle-cache:

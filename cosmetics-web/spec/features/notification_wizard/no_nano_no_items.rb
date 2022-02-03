@@ -15,7 +15,11 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product no nano no items")
 
+    expect_progress(1,3)
+
     complete_product_details
+
+    expect_progress(2,3)
 
     click_link "Accept and submit"
 

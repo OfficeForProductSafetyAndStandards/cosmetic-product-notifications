@@ -4,10 +4,10 @@ class UpdateResponsiblePersonAddress
   delegate :responsible_person, :user, :address, :original_address, to: :context
 
   def call
-    context.fail!(error: "No responsible person provided") unless responsible_person
+    context.fail!(error: "No Responsible Person provided") unless responsible_person
     context.fail!(error: "No user provided") unless user
     context.fail!(error: "No address provided") unless address
-    context.fail!(error: "User does not belong to responsible person") unless user_belongs_to_responsible_person?
+    context.fail!(error: "User does not belong to Responsible Person") unless user_belongs_to_responsible_person?
     context.fail!(error: "Address contains unknown fields") unless valid_address_fields?
 
     context.previous_address = previous_address

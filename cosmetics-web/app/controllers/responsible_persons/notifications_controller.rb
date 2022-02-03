@@ -88,8 +88,8 @@ private
   def get_registered_notifications(page_size)
     @responsible_person.notifications
       .completed
-      .paginate(page: params[:page], per_page: page_size)
       .order(notification_complete_at: :desc)
+      .page(params[:page]).per(page_size)
   end
 
   def add_image_upload_errors

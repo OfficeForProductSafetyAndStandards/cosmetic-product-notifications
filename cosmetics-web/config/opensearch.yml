@@ -1,0 +1,14 @@
+default: &default
+  :url: <%= ENV.fetch('OPENSEARCH_URL', 'http://localhost:9200') %>
+  :transport_options:
+    :request:
+      :timeout: 5
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  :url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"] %>

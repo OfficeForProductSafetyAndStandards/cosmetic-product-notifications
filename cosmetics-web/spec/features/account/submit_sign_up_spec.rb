@@ -347,7 +347,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         email = delivered_emails.first
 
         expect(email.recipient).to eq "inviteduser@example.com"
-        expect(email.reference).to eq "Invite user to join responsible person"
+        expect(email.reference).to eq "Invite user to join Responsible Person"
         expect(email.template).to eq SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user]
         expect(email.personalization).to eq(
           invitation_url: "http://#{ENV.fetch('SUBMIT_HOST')}#{invitation_path}",

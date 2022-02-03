@@ -45,7 +45,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
       email = delivered_emails.first
       expect(email).to have_attributes(
         recipient: invited_user.email,
-        reference: "Invite user to join responsible person",
+        reference: "Invite user to join Responsible Person",
         template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
         personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                            invite_sender: user.name,
@@ -146,7 +146,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     email = delivered_emails.first
     expect(email).to have_attributes(
       recipient: invited_user.email,
-      reference: "Invite user to join responsible person",
+      reference: "Invite user to join Responsible Person",
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                          invite_sender: user.name,
@@ -225,7 +225,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     expect(original_email).to have_attributes(
       recipient: "newusertoregister@example.com",
-      reference: "Invite user to join responsible person",
+      reference: "Invite user to join Responsible Person",
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                          invite_sender: original_inviting_user.name,
@@ -270,7 +270,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     expect(new_email).to have_attributes(
       recipient: "newusertoregister@example.com",
-      reference: "Invite user to join responsible person",
+      reference: "Invite user to join Responsible Person",
       template: SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user],
       personalization: { invitation_url: "http://#{ENV['SUBMIT_HOST']}/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}",
                          invite_sender: user.name,
