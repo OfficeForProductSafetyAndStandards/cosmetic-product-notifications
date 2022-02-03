@@ -6,8 +6,10 @@ env:
   SEARCH_HOST: search
   SUBMIT_HOST: submit
   DATABASE_URL: postgres://localhost:5432/cosmetics_test
+  OPENSEARCH_URL: http://localhost:9200
   PGHOST: localhost
   PGUSER: postgres
+  RAILS_ENV: test
 
 jobs:
   ruby:
@@ -25,8 +27,10 @@ jobs:
           POSTGRES_DB: postgres
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      elasticsearch:
-        image: elasticsearch:7.9.2
+      opensearch:
+        image: opensearchproject/opensearch:1.2.4
+        env:
+          DISABLE_SECURITY_PLUGIN: true
         ports: ["9200:9200"]
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
@@ -59,30 +63,22 @@ jobs:
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     - name: Install Ruby Gems
-      env:
-        RAILS_ENV: test
       run: |
         cd cosmetics-web
         gem install bundler -v 2.1.4
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Install JavaScript dependencies
-      env:
-        RAILS_ENV: test
       run: |
         cd cosmetics-web
         npm install yarn -g
         yarn install
         bin/webpack
     - name: Prepare application database
-      env:
-        RAILS_ENV: test
       run: |
         cd cosmetics-web
         bin/rails db:create db:schema:load
     - name: Run Tests
       env:
-        ELASTICSEARCH_URL: localhost
-        RAILS_ENV: test
         TWO_FACTOR_AUTHENTICATION_ENABLED: false
         CI: true
         COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}

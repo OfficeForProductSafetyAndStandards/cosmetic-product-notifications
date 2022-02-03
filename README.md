@@ -40,6 +40,26 @@ Run docker compose:
 
 Go to app on [submit_cosmetics:3000](http://submit_cosmetics:3000)
 
+### Working with docker compose
+
+To start application, run:
+
+```
+docker-compose up cosmetics-web
+```
+
+To run typical rails command eg. migration, run
+
+```
+docker-compose run cosmetics-web rake db:migrate
+```
+
+or tests:
+
+```
+docker-compose run cosmetics-web rspec spec/some_specs
+```
+
 ### Long read
 
 Install Docker: https://docs.docker.com/install/.
@@ -87,7 +107,7 @@ if there are new migrations:
 
 Running without docker is often more convinient for development. It is still advised to run all dependencies with docker compose:
 
-`docker-compose up db redis elasticsearch`
+`docker-compose up db redis opensearch`
 
 Copy config files:
 `cp cosmetics-web/.env.development.example cosmetics-web/.env.development`
@@ -239,12 +259,12 @@ To create a database for the current space:
     cf enable-service-access postgres
     cf create-service postgres small-10.5 cosmetics-database
 
-### Elasticsearch
+### Opensearch
 
-To create an Elasticsearch instance for the current space:
+To create an Opensearch instance for the current space:
 
-    cf marketplace -s elasticsearch
-    cf create-service elasticsearch tiny-7.x cosmetics-elasticsearch-7
+    cf marketplace -s opensearch
+    cf create-service opensearch tiny-1 cosmetics-opensearch-1
 
 ### Redis
 

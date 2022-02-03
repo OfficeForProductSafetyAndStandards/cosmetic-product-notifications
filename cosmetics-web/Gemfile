@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "~> 3.0"
 
-gem "will_paginate", "3.2.1" # Must be laoded before elasticsearch gems
+gem "kaminari" # Must be loaded before ElasticSearch gems
 
 # Needed a feature added into AASM master branch but still not tagged with a new version.
 gem "aasm", "5.2.0"
@@ -14,14 +14,15 @@ gem "aws-sdk-s3", "~> 1.60.1"
 gem "cf-app-utils", "~> 0.6"
 gem "devise"
 gem "devise-security"
-gem "elasticsearch", "< 7.14" # v7.14 is incompatible with Open Source version of ElasticSearch server provided by PaaS.
-gem "elasticsearch-model", "~> 7.1"
-gem "elasticsearch-rails", "~> 7.1"
+# ES gems won't work with OpenSearch once ES and OS codebases start diverging:
+# https://github.com/elastic/elasticsearch-rails/issues/1010
+gem "elasticsearch"
+gem "elasticsearch-model"
+gem "elasticsearch-rails"
 gem "govuk_notify_rails", "~> 2.1.0"
 gem "image_processing", "~> 1.2"
 gem "interactor"
 gem "jbuilder", "~> 2.9"
-gem "kaminari"
 gem "lograge", "~> 0.11.2"
 gem "mini_magick", "~> 4.9.4"
 gem "okcomputer", "~> 1.18.1"

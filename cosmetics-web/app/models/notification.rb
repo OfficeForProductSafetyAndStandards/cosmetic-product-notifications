@@ -33,8 +33,8 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
-  index_name [ENV.fetch("ES_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
-  scope :elasticsearch, -> { where(state: "notification_complete") }
+  index_name [ENV.fetch("OS_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
+  scope :opensearch, -> { where(state: "notification_complete") }
 
   before_create do
     new_reference_number = nil
@@ -115,6 +115,8 @@ class Notification < ApplicationRecord
   end
 
   def reference_number_for_display
+    return "" if reference_number.blank?
+
     sprintf("UKCP-%08d", reference_number)
   end
 
@@ -319,4 +321,4 @@ private
   end
 end
 
-Notification.elasticsearch.import force: true if Rails.env.development? # for auto sync model with elastic search
+Notification.opensearch.import force: true if Rails.env.development? # for auto sync model with Opensearch

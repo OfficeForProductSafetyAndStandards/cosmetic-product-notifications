@@ -1,4 +1,4 @@
-class ElasticsearchQuery
+class OpensearchQuery
   SCORE_SORTING = "score".freeze
   DATE_ASCENDING_SORTING  = "date_ascending".freeze
   DATE_DESCENDING_SORTING = "date_descending".freeze
@@ -10,7 +10,7 @@ class ElasticsearchQuery
     @category  = category
     @from_date = from_date
     @to_date   = to_date
-    @sort_by   = sort_by.presence || SCORE_SORTING
+    @sort_by   = sort_by.presence || default_sorting
   end
 
   def build_query
@@ -89,5 +89,11 @@ class ElasticsearchQuery
       DATE_ASCENDING_SORTING => { notification_complete_at: { order: :asc } },
       DATE_DESCENDING_SORTING => { notification_complete_at: { order: :desc } },
     }[@sort_by]
+  end
+
+private
+
+  def default_sorting
+    @keyword.present? ? SCORE_SORTING : DATE_DESCENDING_SORTING
   end
 end

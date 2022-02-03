@@ -27,7 +27,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         rp_1_notifications
         rp_2_notifications
         draft_notification
-        Notification.elasticsearch.import force: true
+        Notification.opensearch.import force: true
         get :index
       end
 
@@ -49,7 +49,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         distinct_notification
         similar_notification_one
         similar_notification_two
-        Notification.elasticsearch.import force: true
+        Notification.opensearch.import force: true
       end
 
       it "finds the correct notification" do

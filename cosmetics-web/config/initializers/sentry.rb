@@ -6,6 +6,7 @@ Rails.application.configure do
   Sentry.init do |config|
     config.breadcrumbs_logger = [:active_support_logger] # Inject Sentry logger breadcrumbs
     config.dsn = ENV["SENTRY_DSN"]
+    config.excluded_exceptions += ["Pundit::NotAuthorizedError"]
     config.send_default_pii = false
   end
 end

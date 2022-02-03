@@ -19,6 +19,7 @@ require "webmock/rspec"
 WebMock.allow_net_connect!
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
+RSpec::Matchers.define_negated_matcher :not_include, :include
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

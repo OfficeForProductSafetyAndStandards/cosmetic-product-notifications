@@ -49,7 +49,7 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
   it "fails when no responsible person is provided" do
     result = described_class.call(user: user, address: new_address)
     expect(result).to be_failure
-    expect(result.error).to eq "No responsible person provided"
+    expect(result.error).to eq "No Responsible Person provided"
   end
 
   it "fails when no address is provided" do
@@ -62,7 +62,7 @@ RSpec.describe UpdateResponsiblePersonAddress, :with_stubbed_mailer do
     other_user = create(:submit_user)
     result = described_class.call(user: other_user, responsible_person: responsible_person, address: new_address)
     expect(result).to be_failure
-    expect(result.error).to eq "User does not belong to responsible person"
+    expect(result.error).to eq "User does not belong to Responsible Person"
   end
 
   it "fails when fields not belonging to the RP address are provided" do
