@@ -20,8 +20,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("Enter your full name", href: "#full_name")
     expect(page).to have_css("span#full_name-error", text: "Enter your full name")
 
-    expect(page).to have_link("Enter the email address", href: "#email")
-    expect(page).to have_css("span#email-error", text: "Enter the email address")
+    expect(page).to have_link("Enter an email address", href: "#email")
+    expect(page).to have_css("span#email-error", text: "Enter an email address")
 
     # Second attempt with no validation issues
     fill_in "Full name", with: "Joe Doe"
@@ -184,8 +184,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("Enter your full name", href: "#full_name")
     expect(page).to have_css("span#full_name-error", text: "Enter your full name")
 
-    expect(page).to have_link("Enter the email address", href: "#email")
-    expect(page).to have_css("span#email-error", text: "Enter the email address")
+    expect(page).to have_link("Enter an email address", href: "#email")
+    expect(page).to have_css("span#email-error", text: "Enter an email address")
 
     fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
