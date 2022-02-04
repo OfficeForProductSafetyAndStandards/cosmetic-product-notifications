@@ -44,38 +44,47 @@ module DraftHelper
   end
 
   def product_badge(notification)
+    id = "product-status"
+
     if notification.state == 'empty'
-      not_started_badge
+      not_started_badge(id)
     else
-      completed_badge
+      completed_badge(id)
     end
   end
 
   def multi_item_kit_badge(notification)
-    return cannot_start_yet_badge if !section_can_be_used?(MULTI_ITEMS_KIT_SECTION)
+    id = "multi-item-status"
+
+    return cannot_start_yet_badge(id) if !section_can_be_used?(MULTI_ITEMS_KIT_SECTION)
 
     if notification.state == 'details_complete'
-      not_started_badge
+      not_started_badge(id)
     elsif ['ready_for_components', 'components_complete', 'draft_complete', 'notification_complete'].include? notification.state
-      completed_badge
+      completed_badge(id)
     else
-      cannot_start_yet_badge
+      cannot_start_yet_badge(id)
     end
   end
 
-  def component_badge(component)
+  def component_badge(component, override_id: nil)
+    if override_id
+      id = override_id
+    else
+      id = html_id_for(component)
+    end
     # quarantine - not sure why its there
     # return cannot_start_yet_badge unless component
-    return cannot_start_yet_badge if !section_can_be_used?(ITEMS_SECTION)
+    return cannot_start_yet_badge(id) if !section_can_be_used?(ITEMS_SECTION)
 
     if ['empty', 'product_name_added', 'details_complete'].include? component.notification.state
-      cannot_start_yet_badge
+      cannot_start_yet_badge(id)
     elsif component.state == 'empty'
-      not_started_badge
+      not_started_badge(id)
     elsif component.state == 'component_complete'
-      completed_badge
+      completed_badge(id)
     else
-      cannot_start_yet_badge
+      cannot_start_yet_badge(id)
     end
   end
 
@@ -87,7 +96,7 @@ module DraftHelper
     end
 
     if section_can_be_used?(ITEMS_SECTION)
-      link_to text, new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component), class: "govuk-link govuk-link--no-visited-state"
+      link_to text, new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: html_id_for(component) }
     else
       text
     end
@@ -101,39 +110,47 @@ module DraftHelper
     end
 
     if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_element.blocked?
-      link_to text, new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_element), class: "govuk-link govuk-link--no-visited-state"
+      aria_id = html_id_for(nano_element)
+      link_to text, new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_element), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: aria_id }
     else
       text
     end
   end
 
   def nanomaterial_badge(nano_element)
-    return cannot_start_yet_badge if !section_can_be_used?(NANOMATERIALS_SECTION)
+    id = html_id_for(nano_element)
+
+    return cannot_start_yet_badge(id) if !section_can_be_used?(NANOMATERIALS_SECTION)
 
     if nano_element.completed?
-      completed_badge
+      completed_badge(id)
     elsif nano_element.blocked?
-      blocked_badge
+      blocked_badge(id)
     else
-      not_started_badge
+      not_started_badge(id)
     end
   end
 
-  def completed_badge
-    '<b class="govuk-tag app-task-list__tag" id="product-status">Completed</b>'.html_safe
+  def completed_badge(id)
+    badge("Completed", "", id)
   end
 
-  def not_started_badge
-    '<b class="govuk-tag govuk-tag--grey app-task-list__tag" id="product-details-status">Not started</b>'.html_safe
+  def not_started_badge(id)
+    badge("Not started", "govuk-tag--grey", id)
   end
 
-  def cannot_start_yet_badge
-    '<b class="govuk-tag govuk-tag--grey app-task-list__tag">Cannot start yet</b>'.html_safe
+  def cannot_start_yet_badge(id)
+    badge("Cannot start yet", "govuk-tag--grey", id)
   end
 
-  def blocked_badge
-    '<b class="govuk-tag opss-tag--red app-task-list__tag">Blocked</b>'.html_safe
+  def blocked_badge(id)
+    badge("Blocked", "govuk-tag--red", id)
   end
+
+  def badge(caption, css_classes, id)
+    "<b class=\"govuk-tag app-task-list__tag #{css_classes}\" id=\"#{id}\">#{caption}</b>".html_safe
+  end
+
 
   def section_number(section)
     if section == PRODUCT_DETAILS_SECTION
@@ -213,5 +230,9 @@ module DraftHelper
         2
       end
     end
+  end
+
+  def html_id_for(obj)
+    "#{obj.class.name.downcase}-#{obj.id}-status"
   end
 end

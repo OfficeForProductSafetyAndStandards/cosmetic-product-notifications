@@ -29,9 +29,9 @@
           <li class="app-task-list__item">
             <% if section_can_be_used?(DraftHelper::ACCEPT_SECTION) %>
               <span class="app-task-list__task-name">
-                <%= link_to "Accept and submit", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state" %>
+                <%= link_to "Accept and submit", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: "accept-and-submit-status" } %>
               </span>
-              <%= not_started_badge %>
+              <%= not_started_badge("accept-and-submit-status") %>
             <% else %>
               <span class="app-task-list__task-name">
                 Accept and submit

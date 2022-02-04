@@ -5,7 +5,7 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-          <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="cos-prod-hint">
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
             <% if @notification.product_name.present? %>
               <span class="govuk-caption-m">Product draft for: </span> <%= @notification.product_name %>
             <% else %>
@@ -51,7 +51,7 @@
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
           <a href="<%= delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
-            Delete <span class="govuk-visually-hidden">this </span>draft
+            Delete this draft
           </a>
         </div>
       </div>

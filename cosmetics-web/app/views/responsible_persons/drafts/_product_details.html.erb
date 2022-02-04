@@ -11,7 +11,7 @@
     <li class="app-task-list__item">
       <span class="app-task-list__task-name">
         <% if section_can_be_used?(DraftHelper::PRODUCT_DETAILS_SECTION) %>
-          <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="nano-01-status">
+          <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="single-item-status">
             Product details
           </a>
         <% else %>
@@ -19,7 +19,7 @@
         <% end %>
       </span>
 
-      <%= component_badge(component) %>
+      <%= component_badge(component, override_id: "single-item-status") %>
     </li>
   </ul>
 </li>
