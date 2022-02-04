@@ -50,9 +50,8 @@ class NanoElement < ApplicationRecord
   end
 
   def toxicology_required?
-    confirm_toxicology_notified.nil? ||
-      confirm_toxicology_notified == "not sure" ||
-      confirm_toxicology_notified == "no"
+    confirm_toxicology_notified == "not sure" ||
+    confirm_toxicology_notified == "no"
   end
 
   def conforms_to_restrictions?

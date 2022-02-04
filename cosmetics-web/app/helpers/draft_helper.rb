@@ -165,8 +165,13 @@ module DraftHelper
     @notification.nano_materials.map(&:nano_elements).flatten.all? { |n| n.conforms_to_restrictions? }
   end
 
-  def first_blocked_nanomaterial_name
+  def first_non_notified_blocked_nanomaterial_name
     nano = @notification.nano_materials.map(&:nano_elements).flatten.first { |n| n.toxicology_required? }
+    nano.inci_name
+  end
+
+  def first_restricted_blocked_nanomaterial_name
+    nano = @notification.nano_materials.map(&:nano_elements).flatten.first { |n| !n.conforms_to_restrictions? }
     nano.inci_name
   end
 
