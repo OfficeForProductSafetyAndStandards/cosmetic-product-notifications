@@ -1,8 +1,15 @@
 <%= render 'nanomaterial_banner' %>
 <%= render 'product_info' %>
 
-<div class="govuk-grid-row">
-  <section class="govuk-grid-column-three-quarters govuk-!-padding-top-9" role="region" aria-label="Tasks">
+<div class="govuk-grid-row opss-switch-cols">
+  <div class="govuk-grid-column-one-quarter govuk-!-padding-top-9 opss-switch-cols__right">
+    <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" if @notification.notification_product_wizard_completed? %>
+    <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-4">
+      <%= render "responsible_persons/drafts/guides/#{@notification.state}" %>
+    </div>
+  </div>
+
+  <section class="govuk-grid-column-three-quarters govuk-!-padding-top-9 opps-switch-cols__left" role="region" aria-label="Tasks">
 
     <p class="govuk-body govuk-!-margin-bottom-7 govuk-!-display-block opss-text-align-center">
       <%= progress_bar %>
@@ -46,10 +53,4 @@
 
 
   </section>
-  <div class="govuk-grid-column-one-quarter govuk-!-padding-top-9 opss-switch-cols__right">
-    <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" if @notification.notification_product_wizard_completed? %>
-    <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-4">
-      <%= render "responsible_persons/drafts/guides/#{@notification.state}" %>
-    </div>
-  </div>
 </div>
