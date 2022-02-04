@@ -13,7 +13,7 @@ RSpec.shared_examples "common user tests" do
     it "requires email to be present" do
       user.email = nil
       expect(user).not_to be_valid
-      expect(user.errors[:email]).to include("Email can not be blank")
+      expect(user.errors[:email]).to include("Enter an email address")
     end
 
     it "requires name when user is not invited" do

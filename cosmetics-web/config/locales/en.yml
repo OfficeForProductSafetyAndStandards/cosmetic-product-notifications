@@ -117,6 +117,7 @@ en:
           attributes:
             email:
               invalid: &invalid_email "Enter an email address in the correct format, like name@example.com"
+              blank: &empty_email "Enter an email address"
             mobile_number:
               invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
             new_email:
@@ -142,7 +143,7 @@ en:
           attributes:
             email_address:
               wrong_format: *invalid_email
-              blank: "Enter an email address"
+              blank: *empty_email
             phone_number:
               blank: "Telephone number can not be blank"
               invalid: "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
@@ -312,7 +313,7 @@ en:
   email_form_validation:
     wrong_email_or_password: *invalid_email
     wrong_format: *invalid_email
-    blank: "Enter the email address"
+    blank: *empty_email
   user_password_check_form_validation:
     invalid: "Password is incorrect"
     blank: "Password can not be blank"

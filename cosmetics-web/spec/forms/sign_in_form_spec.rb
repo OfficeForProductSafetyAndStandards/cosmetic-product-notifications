@@ -17,7 +17,7 @@ RSpec.describe SignInForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages_for(:email)).to eq(["Enter the email address"])
+        expect(form.errors.full_messages_for(:email)).to eq(["Enter an email address"])
       end
     end
 
