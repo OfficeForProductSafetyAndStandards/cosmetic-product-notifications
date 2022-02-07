@@ -6,7 +6,7 @@
       </h2>
     </div>
     <div class="govuk-notification-banner__content">
-      <% if nano_material_should_be_notified? && nano_material_conforms_to_restrictions? %>
+      <% if nano_material_should_be_notified? %>
         <p class="govuk-notification-banner__heading">You cannot notify this product until you have notified
           <%= link_to first_non_notified_blocked_nanomaterial_name, responsible_person_nanomaterials_path(@notification.responsible_person), class: 'govuk-notification-banner__link' %><span class="govuk-visually-hidden"> via the nanomaterials page</span>.</p>
       <% elsif !nano_material_conforms_to_restrictions? %>
