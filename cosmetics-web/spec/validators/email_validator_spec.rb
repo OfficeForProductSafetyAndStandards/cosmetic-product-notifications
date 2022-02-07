@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe EmailValidator do
   subject(:validator) { validator_class.new(email) }
 
-  let(:error_msg) { "Enter the email address in the correct format, like name@example.com" }
+  let(:error_msg) { "Enter an email address in the correct format, like name@example.com" }
 
   let(:validator_class) do
     Class.new do
