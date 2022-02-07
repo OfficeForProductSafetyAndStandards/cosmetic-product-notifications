@@ -6,14 +6,14 @@ class NotificationSearchForm < Form
 
   CATEGORIES = get_main_categories.map { |c| get_category_name(c) }
   SORT_WITH_QUERY_OPTIONS = {
-    "Relevance" => ElasticsearchQuery::SCORE_SORTING,
-    "Newest" => ElasticsearchQuery::DATE_DESCENDING_SORTING,
-    "Oldest" => ElasticsearchQuery::DATE_ASCENDING_SORTING,
+    "Relevance" => OpensearchQuery::SCORE_SORTING,
+    "Newest" => OpensearchQuery::DATE_DESCENDING_SORTING,
+    "Oldest" => OpensearchQuery::DATE_ASCENDING_SORTING,
   }.freeze
 
   SORT_WITHOUT_QUERY_OPTIONS = {
-    "Newest" => ElasticsearchQuery::DATE_DESCENDING_SORTING,
-    "Oldest" => ElasticsearchQuery::DATE_ASCENDING_SORTING,
+    "Newest" => OpensearchQuery::DATE_DESCENDING_SORTING,
+    "Oldest" => OpensearchQuery::DATE_ASCENDING_SORTING,
   }.freeze
 
   attribute :q

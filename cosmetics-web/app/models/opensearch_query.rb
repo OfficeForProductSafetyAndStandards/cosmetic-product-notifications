@@ -1,4 +1,4 @@
-class ElasticsearchQuery
+class OpensearchQuery
   SCORE_SORTING = "score".freeze
   DATE_ASCENDING_SORTING  = "date_ascending".freeze
   DATE_DESCENDING_SORTING = "date_descending".freeze

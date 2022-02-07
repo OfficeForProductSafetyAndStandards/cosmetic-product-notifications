@@ -25,8 +25,10 @@ jobs:
           POSTGRES_DB: postgres
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      elasticsearch:
-        image: elasticsearch:7.9.2
+      opensearch:
+        image: opensearchproject/opensearch:1.2.4
+        env:
+          DISABLE_SECURITY_PLUGIN: true
         ports: ["9200:9200"]
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
@@ -81,7 +83,7 @@ jobs:
         bin/rails db:create db:schema:load
     - name: Run Smoke Tests
       env:
-        ELASTICSEARCH_URL: localhost
+        OPENSEARCH_URL: localhost
         RAILS_ENV: test
         SMOKE_ENV_URL: ${{secrets.SMOKE_ENV_URL}}
         SMOKE_SEARCH_USER: ${{secrets.SMOKE_SEARCH_USER}}

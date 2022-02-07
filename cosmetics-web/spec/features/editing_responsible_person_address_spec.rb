@@ -24,7 +24,7 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
     expect_to_be_on__responsible_person_page
     click_link("Edit the address", href: "/responsible_persons/#{responsible_person.id}/edit")
 
-    expect(page).to have_h1("Change UK Responsible Person address for Test RP")
+    expect(page).to have_h1("Edit the UK Responsible Person details")
     expect_back_link_to_responsible_person_page
 
     # First attempts with validation error
@@ -35,7 +35,7 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
     fill_in "Postcode", with: ""
     click_button "Save and continue"
 
-    expect(page).to have_h1("Change UK Responsible Person address for Test RP")
+    expect(page).to have_h1("Edit the UK Responsible Person details")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a building and street", href: "#address_line_1")
     expect(page).to have_css("span#address_line_1-error", text: "Enter a building and street")
