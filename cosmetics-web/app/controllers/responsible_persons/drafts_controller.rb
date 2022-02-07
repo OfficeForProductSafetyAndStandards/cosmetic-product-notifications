@@ -28,6 +28,7 @@ private
 
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
+    @responsible_person = @notification.responsible_person
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 end

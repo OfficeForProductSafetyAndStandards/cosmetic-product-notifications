@@ -1,7 +1,7 @@
 <nav class="app-navigation govuk-clearfix" aria-labelledby="nav-label">
   <h2 class="responsible-person-name govuk-heading-s" id="nav-label"><%= @responsible_person.name %></h2>
   <ul class="app-navigation__list">
-    <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons/notifications" %>">
+    <li class="<%= "app-navigation--current-page" if ["responsible_persons/notifications", "responsible_persons/drafts"].include? params[:controller]  %>">
       <%= link_to "Cosmetic products", responsible_person_notifications_path(@responsible_person), "data-topnav": "responsible_persons/notifications", class: "govuk-link--no-visited-state" %>
     </li>
 
