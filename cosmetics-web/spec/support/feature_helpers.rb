@@ -747,7 +747,7 @@ def fill_in_rp_details
   fill_in "Town or city", with: "Auto-test city"
   fill_in "County", with: "auto-test-county"
   fill_in "Postcode", with: "b28 9un"
-  click_on "Continue"
+  click_on "Save and continue"
 end
 
 def fill_in_rp_business_details(name: "Auto-test rpuser")
