@@ -44,7 +44,7 @@ module DraftHelper
   end
 
   def product_badge(notification)
-    if notification.state == 'empty'
+    if notification.state_lower_than?(NotificationStateConcern::READY_FOR_NANOMATERIALS)
       not_started_badge
     else
       completed_badge
