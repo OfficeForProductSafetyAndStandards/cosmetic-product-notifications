@@ -54,7 +54,7 @@
     <%= render("product_details", notification: @notification, allow_edits: true) %>
 
     <section class="govuk-!-margin-top-7">
-      <% if @notification.valid?(:accept_and_submit) %>
+      <% if @notification.valid?(:accept_and_submit) && @notification.may_submit_notification? %>
         <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
       <% else %>
         <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
