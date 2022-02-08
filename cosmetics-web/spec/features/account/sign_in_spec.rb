@@ -31,8 +31,8 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
       fill_in "Password", with: "password "
       click_button "Continue"
 
-      expect(page).to have_css(".govuk-error-summary__list", text: "Enter the email address in the correct format, like name@example.com")
-      expect(page).to have_css(".govuk-error-message", text: "Enter the email address in the correct format, like name@example.com")
+      expect(page).to have_css(".govuk-error-summary__list", text: "Enter an email address in the correct format, like name@example.com")
+      expect(page).to have_css(".govuk-error-message", text: "Enter an email address in the correct format, like name@example.com")
     end
 
     scenario "user leaves email and password fields empty" do
@@ -42,7 +42,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
       fill_in "Password", with: " "
       click_button "Continue"
 
-      expect(page).to have_css(".govuk-error-message", text: "Enter the email address")
+      expect(page).to have_css(".govuk-error-message", text: "Enter an email address")
       expect(page).to have_css(".govuk-error-message", text: "Enter your password")
     end
 

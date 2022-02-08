@@ -1,7 +1,4 @@
-<%
-  title = "Change UK Responsible Person address for #{@responsible_person.name}"
-  page_title(title, errors: @responsible_person.errors.any?)
-%>
+<% page_title("Edit the UK Responsible Person details", errors: @responsible_person.errors.any?) %>
 
 <% content_for :after_header do %>
   <%= link_to "Back", responsible_person_path(@responsible_person), class: "govuk-back-link" %>
@@ -11,13 +8,35 @@
   <div class="govuk-grid-column-three-quarters">
     <%= error_summary(@responsible_person.errors, %i[address_line_1 address_line_2 city county postal_code]) %>
 
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-2"><%= title %></h1>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      Edit the <abbr>UK</abbr> Responsible Person details
+    </h1>
+
+    <%= govukDetails(summaryHtml: "Help with the <abbr>UK</abbr> Responsible Person details".html_safe, classes: "opss-details--sm govuk-!-margin-top-4") do %>
+      <p class="govuk-body-s">
+          A Responsible Person can be a business - in the law this is called a 'legal person'.
+          Or a Responsible Person can be a living person - in the law this is called a 'natural person'.
+      </p>
+      <p class="govuk-body-s">
+          The Responsible Person - the legal person or natural person - is a legal entity that must be established in the <abbr>UK</abbr>.
+          The address provided must be that of the legal entity named as the Responsible Person.
+          The Responsible Person must provide a <abbr>UK</abbr> address, which cannot be a <abbr title="Post Office">PO</abbr> box or mail forwarding address.
+      </p>
+      <p class="govuk-body-s">
+          A Responsible Person is legally bound by the obligations in the Cosmetics Regulation.
+      </p>
+    <% end %>
 
     <%= govukWarningText(
       iconFallbackText: "Warning",
-      classes: "govuk-!-margin-top-7 govuk-!-margin-bottom-6",
-      html: "You must update your cosmetic product labels with your new address.<br>" \
-            "Any cosmetic products you have notified will be associated with this new address. You will not need to submit a new notification.".html_safe
+      classes: "govuk-!-margin-bottom-0 govuk-!-margin-top-7 opss-warning-text--s",
+      text: "You must update your cosmetic product labels with the new address. Any cosmetic products you have notified will be associated with the new address. You will not need to submit a new notification."
+    )%>
+
+    <%= govukWarningText(
+      iconFallbackText: "Warning",
+      classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-6 opss-warning-text--s",
+      html: "The <abbr>UK</abbr> address provided must not be a <abbr>PO</abbr> box or mail forwarding address. These are not <abbr>UK</abbr> established addresses that comply with the regulation.".html_safe
     )%>
   </div>
 </div>
