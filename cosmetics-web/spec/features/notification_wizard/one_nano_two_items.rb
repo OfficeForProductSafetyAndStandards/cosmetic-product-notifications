@@ -42,6 +42,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     click_link "Accept and submit"
 
-    # TODO: assert that all is properly displayed
+    click_button "Accept and submit"
+
+    expect_successful_submission
   end
 end

@@ -123,3 +123,8 @@ def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, numbe
     end
   end
 end
+
+def expect_successful_submission
+  expect(page).to have_current_path(/\/responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/confirm/)
+  expect(page).to have_h1("Submission complete")
+end
