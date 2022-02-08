@@ -1,7 +1,13 @@
 class ResponsiblePersons::DraftsController < SubmitApplicationController
-  before_action :set_notification
+  before_action :set_notification, except: :new
+  before_action :set_responsible_person
 
   def show
+  end
+
+  def new
+    @notification = Notification.new
+    render 'show'
   end
 
   def add_component
@@ -20,7 +26,11 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
 private
 
   def responsible_person
-    @notification&.responsible_person
+    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
+  end
+
+  def set_responsible_person
+    responsible_person
   end
 
   def set_notification

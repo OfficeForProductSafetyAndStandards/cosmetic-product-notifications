@@ -1,0 +1,29 @@
+<% title = "What’s the product called?" %>
+
+<% page_title title, errors: @notification.errors.any? %>
+<% content_for :after_header do %>
+  <%= link_to "Back", new_responsible_person_draft_path(@responsible_person), class: "govuk-back-link" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= form_with model: @notification, url: responsible_person_notifications_path, method: :post do |form| %>
+
+      <%= error_summary_for(@notification) %>
+
+      <h1 class="govuk-heading-l"><%= title %></h1>
+
+      <p class="govuk-body">Include the trade mark or brand, the product line and the specific name of the product as it appears on the packaging. Include the type of product (for example, ‘shower gel’) unless it’s included in the product name.</p>
+
+      <%= render "form_components/govuk_input",
+              form: form,
+              key: :product_name,
+              label: { text: "Product name", classes: "govuk-label--m", isPageHeading: false },
+              hint: { text: "For example, ‘SkinSoft body fresh with aloe vera, shower gel’." } %>
+
+      <%= govukButton text: "Continue" %>
+
+    <% end %>
+  </div>
+</div>

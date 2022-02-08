@@ -50,9 +50,11 @@
 
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
-          <a href="<%= delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
-            Delete <span class="govuk-visually-hidden">this </span>draft
-          </a>
+          <% if @notification.persisted? %>
+            <a href="<%= delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
+              Delete <span class="govuk-visually-hidden">this </span>draft
+            </a>
+          <% end %>
         </div>
       </div>
 

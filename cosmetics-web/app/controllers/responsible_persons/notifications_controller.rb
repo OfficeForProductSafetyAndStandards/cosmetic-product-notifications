@@ -18,9 +18,16 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def show; end
 
   def new
-    @notification = Notification.create(responsible_person: @responsible_person)
+    @notification = Notification.new
+  end
 
-    redirect_to new_responsible_person_notification_product_path(@responsible_person, @notification)
+  def create
+    @notification = @responsible_person.notifications.new(notification_params)
+    if @notification.save
+      redirect_to responsible_person_notification_product_path(@responsible_person, @notification, :add_internal_reference)
+    else
+      render 'new'
+    end
   end
 
   # Check your answers page
@@ -36,12 +43,6 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     if params[:submit_failed]
       add_image_upload_errors
     end
-  end
-
-  def create_for_draft
-    notification = Notification.create(responsible_person: @responsible_person)
-
-    redirect_to responsible_person_notification_draft_path(@responsible_person, notification)
   end
 
   def confirm
@@ -102,5 +103,10 @@ private
     if @notification.images_pending_anti_virus_check?
       @notification.errors.add :image_uploads, "waiting for files to pass anti virus check. Refresh to update"
     end
+  end
+
+  def notification_params
+    params.fetch(:notification, {})
+      .permit(:product_name)
   end
 end
