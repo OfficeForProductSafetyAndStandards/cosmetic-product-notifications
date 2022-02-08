@@ -23,14 +23,14 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect_to_be_on__responsible_person_page
     click_link("Edit", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=name")
 
-    expect(page).to have_h1("Change contact person name for Test RP")
+    expect(page).to have_h1("Edit the assigned contact name")
     expect_back_link_to_responsible_person_page
 
     # First attempts with validation error
     fill_in "Full name", with: ""
     click_button "Continue"
 
-    expect(page).to have_h1("Change contact person name for Test RP")
+    expect(page).to have_h1("Edit the assigned contact name")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Name can not be blank", href: "#contact_person_name")
     expect(page).to have_css("span#contact_person_name-error", text: "Name can not be blank")
@@ -38,7 +38,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     fill_in "Full name", with: "Foo Bar www.example.org"
     click_button "Continue"
 
-    expect(page).to have_h1("Change contact person name for Test RP")
+    expect(page).to have_h1("Edit the assigned contact name")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a valid name", href: "#contact_person_name")
     expect(page).to have_css("span#contact_person_name-error", text: "Enter a valid name")
@@ -60,15 +60,15 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect_to_be_on__responsible_person_page
     click_link("Edit", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=email_address")
 
-    expect(page).to have_h1("Change contact person email address for Test RP")
+    expect(page).to have_h1("Edit the assigned contact email address")
     expect_back_link_to_responsible_person_page
 
     # First attempt with validation error
     fill_in "Email address", with: "mrFooBar"
     click_button "Continue"
 
-    expect(page).to have_h1("Change contact person email address for Test RP")
-    expected_error = "Enter the email address in the correct format, like name@example.com"
+    expect(page).to have_h1("Edit the assigned contact email address")
+    expected_error = "Enter an email address in the correct format, like name@example.com"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_email_address")
     expect(page).to have_css("span#contact_person_email_address-error", text: expected_error)
@@ -89,21 +89,21 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect_to_be_on__responsible_person_page
     click_link("Edit", href: "/responsible_persons/#{responsible_person.id}/contact_persons/#{contact_person.id}/edit?field=phone_number")
 
-    expect(page).to have_h1("Change contact person phone number for Test RP")
+    expect(page).to have_h1("Edit the assigned contact telephone number")
     expect_back_link_to_responsible_person_page
 
     # First attempt with validation error
-    fill_in "Phone number", with: "000"
+    fill_in "Telephone number", with: "000"
     click_button "Continue"
 
-    expect(page).to have_h1("Change contact person phone number for Test RP")
-    expected_error = "Enter a valid phone number, like 0344 411 1444 or +44 7700 900 982"
+    expect(page).to have_h1("Edit the assigned contact telephone number")
+    expected_error = "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_phone_number")
     expect(page).to have_css("span#contact_person_phone_number-error", text: expected_error)
 
     # Successful attempt
-    fill_in "Phone number", with: "+44(7123456789)"
+    fill_in "Telephone number", with: "+44(7123456789)"
     click_button "Continue"
 
     expect_to_be_on__responsible_person_page
