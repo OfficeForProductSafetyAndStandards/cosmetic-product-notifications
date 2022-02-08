@@ -1,6 +1,6 @@
 <h2 class="govuk-heading-s">In the next task</h2>
 <% if nano_materials_blocked? %>
-  <% if nano_material_should_be_notified? && nano_material_conforms_to_restrictions? %>
+  <% if nano_material_should_be_notified? %>
     <p class="govuk-body govuk-!-font-size-16 opss-secondary-text">Part of the current task is blocked. When the nanomaterial has been notified, remove the blocked nanomaterial from the task list and then add it, using the <kbd class="govuk-!-font-weight-regular">Add</kbd> and <kbd class="govuk-!-font-weight-regular">Remove</kbd> options. (If it is the only nanomaterial listed, first remove it and then complete the first task again).</p>
   <% elsif !nano_material_conforms_to_restrictions? %>
     <p class="govuk-body govuk-!-font-size-16 opss-secondary-text">Part of the current task has blocked this draft notification. You can remove the nanomaterial or delete this draft.</p>
