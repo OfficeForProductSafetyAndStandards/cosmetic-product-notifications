@@ -739,10 +739,11 @@ def select_options_to_create_rp_account
   expect(page).to have_h1("Has your Responsible Person account already been set up?")
   choose "No, I need to create an account"
   click_on "Continue"
-  expect(page).to have_h1("Is the UK Responsible Person a business or an individual?")
+  expect(page).to have_h1("UK Responsible Person details")
 end
 
-def fill_in_rp_details
+def fill_in_rp_details(name:)
+  fill_in "Name", with: name
   fill_in "Building and street", with: "Auto-test-address1", id: "address_line_1"
   fill_in "Town or city", with: "Auto-test city"
   fill_in "County", with: "auto-test-county"
@@ -751,13 +752,13 @@ def fill_in_rp_details
 end
 
 def fill_in_rp_business_details(name: "Auto-test rpuser")
-  fill_in "Name", with: name
-  fill_in_rp_details
+  choose "Limited company or Limited Liability Partnership (LLP)"
+  fill_in_rp_details(name: name)
 end
 
 def fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
-  fill_in "Name", with: name
-  fill_in_rp_details
+  choose "Individual or sole trader"
+  fill_in_rp_details(name: name)
 end
 
 def fill_in_rp_contact_details
@@ -771,17 +772,5 @@ def fill_in_rp_contact_details
   fill_in "Full name", with: "Auto-test contact person"
   fill_in "Email address", with: "auto-test@exaple.com"
   fill_in "Telephone number", with: "07984563072"
-  click_on "Continue"
-end
-
-def select_rp_business_account_type
-  assert_text "Is the UK Responsible Person a business or an individual?"
-  choose "Limited company or Limited Liability Partnership (LLP)"
-  click_on "Continue"
-end
-
-def select_rp_individual_account_type
-  assert_text "Is the UK Responsible Person a business or an individual?"
-  choose "Individual or sole trader"
   click_on "Continue"
 end

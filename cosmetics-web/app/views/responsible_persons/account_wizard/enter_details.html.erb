@@ -1,12 +1,22 @@
 <% page_title("UK Responsible Person details", errors: @responsible_persons_details_form.errors.any?) %>
 
 <% content_for :after_header do %>
-  <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
+  <% default_back_path =  if current_user.responsible_persons.none?
+                            wizard_path(:create_or_join_existing)
+                          elsif current_responsible_person.present?
+                            responsible_person_path(current_responsible_person)
+                          else
+                            select_responsible_persons_path
+                          end
+  %>
+  <%= link_to "Back", request.referer.presence || default_back_path, class: "govuk-back-link" %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <%= error_summary(@responsible_persons_details_form.errors, %i[name address_line_1 address_line_2 city county postal_code]) %>
+    <%= error_summary(@responsible_persons_details_form.errors,
+                      %i[account_type name address_line_1 address_line_2 city county postal_code],
+                      map_errors: { account_type: "account_type_business" }) %>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
       <abbr>UK</abbr> Responsible Person details
@@ -50,6 +60,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for(@responsible_persons_details_form, url: wizard_path, method: :put, html: { novalidate: true }) do |form| %>
+      <%= render "form_components/govuk_radios", form: form, key: :account_type,
+              fieldset: { legend: { html: "Is the <abbr>UK</abbr> Responsible Person a business or an individual?".html_safe } },
+              items: [{ text: "Limited company or Limited Liability Partnership (LLP)", id: "account_type_business", value: :business },
+                      { text: "Individual or sole trader", id: "account_type_individual", value: :individual }] %>
+
       <%= render("form_components/govuk_input",
                  form: form,
                  key: :name,

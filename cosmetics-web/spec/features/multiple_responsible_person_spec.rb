@@ -63,7 +63,6 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     choose "Add a new Responsible Person"
     click_on "Save and continue"
 
-    select_rp_business_account_type
     expect(page).to have_h1("UK Responsible Person details")
 
     name = "Some other responsible person"
@@ -86,7 +85,6 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     choose "Add a new Responsible Person"
     click_on "Save and continue"
 
-    select_rp_business_account_type
     expect(page).to have_h1("UK Responsible Person details")
 
     name = "Some other responsible person"

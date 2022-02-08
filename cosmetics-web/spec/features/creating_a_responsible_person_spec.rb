@@ -17,8 +17,6 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
 
-    select_rp_individual_account_type
-
     expect(page).to have_h1("UK Responsible Person details")
     fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
     fill_in_rp_contact_details
@@ -34,8 +32,6 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
-
-    select_rp_business_account_type
 
     expect(page).to have_h1("UK Responsible Person details")
     fill_in_rp_business_details(name: "Auto-test rpuser")
@@ -54,7 +50,6 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
-    select_rp_business_account_type
 
     expect(page).to have_h1("UK Responsible Person details")
     fill_in_rp_business_details(name: "Auto-test rpuser")
@@ -76,7 +71,6 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
     expect(page).to have_h1("UK Responsible Person")
     click_link "Add a Responsible Person"
-    select_rp_business_account_type
 
     expect(page).to have_h1("UK Responsible Person details")
     fill_in_rp_business_details(name: "auto-test RPuser")
@@ -95,7 +89,6 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
     expect(page).to have_h1("Who do you want to submit cosmetic product notifications for?")
     click_link "create a new Responsible Person"
-    select_rp_business_account_type
 
     expect(page).to have_h1("UK Responsible Person details")
     fill_in_rp_business_details(name: "auto-test RPuser")
