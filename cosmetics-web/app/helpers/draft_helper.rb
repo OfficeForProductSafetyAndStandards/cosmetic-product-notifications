@@ -188,7 +188,7 @@ module DraftHelper
   end
 
   def progress_bar
-    "<span class=\"govuk-visually-hidden\">The task list is </span><span class=\"govuk-!-font-weight-bold\">Incomplete</span>: #{sections_completed} of #{total_sections_count} sections have been completed.".html_safe
+    "<span class=\"govuk-visually-hidden\">The task list is </span><span class=\"govuk-!-font-weight-bold\">Incomplete</span>: #{sections_completed} of #{total_sections_count} tasks have been completed.".html_safe
   end
 
   def total_sections_count
