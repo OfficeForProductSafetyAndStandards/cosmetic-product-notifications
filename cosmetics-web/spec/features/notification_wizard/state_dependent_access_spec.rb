@@ -60,7 +60,6 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     click_button "Accept and submit"
 
-    expect_to_be_on__your_cosmetic_products_page
-    expect_to_see_message "Product with nano and two items notification submitted"
+    expect_successful_submission
   end
 end

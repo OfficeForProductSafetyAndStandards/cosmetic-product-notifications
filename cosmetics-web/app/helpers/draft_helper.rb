@@ -46,7 +46,7 @@ module DraftHelper
   def product_badge(notification)
     id = "product-status"
 
-    if notification.state == 'empty'
+    if notification.state_lower_than?(NotificationStateConcern::READY_FOR_NANOMATERIALS)
       not_started_badge(id)
     else
       completed_badge(id)
@@ -182,8 +182,13 @@ module DraftHelper
     @notification.nano_materials.map(&:nano_elements).flatten.all? { |n| n.conforms_to_restrictions? }
   end
 
-  def first_blocked_nanomaterial_name
-    nano = @notification.nano_materials.map(&:nano_elements).flatten.first { |n| n.toxicology_required? }
+  def first_non_notified_blocked_nanomaterial_name
+    nano = @notification.nano_materials.map(&:nano_elements).flatten.find { |n| n.toxicology_required? }
+    nano.inci_name
+  end
+
+  def first_restricted_blocked_nanomaterial_name
+    nano = @notification.nano_materials.map(&:nano_elements).flatten.find { |n| !n.conforms_to_restrictions? }
     nano.inci_name
   end
 
@@ -203,7 +208,7 @@ module DraftHelper
 
   def sections_completed
     case @notification.state.to_sym
-    when NotificationStateConcern::EMPTY
+    when NotificationStateConcern::EMPTY, NotificationStateConcern::PRODUCT_NAME_ADDED
       0
     when NotificationStateConcern::READY_FOR_NANOMATERIALS
       1
