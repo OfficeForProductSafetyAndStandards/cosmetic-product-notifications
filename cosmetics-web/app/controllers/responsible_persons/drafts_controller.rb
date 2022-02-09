@@ -25,12 +25,8 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
 
 private
 
-  def responsible_person
-    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
-  end
-
   def set_responsible_person
-    responsible_person
+    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
 
   def set_notification
