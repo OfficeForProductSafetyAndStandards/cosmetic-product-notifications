@@ -17,7 +17,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
     fill_in_rp_contact_details
 
@@ -33,7 +33,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "Auto-test rpuser")
     fill_in_rp_contact_details
 
@@ -51,7 +51,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "Auto-test rpuser")
 
     expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
@@ -72,7 +72,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("UK Responsible Person")
     click_link "Add a Responsible Person"
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "auto-test RPuser")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("You are already associated with auto-test RPuser", href: "#name")
@@ -90,7 +90,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("Who do you want to submit cosmetic product notifications for?")
     click_link "create a new Responsible Person"
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "auto-test RPuser")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("You have already been invited to join auto-test RPuser. Check your email inbox for your invite", href: "#name")

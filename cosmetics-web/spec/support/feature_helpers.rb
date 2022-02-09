@@ -739,7 +739,7 @@ def select_options_to_create_rp_account
   expect(page).to have_h1("Has your Responsible Person account already been set up?")
   choose "No, I need to create an account"
   click_on "Continue"
-  expect(page).to have_h1("UK Responsible Person details")
+  expect(page).to have_h1("Add a Responsible Person")
 end
 
 def fill_in_rp_details(name:)

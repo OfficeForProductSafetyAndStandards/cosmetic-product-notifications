@@ -1,4 +1,5 @@
-<% page_title("UK Responsible Person details", errors: @responsible_persons_details_form.errors.any?) %>
+<% title = "Add a Responsible Person" %>
+<% page_title(title, errors: @responsible_persons_details_form.errors.any?) %>
 
 <% content_for :after_header do %>
   <% default_back_path =  if current_user.responsible_persons.none?
@@ -18,9 +19,7 @@
                       %i[account_type name address_line_1 address_line_2 city county postal_code],
                       map_errors: { account_type: "account_type_business" }) %>
 
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-      <abbr>UK</abbr> Responsible Person details
-    </h1>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2"><%= title %></h1>
 
     <%= govukDetails(summaryHtml: "Help with the <abbr>UK</abbr> Responsible Person details".html_safe, classes: "opss-details--sm govuk-!-margin-top-4") do %>
       <p class="govuk-body-s">
