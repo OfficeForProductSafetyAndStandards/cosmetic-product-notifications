@@ -126,7 +126,8 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit] do
+      resource :draft, controller: "responsible_persons/drafts", only: %i[new]
+      resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit create] do
         resources :build, controller: "responsible_persons/wizard/notification_build", only: %i[show update new]
         resources :product, controller: "responsible_persons/wizard/notification_product", only: %i[show update new] do
         end
@@ -156,9 +157,6 @@ Rails.application.routes.draw do
           resources :build, controller: "responsible_persons/wizard/notification_nanomaterial", only: %i[show update new]
         end
 
-        collection do
-          get :create_for_draft
-        end
         member do
           post :confirm
         end
