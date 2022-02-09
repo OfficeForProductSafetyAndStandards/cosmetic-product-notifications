@@ -60,10 +60,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for(@responsible_persons_details_form, url: wizard_path, method: :put, html: { novalidate: true }) do |form| %>
-      <%= render "form_components/govuk_radios", form: form, key: :account_type,
-              fieldset: { legend: { html: "Is the <abbr>UK</abbr> Responsible Person a business or an individual?".html_safe } },
-              items: [{ text: "Limited company or Limited Liability Partnership (LLP)", id: "account_type_business", value: :business },
-                      { text: "Individual or sole trader", id: "account_type_individual", value: :individual }] %>
+      <%= render("form_components/govuk_radios",
+                 form: form,
+                 key: :account_type,
+                 formGroup: { classes: "govuk-!-margin-top-6" },
+                 fieldset: { legend: { html: "Is the <abbr>UK</abbr> Responsible Person a business or an individual?".html_safe,
+                             classes: "govuk-fieldset__legend--s" } },
+                 classes: "govuk-radios--small",
+                 items: [
+                   { html: "Limited company or Limited Liability Partnership (<abbr>LLP</abbr>)".html_safe,
+                     id: "account_type_business",
+                     value: :business,
+                     label: { classes: "govuk-!-padding-bottom-0" } },
+                   { text: "Individual or sole trader",
+                     id: "account_type_individual",
+                     value: :individual,
+                     label: { classes: "govuk-!-padding-bottom-0" } },
+                 ]) %>
 
       <%= render("form_components/govuk_input",
                  form: form,
