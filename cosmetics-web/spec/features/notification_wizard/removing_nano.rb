@@ -25,7 +25,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
       select_nano_materials_and_remove ["Nanomaterial #1", "Nanomaterial #2"]
 
-      expect_success_banner_with_text "The nanomaterial was deleted from this draft"
+      expect_success_banner_with_text "The Nanomaterial(s) has been removed"
 
       complete_product_details
 
@@ -80,7 +80,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     select_nano_materials_and_remove ["Nanomaterial #1"]
 
-    expect_success_banner_with_text "The nanomaterial was deleted from this draft"
+    expect_success_banner_with_text "The Nanomaterial(s) has been removed"
 
     expect_multi_item_kit_task_completed
 
