@@ -3,7 +3,9 @@
 
 <div class="govuk-grid-row opss-switch-cols">
   <div class="govuk-grid-column-one-quarter govuk-!-padding-top-9 opss-switch-cols__right">
-    <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" if @notification.notification_product_wizard_completed? %>
+    <div class="opss-text-align-right">
+      <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset" if @notification.notification_product_wizard_completed? %>
+    </div>
     <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-4">
       <%= render "responsible_persons/drafts/guides/#{@notification.state}" %>
     </div>
