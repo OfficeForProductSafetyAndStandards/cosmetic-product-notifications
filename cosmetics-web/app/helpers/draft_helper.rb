@@ -144,7 +144,7 @@ module DraftHelper
   end
 
   def blocked_badge(id)
-    badge("Blocked", "govuk-tag--red", id)
+    badge("Blocked", "opss-tag--red", id)
   end
 
   def badge(caption, css_classes, id)
