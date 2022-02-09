@@ -38,7 +38,7 @@ def expect_task_status(link_text, status)
 end
 
 def expect_progress(current, total)
- expect(page).to have_text("Incomplete: #{current} of #{total} sections have been completed")
+ expect(page).to have_text("Incomplete: #{current} of #{total} tasks have been completed")
 end
 
 # rubocop:disable Naming/MethodParameterName

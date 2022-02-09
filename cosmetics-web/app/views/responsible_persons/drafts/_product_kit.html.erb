@@ -6,11 +6,11 @@
     Multi item kit
   </h2>
 
-  <ul class="app-task-list__items opss-task-sub__list">
+  <ul class="app-task-list__items">
     <li class="app-task-list__item">
       <span class="app-task-list__task-name">
         <% if section_can_be_used?(DraftHelper::MULTI_ITEMS_KIT_SECTION) %>
-          <a href="<%= new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+          <a href="<%= new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="multi-item-status">
             Define the multi-item kit
           </a>
         <% else %>

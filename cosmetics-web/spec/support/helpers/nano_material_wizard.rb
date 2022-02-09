@@ -70,7 +70,7 @@ def expect_nano_material_task_not_started(name)
 end
 
 def select_nano_materials_and_remove(answers)
-  within_fieldset("Select which nanomaterials to remove") do
+  within_fieldset("Select which nanomaterial(s) to remove") do
     answers.each do |answer|
       page.check(answer)
     end

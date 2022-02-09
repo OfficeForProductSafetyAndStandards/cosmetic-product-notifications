@@ -8,7 +8,7 @@ class ResponsiblePersons::DeleteNanoMaterialsController < SubmitApplicationContr
   def destroy
     @form = NotificationWizard::DeleteNanoMaterialForm.new(form_params.merge(notification: @notification))
     if @form.delete
-      redirect_to responsible_person_notification_draft_path(@notification.responsible_person, @notification), confirmation: "The nanomaterial was deleted from this draft"
+      redirect_to responsible_person_notification_draft_path(@notification.responsible_person, @notification), confirmation: "The Nanomaterial(s) has been removed"
     else
       render "show"
     end

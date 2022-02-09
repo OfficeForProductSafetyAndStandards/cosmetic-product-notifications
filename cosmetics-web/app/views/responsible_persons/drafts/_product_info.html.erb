@@ -5,9 +5,9 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-          <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="cos-prod-hint">
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
             <% if @notification.product_name.present? %>
-              <span class="govuk-caption-m">Product draft for: </span> <%= @notification.product_name %>
+              <span class="govuk-caption-m">Product notification draft for: </span> <%= @notification.product_name %>
             <% else %>
               Add a cosmetic product
             <% end %>
@@ -31,19 +31,13 @@
               </summary>
               <div class="govuk-details__text">
                 <p class="govuk-body-s">
-                Your progress in completing these tasks will be saved as a working draft until you accept and submit it.
-                </p>
-
+                    Your progress in completing each task is saved as a working draft until you are ready to accept and submit it. Product drafts are stored in the <a href="<%= responsible_person_notifications_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state">Cosmetic products page</a> from where you can resume and complete the remaining tasks at any time.</p>
+                <p></p>
+                <!--p class="govuk-body-s">
+                    Completing the first task may change the list and the number of tasks.
+                </p-->
                 <p class="govuk-body-s">
-                Completing the first task may change the list and the number of tasks.
-                </p>
-
-                <p class="govuk-body-s">
-                Before you accept and submit a draft you can change information by completing individual tasks again, or you can delete the entire draft.
-
-                <!-- Before you accept and submit a draft you can complete individual tasks again to change information, or you can delete the entire draft.
-
-                  You can complete individual tasks again to change information or you can delete the entire draft. -->
+                    Before you accept and submit a draft you can change information at any stage by completing individual tasks again. If you have added items (for multi-item kits) or nanomaterials, you can add or remove them individually at any stage.
                 </p>
               </div>
             </details>
@@ -51,9 +45,11 @@
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
           <% if @notification.persisted? %>
-            <a href="<%= delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
-              Delete <span class="govuk-visually-hidden">this </span>draft
-            </a>
+            <div class="opss-text-align-right">
+              <a href="<%= delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset">
+                Delete this draft
+              </a>
+            </div>
           <% end %>
         </div>
       </div>
