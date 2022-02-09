@@ -32,7 +32,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       end
 
       it "populates an error message" do
-        expect(form.errors.full_messages_for(:account_type)).to eq(["Account type can not be blank"])
+        expect(form.errors.full_messages_for(:account_type)).to eq(["Select a Responsible person type"])
       end
     end
 

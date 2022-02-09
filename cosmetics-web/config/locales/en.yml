@@ -201,6 +201,7 @@ en:
         responsible_persons/details_form:
           attributes:
             account_type:
+              blank: "Select a Responsible person type"
               inclusion: "%{value} is not a valid Responsible person type"
             address_line_1:
               blank: "Enter a building and street"
