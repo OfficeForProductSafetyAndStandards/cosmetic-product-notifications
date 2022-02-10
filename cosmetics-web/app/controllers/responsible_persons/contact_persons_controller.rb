@@ -13,7 +13,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
 
   def create
     if @contact_person.save
-      redirect_to responsible_person_notifications_path(@responsible_person)
+      redirect_to responsible_person_path(@responsible_person)
     else
       render :new
     end
