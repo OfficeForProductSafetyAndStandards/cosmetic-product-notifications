@@ -96,7 +96,7 @@ RSpec.describe Component, type: :model do
 
       context "when context is provided" do
         it "is not valid" do
-          expect(component.valid?(:add_component_name)).to be_falsey
+          expect(component).not_to be_valid(:add_component_name)
         end
 
         it "has errors on name" do

@@ -1,9 +1,9 @@
 module DraftHelper
-  NANOMATERIALS_SECTION   = "nanomaterials"
-  PRODUCT_DETAILS_SECTION = "product_details"
-  MULTI_ITEMS_KIT_SECTION = "multi_item_kit"
-  ITEMS_SECTION           = "items"
-  ACCEPT_SECTION          = "accept"
+  NANOMATERIALS_SECTION   = "nanomaterials".freeze
+  PRODUCT_DETAILS_SECTION = "product_details".freeze
+  MULTI_ITEMS_KIT_SECTION = "multi_item_kit".freeze
+  ITEMS_SECTION           = "items".freeze
+  ACCEPT_SECTION          = "accept".freeze
 
   POSSIBLE_STEPS_MATRIX = {
     "empty" => { NANOMATERIALS_SECTION => false,
@@ -37,7 +37,7 @@ module DraftHelper
                                MULTI_ITEMS_KIT_SECTION => true,
                                ITEMS_SECTION => true,
                                ACCEPT_SECTION => true },
-  }
+  }.freeze
 
   def section_can_be_used?(section)
     POSSIBLE_STEPS_MATRIX[@notification.state][section]
@@ -159,19 +159,19 @@ module DraftHelper
   end
 
   def nano_materials_blocked?
-    @notification.nano_materials.map(&:nano_elements).flatten.any? { |n| n.blocked? }
+    @notification.nano_materials.map(&:nano_elements).flatten.any?(&:blocked?)
   end
 
   def nano_material_should_be_notified?
-    @notification.nano_materials.map(&:nano_elements).flatten.any? { |n| n.toxicology_required? }
+    @notification.nano_materials.map(&:nano_elements).flatten.any?(&:toxicology_required?)
   end
 
   def nano_material_conforms_to_restrictions?
-    @notification.nano_materials.map(&:nano_elements).flatten.all? { |n| n.conforms_to_restrictions? }
+    @notification.nano_materials.map(&:nano_elements).flatten.all?(&:conforms_to_restrictions?)
   end
 
   def first_non_notified_blocked_nanomaterial_name
-    nano = @notification.nano_materials.map(&:nano_elements).flatten.find { |n| n.toxicology_required? }
+    nano = @notification.nano_materials.map(&:nano_elements).flatten.find(&:toxicology_required?)
     nano.inci_name
   end
 

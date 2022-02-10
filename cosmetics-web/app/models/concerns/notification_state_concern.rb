@@ -17,18 +17,18 @@ module NotificationStateConcern
   # higher state and restoring it when certain state update is triggered.
 
   # states which can be saved as previous state column
-  CACHEABLE_PREVIOUS_STATES = [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE]
+  CACHEABLE_PREVIOUS_STATES = [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE].freeze
 
   # Indicates which states can be changed
   # key is requested state, value possible state from `previous_state` column.
   STATES_OVERRIDES = {
     DETAILS_COMPLETE => [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE],
     READY_FOR_COMPONENTS => [COMPONENTS_COMPLETE],
-  }
+  }.freeze
 
   DISABLED_OVERRIDES_FOR = {
     COMPONENTS_COMPLETE => [READY_FOR_COMPONENTS],
-  }
+  }.freeze
 
   included do
     include AASM
@@ -71,7 +71,7 @@ module NotificationStateConcern
   end
 
   def set_state_on_product_wizard_completed!
-    if nano_materials.count > 0
+    if nano_materials.count.positive?
       update_state("ready_for_nanomaterials")
     elsif multi_component?
       update_state("details_complete")
@@ -83,7 +83,7 @@ module NotificationStateConcern
   def try_to_complete_nanomaterials!
     return if state != "ready_for_nanomaterials"
 
-    if nano_materials.map(&:nano_elements).flatten.all? { |n| n.completed? }
+    if nano_materials.map(&:nano_elements).flatten.all?(&:completed?)
       if multi_component?
         update_state("details_complete")
       else

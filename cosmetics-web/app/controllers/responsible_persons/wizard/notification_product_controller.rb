@@ -17,7 +17,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     contains_nanomaterials: :for_children_under_three,
     single_or_multi_component: :contains_nanomaterials,
     add_product_image: :single_or_multi_component,
-  }
+  }.freeze
 
   # TODO: investigate previous path helper
   before_action :set_notification
@@ -140,7 +140,7 @@ private
       @notification.components.create if @notification.components.empty?
       render_next_step @notification
     when "multiple"
-      if @notification.components_count > 0 && components_count < @notification.components_count
+      if @notification.components_count.positive? && components_count < @notification.components_count
         @notification.errors.add :single_or_multi_component, "Items count cant be lower than #{@notification.components_count}"
         return rerender_current_step
       end

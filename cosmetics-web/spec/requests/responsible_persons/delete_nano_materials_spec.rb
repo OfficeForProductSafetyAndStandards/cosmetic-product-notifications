@@ -26,7 +26,7 @@ RSpec.describe "Delete Nano material page", type: :request do
     it "destroys nano_material" do
       expect {
         delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
-      }.to change { NanoMaterial.count }.from(1).to(0)
+      }.to change(NanoMaterial, :count).from(1).to(0)
     end
 
     it "redirects properly" do

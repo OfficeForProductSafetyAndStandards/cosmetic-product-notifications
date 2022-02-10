@@ -14,7 +14,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
   describe "validation" do
     context "when nano_material_ids attribute is missing" do
       it "is invalid" do
-        expect(described_class.new.valid?).to be_falsey
+        expect(described_class.new).not_to be_valid
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
       let(:form) { described_class.new(notification: notification1, nano_material_ids: []) }
 
       it "is invalid" do
-        expect(form.valid?).to be_falsey
+        expect(form).not_to be_valid
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
       let(:form) { described_class.new(notification: notification1, nano_material_ids: [""]) }
 
       it "is invalid" do
-        expect(form.valid?).to be_falsey
+        expect(form).not_to be_valid
       end
     end
   end

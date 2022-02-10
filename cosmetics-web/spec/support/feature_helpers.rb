@@ -7,8 +7,8 @@ end
 # --- Page expections -----
 
 module Fspec
-  YES = "Yes"
-  No  = "No"
+  YES = "Yes".freeze
+  No  = "No".freeze
 end
 
 def fill_in_credentials(password_override: nil)

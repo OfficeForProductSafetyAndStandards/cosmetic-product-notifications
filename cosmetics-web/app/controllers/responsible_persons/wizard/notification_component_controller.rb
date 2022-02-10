@@ -55,7 +55,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulatio: :,
     select_ph_option: %i[contains_poisonous_ingredients upload_formulation],
     min_max_ph: :select_ph_option,
-  }
+  }.freeze
 
   BACK_ROUTING_FUNCTIONS = {
     add_exposure_routes: -> { @component.nano_materials.present? },
@@ -63,7 +63,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     add_component_name: -> { @component.notification.multi_component? },
     contains_poisonous_ingredients: -> { @component.predefined? },
     upload_formulation: -> { true },
-  }
+  }.freeze
 
   def show
     case step

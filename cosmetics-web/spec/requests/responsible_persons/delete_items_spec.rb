@@ -30,7 +30,7 @@ RSpec.describe "Delete Notifications page", type: :request do
     it "destroys component" do
       expect {
         delete path, params: { notification_wizard_delete_component_form: { component_id: component1.id } }
-      }.to change { Component.count }.from(3).to(2)
+      }.to change(Component, :count).from(3).to(2)
     end
 
     it "redirects properly" do

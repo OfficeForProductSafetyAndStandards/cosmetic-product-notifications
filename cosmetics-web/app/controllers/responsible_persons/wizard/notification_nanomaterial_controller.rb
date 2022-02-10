@@ -28,12 +28,12 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     notify_your_nanomaterial: :non_standard_nanomaterial_notified,
     must_be_listed: :confirm_restrictions,
     must_conform_to_restrictions: :confirm_usage,
-  }
+  }.freeze
 
   BACK_ROUTING_FUNCTIONS = {
     confirm_usage: -> { @nano_element.multi_purpose? },
     select_purposes: -> { !@nano_element.multi_purpose? },
-  }
+  }.freeze
 
   def new
     redirect_to wizard_path(steps.first)
