@@ -11,7 +11,7 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
 
   describe "validation" do
     it "is invalid without component_id attribute present" do
-      expect(described_class.new.valid?).to be_falsey
+      expect(described_class.new).not_to be_valid
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
       it "removes the component" do
         expect {
           form.delete
-        }.to change { Component.count }.from(3).to(2)
+        }.to change(Component, :count).from(3).to(2)
       end
 
       it "returns true" do
@@ -94,10 +94,16 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
       expect { form.delete }.to raise_error(RuntimeError)
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it "does not remove the component" do
       expect {
-        form.delete rescue StandardError
+        begin
+          form.delete
+        rescue StandardError
+          StandardError
+        end
       }.not_to change(Component, :count)
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end

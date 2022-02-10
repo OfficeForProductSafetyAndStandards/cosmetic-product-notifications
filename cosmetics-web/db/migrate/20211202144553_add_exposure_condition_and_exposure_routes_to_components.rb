@@ -1,5 +1,4 @@
 class AddExposureConditionAndExposureRoutesToComponents < ActiveRecord::Migration[6.1]
-
   def change
     # rubocop:disable RSpec/BulkChangeTable
     add_column :components, :exposure_condition, :string
