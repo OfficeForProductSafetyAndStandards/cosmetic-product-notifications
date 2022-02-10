@@ -2,15 +2,13 @@
 <% page_title(title, errors: @responsible_persons_details_form.errors.any?) %>
 
 <% content_for :after_header do %>
-  <% default_back_path =  if current_user.responsible_persons.none?
-                            wizard_path(:create_or_join_existing)
-                          elsif current_responsible_person.present?
-                            responsible_person_path(current_responsible_person)
-                          else
-                            select_responsible_persons_path
-                          end
+  <% back_path =  if current_user.responsible_persons.none?
+                    wizard_path(:create_or_join_existing)
+                  else
+                    select_responsible_persons_path
+                  end
   %>
-  <%= link_to "Back", request.referer.presence || default_back_path, class: "govuk-back-link" %>
+  <%= link_to "Back", back_path, class: "govuk-back-link" %>
 <% end %>
 
 <div class="govuk-grid-row">
