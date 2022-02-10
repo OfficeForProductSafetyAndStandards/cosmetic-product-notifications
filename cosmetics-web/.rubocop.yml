@@ -109,3 +109,7 @@ RSpec/DescribeClass:
 RSpec/FilePath:
   Exclude:
     - spec/controllers/**/*
+
+Naming/MethodParameterName:
+  Exclude:
+    - spec/support/**/*

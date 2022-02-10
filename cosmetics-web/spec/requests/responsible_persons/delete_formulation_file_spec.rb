@@ -15,9 +15,6 @@ RSpec.describe "Delete formulation file", type: :request do
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
-  end
-
-  before do
     component1
     component2
   end

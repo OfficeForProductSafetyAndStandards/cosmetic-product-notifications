@@ -50,11 +50,13 @@ RSpec.describe "Delete Nano material page", type: :request do
     end
   end
 
+  # rubocop:disable RSpec/AnyInstance
   it "is using proper form class" do
     expect_any_instance_of(NotificationWizard::DeleteNanoMaterialForm).to receive(:delete)
 
     delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: nil } }
   end
+  # rubocop:enable RSpec/AnyInstance
 
   context "when user tries to access not his notification" do
     let(:path) { responsible_person_notification_draft_delete_nano_material_path(responsible_person, notification2) }

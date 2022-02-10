@@ -13,9 +13,6 @@ RSpec.describe "Delete product image", type: :request do
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
-  end
-
-  before do
     notification1
     notification2
   end
@@ -32,7 +29,7 @@ RSpec.describe "Delete product image", type: :request do
     it "raises authorisation error" do
       expect {
         delete responsible_person_notification_draft_delete_product_image_path(responsible_person, notification1, image_id: notification2.image_uploads.first.id)
-      }.not_to change { notification1.image_uploads.count }
+      }.not_to(change { notification1.image_uploads.count })
     end
   end
 end

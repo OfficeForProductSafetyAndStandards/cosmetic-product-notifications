@@ -46,11 +46,13 @@ RSpec.describe "Delete Notifications page", type: :request do
     expect(response).to render_template("show")
   end
 
+  # rubocop:disable RSpec/AnyInstance
   it "is using proper form class" do
     expect_any_instance_of(NotificationWizard::DeleteComponentForm).to receive(:delete)
 
     delete path, params: { notification_wizard_delete_component_form: { component_id: nil } }
   end
+  # rubocop:enable RSpec/AnyInstance
 
   context "when user tries to access not his notification" do
     let(:path) { responsible_person_notification_draft_delete_item_path(responsible_person, notification2) }

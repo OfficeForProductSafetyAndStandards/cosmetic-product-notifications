@@ -70,6 +70,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
         nano_element1
       end
 
+      # rubocop:disable RSpec/MultipleExpectations
       it "removes the nano_material" do
         expect(NanoMaterial.count).to eq(1)
         expect(NanoElement.count).to eq(1)
@@ -79,19 +80,10 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
         expect(NanoMaterial.count).to eq(0)
         expect(NanoElement.count).to eq(0)
       end
+      # rubocop:enable RSpec/MultipleExpectations
 
       it "returns true" do
         expect(form.delete).to be_truthy
-      end
-
-      context "when requested to remove multiple nano materials" do
-        let(:form) { described_class.new(notification: notification1, nano_material_ids: [nano_material1.id]) }
-
-        before do
-          form
-          nano_element1
-          nano_element2
-        end
       end
     end
 

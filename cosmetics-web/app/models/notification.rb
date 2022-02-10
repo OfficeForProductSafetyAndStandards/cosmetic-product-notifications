@@ -299,8 +299,6 @@ private
       mandatory_attributes("empty")
     when "ready_for_components"
       mandatory_attributes("empty")
-    when "product_name_added"
-      mandatory_attributes("empty")
     when "import_country_added"
       %w[components] + mandatory_attributes("product_name_added")
     when "components_complete"

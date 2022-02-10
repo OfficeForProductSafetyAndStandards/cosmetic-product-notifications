@@ -30,7 +30,7 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
       end
     end
 
-    context "if component can not be found" do
+    context "when component can not be found" do
       let(:non_existent_id) { Component.pluck(:id).max + 1 }
       let(:form) { described_class.new(notification: notification1, component_id: non_existent_id) }
 
@@ -96,11 +96,8 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
 
     it "does not remove the component" do
       expect {
-        
-          form.delete
-        rescue StandardError
-        
-      }.not_to change { Component.count }
+        form.delete rescue StandardError
+      }.not_to change(Component, :count)
     end
   end
 end

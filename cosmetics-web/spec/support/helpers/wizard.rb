@@ -41,7 +41,6 @@ def expect_progress(current, total)
   expect(page).to have_text("Incomplete: #{current} of #{total} tasks have been completed")
 end
 
-# rubocop:disable Naming/MethodParameterName
 def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Product name", value: product_name)
@@ -85,7 +84,6 @@ def expect_check_your_answers_page_to_contain(product_name:, number_of_component
     expect(page).to have_summary_item(key: "Exposure condition", value: exposure_condition)
   end
 end
-# rubocop:enable Naming/MethodParameterName
 
 def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, number_of_components:, components_mixed:, kit_items:)
   within("#product-table") do
