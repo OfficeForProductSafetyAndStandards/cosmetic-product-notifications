@@ -4,6 +4,8 @@
 <% content_for :after_header do %>
   <% back_path =  if current_user.responsible_persons.none?
                     wizard_path(:create_or_join_existing)
+                  elsif current_user.responsible_persons.one?
+                    responsible_person_path(current_user.responsible_persons.first)
                   else
                     select_responsible_persons_path
                   end
