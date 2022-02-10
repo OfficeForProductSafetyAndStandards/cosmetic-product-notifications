@@ -69,7 +69,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       reference_number = notification.reference_number
       notification.destroy!
       get :show, params: { responsible_person_id: responsible_person.id, reference_number: reference_number }
-      expect(response).to redirect_to("http://submit/404")
+      expect(response).to redirect_to("/404")
     end
   end
 
@@ -133,7 +133,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       reference_number = draft_notification.reference_number
       draft_notification.destroy!
       get :edit, params: { responsible_person_id: responsible_person.id, reference_number: reference_number }
-      expect(response).to redirect_to("http://submit/404")
+      expect(response).to redirect_to("/404")
     end
 
     context "when the notification is already submitted" do

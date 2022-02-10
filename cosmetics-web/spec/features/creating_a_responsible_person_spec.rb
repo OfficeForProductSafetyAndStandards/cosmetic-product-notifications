@@ -21,7 +21,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
     fill_in_rp_contact_details
 
-    expect(page).to have_h1("Cosmetic products")
+    expect(page).to have_h1("UK Responsible Person")
   end
 
   scenario "creating a responsible person as a limited company" do
@@ -37,7 +37,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     fill_in_rp_business_details(name: "Auto-test rpuser")
     fill_in_rp_contact_details
 
-    expect(page).to have_h1("Cosmetic products")
+    expect(page).to have_h1("UK Responsible Person")
   end
 
   scenario "creating a responsible person with the same name as an existing one" do
@@ -57,7 +57,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
     fill_in_rp_contact_details
 
-    expect(page).to have_h1("Cosmetic products")
+    expect(page).to have_h1("UK Responsible Person")
   end
 
   scenario "creating a responsible person with the same name as another responbible person the user belongs to" do
