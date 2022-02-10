@@ -23,8 +23,8 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
         }
       end
 
-      it "redirects to the notifications dashboard" do
-        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}/notifications")
+      it "redirects to the Responsible Person page" do
+        expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}")
       end
 
       it "saves the contact person’s details" do

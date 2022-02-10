@@ -28,7 +28,7 @@ jobs:
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       opensearch:
-        image: opensearchproject/opensearch:1.2.4
+        image: opensearchproject/opensearch:1.2.3
         env:
           DISABLE_SECURITY_PLUGIN: true
         ports: ["9200:9200"]
@@ -86,3 +86,9 @@ jobs:
         cd cosmetics-web
         # to display branch properly, coveralls needs GIT_BRANCH env var to be set
         GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec spec
+    - name: Dump docker logs
+      uses: jwalton/gh-docker-logs@v1
+      if: always()
+      with:
+        images: 'opensearchproject/opensearch'
+
