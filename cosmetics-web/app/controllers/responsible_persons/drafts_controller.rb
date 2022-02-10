@@ -2,12 +2,11 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
   before_action :set_notification, except: :new
   before_action :set_responsible_person
 
-  def show
-  end
+  def show; end
 
   def new
     @notification = Notification.new
-    render 'show'
+    render "show"
   end
 
   def add_component

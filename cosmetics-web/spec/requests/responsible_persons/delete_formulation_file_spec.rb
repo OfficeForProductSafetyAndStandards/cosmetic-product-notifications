@@ -8,11 +8,10 @@ RSpec.describe "Delete formulation file", type: :request do
   let(:other_user) { build(:submit_user) }
 
   let(:notification1) { create(:notification, responsible_person: responsible_person) }
-  let(:component1) {create(:component, :with_formulation_file, notification: notification1) }
+  let(:component1) { create(:component, :with_formulation_file, notification: notification1) }
 
   let(:notification2) { create(:notification, responsible_person: other_responsible_person) }
-  let(:component2) {create(:component, :with_formulation_file, notification: notification2) }
-
+  let(:component2) { create(:component, :with_formulation_file, notification: notification2) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
@@ -37,6 +36,5 @@ RSpec.describe "Delete formulation file", type: :request do
         delete responsible_person_notification_draft_delete_formulation_file_path(responsible_person, notification1, component_id: component2.id)
       }.to raise_error(Pundit::NotAuthorizedError)
     end
-
   end
 end

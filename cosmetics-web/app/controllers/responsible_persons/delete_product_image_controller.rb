@@ -6,7 +6,7 @@ class ResponsiblePersons::DeleteProductImageController < SubmitApplicationContro
     redirect_back fallback_location: responsible_person_notification_draft_path(@notification.responsible_person, @notification)
   end
 
-  private
+private
 
   def set_notification
     @notification = Notification.find_by reference_number: params[:notification_reference_number]

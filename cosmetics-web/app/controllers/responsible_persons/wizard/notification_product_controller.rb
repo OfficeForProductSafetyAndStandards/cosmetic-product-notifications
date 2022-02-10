@@ -16,7 +16,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     for_children_under_three: :add_internal_reference,
     contains_nanomaterials: :for_children_under_three,
     single_or_multi_component: :contains_nanomaterials,
-    add_product_image: :single_or_multi_component
+    add_product_image: :single_or_multi_component,
   }
 
   # TODO: investigate previous path helper
@@ -26,7 +26,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     case step
     when :completed
       set_final_state_for_wizard
-      render 'responsible_persons/wizard/completed'
+      render "responsible_persons/wizard/completed"
     else
       render_wizard
     end
@@ -55,7 +55,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     redirect_to wizard_path(steps.first)
   end
 
-  private
+private
 
   def set_final_state_for_wizard
     # Make sure state wont be overrided if notification is in higher state

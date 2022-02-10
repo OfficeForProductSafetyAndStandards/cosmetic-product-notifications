@@ -23,7 +23,7 @@ module NotificationStateConcern
   # key is requested state, value possible state from `previous_state` column.
   STATES_OVERRIDES = {
     DETAILS_COMPLETE => [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE],
-    READY_FOR_COMPONENTS => [COMPONENTS_COMPLETE]
+    READY_FOR_COMPONENTS => [COMPONENTS_COMPLETE],
   }
 
   DISABLED_OVERRIDES_FOR = {
@@ -71,82 +71,82 @@ module NotificationStateConcern
   end
 
   def set_state_on_product_wizard_completed!
-    if self.nano_materials.count > 0
-      self.update_state('ready_for_nanomaterials')
+    if nano_materials.count > 0
+      update_state("ready_for_nanomaterials")
+    elsif multi_component?
+      update_state("details_complete")
     else
-      if self.multi_component?
-        self.update_state('details_complete')
-      else
-        self.update_state('ready_for_components')
-      end
+      update_state("ready_for_components")
     end
   end
 
   def try_to_complete_nanomaterials!
-    return if state != 'ready_for_nanomaterials'
+    return if state != "ready_for_nanomaterials"
 
     if nano_materials.map(&:nano_elements).flatten.all? { |n| n.completed? }
-      if self.multi_component?
-        self.update_state('details_complete')
+      if multi_component?
+        update_state("details_complete")
       else
-        self.update_state('ready_for_components')
+        update_state("ready_for_components")
       end
     end
   end
 
   def try_to_complete_components!
-    if components.all? { |c| c.state == 'component_complete' }
-      self.update_state('components_complete')
+    if components.all? { |c| c.state == "component_complete" }
+      update_state("components_complete")
     end
   end
 
   def notification_product_wizard_completed?
-    !['empty', 'product_name_added'].include?(self.state)
+    !%w[empty product_name_added].include?(state)
   end
 
   # TODO: quite entangled
   # This method is only called on product wizard when increasing component count
   # from 1 to n
   def revert_to_details_complete
-    return if ['empty', 'product_name_added', 'ready_for_nanomaterials'].include?(self.state)
+    return if %w[empty product_name_added ready_for_nanomaterials].include?(state)
 
-    raise("This should not be called") if self.components.count != 1
+    raise("This should not be called") if components.count != 1
+
     # we dont want to change state to details complete when its new notification
     # TODO: remove ready_for_nanomaterials and see what happens!
 
     # Reset first component too
-    c = self.components.first
-    c.update_state('empty')
-    self.update_state!(DETAILS_COMPLETE)
+    c = components.first
+    c.update_state("empty")
+    update_state!(DETAILS_COMPLETE)
   end
 
   def revert_to_ready_for_nanomaterials
-    self.update_state(READY_FOR_NANOMATERIALS)
+    update_state(READY_FOR_NANOMATERIALS)
   end
 
   def update_state(new_state, only_downgrade: false)
-    if only_downgrade
-      return if new_state.to_sym == READY_FOR_COMPONENTS && self.state.to_sym == READY_FOR_NANOMATERIALS
+    if only_downgrade && (new_state.to_sym == READY_FOR_COMPONENTS && state.to_sym == READY_FOR_NANOMATERIALS)
+      return
     end
-    if CACHEABLE_PREVIOUS_STATES.include?(self.state.to_sym)
-      self.update(previous_state: self.state)
+
+    if CACHEABLE_PREVIOUS_STATES.include?(state.to_sym)
+      update(previous_state: state)
     end
     # Try to revert to previous state
-    if self.previous_state.present? && STATES_OVERRIDES[new_state.to_sym]&.include?(self.previous_state.to_sym) &&
+    if previous_state.present? && STATES_OVERRIDES[new_state.to_sym]&.include?(previous_state.to_sym) &&
         !DISABLED_OVERRIDES_FOR[state.to_sym]&.include?(new_state.to_sym)
       # but only when transision is allowed
-      self.update(state: self.previous_state)
+      update(state: previous_state)
     else
-      self.update(state: new_state)
+      update(state: new_state)
     end
   end
 
   def update_state!(new_state)
-    self.update(state: new_state)
+    update(state: new_state)
   end
 
   def reset_previous_state!
-    self.update(previous_state: nil)
+    update(previous_state: nil)
   end
 
   def state_lower_than?(state)

@@ -1,38 +1,38 @@
 module DraftHelper
-  NANOMATERIALS_SECTION   = 'nanomaterials'
-  PRODUCT_DETAILS_SECTION = 'product_details'
-  MULTI_ITEMS_KIT_SECTION = 'multi_item_kit'
-  ITEMS_SECTION           = 'items'
-  ACCEPT_SECTION          = 'accept'
+  NANOMATERIALS_SECTION   = "nanomaterials"
+  PRODUCT_DETAILS_SECTION = "product_details"
+  MULTI_ITEMS_KIT_SECTION = "multi_item_kit"
+  ITEMS_SECTION           = "items"
+  ACCEPT_SECTION          = "accept"
 
   POSSIBLE_STEPS_MATRIX = {
-    'empty' => { NANOMATERIALS_SECTION => false,
+    "empty" => { NANOMATERIALS_SECTION => false,
                  PRODUCT_DETAILS_SECTION => false,
                  MULTI_ITEMS_KIT_SECTION => false,
                  ITEMS_SECTION => false,
                  ACCEPT_SECTION => false },
-    'product_name_added' => { NANOMATERIALS_SECTION => false,
+    "product_name_added" => { NANOMATERIALS_SECTION => false,
                               PRODUCT_DETAILS_SECTION => false,
                               MULTI_ITEMS_KIT_SECTION => false,
                               ITEMS_SECTION => false,
                               ACCEPT_SECTION => false },
 
-    'ready_for_nanomaterials' => { NANOMATERIALS_SECTION => true,
+    "ready_for_nanomaterials" => { NANOMATERIALS_SECTION => true,
                                    PRODUCT_DETAILS_SECTION => false,
                                    MULTI_ITEMS_KIT_SECTION => false,
                                    ITEMS_SECTION => false,
                                    ACCEPT_SECTION => false },
-    'details_complete' => { NANOMATERIALS_SECTION => true,
+    "details_complete" => { NANOMATERIALS_SECTION => true,
                             PRODUCT_DETAILS_SECTION => true,
                             MULTI_ITEMS_KIT_SECTION => true,
                             ITEMS_SECTION => false,
                             ACCEPT_SECTION => false },
-    'ready_for_components' => { NANOMATERIALS_SECTION => true,
+    "ready_for_components" => { NANOMATERIALS_SECTION => true,
                                 PRODUCT_DETAILS_SECTION => true,
                                 MULTI_ITEMS_KIT_SECTION => true,
                                 ITEMS_SECTION => true,
                                 ACCEPT_SECTION => false },
-    'components_complete' => { NANOMATERIALS_SECTION => true,
+    "components_complete" => { NANOMATERIALS_SECTION => true,
                                PRODUCT_DETAILS_SECTION => true,
                                MULTI_ITEMS_KIT_SECTION => true,
                                ITEMS_SECTION => true,
@@ -56,11 +56,11 @@ module DraftHelper
   def multi_item_kit_badge(notification)
     id = "multi-item-status"
 
-    return cannot_start_yet_badge(id) if !section_can_be_used?(MULTI_ITEMS_KIT_SECTION)
+    return cannot_start_yet_badge(id) unless section_can_be_used?(MULTI_ITEMS_KIT_SECTION)
 
-    if notification.state == 'details_complete'
+    if notification.state == "details_complete"
       not_started_badge(id)
-    elsif ['ready_for_components', 'components_complete', 'draft_complete', 'notification_complete'].include? notification.state
+    elsif %w[ready_for_components components_complete draft_complete notification_complete].include? notification.state
       completed_badge(id)
     else
       cannot_start_yet_badge(id)
@@ -68,20 +68,16 @@ module DraftHelper
   end
 
   def component_badge(component, override_id: nil)
-    if override_id
-      id = override_id
-    else
-      id = html_id_for(component)
-    end
+    id = override_id || html_id_for(component)
     # quarantine - not sure why its there
     # return cannot_start_yet_badge unless component
-    return cannot_start_yet_badge(id) if !section_can_be_used?(ITEMS_SECTION)
+    return cannot_start_yet_badge(id) unless section_can_be_used?(ITEMS_SECTION)
 
-    if ['empty', 'product_name_added', 'details_complete'].include? component.notification.state
+    if %w[empty product_name_added details_complete].include? component.notification.state
       cannot_start_yet_badge(id)
-    elsif component.state == 'empty'
+    elsif component.state == "empty"
       not_started_badge(id)
-    elsif component.state == 'component_complete'
+    elsif component.state == "component_complete"
       completed_badge(id)
     else
       cannot_start_yet_badge(id)
@@ -89,11 +85,7 @@ module DraftHelper
   end
 
   def component_link(component, index)
-    text = if component.name
-      component.name
-    else
-      "Item ##{ index+1 }"
-    end
+    text = component.name || "Item ##{index + 1}"
 
     if section_can_be_used?(ITEMS_SECTION)
       link_to text, new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: html_id_for(component) }
@@ -103,11 +95,7 @@ module DraftHelper
   end
 
   def nanomaterial_link(nano_element, index)
-    text = if nano_element.inci_name
-      nano_element.inci_name
-    else
-      "Nanomaterial ##{ index+1 }"
-    end
+    text = nano_element.inci_name || "Nanomaterial ##{index + 1}"
 
     if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_element.blocked?
       aria_id = html_id_for(nano_element)
@@ -120,7 +108,7 @@ module DraftHelper
   def nanomaterial_badge(nano_element)
     id = html_id_for(nano_element)
 
-    return cannot_start_yet_badge(id) if !section_can_be_used?(NANOMATERIALS_SECTION)
+    return cannot_start_yet_badge(id) unless section_can_be_used?(NANOMATERIALS_SECTION)
 
     if nano_element.completed?
       completed_badge(id)
@@ -151,22 +139,22 @@ module DraftHelper
     "<b class=\"govuk-tag app-task-list__tag #{css_classes}\" id=\"#{id}\">#{caption}</b>".html_safe
   end
 
-
   def section_number(section)
     if section == PRODUCT_DETAILS_SECTION
-      return @notification.nano_materials.present? ? '3.' : '2.'
+      return @notification.nano_materials.present? ? "3." : "2."
     end
     if section == MULTI_ITEMS_KIT_SECTION
-      return @notification.nano_materials.present? ? '3.' : '2.'
+      return @notification.nano_materials.present? ? "3." : "2."
     end
     if section == ITEMS_SECTION
-      return @notification.nano_materials.present? ? '4.' : '3.'
+      return @notification.nano_materials.present? ? "4." : "3."
     end
+
     if section == ACCEPT_SECTION
       base_number = 3 # for simple product
       base_number += 1 if @notification.nano_materials.present?
       base_number += 1 if @notification.multi_component?
-      return "#{base_number}."
+      "#{base_number}."
     end
   end
 
@@ -203,6 +191,7 @@ module DraftHelper
     if @notification.nano_materials.present? || @notification.multi_component?
       return 4
     end
+
     3
   end
 

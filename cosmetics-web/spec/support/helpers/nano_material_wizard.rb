@@ -1,6 +1,6 @@
 require "support/matchers/capybara_matchers"
 
-def complete_nano_material_wizard(name, nano_material_number: nil, purposes: ['Colourant'], from_add: false)
+def complete_nano_material_wizard(name, nano_material_number: nil, purposes: %w[Colourant], from_add: false)
   unless from_add
     if nano_material_number
       click_on "Nanomaterial ##{nano_material_number}"
@@ -39,9 +39,10 @@ def answer_is_nanomaterial_listed_in_ec_regulation_with(answer, nanomaterial_nam
   fieldset = find("fieldset")
   legend_regex = /Is #{nanomaterial_name} listed in EC regulation 1223.2009, Annex/
   legend_text = fieldset.find("legend h1").text
-  if legend_text !~ legend_regex
+  unless legend_text&.match?(legend_regex)
     raise("Can not locate proper fieldset")
   end
+
   within(fieldset) do
     page.choose(answer)
   end
@@ -52,9 +53,10 @@ def answer_does_nanomaterial_conform_to_restrictions_with(answer, nanomaterial_n
   fieldset = find("fieldset")
   legend_regex = /Does the #{nanomaterial_name} conform to the restrictions set out in Annex/
   legend_text = fieldset.find("legend h1").text
-  if legend_text !~ legend_regex
+  unless legend_text&.match?(legend_regex)
     raise("Can not locate proper fieldset")
   end
+
   within(fieldset) do
     page.choose(answer)
   end

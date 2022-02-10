@@ -26,7 +26,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     if @notification.save
       redirect_to responsible_person_notification_product_path(@responsible_person, @notification, :add_internal_reference)
     else
-      render 'new'
+      render "new"
     end
   end
 
@@ -46,7 +46,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   end
 
   def confirm
-    if !@notification.submit_notification!
+    unless @notification.submit_notification!
       redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
     end
   end

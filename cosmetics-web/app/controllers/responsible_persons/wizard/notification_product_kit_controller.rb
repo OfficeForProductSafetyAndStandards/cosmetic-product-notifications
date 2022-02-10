@@ -3,7 +3,6 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
   include CountriesHelper
   include WizardConcern
 
-
   steps :is_mixed,
         :is_hair_dye, # only for multicomponent - at least code says so
         :is_ph_between_3_and_10, # only for multicomponent - at least code says so
@@ -13,7 +12,7 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
   BACK_ROUTING = {
     is_hair_dye: :is_mixed,
     is_ph_between_3_and_10: :is_hair_dye,
-    ph_range: :is_hair_dye
+    ph_range: :is_hair_dye,
   }
 
   before_action :set_notification
@@ -22,7 +21,7 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
     case step
     when :completed
       @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS) if @notification.details_complete?
-      render 'responsible_persons/wizard/completed'
+      render "responsible_persons/wizard/completed"
     else
       render_wizard
     end
@@ -49,7 +48,7 @@ class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitAppli
     redirect_to wizard_path(steps.first)
   end
 
-  private
+private
 
   def update_is_mixed
     if @notification.update_with_context(notification_params, step)

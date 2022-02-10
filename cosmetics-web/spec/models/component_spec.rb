@@ -79,7 +79,6 @@ RSpec.describe Component, type: :model do
       end
 
       context "when component already exists" do
-
         before { component.save! }
 
         it "is valid" do

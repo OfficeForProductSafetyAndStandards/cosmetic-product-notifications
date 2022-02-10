@@ -26,23 +26,23 @@ end
 
 def expect_task_blocked(link_text)
   status = "Cannot start yet"
-  expect do
+  expect {
     page.find(:xpath, "//span[contains(text(),'#{link_text}')]").find(:xpath, "following-sibling::b[contains(text(), '#{status}')]")
-  end.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
+  }.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
 end
 
 def expect_task_status(link_text, status)
-  expect do
+  expect {
     page.find(:xpath, "//ancestor::span/a[contains(text(),'#{link_text}')]").find(:xpath, "../following-sibling::b[contains(text(), '#{status}')]")
-  end.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
+  }.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
 end
 
 def expect_progress(current, total)
- expect(page).to have_text("Incomplete: #{current} of #{total} tasks have been completed")
+  expect(page).to have_text("Incomplete: #{current} of #{total} tasks have been completed")
 end
 
 # rubocop:disable Naming/MethodParameterName
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, contains_cmrs: nil, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, frame_formulation: nil, physical_form:, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Product name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)

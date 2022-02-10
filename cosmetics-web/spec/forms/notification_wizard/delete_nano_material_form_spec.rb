@@ -2,15 +2,14 @@ require "rails_helper"
 
 RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
   let(:notification1) { create(:notification) }
-  let(:nano_material1) {create(:nano_material, notification: notification1) }
-  let(:nano_element1) {create(:nano_element, nano_material: nano_material1) }
-  let(:nano_material1_2) {create(:nano_material, notification: notification1) }
-  let(:nano_element1_2) {create(:nano_element, nano_material: nano_material1) }
+  let(:nano_material1) { create(:nano_material, notification: notification1) }
+  let(:nano_element1) { create(:nano_element, nano_material: nano_material1) }
+  let(:nano_material1_2) { create(:nano_material, notification: notification1) }
+  let(:nano_element1_2) { create(:nano_element, nano_material: nano_material1) }
 
   let(:notification2) { create(:notification) }
-  let(:nano_material2) {create(:nano_material, notification: notification2) }
-  let(:nano_element2) {create(:nano_element, nano_material: nano_material2) }
-
+  let(:nano_material2) { create(:nano_material, notification: notification2) }
+  let(:nano_element2) { create(:nano_element, nano_material: nano_material2) }
 
   describe "validation" do
     context "when nano_material_ids attribute is missing" do

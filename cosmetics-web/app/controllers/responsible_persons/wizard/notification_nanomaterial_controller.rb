@@ -23,16 +23,16 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     confirm_restrictions: :select_purposes,
     confirm_usage: :confirm_restrictions,
 
-    non_standard_nanomaterial_notified: [:confirm_usage, :select_purposes],
+    non_standard_nanomaterial_notified: %i[confirm_usage select_purposes],
     when_products_containing_nanomaterial_can_be_placed_on_market: :non_standard_nanomaterial_notified,
     notify_your_nanomaterial: :non_standard_nanomaterial_notified,
     must_be_listed: :confirm_restrictions,
-    must_conform_to_restrictions: :confirm_usage
+    must_conform_to_restrictions: :confirm_usage,
   }
 
   BACK_ROUTING_FUNCTIONS = {
     confirm_usage: -> { @nano_element.multi_purpose? },
-    select_purposes: -> { !@nano_element.multi_purpose? }
+    select_purposes: -> { !@nano_element.multi_purpose? },
   }
 
   def new
@@ -55,7 +55,7 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
       end
     when :completed
       @notification.reload.try_to_complete_nanomaterials!
-      return render 'responsible_persons/wizard/completed'
+      return render "responsible_persons/wizard/completed"
     end
 
     render_wizard
@@ -82,7 +82,7 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
     end
   end
 
-  private
+private
 
   def set_nano_element
     @nano_element = NanoElement.find(params[:nanomaterial_nano_element_id])
@@ -167,8 +167,6 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
       return next_element if element == @nano_element
     end
   end
-
-  private
 
   def model
     @nano_element

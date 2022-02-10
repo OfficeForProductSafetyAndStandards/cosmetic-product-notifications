@@ -5,7 +5,7 @@ class NanoElement < ApplicationRecord
   validates :inci_name, presence: true, on: :add_nanomaterial_name
 
   after_save do
-    if self.blocked?
+    if blocked?
       notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
     end
   end
@@ -56,7 +56,6 @@ class NanoElement < ApplicationRecord
   def toxicology_required_or_empty?
     confirm_toxicology_notified.nil? || toxicology_required?
   end
-
 
   def conforms_to_restrictions?
     (confirm_restrictions != "no" && confirm_usage != "no") && !toxicology_required_or_empty?

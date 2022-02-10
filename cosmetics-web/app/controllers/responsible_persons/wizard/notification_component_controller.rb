@@ -38,7 +38,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     select_nanomaterials: [:add_component_name],
     add_exposure_condition: :select_nanomaterials,
     add_exposure_routes: :add_exposure_condition,
-    number_of_shades: [:add_exposure_routes, :select_nanomaterials, :add_component_name],
+    number_of_shades: %i[add_exposure_routes select_nanomaterials add_component_name],
     add_shades: :number_of_shades,
     add_physical_form: :number_of_shades,
     contains_special_applicator: :add_physical_form,
@@ -53,8 +53,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     select_frame_formulation: :select_formulation_type, # only for frame formulatio: :,
     contains_poisonous_ingredients: :select_formulation_type, # only for frame formulatio: :,
     upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulatio: :,
-    select_ph_option: [:contains_poisonous_ingredients, :upload_formulation],
-    min_max_ph: :select_ph_option
+    select_ph_option: %i[contains_poisonous_ingredients upload_formulation],
+    min_max_ph: :select_ph_option,
   }
 
   BACK_ROUTING_FUNCTIONS = {
@@ -62,7 +62,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     select_nanomaterials: -> { @component.notification.nano_materials.present? },
     add_component_name: -> { @component.notification.multi_component? },
     contains_poisonous_ingredients: -> { @component.predefined? },
-    upload_formulation: -> { true }
+    upload_formulation: -> { true },
   }
 
   def show
@@ -80,10 +80,10 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         return jump_to_step(:number_of_shades)
       end
     when :completed
-      @component.update_state('component_complete')
+      @component.update_state("component_complete")
       # TODO: write spec
       @component.reload.notification.try_to_complete_components!
-      return render 'responsible_persons/wizard/completed'
+      return render "responsible_persons/wizard/completed"
     end
 
     render_wizard
@@ -140,16 +140,14 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   def new
     if @component.notification.is_multicomponent?
       redirect_to wizard_path(steps.first, component_id: @component.id)
+    elsif @component.notification.nano_materials.present?
+      redirect_to wizard_path(:select_nanomaterials, component_id: @component.id)
     else
-      if @component.notification.nano_materials.present?
-        redirect_to wizard_path(:select_nanomaterials, component_id: @component.id)
-      else
-        redirect_to wizard_path(:number_of_shades, component_id: @component.id)
-      end
+      redirect_to wizard_path(:number_of_shades, component_id: @component.id)
     end
   end
 
-  private
+private
 
   # TODO: add this in all flows
   def finish_wizard_path
@@ -266,8 +264,8 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
   # for frame formulation only
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
-        jump_to(:contains_poisonous_ingredients)
-        render_next_step @component
+      jump_to(:contains_poisonous_ingredients)
+      render_next_step @component
     else
       render :select_frame_formulation
     end
@@ -282,7 +280,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    if !@component.contains_poisonous_ingredients?
+    unless @component.contains_poisonous_ingredients?
       jump_to(:select_ph_option)
     end
     render_wizard @component
@@ -332,7 +330,6 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     end
   end
 
-
   # In views, the wording here is about range. Its confusing, as param name here is ph
   # and in next action is `ph_range`.
   def update_select_component_ph_options
@@ -375,7 +372,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         nano_material_ids: [],
         exposure_routes: [],
         cmrs_attributes: %i[id name cas_number ec_number],
-        shades: []
+        shades: [],
       )
   end
 
@@ -421,4 +418,3 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     NotificationStateConcern::READY_FOR_COMPONENTS
   end
 end
-

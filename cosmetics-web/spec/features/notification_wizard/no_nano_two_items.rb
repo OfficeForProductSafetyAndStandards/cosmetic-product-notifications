@@ -15,26 +15,26 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_wizard(name: "Product no nano two items", items_count: 2)
 
-    expect_progress(1,4)
+    expect_progress(1, 4)
 
     expect_multi_item_kit_task_not_started
 
     complete_multi_item_kit_wizard
 
-    expect_progress(2,4)
+    expect_progress(2, 4)
 
     expect_item_task_not_started "Item #1"
     expect_item_task_not_started "Item #2"
 
     complete_item_wizard("Cream one", item_number: 1)
 
-    expect_progress(2,4)
+    expect_progress(2, 4)
 
     expect_item_task_not_started "Item #2"
 
     complete_item_wizard("Cream two", item_number: 2)
 
-    expect_progress(3,4)
+    expect_progress(3, 4)
 
     click_link "Accept and submit"
 

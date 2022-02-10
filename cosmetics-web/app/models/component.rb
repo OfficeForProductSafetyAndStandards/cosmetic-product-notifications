@@ -18,9 +18,9 @@ class Component < ApplicationRecord
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
-  #has_one :nano_material, dependent: :destroy
+  # has_one :nano_material, dependent: :destroy
   has_many :component_nano_materials
-  has_many :nano_materials, through: :component_nano_materials# dependent: :nullify
+  has_many :nano_materials, through: :component_nano_materials # dependent: :nullify
 
   # TODO:
   # Add callback to delete nanomaterial when component is being deleted.
@@ -53,8 +53,8 @@ class Component < ApplicationRecord
   # a notification when the user indicates that it is a kit/multi-component,
   # so the uniquness validation has to allow non-unique null values.
   validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false },
-    unless: -> { notification.via_zip_file? },
-    presence: { if: -> { self.notification.reload.components.where.not(id: self.id).count > 0 }, on: :add_component_name }
+                   unless: -> { notification.via_zip_file? },
+                   presence: { if: -> { notification.reload.components.where.not(id: id).count > 0 }, on: :add_component_name }
 
   validates :special_applicator, presence: true, on: :select_special_applicator_type
 
@@ -203,20 +203,20 @@ class Component < ApplicationRecord
   end
 
   def update_state(state)
-    self.update(state: state)
+    update(state: state)
   end
 
   def update_formulation_type(type)
-    old_type = self.notification_type
+    old_type = notification_type
 
     self.notification_type = type
 
-    return if !self.valid?(:select_formulation_type)
+    return unless valid?(:select_formulation_type)
 
-    self.save!
+    save!
 
-    self.formulation_file.purge if self.predefined? && old_type != self.notification_type
-    self.update!(frame_formulation: nil, contains_poisonous_ingredients: nil) if !self.predefined?
+    formulation_file.purge if predefined? && old_type != notification_type
+    update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
   end
 
 private

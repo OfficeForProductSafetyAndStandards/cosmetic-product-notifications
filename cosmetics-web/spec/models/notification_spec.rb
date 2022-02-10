@@ -405,14 +405,14 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         expect(notification.valid?).to eq true
       end
 
-
       it "has proper error messages" do
         notification.valid?(:accept_and_submit)
 
-        expect(notification.errors.messages[:base]).to eq (["Nano 1 is not included in any items", "Nano 2 is not included in any items"])
+        expect(notification.errors.messages[:base]).to eq(["Nano 1 is not included in any items", "Nano 2 is not included in any items"])
       end
     end
   end
+
   describe "#reference_number_for_display" do
     it "returns empty string if reference number is not set" do
       notification = build_stubbed(:notification, reference_number: nil)
