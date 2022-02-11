@@ -152,6 +152,13 @@ def upload_ingredients_pdf
   click_button "Continue"
 end
 
+def answer_what_is_ph_range_of_product_with(answer)
+  within_fieldset("What is the pH range of the product?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
 def upload_formulation_file
   upload_formulation_file
 end

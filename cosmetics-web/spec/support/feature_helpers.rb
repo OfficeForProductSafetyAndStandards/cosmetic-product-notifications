@@ -555,24 +555,6 @@ end
 
 # ---- Page interactions ----
 
-def answer_product_name_with(product_name)
-  fill_in "Product name", with: product_name
-  click_button "Continue"
-end
-
-def answer_do_you_want_to_give_an_internal_reference_with(answer)
-  within_fieldset("Do you want to add an internal reference?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
-
-def answer_is_product_for_under_threes_with(answer)
-  within_fieldset("Is the product intended to be used on children under 3 years old?") do
-    page.choose(answer)
-  end
-  click_button "Continue"
-end
 
 def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
   within_fieldset("Does #{item_name || 'the product'} contain nanomaterials?") do
@@ -587,18 +569,6 @@ def answer_nanomaterial_names_with(nanomaterial_names)
     fill_in "nano_material_nano_elements_attributes_0_inci_name", with: nanomaterial_names
   end
 
-  click_button "Continue"
-end
-
-def upload_product_label
-  page.attach_file "spec/fixtures/files/testImage.png"
-  click_button "Continue"
-end
-
-def answer_what_is_ph_range_of_product_with(answer)
-  within_fieldset("What is the pH range of the product?") do
-    page.choose(answer)
-  end
   click_button "Continue"
 end
 
