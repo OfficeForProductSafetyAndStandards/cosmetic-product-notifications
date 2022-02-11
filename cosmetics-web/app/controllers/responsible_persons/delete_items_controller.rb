@@ -14,7 +14,7 @@ class ResponsiblePersons::DeleteItemsController < SubmitApplicationController
     end
   end
 
-  private
+private
 
   def form_params
     params.require(:notification_wizard_delete_component_form).permit(:component_id)

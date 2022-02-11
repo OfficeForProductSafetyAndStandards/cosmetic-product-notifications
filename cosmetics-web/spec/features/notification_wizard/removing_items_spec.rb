@@ -158,7 +158,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_successful_submission
   end
 
-  scenario "Removing one out of three" do
+  scenario "When only 2 items left it should not be able to delete them" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
     click_on "Add a cosmetic product"

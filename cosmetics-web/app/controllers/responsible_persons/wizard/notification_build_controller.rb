@@ -14,7 +14,6 @@ class ResponsiblePersons::Wizard::NotificationBuildController < SubmitApplicatio
         :ph_range, # only for multicomponent - at least code says so
         :add_new_component # only for multicomponent
 
-
   before_action :set_notification
   before_action :set_countries, only: %i[show update]
 

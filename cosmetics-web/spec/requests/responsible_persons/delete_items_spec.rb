@@ -2,25 +2,23 @@ require "rails_helper"
 
 RSpec.describe "Delete Notifications page", type: :request do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+  let(:path) { responsible_person_notification_draft_delete_item_path(responsible_person, notification1) }
   let(:user) { build(:submit_user, :with_sms_secondary_authentication) }
 
   let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:other_user) { build(:submit_user) }
 
   let(:notification1) { create(:notification, responsible_person: responsible_person) }
-  let(:component1) {create(:component, notification: notification1) }
-  let(:component1_2) {create(:component, notification: notification1) }
-  let(:component1_3) {create(:component, notification: notification1) }
+  let(:component1) { create(:component, notification: notification1) }
+  let(:component1_2) { create(:component, notification: notification1) }
+  let(:component1_3) { create(:component, notification: notification1) }
 
   let(:notification2) { create(:notification, responsible_person: other_responsible_person) }
-  let(:component2) {create(:component, notification: notification2) }
-
+  let(:component2) { create(:component, notification: notification2) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end
-
-  let(:path) { responsible_person_notification_draft_delete_item_path(responsible_person, notification1) }
 
   describe "success" do
     before do
@@ -32,7 +30,7 @@ RSpec.describe "Delete Notifications page", type: :request do
     it "destroys component" do
       expect {
         delete path, params: { notification_wizard_delete_component_form: { component_id: component1.id } }
-      }.to change { Component.count }.from(3).to(2)
+      }.to change(Component, :count).from(3).to(2)
     end
 
     it "redirects properly" do
@@ -48,12 +46,13 @@ RSpec.describe "Delete Notifications page", type: :request do
     expect(response).to render_template("show")
   end
 
+  # rubocop:disable RSpec/AnyInstance
   it "is using proper form class" do
     expect_any_instance_of(NotificationWizard::DeleteComponentForm).to receive(:delete)
 
     delete path, params: { notification_wizard_delete_component_form: { component_id: nil } }
   end
-
+  # rubocop:enable RSpec/AnyInstance
 
   context "when user tries to access not his notification" do
     let(:path) { responsible_person_notification_draft_delete_item_path(responsible_person, notification2) }

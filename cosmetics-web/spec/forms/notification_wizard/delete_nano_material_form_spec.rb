@@ -2,20 +2,19 @@ require "rails_helper"
 
 RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
   let(:notification1) { create(:notification) }
-  let(:nano_material1) {create(:nano_material, notification: notification1) }
-  let(:nano_element1) {create(:nano_element, nano_material: nano_material1) }
-  let(:nano_material1_2) {create(:nano_material, notification: notification1) }
-  let(:nano_element1_2) {create(:nano_element, nano_material: nano_material1) }
+  let(:nano_material1) { create(:nano_material, notification: notification1) }
+  let(:nano_element1) { create(:nano_element, nano_material: nano_material1) }
+  let(:nano_material1_2) { create(:nano_material, notification: notification1) }
+  let(:nano_element1_2) { create(:nano_element, nano_material: nano_material1) }
 
   let(:notification2) { create(:notification) }
-  let(:nano_material2) {create(:nano_material, notification: notification2) }
-  let(:nano_element2) {create(:nano_element, nano_material: nano_material2) }
-
+  let(:nano_material2) { create(:nano_material, notification: notification2) }
+  let(:nano_element2) { create(:nano_element, nano_material: nano_material2) }
 
   describe "validation" do
     context "when nano_material_ids attribute is missing" do
       it "is invalid" do
-        expect(described_class.new.valid?).to be_falsey
+        expect(described_class.new).not_to be_valid
       end
     end
 
@@ -23,7 +22,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
       let(:form) { described_class.new(notification: notification1, nano_material_ids: []) }
 
       it "is invalid" do
-        expect(form.valid?).to be_falsey
+        expect(form).not_to be_valid
       end
     end
 
@@ -31,7 +30,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
       let(:form) { described_class.new(notification: notification1, nano_material_ids: [""]) }
 
       it "is invalid" do
-        expect(form.valid?).to be_falsey
+        expect(form).not_to be_valid
       end
     end
   end
@@ -71,6 +70,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
         nano_element1
       end
 
+      # rubocop:disable RSpec/MultipleExpectations
       it "removes the nano_material" do
         expect(NanoMaterial.count).to eq(1)
         expect(NanoElement.count).to eq(1)
@@ -80,19 +80,10 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
         expect(NanoMaterial.count).to eq(0)
         expect(NanoElement.count).to eq(0)
       end
+      # rubocop:enable RSpec/MultipleExpectations
 
       it "returns true" do
         expect(form.delete).to be_truthy
-      end
-
-      context "when requested to remove multiple nano materials" do
-        let(:form) { described_class.new(notification: notification1, nano_material_ids: [nano_material1.id]) }
-
-        before do
-          form
-          nano_element1
-          nano_element2
-        end
       end
     end
 

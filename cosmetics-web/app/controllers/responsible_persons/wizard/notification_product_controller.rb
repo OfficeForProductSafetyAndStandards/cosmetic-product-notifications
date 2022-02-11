@@ -16,8 +16,8 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     for_children_under_three: :add_internal_reference,
     contains_nanomaterials: :for_children_under_three,
     single_or_multi_component: :contains_nanomaterials,
-    add_product_image: :single_or_multi_component
-  }
+    add_product_image: :single_or_multi_component,
+  }.freeze
 
   # TODO: investigate previous path helper
   before_action :set_notification
@@ -26,7 +26,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     case step
     when :completed
       set_final_state_for_wizard
-      render 'responsible_persons/wizard/completed'
+      render "responsible_persons/wizard/completed"
     else
       render_wizard
     end
@@ -55,7 +55,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     redirect_to wizard_path(steps.first)
   end
 
-  private
+private
 
   def set_final_state_for_wizard
     # Make sure state wont be overrided if notification is in higher state
@@ -140,7 +140,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
       @notification.components.create if @notification.components.empty?
       render_next_step @notification
     when "multiple"
-      if @notification.components_count > 0 && components_count < @notification.components_count
+      if @notification.components_count.positive? && components_count < @notification.components_count
         @notification.errors.add :single_or_multi_component, "Items count cant be lower than #{@notification.components_count}"
         return rerender_current_step
       end

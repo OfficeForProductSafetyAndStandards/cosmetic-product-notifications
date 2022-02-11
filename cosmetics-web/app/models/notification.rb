@@ -111,7 +111,7 @@ class Notification < ApplicationRecord
   end
 
   def notification_product_wizard_completed?
-    !['empty', 'product_name_added'].include?(state)
+    !%w[empty product_name_added].include?(state)
   end
 
   def reference_number_for_display
@@ -153,10 +153,10 @@ class Notification < ApplicationRecord
 
   def missing_nano_materials
     # return nano_material that is in the notification, but not in the component
-    notification_nano_ids = self.nano_materials.pluck(:id).sort
-    components_nano_ids = self.components.map(&:nano_materials).flatten.map(&:id).sort
+    notification_nano_ids = nano_materials.pluck(:id).sort
+    components_nano_ids = components.map(&:nano_materials).flatten.map(&:id).sort
     ids = notification_nano_ids - components_nano_ids
-    ids.map { |id| self.nano_materials.find(id) }
+    ids.map { |id| nano_materials.find(id) }
   end
 
   def formulation_required?
@@ -266,9 +266,9 @@ class Notification < ApplicationRecord
   end
 
   def remember_answer(hash)
-    answers = self.routing_questions_answers || {}
+    answers = routing_questions_answers || {}
     self.routing_questions_answers = answers.merge(hash)
-    self.save
+    save
   end
 
 private
@@ -298,8 +298,6 @@ private
     when "ready_for_nanomaterials"
       mandatory_attributes("empty")
     when "ready_for_components"
-      mandatory_attributes("empty")
-    when "product_name_added"
       mandatory_attributes("empty")
     when "import_country_added"
       %w[components] + mandatory_attributes("product_name_added")

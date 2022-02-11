@@ -7,7 +7,7 @@ class ResponsiblePersons::DeleteFormulationFileController < SubmitApplicationCon
     redirect_back fallback_location: responsible_person_notification_draft_path(@notification.responsible_person, @notification)
   end
 
-  private
+private
 
   def set_notification
     @notification = Notification.find_by reference_number: params[:notification_reference_number]
@@ -24,5 +24,4 @@ class ResponsiblePersons::DeleteFormulationFileController < SubmitApplicationCon
     authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
     @component_name = @component.notification.is_multicomponent? ? @component.name : "the product"
   end
-
 end

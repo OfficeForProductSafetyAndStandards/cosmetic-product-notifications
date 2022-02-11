@@ -14,8 +14,8 @@ module NotificationWizard
     validates :nano_material_ids, non_empty_array: true
 
     def delete
-      return false unless self.valid?
-      raise ActiveRecord::RecordNotFound if ['notification_complete', 'deleted'].include?(notification.state)
+      return false unless valid?
+      raise ActiveRecord::RecordNotFound if %w[notification_complete deleted].include?(notification.state)
 
       notification.nano_materials.find(nano_material_ids).each(&:destroy)
       notification.reload.try_to_complete_nanomaterials!

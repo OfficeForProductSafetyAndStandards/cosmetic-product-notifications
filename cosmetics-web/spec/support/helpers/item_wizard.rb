@@ -21,7 +21,7 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
 
   if nanos.present?
     answer_select_which_nanomaterials_are_included_with(nanos)
-    if !nanos.all?(&:nil?)
+    unless nanos.all?(&:nil?)
       answer_is_item_intended_to_be_rinsed_off_or_left_on_with("Rinsed off", item_name: label_name)
       answer_how_user_is_exposed_to_nanomaterials_with("Dermal")
     end
@@ -146,7 +146,7 @@ def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
 end
 
 def upload_ingredients_pdf
-  if !page.has_css?('#formulation-files-table')
+  unless page.has_css?("#formulation-files-table")
     page.attach_file "spec/fixtures/files/testPdf.pdf"
   end
   click_button "Continue"

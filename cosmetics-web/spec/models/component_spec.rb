@@ -71,7 +71,7 @@ RSpec.describe Component, type: :model do
       end
     end
 
-    context "When component belongs to single component notification" do
+    context "when component belongs to single component notification" do
       let(:component) { described_class.new(name: "", notification: notification) }
 
       it "is valid" do
@@ -79,7 +79,6 @@ RSpec.describe Component, type: :model do
       end
 
       context "when component already exists" do
-
         before { component.save! }
 
         it "is valid" do
@@ -88,7 +87,7 @@ RSpec.describe Component, type: :model do
       end
     end
 
-    context "When component belongs to multi component notification" do
+    context "when component belongs to multi component notification" do
       let(:component) { described_class.new(name: "", notification: notification) }
 
       before do
@@ -97,7 +96,7 @@ RSpec.describe Component, type: :model do
 
       context "when context is provided" do
         it "is not valid" do
-          expect(component.valid?(:add_component_name)).to be_falsey
+          expect(component).not_to be_valid(:add_component_name)
         end
 
         it "has errors on name" do
@@ -528,7 +527,7 @@ RSpec.describe Component, type: :model do
       end
     end
 
-    context "validation" do
+    describe "validation" do
       let(:component) { create(:component) }
 
       it "is invalid without value" do

@@ -36,7 +36,7 @@ module WizardConcern
   def yes_no_question(param, skip_steps_on: "no", on_skip: nil, on_next_step: nil, steps_to_skip: 1)
     answer = yes_no_param(param)
 
-    if ["yes", "no"].include? answer
+    if %w[yes no].include? answer
       model.save_routing_answer(step, answer)
       if skip_steps_on == answer
         on_skip&.call
@@ -120,6 +120,7 @@ module WizardConcern
 
   def check_minimum_state
     return unless minimum_state
+
     set_notification
 
     if @notification.state_lower_than?(minimum_state)

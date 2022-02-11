@@ -2,17 +2,16 @@ require "rails_helper"
 
 RSpec.describe NotificationWizard::DeleteComponentForm do
   let(:notification1) { create(:notification) }
-  let(:component1) {create(:component, notification: notification1) }
-  let(:component1_2) {create(:component, notification: notification1) }
-  let(:component1_3) {create(:component, notification: notification1) }
+  let(:component1) { create(:component, notification: notification1) }
+  let(:component1_2) { create(:component, notification: notification1) }
+  let(:component1_3) { create(:component, notification: notification1) }
 
   let(:notification2) { create(:notification) }
-  let(:component2) {create(:component, notification: notification2) }
-
+  let(:component2) { create(:component, notification: notification2) }
 
   describe "validation" do
-    it "should be invalid without component_id attribute present" do
-      expect(described_class.new.valid?).to be_falsey
+    it "is invalid without component_id attribute present" do
+      expect(described_class.new).not_to be_valid
     end
   end
 
@@ -31,7 +30,7 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
       end
     end
 
-    context "if component can not be found" do
+    context "when component can not be found" do
       let(:non_existent_id) { Component.pluck(:id).max + 1 }
       let(:form) { described_class.new(notification: notification1, component_id: non_existent_id) }
 
@@ -52,9 +51,9 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
       let(:form) { described_class.new(notification: notification1, component_id: component1.id) }
 
       it "removes the component" do
-        expect do
+        expect {
           form.delete
-        end.to change { Component.count }.from(3).to(2)
+        }.to change(Component, :count).from(3).to(2)
       end
 
       it "returns true" do
@@ -95,14 +94,16 @@ RSpec.describe NotificationWizard::DeleteComponentForm do
       expect { form.delete }.to raise_error(RuntimeError)
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it "does not remove the component" do
-      expect do
+      expect {
         begin
           form.delete
-        rescue
+        rescue StandardError
+          StandardError
         end
-      end.not_to change { Component.count }
+      }.not_to change(Component, :count)
     end
+    # rubocop:enable RSpec/ExampleLength
   end
-
 end

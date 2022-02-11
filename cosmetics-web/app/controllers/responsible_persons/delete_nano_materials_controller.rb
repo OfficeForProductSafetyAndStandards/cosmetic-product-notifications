@@ -14,7 +14,7 @@ class ResponsiblePersons::DeleteNanoMaterialsController < SubmitApplicationContr
     end
   end
 
-  private
+private
 
   def form_params
     params.require(:notification_wizard_delete_nano_material_form).permit(nano_material_ids: [])

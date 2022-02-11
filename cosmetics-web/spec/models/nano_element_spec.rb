@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.describe NanoElement, type: :model do
   subject(:nano_element) { build(:nano_element) }
 
-  context "Validation" do
+  describe "Validation" do
     it "is valid" do
       expect(nano_element).to be_valid
     end
 
-    context "without validation context" do
-      context "inci_name" do
+    context "when without validation context" do
+      describe "inci_name" do
         subject(:nano_element) { build(:nano_element, inci_name: "") }
 
         it "is valid without name" do
@@ -19,7 +19,7 @@ RSpec.describe NanoElement, type: :model do
     end
 
     context "with validation context" do
-      context "inci_name" do
+      describe "inci_name" do
         subject(:nano_element) { build(:nano_element, inci_name: "") }
 
         it "is valid without name" do
