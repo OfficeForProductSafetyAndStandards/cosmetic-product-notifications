@@ -2,6 +2,7 @@ module ResponsiblePersons
   class DetailsForm < Form
     include StripWhitespace
 
+    attribute :account_type
     attribute :name
     attribute :address_line_1
     attribute :address_line_2
@@ -10,6 +11,7 @@ module ResponsiblePersons
     attribute :postal_code
     attribute :user
 
+    validates :account_type, presence: true, inclusion: { in: %w[business individual], allow_blank: true }
     validates :name, presence: true,
                      length: { maximum: ResponsiblePerson::NAME_MAX_LENGTH },
                      responsible_person_name_format: { message: :invalid }

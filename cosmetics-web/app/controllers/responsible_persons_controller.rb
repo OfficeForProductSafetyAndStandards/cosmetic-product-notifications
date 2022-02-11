@@ -12,7 +12,7 @@ class ResponsiblePersonsController < SubmitApplicationController
     if @responsible_persons_selection_form.invalid?
       render :select
     elsif @responsible_persons_selection_form.add_new?
-      redirect_to account_path(:select_type)
+      redirect_to account_path(:enter_details)
     else
       set_current_responsible_person(
         current_user.responsible_persons.find(@responsible_persons_selection_form.selection),

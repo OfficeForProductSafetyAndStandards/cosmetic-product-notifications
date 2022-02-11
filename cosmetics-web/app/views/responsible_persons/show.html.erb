@@ -17,7 +17,7 @@
         <% if current_user.responsible_persons.length > 1 %>
           <%= link_to "Change the Responsible Person", select_responsible_persons_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
         <% else %>
-          <%= link_to "Add a Responsible Person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
+          <%= link_to "Add a Responsible Person", account_path(:enter_details), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
         <% end %>
       </div>
     </div>

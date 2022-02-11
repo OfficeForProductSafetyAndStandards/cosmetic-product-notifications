@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe ResponsiblePersons::DetailsForm do
   subject(:form) do
     described_class.new(user: user,
+                        account_type: account_type,
                         name: name,
                         address_line_1: address_line_1,
                         address_line_2: address_line_2,
@@ -12,6 +13,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
   end
 
   let(:user) { build_stubbed(:submit_user) }
+  let(:account_type) { "business" }
   let(:name) { "Resp person name" }
   let(:address_line_1) { "Random street" }
   let(:address_line_2) { "Random street second line" }
@@ -20,6 +22,34 @@ RSpec.describe ResponsiblePersons::DetailsForm do
   let(:postal_code) { "EC1 2PE" }
 
   describe "#valid?" do
+    context "when the account type is blank" do
+      let(:account_type) { "" }
+
+      before { form.validate }
+
+      it "is not valid" do
+        expect(form).to be_invalid
+      end
+
+      it "populates an error message" do
+        expect(form.errors.full_messages_for(:account_type)).to eq(["Select a Responsible person type"])
+      end
+    end
+
+    context "when the account type not either business or individual" do
+      let(:account_type) { "foo_bar" }
+
+      before { form.validate }
+
+      it "is not valid" do
+        expect(form).to be_invalid
+      end
+
+      it "populates an error message" do
+        expect(form.errors.full_messages_for(:account_type)).to eq(["foo_bar is not a valid Responsible person type"])
+      end
+    end
+
     context "when the name is blank" do
       let(:name) { "" }
 
