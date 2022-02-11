@@ -138,7 +138,7 @@ end
 
 def expect_to_be_on__responsible_person_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}")
-  expect(page).to have_h1("UK Responsible Person")
+  expect(page).to have_h1("Responsible Person")
 end
 
 def expect_back_link_to_responsible_person_page

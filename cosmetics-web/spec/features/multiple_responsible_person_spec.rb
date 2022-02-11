@@ -33,7 +33,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     click_on "Change the Responsible Person"
     choose name_2
     click_on "Save and continue"
-    expect(page).to have_h1("UK Responsible Person")
+    expect(page).to have_h1("Responsible Person")
     expect(page).to have_current_path("/responsible_persons/#{responsible_person_2.id}")
   end
 
@@ -69,7 +69,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     fill_in_rp_business_details(name: name)
     fill_in_rp_contact_details
 
-    expect(page).to have_h1("UK Responsible Person")
+    expect(page).to have_h1("Responsible Person")
     expect(page).to have_text(name)
   end
 
