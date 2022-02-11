@@ -68,6 +68,16 @@
               when "business" then "Limited company or Limited Liability Partnership (LLP)"
               end
           },
+          actions: {
+            items: [
+              {
+                href: edit_responsible_person_path(@responsible_person),
+                text: "Edit",
+                classes: "govuk-link--no-visited-state",
+                visuallyHiddenText: "the business type"
+              }
+            ]
+          }
         }
       ])
     %>
