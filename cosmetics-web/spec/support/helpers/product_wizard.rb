@@ -42,6 +42,25 @@ def complete_product_wizard(name: "Product", items_count: 1, nano_materials_coun
   expect_product_task_completed
 end
 
+def answer_product_name_with(product_name)
+  fill_in "Product name", with: product_name
+  click_button "Continue"
+end
+
+def answer_do_you_want_to_give_an_internal_reference_with(answer)
+  within_fieldset("Do you want to add an internal reference?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_is_product_for_under_threes_with(answer)
+  within_fieldset("Is the product intended to be used on children under 3 years old?") do
+    page.choose(answer)
+  end
+  click_button "Continue"
+end
+
 def answer_does_product_contains_nanomaterials_with(answer, amount: 1)
   within("fieldset") do
     page.choose(answer)
@@ -59,6 +78,11 @@ def answer_is_product_multi_item_kit_with(answer, amount: 1)
       fill_in "How many items does it contain?", with: amount
     end
   end
+  click_button "Continue"
+end
+
+def upload_product_label
+  page.attach_file "spec/fixtures/files/testImage.png"
   click_button "Continue"
 end
 
