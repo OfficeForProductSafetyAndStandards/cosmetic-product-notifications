@@ -105,23 +105,13 @@ module ResponsiblePersons::NotificationsHelper
                                 list_item_classes: "") },
         }
       end,
-      # Asterisk (splat) flattens the array in place
-      *(nano_materials.map do |nano_material|
-        {
-          key: { text: "Nanomaterials" },
-          value: { html: render("application/none_or_bullet_list",
-                                entities_list: nano_material&.nano_elements&.map(&:display_name),
-                                list_classes: "",
-                                list_item_classes: "") },
-        }
-      end),
-      if nano_materials.blank?
-        {
-          key: { text: "Nanomaterials" },
-          value: { html: render("application/none_or_bullet_list",
-                                entities_list: nil) },
-        }
-      end,
+      {
+        key: { text: "Nanomaterials" },
+        value: { html: render("application/none_or_bullet_list",
+                              entities_list: component_nano_materials_names(component),
+                              list_classes: "",
+                              list_item_classes: "") },
+      },
       if nano_materials.present?
         {
           key: { text: "Application instruction" },
