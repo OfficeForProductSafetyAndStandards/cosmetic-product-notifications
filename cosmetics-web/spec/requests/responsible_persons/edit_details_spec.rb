@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Edit Responsible Person Address", type: :request do
+RSpec.describe "Edit Responsible Person Details", type: :request do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:other_responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:user) { responsible_person.users.first }
@@ -45,9 +45,10 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
     end
   end
 
-  describe "Update address" do
+  describe "Update details" do
     let(:params) do
       {
+        account_type: "business",
         address_line_1: "11",
         address_line_2: "Fake St",
         city: "Fake City",
@@ -77,19 +78,22 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
         expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}")
       end
 
-      it "updates the responsible person's address" do
+      # rubocop:disable RSpec/ExampleLength
+      it "updates the responsible person's details" do
         update_request
-        expect(responsible_person.reload).to have_attributes(address_line_1: "11",
+        expect(responsible_person.reload).to have_attributes(account_type: "business",
+                                                             address_line_1: "11",
                                                              address_line_2: "Fake St",
                                                              city: "Fake City",
                                                              county: "County",
                                                              postal_code: "FA1 1FA")
       end
+      # rubocop:enable RSpec/ExampleLength
 
       it "response includes a confirmation message" do
         update_request
         follow_redirect!
-        expect(response.body).to include("Responsible Person address changed successfully")
+        expect(response.body).to include("Responsible Person details changed successfully")
       end
 
       it "records the previous responsible person address into DB" do
@@ -100,6 +104,7 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
     context "when missing some required data" do
       let(:params) do
         {
+          account_type: "",
           address_line_1: "",
           address_line_2: "Fake St",
           city: "",
@@ -112,8 +117,9 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
         put "/responsible_persons/#{responsible_person.id}", params: { responsible_person: params }
       end
 
-      it "renders a page instead of redirecting" do
+      it "renders the edit page instead of redirecting" do
         expect(response.status).to be 200
+        expect(response).to render_template(:edit)
       end
 
       it "includes a validation error message in the response" do
@@ -122,6 +128,7 @@ RSpec.describe "Edit Responsible Person Address", type: :request do
 
       it "does not update the responsible person’s details" do
         expect(responsible_person.reload).to have_attributes(
+          account_type: "individual",
           address_line_1: "Street address",
           city: "City",
           postal_code: "AB12 3CD",
