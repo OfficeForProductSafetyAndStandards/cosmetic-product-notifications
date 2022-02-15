@@ -1,4 +1,4 @@
-<% page_title("Edit the Responsible Person details", errors: @responsible_person.errors.any?) %>
+<% page_title("Edit the UK Responsible Person details", errors: @responsible_person.errors.any?) %>
 
 <% content_for :after_header do %>
   <%= link_to "Back", responsible_person_path(@responsible_person), class: "govuk-back-link" %>
@@ -9,7 +9,7 @@
     <%= error_summary(@responsible_person.errors, %i[address_line_1 address_line_2 city county postal_code]) %>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-      Edit the Responsible Person details
+      Edit the <abbr>UK</abbr> Responsible Person details
     </h1>
 
     <%= govukDetails(summaryHtml: "Help with the <abbr>UK</abbr> Responsible Person details".html_safe, classes: "opss-details--sm govuk-!-margin-top-4") do %>
