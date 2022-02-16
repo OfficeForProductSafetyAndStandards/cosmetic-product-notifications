@@ -33,4 +33,11 @@ $(function () {
       })
     }, false)
   }
+
+  /* hide first filter for non js - start */
+  if (document.getElementById('by-date-range')) {
+    if (!window.location.search) { // = no querystring
+      document.getElementById('by-date-range').removeAttribute('checked')
+    }
+  }
 })
