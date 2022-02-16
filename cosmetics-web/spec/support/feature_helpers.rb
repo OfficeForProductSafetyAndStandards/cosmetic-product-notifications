@@ -555,7 +555,6 @@ end
 
 # ---- Page interactions ----
 
-
 def answer_does_item_contain_nanomaterials_with(answer, item_name: nil)
   within_fieldset("Does #{item_name || 'the product'} contain nanomaterials?") do
     page.choose(answer)

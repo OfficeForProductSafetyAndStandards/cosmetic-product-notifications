@@ -231,13 +231,13 @@ private
 
   def componment_formulation_actions_items(component)
     return [] unless component.formulation_file.attached?
+
     path = if component.frame_formulation?
              responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_poisonus_ingredients, back_to_edit: true)
            else
              responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_formulation, back_to_edit: true)
            end
 
-    notification = component.notification
     [{ href: path,
        text: "Change",
        visuallyHiddenText: "formulation document",

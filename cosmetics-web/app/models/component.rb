@@ -221,6 +221,7 @@ class Component < ApplicationRecord
   def frame_formulation?
     predefined?
   end
+
 private
 
   # This takes any value and returns nil if the value
