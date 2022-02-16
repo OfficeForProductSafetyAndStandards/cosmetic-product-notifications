@@ -16,7 +16,10 @@
     <tr class="govuk-table__row">
       <th class="govuk-table__header govuk-!-width-one-half" scope="row">Nanomaterials</th>
       <td class="govuk-table__cell">
-        <%= render "none_or_bullet_list", entities_list: component_nano_materials_names(component) %>
+        <%= render "none_or_bullet_list",
+          entities_list: component_nano_materials_names(component),
+          list_item_classes: ""
+        %>
       </td>
     </tr>
   </table>
