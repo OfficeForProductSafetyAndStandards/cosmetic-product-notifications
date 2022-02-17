@@ -18,10 +18,6 @@
   <% else %>
     <%= "The uploaded file has been flagged as a virus" %>
   <% end %>
-<% elsif allow_edits %>
-  <%= link_to "Add formulation document",
-    new_responsible_person_notification_component_formulation_file_path(@notification.responsible_person, @notification, component),
-    class: "govuk-link govuk-link--no-visited-state" %>
 <% else %>
   N/A
 <% end %>
