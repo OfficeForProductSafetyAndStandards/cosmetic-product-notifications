@@ -36,8 +36,24 @@ $(function () {
 
   /* hide first filter for non js - start */
   if (document.getElementById('by-date-range')) {
-    if (!window.location.search) { // = no querystring
+    /* Removes checked date range radio (collapses date rangge) when there is no query string. */
+    if (!window.location.search) {
       document.getElementById('by-date-range').removeAttribute('checked')
+    } else { // When there is a query string
+      const IDinputs = document.getElementById('conditional-date-block-2')
+      const myInputs = IDinputs.getElementsByTagName('input')
+      let anyVal = false
+      /* Identifies if any of the date inputs has a value */
+      for (i = 0; i < myInputs.length; ++i) {
+        if (myInputs[i].value != '') {
+          anyVal = true
+          break
+        }
+      }
+      /* If all the date range inputs are empty, removes checked radio (collapses date range) */
+      if (anyVal == false) {
+        document.getElementById('by-date-range').removeAttribute('checked')
+      }
     }
   }
 })
