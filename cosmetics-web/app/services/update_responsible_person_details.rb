@@ -1,26 +1,28 @@
-class UpdateResponsiblePersonAddress
+class UpdateResponsiblePersonDetails
   include Interactor
 
-  delegate :responsible_person, :user, :address, :original_address, to: :context
+  delegate :responsible_person, :user, :details, :original_address, to: :context
 
   def call
     context.fail!(error: "No Responsible Person provided") unless responsible_person
     context.fail!(error: "No user provided") unless user
-    context.fail!(error: "No address provided") unless address
+    context.fail!(error: "No details provided") unless details
     context.fail!(error: "User does not belong to Responsible Person") unless user_belongs_to_responsible_person?
-    context.fail!(error: "Address contains unknown fields") unless valid_address_fields?
+    context.fail!(error: "Details contain invalid attributes") unless valid_details?
 
     context.previous_address = previous_address
 
     ActiveRecord::Base.transaction do
-      responsible_person.update!(address)
-      if responsible_person.saved_changes?
+      responsible_person.update!(details)
+      if address_changed?
         previous_address.save!
         send_confirmation_email
         send_alert_emails
-        context.address_changed = true
+        context.changed = true
+      elsif responsible_person.saved_changes?
+        context.changed = true
       else
-        context.address_changed = false
+        context.changed = false
       end
     end
   rescue ActiveRecord::RecordInvalid
@@ -33,8 +35,19 @@ private
     responsible_person.users.include? user
   end
 
-  def valid_address_fields?
-    address.symbolize_keys.keys.all? { |field| field.in? ResponsiblePerson::ADDRESS_FIELDS }
+  def valid_details?
+    allowed_fields = ResponsiblePerson::ADDRESS_FIELDS + [:account_type]
+    details.symbolize_keys.keys.all? { |field| field.in? allowed_fields }
+  end
+
+  def address_changed?
+    return false unless responsible_person.saved_changes?
+
+    previous_address.line_1 != responsible_person.address_line_1 ||
+      previous_address.line_2      != responsible_person.address_line_2 ||
+      previous_address.city        != responsible_person.city ||
+      previous_address.postal_code != responsible_person.postal_code ||
+      previous_address.county      != responsible_person.county
   end
 
   def send_confirmation_email
