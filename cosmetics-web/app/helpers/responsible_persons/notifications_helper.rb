@@ -191,6 +191,7 @@ module ResponsiblePersons::NotificationsHelper
           value: { html: render("notifications/component_details_poisonous_ingredients",
                                 component: component,
                                 allow_edits: allow_edits) },
+          actions: { items: allow_edits ? componment_formulation_actions_items(component) : [] },
         }
       end,
     ].concat(component_ph_trigger_questions_rows(component))
@@ -212,7 +213,7 @@ private
   def label_image_actions_items(notification)
     return [] if notification.image_uploads.blank?
 
-    [{ href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
+    [{ href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_product_image, back_to_edit: true),
        text: "Change",
        visuallyHiddenText: "label image",
        classes: "govuk-link--no-visited-state" }]
@@ -221,8 +222,13 @@ private
   def componment_formulation_actions_items(component)
     return [] unless component.formulation_file.attached?
 
-    notification = component.notification
-    [{ href: edit_responsible_person_notification_component_formulation_path(notification.responsible_person, notification, component),
+    path = if component.frame_formulation?
+             responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_poisonus_ingredients, back_to_edit: true)
+           else
+             responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_formulation, back_to_edit: true)
+           end
+
+    [{ href: path,
        text: "Change",
        visuallyHiddenText: "formulation document",
        classes: "govuk-link--no-visited-state" }]

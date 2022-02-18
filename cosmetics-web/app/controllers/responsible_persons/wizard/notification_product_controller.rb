@@ -179,9 +179,17 @@ private
     if params[:image_upload].present?
       params[:image_upload].each { |img| @notification.add_image(img) }
       @notification.save
-      render_next_step @notification
+      if params[:back_to_edit] == "true"
+        redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+      else
+        render_next_step @notification
+      end
     elsif @notification.image_uploads.present?
-      render_next_step @notification
+      if params[:back_to_edit] == "true"
+        redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+      else
+        render_next_step @notification
+      end
     else
       @notification.errors.add :image_uploads, "Select an image"
       rerender_current_step

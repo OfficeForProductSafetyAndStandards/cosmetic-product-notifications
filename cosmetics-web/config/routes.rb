@@ -144,14 +144,9 @@ Rails.application.routes.draw do
           resource :delete_nano_material, controller: "responsible_persons/delete_nano_materials", only: %i[show destroy]
         end
 
-        resources :product_image_upload, controller: "responsible_persons/product_image_upload", only: %i[new create destroy]
-        resource :product_image_upload, controller: "responsible_persons/product_image_upload", only: %i[edit update], as: "product_images"
-
         resources :components do
           resources :build, controller: "responsible_persons/wizard/notification_component", only: %i[show update new]
           resources :trigger_question, controller: "responsible_persons/wizard/trigger_questions", only: %i[show update new]
-          resources :formulation_file, controller: "responsible_persons/formulation_upload", only: %i[new create destroy]
-          resource :formulation, controller: "responsible_persons/formulation_upload", only: %i[edit update]
         end
         resources :nanomaterials, param: :nano_element_id do
           resources :build, controller: "responsible_persons/wizard/notification_nanomaterial", only: %i[show update new]

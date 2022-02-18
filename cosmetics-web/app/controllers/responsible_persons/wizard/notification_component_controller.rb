@@ -290,15 +290,23 @@ private
   def update_upload_formulation
     formulation_file = params.dig(:component, :formulation_file)
     if formulation_file.blank? && @component.formulation_file.present?
-      jump_to(:select_ph_option)
-      return render_next_step @component
+      if params[:back_to_edit] == "true"
+        return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+      else
+        jump_to(:select_ph_option)
+        return render_next_step @component
+      end
     end
 
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
-        jump_to(:select_ph_option)
-        render_next_step @component
+        if params[:back_to_edit] == "true"
+          redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+        else
+          jump_to(:select_ph_option)
+          render_next_step @component
+        end
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
         render step
@@ -313,13 +321,21 @@ private
   def update_upload_poisonus_ingredients
     formulation_file = params.dig(:component, :formulation_file)
     if formulation_file.blank? && @component.formulation_file.present?
-      return render_next_step @component
+      if params[:back_to_edit] == "true"
+        return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+      else
+        return render_next_step @component
+      end
     end
 
     if formulation_file.present?
       @component.formulation_file.attach(formulation_file)
       if @component.valid?
-        render_next_step @component
+        if params[:back_to_edit] == "true"
+          redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+        else
+          render_next_step @component
+        end
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
         render step

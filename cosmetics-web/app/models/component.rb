@@ -218,6 +218,10 @@ class Component < ApplicationRecord
     update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
   end
 
+  def frame_formulation?
+    predefined?
+  end
+
 private
 
   # This takes any value and returns nil if the value
