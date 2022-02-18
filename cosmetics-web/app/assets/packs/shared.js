@@ -2,11 +2,11 @@
 import Rails from 'rails-ujs'
 import GOVUKFrontend from 'govuk-frontend'
 
+import '../application/javascripts/notification_search'
 import '../application/javascripts/location_picker'
 import '../application/javascripts/autocomplete'
 import '../application/javascripts/bulk_file_upload_error_handling'
 import '../application/javascripts/image_size_validation'
-import '../application/javascripts/notification_search'
 
 import * as ActiveStorage from '@rails/activestorage'
 
