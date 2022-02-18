@@ -1,4 +1,4 @@
-<% content_for :page_title, "UK Responsible Person" %>
+<% content_for :page_title, "Responsible Person" %>
 <% content_for :after_header do %>
   <%= render "layouts/navbar" %>
 <% end %>
@@ -10,14 +10,14 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="responsible-person-hint">
-          <abbr>UK</abbr> Responsible Person
+          Responsible Person
         </h1>
       </div>
       <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
         <% if current_user.responsible_persons.length > 1 %>
           <%= link_to "Change the Responsible Person", select_responsible_persons_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
         <% else %>
-          <%= link_to "Add a Responsible Person", account_path(:select_type), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
+          <%= link_to "Add a Responsible Person", account_path(:enter_details), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
         <% end %>
       </div>
     </div>
@@ -68,6 +68,16 @@
               when "business" then "Limited company or Limited Liability Partnership (LLP)"
               end
           },
+          actions: {
+            items: [
+              {
+                href: edit_responsible_person_path(@responsible_person),
+                text: "Edit",
+                classes: "govuk-link--no-visited-state",
+                visuallyHiddenText: "the business type"
+              }
+            ]
+          }
         }
       ])
     %>
