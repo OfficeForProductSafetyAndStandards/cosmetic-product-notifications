@@ -55,5 +55,6 @@ $(function () {
         document.getElementById('by-date-range').removeAttribute('checked')
       }
     }
+    document.getElementById('conditional-date-block-2').classList.remove('opss-js-enabled-hidden')
   }
 })
