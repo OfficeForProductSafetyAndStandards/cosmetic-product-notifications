@@ -44,14 +44,14 @@ $(function () {
       const myInputs = IDinputs.getElementsByTagName('input')
       let anyVal = false
       /* Identifies if any of the date inputs has a value */
-      for (i = 0; i < myInputs.length; ++i) {
-        if (myInputs[i].value != '') {
+      for (const input of myInputs) {
+        if (input.value !== '') {
           anyVal = true
           break
         }
       }
       /* If all the date range inputs are empty, removes checked radio (collapses date range) */
-      if (anyVal == false) {
+      if (anyVal === false) {
         document.getElementById('by-date-range').removeAttribute('checked')
       }
     }
