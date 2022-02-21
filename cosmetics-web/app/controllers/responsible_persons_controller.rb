@@ -12,7 +12,7 @@ class ResponsiblePersonsController < SubmitApplicationController
     if @responsible_persons_selection_form.invalid?
       render :select
     elsif @responsible_persons_selection_form.add_new?
-      redirect_to account_path(:select_type)
+      redirect_to account_path(:enter_details)
     else
       set_current_responsible_person(
         current_user.responsible_persons.find(@responsible_persons_selection_form.selection),
@@ -24,11 +24,11 @@ class ResponsiblePersonsController < SubmitApplicationController
   def edit; end
 
   def update
-    result = UpdateResponsiblePersonAddress.call(responsible_person: @responsible_person,
+    result = UpdateResponsiblePersonDetails.call(responsible_person: @responsible_person,
                                                  user: current_user,
-                                                 address: responsible_person_address_params.to_h)
+                                                 details: update_params.to_h)
     if result.success?
-      confirmation = "Responsible Person address changed successfully" if result.address_changed
+      confirmation = "Responsible Person details changed successfully" if result.changed
       redirect_to(responsible_person_path(@responsible_person), confirmation: confirmation)
     else
       render :edit
@@ -52,8 +52,9 @@ private
       )
   end
 
-  def responsible_person_address_params
+  def update_params
     params.require(:responsible_person).permit(
+      :account_type,
       :address_line_1,
       :address_line_2,
       :city,
