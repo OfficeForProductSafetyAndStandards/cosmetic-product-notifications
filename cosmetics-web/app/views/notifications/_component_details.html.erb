@@ -15,20 +15,18 @@
     end,
     {
       key: { text: "Nanomaterials" },
-      value: { html: render("application/none_or_bullet_list",
-                            entities_list: component.nano_material&.nano_elements&.map(&:display_name))
-             },
+      value: { html: render("application/none_or_bullet_list", entities_list: component_nano_materials_names(component)) },
     },
-    if component.nano_material&.nano_elements.present?
+    if component.nano_materials.present?
       {
         key: { text: "Application instruction" },
-        value: { text: get_exposure_routes_names(component.nano_material.exposure_routes) },
+        value: { text: get_exposure_routes_names(component.exposure_routes) },
       }
     end,
-    if component.nano_material&.nano_elements.present?
+    if component.nano_materials.present?
       {
         key: { text: "Exposure condition" },
-        value: { text: get_exposure_condition_name(component.nano_material.exposure_condition) },
+        value: { text: get_exposure_condition_name(component.exposure_condition) },
       }
     end,
     {
