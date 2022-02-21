@@ -1,7 +1,7 @@
 class ResponsiblePersons::AccountWizardController < SubmitApplicationController
   include Wicked::Wizard
 
-  steps :pending_invitations, :overview, :create_or_join_existing, :join_existing, :select_type, :enter_details
+  steps :pending_invitations, :overview, :create_or_join_existing, :join_existing, :enter_details
 
   # Using directly the id parameter as'step' is set to nil at this point and 'if' condition gets ignored. Wicked Wizard magic...
   skip_before_action :has_accepted_declaration, if: -> { params[:id] == "pending_invitations" }
@@ -73,7 +73,7 @@ private
     clear_session
     case params[:option]
     when "create_new"
-      redirect_to wizard_path(:select_type)
+      redirect_to wizard_path(:enter_details)
     when "join_existing"
       redirect_to wizard_path(:join_existing)
     else
@@ -100,6 +100,7 @@ private
 
   def responsible_persons_details_form_params
     params.fetch(:responsible_persons_details_form, {}).permit(
+      :account_type,
       :name,
       :address_line_1,
       :address_line_2,

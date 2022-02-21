@@ -43,7 +43,7 @@ RSpec.describe "Creating an account when having pending responsible person invit
     # Invitations are displayed in order of most recent to oldest invite
     expect(page.body.index(responsible_person2.name)).to be < page.body.index(responsible_person.name)
     # User gets the option to create a new responsible person
-    expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/select_type")
+    expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
   end
 
   scenario "user is invited to responsible person but invitation has expired" do
@@ -61,7 +61,7 @@ RSpec.describe "Creating an account when having pending responsible person invit
     expect(page).to have_text(responsible_person.name).once
     expect(page).to have_text("Your invite has expired and needs to be resent. You were invited by #{inviting_user.name}.")
     # User gets the option to create a new responsible person
-    expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/select_type")
+    expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
   end
 
   def user_creates_an_account_with_invitation_email

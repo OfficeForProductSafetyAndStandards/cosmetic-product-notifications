@@ -13,7 +13,6 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     # Creating another business responsible person
     select_options_to_create_rp_account
-    select_rp_business_account_type
     fill_in_rp_business_details
     fill_in_rp_contact_details
   end

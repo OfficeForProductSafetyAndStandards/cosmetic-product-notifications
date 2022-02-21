@@ -17,13 +17,11 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
 
-    select_rp_individual_account_type
-
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
     fill_in_rp_contact_details
 
-    expect(page).to have_h1("UK Responsible Person")
+    expect(page).to have_h1("Responsible Person")
   end
 
   scenario "creating a responsible person as a limited company" do
@@ -35,13 +33,11 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
 
-    select_rp_business_account_type
-
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "Auto-test rpuser")
     fill_in_rp_contact_details
 
-    expect(page).to have_h1("UK Responsible Person")
+    expect(page).to have_h1("Responsible Person")
   end
 
   scenario "creating a responsible person with the same name as an existing one" do
@@ -54,15 +50,14 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
     expect(page).to have_h1("Are you or your organisation a UK Responsible Person?")
     select_options_to_create_rp_account
-    select_rp_business_account_type
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "Auto-test rpuser")
 
     expect(page).not_to have_css("h2#error-summary-title", text: "There is a problem")
     fill_in_rp_contact_details
 
-    expect(page).to have_h1("UK Responsible Person")
+    expect(page).to have_h1("Responsible Person")
   end
 
   scenario "creating a responsible person with the same name as another responbible person the user belongs to" do
@@ -74,11 +69,10 @@ RSpec.describe "Creating a responsible person", type: :feature do
     expect_to_be_on__responsible_person_declaration_page
     click_button "I confirm"
 
-    expect(page).to have_h1("UK Responsible Person")
+    expect(page).to have_h1("Responsible Person")
     click_link "Add a Responsible Person"
-    select_rp_business_account_type
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "auto-test RPuser")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("You are already associated with auto-test RPuser", href: "#name")
@@ -95,9 +89,8 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
     expect(page).to have_h1("Who do you want to submit cosmetic product notifications for?")
     click_link "create a new Responsible Person"
-    select_rp_business_account_type
 
-    expect(page).to have_h1("UK Responsible Person details")
+    expect(page).to have_h1("Add a Responsible Person")
     fill_in_rp_business_details(name: "auto-test RPuser")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("You have already been invited to join auto-test RPuser. Check your email inbox for your invite", href: "#name")

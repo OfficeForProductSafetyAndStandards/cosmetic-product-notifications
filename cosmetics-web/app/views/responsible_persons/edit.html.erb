@@ -30,7 +30,7 @@
     <%= govukWarningText(
       iconFallbackText: "Warning",
       classes: "govuk-!-margin-bottom-0 govuk-!-margin-top-7 opss-warning-text--s",
-      text: "You must update your cosmetic product labels with the new address. Any cosmetic products you have notified will be associated with the new address. You will not need to submit a new notification."
+      text: "You must update your cosmetic product labels with any change to the address. Any cosmetic products you have notified will be associated with the new address. You will not need to submit a new notification."
     )%>
 
     <%= govukWarningText(
@@ -44,6 +44,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for(@responsible_person, method: :put, html: { novalidate: true }) do |form| %>
+      <%= render("form_components/govuk_radios",
+                 form: form,
+                 key: :account_type,
+                 formGroup: { classes: "govuk-!-margin-top-6" },
+                 fieldset: { legend: { html: "Is the <abbr>UK</abbr> Responsible Person a business or an individual?".html_safe,
+                             classes: "govuk-fieldset__legend--s" } },
+                 classes: "govuk-radios--small",
+                 items: [
+                   { html: "Limited company or Limited Liability Partnership (<abbr>LLP</abbr>)".html_safe,
+                     id: "account_type_business",
+                     value: :business,
+                     label: { classes: "govuk-!-padding-bottom-0" } },
+                   { text: "Individual or sole trader",
+                     id: "account_type_individual",
+                     value: :individual,
+                     label: { classes: "govuk-!-padding-bottom-0" } },
+                 ]) %>
       <fieldset class="govuk-fieldset ">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
           <h2 class="govuk-fieldset__heading">
@@ -59,6 +76,7 @@
                    key: :address_line_1,
                    id: "address_line_1",
                    classes: "govuk-!-width-three-quarters",
+                   formGroup: { classes: "govuk-!-margin-bottom-5" },
                    described_by: "address-hint",
                    label: { html: "Building and street <span class='govuk-visually-hidden'>line 1 of 2</span>".html_safe }) %>
 
