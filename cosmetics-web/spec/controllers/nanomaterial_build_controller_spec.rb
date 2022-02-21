@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :controller do
+RSpec.describe ResponsiblePersons::Wizard::NotificationNanomaterialController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:component) { create(:component, notification: notification) }
 
   let(:nanomaterial) do
     create(:nano_material,
-           component: component,
+           notification: notification,
            nano_elements: [
              create(:nano_element, inci_name: "nanomaterial1"),
              create(:nano_element, inci_name: "nanomaterial2"),
@@ -20,7 +20,6 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
-      component_id: component.id,
       nanomaterial_nano_element_id: nano_element1,
     }
   end
@@ -36,7 +35,7 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
   describe "GET #new" do
     it "redirects to the first step of the wizard" do
       get(:new, params: params)
-      expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :select_purposes))
+      expect(response).to redirect_to(responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_element1, :add_nanomaterial_name))
     end
   end
 
@@ -51,9 +50,9 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
       end
     end
 
-    it "assigns the correct component" do
+    it "assigns the correct notification" do
       get(:show, params: params.merge(id: :select_purposes))
-      expect(assigns(:component)).to eq(component)
+      expect(assigns(:notification)).to eq(notification)
     end
 
     it "assigns the correct nano-element" do
@@ -66,23 +65,11 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
       expect(response).to render_template(:select_purposes)
     end
 
-    describe "at wicked_finish" do
-      it "redirects to a new nanomaterial build page, with the next nano-element, on finish" do
-        get(:show, params: params.merge(id: :wicked_finish))
-        expect(response).to redirect_to(new_responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element2))
-      end
-
-      it "redirects back to the component build path, on finish the last nano-element" do
-        get(:show, params: params.merge(id: :wicked_finish, nanomaterial_nano_element_id: nano_element2))
-        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :select_category))
-      end
-    end
-
     describe "at confirm_restrictions" do
       it "redirects to the non-standard nanomaterial path when nano-element purposes include 'other'" do
         nano_element1.update(purposes: %w[other])
-        get(:show, params: params.merge(id: :confirm_restrictions))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :non_standard_nanomaterial_notified))
+        get(:show, params: params.merge(id: :after_select_purposes_routing))
+        expect(response).to redirect_to(responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_element1, :non_standard_nanomaterial_notified))
       end
     end
   end
@@ -103,7 +90,7 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
 
       it "redirects to the next page when purposes are selected" do
         post(:update, params: select_purposes_params.merge(nano_element: { "preservative": "1" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_restrictions))
+        expect(response).to redirect_to(responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_element1, :after_select_purposes_routing))
       end
 
       it "sets error when no purpose is selected" do
@@ -117,12 +104,12 @@ RSpec.describe ResponsiblePersons::Wizard::NanomaterialBuildController, type: :c
 
       it "redirects to the next page when confirm_restrictions is 'yes'" do
         post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "yes" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :confirm_usage))
+        expect(response).to redirect_to(responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_element1, :confirm_usage))
       end
 
       it "redirects to the 'nanomaterial must be listed' error page when confirm_restrictions is 'no'" do
         post(:update, params: confirm_restrictions_params.merge(nano_element: { confirm_restrictions: "no" }))
-        expect(response).to redirect_to(responsible_person_notification_component_nanomaterial_build_path(responsible_person, notification, component, nano_element1, :must_be_listed))
+        expect(response).to redirect_to(responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_element1, :must_be_listed))
       end
 
       it "sets error when no option is selected" do

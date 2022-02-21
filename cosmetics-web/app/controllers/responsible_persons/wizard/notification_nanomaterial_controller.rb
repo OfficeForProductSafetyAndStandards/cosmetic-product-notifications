@@ -2,6 +2,7 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
   include Wicked::Wizard
   include WizardConcern
 
+  before_action :set_notification
   before_action :set_nano_element
 
   steps :add_nanomaterial_name,
