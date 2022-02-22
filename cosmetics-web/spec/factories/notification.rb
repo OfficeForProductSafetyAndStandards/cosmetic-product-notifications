@@ -24,10 +24,6 @@ FactoryBot.define do
       state { NotificationStateConcern::COMPONENTS_COMPLETE }
     end
 
-    trait :deleted do
-      state { NotificationStateConcern::DELETED }
-    end
-
     trait :ph_values do
       ph_min_value { 4 }
       ph_max_value { 8 }
