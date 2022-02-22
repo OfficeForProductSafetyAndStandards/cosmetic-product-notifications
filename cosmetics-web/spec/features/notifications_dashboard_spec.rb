@@ -23,7 +23,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     it "displays the incomplete notification" do
       visit responsible_person_notifications_path(responsible_person)
 
-      expect(body).to have_css("#incomplete-notifications", text: "Incomplete notifications (1)")
+      expect(body).to have_css("#incomplete-notifications", text: "Draft notifications (1)")
     end
   end
 end

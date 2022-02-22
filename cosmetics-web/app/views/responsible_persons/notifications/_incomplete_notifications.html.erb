@@ -2,12 +2,12 @@
   <div class="govuk-accordion__section-header">
     <h2 class="govuk-accordion__section-heading">
       <span class="govuk-accordion__section-button" id="accordion-opss-heading-2">
-        Incomplete notifications (<%= @unfinished_notifications.count %>)
+        Draft notifications (<%= @unfinished_notifications.count %>)
       </span>
     </h2>
 
     <div class="govuk-accordion__section-summary govuk-body" id="accordion-opss-summary-2">
-      <p class="govuk-body govuk-!-margin-bottom-1">There are currently <%= @unfinished_notifications.count %> incomplete notifications.</p>
+      <p class="govuk-body govuk-!-margin-bottom-1">There are currently <%= @unfinished_notifications.count %> draft notifications.</p>
     </div>
 
   </div>
@@ -15,7 +15,7 @@
 
     <table class="govuk-table govuk-!-margin-bottom-4 opss-table opss-table--last-col-right opss-table--first-col-normal">
 
-      <caption class="govuk-table__caption govuk-visually-hidden">List of incomplete notified products</caption>
+      <caption class="govuk-table__caption govuk-visually-hidden">List of draft notified products</caption>
 
 
       <thead class="govuk-table__head">
