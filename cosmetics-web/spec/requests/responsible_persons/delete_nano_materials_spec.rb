@@ -20,7 +20,7 @@ RSpec.describe "Delete Nano material page", type: :request do
 
   describe "success" do
     before do
-      nano_material1
+      nano_element1
     end
 
     it "destroys nano_material" do
@@ -37,6 +37,10 @@ RSpec.describe "Delete Nano material page", type: :request do
   end
 
   context "when form is invalid" do
+    before do
+      nano_element1
+    end
+
     it "renders form again on nil params" do
       delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: nil } }
 

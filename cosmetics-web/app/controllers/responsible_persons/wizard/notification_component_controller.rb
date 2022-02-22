@@ -276,7 +276,7 @@ private
 
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
       @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
-      render :contains_poisonous_ingredients
+      return render :contains_poisonous_ingredients
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])

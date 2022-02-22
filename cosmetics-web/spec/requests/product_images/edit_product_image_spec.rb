@@ -15,7 +15,7 @@ RSpec.describe "Edit product image page", type: :request do
 
   describe "GET #edit" do
     before do
-      get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product_image_upload/edit"
+      get "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product/add_product_image"
     end
 
     context "when the notification has a single component" do

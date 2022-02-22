@@ -1,9 +1,13 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :controller do
+RSpec.describe ResponsiblePersons::Wizard::NotificationComponentController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:component) { create(:component, notification: notification, notification_type: component_type) }
-  let(:notification) { create(:notification, responsible_person: responsible_person) }
+  let(:notification) do
+    create(:notification,
+           responsible_person: responsible_person,
+           state: NotificationStateConcern::READY_FOR_COMPONENTS)
+  end
   let(:component_type) { nil }
 
   let(:params) do
@@ -46,11 +50,6 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
       expect(response).to render_template(:number_of_shades)
     end
 
-    it "redirects to the trigger rules page on finish" do
-      get(:show, params: params.merge(id: :wicked_finish))
-      expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
-    end
-
     it "initialises shades array with two empty strings in add_shades step" do
       get(:show, params: params.merge(id: :add_shades))
       expect(assigns(:component).shades).to eq(["", ""])
@@ -78,6 +77,22 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
       expect(assigns(:component).cmrs).to all(have_attributes(name: be_nil))
     end
 
+    describe "upload poisonus ingredients page" do
+      before { get(:show, params: params.merge(id: :upload_poisonus_ingredients)) }
+
+      render_views
+
+      describe "back link" do
+        context "with a component with predefined formulation" do
+          let(:component_type) { "predefined" }
+
+          it "links to the poisonous materials page" do
+            expect(response.body).to have_back_link_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients))
+          end
+        end
+      end
+    end
+
     describe "upload product ingredients page" do
       before { get(:show, params: params.merge(id: :upload_formulation)) }
 
@@ -102,14 +117,6 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
       end
 
       describe "back link" do
-        context "with a component with predefined formulation" do
-          let(:component_type) { "predefined" }
-
-          it "links to the poisonous materials page" do
-            expect(response.body).to have_back_link_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients))
-          end
-        end
-
         context "with a component without predefined formulation" do
           let(:component_type) { "exact" }
 
@@ -244,7 +251,7 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
 
         context "when the answer is true" do
           it "redirects to the upload formulation page" do
-            expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :upload_formulation))
+            expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :upload_poisonus_ingredients))
           end
         end
 
@@ -252,7 +259,7 @@ RSpec.describe ResponsiblePersons::Wizard::ComponentBuildController, type: :cont
           let(:answer) { "false" }
 
           it "redirects to the select pH range page" do
-            expect(response).to redirect_to(responsible_person_notification_component_trigger_question_path(responsible_person, notification, component, :select_ph_range))
+            expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :select_ph_option))
           end
         end
       end

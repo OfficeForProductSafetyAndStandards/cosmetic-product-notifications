@@ -18,7 +18,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def show; end
 
   def new
-    @notification = Notification.new
+    @notification = @responsible_person.notifications.new
   end
 
   def create

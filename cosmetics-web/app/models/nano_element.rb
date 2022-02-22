@@ -24,7 +24,7 @@ class NanoElement < ApplicationRecord
 
   def required?
     purposes.blank? ||
-      (non_standard? && toxicology_required?) ||
+      (non_standard? && toxicology_required_or_empty?) ||
       (standard? && restrictions_confirmed_required?)
   end
 
@@ -65,7 +65,7 @@ private
 
   def restrictions_confirmed_required?
     confirm_restrictions.nil? ||
-      (confirm_restrictions == "no" && toxicology_required_or_empty?) ||
+      (confirm_restrictions == "no") ||
       (
         (confirm_restrictions == "yes" && usage_confirmed_required?) ||
        (confirm_usage == "no" && toxicology_required_or_empty?)

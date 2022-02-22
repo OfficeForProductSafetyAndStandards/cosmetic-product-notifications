@@ -98,7 +98,7 @@ RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
     end
 
     context "when notification is deleted" do
-      let(:notification1) { create(:notification, traits: [:deleted]) }
+      let(:notification1) { create(:notification, :deleted) }
 
       let(:form) { described_class.new(notification: notification1, nano_material_ids: [nano_material1.id]) }
 

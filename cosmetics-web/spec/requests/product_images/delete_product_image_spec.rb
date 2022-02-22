@@ -8,7 +8,7 @@ RSpec.describe "Delete product image", type: :request do
       create(:draft_notification, responsible_person: responsible_person, image_uploads: [image])
     end
     let(:delete_path) do
-      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product_image_upload/#{image.id}"
+      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft/delete_product_image?image_id=#{image.id}"
     end
 
     before do
@@ -31,7 +31,7 @@ RSpec.describe "Delete product image", type: :request do
       it "redirects the user to the edit product images page" do
         delete delete_path
         expect(response).to redirect_to(
-          "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product_image_upload/edit",
+          "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft",
         )
       end
     end

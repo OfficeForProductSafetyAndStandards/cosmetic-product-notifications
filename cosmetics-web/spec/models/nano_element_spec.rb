@@ -223,7 +223,7 @@ RSpec.describe NanoElement, type: :model do
         it "is not required when toxicology is notified" do
           nano_element.confirm_toxicology_notified = "yes"
 
-          expect(nano_element).not_to be_required
+          expect(nano_element).to be_required
         end
       end
 
