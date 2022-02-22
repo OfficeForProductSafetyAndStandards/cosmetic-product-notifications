@@ -1,5 +1,5 @@
 class NanoMaterial < ApplicationRecord
-  belongs_to :notification, optional: true
+  belongs_to :notification, optional: false
 
   has_many :component_nano_materials, dependent: :destroy
   has_many :components, through: :component_nano_materials
