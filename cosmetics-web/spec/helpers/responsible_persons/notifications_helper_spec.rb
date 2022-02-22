@@ -278,9 +278,11 @@ describe ResponsiblePersons::NotificationsHelper do
 
     let(:include_shades) { false }
     let(:allow_edits) { false }
-    let(:component) { build_stubbed(:component,
-                          exposure_routes: %w[Route],
-                          exposure_condition: "rinse_off") }
+    let(:component) do
+      build_stubbed(:component,
+                    exposure_routes: %w[Route],
+                    exposure_condition: "rinse_off")
+    end
     let(:user) { instance_double(SubmitUser, can_view_product_ingredients?: true) }
 
     before do
@@ -509,7 +511,8 @@ describe ResponsiblePersons::NotificationsHelper do
                      .and_return("Poisonous ingredients HTML")
         expect(summary_component_rows).to include(
           { key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" },
-            value: { html: "Poisonous ingredients HTML" }, actions: { items: [] } },
+            value: { html: "Poisonous ingredients HTML" },
+            actions: { items: [] } },
         )
       end
       # rubocop:enable RSpec/ExampleLength

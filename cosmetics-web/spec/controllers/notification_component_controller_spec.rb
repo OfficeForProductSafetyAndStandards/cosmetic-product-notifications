@@ -3,9 +3,11 @@ require "rails_helper"
 RSpec.describe ResponsiblePersons::Wizard::NotificationComponentController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:component) { create(:component, notification: notification, notification_type: component_type) }
-  let(:notification) { create(:notification,
-                              responsible_person: responsible_person,
-                              state: NotificationStateConcern::READY_FOR_COMPONENTS) }
+  let(:notification) do
+    create(:notification,
+           responsible_person: responsible_person,
+           state: NotificationStateConcern::READY_FOR_COMPONENTS)
+  end
   let(:component_type) { nil }
 
   let(:params) do
@@ -75,7 +77,7 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationComponentController, type
       expect(assigns(:component).cmrs).to all(have_attributes(name: be_nil))
     end
 
-    describe "upload product ingredients page" do
+    describe "upload poisonus ingredients page" do
       before { get(:show, params: params.merge(id: :upload_poisonus_ingredients)) }
 
       render_views
