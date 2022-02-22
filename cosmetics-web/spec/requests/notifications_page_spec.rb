@@ -57,7 +57,7 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
         end
 
         it "displays the number of draft notifications" do
-          expect(response.body).to include("Incomplete notifications (1)")
+          expect(response.body).to include("Draft notifications (1)")
         end
 
         it "displays the number of completed notifications" do
