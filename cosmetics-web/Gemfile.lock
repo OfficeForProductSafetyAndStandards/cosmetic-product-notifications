@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/UKGovernmentBEIS/govuk-design-system-rails
-  revision: 516c4ec23e6c4e261e12c29eed3c51b43845ac81
-  branch: option-to-disable-ghost-checkbox
+  revision: 924859834b4be0a877aec03ec257bc4745c17dff
+  tag: 0.8.2
   specs:
     govuk-design-system-rails (0.8.1)
       slim-rails
