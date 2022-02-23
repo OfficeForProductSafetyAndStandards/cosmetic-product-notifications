@@ -393,7 +393,7 @@ end
 
 def expect_to_be_on__check_your_answers_page(product_name:)
   expect(page.current_path).to end_with("/edit")
-  expect(page).to have_h1("Incomplete notification for: #{product_name}")
+  expect(page).to have_h1("Draft notification for: #{product_name}")
 end
 
 def expect_back_link_to_check_your_answers_page

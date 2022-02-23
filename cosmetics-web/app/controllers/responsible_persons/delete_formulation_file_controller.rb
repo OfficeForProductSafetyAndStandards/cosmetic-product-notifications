@@ -1,5 +1,4 @@
 class ResponsiblePersons::DeleteFormulationFileController < SubmitApplicationController
-  # TODO: move this method to some common place
   before_action :set_notification, :set_component
 
   def destroy

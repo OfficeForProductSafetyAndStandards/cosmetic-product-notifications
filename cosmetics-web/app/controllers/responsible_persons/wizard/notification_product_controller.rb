@@ -19,7 +19,6 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
     add_product_image: :single_or_multi_component,
   }.freeze
 
-  # TODO: investigate previous path helper
   before_action :set_notification
 
   def show
@@ -84,8 +83,6 @@ private
   end
 
   # Run this step only when notifications does not have any notifications
-  # TODO: at some point, when user changes number on nano materials,
-  # state should block all other changes to force user to add nanomaterial
   def update_contains_nanomaterials
     return render_next_step @notification if @notification.nano_materials.count > 1
 

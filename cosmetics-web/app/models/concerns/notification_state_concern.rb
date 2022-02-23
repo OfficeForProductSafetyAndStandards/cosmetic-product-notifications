@@ -38,9 +38,9 @@ module NotificationStateConcern
       state PRODUCT_NAME_ADDED
 
       state READY_FOR_NANOMATERIALS
+
       # state is entangled with view here, this state is used to indicate
       # that multiitem kit step is not defined
-      # TODO: rename to something as product_definition_complete
       state DETAILS_COMPLETE # only for multiitem
 
       # indicate that component related steps can be started
@@ -111,7 +111,7 @@ module NotificationStateConcern
     raise("This should not be called") if components.count != 1
 
     # we dont want to change state to details complete when its new notification
-    # TODO: remove ready_for_nanomaterials and see what happens!
+    # eg. remove ready_for_nanomaterials and see what happens!
 
     # Reset first component too
     c = components.first
