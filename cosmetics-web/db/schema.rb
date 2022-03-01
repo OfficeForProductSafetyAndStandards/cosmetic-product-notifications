@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_171123) do
+ActiveRecord::Schema.define(version: 2021_12_20_142251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "user_roles", ["poison_centre", "market_surveilance_authority"]
@@ -60,6 +61,13 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.index ["component_id"], name: "index_cmrs_on_component_id"
   end
 
+  create_table "component_nano_materials", force: :cascade do |t|
+    t.integer "component_id"
+    t.integer "nano_material_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "components", force: :cascade do |t|
     t.string "state"
     t.string "shades", array: true
@@ -78,6 +86,8 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.float "minimum_ph"
     t.float "maximum_ph"
     t.text "ph"
+    t.string "exposure_condition"
+    t.string "exposure_routes", array: true
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
@@ -159,6 +169,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.datetime "updated_at", null: false
     t.bigint "component_id"
     t.string "exposure_routes", array: true
+    t.integer "notification_id"
     t.index ["component_id"], name: "index_nano_materials_on_component_id"
   end
 
@@ -197,11 +208,11 @@ ActiveRecord::Schema.define(version: 2021_11_08_171123) do
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
-    t.string "industry_reference"
     t.datetime "cpnp_notification_date"
-    t.boolean "was_notified_before_eu_exit", default: false
+    t.string "industry_reference"
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
