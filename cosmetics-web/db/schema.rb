@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "user_roles", ["poison_centre", "market_surveilance_authority"]
@@ -208,11 +209,11 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
-    t.string "industry_reference"
     t.datetime "cpnp_notification_date"
-    t.boolean "was_notified_before_eu_exit", default: false
+    t.string "industry_reference"
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
