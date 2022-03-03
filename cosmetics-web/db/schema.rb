@@ -86,9 +86,9 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.float "minimum_ph"
     t.float "maximum_ph"
     t.text "ph"
-    t.jsonb "routing_questions_answers"
     t.string "exposure_condition"
     t.string "exposure_routes", array: true
+    t.jsonb "routing_questions_answers"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
