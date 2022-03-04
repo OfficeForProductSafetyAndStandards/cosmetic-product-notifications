@@ -11,6 +11,12 @@ namespace :draft_notifications do
       DraftNotificationData.add_component_nano_material_relation
     end
   end
+
+  task :rewrite_state => :environment do
+    ActiveRecord::Base.transaction do
+      DraftNotificationData.rewrite_state
+    end
+  end
 end
 
 # Namespaced methods used in rake. It is safe to use each method mutiple times, it should not be necessary though.
@@ -83,6 +89,30 @@ module DraftNotificationData
 
       ComponentNanoMaterial.create(nano_material: nano_material, component: component)
     end
+  end
+
+  # TODO: check if new flow makes possible to create empty notification
+  def self.rewrite_state
+    if !Notification.pluck(:state).uniq.map(&:to_s).include? "draft_complete"
+      log("State migration already done")
+      return
+    end
+    # In new flow, we are displaying all notifications that are not empty
+    Notification.where(state: NotificationStateConcern::PRODUCT_NAME_ADDED).update_all(state: NotificationStateConcern::EMPTY)
+    # old components complete state was different
+    Notification.where(state: NotificationStateConcern::COMPONENTS_COMPLETE).update_all(state: NotificationStateConcern::EMPTY)
+
+    notifications = Notification.where(state: 'draft_complete')
+    notifications.each do |notification|
+      unless notification.missing_information?
+        notification.state = NotificationStateConcern::COMPONENTS_COMPLETE
+        notification.previous_state = NotificationStateConcern::COMPONENTS_COMPLETE
+      else
+        notification.state = NotificationStateConcern::PRODUCT_NAME_ADDED
+      end
+      notification.save!
+    end
+
   end
 
   def self.log(msg)
