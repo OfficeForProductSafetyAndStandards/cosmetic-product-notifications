@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type: :feature do
+RSpec.describe "Editing responsible person details", :with_stubbed_mailer, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person, name: "Test RP") }
   let(:user) { create(:submit_user) }
   let(:other_member) { create(:submit_user) }
@@ -17,7 +17,7 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
     expect(page).not_to have_link("Edit")
   end
 
-  scenario "user belonging to the responsible person can edit the responsible person address" do
+  scenario "user belonging to the responsible person can edit the Responsible Person address" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
     visit "/responsible_persons/#{responsible_person.id}"
 
@@ -26,8 +26,10 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
 
     expect(page).to have_h1("Edit the UK Responsible Person details")
     expect_back_link_to_responsible_person_page
+    expect(page).to have_checked_field("Individual or sole trader")
 
     # First attempts with validation error
+    choose "Limited company or Limited Liability Partnership (LLP)"
     fill_in "Building and street line 1 of 2", with: ""
     fill_in "Building and street line 2 of 2", with: ""
     fill_in "Town or city", with: ""
@@ -45,6 +47,7 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
     expect(page).to have_css("span#postal_code-error", text: "Enter a postcode")
 
     # Successful attempt
+    choose "Limited company or Limited Liability Partnership (LLP)"
     fill_in "Building and street line 1 of 2", with: "Office building name"
     fill_in "Building and street line 2 of 2", with: "Example street"
     fill_in "Town or city", with: "Manchester"
@@ -53,7 +56,12 @@ RSpec.describe "Editing responsible person address", :with_stubbed_mailer, type:
     click_button "Save and continue"
 
     expect_to_be_on__responsible_person_page
-    expect(page).to have_text("Responsible Person address changed successfully")
+    expect(page).to have_text("Responsible Person details changed successfully")
+    business_type_elem = page.find("dt", text: "Business type", exact_text: true)
+    expect(business_type_elem).to have_sibling("td, dd",
+                                               text: "Limited company or Limited Liability Partnership (LLP)",
+                                               exact_text: true)
+
     address_elem = page.find("dt", text: "Address", exact_text: true)
     expect(address_elem).to have_sibling("dd", text: "Office building name", exact_text: false)
     expect(address_elem).to have_sibling("dd", text: "Example street", exact_text: false)
