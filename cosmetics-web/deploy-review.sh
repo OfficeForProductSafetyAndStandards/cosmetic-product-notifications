@@ -16,8 +16,10 @@ APP=$INSTANCE_NAME
 
 DOMAIN=london.cloudapps.digital
 
-# Please note new manifest file
-MANIFEST_FILE=./cosmetics-web/manifest.review.yml
+if [ -z "$MANIFEST_FILE" ]
+then
+  MANIFEST_FILE=./cosmetics-web/manifest.review.yml
+fi
 
 if [ -z "$DB_NAME" ]
 then
