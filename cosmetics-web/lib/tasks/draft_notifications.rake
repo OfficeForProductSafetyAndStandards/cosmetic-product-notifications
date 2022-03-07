@@ -41,7 +41,7 @@ module DraftNotificationData
         new_nano_material = NanoMaterial.create!(notification: component.notification)
         nano_element.update!(nano_material_id: new_nano_material.id)
         # add component relation for new nanomaterial
-        ComponentNanoMaterial.create(nano_material: nano_material, component: component)
+        ComponentNanoMaterial.create(nano_material: new_nano_material, component: component)
       end
     end
   end
