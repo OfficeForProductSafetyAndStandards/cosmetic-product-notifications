@@ -102,6 +102,8 @@ module DraftNotificationData
     # old components complete state was different
     Notification.where(state: NotificationStateConcern::COMPONENTS_COMPLETE).update_all(state: NotificationStateConcern::EMPTY)
 
+    Notification.where(state: 'notification_file_imported').update_all(state: 'product_name_added')
+
     notifications = Notification.where(state: 'draft_complete')
     notifications.each do |notification|
       unless notification.missing_information?
