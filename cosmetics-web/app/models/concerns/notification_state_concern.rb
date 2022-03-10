@@ -9,6 +9,15 @@ module NotificationStateConcern
   NOTIFICATION_COMPLETE = :notification_complete
   DELETED = :deleted
 
+  DISPLAYABLE_INCOMPLETE_STATES = [
+    PRODUCT_NAME_ADDED,
+    READY_FOR_NANOMATERIALS,
+    DETAILS_COMPLETE,
+    READY_FOR_COMPONENTS,
+    COMPONENTS_COMPLETE
+  ]
+
+
   # State cache and overrides
   #
   # Sometimes, when user changes higher state to lower - in practice, only

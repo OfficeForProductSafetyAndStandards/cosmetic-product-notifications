@@ -80,7 +80,7 @@ private
 
   def get_unfinished_notifications
     @responsible_person.notifications
-      .where.not(state: %i[notification_complete])
+      .where("state IN (?)", NotificationStateConcern::DISPLAYABLE_INCOMPLETE_STATES)
       .where("reference_number IS NOT NULL")
       .where("product_name IS NOT NULL")
       .order("updated_at DESC")
