@@ -99,10 +99,15 @@ module DraftNotificationData
     end
     # In new flow, we are displaying all notifications that are not empty
     Notification.where(state: NotificationStateConcern::PRODUCT_NAME_ADDED).update_all(state: NotificationStateConcern::EMPTY)
-    # old components complete state was different
+
+    # old components complete state was different - was set when one of the components was complete
+    # in new flow, its when all components are complete and indicates that product is ready for submition
     Notification.where(state: NotificationStateConcern::COMPONENTS_COMPLETE).update_all(state: NotificationStateConcern::EMPTY)
 
-    Notification.where(state: 'notification_file_imported').update_all(state: 'product_name_added')
+    # we dont need this state anymore
+    Notification.where(state: 'import_country_added').update_all(state: NotificationStateConcern::EMPTY)
+
+    Notification.where(state: 'notification_file_imported').update_all(state: NotificationStateConcern::EMPTY)
 
     notifications = Notification.where(state: 'draft_complete')
     notifications.each do |notification|
