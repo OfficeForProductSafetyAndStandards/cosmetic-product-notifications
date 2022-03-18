@@ -28,7 +28,7 @@ module DraftNotificationData
   #
   # This method is not backwards compatibile.
   def self.add_nano_materials
-    NanoMaterial.all.each do |nano_material|
+    nano_materials.each do |nano_material|
       nano_elements = NanoElement.where(nano_material_id: nano_material.id)
 
       next if nano_elements.count < 2
@@ -49,7 +49,7 @@ module DraftNotificationData
   # in new flow we add nanomaterial first so there is need to assign NanoMaterial
   # to proper notification
   def self.assign_nano_materials_to_notification
-    NanoMaterial.all.each do |nano_material|
+    nano_materials.each do |nano_material|
       component = Component.find_by(id: nano_material.component_id)
       if component.nil?
         log("NanoMaterial #{nano_material.id} has no component")
@@ -64,7 +64,7 @@ module DraftNotificationData
   # In new datastructure, its component that holds information about exposure condition.
   # TODO: should it be first?
   def self.add_info_to_components
-    NanoMaterial.all.each do |nano_material|
+    nano_materials.each do |nano_material|
       component = Component.find_by(id: nano_material.component_id)
       next if component.nil?
 
@@ -80,7 +80,7 @@ module DraftNotificationData
 
   # In new datastructure, given nano material can be assigned to multiple components
   def self.add_component_nano_material_relation
-    NanoMaterial.all.each do |nano_material|
+    nano_materials.each do |nano_material|
       component = Component.find_by(id: nano_material.component_id)
       next if component.nil?
 
@@ -124,5 +124,10 @@ module DraftNotificationData
 
   def self.log(msg)
     Rails.logger.info("[DRAFT_MIGRATION] #{msg}")
+  end
+
+  # we want only nanomaterials that has nano elements
+  def self.nano_materials
+    @nanos ||= NanoMaterial.joins("LEFT JOIN nano_elements on nano_elements.nano_material_id = nano_materials.id").where("nano_elements.id IS NOT null")
   end
 end
