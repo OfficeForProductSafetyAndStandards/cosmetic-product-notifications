@@ -14,7 +14,7 @@ applications:
   services:
     - cosmetics-database
     - cosmetics-opensearch-1
-    - cosmetics-queue
+    - cosmetics-queue-v6
     - opss-log-drain
     - cosmetics-aws-env
     - cosmetics-auth-env
