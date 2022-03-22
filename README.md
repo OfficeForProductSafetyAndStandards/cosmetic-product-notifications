@@ -245,7 +245,7 @@ To create a database for the current space:
 
     cf marketplace -s postgres
     cf enable-service-access postgres
-    cf create-service postgres small-10.5 cosmetics-database
+    cf create-service postgres small-13 cosmetics-database
 
 ### Opensearch
 
