@@ -424,4 +424,60 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       expect(notification.reference_number_for_display).to eq "UKCP-60162968"
     end
   end
+
+  describe "#make_ready_for_nanomaterials!" do
+    let(:notification) { create(:notification) }
+
+    shared_examples "no changes" do
+      it "returns nil" do
+        expect(notification.make_ready_for_nanomaterials!(nanomaterials_count)).to eq nil
+      end
+
+      it "does not create any nanomaterials" do
+        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
+          .not_to(change { notification.nano_materials.count })
+      end
+
+      it "does not change the notification state" do
+        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
+        .not_to change(notification, :state)
+      end
+    end
+
+    context "when not given a number of nanomaterials" do
+      let(:nanomaterials_count) { nil }
+
+      include_examples "no changes"
+    end
+
+    context "when given a non digit value as nanomaterials count" do
+      let(:nanomaterials_count) { "twelve" }
+
+      include_examples "no changes"
+    end
+
+    context "when given 0 nanomaterials count" do
+      let(:nanomaterials_count) { 0 }
+
+      include_examples "no changes"
+    end
+
+    context "when given a nanomaterials count" do
+      let(:nanomaterials_count) { 2 }
+
+      it "returns true" do
+        expect(notification.make_ready_for_nanomaterials!(nanomaterials_count)).to eq true
+      end
+
+      it "create the given number of nanomaterials" do
+        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
+          .to(change { notification.nano_materials.count }.by(nanomaterials_count))
+      end
+
+      it "sets the notification state to reay for nanomaterials" do
+        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
+          .to change(notification, :state).to(Notification::READY_FOR_NANOMATERIALS.to_s)
+      end
+    end
+  end
 end

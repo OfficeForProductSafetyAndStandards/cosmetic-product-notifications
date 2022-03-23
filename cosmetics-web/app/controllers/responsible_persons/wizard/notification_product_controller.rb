@@ -20,6 +20,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   }.freeze
 
   before_action :set_notification
+  before_action :contains_nanomaterials_form, if: -> { step == :contains_nanomaterials }
 
   def show
     case step
@@ -82,50 +83,21 @@ private
     end
   end
 
-  # Run this step only when notifications does not have any notifications
+  # Run this step only when notification doesn't already have multiple nanomaterials
   def update_contains_nanomaterials
     return render_next_step @notification if @notification.nano_materials.count > 1
 
-    answer = params.dig(:notification, :contains_nanomaterials)
-    model.save_routing_answer(step, answer) if answer
+    form = contains_nanomaterials_form
+    return rerender_current_step unless form.valid?
 
-    case answer
-    when "yes"
-      if nano_materials_count > 10
-        @notification.errors.add :contains_nanomaterials, "Maximum nanomaterials count is 10. More can be added later"
-        return rerender_current_step
+    model.save_routing_answer(step, form.contains_nanomaterials)
 
-      end
-      if nano_materials_count < 1
-        @notification.errors.add :contains_nanomaterials, "Please enter at least 1"
-        return rerender_current_step
-      end
-      if @notification.nano_materials.count > 1 && nano_materials_count < @notification.nano_materials.count
-        @notification.errors.add :contains_nanomaterials, "Components count cant be lower than #{@notification.components_count}"
-        return rerender_current_step
-      end
-      required_nano_materials_count = @notification.nano_materials.present? ? nano_materials_count - 1 : nano_materials_count
-      required_nano_materials_count.times do
-        nano = @notification.nano_materials.create
-        nano.nano_elements.create
-        # TODO: quite entangled
-        @notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
-      end
-      render_next_step @notification
-    when "no"
-      render_next_step @notification
-    else
-      @notification.errors.add :contains_nanomaterials, "Select yes if the product is a multi-item kit, no if its single item"
-      rerender_current_step
+    if form.contains_nanomaterials?
+      nano_materials_count = form.nanomaterials_count.to_i
+      nano_materials_count -= 1 if @notification.nano_materials.present?
+      @notification.make_ready_for_nanomaterials!(nano_materials_count)
     end
-  end
-
-  def nano_materials_count
-    if params[:notification][:contains_nanomaterials] == "yes"
-      params[:notification][:nanomaterial_count].to_i
-    else
-      0
-    end
+    render_next_step @notification
   end
 
   # Run this step only when notifications does not have any components
@@ -201,6 +173,16 @@ private
         :under_three_years,
         image_uploads_attributes: [file: []],
       )
+  end
+
+  def contains_nanomaterials_params
+    params.fetch(:contains_nanomaterials_form, {})
+          .permit(:contains_nanomaterials, :nanomaterials_count)
+  end
+
+  def contains_nanomaterials_form
+    @contains_nanomaterials_form ||=
+      ResponsiblePersons::Wizard::NotificationProduct::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
   end
 
   def model

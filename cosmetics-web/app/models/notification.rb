@@ -203,6 +203,18 @@ class Notification < ApplicationRecord
     cpnp_reference.present?
   end
 
+  def make_ready_for_nanomaterials!(count)
+    count = count.to_i
+    return unless count.positive?
+
+    count.times do
+      nano_materials.create.tap do |nano|
+        nano.nano_elements.create
+      end
+    end
+    revert_to_ready_for_nanomaterials
+  end
+
   # =========================================
   # DELETING NOTIFICATIONS
   # =========================================
