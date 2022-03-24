@@ -21,6 +21,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
   before_action :set_notification
   before_action :contains_nanomaterials_form, if: -> { step == :contains_nanomaterials }
+  before_action :single_or_multi_component_form, if: -> { step == :single_or_multi_component }
 
   def show
     case step
@@ -100,28 +101,17 @@ private
     render_next_step @notification
   end
 
-  # Run this step only when notifications does not have any components
+  # Run this step only when notifications does not have multiple components
   def update_single_or_multi_component_step
     return render_next_step @notification if @notification.components.count > 1
 
-    case params.dig(:notification, :single_or_multi_component)
-    when "single"
-      @notification.components.create if @notification.components.empty?
-      render_next_step @notification
-    when "multiple"
-      if @notification.components_count.positive? && components_count < @notification.components_count
-        @notification.errors.add :single_or_multi_component, "Items count cant be lower than #{@notification.components_count}"
-        return rerender_current_step
-      end
-      if components_count > 10
-        @notification.errors.add :single_or_multi_component, "Please select less items. More items can be added later"
-        return rerender_current_step
+    form = single_or_multi_component_form
+    return rerender_current_step unless form.valid?
 
-      end
-      if components_count < 2
-        @notification.errors.add :single_or_multi_component, "Enter 2 or more"
-        return rerender_current_step
-      end
+    if form.single_component?
+      @notification.components.create if @notification.components.empty?
+    elsif form.multi_component?
+      components_count = form.components_count&.to_i
       # This happens only when there only one component
       if components_count > @notification.components.count
         # TODO: quite entangled
@@ -133,15 +123,8 @@ private
       end
       required_components_count = @notification.components.present? ? components_count - 1 : components_count
       required_components_count.times { @notification.components.create }
-      render_next_step @notification
-    else
-      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit, no if its single item"
-      rerender_current_step
     end
-  end
-
-  def components_count
-    params[:notification][:components_count].to_i
+    render_next_step @notification
   end
 
   def update_add_product_image_step
@@ -180,9 +163,19 @@ private
           .permit(:contains_nanomaterials, :nanomaterials_count)
   end
 
+  def single_or_multi_component_params
+    params.fetch(:single_or_multi_component_form, {})
+          .permit(:single_or_multi_component, :components_count)
+  end
+
   def contains_nanomaterials_form
     @contains_nanomaterials_form ||=
       ResponsiblePersons::Wizard::NotificationProduct::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
+  end
+
+  def single_or_multi_component_form
+    @single_or_multi_component_form ||=
+      ResponsiblePersons::Wizard::NotificationProduct::SingleOrMultiComponentForm.new(single_or_multi_component_params)
   end
 
   def model

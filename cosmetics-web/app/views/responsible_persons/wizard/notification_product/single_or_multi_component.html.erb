@@ -1,23 +1,21 @@
 <% title = "Multi-item kits" %>
-<% page_title title, errors: @notification.errors.any? %>
+<% errors = @single_or_multi_component_form.errors %>
+<% page_title(title, errors: errors.any?) %>
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>
 
 <% if @notification.components.count <= 1 %>
-  <%= form_with model: @notification, url: wizard_path, method: :put, disabled: true do |form| %>
-
+  <%= form_with model: @single_or_multi_component_form, url: wizard_path, scope: :single_or_multi_component_form, method: :put, disabled: true do |form| %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-
-        <%= error_summary_for(@notification, first_values: {single_or_multi_component: "multiple"}) %>
+        <%= error_summary(errors, map_errors: { single_or_multi_component: :single_or_multi_component_multiple }) %>
 
         <h1 class="govuk-heading-l"><%= title %></h1>
 
         <p>Multi-item kits have items that need to be mixed together or used in a particular order for them to work.</p>
 
         <p class="govuk-!-margin-bottom-1">Examples of multi-item kits include:</p>
-
 
         <ul class="govuk-list govuk-list--bullet">
           <li>hair dye kits</li>
@@ -35,23 +33,36 @@
 
         <% if @notification.components.count == 1 %>
           <p class="govuk-inset-text">
-            Currently product has only 1 item. You can cdd more items by increasing components count.
+            Currently product has only 1 item. You can add more items by increasing components count.
           </p>
         <% end %>
 
         <% count_input_html = capture do %>
-          <%= render "form_components/govuk_input", form: form, key: :components_count,
-            label: { text: "How many items does it contain?" }, value: @notification.components_count > 0 ? @notification.components_count : ''  %>
+          <%= render("form_components/govuk_input",
+                     form: form,
+                     key: :components_count,
+                     id: "components_count",
+                     classes: "govuk-input--width-3",
+                     label: { text: "How many items does it contain?" },
+                     value: @notification.components_count > 0 ? @notification.components_count : '') %>
         <% end %>
-        <%= render "form_components/govuk_radios", form: form, key: :single_or_multi_component,
-            fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },
-            items: [{ text: "Yes", value: "multiple" , conditional: { html: count_input_html },
-                      checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple") || @notification.components.count > 1 },
-                    { text: "No, this is a single product", value: "single",
-                      checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "single") || (@notification.components.count == 1 && !(params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple"))},
-        ] %>
+        <%= render("form_components/govuk_radios",
+                   form: form,
+                   key: :single_or_multi_component,
+                   fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },
+                   items: [
+                     { text: "Yes",
+                       value: "multiple",
+                       id: "single_or_multi_component_multiple",
+                       conditional: { html: count_input_html },
+                       checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple") || @notification.components.count > 1 },
+                     { text: "No, this is a single product",
+                       value: "single",
+                       id: "single_or_multi_component_single",
+                       checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "single") || (@notification.components.count == 1 && !(params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple")) },
+                   ]
+                  ) %>
         <%= govukButton text: "Continue" %>
-
       </div>
     </div>
   <% end %>

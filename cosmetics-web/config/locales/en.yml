@@ -235,6 +235,14 @@ en:
               not_a_number: "Enter a number for how many nanomaterials"
               greater_than: "Enter a number for how many nanomaterials"
               less_than_or_equal_to: "Maximum nanomaterials count is 10. More can be added later"
+        responsible_persons/wizard/notification_product/single_or_multi_component_form:
+          attributes:
+            single_or_multi_component:
+              inclusion: "Select yes if the product is a multi-item kit, no if its single item"
+            components_count:
+              not_a_number: "Enter a number for how how many items it contains"
+              greater_than: "There is a minimum of 2 items"
+              less_than_or_equal_to: "Maximum items count is 10. More can be added later"
         secondary_authentication/app/auth_form:
           attributes:
             otp_code:
