@@ -103,7 +103,7 @@ module NotificationStateConcern
   end
 
   def notification_product_wizard_completed?
-    [EMPTY, PRODUCT_NAME_ADDED].exclude?(state)
+    !empty? && !product_name_added?
   end
 
   # TODO: quite entangled

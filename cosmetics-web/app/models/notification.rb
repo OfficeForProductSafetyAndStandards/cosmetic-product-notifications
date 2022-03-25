@@ -110,10 +110,6 @@ class Notification < ApplicationRecord
     )
   end
 
-  def notification_product_wizard_completed?
-    !empty? && !product_name_added?
-  end
-
   def reference_number_for_display
     return "" if reference_number.blank?
 
