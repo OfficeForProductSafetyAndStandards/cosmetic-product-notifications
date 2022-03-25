@@ -108,22 +108,7 @@ private
     form = single_or_multi_component_form
     return rerender_current_step unless form.valid?
 
-    if form.single_component?
-      @notification.components.create if @notification.components.empty?
-    elsif form.multi_component?
-      components_count = form.components_count&.to_i
-      # This happens only when there only one component
-      if components_count > @notification.components.count
-        # TODO: quite entangled
-
-        # We can reset previous state, as previous state functionality
-        # is to prevent messing state when nanos are added.
-        @notification.reset_previous_state!
-        @notification.revert_to_details_complete
-      end
-      required_components_count = @notification.components.present? ? components_count - 1 : components_count
-      required_components_count.times { @notification.components.create }
-    end
+    @notification.make_single_ready_for_components!(form.components_count.to_i)
     render_next_step @notification
   end
 

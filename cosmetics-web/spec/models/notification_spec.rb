@@ -480,4 +480,130 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
     end
   end
+
+  describe "#make_single_ready_for_components!" do
+    subject(:make_ready) { notification.make_single_ready_for_components!(count) }
+
+    shared_examples "nothing changes" do
+      it "returns 0 as number of components created" do
+        expect(make_ready).to eq 0
+      end
+
+      it "does not create any components" do
+        expect { make_ready }.not_to(change { notification.components.count })
+      end
+
+      it "does not change the notification state" do
+        expect { make_ready }.not_to change(notification, :state)
+      end
+    end
+
+    shared_examples "sets up single component" do
+      it { expect(make_ready).to eq 1 }
+
+      it "creates a single component" do
+        expect { make_ready }.to(change { notification.components.count }.by(1))
+      end
+
+      it "does not change the notification state" do
+        expect { make_ready }.not_to change(notification, :state)
+      end
+    end
+
+    context "with a multi component notification" do
+      let(:notification) { create(:notification, :with_components) }
+
+      context "when given a count of 0" do
+        let(:count) { 0 }
+
+        include_examples "nothing changes"
+      end
+
+      context "when given a single count" do
+        let(:count) { 1 }
+
+        include_examples "nothing changes"
+      end
+
+      context "when given a multiple count" do
+        let(:count) { 3 }
+
+        include_examples "nothing changes"
+      end
+    end
+
+    context "with a single component notification" do
+      let(:notification) do
+        create(:notification, :with_component, state: Notification::COMPONENTS_COMPLETE, previous_state: Notification::READY_FOR_COMPONENTS)
+      end
+
+      context "when given a count of 0" do
+        let(:count) { 0 }
+
+        include_examples "nothing changes"
+      end
+
+      context "when given a single count" do
+        let(:count) { 1 }
+
+        include_examples "nothing changes"
+      end
+
+      context "when given a multiple count" do
+        let(:count) { 3 }
+
+        it "returns 2 as number of components created" do
+          expect(make_ready).to eq 2
+        end
+
+        it "creates the missing components to match the given count" do
+          expect { make_ready }.to(change { notification.components.count }.by(2))
+        end
+
+        it "reverts notification state to 'details complete'" do
+          expect { make_ready }.to change(notification, :state).to(Notification::DETAILS_COMPLETE.to_s)
+        end
+
+        it "resets the notification previous state" do
+          expect { make_ready }.to change(notification, :previous_state).to(nil)
+        end
+      end
+    end
+
+    context "with a notification without components" do
+      let(:notification) { create(:notification, state: Notification::READY_FOR_NANOMATERIALS) }
+
+      context "when given a count of 0" do
+        let(:count) { 0 }
+
+        include_examples "sets up single component"
+      end
+
+      context "when given a single count" do
+        let(:count) { 1 }
+
+        include_examples "sets up single component"
+      end
+
+      context "when given a multiple count" do
+        let(:count) { 3 }
+
+        it "returns 3 as number of components created" do
+          expect(make_ready).to eq 3
+        end
+
+        it "creates the missing components to match the given count" do
+          expect { make_ready }.to(change { notification.components.count }.by(3))
+        end
+
+        it "does not change the notification state" do
+          expect { make_ready }.not_to change(notification, :state)
+        end
+
+        it " does not reset the notification previous state" do
+          expect { make_ready }.not_to change(notification, :previous_state)
+        end
+      end
+    end
+  end
 end

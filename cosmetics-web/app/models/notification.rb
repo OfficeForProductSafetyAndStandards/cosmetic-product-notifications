@@ -211,8 +211,24 @@ class Notification < ApplicationRecord
       nano_materials.create.tap do |nano|
         nano.nano_elements.create
       end
+  # Sets up a single component notification or prepares it for the upgrade to multicomponent notification.
+  # Nothing to do if notification is already multicomponent.
+  # Returns number of components added to the notification.
+  def make_single_ready_for_components!(count)
+    return 0 if multi_component? || count.negative?
+
+    transaction do
+      if count > 1 # Turning into a multi component notification
+        reset_previous_state! # Previous state was set to prevent messing state when nanos are added
+        revert_to_details_complete
+      end
+
+      count += 1 if count.zero? # Single component notification
+      count -= 1 if components.any? # Don't create the already existing component
+      count.times { components.create! }
     end
     revert_to_ready_for_nanomaterials
+    count
   end
 
   # =========================================
