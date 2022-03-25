@@ -75,7 +75,7 @@ module NotificationStateConcern
   end
 
   def set_state_on_product_wizard_completed!
-    return if product_wizard_completed? # State wont be overrided if notification is in higher state
+    return if product_wizard_completed? # State wont be overridden if notification is in higher state
 
     if nano_materials.count.positive?
       update_state(READY_FOR_NANOMATERIALS)
