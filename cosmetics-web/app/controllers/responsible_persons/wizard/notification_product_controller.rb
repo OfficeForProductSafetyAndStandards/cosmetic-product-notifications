@@ -98,7 +98,7 @@ private
 
   # Run this step only when notifications does not have multiple components
   def update_single_or_multi_component_step
-    return render_next_step @notification if @notification.components.count > 1
+    return render_next_step @notification if @notification.multi_component?
 
     form = single_or_multi_component_form
     return rerender_current_step unless form.valid?
