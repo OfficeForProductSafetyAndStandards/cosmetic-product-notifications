@@ -26,7 +26,7 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   def show
     case step
     when :completed
-      set_final_state_for_wizard
+      @notification.set_state_on_product_wizard_completed!
       render "responsible_persons/wizard/completed"
     else
       render_wizard
@@ -57,13 +57,6 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   end
 
 private
-
-  def set_final_state_for_wizard
-    # Make sure state wont be overrided if notification is in higher state
-    return if @notification.product_wizard_completed?
-
-    @notification.set_state_on_product_wizard_completed!
-  end
 
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)
