@@ -60,7 +60,7 @@ private
 
   def set_final_state_for_wizard
     # Make sure state wont be overrided if notification is in higher state
-    return if @notification.notification_product_wizard_completed?
+    return if @notification.product_wizard_completed?
 
     @notification.set_state_on_product_wizard_completed!
   end

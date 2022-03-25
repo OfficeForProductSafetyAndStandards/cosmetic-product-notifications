@@ -102,7 +102,7 @@ module NotificationStateConcern
     end
   end
 
-  def notification_product_wizard_completed?
+  def product_wizard_completed?
     !empty? && !product_name_added?
   end
 
