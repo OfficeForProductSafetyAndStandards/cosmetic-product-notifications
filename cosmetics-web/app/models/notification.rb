@@ -203,14 +203,25 @@ class Notification < ApplicationRecord
     cpnp_reference.present?
   end
 
+  # Sets up a given count of nanomaterials for the notification.
+  # Nothing to do if notification already contains multiple nanomaterials.
+  # Returns number of nano materials added to the notification
   def make_ready_for_nanomaterials!(count)
     count = count.to_i
-    return unless count.positive?
+    return 0 unless count.positive? && nano_materials.count <= 1
 
-    count.times do
-      nano_materials.create.tap do |nano|
-        nano.nano_elements.create
+    count -= 1 if nano_materials.any? # Don't create the already existing nanomaterial
+    transaction do
+      count.times do
+        nano_materials.create.tap do |nano|
+          nano.nano_elements.create!
+        end
       end
+      revert_to_ready_for_nanomaterials
+    end
+    count
+  end
+
   # Sets up a single component notification or prepares it for the upgrade to multicomponent notification.
   # Nothing to do if notification is already multicomponent.
   # Returns number of components added to the notification.
@@ -227,7 +238,6 @@ class Notification < ApplicationRecord
       count -= 1 if components.any? # Don't create the already existing component
       count.times { components.create! }
     end
-    revert_to_ready_for_nanomaterials
     count
   end
 

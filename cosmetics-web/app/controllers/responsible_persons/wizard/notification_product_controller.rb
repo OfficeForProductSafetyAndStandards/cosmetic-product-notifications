@@ -92,12 +92,7 @@ private
     return rerender_current_step unless form.valid?
 
     model.save_routing_answer(step, form.contains_nanomaterials)
-
-    if form.contains_nanomaterials?
-      nano_materials_count = form.nanomaterials_count.to_i
-      nano_materials_count -= 1 if @notification.nano_materials.present?
-      @notification.make_ready_for_nanomaterials!(nano_materials_count)
-    end
+    @notification.make_ready_for_nanomaterials!(form.nanomaterials_count.to_i)
     render_next_step @notification
   end
 

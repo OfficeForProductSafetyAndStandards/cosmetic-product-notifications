@@ -426,57 +426,109 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
   end
 
   describe "#make_ready_for_nanomaterials!" do
-    let(:notification) { create(:notification) }
+    subject(:make_ready) { notification.make_ready_for_nanomaterials!(count) }
 
     shared_examples "no changes" do
-      it "returns nil" do
-        expect(notification.make_ready_for_nanomaterials!(nanomaterials_count)).to eq nil
+      it "returns 0 as number of nanomaterials created" do
+        expect(notification.make_ready_for_nanomaterials!(count)).to eq 0
       end
 
       it "does not create any nanomaterials" do
-        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
+        expect { notification.make_ready_for_nanomaterials!(count) }
           .not_to(change { notification.nano_materials.count })
       end
 
       it "does not change the notification state" do
-        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
+        expect { notification.make_ready_for_nanomaterials!(count) }
         .not_to change(notification, :state)
       end
     end
 
-    context "when not given a number of nanomaterials" do
-      let(:nanomaterials_count) { nil }
+    context "with a notification containing no nanomaterials" do
+      let(:notification) { create(:notification) }
 
-      include_examples "no changes"
-    end
+      context "when not given a number of nanomaterials" do
+        let(:count) { nil }
 
-    context "when given a non digit value as nanomaterials count" do
-      let(:nanomaterials_count) { "twelve" }
-
-      include_examples "no changes"
-    end
-
-    context "when given 0 nanomaterials count" do
-      let(:nanomaterials_count) { 0 }
-
-      include_examples "no changes"
-    end
-
-    context "when given a nanomaterials count" do
-      let(:nanomaterials_count) { 2 }
-
-      it "returns true" do
-        expect(notification.make_ready_for_nanomaterials!(nanomaterials_count)).to eq true
+        include_examples "no changes"
       end
 
-      it "create the given number of nanomaterials" do
-        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
-          .to(change { notification.nano_materials.count }.by(nanomaterials_count))
+      context "when given a non digit value as nanomaterials count" do
+        let(:count) { "twelve" }
+
+        include_examples "no changes"
       end
 
-      it "sets the notification state to reay for nanomaterials" do
-        expect { notification.make_ready_for_nanomaterials!(nanomaterials_count) }
-          .to change(notification, :state).to(Notification::READY_FOR_NANOMATERIALS.to_s)
+      context "when given 0 nanomaterials count" do
+        let(:count) { 0 }
+
+        include_examples "no changes"
+      end
+
+      context "when given a nanomaterials count" do
+        let(:count) { 2 }
+
+        it "returns 2 as the number of nanomaterials created" do
+          expect(make_ready).to eq 2
+        end
+
+        it "creates the missing nanomaterials to match the given count" do
+          expect { make_ready }
+            .to(change { notification.nano_materials.count }.by(2))
+        end
+
+        it "sets the notification state to reay for nanomaterials" do
+          expect { notification.make_ready_for_nanomaterials!(2) }
+            .to change(notification, :state).to(Notification::READY_FOR_NANOMATERIALS.to_s)
+        end
+      end
+    end
+
+    context "with a notification containing a single nanomaterial" do
+      let(:notification) { create(:notification, :with_nano_material) }
+
+      context "when given a nanomaterials count" do
+        let(:count) { 3 }
+
+        it "returns 2 as the number of nanomaterials created" do
+          expect(make_ready).to eq 2
+        end
+
+        it "creates the missing nanomaterials to match the given count" do
+          expect { make_ready }.to(change { notification.nano_materials.count }.by(2))
+        end
+
+        it "sets the notification state to reay for nanomaterials" do
+          expect { make_ready }.to change(notification, :state).to(Notification::READY_FOR_NANOMATERIALS.to_s)
+        end
+      end
+    end
+
+    context "with a notification containing multiple nanomaterials" do
+      let(:notification) { create(:notification, :with_nano_materials) }
+
+      context "when not given a number of nanomaterials" do
+        let(:count) { nil }
+
+        include_examples "no changes"
+      end
+
+      context "when given a non digit value as nanomaterials count" do
+        let(:count) { "twelve" }
+
+        include_examples "no changes"
+      end
+
+      context "when given 0 nanomaterials count" do
+        let(:count) { 0 }
+
+        include_examples "no changes"
+      end
+
+      context "when given a nanomaterials count" do
+        let(:count) { 3 }
+
+        include_examples "no changes"
       end
     end
   end
