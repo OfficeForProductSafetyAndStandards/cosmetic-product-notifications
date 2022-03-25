@@ -55,11 +55,12 @@
                        value: "multiple",
                        id: "single_or_multi_component_multiple",
                        conditional: { html: count_input_html },
-                       checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple") || @notification.components.count > 1 },
+                       checked: errors.include?(:components_count) || form.object.multi_component? },
                      { text: "No, this is a single product",
                        value: "single",
                        id: "single_or_multi_component_single",
-                       checked: (params[:notification].present? && params[:notification][:single_or_multi_component] == "single") || (@notification.components.count == 1 && !(params[:notification].present? && params[:notification][:single_or_multi_component] == "multiple")) },
+                       checked: errors.exclude?(:components_count) &&
+                                  (form.object.single_component? || (form.object.multi_component? && @notification.components.count == 1)) },
                    ]
                   ) %>
         <%= govukButton text: "Continue" %>
