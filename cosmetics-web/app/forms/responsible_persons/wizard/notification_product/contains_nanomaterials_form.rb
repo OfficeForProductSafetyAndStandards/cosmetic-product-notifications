@@ -9,7 +9,7 @@ module ResponsiblePersons
 
         validates :contains_nanomaterials, inclusion: { in: %w[yes no] }
         validates :nanomaterials_count,
-                  numericality: { greater_than: 0, less_than_or_equal_to: 10 },
+                  numericality: { greater_than: 0, less_than_or_equal_to: 10, only_integer: true },
                   if: -> { contains_nanomaterials == "yes" }
 
         def contains_nanomaterials?

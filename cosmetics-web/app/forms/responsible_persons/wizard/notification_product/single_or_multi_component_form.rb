@@ -12,7 +12,7 @@ module ResponsiblePersons
 
         validates :single_or_multi_component, inclusion: { in: [SINGLE, MULTI] }
         validates :components_count,
-                  numericality: { greater_than: 1, less_than_or_equal_to: 10 },
+                  numericality: { greater_than: 1, less_than_or_equal_to: 10, only_integer: true },
                   if: -> { multi_component? }
 
         def single_component?
