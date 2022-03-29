@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_20_142251) do
+ActiveRecord::Schema.define(version: 2022_03_28_133505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.integer "nano_material_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["component_id"], name: "index_component_nano_materials_on_component_id"
+    t.index ["nano_material_id"], name: "index_component_nano_materials_on_nano_material_id"
   end
 
   create_table "components", force: :cascade do |t|
@@ -172,6 +174,7 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.string "exposure_routes", array: true
     t.integer "notification_id"
     t.index ["component_id"], name: "index_nano_materials_on_component_id"
+    t.index ["notification_id"], name: "index_nano_materials_on_notification_id"
   end
 
   create_table "nanomaterial_notifications", force: :cascade do |t|
