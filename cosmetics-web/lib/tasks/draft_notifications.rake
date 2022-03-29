@@ -1,7 +1,7 @@
 namespace :draft_notifications do
   desc "Migrate notifications to use new task-based flow structure. This task is safe to run multiple times"
 
-  task :migrate_data => :environment do
+  task migrate_data: :environment do
     ActiveRecord::Base.transaction do
       # need to be first as is using existing nano_material exposure info
       DraftNotificationData.add_info_to_components
@@ -12,7 +12,8 @@ namespace :draft_notifications do
     end
   end
 
-  task :rewrite_state => :environment do
+  desc "Change state of notifications. This task can be run just once"
+  task rewrite_state: :environment do
     ActiveRecord::Base.transaction do
       DraftNotificationData.rewrite_state
     end
@@ -37,7 +38,7 @@ module DraftNotificationData
       next if component.nil?
 
       # create new nano material for next nano elements
-      nano_elements[1..-1].each do |nano_element|
+      nano_elements[1..].each do |nano_element|
         new_nano_material = NanoMaterial.create!(notification: component.notification)
         nano_element.update!(nano_material_id: new_nano_material.id)
         # add component relation for new nanomaterial
@@ -70,11 +71,11 @@ module DraftNotificationData
 
       component.exposure_routes    = nano_material.exposure_routes
       component.exposure_condition = nano_material.exposure_condition
-      if !component.save
-        log("Component #{component.id} could not be saved")
-        # Some early data issues were causing troubles, save anyway
-        component.save(validate: false)
-      end
+      next if component.save
+
+      log("Component #{component.id} could not be saved")
+      # Some early data issues were causing troubles, save anyway
+      component.save(validate: false)
     end
   end
 
@@ -93,10 +94,12 @@ module DraftNotificationData
 
   # TODO: check if new flow makes possible to create empty notification
   def self.rewrite_state
-    if !Notification.pluck(:state).uniq.map(&:to_s).include? "draft_complete"
+    # rubocop:disable Rails/UniqBeforePluck
+    unless Notification.pluck(:state).uniq.map(&:to_s).include? "draft_complete"
       log("State migration already done")
       return
     end
+    # rubocop:enable Rails/UniqBeforePluck
     # In new flow, we are displaying all notifications that are not empty
     Notification.where(state: NotificationStateConcern::PRODUCT_NAME_ADDED).update_all(state: NotificationStateConcern::EMPTY)
 
@@ -105,21 +108,20 @@ module DraftNotificationData
     Notification.where(state: NotificationStateConcern::COMPONENTS_COMPLETE).update_all(state: NotificationStateConcern::EMPTY)
 
     # we dont need this state anymore
-    Notification.where(state: 'import_country_added').update_all(state: NotificationStateConcern::EMPTY)
+    Notification.where(state: "import_country_added").update_all(state: NotificationStateConcern::EMPTY)
 
-    Notification.where(state: 'notification_file_imported').update_all(state: NotificationStateConcern::EMPTY)
+    Notification.where(state: "notification_file_imported").update_all(state: NotificationStateConcern::EMPTY)
 
-    notifications = Notification.where(state: 'draft_complete')
+    notifications = Notification.where(state: "draft_complete")
     notifications.each do |notification|
-      unless notification.missing_information?
+      if notification.missing_information?
+        notification.state = NotificationStateConcern::PRODUCT_NAME_ADDED
+      else
         notification.state = NotificationStateConcern::COMPONENTS_COMPLETE
         notification.previous_state = NotificationStateConcern::COMPONENTS_COMPLETE
-      else
-        notification.state = NotificationStateConcern::PRODUCT_NAME_ADDED
       end
       notification.save!
     end
-
   end
 
   def self.log(msg)
@@ -128,6 +130,6 @@ module DraftNotificationData
 
   # we want only nanomaterials that has nano elements
   def self.nano_materials
-    @nanos ||= NanoMaterial.joins("LEFT JOIN nano_elements on nano_elements.nano_material_id = nano_materials.id").where("nano_elements.id IS NOT null")
+    @nano_materials ||= NanoMaterial.joins("LEFT JOIN nano_elements on nano_elements.nano_material_id = nano_materials.id").where("nano_elements.id IS NOT null")
   end
 end

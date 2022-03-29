@@ -14,9 +14,8 @@ module NotificationStateConcern
     READY_FOR_NANOMATERIALS,
     DETAILS_COMPLETE,
     READY_FOR_COMPONENTS,
-    COMPONENTS_COMPLETE
-  ]
-
+    COMPONENTS_COMPLETE,
+  ].freeze
 
   # State cache and overrides
   #
