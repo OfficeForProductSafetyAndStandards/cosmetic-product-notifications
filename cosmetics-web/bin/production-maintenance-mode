@@ -61,9 +61,13 @@ private
     case system("cf target -s #{CF_SPACE}")
     when true
       say("BEIS-OPSS #{CF_SPACE} PaaS space access granted.", :green)
+      true
     when nil
       say_error("Error: Cloud Foundry client not available for your user.", :red)
       say("You can find installation instructions at: https://docs.cloudfoundry.org/cf-cli/install-go-cli.html", :yellow)
+      false
+    else
+      false
     end
   end
 
@@ -72,8 +76,12 @@ private
     case system("cf app #{MAINTENANCE_APP_NAME}")
     when true
       say("#{MAINTENANCE_APP_NAME} app found.", :green)
+      true
     when nil
       say_error("Error: Command execution failed", :red)
+      false
+    else
+      false
     end
   end
 
@@ -82,8 +90,12 @@ private
     case system("cf app #{APP_NAME}")
     when true
       say("#{APP_NAME} app found.", :green)
+      true
     when nil
       say_error("Error: Command execution failed", :red)
+      false
+    else
+      false
     end
   end
 
