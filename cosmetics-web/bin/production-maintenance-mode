@@ -1,0 +1,108 @@
+#!/usr/bin/env ruby
+
+require "thor" # included with rails.
+
+# Cli tool that turns maintenance mode on or off for Submit and Search production pages.
+#
+# Usage:
+#   $ ./bin/production-maintenance-mode on
+#   $ ./bin/production-maintenance-mode off
+#
+class ProductionMaintenanceModeCLI < Thor
+  CF_SPACE = "prod".freeze
+  DOMAIN = "cosmetic-product-notifications.service.gov.uk".freeze
+  APP_NAME = "cosmetics-web".freeze
+  MAINTENANCE_APP_NAME = "maintenance".freeze
+  SUBMIT_HOSTNAME = "submit".freeze
+  SEARCH_HOSTNAME = "search".freeze
+
+  ON_COMMANDS = [
+    "cf map-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
+    "cf map-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+    "cf unmap-route #{APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
+    "cf unmap-route #{APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+  ].freeze
+
+  OFF_COMMANDS = [
+    "cf map-route #{APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
+    "cf map-route #{APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+    "cf unmap-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
+    "cf unmap-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+  ].freeze
+
+  desc "on", "Sets Cosmetics production websites (Submit and Search services) into maintenance mode."
+  def on
+    say("This command will make the production live Submit and Search services unavailable for the users.", :yellow)
+    return unless yes?("Do you want to proceed? (y/n)", :yellow)
+    return unless ensure_space_access && ensure_maintenance_app_presence && ensure_app_presence
+
+    say("Setting #{APP_NAME} into maintenance mode...", :yellow)
+    if execute_route_mapping_commands(ON_COMMANDS)
+      display_success_message("ON")
+    end
+  end
+
+  desc "off", "Sets Cosmetics production websites (Submit and Search services) back to live from maintenance mode."
+  def off
+    say("This command will remove the production live Submit and Search services from maintenance mode and make them available for the users.", :yellow)
+    return unless yes?("Do you want to proceed? (y/n)", :yellow)
+    return unless ensure_space_access && ensure_maintenance_app_presence && ensure_app_presence
+
+    say("Removing #{APP_NAME} from maintenance mode...", :yellow)
+    if execute_route_mapping_commands(OFF_COMMANDS)
+      display_success_message("OFF")
+    end
+  end
+
+private
+
+  def ensure_space_access
+    say("Ensuring access to GOV.UK BEIS-OPSS PaaS #{CF_SPACE} space...", :yellow)
+    case system("cf target -s #{CF_SPACE}")
+    when true
+      say("BEIS-OPSS #{CF_SPACE} PaaS space access granted.", :green)
+    when nil
+      say_error("Error: Cloud Foundry client not available for your user.", :red)
+      say("You can find installation instructions at: https://docs.cloudfoundry.org/cf-cli/install-go-cli.html", :yellow)
+    end
+  end
+
+  def ensure_maintenance_app_presence
+    say("Ensuring presence of #{MAINTENANCE_APP_NAME} app in #{CF_SPACE}...", :yellow)
+    case system("cf app #{MAINTENANCE_APP_NAME}")
+    when true
+      say("#{MAINTENANCE_APP_NAME} app found.", :green)
+    when nil
+      say_error("Error: Command execution failed", :red)
+    end
+  end
+
+  def ensure_app_presence
+    say("Ensuring presence of #{APP_NAME} app in #{CF_SPACE}...", :yellow)
+    case system("cf app #{APP_NAME}")
+    when true
+      say("#{APP_NAME} app found.", :green)
+    when nil
+      say_error("Error: Command execution failed", :red)
+    end
+  end
+
+  def execute_route_mapping_commands(commands)
+    commands.each do |command|
+      unless system(command)
+        say_error("Error: Failed while mapping/unmapping routes between #{APP_NAME} and #{MAINTENANCE_APP_NAME}.", :on_red)
+        say_error("Please check execution logs and fix any possible inconsistent route mapping left.", :on_red)
+        return
+      end
+    end
+  end
+
+  def display_success_message(status)
+    say("SUCCESS: Maintenance mode turned #{status} for #{APP_NAME}.", :on_green)
+    say("To check the pages:")
+    say("Submit: https://#{SUBMIT_HOSTNAME}.#{DOMAIN}")
+    say("Search: https://#{SEARCH_HOSTNAME}.#{DOMAIN}")
+  end
+end
+
+ProductionMaintenanceModeCLI.start(ARGV)
