@@ -38,12 +38,6 @@ module NotificationStateConcern
     READY_FOR_COMPONENTS => [COMPONENTS_COMPLETE],
   }.freeze
 
-  # If we are setting status that is defined as key,
-  # dont use override if the status is one of the value.
-  DISABLED_OVERRIDES_FOR = {
-    COMPONENTS_COMPLETE => [READY_FOR_COMPONENTS],
-  }.freeze
-
   included do
     include AASM
 
@@ -136,16 +130,14 @@ module NotificationStateConcern
   def update_state(new_state, only_downgrade: false)
     return if only_downgrade && state_lower_than?(new_state.to_sym)
 
-    if CACHEABLE_PREVIOUS_STATES.include?(state.to_sym)
-      update(previous_state: state)
-    end
-    # Try to revert to previous state
-    if previous_state.present? && STATES_OVERRIDES[new_state.to_sym]&.include?(previous_state.to_sym) &&
-        !DISABLED_OVERRIDES_FOR[state.to_sym]&.include?(new_state.to_sym)
-      # but only when transision is allowed
+    original_state = state.to_sym
+    if previous_state.present? && STATES_OVERRIDES[new_state.to_sym]&.include?(previous_state.to_sym)
       update(state: previous_state)
     else
       update(state: new_state)
+    end
+    if CACHEABLE_PREVIOUS_STATES.include?(original_state)
+      update(previous_state: original_state)
     end
   end
 
