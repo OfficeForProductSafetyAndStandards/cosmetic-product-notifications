@@ -134,9 +134,7 @@ module NotificationStateConcern
   end
 
   def update_state(new_state, only_downgrade: false)
-    if only_downgrade && (new_state.to_sym == READY_FOR_COMPONENTS && state.to_sym == READY_FOR_NANOMATERIALS)
-      return
-    end
+    return if only_downgrade && state_lower_than?(new_state.to_sym)
 
     if CACHEABLE_PREVIOUS_STATES.include?(state.to_sym)
       update(previous_state: state)
