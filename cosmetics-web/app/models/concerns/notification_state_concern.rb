@@ -31,9 +31,9 @@ module NotificationStateConcern
   # states which can be saved as previous state column
   CACHEABLE_PREVIOUS_STATES = [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE].freeze
 
-  # Indicates which states can be changed
+  # Indicates which state update attempts are overridden by a previous state.
   # key is requested state, value possible state from `previous_state` column.
-  STATES_OVERRIDES = {
+  UPDATE_STATES_OVERRIDDEN_BY_PREVIOUS = {
     DETAILS_COMPLETE => [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE],
     READY_FOR_COMPONENTS => [COMPONENTS_COMPLETE],
   }.freeze
@@ -131,7 +131,7 @@ module NotificationStateConcern
     return if only_downgrade && state_lower_than?(new_state.to_sym)
 
     original_state = state.to_sym
-    if previous_state.present? && STATES_OVERRIDES[new_state.to_sym]&.include?(previous_state.to_sym)
+    if update_overridden_by_previous_state?(new_state)
       update(state: previous_state)
     else
       update(state: new_state)
@@ -139,6 +139,11 @@ module NotificationStateConcern
     if CACHEABLE_PREVIOUS_STATES.include?(original_state)
       update(previous_state: original_state)
     end
+  end
+
+  def update_overridden_by_previous_state?(new_state)
+    previous_state.present? &&
+      UPDATE_STATES_OVERRIDDEN_BY_PREVIOUS[new_state.to_sym]&.include?(previous_state.to_sym)
   end
 
   def update_state!(new_state)
