@@ -18,9 +18,9 @@ private
     @component = Component.find(params[:component_id])
     @notification = @component.notification
 
-    return redirect_to responsible_person_notification_path(@component.notification.responsible_person, @component.notification) if @component&.notification&.notification_complete?
+    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
-    authorize @component.notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
-    @component_name = @component.notification.is_multicomponent? ? @component.name : "the product"
+    authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+    @component_name = @notification.is_multicomponent? ? @component.name : "the product"
   end
 end
