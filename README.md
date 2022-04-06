@@ -208,7 +208,7 @@ And those routes are explicitly disabled in application:
 ## Deployment
 
 Anything which is merged to `master` (via a Pull Request or push) will trigger the
-[Github Action Build](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
+[Github Action Build](https://github.com/UKGovernmentBEIS/beis-opss-cosmetics/actions/workflows/deploy.yml)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
 
 ### Review applications
@@ -390,6 +390,20 @@ cf apps
 See [antivirus repo](https://github.com/UKGovernmentBEIS/beis-opss-antivirus).
 
 #### Maintenance page
+
+Sometimes, database migrations, infrastructure updates, etc., require making the service inaccessible.
+We achieve this by redirecting the web requests to our application to a `maintenance` application that displays a static HTML page.
+
+Cosmetics has a cli tool to set/unset maintenance mode. It can be found at `bin/production-maintenance-mode`.
+
+To set the service under maintenance mode:
+```
+./bin/production-maintenance-mode on
+```
+To remove the service from maintenance mode:
+```
+./bin/production-maintenance-mode off
+```
 
 See [maintenance in infrastructure repo](https://github.com/UKGovernmentBEIS/beis-opss-infrastructure/blob/master/maintenance/README.md).
 
