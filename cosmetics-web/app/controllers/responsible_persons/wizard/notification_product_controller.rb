@@ -68,17 +68,17 @@ private
     when "yes"
       model.save_routing_answer(step, "yes")
       if @notification.update_with_context(notification_params, step)
-        render_wizard @notification
+        render_next_step @notification
       else
-        render step
+        rerender_current_step
       end
     when "no"
       model.save_routing_answer(step, "no")
       @notification.industry_reference = nil
-      render_wizard @notification
+      render_next_step @notification
     else
       @notification.errors.add :add_internal_reference, "Select yes to add an internal reference"
-      render step
+      rerender_current_step
     end
   end
 

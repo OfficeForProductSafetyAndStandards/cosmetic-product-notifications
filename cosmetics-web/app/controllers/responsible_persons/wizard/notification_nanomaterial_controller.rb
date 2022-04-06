@@ -109,9 +109,9 @@ private
 
   def update_select_purposes_step
     if @nano_element.update_with_context(purpose_params, step)
-      render_wizard @nano_element
+      render_next_step @nano_element
     else
-      render step
+      rerender_current_step
     end
   end
 
@@ -126,7 +126,7 @@ private
       redirect_to wizard_path(:must_be_listed)
     else
       @nano_element.errors.add :confirm_restrictions, "Select an option"
-      render step
+      rerender_current_step
     end
   end
 
@@ -138,8 +138,7 @@ private
     when "yes"
       render_next_step @nano_element
     when "no"
-      jump_to(:must_conform_to_restrictions)
-      render_next_step @nano_element
+      jump_to_step :must_conform_to_restrictions
     else
       @nano_element.errors.add :confirm_usage, "Select an option"
       rerender_current_step

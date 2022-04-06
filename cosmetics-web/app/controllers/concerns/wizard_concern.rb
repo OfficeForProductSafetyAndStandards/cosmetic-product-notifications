@@ -84,7 +84,6 @@ module WizardConcern
   end
 
   def model
-    # If you want your controller to allow different after_eu steps, override this
     raise "model method should be overridden"
   end
 
