@@ -104,13 +104,6 @@ class Component < ApplicationRecord
     %i[dermal oral inhalation].freeze
   end
 
-  # TODO: for backwards compatibi
-  # def exposure_routes
-  # end
-
-  # def exposure_condition
-  # end
-
   def prune_blank_shades
     return if self[:shades].nil?
 

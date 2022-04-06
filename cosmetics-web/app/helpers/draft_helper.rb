@@ -69,8 +69,6 @@ module DraftHelper
 
   def component_badge(component, override_id: nil)
     id = override_id || html_id_for(component)
-    # quarantine - not sure why its there
-    # return cannot_start_yet_badge unless component
     return cannot_start_yet_badge(id) unless section_can_be_used?(ITEMS_SECTION)
 
     if %w[empty product_name_added details_complete].include? component.notification.state
