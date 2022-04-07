@@ -105,10 +105,27 @@ module WizardConcern
     @component_name = @notification.is_multicomponent? ? @component.name : "the product"
   end
 
+  # To use helper above, the `BACK_ROUTING` constant needs to be defined in controller.
+  # The keys should be current page, the values will be previous page.
+  # If the current page has multiple back pages, the value will be hash.
+  # In such hash, the key will be back page, the value block. If the block evaluates to
+  # true, the corresponding key is used as back page. The first block thet evaluates to true, will be back page
+  #
+  # Example:
+  # `:second_page` has only one back page, `:first_page`, but for `:multiple_back_page`
+  # there are 2 pages.
+  #
+  # BACK_ROUTING = {
+  #   second_page: :first_page,
+  #   multiple_back_page: {
+  #     back_page_one: -> { go_to_one? },
+  #     back_page_two: -> { go_to_two? },
+  #   }
+  # }
   def previous_wizard_path(params = nil)
     route = self.class::BACK_ROUTING[step]
-    if route.is_a? Array
-      route = route.find { |r| instance_exec(&self.class::BACK_ROUTING_FUNCTIONS[r]) }
+    if route.is_a? Hash
+      route = route.find { |r, blk| instance_exec(&blk) }.first
       if route.nil?
         return responsible_person_notification_draft_path(@notification.responsible_person, @notification)
       end

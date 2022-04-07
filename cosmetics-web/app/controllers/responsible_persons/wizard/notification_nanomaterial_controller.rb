@@ -18,22 +18,21 @@ class ResponsiblePersons::Wizard::NotificationNanomaterialController < SubmitApp
         :must_conform_to_restrictions, # used when confirm usage fails - FLOW TERMINATION
         :completed
 
+  # Key is current page, value is page to go back to.
+  # In case of array, the first block that evaluates to true will determine back page
   BACK_ROUTING = {
     # first 3 checkboxes
     select_purposes: :add_nanomaterial_name,
     confirm_restrictions: :select_purposes,
     confirm_usage: :confirm_restrictions,
-
-    non_standard_nanomaterial_notified: %i[confirm_usage select_purposes],
+    non_standard_nanomaterial_notified: {
+      confirm_usage: -> { @nano_element.multi_purpose? },
+      select_purposes: -> { !@nano_element.multi_purpose? },
+    },
     when_products_containing_nanomaterial_can_be_placed_on_market: :non_standard_nanomaterial_notified,
     notify_your_nanomaterial: :non_standard_nanomaterial_notified,
     must_be_listed: :confirm_restrictions,
     must_conform_to_restrictions: :confirm_usage,
-  }.freeze
-
-  BACK_ROUTING_FUNCTIONS = {
-    confirm_usage: -> { @nano_element.multi_purpose? },
-    select_purposes: -> { !@nano_element.multi_purpose? },
   }.freeze
 
   def new
