@@ -80,11 +80,11 @@ module NotificationStateConcern
 
   def set_state_on_product_wizard_completed!
     if nano_materials.count.positive?
-      update_state("ready_for_nanomaterials")
+      update_state(READY_FOR_NANOMATERIALS)
     elsif multi_component?
-      update_state("details_complete")
+      update_state(DETAILS_COMPLETE)
     else
-      update_state("ready_for_components")
+      update_state(READY_FOR_COMPONENTS)
     end
   end
 
@@ -93,28 +93,28 @@ module NotificationStateConcern
 
     if nano_materials.map(&:nano_elements).flatten.all?(&:completed?)
       if multi_component?
-        update_state("details_complete")
+        update_state(DETAILS_COMPLETE)
       else
-        update_state("ready_for_components")
+        update_state(READY_FOR_COMPONENTS)
       end
     end
   end
 
   def try_to_complete_components!
-    if components.all? { |c| c.state == "component_complete" }
-      update_state("components_complete")
+    if components.all?(&:component_complete?)
+      update_state(COMPONENTS_COMPLETE)
     end
   end
 
   def notification_product_wizard_completed?
-    !%w[empty product_name_added].include?(state)
+    [EMPTY PRODUCT_NAME_ADDED].exclude?(state)
   end
 
   # TODO: quite entangled
   # This method is only called on product wizard when increasing component count
   # from 1 to n
   def revert_to_details_complete
-    return if %w[empty product_name_added ready_for_nanomaterials].include?(state)
+    return if [EMPTY PRODUCT_NAME_ADDED READY_FOR_NANOMATERUALS].include?(state.to_sym)
 
     raise("This should not be called") if components.count != 1
 
@@ -123,7 +123,7 @@ module NotificationStateConcern
 
     # Reset first component too
     c = components.first
-    c.update_state("empty")
+    c.update_state(EMPTY)
     update_state!(DETAILS_COMPLETE)
   end
 

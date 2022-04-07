@@ -111,7 +111,7 @@ class Notification < ApplicationRecord
   end
 
   def notification_product_wizard_completed?
-    !%w[empty product_name_added].include?(state)
+    !empty? && !product_name_added?
   end
 
   def reference_number_for_display

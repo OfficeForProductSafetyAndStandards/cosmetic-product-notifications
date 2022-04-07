@@ -1,7 +1,7 @@
 class NanoElement < ApplicationRecord
   belongs_to :nano_material
 
-  # TODO: add uniquenes notification across notifications
+  # TODO: add uniqueness validation across notifications
   validates :inci_name, presence: true, on: :add_nanomaterial_name
 
   after_save do

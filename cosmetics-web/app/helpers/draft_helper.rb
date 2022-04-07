@@ -16,7 +16,6 @@ module DraftHelper
                               MULTI_ITEMS_KIT_SECTION => false,
                               ITEMS_SECTION => false,
                               ACCEPT_SECTION => false },
-
     "ready_for_nanomaterials" => { NANOMATERIALS_SECTION => true,
                                    PRODUCT_DETAILS_SECTION => false,
                                    MULTI_ITEMS_KIT_SECTION => false,
@@ -58,9 +57,10 @@ module DraftHelper
 
     return cannot_start_yet_badge(id) unless section_can_be_used?(MULTI_ITEMS_KIT_SECTION)
 
-    if notification.state == "details_complete"
+    case notification.state.to_sym
+    when Notification::DETAILS_COMPLETE
       not_started_badge(id)
-    elsif %w[ready_for_components components_complete draft_complete notification_complete].include? notification.state
+    when Notification::READY_FOR_COMPONENTS, Notification::COMPONENTS_COMPLETE, Notification::DRAFT_COMPLETE, Notification::NOTIFICATION_COMPLETE
       completed_badge(id)
     else
       cannot_start_yet_badge(id)
@@ -71,11 +71,12 @@ module DraftHelper
     id = override_id || html_id_for(component)
     return cannot_start_yet_badge(id) unless section_can_be_used?(ITEMS_SECTION)
 
-    if %w[empty product_name_added details_complete].include? component.notification.state
+    notification = component.notification
+    if notification.empty? || notification.product_name_added? || notification.details_complete?
       cannot_start_yet_badge(id)
-    elsif component.state == "empty"
+    elsif component.empty?
       not_started_badge(id)
-    elsif component.state == "component_complete"
+    elsif component.component_complete?
       completed_badge(id)
     else
       cannot_start_yet_badge(id)
@@ -183,14 +184,10 @@ module DraftHelper
   end
 
   def total_sections_count
-    if @notification.nano_materials.present? && @notification.multi_component?
-      return 5
-    end
-    if @notification.nano_materials.present? || @notification.multi_component?
-      return 4
-    end
-
-    3
+    count = 3
+    count += 1 if @notification.nano_materials.present?
+    count += 1 if @notification.multi_component?
+    count
   end
 
   def sections_completed

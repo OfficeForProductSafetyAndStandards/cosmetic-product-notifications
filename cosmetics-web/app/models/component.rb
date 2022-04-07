@@ -18,10 +18,8 @@ class Component < ApplicationRecord
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
-  # has_one :nano_material, dependent: :destroy
   has_many :component_nano_materials
-  has_many :nano_materials, through: :component_nano_materials # dependent: :nullify
-
+  has_many :nano_materials, through: :component_nano_materials
   has_one_attached :formulation_file
 
   delegate :responsible_person, to: :notification
@@ -200,9 +198,7 @@ class Component < ApplicationRecord
 
     self.notification_type = type
 
-    return unless valid?(:select_formulation_type)
-
-    save!
+    return unless save(context: :select_formulation_type)
 
     formulation_file.purge if predefined? && old_type != notification_type
     update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?

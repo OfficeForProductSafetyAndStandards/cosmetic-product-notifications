@@ -8,10 +8,9 @@ module NotificationWizard
     def delete
       return false unless valid?
       raise("Can not remove item") if notification.components.count < 3
-      raise ActiveRecord::RecordNotFound if %w[notification_complete deleted].include?(notification.state)
+      raise ActiveRecord::RecordNotFound if notification.notification_complete? || notification.deleted?
 
-      component = notification.components.find(component_id)
-      component.destroy
+      notification.components.find(component_id).destroy
       notification.try_to_complete_components!
       true
     end
