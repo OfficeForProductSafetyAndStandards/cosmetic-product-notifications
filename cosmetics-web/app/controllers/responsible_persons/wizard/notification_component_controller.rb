@@ -333,11 +333,11 @@ private
         end
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
-        render step
+        rerender_current_step
       end
     else
       @component.errors.add :formulation_file, "Upload a list of poisonous ingredients"
-      render step
+      rerender_current_step
     end
   end
 
