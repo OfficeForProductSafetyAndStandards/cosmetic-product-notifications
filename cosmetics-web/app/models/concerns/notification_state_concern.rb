@@ -107,14 +107,14 @@ module NotificationStateConcern
   end
 
   def notification_product_wizard_completed?
-    [EMPTY PRODUCT_NAME_ADDED].exclude?(state)
+    [EMPTY, PRODUCT_NAME_ADDED].exclude?(state)
   end
 
   # TODO: quite entangled
   # This method is only called on product wizard when increasing component count
   # from 1 to n
   def revert_to_details_complete
-    return if [EMPTY PRODUCT_NAME_ADDED READY_FOR_NANOMATERUALS].include?(state.to_sym)
+    return if [EMPTY, PRODUCT_NAME_ADDED, READY_FOR_NANOMATERIALS].include?(state.to_sym)
 
     raise("This should not be called") if components.count != 1
 
