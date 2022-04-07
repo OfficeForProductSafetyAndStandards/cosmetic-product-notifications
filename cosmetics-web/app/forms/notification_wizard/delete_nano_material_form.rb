@@ -2,7 +2,7 @@ module NotificationWizard
   class DeleteNanoMaterialForm < Form
     class NonEmptyArrayValidator < ActiveModel::EachValidator
       def validate_each(record, attribute, value)
-        if value.empty? || value.reject(&:blank?).empty?
+        if value.blank? || value.reject(&:blank?).empty?
           record.errors.add attribute, "Please select nanomaterial to remove"
         end
       end
