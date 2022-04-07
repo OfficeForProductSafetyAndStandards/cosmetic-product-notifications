@@ -42,17 +42,17 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     add_shades: :number_of_shades,
     add_physical_form: :number_of_shades,
     contains_special_applicator: :add_physical_form,
-    select_special_applicator_type: :contains_special_applicator, # only if contains special applicato: :,
+    select_special_applicator_type: :contains_special_applicator, # only if contains special applicator,
     contains_cmrs: :contains_special_applicator,
     add_cmrs: :contains_cmrs,
     select_root_category: :contains_cmrs,
     select_sub_category: :select_root_category,
     select_sub_sub_category: :select_sub_category,
     select_formulation_type: :select_sub_sub_category,
-    upload_formulation: :select_formulation_type, # only for range and exac: :,
-    select_frame_formulation: :select_formulation_type, # only for frame formulatio: :,
-    contains_poisonous_ingredients: :select_formulation_type, # only for frame formulatio: :,
-    upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulatio: :,
+    upload_formulation: :select_formulation_type, # only for range and exact,
+    select_frame_formulation: :select_formulation_type, # only for frame formulation,
+    contains_poisonous_ingredients: :select_formulation_type, # only for frame formulation,
+    upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulation,
     select_ph_option: %i[contains_poisonous_ingredients upload_formulation],
     min_max_ph: :select_ph_option,
   }.freeze
@@ -132,7 +132,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
       if @component.update_with_context(component_params, step)
         render_next_step @component
       else
-        render step
+        rerender_current_step
       end
     end
   end
@@ -161,8 +161,7 @@ private
     case answer
     when "single-or-no-shades", "multiple-shades-different-notification"
       @component.shades = nil
-      jump_to :add_physical_form
-      render_next_step @component
+      jump_to_step :add_physical_form
     when "multiple-shades-same-notification"
       render_next_step @component
     else
@@ -176,16 +175,16 @@ private
     if @component.update(nano_material_ids: (ids || []))
       render_next_step @component
     else
-      render step
+      rerender_current_step
     end
   end
 
   def update_add_exposure_routes
     exposure_routes = params[:component].select { |_key, value| value == "1" }.keys
     if @component.update_with_context({ exposure_routes: exposure_routes }, step)
-      render_wizard @component
+      render_next_step @component
     else
-      render step
+      rerender_current_step
     end
   end
 
@@ -202,10 +201,10 @@ private
     else
       @component.prune_blank_shades
       if @component.valid?
-        render_wizard @component
+        render_next_step @component
       else
         create_required_shades
-        render step
+        rerender_current_step
       end
     end
   end
@@ -220,10 +219,10 @@ private
 
   def update_add_cmrs
     if @component.update_with_context(component_params, step)
-      render_wizard @component
+      render_next_step @component
     else
       create_required_cmrs
-      render step
+      rerender_current_step
     end
   end
 
@@ -232,10 +231,9 @@ private
     if sub_category
       if has_sub_categories(sub_category)
         render_wizard @component, {}, category: sub_category
-        # redirect_to responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, category: sub_category)
       else
         @component.update(sub_sub_category: sub_category)
-        render_wizard @component
+        render_next_step @component
       end
     else
       @component.errors.add :sub_category, "Choose an option"
@@ -249,23 +247,22 @@ private
     @component.update_formulation_type(formulation_type)
 
     if @component.errors.present?
-      return render step
+      return rerender_current_step
     end
 
     if @component.predefined? # predefined == frame_formulation
       jump_to(:select_frame_formulation)
-    else
-      @component.update(frame_formulation: nil) unless @component.frame_formulation.nil?
+    elsif @component.frame_formulation.present?
+      @component.update(frame_formulation: nil)
     end
 
-    render_wizard @component
+    render_next_step @component
   end
 
   # for frame formulation only
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
-      jump_to(:contains_poisonous_ingredients)
-      render_next_step @component
+      jump_to_step :contains_poisonous_ingredients
     else
       render :select_frame_formulation
     end
@@ -283,7 +280,7 @@ private
     unless @component.contains_poisonous_ingredients?
       jump_to(:select_ph_option)
     end
-    render_wizard @component
+    render_next_step @component
   end
 
   # For exact and range formulations only
@@ -293,8 +290,7 @@ private
       if params[:back_to_edit] == "true"
         return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
       else
-        jump_to(:select_ph_option)
-        return render_next_step @component
+        return  jump_to_step(:select_ph_option)
       end
     end
 
@@ -304,12 +300,11 @@ private
         if params[:back_to_edit] == "true"
           redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
         else
-          jump_to(:select_ph_option)
-          render_next_step @component
+          jump_to_step :select_ph_option
         end
       else
         @component.formulation_file.purge if @component.formulation_file.attached?
-        render step
+        rerender_current_step
       end
     else
       @component.errors.add :formulation_file, "Upload a list of ingredients"
@@ -363,8 +358,7 @@ private
   # and wording in previous action is about range.
   def update_component_min_max_ph
     if @component.update_with_context(component_params, :ph_range)
-      jump_to :completed
-      render_next_step @component
+      jump_to_step :completed
     else
       rerender_current_step
     end
