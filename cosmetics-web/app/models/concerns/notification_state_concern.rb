@@ -1,5 +1,6 @@
 module NotificationStateConcern
   extend ActiveSupport::Concern
+
   EMPTY = :empty
   PRODUCT_NAME_ADDED = :product_name_added
   READY_FOR_NANOMATERIALS = :ready_for_nanomaterials
@@ -23,6 +24,9 @@ module NotificationStateConcern
   # when adding nanos after higher steps were completed, after finishing
   # nano wizard we want to go to the previous state. This is achieved by cacheing
   # higher state and restoring it when certain state update is triggered.
+  # In practice, this is *complicated mechanism*. It is well tested,
+  # the best thing to understand it is to read feature specs and temporary remove
+  # some values from data structures below to see what happens.
 
   # states which can be saved as previous state column
   CACHEABLE_PREVIOUS_STATES = [READY_FOR_COMPONENTS, COMPONENTS_COMPLETE].freeze
@@ -34,6 +38,8 @@ module NotificationStateConcern
     READY_FOR_COMPONENTS => [COMPONENTS_COMPLETE],
   }.freeze
 
+  # If we are setting status that is defined as key,
+  # dont use override if the status is one of the value.
   DISABLED_OVERRIDES_FOR = {
     COMPONENTS_COMPLETE => [READY_FOR_COMPONENTS],
   }.freeze
@@ -58,15 +64,11 @@ module NotificationStateConcern
       state NOTIFICATION_COMPLETE
 
       event :add_product_name do
-        transitions from: :empty, to: :product_name_added
-      end
-
-      event :complete_draft do
-        transitions from: :components_complete, to: :draft_complete
+        transitions from: EMPTY, to: PRODUCT_NAME_ADDED
       end
 
       event :submit_notification, after: :cache_notification_for_csv! do
-        transitions from: :components_complete, to: :notification_complete,
+        transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE,
                     after: proc { __elasticsearch__.index_document } do
           guard do
             !missing_information?
