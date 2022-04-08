@@ -128,11 +128,9 @@ Rails.application.routes.draw do
 
       resource :draft, controller: "responsible_persons/drafts", only: %i[new]
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit create] do
-        resources :build, controller: "responsible_persons/wizard/notification_build", only: %i[show update new]
         resources :product, controller: "responsible_persons/wizard/notification_product", only: %i[show update new] do
         end
         resources :product_kit, controller: "responsible_persons/wizard/notification_product_kit", only: %i[show update new]
-        resources :additional_information, controller: "responsible_persons/additional_information", only: %i[index]
         resource :draft, controller: "responsible_persons/drafts", only: %i[show] do
           collection do
             post :add_component
@@ -142,14 +140,6 @@ Rails.application.routes.draw do
           resource :delete_product_image, controller: "responsible_persons/delete_product_image", only: %i[destroy]
           resource :delete_formulation_file, controller: "responsible_persons/delete_formulation_file", only: %i[destroy]
           resource :delete_nano_material, controller: "responsible_persons/delete_nano_materials", only: %i[show destroy]
-        end
-
-        resources :components do
-          resources :build, controller: "responsible_persons/wizard/notification_component", only: %i[show update new]
-          resources :trigger_question, controller: "responsible_persons/wizard/trigger_questions", only: %i[show update new]
-        end
-        resources :nanomaterials, param: :nano_element_id do
-          resources :build, controller: "responsible_persons/wizard/notification_nanomaterial", only: %i[show update new]
         end
 
         member do
