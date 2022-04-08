@@ -157,7 +157,7 @@ private
       jump_to_step(:notify_your_nanomaterial)
     else
       @nano_element.errors.add :confirm_toxicology_notified, "Select an option"
-      rerender_current_path
+      rerender_current_step
     end
   end
 
