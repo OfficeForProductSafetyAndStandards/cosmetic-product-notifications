@@ -125,7 +125,7 @@ module WizardConcern
   def previous_wizard_path(params = nil)
     route = self.class::BACK_ROUTING[step]
     if route.is_a? Hash
-      route = route.find { |r, blk| instance_exec(&blk) }.first
+      route = route.find { |_r, blk| instance_exec(&blk) }.first
       if route.nil?
         return responsible_person_notification_draft_path(@notification.responsible_person, @notification)
       end

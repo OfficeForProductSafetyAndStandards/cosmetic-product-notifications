@@ -290,7 +290,7 @@ private
       if params[:back_to_edit] == "true"
         return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
       else
-        return  jump_to_step(:select_ph_option)
+        return jump_to_step(:select_ph_option)
       end
     end
 
