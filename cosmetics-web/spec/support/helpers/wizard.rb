@@ -117,7 +117,6 @@ def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, numbe
       expect(page).to have_summary_item(key: "Category of #{kit_item[:subcategory].downcase.singularize}", value: kit_item[:sub_subcategory])
       expect(page).to have_summary_item(key: "Formulation given as", value: kit_item[:formulation_given_as])
       expect(page).to have_summary_item(key: "Physical form", value: kit_item[:physical_form])
-      # expect(page).to have_summary_item(key: "pH", value: kit_item[:ph])
     end
   end
 end

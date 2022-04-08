@@ -28,7 +28,7 @@ RSpec.describe "Delete product image", type: :request do
         expect { delete delete_path }.to change { notification.image_uploads.count }.from(1).to(0)
       end
 
-      it "redirects the user to the edit product images page" do
+      it "redirects the user to the notification draft page" do
         delete delete_path
         expect(response).to redirect_to(
           "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft",
