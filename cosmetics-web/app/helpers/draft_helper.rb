@@ -97,8 +97,10 @@ module DraftHelper
     text = nano_element.inci_name || "Nanomaterial ##{index + 1}"
 
     if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_element.blocked?
-      aria_id = html_id_for(nano_element)
-      link_to text, new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_element), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: aria_id }
+      link_to(text,
+              new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_element),
+              class: "govuk-link govuk-link--no-visited-state",
+              aria: { describedby: html_id_for(nano_element) })
     else
       text
     end

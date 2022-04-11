@@ -15,13 +15,6 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     redirect_to new_responsible_person_notification_component_build_path @notification.responsible_person, @notification, component
   end
 
-  def add_nano_material
-    nano = @notification.nano_materials.create
-    ne = nano.nano_elements.create
-    @notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
-    redirect_to new_responsible_person_notification_nanomaterial_build_path @notification.responsible_person, @notification, ne
-  end
-
 private
 
   def set_responsible_person

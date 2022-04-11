@@ -135,7 +135,6 @@ Rails.application.routes.draw do
         resource :draft, controller: "responsible_persons/drafts", only: %i[show] do
           collection do
             post :add_component
-            post :add_nano_material
           end
           resource :delete_item, controller: "responsible_persons/delete_items", only: %i[show destroy]
           resource :delete_product_image, controller: "responsible_persons/delete_product_image", only: %i[destroy]
@@ -146,8 +145,9 @@ Rails.application.routes.draw do
         resources :components do
           resources :build, controller: "responsible_persons/wizard/notification_component", only: %i[show update new]
         end
-        resources :nanomaterials, param: :nano_element_id do
-          resources :build, controller: "responsible_persons/wizard/notification_nanomaterial", only: %i[show update new]
+
+        resources :nanomaterials, controller: "responsible_persons/wizard/notifications/nanomaterials", param: :nano_element_id, only: %i[new create] do
+          resources :build, controller: "responsible_persons/wizard/notifications/nanomaterials/build", only: %i[show update new]
         end
 
         member do
