@@ -242,15 +242,26 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
+    # Does not create the item until the name is added.
     click_on "Add another item"
-
     click_on "Back"
 
-    expect_item_task_not_started "Item #3"
+    expect(page).to have_current_path(/\/draft/)
+    expect(page).not_to have_link("Item #3")
+    expect_accept_and_submit_not_started
+
+    click_on "Add another item"
+    answer_item_name_with "Cream three"
+    click_link "Back"
+    expect(page).to have_current_path(/\/add_component_name/)
+
+    click_link "Back"
+    expect(page).to have_current_path(/\/draft/)
+    expect_item_task_not_started "Cream three"
 
     expect_accept_and_submit_blocked
 
-    complete_item_wizard("Cream three", item_number: 3)
+    complete_item_wizard("Cream three")
 
     expect_accept_and_submit_not_started
 

@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplicationController
+class ResponsiblePersons::Wizard::Notifications::Components::BuildController < SubmitApplicationController
   NUMBER_OF_CMRS = 5
 
   include Wicked::Wizard

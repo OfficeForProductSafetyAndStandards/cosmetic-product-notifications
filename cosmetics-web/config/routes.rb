@@ -142,8 +142,8 @@ Rails.application.routes.draw do
           resource :delete_nano_material, controller: "responsible_persons/delete_nano_materials", only: %i[show destroy]
         end
 
-        resources :components do
-          resources :build, controller: "responsible_persons/wizard/notification_component", only: %i[show update new]
+        resources :components, controller: "responsible_persons/wizard/notifications/components", only: %i[new create] do
+          resources :build, controller: "responsible_persons/wizard/notifications/components/build", only: %i[show update new]
         end
 
         resources :nanomaterials, controller: "responsible_persons/wizard/notifications/nanomaterials", param: :nano_element_id, only: %i[new create] do

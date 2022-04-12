@@ -9,12 +9,6 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     render "show"
   end
 
-  def add_component
-    component = @notification.components.create
-    @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS, only_downgrade: true)
-    redirect_to new_responsible_person_notification_component_build_path @notification.responsible_person, @notification, component
-  end
-
 private
 
   def set_responsible_person

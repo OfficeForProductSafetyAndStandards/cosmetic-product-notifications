@@ -87,7 +87,10 @@ module DraftHelper
     text = component.name || "Item ##{index + 1}"
 
     if section_can_be_used?(ITEMS_SECTION)
-      link_to text, new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: html_id_for(component) }
+      link_to(text,
+              new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component),
+              class: "govuk-link govuk-link--no-visited-state",
+              aria: { describedby: html_id_for(component) })
     else
       text
     end
