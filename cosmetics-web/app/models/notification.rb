@@ -230,7 +230,7 @@ class Notification < ApplicationRecord
       end
 
       count += 1 if count.zero? # Single component notification
-      count -= 1 if components.any? # Don't create the already existing component
+      count -= 1 if components.one? # Don't create the already existing component
       count.times { components.create! }
     end
     count
