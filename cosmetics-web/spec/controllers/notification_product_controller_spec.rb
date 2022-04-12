@@ -74,19 +74,19 @@ RSpec.describe ResponsiblePersons::Wizard::NotificationProductController, :with_
     end
 
     it "creates a component if single_or_multi_component set to single" do
-      post(:update, params: params.merge(id: :single_or_multi_component, notification: { single_or_multi_component: "single" }))
+      post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component_form: { single_or_multi_component: "single" }))
       Notification.find(notification.id).components
       expect(Notification.find(notification.id).components).to have(1).item
     end
 
     it "creates components if single_or_multi_component set to multiple" do
-      post(:update, params: params.merge(id: :single_or_multi_component, notification: { single_or_multi_component: "multiple", components_count: 3 }))
+      post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component_form: { single_or_multi_component: "multiple", components_count: 3 }))
       expect(Notification.find(notification.id).components).to have(3).item
     end
 
     it "adds errors if single_or_multi_component is empty" do
-      post(:update, params: params.merge(id: :single_or_multi_component, notification: { single_or_multi_component: nil }))
-      expect(assigns(:notification).errors[:single_or_multi_component]).to eql(["Select yes if the product is a multi-item kit, no if its single item"])
+      post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component_form: { single_or_multi_component: nil }))
+      expect(assigns(:single_or_multi_component_form).errors[:single_or_multi_component]).to eql(["Select yes if the product is a multi-item kit, no if its single item"])
     end
 
     it "continues to next step if user submits under_three_years with a valid value" do

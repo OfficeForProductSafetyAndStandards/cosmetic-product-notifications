@@ -65,7 +65,7 @@ def answer_does_product_contains_nanomaterials_with(answer, amount: 1)
   within("fieldset") do
     page.choose(answer)
     if answer == Fspec::YES
-      fill_in "Nanomaterial count", with: amount
+      fill_in "How many nanomaterials?", with: amount
     end
   end
   click_button "Continue"

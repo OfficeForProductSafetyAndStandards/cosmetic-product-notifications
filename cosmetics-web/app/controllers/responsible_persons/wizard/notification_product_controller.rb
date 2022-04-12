@@ -20,11 +20,13 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
   }.freeze
 
   before_action :set_notification
+  before_action :contains_nanomaterials_form, if: -> { step == :contains_nanomaterials }
+  before_action :single_or_multi_component_form, if: -> { step == :single_or_multi_component }
 
   def show
     case step
     when :completed
-      set_final_state_for_wizard
+      @notification.set_state_on_product_wizard_completed!
       render "responsible_persons/wizard/completed"
     else
       render_wizard
@@ -56,13 +58,6 @@ class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicat
 
 private
 
-  def set_final_state_for_wizard
-    # Make sure state wont be overrided if notification is in higher state
-    return if @notification.notification_product_wizard_completed?
-
-    @notification.set_state_on_product_wizard_completed!
-  end
-
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)
     when "yes"
@@ -82,94 +77,27 @@ private
     end
   end
 
-  # Run this step only when notifications does not have any notifications
+  # Run this step only when notification doesn't already have nanomaterials
   def update_contains_nanomaterials
-    return render_next_step @notification if @notification.nano_materials.count > 1
+    return render_next_step @notification if @notification.nano_materials.any?
 
-    answer = params.dig(:notification, :contains_nanomaterials)
-    model.save_routing_answer(step, answer) if answer
+    form = contains_nanomaterials_form
+    return rerender_current_step unless form.valid?
 
-    case answer
-    when "yes"
-      if nano_materials_count > 10
-        @notification.errors.add :contains_nanomaterials, "Maximum nanomaterials count is 10. More can be added later"
-        return rerender_current_step
-
-      end
-      if nano_materials_count < 1
-        @notification.errors.add :contains_nanomaterials, "Please enter at least 1"
-        return rerender_current_step
-      end
-      if @notification.nano_materials.count > 1 && nano_materials_count < @notification.nano_materials.count
-        @notification.errors.add :contains_nanomaterials, "Components count cant be lower than #{@notification.components_count}"
-        return rerender_current_step
-      end
-      required_nano_materials_count = @notification.nano_materials.present? ? nano_materials_count - 1 : nano_materials_count
-      required_nano_materials_count.times do
-        nano = @notification.nano_materials.create
-        nano.nano_elements.create
-        # TODO: quite entangled
-        @notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
-      end
-      render_next_step @notification
-    when "no"
-      render_next_step @notification
-    else
-      @notification.errors.add :contains_nanomaterials, "Select yes if the product is a multi-item kit, no if its single item"
-      rerender_current_step
-    end
+    model.save_routing_answer(step, form.contains_nanomaterials)
+    @notification.make_ready_for_nanomaterials!(form.nanomaterials_count.to_i)
+    render_next_step @notification
   end
 
-  def nano_materials_count
-    if params[:notification][:contains_nanomaterials] == "yes"
-      params[:notification][:nanomaterial_count].to_i
-    else
-      0
-    end
-  end
-
-  # Run this step only when notifications does not have any components
+  # Run this step only when notifications does not have multiple components
   def update_single_or_multi_component_step
-    return render_next_step @notification if @notification.components.count > 1
+    return render_next_step @notification if @notification.multi_component?
 
-    case params.dig(:notification, :single_or_multi_component)
-    when "single"
-      @notification.components.create if @notification.components.empty?
-      render_next_step @notification
-    when "multiple"
-      if @notification.components_count.positive? && components_count < @notification.components_count
-        @notification.errors.add :single_or_multi_component, "Items count cant be lower than #{@notification.components_count}"
-        return rerender_current_step
-      end
-      if components_count > 10
-        @notification.errors.add :single_or_multi_component, "Please select less items. More items can be added later"
-        return rerender_current_step
+    form = single_or_multi_component_form
+    return rerender_current_step unless form.valid?
 
-      end
-      if components_count < 2
-        @notification.errors.add :single_or_multi_component, "Enter 2 or more"
-        return rerender_current_step
-      end
-      # This happens only when there only one component
-      if components_count > @notification.components.count
-        # TODO: quite entangled
-
-        # We can reset previous state, as previous state functionality
-        # is to prevent messing state when nanos are added.
-        @notification.reset_previous_state!
-        @notification.revert_to_details_complete
-      end
-      required_components_count = @notification.components.present? ? components_count - 1 : components_count
-      required_components_count.times { @notification.components.create }
-      render_next_step @notification
-    else
-      @notification.errors.add :single_or_multi_component, "Select yes if the product is a multi-item kit, no if its single item"
-      rerender_current_step
-    end
-  end
-
-  def components_count
-    params[:notification][:components_count].to_i
+    @notification.make_single_ready_for_components!(form.components_count.to_i)
+    render_next_step @notification
   end
 
   def update_add_product_image_step
@@ -201,6 +129,26 @@ private
         :under_three_years,
         image_uploads_attributes: [file: []],
       )
+  end
+
+  def contains_nanomaterials_params
+    params.fetch(:contains_nanomaterials_form, {})
+          .permit(:contains_nanomaterials, :nanomaterials_count)
+  end
+
+  def single_or_multi_component_params
+    params.fetch(:single_or_multi_component_form, {})
+          .permit(:single_or_multi_component, :components_count)
+  end
+
+  def contains_nanomaterials_form
+    @contains_nanomaterials_form ||=
+      ResponsiblePersons::Wizard::NotificationProduct::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
+  end
+
+  def single_or_multi_component_form
+    @single_or_multi_component_form ||=
+      ResponsiblePersons::Wizard::NotificationProduct::SingleOrMultiComponentForm.new(single_or_multi_component_params)
   end
 
   def model

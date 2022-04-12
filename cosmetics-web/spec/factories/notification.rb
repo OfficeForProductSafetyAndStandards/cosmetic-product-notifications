@@ -48,6 +48,20 @@ FactoryBot.define do
       end
     end
 
+    trait :with_nano_material do
+      after(:create) do |notification|
+        create(:nano_material, notification: notification)
+        notification.reload
+      end
+    end
+
+    trait :with_nano_materials do
+      after(:create) do |notification|
+        create_list(:nano_material, 2, notification: notification)
+        notification.reload
+      end
+    end
+
     trait :with_label_image do
       image_uploads { [build(:image_upload, :uploaded_and_virus_scanned)] }
     end

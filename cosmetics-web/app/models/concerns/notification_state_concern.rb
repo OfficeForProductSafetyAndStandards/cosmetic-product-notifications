@@ -75,6 +75,8 @@ module NotificationStateConcern
   end
 
   def set_state_on_product_wizard_completed!
+    return if product_wizard_completed? # State wont be overridden if notification is in higher state
+
     if nano_materials.count.positive?
       update_state(READY_FOR_NANOMATERIALS)
     elsif multi_component?
@@ -102,8 +104,8 @@ module NotificationStateConcern
     end
   end
 
-  def notification_product_wizard_completed?
-    [EMPTY, PRODUCT_NAME_ADDED].exclude?(state)
+  def product_wizard_completed?
+    !empty? && !product_name_added?
   end
 
   # TODO: quite entangled
