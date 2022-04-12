@@ -1,14 +1,15 @@
 <% title = "Nanomaterials" %>
-<% page_title title %>
+<% errors = @contains_nanomaterials_form.errors %>
+<% page_title(title, errors: errors.any?) %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
 <% if @notification.nano_materials.blank? %>
-  <%= form_with model: @notification, url: wizard_path, method: :put do |form| %>
+  <%= form_with model: @contains_nanomaterials_form, url: wizard_path, scope: :contains_nanomaterials_form, method: :put do |form| %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <%= error_summary_for(@notification, first_values: {contains_nanomaterials: "yes"}) %>
+        <%= error_summary(errors, map_errors: { contains_nanomaterials: :contains_nanomaterials_yes }) %>
 
         <h1 class="govuk-heading-l"><%= title %></h1>
 
@@ -21,15 +22,29 @@
         </ul>
 
         <% count_input_html = capture do %>
-          <%= render "form_components/govuk_input", form: form, key: :nanomaterial_count,
-              label: { text: "Nanomaterial count" } %>
+          <%= render("form_components/govuk_input",
+                     form: form,
+                     key: :nanomaterials_count,
+                     id: "nanomaterials_count",
+                     label: { text: "How many nanomaterials?" },
+                     classes: "govuk-input--width-3") %>
         <% end %>
-        <%= render "form_components/govuk_radios", form: form, key: :contains_nanomaterials,
-                fieldset: { legend: { text: "Does #{@notification.product_name} contain nanomaterials?",
-                classes: "govuk-label--m" } },
-                items: [{ text: "Yes", value: "yes", conditional: { html: count_input_html },
-                      checked: params[:notification].present? && params[:notification][:contains_nanomaterials] == "yes" },
-                      { text: "No", value: "no", checked: answer_checked?("no") }] %>
+        <%= render("form_components/govuk_radios",
+                   form: form,
+                   key: :contains_nanomaterials,
+                   fieldset: { legend: { text: "Does #{@notification.product_name} contain nanomaterials?",
+                   classes: "govuk-label--m" } },
+                   items: [
+                     { text: "Yes",
+                       value: "yes",
+                       id: "contains_nanomaterials_yes",
+                       conditional: { html: count_input_html },
+                       checked: errors.include?(:nanomaterials_count) || form.object.contains_nanomaterials? },
+                     { text: "No",
+                       value: "no",
+                       id: "contains_nanomaterials_no",
+                       checked: errors.exclude?(:nanomaterials_count) && answer_checked?("no") },
+                    ]) %>
         <%= govukButton text: "Continue" %>
 
       </div>
