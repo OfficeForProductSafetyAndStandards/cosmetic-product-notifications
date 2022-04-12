@@ -77,9 +77,9 @@ private
     end
   end
 
-  # Run this step only when notification doesn't already have multiple nanomaterials
+  # Run this step only when notification doesn't already have nanomaterials
   def update_contains_nanomaterials
-    return render_next_step @notification if @notification.nano_materials.count > 1
+    return render_next_step @notification if @notification.nano_materials.any?
 
     form = contains_nanomaterials_form
     return rerender_current_step unless form.valid?

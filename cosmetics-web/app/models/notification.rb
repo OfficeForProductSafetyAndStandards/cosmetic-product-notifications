@@ -200,13 +200,12 @@ class Notification < ApplicationRecord
   end
 
   # Sets up a given count of nanomaterials for the notification.
-  # Nothing to do if notification already contains multiple nanomaterials.
+  # Nothing to do if notification already contains nanomaterials.
   # Returns number of nano materials added to the notification
   def make_ready_for_nanomaterials!(count)
     count = count.to_i
-    return 0 unless count.positive? && nano_materials.count <= 1
+    return 0 unless count.positive? && nano_materials.none?
 
-    count -= 1 if nano_materials.any? # Don't create the already existing nanomaterial
     transaction do
       count.times do
         nano_materials.create.tap do |nano|

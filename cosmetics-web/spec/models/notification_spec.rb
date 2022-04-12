@@ -484,27 +484,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
     end
 
-    context "with a notification containing a single nanomaterial" do
-      let(:notification) { create(:notification, :with_nano_material) }
-
-      context "when given a nanomaterials count" do
-        let(:count) { 3 }
-
-        it "returns 2 as the number of nanomaterials created" do
-          expect(make_ready).to eq 2
-        end
-
-        it "creates the missing nanomaterials to match the given count" do
-          expect { make_ready }.to(change { notification.nano_materials.count }.by(2))
-        end
-
-        it "sets the notification state to reay for nanomaterials" do
-          expect { make_ready }.to change(notification, :state).to(Notification::READY_FOR_NANOMATERIALS.to_s)
-        end
-      end
-    end
-
-    context "with a notification containing multiple nanomaterials" do
+    context "with a notification containing nanomaterials" do
       let(:notification) { create(:notification, :with_nano_materials) }
 
       context "when not given a number of nanomaterials" do
