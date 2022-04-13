@@ -36,14 +36,14 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
 
   BACK_ROUTING = {
     select_nanomaterials: {
-      add_component_name: -> { @component.notification.multi_component? }
+      add_component_name: -> { @component.notification.multi_component? },
     },
     add_exposure_condition: :select_nanomaterials,
     add_exposure_routes: :add_exposure_condition,
     number_of_shades: {
       add_exposure_routes: -> { @component.nano_materials.present? },
       select_nanomaterials: -> { @component.notification.nano_materials.present? },
-      add_component_name: -> { @component.notification.multi_component? }
+      add_component_name: -> { @component.notification.multi_component? },
     },
     add_shades: :number_of_shades,
     add_physical_form: :number_of_shades,
@@ -61,7 +61,7 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulation,
     select_ph_option: {
       contains_poisonous_ingredients: -> { @component.predefined? },
-      upload_formulation: -> { true }
+      upload_formulation: -> { true },
     },
     min_max_ph: :select_ph_option,
   }.freeze
