@@ -35,10 +35,16 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
         :completed
 
   BACK_ROUTING = {
-    select_nanomaterials: [:add_component_name],
+    select_nanomaterials: {
+      add_component_name: -> { @component.notification.multi_component? }
+    },
     add_exposure_condition: :select_nanomaterials,
     add_exposure_routes: :add_exposure_condition,
-    number_of_shades: %i[add_exposure_routes select_nanomaterials add_component_name],
+    number_of_shades: {
+      add_exposure_routes: -> { @component.nano_materials.present? },
+      select_nanomaterials: -> { @component.notification.nano_materials.present? },
+      add_component_name: -> { @component.notification.multi_component? }
+    },
     add_shades: :number_of_shades,
     add_physical_form: :number_of_shades,
     contains_special_applicator: :add_physical_form,
@@ -53,16 +59,11 @@ class ResponsiblePersons::Wizard::NotificationComponentController < SubmitApplic
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_poisonous_ingredients: :select_formulation_type, # only for frame formulation,
     upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulation,
-    select_ph_option: %i[contains_poisonous_ingredients upload_formulation],
+    select_ph_option: {
+      contains_poisonous_ingredients: -> { @component.predefined? },
+      upload_formulation: -> { true }
+    },
     min_max_ph: :select_ph_option,
-  }.freeze
-
-  BACK_ROUTING_FUNCTIONS = {
-    add_exposure_routes: -> { @component.nano_materials.present? },
-    select_nanomaterials: -> { @component.notification.nano_materials.present? },
-    add_component_name: -> { @component.notification.multi_component? },
-    contains_poisonous_ingredients: -> { @component.predefined? },
-    upload_formulation: -> { true },
   }.freeze
 
   def show
