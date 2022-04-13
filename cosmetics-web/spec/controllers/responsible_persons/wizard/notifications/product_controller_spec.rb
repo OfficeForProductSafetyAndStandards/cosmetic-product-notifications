@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::Wizard::NotificationProductController, :with_stubbed_antivirus, type: :controller do
+RSpec.describe ResponsiblePersons::Wizard::Notifications::ProductController, :with_stubbed_antivirus, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:notification) { create(:notification, responsible_person: responsible_person) }
   let(:image_file) { fixture_file_upload("testImage.png", "image/png") }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::Wizard::NotificationProduct::ContainsNanomaterialsForm do
+RSpec.describe ResponsiblePersons::Wizard::Notifications::Product::ContainsNanomaterialsForm do
   subject(:form) do
     described_class.new(contains_nanomaterials: contains_nanomaterials, nanomaterials_count: nanomaterials_count)
   end

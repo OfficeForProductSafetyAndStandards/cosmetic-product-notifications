@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::NotificationProductController < SubmitApplicationController
+class ResponsiblePersons::Wizard::Notifications::ProductController < SubmitApplicationController
   include Wicked::Wizard
   include CountriesHelper
   include WizardConcern
@@ -143,12 +143,12 @@ private
 
   def contains_nanomaterials_form
     @contains_nanomaterials_form ||=
-      ResponsiblePersons::Wizard::NotificationProduct::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
+      ResponsiblePersons::Wizard::Notifications::Product::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
   end
 
   def single_or_multi_component_form
     @single_or_multi_component_form ||=
-      ResponsiblePersons::Wizard::NotificationProduct::SingleOrMultiComponentForm.new(single_or_multi_component_params)
+      ResponsiblePersons::Wizard::Notifications::Product::SingleOrMultiComponentForm.new(single_or_multi_component_params)
   end
 
   def model

@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::NotificationProductKitController < SubmitApplicationController
+class ResponsiblePersons::Wizard::Notifications::ProductKitController < SubmitApplicationController
   include Wicked::Wizard
   include CountriesHelper
   include WizardConcern

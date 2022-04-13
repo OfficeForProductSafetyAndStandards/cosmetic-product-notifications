@@ -129,9 +129,8 @@ Rails.application.routes.draw do
       resource :draft, controller: "responsible_persons/drafts", only: %i[new]
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit create] do
         resources :build, controller: "responsible_persons/wizard/notification_build", only: %i[show update new]
-        resources :product, controller: "responsible_persons/wizard/notification_product", only: %i[show update new] do
-        end
-        resources :product_kit, controller: "responsible_persons/wizard/notification_product_kit", only: %i[show update new]
+        resources :product, controller: "responsible_persons/wizard/notifications/product", only: %i[show update new]
+        resources :product_kit, controller: "responsible_persons/wizard/notifications/product_kit", only: %i[show update new]
         resource :draft, controller: "responsible_persons/drafts", only: %i[show] do
           collection do
             post :add_component
