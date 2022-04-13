@@ -9,7 +9,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
 
     <%= form_with model: @notification, url: responsible_person_notifications_path, method: :post do |form| %>
-      <%= render partial: 'responsible_persons/wizard/notification_product/add_product_name_form', locals: { form: form, title: title } %>
+      <%= render partial: 'responsible_persons/notifications/product/add_product_name_form', locals: { form: form, title: title } %>
     <% end %>
   </div>
 </div>
