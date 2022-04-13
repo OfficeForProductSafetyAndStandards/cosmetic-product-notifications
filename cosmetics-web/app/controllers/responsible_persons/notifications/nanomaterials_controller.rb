@@ -23,7 +23,6 @@ class ResponsiblePersons::Notifications::NanomaterialsController < SubmitApplica
 
 private
 
-  # Duplicated from WizardConcern
   def set_notification
     @notification ||= Notification.find_by reference_number: params[:notification_reference_number]
 

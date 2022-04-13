@@ -27,7 +27,6 @@ private
     @component.notification.nano_materials.present? ? :select_nanomaterials : :number_of_shades
   end
 
-  # Duplicated from WizardConcern
   def set_notification
     @notification ||= Notification.find_by reference_number: params[:notification_reference_number]
 
