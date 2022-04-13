@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::Notifications::ComponentsController < SubmitApplicationController
+class ResponsiblePersons::Notifications::ComponentsController < SubmitApplicationController
   before_action :set_notification
 
   def new

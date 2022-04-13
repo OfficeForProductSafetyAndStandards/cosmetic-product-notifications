@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NotificationWizard::DeleteNanoMaterialForm do
+RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
   let(:notification1) { create(:notification) }
   let(:nano_material1) { create(:nano_material, notification: notification1) }
   let(:nano_element1) { create(:nano_element, nano_material: nano_material1) }

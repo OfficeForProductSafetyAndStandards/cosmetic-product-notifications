@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::Notifications::Nanomaterials::BuildController < SubmitApplicationController
+class ResponsiblePersons::Notifications::Nanomaterials::BuildController < SubmitApplicationController
   include Wicked::Wizard
   include WizardConcern
 
@@ -55,7 +55,7 @@ class ResponsiblePersons::Wizard::Notifications::Nanomaterials::BuildController 
       end
     when :completed
       @notification.reload.try_to_complete_nanomaterials!
-      return render "responsible_persons/wizard/completed"
+      return render "responsible_persons/notifications/task_completed"
     end
 
     render_wizard

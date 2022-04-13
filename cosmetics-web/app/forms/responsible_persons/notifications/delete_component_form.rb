@@ -1,4 +1,4 @@
-module NotificationWizard
+module ResponsiblePersons::Notifications
   class DeleteComponentForm < Form
     attribute :component_id
     attribute :notification

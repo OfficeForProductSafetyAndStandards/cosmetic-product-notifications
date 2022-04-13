@@ -29,28 +29,28 @@ RSpec.describe "Delete Notifications page", type: :request do
 
     it "destroys component" do
       expect {
-        delete path, params: { notification_wizard_delete_component_form: { component_id: component1.id } }
+        delete path, params: { responsible_persons_notifications_delete_component_form: { component_id: component1.id } }
       }.to change(Component, :count).from(3).to(2)
     end
 
     it "redirects properly" do
-      delete path, params: { notification_wizard_delete_component_form: { component_id: component1.id } }
+      delete path, params: { responsible_persons_notifications_delete_component_form: { component_id: component1.id } }
 
       expect(response).to redirect_to(responsible_person_notification_draft_path(responsible_person, notification1))
     end
   end
 
   it "renders form again" do
-    delete path, params: { notification_wizard_delete_component_form: { component_id: nil } }
+    delete path, params: { responsible_persons_notifications_delete_component_form: { component_id: nil } }
 
     expect(response).to render_template("show")
   end
 
   # rubocop:disable RSpec/AnyInstance
   it "is using proper form class" do
-    expect_any_instance_of(NotificationWizard::DeleteComponentForm).to receive(:delete)
+    expect_any_instance_of(ResponsiblePersons::Notifications::DeleteComponentForm).to receive(:delete)
 
-    delete path, params: { notification_wizard_delete_component_form: { component_id: nil } }
+    delete path, params: { responsible_persons_notifications_delete_component_form: { component_id: nil } }
   end
   # rubocop:enable RSpec/AnyInstance
 
@@ -59,13 +59,13 @@ RSpec.describe "Delete Notifications page", type: :request do
 
     it "raises an exception on delete request" do
       expect {
-        delete path, params: { notification_wizard_delete_component_form: { component_id: component1.id } }
+        delete path, params: { responsible_persons_notifications_delete_component_form: { component_id: component1.id } }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
     it "raises an exception on get request" do
       expect {
-        get path, params: { notification_wizard_delete_component_form: { component_id: component1.id } }
+        get path, params: { responsible_persons_notifications_delete_component_form: { component_id: component1.id } }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

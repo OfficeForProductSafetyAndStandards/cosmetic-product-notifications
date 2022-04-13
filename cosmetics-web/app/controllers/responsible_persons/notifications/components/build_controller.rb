@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::Notifications::Components::BuildController < SubmitApplicationController
+class ResponsiblePersons::Notifications::Components::BuildController < SubmitApplicationController
   NUMBER_OF_CMRS = 5
 
   include Wicked::Wizard
@@ -84,7 +84,7 @@ class ResponsiblePersons::Wizard::Notifications::Components::BuildController < S
       @component.update_state("component_complete")
       # TODO: write spec
       @component.reload.notification.try_to_complete_components!
-      return render "responsible_persons/wizard/completed"
+      return render "responsible_persons/notifications/task_completed"
     end
 
     render_wizard

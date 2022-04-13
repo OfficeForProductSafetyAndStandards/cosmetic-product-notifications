@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::Wizard::Notifications::Product::SingleOrMultiComponentForm do
+RSpec.describe ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm do
   subject(:form) do
     described_class.new(single_or_multi_component: single_or_multi_component, components_count: components_count)
   end

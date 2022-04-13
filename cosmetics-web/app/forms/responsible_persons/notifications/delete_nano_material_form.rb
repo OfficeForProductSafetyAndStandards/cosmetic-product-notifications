@@ -1,4 +1,4 @@
-module NotificationWizard
+module ResponsiblePersons::Notifications
   class DeleteNanoMaterialForm < Form
     class NonEmptyArrayValidator < ActiveModel::EachValidator
       def validate_each(record, attribute, value)

@@ -25,12 +25,12 @@ RSpec.describe "Delete Nano material page", type: :request do
 
     it "destroys nano_material" do
       expect {
-        delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
+        delete path, params: { responsible_persons_notifications_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
       }.to change(NanoMaterial, :count).from(1).to(0)
     end
 
     it "redirects properly" do
-      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
+      delete path, params: { responsible_persons_notifications_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
 
       expect(response).to redirect_to(responsible_person_notification_draft_path(responsible_person, notification1))
     end
@@ -42,13 +42,13 @@ RSpec.describe "Delete Nano material page", type: :request do
     end
 
     it "renders form again on nil params" do
-      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: nil } }
+      delete path, params: { responsible_persons_notifications_delete_nano_material_form: { nano_material_ids: nil } }
 
       expect(response).to render_template("show")
     end
 
     it "renders form again on empty params" do
-      delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [] } }
+      delete path, params: { responsible_persons_notifications_delete_nano_material_form: { nano_material_ids: [] } }
 
       expect(response).to render_template("show")
     end
@@ -56,9 +56,9 @@ RSpec.describe "Delete Nano material page", type: :request do
 
   # rubocop:disable RSpec/AnyInstance
   it "is using proper form class" do
-    expect_any_instance_of(NotificationWizard::DeleteNanoMaterialForm).to receive(:delete)
+    expect_any_instance_of(ResponsiblePersons::Notifications::DeleteNanoMaterialForm).to receive(:delete)
 
-    delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: nil } }
+    delete path, params: { responsible_persons_notifications_delete_nano_material_form: { nano_material_ids: nil } }
   end
   # rubocop:enable RSpec/AnyInstance
 
@@ -67,13 +67,13 @@ RSpec.describe "Delete Nano material page", type: :request do
 
     it "raises an exception on delete request" do
       expect {
-        delete path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
+        delete path, params: { responsible_persons_notifications_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
     it "raises an exception on get request" do
       expect {
-        get path, params: { notification_wizard_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
+        get path, params: { responsible_persons_notifications_delete_nano_material_form: { nano_material_ids: [nano_material1.id] } }
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ResponsiblePersons::Wizard::Notifications::Components::BuildController, type: :controller do
+RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:component) { create(:component, notification: notification, notification_type: component_type) }
   let(:notification) do

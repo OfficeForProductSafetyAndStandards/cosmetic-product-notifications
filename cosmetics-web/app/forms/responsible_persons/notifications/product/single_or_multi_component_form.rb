@@ -1,4 +1,4 @@
-module ResponsiblePersons::Wizard::Notifications::Product
+module ResponsiblePersons::Notifications::Product
   class SingleOrMultiComponentForm < Form
     SINGLE = "single".freeze
     MULTI = "multiple".freeze

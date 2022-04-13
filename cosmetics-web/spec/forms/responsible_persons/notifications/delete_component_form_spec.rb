@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NotificationWizard::DeleteComponentForm do
+RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
   let(:notification1) { create(:notification) }
   let(:component1) { create(:component, notification: notification1) }
   let(:component1_2) { create(:component, notification: notification1) }

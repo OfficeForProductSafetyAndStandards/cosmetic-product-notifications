@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::Notifications::NanomaterialsController < SubmitApplicationController
+class ResponsiblePersons::Notifications::NanomaterialsController < SubmitApplicationController
   before_action :set_notification
 
   def new

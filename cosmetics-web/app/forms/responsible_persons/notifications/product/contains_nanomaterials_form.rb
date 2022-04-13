@@ -1,4 +1,4 @@
-module ResponsiblePersons::Wizard::Notifications::Product
+module ResponsiblePersons::Notifications::Product
   class ContainsNanomaterialsForm < Form
     include StripWhitespace
 

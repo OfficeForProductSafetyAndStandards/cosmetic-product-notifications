@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::Notifications::ProductController < SubmitApplicationController
+class ResponsiblePersons::Notifications::ProductController < SubmitApplicationController
   include Wicked::Wizard
   include CountriesHelper
   include WizardConcern
@@ -27,7 +27,7 @@ class ResponsiblePersons::Wizard::Notifications::ProductController < SubmitAppli
     case step
     when :completed
       @notification.set_state_on_product_wizard_completed!
-      render "responsible_persons/wizard/completed"
+      render "responsible_persons/notifications/task_completed"
     else
       render_wizard
     end
@@ -143,12 +143,12 @@ private
 
   def contains_nanomaterials_form
     @contains_nanomaterials_form ||=
-      ResponsiblePersons::Wizard::Notifications::Product::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
+      ResponsiblePersons::Notifications::Product::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
   end
 
   def single_or_multi_component_form
     @single_or_multi_component_form ||=
-      ResponsiblePersons::Wizard::Notifications::Product::SingleOrMultiComponentForm.new(single_or_multi_component_params)
+      ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm.new(single_or_multi_component_params)
   end
 
   def model

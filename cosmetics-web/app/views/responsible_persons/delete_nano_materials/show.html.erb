@@ -12,7 +12,7 @@
     hint = { text: "Included in item(s): #{n.nano_material.components.map(&:name).join(', ')}.", classes: 'govuk-checkboxes__hint govuk-!-font-size-16' }
   end
 
-  { name: 'notification_wizard_delete_nano_material_form[nano_material_ids][]',
+  { name: 'responsible_persons_notifications_delete_nano_material_form[nano_material_ids][]',
     text: (n.inci_name.present? ? n.inci_name : "Nanomaterial ##{i+1}"),
     value: n.nano_material.id,
     key: :nil, # TODO: investigate design library to get rid of required key attribute

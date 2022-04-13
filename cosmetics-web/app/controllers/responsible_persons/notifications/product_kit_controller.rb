@@ -1,4 +1,4 @@
-class ResponsiblePersons::Wizard::Notifications::ProductKitController < SubmitApplicationController
+class ResponsiblePersons::Notifications::ProductKitController < SubmitApplicationController
   include Wicked::Wizard
   include CountriesHelper
   include WizardConcern
@@ -21,7 +21,7 @@ class ResponsiblePersons::Wizard::Notifications::ProductKitController < SubmitAp
     case step
     when :completed
       @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS) if @notification.details_complete?
-      render "responsible_persons/wizard/completed"
+      render "responsible_persons/notifications/task_completed"
     else
       render_wizard
     end
