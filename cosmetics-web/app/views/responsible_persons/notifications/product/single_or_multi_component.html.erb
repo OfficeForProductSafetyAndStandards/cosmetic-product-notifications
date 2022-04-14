@@ -68,10 +68,13 @@
     </div>
   <% end %>
 <% else %>
-  <p class="govuk-inset-text">
-    You can add and remove components for this notification from product draft page.
-    <br />
-    <br />
-    <%= link_to "Continue", next_step_path, class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset" %>
+  <h1 class="govuk-heading-m">
+      Items have already been added to the multi-item kit
+  </h1>
+
+  <p class="govuk-body">
+      You will be able to add and remove items directly from the tasks list page once the multi-item kit task is completed.
   </p>
+
+  <%= link_to "Continue", next_step_path, class: "govuk-button govuk-!-margin-top-8" %>
 <% end %>

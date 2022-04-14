@@ -51,10 +51,13 @@
     </div>
   <% end %>
 <% else %>
-  <p class="govuk-inset-text">
-    You can add and remove nanomaterials for this notification from product draft page.
-    <br />
-    <br />
-    <%= link_to "Continue", next_step_path, class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset" %>
+  <h1 class="govuk-heading-m">
+    Nanomaterials have already been added
+  </h1>
+
+  <p class="govuk-body">
+      You can add and remove nanomaterials directly from the tasks list page.
   </p>
+
+  <%= link_to "Continue", next_step_path, class: "govuk-button govuk-!-margin-top-8" %>
 <% end %>
