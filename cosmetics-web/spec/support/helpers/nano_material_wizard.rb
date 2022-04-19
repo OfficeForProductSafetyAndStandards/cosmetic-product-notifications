@@ -22,8 +22,8 @@ def complete_nano_material_wizard(name, nano_material_number: nil, purposes: %w[
 end
 
 def answer_inci_name_with(name)
-  fill_in "Inci Name", with: name
-  click_button "Continue"
+  fill_in "nano_element_inci_name", with: name
+  click_button "Save and continue"
 end
 
 def answer_what_is_purpose_of_nanomaterial_with(purposes, nanomaterial_name:)

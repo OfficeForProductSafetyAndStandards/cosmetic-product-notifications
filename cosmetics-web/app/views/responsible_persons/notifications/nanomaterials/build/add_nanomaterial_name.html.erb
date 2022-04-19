@@ -5,21 +5,21 @@
   <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
 
-<h1 class="govuk-heading-l">
-  What is the nanomaterial <abbr title="International Nomenclature for Cosmetic Ingredients">INCI</abbr> name?
-</h1>
-
-<%= form_with model: @nano_element, url: wizard_path, method: :put do |form| %>
+<%= form_with model: @nano_element, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@nano_element) %>
       <%= render "form_components/govuk_input",
               form: form,
               key: :inci_name,
-              label: { text: "Inci Name", classes: "govuk-label--m" },
-              hint: { text: 'This is the International Nomenclature for Cosmetic Ingredients name.' } %>
-      <%= govukButton text: "Save and Continue" %>
-
+              classes: "govuk-!-margin-top-7",
+              label: { html: "What is the nanomaterial <abbr title='International Nomenclature for Cosmetic Ingredients'>INCI</abbr> name?".html_safe ,
+                       classes: "govuk-label--l",
+                       isPageHeading: true },
+              hint: { html: 'This is the International Nomenclature for Cosmetic Ingredients name.' } %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+      </div>
     </div>
   </div>
 <% end %>
