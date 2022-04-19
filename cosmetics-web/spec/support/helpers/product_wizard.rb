@@ -16,8 +16,7 @@ def complete_product_wizard(name: "Product", items_count: 1, nano_materials_coun
       answer_does_product_contains_nanomaterials_with "No"
     end
   else
-    text = "You can add and remove nanomaterials for this notification from product draft page."
-    expect(page).to have_text(text)
+    expect(page).to have_text("You can add and remove nanomaterials directly from the tasks list page.")
     click_on "Continue"
   end
 
@@ -28,8 +27,7 @@ def complete_product_wizard(name: "Product", items_count: 1, nano_materials_coun
       answer_is_product_multi_item_kit_with "No, this is a single product"
     end
   else
-    text = "You can add and remove components for this notification from product draft page."
-    expect(page).to have_text(text)
+    expect(page).to have_text("You will be able to add and remove items directly from the tasks list page once the multi-item kit task is completed.")
     click_on "Continue"
   end
 
