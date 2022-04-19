@@ -3,6 +3,33 @@ require "rails_helper"
 RSpec.describe NanoElement, type: :model do
   subject(:nano_element) { build(:nano_element) }
 
+  describe "Validation" do
+    it "is valid" do
+      expect(nano_element).to be_valid
+    end
+
+    context "when without validation context" do
+      describe "inci_name" do
+        subject(:nano_element) { build(:nano_element, inci_name: "") }
+
+        it "is valid without name" do
+          expect(nano_element).to be_valid
+        end
+      end
+    end
+
+    context "with validation context" do
+      describe "inci_name" do
+        subject(:nano_element) { build(:nano_element, inci_name: "") }
+
+        it "is valid without name" do
+          nano_element.valid?(:add_nanomaterial_name)
+          expect(nano_element.errors).to be_present
+        end
+      end
+    end
+  end
+
   describe "#attributes" do
     it "confirms purposes" do
       expect(nano_element).to have_attributes(purposes: nil)
@@ -196,7 +223,7 @@ RSpec.describe NanoElement, type: :model do
         it "is not required when toxicology is notified" do
           nano_element.confirm_toxicology_notified = "yes"
 
-          expect(nano_element).not_to be_required
+          expect(nano_element).to be_required
         end
       end
 

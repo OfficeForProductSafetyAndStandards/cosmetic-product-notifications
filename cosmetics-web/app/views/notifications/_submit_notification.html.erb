@@ -6,8 +6,9 @@
   </p>
   <div class="govuk-button-group">
     <%= govukButton text: "Accept and submit" %>
-    <%= link_to "Return to Cosmetic products",
-                responsible_person_notifications_path(@responsible_person, tab: 'incomplete'),
-                class: 'govuk-link govuk-link--no-visited-state' %>
+    <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
+      Return to the
+      <%= link_to "task list page", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
+    </p>
   </div>
 <% end %>

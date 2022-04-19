@@ -1,5 +1,6 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
+  include NotificationStateConcern
 
   DELETION_PERIOD_DAYS = 7
   DELETABLE_ATTRIBUTES = %w[product_name
@@ -19,12 +20,13 @@ class Notification < ApplicationRecord
                             csv_cache].freeze
 
   include Searchable
-  include AASM
   include CountriesHelper
+  include RoutingQuestionCacheConcern
 
   belongs_to :responsible_person
 
   has_many :components, dependent: :destroy
+  has_many :nano_materials, dependent: :destroy
   has_many :image_uploads, dependent: :destroy
 
   has_one :deleted_notification, dependent: :destroy
@@ -63,6 +65,8 @@ class Notification < ApplicationRecord
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 },
                                           allow_nil: true
   validate :max_ph_is_greater_than_min_ph
+
+  validates_with AcceptAndSubmitValidator, on: :accept_and_submit
 
   delegate :count, to: :components, prefix: true
 
@@ -106,35 +110,8 @@ class Notification < ApplicationRecord
     )
   end
 
-  aasm whiny_transitions: false, timestamps: true, column: :state do
-    state :empty, initial: true
-    state :product_name_added
-    state :components_complete
-    state :draft_complete
-    state :notification_complete
-
-    event :add_product_name do
-      transitions from: :empty, to: :product_name_added
-    end
-
-    event :set_single_or_multi_component do
-      transitions from: :product_name_added, to: :components_complete
-    end
-
-    event :complete_draft do
-      transitions from: :components_complete, to: :draft_complete
-    end
-
-    event :submit_notification, after: :cache_notification_for_csv! do
-      transitions from: :draft_complete, to: :notification_complete,
-                  after: proc { __elasticsearch__.index_document } do
-        guard do
-          !missing_information?
-        end
-      end
-    end
-
-    state :deleted
+  def notification_product_wizard_completed?
+    !empty? && !product_name_added?
   end
 
   def reference_number_for_display
@@ -171,7 +148,15 @@ class Notification < ApplicationRecord
   end
 
   def nano_material_required?
-    components.any?(&:nano_material_required?)
+    missing_nano_materials.present?
+  end
+
+  def missing_nano_materials
+    # return nano_material that is in the notification, but not in the component
+    notification_nano_ids = nano_materials.pluck(:id).sort
+    components_nano_ids = components.map(&:nano_materials).flatten.map(&:id).sort
+    ids = notification_nano_ids - components_nano_ids
+    ids.map { |id| nano_materials.find(id) }
   end
 
   def formulation_required?
@@ -184,6 +169,14 @@ class Notification < ApplicationRecord
 
   def is_multicomponent?
     components.length > 1
+  end
+
+  def multi_component?
+    is_multicomponent?
+  end
+
+  def single_component?
+    !multi_component?
   end
 
   # If any image is waiting for the antivirus check or it got a virus alert this method will be "true"
@@ -279,7 +272,6 @@ private
 
     changed.each do |attribute|
       if mandatory_attributes.include?(attribute) && self[attribute].blank?
-
         if attribute == "product_name"
           errors.add attribute, "Enter the product name"
         else
@@ -295,11 +287,19 @@ private
       %w[product_name]
     when "product_name_added"
       mandatory_attributes("empty")
+    when "details_complete"
+      mandatory_attributes("empty")
+    when "ready_for_nanomaterials"
+      mandatory_attributes("empty")
+    when "ready_for_components"
+      mandatory_attributes("empty")
     when "import_country_added"
       %w[components] + mandatory_attributes("product_name_added")
     when "components_complete"
       mandatory_attributes("import_country_added")
     when "draft_complete"
+      mandatory_attributes("components_complete")
+    when "deleted"
       mandatory_attributes("components_complete")
     when "notification_complete"
       mandatory_attributes("draft_complete")

@@ -21,4 +21,4 @@ production:
   url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_label("postgres")["uri"] %>
   connect_timeout: 2
   variables:
-    statement_timeout: <%= ENV["STATEMENT_TIMEOUT"] || "500ms" %>
+    statement_timeout: <%= ENV["STATEMENT_TIMEOUT"] || "15000ms" %>

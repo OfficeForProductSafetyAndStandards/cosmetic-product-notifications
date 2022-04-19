@@ -4,6 +4,8 @@ class Component < ApplicationRecord
   include NotificationPropertiesHelper
   include CategoryHelper
   include FileUploadConcern
+  include RoutingQuestionCacheConcern
+
   set_attachment_name :formulation_file
   set_allowed_types %w[application/pdf].freeze
   set_max_file_size 30.megabytes
@@ -16,7 +18,8 @@ class Component < ApplicationRecord
   has_many :range_formulas, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
-  has_one :nano_material, dependent: :destroy
+  has_many :component_nano_materials
+  has_many :nano_materials, through: :component_nano_materials
   has_one_attached :formulation_file
 
   delegate :responsible_person, to: :notification
@@ -30,7 +33,6 @@ class Component < ApplicationRecord
   }, _prefix: true
 
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
-  accepts_nested_attributes_for :nano_material
 
   scope :complete, -> { where(state: "component_complete") }
 
@@ -44,7 +46,9 @@ class Component < ApplicationRecord
   # Currently two components with no name are immediately created for
   # a notification when the user indicates that it is a kit/multi-component,
   # so the uniquness validation has to allow non-unique null values.
-  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false }, unless: -> { notification.via_zip_file? }
+  validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false },
+                   unless: -> { notification.via_zip_file? },
+                   presence: { if: -> { notification.reload.components.where.not(id: id).count.positive? }, on: :add_component_name }
 
   validates :special_applicator, presence: true, on: :select_special_applicator_type
 
@@ -74,16 +78,28 @@ class Component < ApplicationRecord
 
   validates :maximum_ph, numericality: { message: "Enter a value of 14 or lower for maximum pH", less_than_or_equal_to: 14 }, if: -> { maximum_ph.present? }
 
-  before_save :add_shades, if: :will_save_change_to_shades?
+  validates :exposure_condition, presence: {
+    on: :add_exposure_condition,
+    message: lambda do |object, _|
+      I18n.t(:missing, scope: %i[activerecord errors models component attributes exposure_condition], component_name: object.component_name)
+    end,
+  }
+  validates :exposure_routes, presence: true, on: :add_exposure_routes
+
+  enum exposure_condition: {
+    rinse_off: "rinse_off",
+    leave_on: "leave_on",
+  }
+
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
-    state :component_complete, enter: :update_notification_state
+    state :component_complete
+  end
 
-    event :add_shades do
-      transitions from: :empty, to: :component_complete
-    end
+  def self.exposure_routes_options
+    %i[dermal oral inhalation].freeze
   end
 
   def prune_blank_shades
@@ -117,10 +133,6 @@ class Component < ApplicationRecord
   # This method is a temporary solution for opensearch indexing, until we implement filtering by categories
   def display_root_category
     get_category_name(root_category)
-  end
-
-  def nano_material_required?
-    nano_material && nano_material.nano_elements_required?
   end
 
   def formulation_required?
@@ -177,6 +189,25 @@ class Component < ApplicationRecord
     contains_poisonous_ingredients? ? "Yes" : "No"
   end
 
+  def update_state(state)
+    update(state: state)
+  end
+
+  def update_formulation_type(type)
+    old_type = notification_type
+
+    self.notification_type = type
+
+    return unless save(context: :select_formulation_type)
+
+    formulation_file.purge if predefined? && old_type != notification_type
+    update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
+  end
+
+  def frame_formulation?
+    predefined?
+  end
+
 private
 
   # This takes any value and returns nil if the value
@@ -194,10 +225,6 @@ private
     else
       value
     end
-  end
-
-  def update_notification_state
-    notification&.set_single_or_multi_component!
   end
 
   def other_special_applicator?

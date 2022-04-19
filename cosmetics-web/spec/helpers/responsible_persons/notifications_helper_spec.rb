@@ -160,7 +160,7 @@ describe ResponsiblePersons::NotificationsHelper do
         end
       end
 
-      context "when edits are  allowed" do
+      context "when edits are allowed" do
         let(:allow_edits) { true }
 
         it "contains the label image html without any actions for notifications without images" do
@@ -173,7 +173,7 @@ describe ResponsiblePersons::NotificationsHelper do
         # rubocop:disable RSpec/ExampleLength
         it "contains the label image html with Change action for notifications with images" do
           allow(notification).to receive(:image_uploads).and_return([instance_double(ImageUpload)])
-          allow(helper).to receive(:edit_responsible_person_notification_product_images_path).and_return("/product/image/edit/path")
+          allow(helper).to receive(:responsible_person_notification_product_path).and_return("/product/image/edit/path")
           expect(summary_product_rows).to include(
             { key: { text: "Label image" },
               value: { html: "Label image html" },
@@ -278,7 +278,11 @@ describe ResponsiblePersons::NotificationsHelper do
 
     let(:include_shades) { false }
     let(:allow_edits) { false }
-    let(:component) { build_stubbed(:component) }
+    let(:component) do
+      build_stubbed(:component,
+                    exposure_routes: %w[Route],
+                    exposure_condition: "rinse_off")
+    end
     let(:user) { instance_double(SubmitUser, can_view_product_ingredients?: true) }
 
     before do
@@ -330,7 +334,7 @@ describe ResponsiblePersons::NotificationsHelper do
         it "contains a row indication that there are no nanomaterials" do
           allow(helper).to receive(:render).and_return("None")
           expect(summary_component_rows).to include({ key: { text: "Nanomaterials" }, value: { html: "None" } })
-          expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: nil))
+          expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: []))
         end
 
         it "does not contains a row with the nano material application exposure instruction" do
@@ -345,13 +349,11 @@ describe ResponsiblePersons::NotificationsHelper do
       context "when there are nano elements present" do
         let(:nano_material) do
           instance_double(NanoMaterial,
-                          nano_elements: [instance_double(NanoElement, display_name: "NanoEl name")],
-                          exposure_routes: %w[Route],
-                          exposure_condition: "Condition")
+                          nano_elements: [instance_double(NanoElement, display_name: "NanoEl name")])
         end
 
         before do
-          allow(component).to receive(:nano_material).and_return(nano_material)
+          allow(component).to receive(:nano_materials).and_return([nano_material])
         end
 
         it "contains a row with the nano element names" do
@@ -366,7 +368,7 @@ describe ResponsiblePersons::NotificationsHelper do
         end
 
         it "contains a row with the nano material application exposure condition" do
-          allow(helper).to receive(:get_exposure_condition_name).with("Condition").and_return("Condition name")
+          allow(helper).to receive(:get_exposure_condition_name).with("rinse_off").and_return("Condition name")
           expect(summary_component_rows).to include({ key: { text: "Exposure condition" }, value: { text: "Condition name" } })
         end
       end
@@ -509,7 +511,8 @@ describe ResponsiblePersons::NotificationsHelper do
                      .and_return("Poisonous ingredients HTML")
         expect(summary_component_rows).to include(
           { key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" },
-            value: { html: "Poisonous ingredients HTML" } },
+            value: { html: "Poisonous ingredients HTML" },
+            actions: { items: [] } },
         )
       end
       # rubocop:enable RSpec/ExampleLength

@@ -1,0 +1,33 @@
+<li class="opss-task-sub">
+  <%= form_with url: add_nano_material_responsible_person_notification_draft_path(@notification.responsible_person, @notification) do %>
+    <h3 class="app-task-list__section">
+      <span class="app-task-list__section-number">2. </span>
+      Nanomaterials
+    </h3>
+
+    <ul class="app-task-list__items opss-task-sub__list">
+      <% @notification.nano_materials.order(:created_at).map(&:nano_elements).flatten.each_with_index do |nano_element, i| %>
+        <li class="app-task-list__item">
+          <span class="app-task-list__task-name">
+            <%= nanomaterial_link(nano_element, i) %>
+          </span>
+
+          <%= nanomaterial_badge(nano_element) %>
+        </li>
+      <% end %>
+
+      <li class="app-task-list__item opss-task-sub__last">
+        <span class="app-task-list__task-name">
+          <button class="govuk-button opss-button-link">
+            Add <span class="govuk-visually-hidden">another nanomaterial</span>
+          </button>
+          <span class="opss-task-sub__pipe">|</span>
+          <a href="<%= responsible_person_notification_draft_delete_nano_material_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+            Remove <span class="govuk-visually-hidden">a nanomaterial</span>
+          </a>
+        </span>
+      </li>
+    </ul>
+  <% end %>
+
+</li>

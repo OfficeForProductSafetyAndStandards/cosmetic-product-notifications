@@ -12,7 +12,7 @@
         </h1>
       </div>
       <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
-        <a href="<%= new_responsible_person_notification_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
+        <a href="<%= new_responsible_person_draft_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
           Add a cosmetic product
         </a>
       </div>
@@ -20,7 +20,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <p id="cosmetic-products-hint" class="govuk-hint govuk-!-width-two-thirds">
-        These are your incomplete and notified cosmetic products.
+        These are your draft and notified cosmetic products.
         </p>
       </div>
     </div>
@@ -49,10 +49,10 @@
     <% else %>
       <div class="opss-border-top govuk-!-padding-top-3 opss-border-bottom">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-          Incomplete notifications (0)
+          Draft notifications (0)
         </h2>
         <p class="govuk-body">
-        There are currently no incomplete notifications.
+        There are currently no draft notifications.
         </p>
       </div>
     <% end %>

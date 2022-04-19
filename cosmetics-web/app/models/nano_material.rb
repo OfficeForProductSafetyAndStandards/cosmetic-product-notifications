@@ -1,7 +1,8 @@
 class NanoMaterial < ApplicationRecord
-  # TODO: make this non-optional after refactoring CpnpParser
-  belongs_to :component, optional: true
+  belongs_to :notification, optional: false
 
+  has_many :component_nano_materials, dependent: :destroy
+  has_many :components, through: :component_nano_materials
   has_many :nano_elements, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :nano_material
   accepts_nested_attributes_for :nano_elements
 
@@ -26,5 +27,9 @@ class NanoMaterial < ApplicationRecord
 
   def self.exposure_routes_options
     %i[dermal oral inhalation].freeze
+  end
+
+  def name
+    nano_elements.first.inci_name
   end
 end

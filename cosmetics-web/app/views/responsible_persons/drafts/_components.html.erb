@@ -1,0 +1,35 @@
+<li class="opss-task-sub">
+  <%= form_with url: add_component_responsible_person_notification_draft_path(@notification.responsible_person, @notification) do %>
+    <h3 class="app-task-list__section">
+      <span class="app-task-list__section-number">
+        <%= section_number(DraftHelper::ITEMS_SECTION) %>
+      </span>
+      Items
+    </h3>
+
+    <ul class="app-task-list__items opss-task-sub__list">
+      <% @notification.components.order(:created_at).each_with_index do |component, i| %>
+        <li class="app-task-list__item">
+          <span class="app-task-list__task-name">
+            <%= component_link(component, i) %>
+          </span>
+
+          <%= component_badge(component) %>
+        </li>
+      <% end %>
+      <% if section_can_be_used?(DraftHelper::ITEMS_SECTION) %>
+        <li class="app-task-list__item opss-task-sub__last">
+          <span class="app-task-list__task-name">
+              <button class="govuk-button opss-button-link">
+                Add <span class="govuk-visually-hidden">another item</span>
+              </button>
+            <span class="opss-task-sub__pipe">|</span>
+            <a href="<%= responsible_person_notification_draft_delete_item_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
+              Remove <span class="govuk-visually-hidden">a one of components</span>
+            </a>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</li>

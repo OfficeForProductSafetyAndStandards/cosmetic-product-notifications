@@ -17,6 +17,7 @@ $govuk-assets-path: '~govuk-frontend/govuk/assets/';
 @import "navbar";
 @import "responsible_person_notification_page";
 @import "opss/opss-msa";
+@import "patterns/task-list";
 @import "pagination";
 @import "products";
 @import "responsible_persons";

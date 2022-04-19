@@ -10,10 +10,6 @@
   <% else %>
     <%= "The uploaded file has been flagged as a virus" %>
   <% end %>
-<% elsif allow_edits %>
-  <%= link_to "Add ingredients document",
-          responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :upload_formulation),
-          class: "govuk-link--no-visited-state" %>
 <% else %>
   Not provided
 <% end %>

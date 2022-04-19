@@ -56,17 +56,15 @@ en:
               blank: "Upload a list of ingredients"
             cmrs:
               blank: "Enter at least 1 CMR"
+            exposure_condition:
+              missing: "Select if %{component_name} is intended to be rinsed off or left on"
+            exposure_routes:
+              blank: "Select how the user is likely to be exposed to the nanomaterials"
         nano_element:
           attributes:
             purposes:
               blank: "Choose an option"
               inclusion: "%{value} is not a valid purpose"
-        nano_material:
-          attributes:
-            exposure_condition:
-              missing: "Select if %{component_name} is intended to be rinsed off or left on"
-            exposure_routes:
-              blank: "Select how the user is likely to be exposed to the nanomaterials"
         new_account:
           attributes:
             full_name:
@@ -272,6 +270,10 @@ en:
           attributes:
             password:
               blank: "Enter your password"
+        notification_wizard/delete_component_form:
+          attributes:
+            component_id:
+              blank: "Please select an item"
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"

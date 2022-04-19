@@ -70,6 +70,47 @@ RSpec.describe Component, type: :model do
         expect(component).to be_valid
       end
     end
+
+    context "when component belongs to single component notification" do
+      let(:component) { described_class.new(name: "", notification: notification) }
+
+      it "is valid" do
+        expect(component).to be_valid
+      end
+
+      context "when component already exists" do
+        before { component.save! }
+
+        it "is valid" do
+          expect(component).to be_valid
+        end
+      end
+    end
+
+    context "when component belongs to multi component notification" do
+      let(:component) { described_class.new(name: "", notification: notification) }
+
+      before do
+        create(:component, name: "COMPONENT X", notification: notification)
+      end
+
+      context "when context is provided" do
+        it "is not valid" do
+          expect(component).not_to be_valid(:add_component_name)
+        end
+
+        it "has errors on name" do
+          component.valid?(:add_component_name)
+          expect(component.errors[:name]).to eql(["Name can not be blank"])
+        end
+      end
+
+      context "when no context is provided" do
+        it "is valid" do
+          expect(component).to be_valid
+        end
+      end
+    end
   end
 
   describe "formulation_required", :with_stubbed_antivirus do
@@ -381,36 +422,6 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "#nano_material_required?" do
-    context "when there is no nanomaterial" do
-      let(:component) { build(:component) }
-
-      it "does not require nano material information" do
-        expect(component).not_to be_nano_material_required
-      end
-    end
-
-    context "when there is a nano material" do
-      let(:first_nano_element) { build(:nano_element) }
-      let(:nano_material) { build(:nano_material, nano_elements: [first_nano_element]) }
-      let(:component) { build(:component, nano_material: nano_material) }
-
-      context "when a nano element requires information" do
-        it "requires more information the nano_material" do
-          expect(component).to be_nano_material_required
-        end
-      end
-
-      context "when a nano element does not require information" do
-        let(:first_nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w[other]) }
-
-        it "requires nano material information" do
-          expect(component).not_to be_nano_material_required
-        end
-      end
-    end
-  end
-
   describe "#poisonous_ingredients_answer" do
     let(:component) { build(:component) }
 
@@ -426,6 +437,74 @@ RSpec.describe Component, type: :model do
     it "returns 'No' if contains_poisonous_ingredients is false" do
       component.update(contains_poisonous_ingredients: false)
       expect(component.poisonous_ingredients_answer).to eq "No"
+    end
+  end
+
+  describe "select formulation", :with_stubbed_antivirus do
+    context "when no formulation was selected before" do
+      let(:component) { create(:component, notification_type: nil) }
+
+      it "sets proper formulation" do
+        component.update_formulation_type("range")
+
+        expect(component.notification_type).to eq("range")
+      end
+    end
+
+    context "when different then formulation was selected before frame formulation" do
+      let(:component) { create(:component, :using_exact, :with_formulation_file) }
+
+      before { component }
+
+      it "sets proper formulation" do
+        component.update_formulation_type("predefined")
+
+        expect(component.notification_type).to eq("predefined")
+      end
+
+      it "deletes the file" do
+        component.update_formulation_type("predefined")
+
+        expect(component.reload.formulation_file).to be_blank
+      end
+    end
+
+    context "when exact formulation was reselected" do
+      let(:component) { create(:component, :using_exact, :with_formulation_file) }
+
+      before { component }
+
+      it "leaves the file" do
+        component.update_formulation_type("range")
+
+        expect(component.reload.formulation_file).to be_present
+      end
+    end
+
+    context "when changing from frame formulation" do
+      let(:component) { create(:component, :using_frame_formulation, contains_poisonous_ingredients: true) }
+
+      it "removes frame formulation" do
+        component.update_formulation_type("range")
+
+        expect(component.reload.frame_formulation).to be_blank
+      end
+
+      it "removes information about poisonus ingredients" do
+        component.update_formulation_type("range")
+
+        expect(component.reload.contains_poisonous_ingredients).to eq nil
+      end
+    end
+
+    describe "validation" do
+      let(:component) { create(:component) }
+
+      it "is invalid without value" do
+        component.update_formulation_type(nil)
+
+        expect(component.errors).to be_present
+      end
     end
   end
 end

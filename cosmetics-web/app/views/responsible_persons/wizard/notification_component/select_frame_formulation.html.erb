@@ -1,0 +1,27 @@
+<% title = "Choose frame formulation" %>
+<% question = "Frame formulation name" %>
+
+<% page_title title, errors: @component.errors.any? %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+  <%= error_summary_for(@component) %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-fieldset__heading govuk-label--l"><%= title %></h1>
+
+      <%= render "form_components/govuk_select", form: form, key: :frame_formulation,
+                show_all_values: true, is_autocomplete: true,
+                label: { text: question, classes: "govuk-label--m", isPageHeading: true },
+                items: Component.frame_formulations.keys.map { |formulation_key| \
+                  { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
+                } %>
+      <%= govukButton text: "Continue" %>
+
+    </div>
+  </div>
+<% end %>

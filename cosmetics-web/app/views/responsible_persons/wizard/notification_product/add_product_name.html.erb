@@ -1,0 +1,17 @@
+<% title = "What’s the product called?" %>
+
+<% page_title title, errors: @notification.errors.any? %>
+<% content_for :after_header do %>
+  <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <%= form_with model: @notification, url: wizard_path, method: :put do |form| %>
+
+      <%= render partial: 'add_product_name_form', locals: { form: form, title: title } %>
+
+    <% end %>
+  </div>
+</div>

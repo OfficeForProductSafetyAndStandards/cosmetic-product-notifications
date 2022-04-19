@@ -1,0 +1,24 @@
+<li>
+  <h2 class="app-task-list__section">
+    <span class="app-task-list__section-number">1. </span>
+    Create the product
+  </h2>
+
+  <ul class="app-task-list__items">
+    <li class="app-task-list__item">
+      <span class="app-task-list__task-name">
+        <% if @notification.persisted? %>
+          <a href="<%= new_responsible_person_notification_product_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="product-status">
+            Create the product
+          </a>
+        <% else %>
+          <a href="<%= new_responsible_person_notification_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="product-status">
+            Create the product
+          </a>
+        <% end %>
+      </span>
+
+      <%= product_badge(@notification) %>
+    </li>
+  </ul>
+</li>

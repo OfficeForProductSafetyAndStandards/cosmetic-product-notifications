@@ -18,9 +18,16 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def show; end
 
   def new
-    @notification = Notification.create(responsible_person: @responsible_person)
+    @notification = @responsible_person.notifications.new
+  end
 
-    redirect_to new_responsible_person_notification_build_path(@responsible_person, @notification)
+  def create
+    @notification = @responsible_person.notifications.new(notification_params)
+    if @notification.save
+      redirect_to responsible_person_notification_product_path(@responsible_person, @notification, :add_internal_reference)
+    else
+      render "new"
+    end
   end
 
   # Check your answers page
@@ -31,7 +38,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
 
-    @previous_page_path = previous_path_before_check_your_answers(@notification)
+    @notification.valid?(:accept_and_submit) if @notification.components_complete?
 
     if params[:submit_failed]
       add_image_upload_errors
@@ -39,9 +46,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   end
 
   def confirm
-    if @notification.submit_notification!
-      redirect_to responsible_person_notifications_path(@responsible_person), confirmation: "#{@notification.product_name} notification submitted"
-    else
+    unless @notification.submit_notification!
       redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
     end
   end
@@ -74,7 +79,11 @@ private
   end
 
   def get_unfinished_notifications
-    @responsible_person.notifications.where(state: :draft_complete).order("updated_at DESC")
+    @responsible_person.notifications
+      .where("state IN (?)", NotificationStateConcern::DISPLAYABLE_INCOMPLETE_STATES)
+      .where("reference_number IS NOT NULL")
+      .where("product_name IS NOT NULL")
+      .order("updated_at DESC")
   end
 
   def get_registered_notifications(page_size)
@@ -92,5 +101,10 @@ private
     if @notification.images_pending_anti_virus_check?
       @notification.errors.add :image_uploads, "waiting for files to pass anti virus check. Refresh to update"
     end
+  end
+
+  def notification_params
+    params.fetch(:notification, {})
+      .permit(:product_name)
   end
 end

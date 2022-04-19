@@ -5,7 +5,7 @@ FactoryBot.define do
     cpnp_reference { nil }
 
     factory :draft_notification do
-      state { :draft_complete }
+      state { NotificationStateConcern::COMPONENTS_COMPLETE }
 
       after(:create) do |notification|
         create(:component, notification: notification)
@@ -16,12 +16,12 @@ FactoryBot.define do
     factory :registered_notification, traits: [:registered]
 
     trait :registered do
-      state { :notification_complete }
+      state { NotificationStateConcern::NOTIFICATION_COMPLETE }
       notification_complete_at { Time.zone.now }
     end
 
     trait :draft_complete do
-      state { :draft_complete }
+      state { NotificationStateConcern::COMPONENTS_COMPLETE }
     end
 
     trait :ph_values do
@@ -59,7 +59,7 @@ FactoryBot.define do
     trait :deleted do
       skip_validations
       deleted_at { Time.zone.now }
-      state { :deleted }
+      state { NotificationStateConcern::DELETED }
       Notification::DELETABLE_ATTRIBUTES.each do |attribute|
         send(attribute) { nil }
       end

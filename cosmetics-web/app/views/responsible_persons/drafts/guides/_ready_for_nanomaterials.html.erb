@@ -1,0 +1,18 @@
+<h2 class="govuk-heading-s">In the next task</h2>
+<% if nano_materials_blocked? %>
+  <% if nano_material_should_be_notified? %>
+    <p class="govuk-body govuk-!-font-size-16 opss-secondary-text">Part of the current task is blocked. When the nanomaterial has been notified, remove the blocked nanomaterial from the task list and then add it, using the <kbd class="govuk-!-font-weight-regular">Add</kbd> and <kbd class="govuk-!-font-weight-regular">Remove</kbd> options. (If it is the only nanomaterial listed, first remove it and then complete the first task again).</p>
+  <% elsif !nano_material_conforms_to_restrictions? %>
+    <p class="govuk-body govuk-!-font-size-16 opss-secondary-text">Part of the current task has blocked this draft notification. You can remove the nanomaterial or delete this draft.</p>
+  <% end %>
+<% else %>
+
+  <p class="govuk-body govuk-!-font-size-16 opss-secondary-text">4 or more questions about the nanomaterial(s) will include:</p>
+
+  <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
+    <li>Have you submitted a notification about it in <abbr title="Great Britain">GB</abbr> since 1 January 2021?</li>
+    <li>Is it listed in <abbr title="European Commision">EC</abbr> regulation 1223/2009, Annex 6 and does it conform to the restrictions of Annex 6?</li>
+  </ul>
+
+  <p class="govuk-body govuk-!-font-size-16 opss-secondary-text">You can also add or remove individual nanomaterials.</p>
+<% end %>

@@ -17,7 +17,7 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     click_link "Change"
 
     expect(page).to have_current_path(
-      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product_image_upload/edit",
+      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product/add_product_image?back_to_edit=true",
     )
     expect(page).to have_h1("Upload an image of the product label")
     expect(page).to have_link(
@@ -30,17 +30,18 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
 
     expect(page).to have_h1("Upload an image of the product label")
     expect(page).to have_current_path(
-      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product_image_upload/edit",
+      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/product/add_product_image?back_to_edit=true",
     )
     expect(page).not_to have_text("Label images")
     expect(page).not_to have_summary_item(key: "testImage.png", value: "Remove")
-    click_button("Save and continue")
+    click_button("Continue")
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("No file selected", href: "#image_upload")
+    expect(page).to have_link("Select an image", href: "#image_upload")
 
     page.attach_file "spec/fixtures/files/testImage.png"
-    click_button "Save and continue"
+    click_button "Continue"
+
     expect(page).to have_current_path(
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
@@ -59,7 +60,7 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     click_link "Change"
 
     expect(page).to have_current_path(
-      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/formulation/edit",
+      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/upload_formulation?back_to_edit=true",
     )
     expect(page).to have_h1("Exact concentrations of the ingredients")
     expect(page).to have_link(
@@ -73,7 +74,7 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     expect(page).not_to have_field("formulation_file")
 
     # User can keep the same attachment
-    click_button "Save and continue"
+    click_button "Continue"
     expect(page).to have_current_path(
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",
     )
@@ -83,7 +84,7 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     # User goes back to edit the formulation page
     click_link "Change"
     expect(page).to have_current_path(
-      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/formulation/edit",
+      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/upload_formulation?back_to_edit=true",
     )
     expect(page).to have_h1("Exact concentrations of the ingredients")
     expect(page).to have_link(
@@ -99,14 +100,14 @@ RSpec.describe "Edit draft notification before submitting it", :with_stubbed_ant
     # User removes the existing formulation file
     click_link "Remove"
     expect(page).to have_current_path(
-      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/formulation/edit",
+      "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/components/#{component.id}/build/upload_formulation?back_to_edit=true",
     )
     expect(page).to have_h1("Exact concentrations of the ingredients")
-    expect(page).to have_field("formulation_file")
+    expect(page).to have_field("component[formulation_file]")
 
     # User uploads a new formulation file
     page.attach_file "spec/fixtures/files/testPdf.pdf"
-    click_button "Save and continue"
+    click_button "Continue"
 
     expect(page).to have_current_path(
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/edit",

@@ -1,0 +1,57 @@
+<%= render 'nanomaterial_banner' %>
+<%= render 'product_info' %>
+
+<div class="govuk-grid-row opss-switch-cols">
+  <div class="govuk-grid-column-one-quarter govuk-!-padding-top-9 opss-switch-cols__right">
+    <div class="opss-text-align-right">
+      <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset" if @notification.notification_product_wizard_completed? %>
+    </div>
+    <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-4">
+      <%= render "responsible_persons/drafts/guides/#{@notification.state}" %>
+    </div>
+  </div>
+
+  <section class="govuk-grid-column-three-quarters govuk-!-padding-top-9 opps-switch-cols__left" role="region" aria-label="Tasks">
+
+    <p class="govuk-body govuk-!-margin-bottom-7 govuk-!-display-block opss-text-align-center">
+      <%= progress_bar %>
+    </p>
+
+    <ol class="app-task-list">
+      <%= render 'product' %>
+      <%= render 'nanomaterials' if @notification.nano_materials.present? %>
+      <% if @notification.multi_component? %>
+        <%= render 'product_kit' %>
+        <%= render 'components' %>
+      <% else %>
+        <%= render 'product_details' %>
+      <% end %>
+      <li>
+        <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number">
+            <%= section_number(DraftHelper::ACCEPT_SECTION) %>
+          </span>
+          Accept and submit
+        </h2>
+
+        <ul class="app-task-list__items">
+          <li class="app-task-list__item">
+            <% if section_can_be_used?(DraftHelper::ACCEPT_SECTION) %>
+              <span class="app-task-list__task-name">
+                <%= link_to "Accept and submit", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: "accept-and-submit-status" } %>
+              </span>
+              <%= not_started_badge("accept-and-submit-status") %>
+            <% else %>
+              <span class="app-task-list__task-name">
+                Accept and submit
+              </span>
+              <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="accept-status">Cannot start yet</b>
+            <% end %>
+
+          </li>
+        </ul>
+      </li>
+    </ol>
+
+  </section>
+</div>

@@ -7,9 +7,21 @@
 
 ## Inviting Search Users
 
-1. SSH to rails console (described below)
-2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`
-3. Role could be `poison_centre` or `msa`
+1. SSH and run rails console: `cd app && export $(./env/get-env-from-vcap.sh) && /tmp/lifecycle/launcher /home/vcap/app 'rails c' ''`.
+2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`.
+3. Role could be `poison_centre` or `msa`.
+
+## Creating ad-hoc reviews apps
+
+Useful for example for user testing:
+
+```
+DB_NAME=cosmetics-db-2021_09_21_092542 REVIEW_INSTANCE_NAME=cosmetics-test REDIS_NAME=cosmetics-test-redis cosmetics-web/deploy-review.sh
+```
+
+DB_NAME is name of database
+REVIEW_INSTANCE_NAME is name of domain eg `REVIEW_INSTANCE_NAME=user-testing` will become `cosmetics-user-testing`
+REDIS_NAME is name of redis instance
 
 ## Getting Setup
 

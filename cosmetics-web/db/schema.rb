@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_20_142251) do
+ActiveRecord::Schema.define(version: 2022_03_28_133505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "user_roles", ["poison_centre", "market_surveilance_authority"]
@@ -66,6 +65,8 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.integer "nano_material_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["component_id"], name: "index_component_nano_materials_on_component_id"
+    t.index ["nano_material_id"], name: "index_component_nano_materials_on_nano_material_id"
   end
 
   create_table "components", force: :cascade do |t|
@@ -86,6 +87,7 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.float "minimum_ph"
     t.float "maximum_ph"
     t.text "ph"
+    t.jsonb "routing_questions_answers"
     t.string "exposure_condition"
     t.string "exposure_routes", array: true
     t.index ["notification_id"], name: "index_components_on_notification_id"
@@ -171,6 +173,7 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.string "exposure_routes", array: true
     t.integer "notification_id"
     t.index ["component_id"], name: "index_nano_materials_on_component_id"
+    t.index ["notification_id"], name: "index_nano_materials_on_notification_id"
   end
 
   create_table "nanomaterial_notifications", force: :cascade do |t|
@@ -208,17 +211,19 @@ ActiveRecord::Schema.define(version: 2021_12_20_142251) do
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
-    t.datetime "cpnp_notification_date"
     t.string "industry_reference"
+    t.datetime "cpnp_notification_date"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
-    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
     t.datetime "notification_complete_at"
     t.text "csv_cache"
     t.datetime "deleted_at"
+    t.jsonb "routing_questions_answers"
+    t.string "previous_state"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"

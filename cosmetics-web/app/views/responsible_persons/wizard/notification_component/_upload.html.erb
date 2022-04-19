@@ -1,0 +1,64 @@
+<% title = @component.predefined? ? "Ingredients the National Poisons Information Service needs to know about" : "Upload list of ingredients" %>
+
+<% page_title title, errors: @component.errors.any? %>
+<% content_for :after_header do %>
+  <% if params[:back_to_edit] %>
+    <%= govukBackLink text: "Back", href: edit_responsible_person_notification_path(@notification.responsible_person, @notification) %>
+  <% else %>
+    <%= govukBackLink text: "Back", href: previous_wizard_path %>
+  <% end %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <%= error_summary_for(@component) %>
+  <% name = @component.name if @component.notification.is_multicomponent? %>
+  <% if @component.exact? %>
+    <%= render 'exact_concentration', name: name %>
+  <% elsif @component.range? %>
+    <%= render 'ranges_concentration', name: name %>
+  <% elsif @component.predefined? %>
+    <%= render 'frame_formulation_poisonous_ingredients' %>
+  <% else %>
+    <h1 class="govuk-heading-l"><%= title %></h1>
+  <% end %>
+</div>
+<%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+  <%= hidden_field_tag :back_to_edit, params[:back_to_edit] %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <% if @component.formulation_file.attached? %>
+        <% file = @component.formulation_file %>
+        <table class="govuk-table" id="formulation-files-table">
+          <caption class="govuk-table__caption govuk-heading-s">Upload a file</caption>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header govuk-!-width-two-thirds" scope="row">
+                <%= link_to(file.filename, url_for(file), class: "govuk-link govuk-link--no-visited-state") %>
+              </th>
+              <td class="govuk-table__cell">
+                <%= link_to("Remove",
+                            responsible_person_notification_draft_delete_formulation_file_path(@notification.responsible_person, @notification, component_id: @component),
+                            method: :delete) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="govuk-form-group <%= error_group_class(@component)%>">
+            <p>File type must be a PDF.</p>
+
+            <%= form.label :formulation_file, "Upload a file", class: "govuk-label govuk-label--s" %>
+
+            <% if @component.errors.any? %>
+              <span id="file-upload-1-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
+              </span>
+            <% end %>
+            <%= form.file_field :formulation_file, class: "govuk-file-upload",
+                    accept: Component.allowed_types.join(",") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= govukButton text: "Continue" %>
+<% end %>

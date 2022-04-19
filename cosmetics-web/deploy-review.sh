@@ -16,8 +16,10 @@ APP=$INSTANCE_NAME
 
 DOMAIN=london.cloudapps.digital
 
-# Please note new manifest file
-MANIFEST_FILE=./cosmetics-web/manifest.review.yml
+if [ -z "$MANIFEST_FILE" ]
+then
+  MANIFEST_FILE=./cosmetics-web/manifest.review.yml
+fi
 
 if [ -z "$DB_NAME" ]
 then
@@ -40,6 +42,11 @@ until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp
 
 # Copy files from infrastructure env
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
+
+if [ -z "$WEB_CONCURRENCY" ]
+then
+  WEB_CONCURRENCY=1
+fi
 
 if [ -z "$WEB_MAX_THREADS" ]
 then

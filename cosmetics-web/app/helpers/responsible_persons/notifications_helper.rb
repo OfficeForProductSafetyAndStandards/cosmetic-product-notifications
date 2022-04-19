@@ -80,7 +80,7 @@ module ResponsiblePersons::NotificationsHelper
 
   def notification_summary_component_rows(component, include_shades: true, allow_edits: false)
     cmrs = component.cmrs
-    nano_material = component.nano_material
+    nano_materials = component.nano_materials
 
     [
       if include_shades
@@ -108,20 +108,20 @@ module ResponsiblePersons::NotificationsHelper
       {
         key: { text: "Nanomaterials" },
         value: { html: render("application/none_or_bullet_list",
-                              entities_list: nano_material&.nano_elements&.map(&:display_name),
+                              entities_list: component_nano_materials_names(component),
                               list_classes: "",
                               list_item_classes: "") },
       },
-      if nano_material&.nano_elements.present?
+      if nano_materials.present?
         {
           key: { text: "Application instruction" },
-          value: { text: get_exposure_routes_names(nano_material.exposure_routes) },
+          value: { text: get_exposure_routes_names(component.exposure_routes) },
         }
       end,
-      if nano_material&.nano_elements.present?
+      if nano_materials.present?
         {
           key: { text: "Exposure condition" },
-          value: { text: get_exposure_condition_name(nano_material.exposure_condition) },
+          value: { text: get_exposure_condition_name(component.exposure_condition) },
         }
       end,
       {
@@ -191,6 +191,7 @@ module ResponsiblePersons::NotificationsHelper
           value: { html: render("notifications/component_details_poisonous_ingredients",
                                 component: component,
                                 allow_edits: allow_edits) },
+          actions: { items: allow_edits ? componment_formulation_actions_items(component) : [] },
         }
       end,
     ].concat(component_ph_trigger_questions_rows(component))
@@ -212,7 +213,7 @@ private
   def label_image_actions_items(notification)
     return [] if notification.image_uploads.blank?
 
-    [{ href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
+    [{ href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_product_image, back_to_edit: true),
        text: "Change",
        visuallyHiddenText: "label image",
        classes: "govuk-link--no-visited-state" }]
@@ -221,8 +222,13 @@ private
   def componment_formulation_actions_items(component)
     return [] unless component.formulation_file.attached?
 
-    notification = component.notification
-    [{ href: edit_responsible_person_notification_component_formulation_path(notification.responsible_person, notification, component),
+    path = if component.frame_formulation?
+             responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_poisonus_ingredients, back_to_edit: true)
+           else
+             responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_formulation, back_to_edit: true)
+           end
+
+    [{ href: path,
        text: "Change",
        visuallyHiddenText: "formulation document",
        classes: "govuk-link--no-visited-state" }]
