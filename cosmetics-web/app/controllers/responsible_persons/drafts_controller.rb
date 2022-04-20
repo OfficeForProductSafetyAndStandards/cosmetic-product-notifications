@@ -13,12 +13,12 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     @notification.valid?(:accept_and_submit) if @notification.components_complete?
   end
 
-  def declaration
-
-  end
+  def declaration; end
 
   def accept
-
+    unless @notification.submit_notification!
+      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
+    end
   end
 
 private
