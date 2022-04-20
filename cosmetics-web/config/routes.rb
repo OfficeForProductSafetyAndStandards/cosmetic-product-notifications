@@ -133,6 +133,9 @@ Rails.application.routes.draw do
         resource :draft, controller: "responsible_persons/drafts", only: %i[show] do
           collection do
             post :add_component
+            get :review
+            get :declaration
+            post :accept
           end
           resource :delete_item, controller: "responsible_persons/delete_items", only: %i[show destroy]
           resource :delete_product_image, controller: "responsible_persons/delete_product_image", only: %i[destroy]

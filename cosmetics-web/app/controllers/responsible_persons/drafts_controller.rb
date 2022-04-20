@@ -9,6 +9,18 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     render "show"
   end
 
+  def review
+    @notification.valid?(:accept_and_submit) if @notification.components_complete?
+  end
+
+  def declaration
+
+  end
+
+  def accept
+
+  end
+
 private
 
   def set_responsible_person

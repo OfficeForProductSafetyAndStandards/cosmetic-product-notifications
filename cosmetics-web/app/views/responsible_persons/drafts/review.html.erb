@@ -1,4 +1,4 @@
-<% content_for :page_title, "Check your answers" %>
+<% content_for :page_title, "Accept and submit - review" %>
 <% content_for :after_header do %>
   <%= link_to "Back", responsible_person_notification_draft_path(@responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
@@ -28,29 +28,34 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">
-          <span class="govuk-caption-l">Draft notification for: </span>
-          <%= @notification.product_name %>
-        </h1>
-      </div>
-    </div>
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      Accept and submit - review
+    </h1>
+
+    <p class="govuk-body opss-secondary-text">
+      Review the draft product notification. You can still make changes by completing individual tasks again.
+    </p>
+
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
-    <%= render("product_details", notification: @notification, allow_edits: true) %>
+    <%= render("responsible_persons/notifications/product_details", notification: @notification, allow_edits: true) %>
 
     <section class="govuk-!-margin-top-7">
-      <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
-        Return to the
-        <%= link_to "task list page", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
-      </p>
+      <% if @notification.valid?(:accept_and_submit) %>
+        <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
+      <% else %>
+        <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
+          Return to the
+          <%= link_to "task list page", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
+        </p>
+      <% end %>
     </section>
   </article>
 
-  <%= render("aside_responsible_person_details", responsible_person: @responsible_person) %>
+  <%= render("responsible_persons/notifications/aside_responsible_person_details", responsible_person: @responsible_person) %>
 </div>

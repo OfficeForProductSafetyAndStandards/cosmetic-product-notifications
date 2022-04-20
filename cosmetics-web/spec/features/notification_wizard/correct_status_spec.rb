@@ -85,9 +85,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream one", nanos: ["Nano three", "Nano four", "Nano five", "Nano six"])
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -125,9 +123,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_details(nanos: ["Nano two"])
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -163,9 +159,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(3, 4)
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -213,9 +207,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(3, 4)
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -265,9 +257,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -343,9 +333,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -454,9 +442,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream one", nanos: ["Nano four", "Nano five", "Nano six"])
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end

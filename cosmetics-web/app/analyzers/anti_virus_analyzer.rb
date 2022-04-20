@@ -4,6 +4,7 @@ class AntiVirusAnalyzer < ActiveStorage::Analyzer
   end
 
   def metadata
+    return { safe: true } if Rails.env.development?
     download_blob_to_tempfile do |file|
       response = RestClient::Request.execute method: :post, url: Rails.application.config.antivirus_url, user: ENV["ANTIVIRUS_USERNAME"], password: ENV["ANTIVIRUS_PASSWORD"], payload: { file: file }
       body = JSON.parse(response.body)

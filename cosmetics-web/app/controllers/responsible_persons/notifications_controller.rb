@@ -38,16 +38,8 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
 
-    @notification.valid?(:accept_and_submit) if @notification.components_complete?
-
     if params[:submit_failed]
       add_image_upload_errors
-    end
-  end
-
-  def confirm
-    unless @notification.submit_notification!
-      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
     end
   end
 

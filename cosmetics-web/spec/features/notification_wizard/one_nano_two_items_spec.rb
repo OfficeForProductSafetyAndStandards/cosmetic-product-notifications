@@ -40,9 +40,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(4, 5)
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end

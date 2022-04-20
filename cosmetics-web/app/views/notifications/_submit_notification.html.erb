@@ -1,14 +1,7 @@
-<h3 class="govuk-heading-m">Declaration</h3>
-
-<%= form_with url: confirm_responsible_person_notification_path(@responsible_person, @notification), method: :post, html: { novalidate: true } do |form| %>
-  <p class="govuk-body">
-    By submitting this cosmetic product notification, you confirm that the details you provide are correct to the best of your knowledge.
-  </p>
+<%= form_with url: accept_responsible_person_notification_draft_path(@responsible_person, @notification), method: :post, html: { novalidate: true } do |form| %>
   <div class="govuk-button-group">
-    <%= govukButton text: "Accept and submit" %>
-    <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
-      Return to the
-      <%= link_to "task list page", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
-    </p>
+      <%= link_to "Continue", declaration_responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-button' %>
+      <span class="govuk-visually-hidden">|</span>
+      <%= link_to "Cancel", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
   </div>
 <% end %>
