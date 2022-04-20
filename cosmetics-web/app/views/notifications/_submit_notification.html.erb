@@ -1,7 +1,5 @@
-<%= form_with url: accept_responsible_person_notification_draft_path(@responsible_person, @notification), method: :post, html: { novalidate: true } do |form| %>
-  <div class="govuk-button-group">
-      <%= link_to "Continue", declaration_responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-button' %>
-      <span class="govuk-visually-hidden">|</span>
-      <%= link_to "Cancel", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
-  </div>
-<% end %>
+<div class="govuk-button-group">
+    <%= link_to "Continue", declaration_responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-button' %>
+    <span class="govuk-visually-hidden">|</span>
+    <%= link_to "Cancel", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
+</div>
