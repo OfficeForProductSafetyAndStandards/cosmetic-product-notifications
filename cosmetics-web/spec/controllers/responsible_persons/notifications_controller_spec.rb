@@ -146,6 +146,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       end
     end
   end
+
 private
 
   def attach_image_to_draft_with_metadata(metadata)

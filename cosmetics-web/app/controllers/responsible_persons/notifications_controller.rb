@@ -1,7 +1,7 @@
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :validate_responsible_person
-  before_action :set_notification, only: %i[show confirm]
+  before_action :set_notification, only: %i[show]
 
   def index
     @unfinished_notifications = get_unfinished_notifications
