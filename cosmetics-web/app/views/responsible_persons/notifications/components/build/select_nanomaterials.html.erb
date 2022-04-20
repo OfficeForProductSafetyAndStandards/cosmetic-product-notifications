@@ -20,21 +20,18 @@
         }
       }
     %>
-    <%= form_with(model: @component, url: wizard_path, method: :put) do |form| %>
-      <div class="govuk-form-group">
+    <%= form_with(model: @component, url: wizard_path, html: { novalidate: true }, method: :put) do |form| %>
+      <%= form.hidden_field :name %>
+      <%= render "form_components/govuk_checkboxes", form: form, key: :nano_material_ids,
+            fieldset: { legend: { text: "Select which nanomaterials are included in the item", classes: "govuk-label--l", isPageHeading: true } },
+            items: nano_material_items,
+            classes: "govuk-!-margin-top-7",
+            hint: { text: "If a nanomaterial you require is not shown, return to the tasks list page and add it. You can then start this task again.",
+                    classes: "govuk-!-width-three-quarters" } %>
 
-        <%= form.hidden_field :name %>
-        <%= render "form_components/govuk_checkboxes", form: form, key: :nano_material_ids,
-              fieldset: { legend: { text: "Select which nanomaterials are included in the item", classes: "govuk-label--l", isPageHeading: true } },
-              items: nano_material_items %>
-
-        <div id="nano-hint" class="govuk-hint govuk-!-width-three-quarters">
-          If a nanomaterial you require is not shown, return to the tasks list page and add it. You can then start this task again.
-        </div>
-      </div>
       <div class="govuk-button-group">
         <%= govukButton text: "Continue" %>
-        <a class="govuk-link" href="#">Cancel</a>
+        <%= link_to("Cancel", "#", class: "govuk-link govuk-link--no-visited-state") %>
       </div>
     <% end %>
 
