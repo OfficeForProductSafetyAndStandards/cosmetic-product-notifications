@@ -28,6 +28,16 @@ figcaption {
 }
 /* not normalised by gds library - ends */
 
+@include govuk-media-query($from: desktop) {
+    .govuk-width-container > main.govuk-main-wrapper {
+        padding-top: govuk-spacing(8);
+    }
+    .govuk-width-container > .govuk-breadcrumbs + main.govuk-main-wrapper,
+    .govuk-width-container > .govuk-back-link + main.govuk-main-wrapper {
+        padding-top: govuk-spacing(2);
+    }
+}
+
 main.govuk-main-wrapper {
     @include govuk-media-query($from: desktop) {
         min-height: 500px;
@@ -245,6 +255,16 @@ body.js-enabled .opss-nojs-hide {
     }
 }
 
+.opss-warning-text--s {/* make warning text smaller and allow several in succession */
+    strong {
+        @include opss-font-size($s: 16px, $l: 1.3);
+    }
+
+    & + .opss-warning-text--s > span {
+        display: none;
+    }
+}
+
 abbr[title]{
     text-decoration: none;
 
@@ -376,6 +396,15 @@ kbd {
         text-decoration: none !important;
         top: 0 !important;
     }
+}
+
+.opss-button-refresh {
+    padding-left: 40px;
+    background-image: url("data:image/webp;base64,UklGRrABAABXRUJQVlA4TKQBAAAvGAAGELXIkiTJkSoOodXEfnP/G3bPLkdIZKATnpZmCNq2ba5X3TOYgbRtQ82u4XBt2zb27N+2/z+2k9JprSdw0tm2n8C2bVa22dm2JyBTwHq2XwyOl/8AJAbqpuCSsIUqGEAUtMMCrMM0VIMPiAHqiucDQf0F3uF/DheQDDR14gIEZ7jstjADmupEcIevtoUX2IJ5OISftoUDUF8BPbgr/BWuIRa0gLwBQAcrKILf/ipMAQngAB39VVgBHefgAo9tIWQCdk8tnHxTk2WDCl5t/wPT/YQEStpCoJpRhYa24OTvBPZbOAO+JokjOLSFbFV4b2FUMwESGII+aIM1PLTQD+p/wOBPW2he2zRAeuED3n618PsXvuAZ/OC9hZE1hcKu3goHLZwAT4eDe6iQPwNfhbK2t2qSfFP/DS8qOMJvC0egUPcSknxT/7UvaoTu/iosgLpjcvKCCvkQrCaC4VtbOIdwUC0QhhzcQ3XZYBIFb/ht2zfYAachpwmqGWgQPOAG/kfwn2zrAgQdaISvtrc7RRVMIRH6YBe8dotTIP64giROdwA=");
+    background-position-x: 8px;
+    background-position-y: center;
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
 }
 
 .opss-details-img {
@@ -560,6 +589,30 @@ dd dl.opss-nested-definition-list {
         display: inline-block; 
         padding-right: 0; 
         margin-left: 0; 
+    }
+}
+
+.opss-definition-list {
+    @include govuk-media-query($from: tablet) {
+        @include opss-font-size($s: 19px, $l: 1.3);
+    }
+
+    @include opss-font-size($s: 16px, $l: 1.25);
+    font-family: $std-font-family;
+    color: $govuk-text-colour;
+
+    &.opss-definition-list--left dd {
+        margin-left: 0;
+    }
+
+    @include govuk-media-query($from: desktop) {
+        & > div {
+            display: inline-block;
+        }
+    }
+
+    dt {
+        @include word-wrap;
     }
 }
 
