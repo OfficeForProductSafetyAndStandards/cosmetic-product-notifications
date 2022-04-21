@@ -17,6 +17,7 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
 
   def accept
     unless @notification.submit_notification!
+      flash[:alert] = "Notification could not be submitted"
       redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
     end
   end
