@@ -21,25 +21,24 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(2, 3)
 
-    click_link "Accept and submit"
+    click_on "Create the product"
+    click_button "Continue" # product name
+    click_button "Continue" # internal reference
+    click_button "Continue" # children under 3 years
+    click_button "Continue" # nanomaterials
+    answer_is_product_multi_item_kit_with "No, this is a single product"
+    click_link "Remove"
 
-    expect_check_your_answers_page_to_contain(
-      product_name: "Product no nano no items",
-      number_of_components: "1",
-      shades: "None",
-      nanomaterials: "None",
-      contains_cmrs: "No",
-      category: "Hair and scalp products",
-      subcategory: "Hair and scalp care and cleansing products",
-      sub_subcategory: "Shampoo",
-      formulation_given_as: "Exact concentration",
-      physical_form: "Liquid",
-      ph: "Between 3 and 10",
-    )
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+
+    click_link "Continue"
+
+    click_link "Accept and submit"
 
     click_link "Continue"
     click_button "Accept and submit"
 
-    expect_successful_submission
+    expect(page).to have_current_path(/\/responsible_persons\/#{responsible_person.id}\/notifications\/\d+\/edit/)
+    expect(page).to have_css("h2", text: "Notification could not be submitted")
   end
 end

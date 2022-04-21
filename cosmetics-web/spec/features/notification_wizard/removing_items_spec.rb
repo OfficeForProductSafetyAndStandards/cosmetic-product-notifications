@@ -75,6 +75,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       ],
     )
 
+    click_link "Continue"
     click_button "Accept and submit"
 
     expect_successful_submission
@@ -153,6 +154,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       ],
     )
 
+    click_link "Continue"
     click_button "Accept and submit"
 
     expect_successful_submission
