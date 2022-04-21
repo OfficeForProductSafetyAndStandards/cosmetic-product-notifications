@@ -159,9 +159,9 @@ GEM
       elasticsearch-transport (= 7.17.1)
     elasticsearch-api (7.17.1)
       multi_json
-    elasticsearch-model (7.1.1)
+    elasticsearch-model (7.2.1)
       activesupport (> 3)
-      elasticsearch (> 1)
+      elasticsearch (~> 7)
       hashie
     elasticsearch-rails (7.2.1)
     elasticsearch-transport (7.17.1)
@@ -210,7 +210,7 @@ GEM
       notifications-ruby-client (~> 5.1)
       rails (>= 4.1.0)
     hashdiff (1.0.1)
-    hashie (4.1.0)
+    hashie (5.0.0)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
