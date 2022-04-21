@@ -12,7 +12,7 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <%= error_summary(@notification.errors) %>
     <%= form_with url: responsible_person_delete_notification_path(@responsible_person, @notification), method: :delete do |form| %>
       <%= render "form_components/govuk_checkboxes",
