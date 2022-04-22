@@ -17,8 +17,15 @@ RSpec.describe "Notifications delete", type: :feature do
     click_on draft_notification.product_name
     click_on "task list page"
     click_on "Delete this draft"
-    expect(page).to have_h1("Are you sure you want to delete #{draft_notification.product_name}?")
-    click_button "Delete notification"
+
+    expect(page).to have_h1("Do you want to delete this draft?")
+    expect(page).to have_text("The #{draft_notification.product_name} product notification draft will be deleted.")
+    click_button "Delete"
+
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Select yes if you want to delete this draft", href: "#yes")
+    check "Yes"
+    click_button "Delete"
 
     assert_text "#{draft_notification.product_name} notification deleted"
   end
@@ -28,8 +35,15 @@ RSpec.describe "Notifications delete", type: :feature do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on notification.product_name
     click_on "Delete this notification"
-    expect(page).to have_h1("Are you sure you want to delete #{notification.product_name}?")
-    click_button "Delete notification"
+
+    expect(page).to have_h1("Do you want to delete this notification?")
+    expect(page).to have_text("The #{notification.product_name} product notification will be deleted.")
+    click_button "Delete"
+
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_link("Select yes if you want to delete this notification", href: "#yes")
+    check "Yes"
+    click_button "Delete"
 
     assert_text "#{notification.product_name} notification deleted"
 
