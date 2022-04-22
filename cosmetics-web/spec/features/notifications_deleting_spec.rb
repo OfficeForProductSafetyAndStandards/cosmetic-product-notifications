@@ -23,7 +23,7 @@ RSpec.describe "Notifications delete", type: :feature do
     click_button "Delete"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Select yes if you want to delete this draft", href: "#confirmation")
+    expect(page).to have_link("Select yes if you want to delete this draft", href: "#yes")
     check "Yes"
     click_button "Delete"
 
@@ -41,7 +41,7 @@ RSpec.describe "Notifications delete", type: :feature do
     click_button "Delete"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Select yes if you want to delete this notification", href: "#confirmation")
+    expect(page).to have_link("Select yes if you want to delete this notification", href: "#yes")
     check "Yes"
     click_button "Delete"
 

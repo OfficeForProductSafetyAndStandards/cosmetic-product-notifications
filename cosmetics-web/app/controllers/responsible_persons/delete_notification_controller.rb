@@ -6,7 +6,7 @@ class ResponsiblePersons::DeleteNotificationController < SubmitApplicationContro
   def delete; end
 
   def destroy
-    unless params[:confirmation] == "yes"
+    unless params.dig(:confirmation, :yes) == "yes"
       @notification.errors.add(:confirmation, "Select yes if you want to delete this #{@notification.notification_complete? ? 'notification' : 'draft'}")
       return render(:delete)
     end
