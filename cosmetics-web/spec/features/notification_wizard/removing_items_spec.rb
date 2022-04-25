@@ -29,7 +29,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     select_item_and_remove "Item #3"
 
-    expect_success_banner_with_text "The item was deleted"
+    expect_success_banner_with_text "The item was removed and deleted"
 
     expect(page).not_to have_link("Item #3")
 
@@ -114,7 +114,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     select_item_and_remove "Item #3"
 
-    expect_success_banner_with_text "The item was deleted"
+    expect_success_banner_with_text "The item was removed and deleted"
 
     expect(page).not_to have_link("Item #3")
 

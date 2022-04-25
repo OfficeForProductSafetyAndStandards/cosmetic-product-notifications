@@ -225,7 +225,7 @@ en:
         responsible_persons/notifications/delete_component_form:
           attributes:
             component_id:
-              blank: "Please select an item"
+              blank: "Select an item"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:

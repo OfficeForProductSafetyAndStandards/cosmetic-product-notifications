@@ -8,7 +8,7 @@ class ResponsiblePersons::DeleteItemsController < SubmitApplicationController
   def destroy
     @form = ResponsiblePersons::Notifications::DeleteComponentForm.new(form_params.merge(notification: @notification))
     if @form.delete
-      redirect_to responsible_person_notification_draft_path(@notification.responsible_person, @notification), confirmation: "The item was deleted"
+      redirect_to responsible_person_notification_draft_path(@notification.responsible_person, @notification), confirmation: "The item was removed and deleted"
     else
       render "show"
     end
