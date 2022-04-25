@@ -57,7 +57,6 @@ module ResponsiblePersons::NotificationsHelper
         value: { html: render("notifications/product_details_label_images",
                               notification: notification,
                               allow_edits: allow_edits) },
-        actions: { items: allow_edits ? label_image_actions_items(notification) : [] },
       },
       {
         key: { text: "Are the items mixed?" },
@@ -154,7 +153,6 @@ module ResponsiblePersons::NotificationsHelper
           value: { html: render("notifications/component_details_formulation_ingredients",
                                 component: component,
                                 allow_edits: allow_edits) },
-          actions: { items: allow_edits ? componment_formulation_actions_items(component) : [] },
         }
       end,
       {
@@ -209,30 +207,6 @@ module ResponsiblePersons::NotificationsHelper
   end
 
 private
-
-  def label_image_actions_items(notification)
-    return [] if notification.image_uploads.blank?
-
-    [{ href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_product_image, back_to_edit: true),
-       text: "Change",
-       visuallyHiddenText: "label image",
-       classes: "govuk-link--no-visited-state" }]
-  end
-
-  def componment_formulation_actions_items(component)
-    return [] unless component.formulation_file.attached?
-
-    path = if component.frame_formulation?
-             responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_poisonus_ingredients, back_to_edit: true)
-           else
-             responsible_person_notification_component_build_path(component.responsible_person, component.notification, component, :upload_formulation, back_to_edit: true)
-           end
-
-    [{ href: path,
-       text: "Change",
-       visuallyHiddenText: "formulation document",
-       classes: "govuk-link--no-visited-state" }]
-  end
 
   def component_ph_trigger_questions_rows(component)
     return [] unless current_user.can_view_product_ingredients? && component.trigger_questions
