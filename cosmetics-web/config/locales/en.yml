@@ -47,7 +47,7 @@ en:
         component:
           attributes:
             name:
-              taken: "You’ve already told us about an item called ‘%{value}’"
+              taken: "Enter an item name which has not been used for this notification"
             special_applicator:
               blank: "Choose an option"
             other_special_applicator:

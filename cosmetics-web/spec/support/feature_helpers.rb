@@ -201,7 +201,7 @@ end
 
 def expect_to_be_on__what_is_item_called_page
   expect(page.current_path).to end_with("/build/add_component_name")
-  expect(page).to have_h1("What’s the item called?")
+  expect(page).to have_h1("What is the item name?")
 end
 
 def expect_back_link_to_what_is_item_called_page
