@@ -143,50 +143,6 @@ describe ResponsiblePersons::NotificationsHelper do
       expect(summary_product_rows).to include({ key: { text: "Are the items mixed?" }, value: { text: "No" } })
     end
 
-    describe "label image" do
-      before do
-        allow(helper).to receive(:render)
-          .with("notifications/product_details_label_images", notification: notification, allow_edits: allow_edits)
-          .and_return("Label image html")
-      end
-
-      context "when edits are not allowed" do
-        let(:allow_edits) { false }
-
-        it "contains the label image html without any actions" do
-          expect(summary_product_rows).to include(
-            { key: { text: "Label image" }, value: { html: "Label image html" }, actions: { items: [] } },
-          )
-        end
-      end
-
-      context "when edits are allowed" do
-        let(:allow_edits) { true }
-
-        it "contains the label image html without any actions for notifications without images" do
-          allow(notification).to receive(:image_uploads).and_return([])
-          expect(summary_product_rows).to include(
-            { key: { text: "Label image" }, value: { html: "Label image html" }, actions: { items: [] } },
-          )
-        end
-
-        # rubocop:disable RSpec/ExampleLength
-        it "contains the label image html with Change action for notifications with images" do
-          allow(notification).to receive(:image_uploads).and_return([instance_double(ImageUpload)])
-          allow(helper).to receive(:responsible_person_notification_product_path).and_return("/product/image/edit/path")
-          expect(summary_product_rows).to include(
-            { key: { text: "Label image" },
-              value: { html: "Label image html" },
-              actions: { items: [{ href: "/product/image/edit/path",
-                                   text: "Change",
-                                   visuallyHiddenText: "label image",
-                                   classes: "govuk-link--no-visited-state" }] } },
-          )
-        end
-        # rubocop:enable RSpec/ExampleLength
-      end
-    end
-
     describe "for children under 3" do
       it "not included when not available for the notification" do
         notification.under_three_years = nil
@@ -417,43 +373,6 @@ describe ResponsiblePersons::NotificationsHelper do
         expect(summary_component_rows).to include(
           { key: { text: "Frame formulation" }, value: { text: "Frame formulation name" } },
         )
-      end
-
-      describe "non predefined documents" do
-        before do
-          allow(component).to receive(:predefined?).and_return(false)
-          allow(helper).to receive(:render).with(
-            "notifications/component_details_formulation_ingredients",
-            component: component,
-            allow_edits: allow_edits,
-          ).and_return("Formulation html")
-        end
-
-        context "when edits are allowed" do
-          let(:allow_edits) { true }
-
-          it "includes the formulation html with formulation actions" do
-            allow(helper).to receive(:componment_formulation_actions_items).and_return(%(Edit Delete))
-            expect(summary_component_rows).to include(
-              { key: { text: "Formulation" },
-                value: { html: "Formulation html" },
-                actions: { items: %(Edit Delete) } },
-            )
-          end
-        end
-
-        context "when edits are not allowed" do
-          let(:allow_edits) { false }
-
-          it "includes the formulation html without formulation actions" do
-            allow(helper).to receive(:componment_formulation_actions_items).and_return(%(Edit Delete))
-            expect(summary_component_rows).to include(
-              { key: { text: "Formulation" },
-                value: { html: "Formulation html" },
-                actions: { items: [] } },
-            )
-          end
-        end
       end
 
       it "indicates when the special applicator is used for the component" do

@@ -1,0 +1,63 @@
+<% title = "Nanomaterials" %>
+<% errors = @contains_nanomaterials_form.errors %>
+<% page_title(title, errors: errors.any?) %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<% if @notification.nano_materials.blank? %>
+  <%= form_with model: @contains_nanomaterials_form, url: wizard_path, scope: :contains_nanomaterials_form, method: :put do |form| %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= error_summary(errors, map_errors: { contains_nanomaterials: :contains_nanomaterials_yes }) %>
+
+        <h1 class="govuk-heading-l"><%= title %></h1>
+
+        <p class="govuk-body govuk-!-margin-bottom-1">A nanomaterial:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>has one or more external dimensions, or an internal structure, with a size ranging from 1 nm to 100 nm</li>
+          <li>is insoluble or biopersistent</li>
+          <li>is intentionally manufactured</li>
+        </ul>
+
+        <% count_input_html = capture do %>
+          <%= render("form_components/govuk_input",
+                     form: form,
+                     key: :nanomaterials_count,
+                     id: "nanomaterials_count",
+                     label: { text: "How many nanomaterials?" },
+                     classes: "govuk-input--width-3") %>
+        <% end %>
+        <%= render("form_components/govuk_radios",
+                   form: form,
+                   key: :contains_nanomaterials,
+                   fieldset: { legend: { text: "Does #{@notification.product_name} contain nanomaterials?",
+                   classes: "govuk-label--m" } },
+                   items: [
+                     { text: "Yes",
+                       value: "yes",
+                       id: "contains_nanomaterials_yes",
+                       conditional: { html: count_input_html },
+                       checked: errors.include?(:nanomaterials_count) || form.object.contains_nanomaterials? },
+                     { text: "No",
+                       value: "no",
+                       id: "contains_nanomaterials_no",
+                       checked: errors.exclude?(:nanomaterials_count) && answer_checked?("no") },
+                    ]) %>
+        <%= govukButton text: "Continue" %>
+
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <h1 class="govuk-heading-m">
+    Nanomaterials have already been added
+  </h1>
+
+  <p class="govuk-body">
+      You can add and remove nanomaterials directly from the tasks list page.
+  </p>
+
+  <%= link_to "Continue", next_step_path, class: "govuk-button govuk-!-margin-top-8" %>
+<% end %>

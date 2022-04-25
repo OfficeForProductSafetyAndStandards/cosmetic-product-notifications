@@ -32,9 +32,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream two", item_number: 2, nanos: ["Nano two"])
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end

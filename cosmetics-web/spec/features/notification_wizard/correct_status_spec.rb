@@ -85,9 +85,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream one", nanos: ["Nano three", "Nano four", "Nano five", "Nano six"])
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -125,9 +123,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_product_details(nanos: ["Nano two"])
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -163,9 +159,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(3, 4)
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -213,9 +207,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(3, 4)
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -242,21 +234,30 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
+    # Does not create the item until the name is added.
     click_on "Add another item"
-
     click_on "Back"
 
-    expect_item_task_not_started "Item #3"
+    expect(page).to have_current_path(/\/draft/)
+    expect(page).not_to have_link("Item #3")
+    expect_accept_and_submit_not_started
+
+    click_on "Add another item"
+    answer_item_name_with "Cream three"
+    click_link "Back"
+    expect(page).to have_current_path(/\/add_component_name/)
+
+    click_link "Back"
+    expect(page).to have_current_path(/\/draft/)
+    expect_item_task_not_started "Cream three"
 
     expect_accept_and_submit_blocked
 
-    complete_item_wizard("Cream three", item_number: 3)
+    complete_item_wizard("Cream three")
 
     expect_accept_and_submit_not_started
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -332,9 +333,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end
@@ -386,15 +385,27 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_multi_item_kit_task_completed
 
+    # Does not create the nanomaterial until the name is added.
     click_on "Add another nanomaterial"
     click_link "Back"
+    expect(page).to have_current_path(/\/draft/)
+    expect(page).not_to have_link "Nanomaterial #4"
+    expect_multi_item_kit_task_completed
 
+    click_on "Add another nanomaterial"
+    answer_inci_name_with "Nano four"
+    click_link "Back"
+    expect(page).to have_current_path(/\/add_nanomaterial_name/)
+
+    click_link "Back"
+    expect(page).to have_current_path(/\/draft/)
+    expect_task_not_started "Nano four"
     expect_multi_item_kit_task_blocked
 
     expect_task_blocked "Item #1"
     expect_task_blocked "Item #2"
 
-    complete_nano_material_wizard("Nano four", purposes: %w[Preservative], nano_material_number: 4)
+    complete_nano_material_wizard("Nano four", purposes: %w[Preservative])
 
     expect_multi_item_kit_task_completed
 
@@ -431,9 +442,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream one", nanos: ["Nano four", "Nano five", "Nano six"])
 
-    click_link "Accept and submit"
-
-    click_button "Accept and submit"
+    accept_and_submit_flow
 
     expect_successful_submission
   end

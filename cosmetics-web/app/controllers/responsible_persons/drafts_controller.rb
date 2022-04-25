@@ -9,17 +9,17 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     render "show"
   end
 
-  def add_component
-    component = @notification.components.create
-    @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS, only_downgrade: true)
-    redirect_to new_responsible_person_notification_component_build_path @notification.responsible_person, @notification, component
+  def review
+    @notification.valid?(:accept_and_submit) if @notification.components_complete?
   end
 
-  def add_nano_material
-    nano = @notification.nano_materials.create
-    ne = nano.nano_elements.create
-    @notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
-    redirect_to new_responsible_person_notification_nanomaterial_build_path @notification.responsible_person, @notification, ne
+  def declaration; end
+
+  def accept
+    unless @notification.submit_notification!
+      flash[:alert] = "Notification could not be submitted"
+      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
+    end
   end
 
 private

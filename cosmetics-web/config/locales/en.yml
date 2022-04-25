@@ -222,6 +222,28 @@ en:
               blank: "Enter the full name"
               invalid: "Enter a valid name"
               too_long: "Full name must be 50 characters or fewer"
+        responsible_persons/notifications/delete_component_form:
+          attributes:
+            component_id:
+              blank: "Please select an item"
+        responsible_persons/notifications/product/contains_nanomaterials_form:
+          attributes:
+            contains_nanomaterials:
+              inclusion: "Select yes if the product is a multi-item kit, no if its single item"
+            nanomaterials_count:
+              not_a_number: "Enter a number for how many nanomaterials"
+              not_an_integer: "Enter a number for how many nanomaterials"
+              greater_than: "Enter a number for how many nanomaterials"
+              less_than_or_equal_to: "Maximum nanomaterials count is 10. More can be added later"
+        responsible_persons/notifications/product/single_or_multi_component_form:
+          attributes:
+            single_or_multi_component:
+              inclusion: "Select yes if the product is a multi-item kit, no if its single item"
+            components_count:
+              not_a_number: "Enter a number for how how many items it contains"
+              not_an_integer: "Enter a number for how how many items it contains"
+              greater_than: "There is a minimum of 2 items"
+              less_than_or_equal_to: "Maximum items count is 10. More can be added later"
         responsible_persons/selection_form:
           attributes:
             selection:
@@ -270,10 +292,6 @@ en:
           attributes:
             password:
               blank: "Enter your password"
-        notification_wizard/delete_component_form:
-          attributes:
-            component_id:
-              blank: "Please select an item"
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"

@@ -1,0 +1,61 @@
+<% content_for :page_title, "Accept and submit - review" %>
+<% content_for :after_header do %>
+  <%= link_to "Back", responsible_person_notification_draft_path(@responsible_person, @notification), class: "govuk-back-link" %>
+<% end %>
+
+<% if @notification.errors.present? %>
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+
+      <p class="govuk-body govuk-!-font-weight-bold opss-error-colour">You cannot Accept and submit this draft because:</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-error-summary__list govuk-!-margin-bottom-4">
+        <% @notification.errors.messages[:base].each do |error| %>
+          <li>
+            <%= error %>
+          </li>
+        <% end %>
+      </ul>
+
+      <p class="govuk-body govuk-!-margin-bottom-1">Remove the nanomaterial(s) or include it in an item. <br class="opss-br-desktop">
+      <a href="<%= responsible_person_notification_draft_path(@responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">Return to the tasks list page</a>.</p>
+
+    </div>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      Accept and submit - review
+    </h1>
+
+    <p class="govuk-body opss-secondary-text">
+      Review the draft product notification. You can still make changes by completing individual tasks again.
+    </p>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <article class="govuk-grid-column-three-quarters">
+    <%= render("responsible_persons/notifications/product_details", notification: @notification, allow_edits: true) %>
+
+    <section class="govuk-!-margin-top-7">
+      <% if @notification.valid?(:accept_and_submit) %>
+        <%= render "notifications/submit_notification", notification: @notification, responsible_person: @responsible_person %>
+      <% else %>
+        <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">
+          Return to the
+          <%= link_to "task list page", responsible_person_notification_draft_path(@responsible_person, @notification), class: 'govuk-link govuk-link--no-visited-state' %>
+        </p>
+      <% end %>
+    </section>
+  </article>
+
+  <%= render("responsible_persons/notifications/aside_responsible_person_details", responsible_person: @responsible_person) %>
+</div>

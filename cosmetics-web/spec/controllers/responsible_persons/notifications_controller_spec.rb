@@ -147,28 +147,6 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "POST /confirm" do
-    let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
-    let(:params) { { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number } }
-
-    it "assigns the correct notification" do
-      post :confirm, params: params
-      expect(assigns(:notification)).to eq(draft_notification)
-    end
-
-    it "marks the notification as complete" do
-      attach_image_to_draft_with_metadata(safe: true)
-      post :confirm, params: params
-      expect(draft_notification.reload.state).to eq("notification_complete")
-    end
-
-    it "populates the completion timestamp" do
-      attach_image_to_draft_with_metadata(safe: true)
-      post :confirm, params: params
-      expect(draft_notification.reload.notification_complete_at).not_to be_nil
-    end
-  end
-
 private
 
   def attach_image_to_draft_with_metadata(metadata)

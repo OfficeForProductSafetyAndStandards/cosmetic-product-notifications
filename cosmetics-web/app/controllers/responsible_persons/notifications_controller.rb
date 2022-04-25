@@ -1,7 +1,7 @@
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_responsible_person
   before_action :validate_responsible_person
-  before_action :set_notification, only: %i[show confirm]
+  before_action :set_notification, only: %i[show]
 
   def index
     @unfinished_notifications = get_unfinished_notifications
@@ -38,16 +38,8 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
 
-    @notification.valid?(:accept_and_submit) if @notification.components_complete?
-
     if params[:submit_failed]
       add_image_upload_errors
-    end
-  end
-
-  def confirm
-    unless @notification.submit_notification!
-      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification, submit_failed: true)
     end
   end
 

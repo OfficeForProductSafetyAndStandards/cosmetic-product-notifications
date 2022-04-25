@@ -33,8 +33,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
       expect(page).not_to have_link("Nanomaterial #2")
 
-      click_link "Accept and submit"
-      click_button "Accept and submit"
+      accept_and_submit_flow
 
       expect_successful_submission
     end
@@ -91,6 +90,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_accept_and_submit_not_started
 
     click_link "Accept and submit"
+
+    click_link "Continue"
 
     click_button "Accept and submit"
 
