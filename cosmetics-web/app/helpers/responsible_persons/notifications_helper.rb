@@ -188,7 +188,7 @@ module ResponsiblePersons::NotificationsHelper
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
                                 component: component,
-                                allow_edits: allow_edits) }
+                                allow_edits: allow_edits) },
         }
       end,
     ].concat(component_ph_trigger_questions_rows(component))
