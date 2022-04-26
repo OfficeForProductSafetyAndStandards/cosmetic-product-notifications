@@ -12,7 +12,7 @@
     </div>
 
     <p class="govuk-body">
-    Submission of the Cosmetic product notification is complete. Your product is now one of your <%= link_to "notified cosmetic products", responsible_person_notifications_path(@responsible_person), class: 'govuk-link govuk-link--no-visited-state"' %>.
+    Submission of the Cosmetic product notification is complete. Your product is now one of your <%= link_to "notified cosmetic products", responsible_person_notifications_path(@responsible_person), class: 'govuk-link govuk-link--no-visited-state' %>.
     </p>
 
     <div class="govuk-inset-text">
@@ -29,5 +29,10 @@
     For any queries related to your cosmetic product notification, contact <a href="mailto:opss.enquiries@beis.gov.uk" class="govuk-link govuk-link--no-visited-state">opss.enquiries@beis.gov.uk</a>.
     </p>
 
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <p class="govuk-body-l">
+      View your product notifications on the <%= link_to "Cosmetic products page", responsible_person_notifications_path(@responsible_person), class: "govuk-link govuk-link--no-visited-state opss-no-wrap" %>.
+    </p>
   </div>
 </div>

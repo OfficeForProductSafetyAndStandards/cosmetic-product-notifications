@@ -26,16 +26,8 @@
 
         <p class="govuk-inset-text">
           Where a set contains separate products that do not need to be mixed together or used in a particular order for the product to work, you’ll need to
-          <%= link_to "submit a separate notification for each product", responsible_person_notifications_path(@notification.responsible_person),
-                  "data-topnav": "responsible_persons/notifications",
-                  class: "govuk-link--no-visited-state" %>.
+          submit a separate notification for each product.
         </p>
-
-        <% if @notification.components.count == 1 %>
-          <p class="govuk-inset-text">
-            Currently product has only 1 item. You can add more items by increasing components count.
-          </p>
-        <% end %>
 
         <% count_input_html = capture do %>
           <%= render("form_components/govuk_input",
