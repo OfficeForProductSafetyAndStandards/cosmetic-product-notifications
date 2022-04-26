@@ -430,8 +430,7 @@ describe ResponsiblePersons::NotificationsHelper do
                      .and_return("Poisonous ingredients HTML")
         expect(summary_component_rows).to include(
           { key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" },
-            value: { html: "Poisonous ingredients HTML" },
-            actions: { items: [] } },
+            value: { html: "Poisonous ingredients HTML" } },
         )
       end
       # rubocop:enable RSpec/ExampleLength
