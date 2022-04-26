@@ -189,7 +189,6 @@ module ResponsiblePersons::NotificationsHelper
           value: { html: render("notifications/component_details_poisonous_ingredients",
                                 component: component,
                                 allow_edits: allow_edits) },
-          actions: { items: allow_edits ? componment_formulation_actions_items(component) : [] },
         }
       end,
     ].concat(component_ph_trigger_questions_rows(component))
