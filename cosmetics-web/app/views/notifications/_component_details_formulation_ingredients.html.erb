@@ -8,7 +8,7 @@
   <% if component.formulation_file.metadata["safe"] %>
     <%= link_to component.formulation_file.filename,
                 url_for(component.formulation_file),
-                class: "govuk-link govuk-link--no-visited-state" %>
+                class: "govuk-link govuk-link--no-visited-state", target: "_blank" %>
   <% elsif component.formulation_file.metadata["safe"].nil? %>
     <%= "Processing file #{component.formulation_file.filename} ..." %>
     <br>

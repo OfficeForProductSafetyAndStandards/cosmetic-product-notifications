@@ -197,7 +197,7 @@ module ResponsiblePersons::NotificationsHelper
 
   def notification_summary_label_image_link(image, responsible_person, notification)
     if image.passed_antivirus_check?
-      link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state")
+      link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state", target: "_blank")
     elsif image.file_exists?
       "Processing image #{image.file.filename}..." \
       "<br>" \
