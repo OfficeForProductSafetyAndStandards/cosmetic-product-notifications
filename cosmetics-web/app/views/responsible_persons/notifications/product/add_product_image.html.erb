@@ -58,7 +58,8 @@
       </div>
 
       <div class="govuk-form-group">
-        <%= govukButton text: "Continue" %>
+        <%= govukButton text: "Save and continue", name: 'after_save', value: 'continue' %>
+        <%= govukButton text: "Save and upload another image", name: 'after_save', value: 'upload_another', classes: "govuk-button--secondary" %>
       </div>
     <% end %>
   </div>
