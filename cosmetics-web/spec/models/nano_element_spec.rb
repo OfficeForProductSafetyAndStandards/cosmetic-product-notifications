@@ -28,6 +28,30 @@ RSpec.describe NanoElement, type: :model do
         end
       end
     end
+
+    context "when using same name in same notification" do
+      let(:notification) { create(:notification) }
+
+      let(:nano_material1) { create(:nano_material, notification: notification) }
+      let(:nano_material2) { create(:nano_material, notification: notification) }
+
+      let(:nano_element1) { create(:nano_element, inci_name: "Nanomaterial", nano_material: nano_material1) }
+      let(:nano_element) { build(:nano_element, inci_name: "Nanomaterial", nano_material: nano_material2) }
+
+      before do
+        nano_element1
+      end
+
+      it "is valid with same name without context" do
+        nano_element.valid?
+        expect(nano_element.errors).to be_empty
+      end
+
+      it "is valid with same name with context" do
+        nano_element.valid?(:add_nanomaterial_name)
+        expect(nano_element.errors).to be_present
+      end
+    end
   end
 
   describe "#attributes" do

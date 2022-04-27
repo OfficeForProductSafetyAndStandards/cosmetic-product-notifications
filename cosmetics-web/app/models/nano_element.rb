@@ -3,6 +3,7 @@ class NanoElement < ApplicationRecord
 
   # TODO: add uniqueness validation across notifications
   validates :inci_name, presence: true, on: :add_nanomaterial_name
+  validate :unique_name_per_nanomaterial, on: :add_nanomaterial_name
 
   after_save do
     if blocked?
@@ -78,5 +79,13 @@ private
 
   def notification
     nano_material.notification
+  end
+
+  def unique_name_per_nanomaterial
+    nano_elements = nano_material.notification.nano_materials.map(&:nano_elements).flatten
+    other_names = nano_elements.map(&:inci_name)
+    if other_names.include? inci_name
+      errors.add(:inci_name, "Enter a name which has not already been used in this notification")
+    end
   end
 end
