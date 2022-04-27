@@ -53,8 +53,8 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
 end
 
 def answer_item_name_with(item_name)
-  fill_in "Item name", with: item_name
-  click_button "Continue"
+  fill_in "component_name", with: item_name
+  click_button "Save and continue"
 end
 
 def answer_select_which_nanomaterials_are_included_with(nanos)

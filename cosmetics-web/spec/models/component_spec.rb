@@ -38,7 +38,7 @@ RSpec.describe Component, type: :model do
 
       it "has an error message" do
         component.valid?
-        expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
+        expect(component.errors[:name]).to eql(["Enter an item name which has not been used for this notification"])
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Component, type: :model do
 
       it "has an error message" do
         component.valid?
-        expect(component.errors[:name]).to eql(["You’ve already told us about an item called ‘Component X’"])
+        expect(component.errors[:name]).to eql(["Enter an item name which has not been used for this notification"])
       end
     end
 

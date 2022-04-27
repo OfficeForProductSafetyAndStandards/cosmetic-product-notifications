@@ -14,7 +14,7 @@
           </h1>
 
           <p class="govuk-body opss-secondary-text">
-          Complete the following tasks to add this cosmetic product.
+            Complete the following tasks to add <%= @notification.product_name.present? ? "this" : "a" %> cosmetic product.
           </p>
 
             <details class="govuk-details opss-details--sm" data-module="govuk-details">

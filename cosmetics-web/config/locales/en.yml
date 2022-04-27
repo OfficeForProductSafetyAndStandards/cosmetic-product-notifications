@@ -47,7 +47,7 @@ en:
         component:
           attributes:
             name:
-              taken: "You’ve already told us about an item called ‘%{value}’"
+              taken: "Enter an item name which has not been used for this notification"
             special_applicator:
               blank: "Choose an option"
             other_special_applicator:
@@ -225,7 +225,7 @@ en:
         responsible_persons/notifications/delete_component_form:
           attributes:
             component_id:
-              blank: "Please select an item"
+              blank: "Select an item"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:
