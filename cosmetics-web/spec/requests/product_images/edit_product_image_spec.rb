@@ -40,7 +40,7 @@ RSpec.describe "Edit product image page", type: :request do
       end
 
       it "has a section for the label images" do
-        expect(response.body).to have_tag("caption", text: "Label images")
+        expect(response.body).to have_tag("caption", text: /Label images/)
       end
 
       it "list the images and allows to remove them" do
@@ -55,7 +55,7 @@ RSpec.describe "Edit product image page", type: :request do
       end
 
       it "does not have a section for the label images" do
-        expect(response.body).not_to have_tag("caption", text: "Label images")
+        expect(response.body).not_to have_tag("caption", text: /Label images/)
       end
 
       it "does not show an option to remove any image" do
