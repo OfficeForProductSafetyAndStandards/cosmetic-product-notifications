@@ -45,39 +45,33 @@ RSpec.describe NanoElement, type: :model do
       end
 
       it "is valid with same name without context" do
-        nano_element.valid?
-        expect(nano_element.errors).to be_empty
+        expect(nano_element).to be_valid
       end
 
-      it "is valid with same name with context" do
-        nano_element.valid?(:add_nanomaterial_name)
-        expect(nano_element.errors).to be_present
+      it "is invalid with same name with context" do
+        expect(nano_element.valid?(:add_nanomaterial_name)).to be(false)
       end
 
       context "when saving" do
-        # rubocop:disable RSpec/PredicateMatcher
         it "does not cause error on self" do
-          expect(nano_element1.valid?(:add_nanomaterial_name)).to be_truthy
+          expect(nano_element1.valid?(:add_nanomaterial_name)).to be(true)
         end
-        # rubocop:enable RSpec/PredicateMatcher
       end
 
       context "when names are similar" do
         context "when new name differs only by whitespaces" do
           let(:new_name) { "#{existing_name} " }
 
-          it "is valid with same name with context" do
-            nano_element.valid?(:add_nanomaterial_name)
-            expect(nano_element.errors).to be_present
+          it "is invalid with same name with context" do
+            expect(nano_element.valid?(:add_nanomaterial_name)).to be(false)
           end
         end
 
         context "when new name differs only by case" do
           let(:new_name) { existing_name.upcase }
 
-          it "is valid with same name with context" do
-            nano_element.valid?(:add_nanomaterial_name)
-            expect(nano_element.errors).to be_present
+          it "is invalid with same name with context" do
+            expect(nano_element.valid?(:add_nanomaterial_name)).to be(false)
           end
         end
       end
