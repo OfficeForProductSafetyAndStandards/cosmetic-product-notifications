@@ -55,9 +55,11 @@ RSpec.describe NanoElement, type: :model do
       end
 
       context "when saving" do
-        it "should not cause error on self" do
+        # rubocop:disable RSpec/PredicateMatcher
+        it "does not cause error on self" do
           expect(nano_element1.valid?(:add_nanomaterial_name)).to be_truthy
         end
+        # rubocop:enable RSpec/PredicateMatcher
       end
 
       context "when names are similar" do
