@@ -43,7 +43,7 @@ RSpec.describe "Edit product image page", type: :request do
         expect(response.body).to have_tag("caption", text: /Label images/)
       end
 
-      it "list the image but does not allow to remove it" do
+      it "list the image" do
         expect(response.body).to include("testImage.png")
       end
 
