@@ -82,10 +82,10 @@ private
   end
 
   def unique_name_per_nanomaterial
-    nano_elements = nano_material.notification.nano_materials.map(&:nano_elements).flatten
-    other_names = nano_elements.reject { |nano_element| nano_element.id == id }.map(&:inci_name)
-    other_names = other_names.compact.map(&:downcase).map(&:strip)
-    if other_names.include? inci_name.downcase.strip
+    nano_elements_with_same_name = NanoElement.where(nano_material: nano_material.notification.nano_materials)
+                                              .where.not(id: id)
+                                              .where("trim(lower(inci_name)) = ?", inci_name.downcase.strip)
+    if nano_elements_with_same_name.any?
       errors.add(:inci_name, "Enter a name which has not already been used in this notification")
     end
   end
