@@ -31,7 +31,7 @@
                 <td class="govuk-table__cell">
                   <%=
                     if image_count > 1
-                      link_to("Remove",
+                      link_to("Remove <span class='govuk-visually-hidden'>#{image.filename}</span>".html_safe,
                               responsible_person_notification_draft_delete_product_image_path(@notification.responsible_person, @notification, image_id: image.id),
                               method: :delete)
                     end
