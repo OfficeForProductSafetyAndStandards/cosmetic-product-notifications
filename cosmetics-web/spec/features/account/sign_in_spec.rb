@@ -167,7 +167,8 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         fill_in_credentials
 
         expect_to_be_on_secondary_authentication_sms_page
-        complete_secondary_authentication_sms_with(otp_code.reverse)
+        wrong_code = otp_code.sub(/[0-9]/) { |x| x == "0" ? "1" : x.to_i - 1 }
+        complete_secondary_authentication_sms_with(wrong_code)
 
         expect_to_be_on_secondary_authentication_sms_page
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -363,7 +364,8 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         fill_in_credentials
 
         expect_to_be_on_secondary_authentication_sms_page
-        complete_secondary_authentication_sms_with(otp_code.reverse)
+        wrong_code = otp_code.sub(/[0-9]/) { |x| x == "0" ? "1" : x.to_i - 1 }
+        complete_secondary_authentication_sms_with(wrong_code)
 
         expect_to_be_on_secondary_authentication_sms_page
         expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
