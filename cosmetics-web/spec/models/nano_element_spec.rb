@@ -28,6 +28,54 @@ RSpec.describe NanoElement, type: :model do
         end
       end
     end
+
+    context "when using same name in same notification" do
+      let(:notification) { create(:notification) }
+      let(:existing_name) { "Nanomaterial" }
+      let(:new_name) { existing_name }
+
+      let(:nano_material1) { create(:nano_material, notification: notification) }
+      let(:nano_material2) { create(:nano_material, notification: notification) }
+
+      let(:nano_element1) { create(:nano_element, inci_name: existing_name, nano_material: nano_material1) }
+      let(:nano_element) { build(:nano_element, inci_name: new_name, nano_material: nano_material2) }
+
+      before do
+        nano_element1
+      end
+
+      it "is valid with same name without context" do
+        expect(nano_element).to be_valid
+      end
+
+      it "is invalid with same name with context" do
+        expect(nano_element.valid?(:add_nanomaterial_name)).to be(false)
+      end
+
+      context "when saving" do
+        it "does not cause error on self" do
+          expect(nano_element1.valid?(:add_nanomaterial_name)).to be(true)
+        end
+      end
+
+      context "when names are similar" do
+        context "when new name differs only by whitespaces" do
+          let(:new_name) { "#{existing_name} " }
+
+          it "is invalid with same name with context" do
+            expect(nano_element.valid?(:add_nanomaterial_name)).to be(false)
+          end
+        end
+
+        context "when new name differs only by case" do
+          let(:new_name) { existing_name.upcase }
+
+          it "is invalid with same name with context" do
+            expect(nano_element.valid?(:add_nanomaterial_name)).to be(false)
+          end
+        end
+      end
+    end
   end
 
   describe "#attributes" do
