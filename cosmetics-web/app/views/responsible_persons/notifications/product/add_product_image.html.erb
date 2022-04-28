@@ -57,7 +57,7 @@
         <%= form.file_field :image_upload, multiple: true, accept: ImageUpload.allowed_types.join(", "), class: "govuk-file-upload" %>
       </div>
 
-      <div class="govuk-form-group">
+      <div class="govuk-button-group">
         <%= govukButton text: "Save and continue", name: 'after_save', value: 'continue' %>
         <%= govukButton text: "Save and upload another image", name: 'after_save', value: 'upload_another', classes: "govuk-button--secondary" %>
       </div>
