@@ -28,7 +28,7 @@ describe ResponsiblePersons::NotificationsHelper do
       allow(image).to receive(:passed_antivirus_check?).and_return(true)
       allow(helper).to receive(:link_to).and_return("<a href='/url/for/image'>Label image</a>")
       expect(label_image_link).to eq("<a href='/url/for/image'>Label image</a>")
-      expect(helper).to have_received(:link_to).with("Label image", "/url/for/image", class: "govuk-link govuk-link--no-visited-state")
+      expect(helper).to have_received(:link_to).with("Label image", "/url/for/image", class: "govuk-link govuk-link--no-visited-state", rel: "noopener", target: "_blank")
     end
 
     it "returns a processing message with a refresh link if image is waiting for antivirus check" do
