@@ -86,7 +86,7 @@ private
                                               .where.not(id: id)
                                               .where("trim(lower(inci_name)) = ?", inci_name.downcase.strip)
     if nano_elements_with_same_name.any?
-      errors.add(:inci_name, "Enter a name which has not already been used in this notification")
+      errors.add(:inci_name)
     end
   end
 end
