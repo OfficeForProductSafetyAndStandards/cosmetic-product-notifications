@@ -3,7 +3,7 @@ class ResponsiblePersons::DeleteProductImageController < SubmitApplicationContro
 
   def destroy
     @notification.image_uploads.find(params[:image_id]).destroy
-    redirect_back fallback_location: responsible_person_notification_draft_path(@notification.responsible_person, @notification)
+    redirect_to responsible_person_notification_product_path(@notification.responsible_person, @notification, :add_product_image)
   end
 
 private

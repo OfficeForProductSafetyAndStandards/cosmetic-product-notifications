@@ -34,18 +34,42 @@ RSpec.describe "Edit product image page", type: :request do
       end
     end
 
-    context "when the notification has an image" do
+    context "when the notification has a single image" do
       let(:notification) do
         create(:notification, responsible_person: responsible_person, image_uploads: [create(:image_upload)])
       end
 
       it "has a section for the label images" do
-        expect(response.body).to have_tag("caption", text: "Label images")
+        expect(response.body).to have_tag("caption", text: /Label images/)
       end
 
-      it "list the images and allows to remove them" do
+      it "list the image" do
         expect(response.body).to include("testImage.png")
-        expect(response.body).to include("Remove")
+      end
+
+      it "does not allow to remove the image" do
+        expect(response.body).not_to include("Remove")
+      end
+    end
+
+    context "when the notification has multiple images" do
+      let(:notification) do
+        create(:notification,
+               responsible_person: responsible_person,
+               image_uploads: [create(:image_upload, filename: "testImage.png"), create(:image_upload, filename: "testLabelImage.jpg")])
+      end
+
+      it "has a section for the label images" do
+        expect(response.body).to have_tag("caption", text: /Label images/)
+      end
+
+      it "list the images" do
+        expect(response.body).to include("testImage.png")
+        expect(response.body).to include("testLabelImage.jpg")
+      end
+
+      it "allows to remove the images" do
+        expect(response.body).to include("Remove").twice
       end
     end
 
@@ -55,7 +79,7 @@ RSpec.describe "Edit product image page", type: :request do
       end
 
       it "does not have a section for the label images" do
-        expect(response.body).not_to have_tag("caption", text: "Label images")
+        expect(response.body).not_to have_tag("caption", text: /Label images/)
       end
 
       it "does not show an option to remove any image" do
