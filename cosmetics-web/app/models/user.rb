@@ -71,6 +71,18 @@ class User < ApplicationRecord
     secondary_authentication_methods.size > 1
   end
 
+  # Needed for user support requests. We call it from Rails Console.
+  def reset_secondary_authentication!
+    update(mobile_number: nil,
+           mobile_number_verified: false,
+           direct_otp: nil,
+           direct_otp_sent_at: nil,
+           encrypted_totp_secret_key: nil,
+           last_totp_at: nil,
+           secondary_authentication_methods: nil,
+           account_security_completed: false)
+  end
+
 private
 
   def secondary_authentication_set?
