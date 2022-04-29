@@ -16,6 +16,7 @@ class SearchUser < User
   enum role: {
     poison_centre: "poison_centre",
     msa: "market_surveilance_authority",
+    opss_science: "opss_science",
   }
 
   validates :mobile_number,
