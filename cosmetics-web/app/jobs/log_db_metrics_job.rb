@@ -15,6 +15,8 @@ class LogDbMetricsJob < ApplicationJob
       products_notified_before_eu_exit: Notification.completed.where(was_notified_before_eu_exit: true).count,
       business_rp_count: ResponsiblePerson.where(account_type: "business").count,
       individual_rp_count: ResponsiblePerson.where(account_type: "individual").count,
+      nanomaterials_notified: NanomaterialNotification.where.not(submitted_at: nil).count,
+      notifications_with_nanomaterials: ,Notification.completed.joins(nano_materials: :nano_elements).count
     }
 
     Sidekiq.logger.info "CosmeticsStatistics #{stats.to_a.map { |x| x.join('=') }.join(' ')}"
@@ -23,5 +25,11 @@ class LogDbMetricsJob < ApplicationJob
       .count.values.sort.each_with_object(Hash.new(0)) { |e, h| h[e] += 1; }
 
     Sidekiq.logger.info "usersPerResponsiblePerson: #{users_per_responsible_person}"
+  end
+
+  private
+
+  def notifications_with_nanomaterials
+
   end
 end
