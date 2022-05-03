@@ -19,13 +19,7 @@ class ErrorsController < ApplicationController
   end
 
   def invalid_account
-    template = if search_domain?
-                 :wrong_service_for_business_account
-               elsif current_user&.poison_centre_user?
-                 :wrong_service_for_poison_centre_account
-               else
-                 :wrong_service_for_msa_account
-               end
-    render template, status: :forbidden, formats: [:html]
+    template = search_domain? ? :wrong_service_for_submit_user : :wrong_service_for_search_user
+    render template, status: :forbidden, formats: [:html], locals: { user_role: current_user&.role }
   end
 end
