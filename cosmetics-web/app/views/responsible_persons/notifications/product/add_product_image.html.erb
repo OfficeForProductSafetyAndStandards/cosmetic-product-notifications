@@ -18,17 +18,24 @@
 
     <% if @notification.image_uploads.any? %>
       <table class="govuk-table" id="label-images-table">
-        <caption class="govuk-table__caption govuk-heading-m">Label images</caption>
+        <caption class="govuk-table__caption govuk-heading-m">
+          Label images <span class="govuk-!-font-weight-regular govuk-!-font-size-16"> &ndash; You can remove any image when more than one has been added.</span>
+        </caption>
         <tbody class="govuk-table__body">
+          <% image_count = @notification.image_uploads.size %>
           <% @notification.image_uploads.each do |image| %>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header govuk-!-width-two-thirds" scope="row">
                   <%= link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state") %>
                 </th>
                 <td class="govuk-table__cell">
-                  <%= link_to("Remove",
+                  <%=
+                    if image_count > 1
+                      link_to("Remove <span class='govuk-visually-hidden'>#{image.filename}</span>".html_safe,
                               responsible_person_notification_draft_delete_product_image_path(@notification.responsible_person, @notification, image_id: image.id),
-                              method: :delete) %>
+                              method: :delete)
+                    end
+                  %>
                 </td>
               </tr>
           <% end %>
@@ -50,8 +57,9 @@
         <%= form.file_field :image_upload, multiple: true, accept: ImageUpload.allowed_types.join(", "), class: "govuk-file-upload" %>
       </div>
 
-      <div class="govuk-form-group">
-        <%= govukButton text: "Continue" %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue", name: 'after_save', value: 'continue' %>
+        <%= govukButton text: "Save and upload another image", name: 'after_save', value: 'upload_another', classes: "govuk-button--secondary" %>
       </div>
     <% end %>
   </div>
