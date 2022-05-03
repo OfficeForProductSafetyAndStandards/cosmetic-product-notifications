@@ -31,6 +31,10 @@ class SearchUser < User
     msa?
   end
 
+  def opss_science_user?
+    opss_science?
+  end
+
   def can_view_product_ingredients?
     !msa_user?
   end

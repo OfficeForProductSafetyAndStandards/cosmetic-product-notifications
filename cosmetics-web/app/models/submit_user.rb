@@ -48,6 +48,10 @@ class SubmitUser < User
     false
   end
 
+  def opss_science_user?
+    false
+  end
+
   def can_view_product_ingredients?
     !msa_user? # Could hardcode "true" but leave it as original for User for clarity
   end
