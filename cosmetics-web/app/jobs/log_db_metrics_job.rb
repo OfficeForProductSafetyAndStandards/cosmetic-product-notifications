@@ -26,5 +26,4 @@ class LogDbMetricsJob < ApplicationJob
 
     Sidekiq.logger.info "usersPerResponsiblePerson: #{users_per_responsible_person}"
   end
-
 end
