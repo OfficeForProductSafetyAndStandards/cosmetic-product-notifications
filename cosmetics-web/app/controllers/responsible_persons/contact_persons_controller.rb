@@ -13,7 +13,11 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
 
   def create
     if @contact_person.save
-      redirect_to responsible_person_path(@responsible_person)
+      # After contact person creation we might like to go back to previous RP as
+      # we don't want to switch to new RP
+      # See also ResponsiblePerspon::AccountWizardController
+      set_proper_current_responsible_person
+      redirect_to responsible_person_path(current_responsible_person), confirmation: create_successful_message
     else
       render :new
     end
@@ -67,5 +71,13 @@ private
     return unless changed # Don't set confirmation message when submitted value does not change the current value
 
     "Contact person #{field.humanize(capitalize: false)} changed successfully"
+  end
+
+  def create_successful_message
+    if current_user.responsible_persons.count > 1
+      "The new Responsible Person has been added to your list of Responsible Persons and can be selected as the Responsible Person."
+    else
+      "Success: The Responsible Person was created."
+    end
   end
 end

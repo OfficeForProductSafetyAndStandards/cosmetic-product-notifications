@@ -20,7 +20,7 @@ module ResponsiblePersonConcern
   end
 
   def current_responsible_person
-    rp = current_user.responsible_persons.find_by id: session[:current_responsible_person_id]
+    rp = find_responsible_person(session[:current_responsible_person_id])
     if rp.nil? && current_user.responsible_persons.count == 1
       current_user.responsible_persons.first
     else
@@ -40,6 +40,22 @@ module ResponsiblePersonConcern
     end
   end
 
+  def set_proper_current_responsible_person
+    if session[:previous_responsible_person_id].present?
+      set_current_responsible_person(find_responsible_person(session[:previous_responsible_person_id]))
+      session[:previous_responsible_person_id] = nil
+    end
+  end
+
+  def set_previous_responsible_person
+    if current_responsible_person
+      session[:previous_responsible_person_id] = current_responsible_person&.id
+    elsif current_user.responsible_persons.one?
+      rp = current_user.responsible_persons.first
+      session[:previous_responsible_person_id] = rp&.id
+    end
+  end
+
 private
 
   def pending_invitations
@@ -47,5 +63,9 @@ private
       .where(email_address: current_user.email)
       .includes(:responsible_person, :inviting_user)
       .order(created_at: :desc)
+  end
+
+  def find_responsible_person(id)
+    current_user.responsible_persons.find_by id: id
   end
 end

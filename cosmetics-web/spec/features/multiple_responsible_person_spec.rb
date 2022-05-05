@@ -70,7 +70,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     fill_in_rp_contact_details
 
     expect(page).to have_h1("Responsible Person")
-    expect(page).to have_text(name)
+    expect(page).to have_text(responsible_person_1.name)
   end
 
   scenario "Adding new responsible person - cant ommit contact details" do
