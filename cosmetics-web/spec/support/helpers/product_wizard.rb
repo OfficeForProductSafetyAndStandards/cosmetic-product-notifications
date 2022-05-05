@@ -81,7 +81,7 @@ end
 
 def upload_product_label
   page.attach_file "spec/fixtures/files/testImage.png"
-  click_button "Continue"
+  click_button "Save and continue"
 end
 
 def expect_product_task_blocked
@@ -90,4 +90,22 @@ end
 
 def expect_product_task_completed
   expect_task_completed "Create the product"
+end
+
+def expect_product_label_images(images_names)
+  images_names = images_names.compact_blank
+  images_count = images_names.size
+
+  expect(page).to have_h1("Upload an image of the product label")
+  within("#label-images-table") do
+    expect(page).to have_css("tr.govuk-table__row", count: images_count)
+    images_names.each do |name|
+      expect(page).to have_link(name)
+    end
+    if images_count > 1
+      expect(page).to have_link("Remove", count: images_count)
+    else
+      expect(page).not_to have_link("Remove")
+    end
+  end
 end
