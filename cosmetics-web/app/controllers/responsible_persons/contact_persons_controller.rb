@@ -16,7 +16,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
       # After contact person creation we might like to go back to previous RP as
       # we don't want to switch to new RP
       # See also ResponsiblePerspon::AccountWizardController
-      set_proper_current_responsible_person
+      set_current_responsible_person_from_previous
       redirect_to responsible_person_path(current_responsible_person), confirmation: create_successful_message
     else
       render :new

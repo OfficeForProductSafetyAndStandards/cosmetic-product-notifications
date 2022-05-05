@@ -40,7 +40,7 @@ module ResponsiblePersonConcern
     end
   end
 
-  def set_proper_current_responsible_person
+  def set_current_responsible_person_from_previous
     if session[:previous_responsible_person_id].present?
       set_current_responsible_person(find_responsible_person(session[:previous_responsible_person_id]))
       session[:previous_responsible_person_id] = nil
