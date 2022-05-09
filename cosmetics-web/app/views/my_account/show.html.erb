@@ -125,5 +125,29 @@
           },
         ]
       ) %>
+
+    <% if search_domain? && current_user.opss_science_user? %>
+      <h2 class="govuk-heading-l">Downloadable data</h2>
+      <p class="govuk-body">Your account privileges allow you to download this information directly to your computer or device.</p>
+      <%= govukSummaryList(
+        classes: "app-summary-list--key-weight-regular",
+        rows: [
+          {
+            key: { text: "All notified cosmetic products containing nanomaterials" },
+            value: { html: "Download as a <abbr>CSV</abbr> (spreadsheet) file".html_safe },
+            actions: {
+              items: [
+                {
+                  href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsContainingNanomaterialsJob::FILE_NAME)&.url,
+                  html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+                  visuallyHiddenText: "products with nanomaterials",
+                  classes: "govuk-link--no-visited-state",
+                }
+              ]
+            }
+          },
+        ]
+      ) %>
+    <% end %>
   </div>
 </div>
