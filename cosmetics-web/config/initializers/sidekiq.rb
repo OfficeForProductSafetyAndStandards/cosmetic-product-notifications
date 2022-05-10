@@ -50,12 +50,26 @@ def upload_nanomaterial_notifications_job
   end
 end
 
+def upload_nanomaterials_pdfs_job
+  job = Sidekiq::Cron::Job.new(
+    name: "Upload a ZIP with all Nanomaterials safety data sheets every day at 00:30",
+    cron: "30 0 * * *",
+    class: "UploadNanomaterialsPdfsJob",
+    queue: "cosmetics",
+  )
+  unless job.save
+    Rails.logger.error "***** WARNING - Upload Nanomaterials PDFs job was not saved! *****"
+    Rails.logger.error job.errors.join("; ")
+  end
+end
+
 Sidekiq.configure_server do |config|
   config.redis = Rails.application.config_for(:redis)
   create_log_db_metrics_job
   create_opensearch_index_job
   upload_cosmetic_products_containing_nanomaterials_job
   upload_nanomaterial_notifications_job
+  upload_nanomaterials_pdfs_job
 end
 
 Sidekiq.configure_client do |config|

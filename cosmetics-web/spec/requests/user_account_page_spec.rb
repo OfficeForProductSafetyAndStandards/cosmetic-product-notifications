@@ -64,6 +64,12 @@ RSpec.describe "User account page", type: :request do
       expect(response.body).not_to have_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
       expect(response.body).not_to have_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials")
     end
+
+    it "does not allow user to download all nanomaterial notifications PDFs" do
+      expect(response.body).not_to have_tag("dt", text: "All notified nanomaterials as PDFs", with: { class: "govuk-summary-list__key" })
+      expect(response.body).not_to have_tag("dd", text: "Download as a ZIP file (containing PDFs)", with: { class: "govuk-summary-list__value" })
+      expect(response.body).not_to have_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials as pdfs")
+    end
     # rubocop:enable RSpec/MultipleExpectations
   end
 
@@ -142,6 +148,14 @@ RSpec.describe "User account page", type: :request do
         with_tag("dt", text: "All notified nanomaterials", with: { class: "govuk-summary-list__key" })
         with_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
         with_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials")
+      end
+    end
+
+    it "allows user to download all nanomaterial notifications pdfs" do
+      expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
+        with_tag("dt", text: "All notified nanomaterials as PDFs", with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: "Download as a ZIP file (containing PDFs)", with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials as pdfs")
       end
     end
   end

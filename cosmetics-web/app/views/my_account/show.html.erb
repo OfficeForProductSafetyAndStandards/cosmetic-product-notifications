@@ -160,6 +160,20 @@
               ]
             }
           },
+          {
+            key: { html: "All notified nanomaterials as <abbr>PDF</abbr>s".html_safe },
+            value: { html: "Download as a ZIP file (containing <abbr>PDF</abbr>s)".html_safe },
+            actions: {
+              items: [
+                {
+                  href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsJob::FILE_NAME)&.url,
+                  html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+                  visuallyHiddenText: "notified nanomaterials as pdfs",
+                  classes: "govuk-link--no-visited-state",
+                }
+              ]
+            }
+          },
         ]
       ) %>
     <% end %>
