@@ -5,7 +5,7 @@ class UploadNanomaterialNotificationsJob < ApplicationJob
            nano.id as "UKN number",
            DATE(nano.submitted_at) as "Date nanomaterial notification was submitted",
            nano.name as "Name of the nanomaterial",
-           nano.eu_notified as "Was the EU notified about test on CPNP before 1 January 2021?",
+           CAST(nano.eu_notified as TEXT) as "Was the EU notified about test on CPNP before 1 January 2021?",
            nano.notified_to_eu_on as "Date EU notified on"
     FROM nanomaterial_notifications as nano
     INNER JOIN responsible_persons as rp
