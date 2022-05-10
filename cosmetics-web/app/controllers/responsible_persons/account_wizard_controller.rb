@@ -24,6 +24,10 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
       create_or_join_existing_account
     when :enter_details
       if responsible_person_saved?
+        # When we are creating responsible person, we don't want to change it. However,
+        # in order to create contact person, we need to switch temporairly so
+        # we want to remember what was the previous RP
+        set_previous_responsible_person
         clear_session
         set_current_responsible_person(@responsible_person)
         redirect_to new_responsible_person_contact_person_path(@responsible_person)
