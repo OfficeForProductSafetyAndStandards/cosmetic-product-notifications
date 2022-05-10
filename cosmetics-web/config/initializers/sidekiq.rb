@@ -37,11 +37,25 @@ def upload_cosmetic_products_containing_nanomaterials_job
   end
 end
 
+def upload_nanomaterial_notifications_job
+  job = Sidekiq::Cron::Job.new(
+    name: "Upload a CSV with all Nanomaterial Notifications every day at 00:15",
+    cron: "15 0 * * *",
+    class: "UploadNanomaterialNotificationsJob",
+    queue: "cosmetics",
+  )
+  unless job.save
+    Rails.logger.error "***** WARNING - Upload Nanomaterial Notifications CSV job was not saved! *****"
+    Rails.logger.error job.errors.join("; ")
+  end
+end
+
 Sidekiq.configure_server do |config|
   config.redis = Rails.application.config_for(:redis)
   create_log_db_metrics_job
   create_opensearch_index_job
   upload_cosmetic_products_containing_nanomaterials_job
+  upload_nanomaterial_notifications_job
 end
 
 Sidekiq.configure_client do |config|

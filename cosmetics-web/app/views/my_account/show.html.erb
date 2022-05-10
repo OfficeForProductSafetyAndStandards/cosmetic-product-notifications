@@ -146,6 +146,20 @@
               ]
             }
           },
+          {
+            key: { text: "All notified nanomaterials" },
+            value: { html: "Download as a <abbr>CSV</abbr> (spreadsheet) file".html_safe },
+            actions: {
+              items: [
+                {
+                  href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsJob::FILE_NAME)&.url,
+                  html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+                  visuallyHiddenText: "notified nanomaterials",
+                  classes: "govuk-link--no-visited-state",
+                }
+              ]
+            }
+          },
         ]
       ) %>
     <% end %>

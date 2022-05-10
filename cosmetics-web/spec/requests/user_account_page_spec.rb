@@ -49,11 +49,20 @@ RSpec.describe "User account page", type: :request do
 
   RSpec.shared_examples "can't download nanomaterials" do
     # rubocop:disable RSpec/MultipleExpectations
-    it "does not allow user to download a list of cosmetic products containing nanomaterials" do
+    it "does not have downloadable data section" do
       expect(response.body).not_to have_tag("h2", text: "Downloadable data")
+    end
+
+    it "does not allow user to download a list of cosmetic products containing nanomaterials" do
       expect(response.body).not_to have_tag("dt", text: "All notified cosmetic products containing nanomaterials", with: { class: "govuk-summary-list__key" })
       expect(response.body).not_to have_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
       expect(response.body).not_to have_tag("dd.govuk-summary-list__actions a", text: "Download products with nanomaterials")
+    end
+
+    it "does not allow user to download a list of nanomaterial notifications" do
+      expect(response.body).not_to have_tag("dt", text: "All notified nanomaterials", with: { class: "govuk-summary-list__key" })
+      expect(response.body).not_to have_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
+      expect(response.body).not_to have_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials")
     end
     # rubocop:enable RSpec/MultipleExpectations
   end
@@ -116,12 +125,23 @@ RSpec.describe "User account page", type: :request do
     include_examples "can change name and security"
     include_examples "can't change email"
 
-    it "allows user to download a list of cosmetic products containing nanomaterials" do
+    it "includes the downloadable data section" do
       expect(response.body).to have_tag("h2", text: "Downloadable data")
+    end
+
+    it "allows user to download a list of cosmetic products containing nanomaterials" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
         with_tag("dt", text: "All notified cosmetic products containing nanomaterials", with: { class: "govuk-summary-list__key" })
         with_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
         with_tag("dd.govuk-summary-list__actions a", text: "Download products with nanomaterials")
+      end
+    end
+
+    it "allows user to download a list of notified nanomaterials" do
+      expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
+        with_tag("dt", text: "All notified nanomaterials", with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials")
       end
     end
   end
