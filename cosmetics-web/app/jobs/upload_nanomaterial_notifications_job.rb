@@ -1,4 +1,4 @@
-class UploadNanomaterialNotificationsJob < ApplicationJob
+class UploadNanomaterialNotificationsJob < ActiveStorageUploadJob
   SQL_QUERY = <<~SQL.freeze
     SELECT rp.name as "Responsible Person",
            cp.email_address as "Contact person email address",
@@ -17,42 +17,22 @@ class UploadNanomaterialNotificationsJob < ApplicationJob
   SQL
 
   FILE_NAME = "NanomaterialNotifications.csv".freeze
-  FILE_PATH = Rails.root.join("tmp/#{FILE_NAME}").freeze
 
-  def perform
-    generate_csv_file
-    upload_to_cloud_storage
-    delete_tmp_file
-    delete_previous_uploads
+  def self.file_name
+    self::FILE_NAME
   end
 
 private
 
-  def generate_csv_file
+  def generate_local_file
     conn = ActiveRecord::Base.connection.raw_connection
 
-    File.open(FILE_PATH, "w") do |f|
+    File.open(self.class.file_path, "w") do |f|
       conn.copy_data "COPY (#{SQL_QUERY}) TO STDOUT WITH CSV HEADER;" do
         while (line = conn.get_copy_data)
           f.write line.force_encoding("UTF-8")
         end
       end
     end
-  end
-
-  def upload_to_cloud_storage
-    ActiveStorage::Blob.create_and_upload!(
-      io: File.open(FILE_PATH),
-      filename: FILE_NAME,
-    )
-  end
-
-  def delete_tmp_file
-    File.delete(FILE_PATH) if File.exist?(FILE_PATH)
-  end
-
-  def delete_previous_uploads
-    uploads = ActiveStorage::Blob.where(filename: FILE_NAME).order(created_at: :desc)
-    uploads.drop(1).each(&:purge) # Purges all but the 1st (latest created) one.
   end
 end

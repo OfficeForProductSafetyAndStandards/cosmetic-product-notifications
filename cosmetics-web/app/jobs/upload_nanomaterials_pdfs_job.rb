@@ -1,20 +1,21 @@
 require "zip"
 require "fileutils"
 
-class UploadNanomaterialsPdfsJob < ApplicationJob
+class UploadNanomaterialsPdfsJob < ActiveStorageUploadJob
   FILE_NAME = "NanomaterialsPDFs.zip".freeze
-  FILE_PATH = Rails.root.join("tmp/#{FILE_NAME}").freeze
   TMP_DIR   = "tmp/nanomaterials_pdfs".freeze
 
-  def perform
-    download_pdfs
-    generate_zip_file
-    upload_to_cloud_storage
-    delete_tmp_files
-    delete_previous_uploads
+  def self.file_name
+    self::FILE_NAME
   end
 
 private
+
+  def generate_local_file
+    download_pdfs
+    generate_zip
+    delete_downloaded_pdfs
+  end
 
   def download_pdfs
     FileUtils.mkdir_p(TMP_DIR)
@@ -25,29 +26,16 @@ private
     end
   end
 
-  def generate_zip_file
+  def generate_zip
     input_filenames = Dir.children(TMP_DIR)
-    ::Zip::File.open(FILE_PATH, create: true) do |zipfile|
+    ::Zip::File.open(self.class.file_path, create: true) do |zipfile|
       input_filenames.each do |filename|
         zipfile.add(File.basename(filename), "#{TMP_DIR}/#{filename}")
       end
     end
   end
 
-  def upload_to_cloud_storage
-    ActiveStorage::Blob.create_and_upload!(
-      io: File.open(FILE_PATH),
-      filename: FILE_NAME,
-    )
-  end
-
-  def delete_tmp_files
+  def delete_downloaded_pdfs
     FileUtils.remove_dir(TMP_DIR) if Dir.exist?(TMP_DIR)
-    File.delete(FILE_PATH) if File.exist?(FILE_PATH)
-  end
-
-  def delete_previous_uploads
-    uploads = ActiveStorage::Blob.where(filename: FILE_NAME).order(created_at: :desc)
-    uploads.drop(1).each(&:purge) # Purges all but the 1st (latest created) one.
   end
 end

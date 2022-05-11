@@ -23,6 +23,6 @@ RSpec.describe UploadNanomaterialsPdfsJob do
 
   it "does not leave the ZIP file in the app temp folder" do
     described_class.perform_now
-    expect { File.open(described_class::FILE_PATH) }.to raise_error(Errno::ENOENT)
+    expect { File.open(described_class.file_path) }.to raise_error(Errno::ENOENT)
   end
 end
