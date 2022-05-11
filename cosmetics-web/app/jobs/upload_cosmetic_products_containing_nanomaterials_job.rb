@@ -1,4 +1,4 @@
-class UploadCosmeticProductsContainingNanomaterialsJob < ActiveStorageUploadJob
+class UploadCosmeticProductsContainingNanomaterialsJob < PostgresCsvUploadJob
   SQL_QUERY = <<~SQL.freeze
     SELECT responsible_persons.name as "Responsible Person",
            product_name as "Cosmetic product name",
@@ -23,17 +23,7 @@ class UploadCosmeticProductsContainingNanomaterialsJob < ActiveStorageUploadJob
     self::FILE_NAME
   end
 
-private
-
-  def generate_local_file
-    conn = ActiveRecord::Base.connection.raw_connection
-
-    File.open(self.class.file_path, "w") do |f|
-      conn.copy_data "COPY (#{SQL_QUERY}) TO STDOUT WITH CSV HEADER;" do
-        while (line = conn.get_copy_data)
-          f.write line.force_encoding("UTF-8")
-        end
-      end
-    end
+  def self.sql_query
+    self::SQL_QUERY
   end
 end
