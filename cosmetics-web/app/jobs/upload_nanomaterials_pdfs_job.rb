@@ -20,7 +20,7 @@ private
     FileUtils.mkdir_p(TMP_DIR)
     NanomaterialNotification.find_each do |nano|
       nano.file.open(tmpdir: "tmp") do |file|
-        FileUtils.cp(file, "#{TMP_DIR}/#{nano.id}.pdf")
+        FileUtils.cp(file, "#{TMP_DIR}/UKN-#{nano.id}.pdf")
       end
     end
   end
