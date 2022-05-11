@@ -138,7 +138,7 @@
             actions: {
               items: [
                 {
-                  href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsContainingNanomaterialsJob::FILE_NAME)&.url,
+                  href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsContainingNanomaterialsJob.file_name)&.url,
                   html: "<span class='opss-download-link-sm'></span>Download".html_safe,
                   visuallyHiddenText: "products with nanomaterials",
                   classes: "govuk-link--no-visited-state",
@@ -152,7 +152,7 @@
             actions: {
               items: [
                 {
-                  href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsJob::FILE_NAME)&.url,
+                  href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsJob.file_name)&.url,
                   html: "<span class='opss-download-link-sm'></span>Download".html_safe,
                   visuallyHiddenText: "notified nanomaterials",
                   classes: "govuk-link--no-visited-state",
@@ -166,7 +166,7 @@
             actions: {
               items: [
                 {
-                  href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsJob::FILE_NAME)&.url,
+                  href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsJob.file_name)&.url,
                   html: "<span class='opss-download-link-sm'></span>Download".html_safe,
                   visuallyHiddenText: "notified nanomaterials as pdfs",
                   classes: "govuk-link--no-visited-state",
