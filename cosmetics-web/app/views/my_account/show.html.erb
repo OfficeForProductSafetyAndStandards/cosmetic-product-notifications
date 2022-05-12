@@ -134,6 +134,7 @@
       </p>
       <%= govukSummaryList(
         classes: "app-summary-list--key-weight-regular",
+        attributes: { id: "opss-downloads" },
         rows: [
           {
             key: { text: "All notified cosmetic products containing nanomaterials" },
@@ -182,3 +183,13 @@
     <% end %>
   </div>
 </div>
+
+<%= javascript_tag nonce: true do -%>
+  document.addEventListener('DOMContentLoaded', (e) => {//fallback for some browsers
+    var theList = document.getElementById("opss-downloads");
+    var elements = theList.querySelectorAll('a');
+    Array.prototype.forEach.call(elements, function(el, i){
+      el.setAttribute("download", "");
+    });
+  });
+<% end %>
