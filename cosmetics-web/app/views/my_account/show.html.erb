@@ -171,7 +171,7 @@
                 {
                   href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsJob.file_name)&.url,
                   html: "<span class='opss-download-link-sm'></span>Download".html_safe,
-                  visuallyHiddenText: "notified nanomaterials as pdfs",
+                  visuallyHiddenText: "notified nanomaterials as <abbr>PDF</abbr>s".html_safe,
                   classes: "govuk-link--no-visited-state",
                 }
               ]
