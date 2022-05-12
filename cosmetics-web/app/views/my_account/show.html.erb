@@ -128,7 +128,10 @@
 
     <% if search_domain? && current_user.opss_science_user? %>
       <h2 class="govuk-heading-l">Downloadable data</h2>
-      <p class="govuk-body">Your account privileges allow you to download this information directly to your computer or device.</p>
+      <p class="govuk-body">
+        Your account privileges allow you to download this information directly to your computer or device. <br class="opss-br-desktop">
+        (Downloadable data is updated at midnight).
+      </p>
       <%= govukSummaryList(
         classes: "app-summary-list--key-weight-regular",
         rows: [
