@@ -13,7 +13,7 @@
       <p class="govuk-body govuk-!-font-weight-bold opss-error-colour">You cannot Accept and submit this draft because:</p>
 
       <ul class="govuk-list govuk-list--bullet govuk-error-summary__list govuk-!-margin-bottom-4">
-        <% @notification.errors.messages[:base].each do |error| %>
+        <% @notification.errors.messages.values.each do |error| %>
           <li>
             <%= error %>
           </li>

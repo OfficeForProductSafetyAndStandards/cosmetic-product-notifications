@@ -135,14 +135,26 @@ class Component < ApplicationRecord
     get_category_name(root_category)
   end
 
+  # This should read formulation file required
+  # TODO: find where it is used
   def formulation_required?
     if range?
       !formulation_file.attached? && range_formulas&.empty?
     elsif exact?
       !formulation_file.attached? && exact_formulas&.empty?
+    elsif predefined? && contains_poisonous_ingredients
+      !formulation_file.attached?
     else
       false
     end
+  end
+
+  def formulation_file_failed_antivirus_check?
+    formulation_file.attached? && formulation_file.metadata["safe"] == false
+  end
+
+  def formulation_file_pending_antivirus_check?
+    formulation_file.attached? && formulation_file.metadata["safe"].nil?
   end
 
   def self.get_parent_category(category)

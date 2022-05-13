@@ -1,8 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Component, type: :model do
+  let(:contains_poisonous_ingredients) { false }
+
   let(:notification) { create(:notification) }
-  let(:predefined_component) { create(:component) }
+  let(:predefined_component) { create(:component, contains_poisonous_ingredients: contains_poisonous_ingredients) }
   let(:ranges_component) { create(:ranges_component) }
   let(:exact_component) { create(:exact_component) }
   let(:text_file) { fixture_file_upload("/testText.txt", "application/text") }
@@ -114,36 +116,55 @@ RSpec.describe Component, type: :model do
   end
 
   describe "formulation_required", :with_stubbed_antivirus do
-    it "returns false for predefined formulation even if no file attached" do
-      expect(predefined_component.formulation_required?).to be false
+    context "when component uses frame formulation" do
+      it "returns false for predefined formulation when no file attached" do
+        expect(predefined_component.formulation_required?).to be false
+      end
     end
 
-    it "returns true for ranges formulation if no file attached" do
-      expect(ranges_component.formulation_required?).to be true
+    context "when component uses frame formulation and has harmful ingredients" do
+      let(:contains_poisonous_ingredients) { true }
+
+      it "returns false when there is no file" do
+        expect(predefined_component.formulation_required?).to be true
+      end
+
+      it "returns false for predefined formulation even if no file attached" do
+        predefined_component.formulation_file.attach text_file
+        expect(predefined_component.formulation_required?).to be false
+      end
     end
 
-    it "returns false for ranges formulation if file is attached" do
-      ranges_component.formulation_file.attach text_file
-      expect(ranges_component.formulation_required?).to be false
+    context "when component uses range formulation" do
+      it "returns true if file is not attached" do
+        expect(ranges_component.formulation_required?).to be true
+      end
+
+      it "returns false if file is attached" do
+        ranges_component.formulation_file.attach text_file
+        expect(ranges_component.formulation_required?).to be false
+      end
+
+      it "returns false if manually entered data present" do
+        ranges_component.range_formulas.create
+        expect(ranges_component.formulation_required?).to be false
+      end
     end
 
-    it "returns false for ranges formulation if manually entered data present" do
-      ranges_component.range_formulas.create
-      expect(ranges_component.formulation_required?).to be false
-    end
+    context "when component uses exact formulation" do
+      it "returns true for exact formulation if no file attached" do
+        expect(exact_component.formulation_required?).to be true
+      end
 
-    it "returns true for exact formulation if no file attached" do
-      expect(exact_component.formulation_required?).to be true
-    end
+      it "returns false if file is attached" do
+        exact_component.formulation_file.attach text_file
+        expect(exact_component.formulation_required?).to be false
+      end
 
-    it "returns false for exact formulation if file is attached" do
-      exact_component.formulation_file.attach text_file
-      expect(exact_component.formulation_required?).to be false
-    end
-
-    it "returns false for exact formulation if manually entered data present" do
-      exact_component.exact_formulas.create
-      expect(exact_component.formulation_required?).to be false
+      it "returns false if manually entered data present" do
+        exact_component.exact_formulas.create
+        expect(exact_component.formulation_required?).to be false
+      end
     end
   end
 
@@ -504,6 +525,70 @@ RSpec.describe Component, type: :model do
         component.update_formulation_type(nil)
 
         expect(component.errors).to be_present
+      end
+    end
+  end
+
+  describe "formulation file virus related methods", :with_stubbed_antivirus do
+    let(:component) { create(:ranges_component, :with_formulation_file) }
+
+    describe "formulation_file_failed_antivirus_check?" do
+      context "when virus is present" do
+        let(:with_stubbed_antivirus_result) { false }
+
+        it "returns true" do
+          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(true)
+        end
+      end
+
+      context "when file is not infected" do
+        let(:with_stubbed_antivirus_result) { true }
+
+        it "returns false" do
+          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(false)
+        end
+      end
+
+      context "when no file is present" do
+        let(:component) { create(:ranges_component) }
+
+        it "returns true" do
+          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(false)
+        end
+      end
+    end
+
+    describe "formulation_file_pending_antivirus_check?", :with_stubbed_antivirus do
+      context "when result is nil" do
+        let(:with_stubbed_antivirus_result) { nil }
+
+        it "returns true" do
+          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(true)
+        end
+      end
+
+      context "when result is false" do
+        let(:with_stubbed_antivirus_result) { false }
+
+        it "returns true" do
+          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
+        end
+      end
+
+      context "when result is true" do
+        let(:with_stubbed_antivirus_result) { true }
+
+        it "returns true" do
+          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
+        end
+      end
+
+      context "when no file is present" do
+        let(:component) { create(:ranges_component) }
+
+        it "returns true" do
+          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
+        end
       end
     end
   end
