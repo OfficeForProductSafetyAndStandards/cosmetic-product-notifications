@@ -82,7 +82,49 @@ RSpec.describe User, type: :model do # rubocop:todo RSpec/FilePath
       end
     end
 
-    describe ".confirm_new_email!(token)" do
+    describe "#confirm_new_email!" do
+      let(:user) do
+        create(:submit_user,
+               email: old_email,
+               new_email: new_email,
+               new_email_confirmation_token: expected_token,
+               new_email_confirmation_token_expires_at: new_email_expiration)
+      end
+
+      context "when the new email is not set" do
+        let(:user) { create(:submit_user, email: old_email, new_email: nil) }
+
+        it "returns nil" do
+          expect(user.confirm_new_email!).to be_nil
+        end
+
+        it "does not replace the email" do
+          expect { user.confirm_new_email! }.not_to change(user, :email).from(old_email)
+        end
+      end
+
+      it "replaces email with new email" do
+        expect { user.confirm_new_email! }.to change(user, :email).from(old_email).to(new_email)
+      end
+
+      it "removes new email" do
+        expect { user.confirm_new_email! }.to change(user, :new_email).from(new_email).to(nil)
+      end
+
+      it "removes the new email confirmation token" do
+        expect { user.confirm_new_email! }.to change(user, :new_email_confirmation_token)
+                                          .from(expected_token)
+                                          .to(nil)
+      end
+
+      it "removes the new email confirmation token expiration" do
+        expect { user.confirm_new_email! }.to change(user, :new_email_confirmation_token_expires_at)
+                                          .from(new_email_expiration)
+                                          .to(nil)
+      end
+    end
+
+    describe ".confirm_new_email!" do
       shared_examples "invalid token" do
         it "does not change email" do
           begin
