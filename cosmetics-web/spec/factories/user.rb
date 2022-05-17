@@ -96,6 +96,10 @@ FactoryBot.define do
         role { :msa }
       end
 
+      factory :opss_science_user do
+        role { :opss_science }
+      end
+
       after :create do |user, options|
         create(:user_attributes, user: user, declaration_accepted: !options.first_login)
       end

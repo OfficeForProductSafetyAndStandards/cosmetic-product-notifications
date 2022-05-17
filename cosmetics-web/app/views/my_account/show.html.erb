@@ -125,5 +125,10 @@
           },
         ]
       ) %>
+
+    <% if search_domain? && current_user.opss_science_user? %>
+      <%= render "opss_science_downloads" %>
+    <% end %>
   </div>
 </div>
+
