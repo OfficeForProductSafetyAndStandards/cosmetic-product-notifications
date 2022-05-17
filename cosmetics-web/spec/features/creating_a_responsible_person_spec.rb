@@ -22,6 +22,8 @@ RSpec.describe "Creating a responsible person", type: :feature do
     fill_in_rp_contact_details
 
     expect(page).to have_h1("Responsible Person")
+    expect(page).to have_text("Success: The Responsible Person was created")
+    expect(page).to have_text("Auto-test rpuser")
   end
 
   scenario "creating a responsible person as a limited company" do
