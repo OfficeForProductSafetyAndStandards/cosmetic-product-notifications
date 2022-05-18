@@ -10,6 +10,6 @@ class PoisonCentreNotificationPolicy < ApplicationPolicy
   end
 
   def show?
-    user.poison_centre_user? || user.msa_user?
+    user.poison_centre_user? || user.msa_user? || user.opss_science_user?
   end
 end

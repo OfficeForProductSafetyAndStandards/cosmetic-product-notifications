@@ -407,4 +407,45 @@ RSpec.shared_examples "common user tests" do
       end
     end
   end
+
+  describe "#uses_email_address?" do
+    before do
+      user.email = "user@example.com"
+      user.new_email = "usernew@example.com"
+    end
+
+    it "is false for blank email address" do
+      expect(user.uses_email_address?("")).to eq false
+    end
+
+    it "is false for no email address" do
+      expect(user.uses_email_address?(nil)).to eq false
+    end
+
+    it "is false when the email address is neither the user email or new email" do
+      expect(user.uses_email_address?("userdifferent@example.com")).to eq false
+    end
+
+    it "is false when the email address is not the user email and user has no new email" do
+      user.new_email = nil
+
+      expect(user.uses_email_address?("userdifferent@example.com")).to eq false
+    end
+
+    it "is true when the email address matches the user email" do
+      expect(user.uses_email_address?("user@example.com")).to eq true
+    end
+
+    it "is true when the email address matches the new user email" do
+      expect(user.uses_email_address?("usernew@example.com")).to eq true
+    end
+
+    it "is true when the email address matches the user email with different capitalisation" do
+      expect(user.uses_email_address?("User@EXAMPLE.com")).to eq true
+    end
+
+    it "is true when the email address matches the user new email with different capitalisation" do
+      expect(user.uses_email_address?("userNEW@example.com")).to eq true
+    end
+  end
 end
