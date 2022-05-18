@@ -1,6 +1,10 @@
 <head>
   <% # Google Analytics %>
-  <% if Rails.env.production? %>
+  <% if true || Rails.env.production? %>
+
+    <%= javascript_tag nonce: true do %>
+      window['ga-disable-UA-126364208-2'] = true;
+    <% end %>
     <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
     <%= javascript_tag nonce: true do %>
       window.dataLayer = window.dataLayer || [];

@@ -192,6 +192,7 @@ Rails.application.routes.draw do
     get :accessibility_statement, path: "accessibility-statement"
     get :terms_and_conditions, path: "terms-and-conditions"
     get :privacy_notice, path: "privacy-notice"
+    get :cookies, path: "cookies"
   end
 
   get "frame_formulations", to: "frame_formulations#index"
