@@ -32,6 +32,18 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
     end
   end
 
+  describe "image is missing" do
+    before do
+      ImageUpload.delete_all
+
+      notification.reload.valid?(:accept_and_submit)
+    end
+
+    it "complains about missing image" do
+      expect(notification.errors.messages_for(:image_uploads)).to eq(["Product image is missing"])
+    end
+  end
+
   describe "image still being processed" do
     let(:with_stubbed_antivirus_result) { nil }
     let(:image_upload) { create(:image_upload, notification: notification) }

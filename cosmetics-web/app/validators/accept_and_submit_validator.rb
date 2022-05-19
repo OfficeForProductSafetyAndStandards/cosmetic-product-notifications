@@ -23,6 +23,9 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
         notification.errors.add :image_uploads, "Image #{image_upload.file.filename} failed antivirus check. Remove image and try again"
       end
     end
+    if notification.image_uploads.blank?
+      notification.errors.add :image_uploads, "Product image is missing"
+    end
   end
 
   def validate_frame_formulation_uploads(notification)
