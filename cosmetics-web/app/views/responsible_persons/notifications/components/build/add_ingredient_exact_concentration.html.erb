@@ -1,0 +1,68 @@
+<% title = "Add the ingredients" %>
+
+<% page_title title, errors: @component.errors.any? %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-3"><%= title %></h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body-s opss-secondary-text">For every ingredient:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
+      <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
+      <li>Confirm if poisonous - especially if the details match ingredients listed in the following poison tables </li>
+    </ul>
+
+    <%= govukDetails(summaryText: "Show the poison tables", classes: "govuk-!-margin-left-0 govuk-!-font-size-16") do %>
+      <%= render "poison_tables" %>
+    <% end %>
+
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+
+    <%= form_with model: @ingredients_exact_concentration_form, url: wizard_path, method: :put, html: { novalidate: true } do |form| %>
+      <div class="govuk-form-group">
+        <%= render "components/govuk_fieldset", legend: { text: "Ingredient 1", classes: "govuk-fieldset__legend--s" } do %>
+          <%= render "form_components/govuk_input", form: form, key: :name, label: { text: "What is the name?" } %>
+
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <div class="govuk-form-group">
+                <%= govukLabel(for: :exact_concentration, text: "What is the exact concentration?", classes: "govuk-label--s govuk-!-font-weight-regular")%>
+                <div class="govuk-input__wrapper">
+                  <%= form.text_field :exact_concentration, class: "govuk-input govuk-input--width-3", maxlength: 3 %>
+                  <div class="govuk-input__suffix" aria-hidden="true"><span title="Percentage weight by weight">% w/w</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="govuk-grid-column-one-half">
+              <div class="govuk-form-group">
+                <div class="govuk-checkboxes opss-float-right-desktop">
+                  <%= render "form_components/govuk_input",
+                            form: form,
+                            key: :cas_number,
+                            label: { text: "What is the CAS number?", classes: "govuk-label--s govuk-!-font-weight-regular" },
+                            classes: "govuk-input--width-10" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <%= render "form_components/govuk_checkboxes",
+                        form: form,
+                        key: :poisonous,
+                        items: [{ key: :poisonous_yes,  text: "Is it poisonous?" }] %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <%= govukButton text: "Save and continue" %>
+    <% end %>
+  </div>
+</div>
