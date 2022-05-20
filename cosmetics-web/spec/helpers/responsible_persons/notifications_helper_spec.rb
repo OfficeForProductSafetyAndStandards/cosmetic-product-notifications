@@ -14,11 +14,12 @@ describe ResponsiblePersons::NotificationsHelper do
 
   describe "#notification_summary_label_image_link" do
     subject(:label_image_link) do
-      helper.notification_summary_label_image_link(image, notification.responsible_person, notification)
+      helper.notification_summary_label_image_link(image, notification.responsible_person, notification, allow_edits: allow_edits)
     end
 
     let(:notification) { build_stubbed(:notification) }
     let(:image) { build_stubbed(:image_upload, filename: "Label image") }
+    let(:allow_edits) { false }
 
     before do
       allow(helper).to receive(:url_for).and_return("/url/for/image")
@@ -31,12 +32,21 @@ describe ResponsiblePersons::NotificationsHelper do
       expect(helper).to have_received(:link_to).with("Label image", "/url/for/image", class: "govuk-link govuk-link--no-visited-state", rel: "noopener", target: "_blank")
     end
 
-    it "returns a processing message with a refresh link if image is waiting for antivirus check" do
+    it "returns nil if image is waiting for antivirus check" do
       allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: true)
-      allow(helper).to receive_messages(link_to: "<a href='/edit/path'>Refresh</a>",
-                                        edit_responsible_person_notification_path: "/edit/path")
-      expect(label_image_link).to eq("Processing image testImage.png...<br><a href='/edit/path'>Refresh</a>")
-      expect(helper).to have_received(:link_to).with("Refresh", "/edit/path", class: "govuk-link govuk-link--no-visited-state")
+      expect(label_image_link).to eq(nil)
+    end
+
+    context "when edits are allowed" do
+      let(:allow_edits) { true }
+
+      it "returns a processing message with a refresh link if image is waiting for antivirus check" do
+        allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: true)
+        allow(helper).to receive_messages(link_to: "<a href='/edit/path'>Refresh</a>",
+                                          edit_responsible_person_notification_path: "/edit/path")
+        expect(label_image_link).to eq("Processing image testImage.png...<br><a href='/edit/path'>Refresh</a>")
+        expect(helper).to have_received(:link_to).with("Refresh", "/edit/path", class: "govuk-link govuk-link--no-visited-state")
+      end
     end
 
     it "returns nil when the image file does not exist" do

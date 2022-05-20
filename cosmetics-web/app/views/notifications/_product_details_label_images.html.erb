@@ -3,12 +3,12 @@
   <ul class="govuk-list govuk-list--bullet">
     <% image_uploads.each do |image| %>
       <li>
-        <%= notification_summary_label_image_link(image, @responsible_person, @notification) %>
+        <%= notification_summary_label_image_link(image, @responsible_person, @notification, allow_edits: allow_edits) %>
       </li>
     <% end %>
   </ul>
 <% elsif image_uploads.one? %>
-  <%= notification_summary_label_image_link(image_uploads.first, @responsible_person, @notification) %>
+  <%= notification_summary_label_image_link(image_uploads.first, @responsible_person, @notification, allow_edits: allow_edits) %>
 <% else %>
   N/A
 <% end %>
