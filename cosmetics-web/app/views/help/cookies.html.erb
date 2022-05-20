@@ -87,10 +87,17 @@
               For example, partial information from a wizard.</td>
           <td class="govuk-table__cell">When you close your browser</td>
         </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">two-factor-*</td>
+          <td class="govuk-table__cell">Required for secondary authentication method; There could be several instances of this cookies</td>
+          <td class="govuk-table__cell">When you close your browser</td>
+        </tr>
       </tbody>
     </table>
 
-    <p>You can <%= link_to "opt out of Google Analytics cookies", "https://tools.google.com/dlpage/gaoptout" %>.</p>
+    <%= render 'cookie_form' %>
+
+    <p>You can also<%= link_to "opt out of Google Analytics cookies", "https://tools.google.com/dlpage/gaoptout" %> here.</p>
 
     <h2 class="govuk-heading-m">How are cookies deleted?</h2>
 

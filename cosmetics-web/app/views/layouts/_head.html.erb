@@ -1,18 +1,19 @@
 <head>
   <% # Google Analytics %>
-  <% if true || Rails.env.production? %>
-
-    <%= javascript_tag nonce: true do %>
-      window['ga-disable-UA-126364208-2'] = true;
-    <% end %>
-    <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
-    <%= javascript_tag nonce: true do %>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'UA-126364208-2');
+  <% if Rails.env.production? %>
+    <% if session[:accept_analytics_cookies] %>
+      <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
+      <%= javascript_tag nonce: true do %>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-126364208-2');
+      <% end %>
+      <%= javascript_tag nonce: true do %>
+        removeNonEssentialCookies()
+      <% end %>
     <% end %>
   <% end %>
   <meta charset="utf-8" />

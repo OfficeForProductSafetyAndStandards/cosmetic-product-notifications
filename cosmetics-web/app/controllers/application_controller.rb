@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  NON_ESSENTIAL_COOKIES = [/_ga.*/, /_gid/, /_ga_.*/].freeze
+
   include AuthenticationConcern
   include CacheConcern
   include HttpAuthConcern
@@ -20,6 +22,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_cookie_form
+  after_action :try_to_clear_non_essential_cookies
 
   rescue_from "ActiveRecord::RecordNotFound" do |_e|
     redirect_to "/404"
@@ -121,4 +125,19 @@ private
     submit_domain? ? submit_root_path : search_root_path
   end
   helper_method :root_path
+
+  def set_cookie_form
+    @cookie_form = CookieForm.new(session: session)
+  end
+
+  def try_to_clear_non_essential_cookies
+    return if session[:accept_analytics_cookies]
+
+    cookies_to_delete = request.cookie_jar.select { |name, _|
+      NON_ESSENTIAL_COOKIES.any? { |regexp| name =~ regexp }
+    }.map(&:first)
+    cookies_to_delete.each do |cookie_name|
+      request.cookie_jar.delete(cookie_name)
+    end
+  end
 end
