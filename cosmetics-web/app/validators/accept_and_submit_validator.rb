@@ -18,8 +18,7 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
     notification.image_uploads.each do |image_upload|
       if image_upload.pending_antivirus_check?
         notification.errors.add :image_uploads, "Image #{image_upload.file.filename} is still being processed"
-      end
-      if image_upload.failed_antivirus_check?
+      elsif image_upload.failed_antivirus_check?
         notification.errors.add :image_uploads, "Image #{image_upload.file.filename} failed antivirus check. Remove image and try again"
       end
     end
@@ -30,14 +29,12 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
 
   def validate_frame_formulation_uploads(notification)
     notification.components.each do |component|
-      if component.formulation_file_pending_antivirus_check?
-        notification.errors.add :formulation_uploads, "File #{component.formulation_file.filename} is still being processed"
-      end
-      if component.formulation_file_failed_antivirus_check?
-        notification.errors.add :formulation_uploads, "File #{component.formulation_file.filename} failed antivirus check. Remove file and try again"
-      end
       if component.formulation_required?
         notification.errors.add :formulation_uploads, "Item #{component.name} is missing formulation file"
+      elsif component.formulation_file_pending_antivirus_check?
+        notification.errors.add :formulation_uploads, "File #{component.formulation_file.filename} is still being processed"
+      elsif component.formulation_file_failed_antivirus_check?
+        notification.errors.add :formulation_uploads, "File #{component.formulation_file.filename} failed antivirus check. Remove file and try again"
       end
     end
   end

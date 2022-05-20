@@ -138,15 +138,11 @@ class Component < ApplicationRecord
   # This should read formulation file required
   # TODO: find where it is used
   def formulation_required?
-    if range?
-      !formulation_file.attached? && range_formulas&.empty?
-    elsif exact?
-      !formulation_file.attached? && exact_formulas&.empty?
-    elsif predefined? && contains_poisonous_ingredients
-      !formulation_file.attached?
-    else
-      false
-    end
+    return false if formulation_file.attached?
+
+    (range && range_formulas&.empty?) ||
+      (exact? && exact_formulas&.empty?) ||
+      (predefined? && contains_poisonous_ingredients)
   end
 
   def formulation_file_failed_antivirus_check?
