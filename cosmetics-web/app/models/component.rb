@@ -135,12 +135,10 @@ class Component < ApplicationRecord
     get_category_name(root_category)
   end
 
-  # This should read formulation file required
-  # TODO: find where it is used
-  def formulation_required?
+  def formulation_file_required?
     return false if formulation_file.attached?
 
-    (range && range_formulas&.empty?) ||
+    (range? && range_formulas&.empty?) ||
       (exact? && exact_formulas&.empty?) ||
       (predefined? && contains_poisonous_ingredients)
   end

@@ -127,9 +127,6 @@ class Notification < ApplicationRecord
     reference_number.to_s
   end
 
-  # TODO: this might be replaced by validator
-  def missing_information?; end
-
   def missing_nano_materials
     # return nano_material that is in the notification, but not in the component
     notification_nano_ids = nano_materials.pluck(:id).sort

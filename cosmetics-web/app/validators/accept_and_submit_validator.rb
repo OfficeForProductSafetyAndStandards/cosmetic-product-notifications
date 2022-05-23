@@ -29,7 +29,7 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
 
   def validate_frame_formulation_uploads(notification)
     notification.components.each do |component|
-      if component.formulation_required?
+      if component.formulation_file_required?
         notification.errors.add :formulation_uploads, "Item #{component.name} is missing formulation file"
       elsif component.formulation_file_pending_antivirus_check?
         notification.errors.add :formulation_uploads, "File #{component.formulation_file.filename} is still being processed"
