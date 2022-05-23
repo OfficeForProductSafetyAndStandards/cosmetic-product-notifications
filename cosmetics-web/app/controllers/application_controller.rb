@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   include SecondaryAuthenticationConcern
 
   protect_from_forgery with: :exception
-  before_action :set_cookie_form
   before_action :authorize_user!
   before_action :authenticate_user!
   before_action :ensure_secondary_authentication
@@ -125,10 +124,6 @@ private
     submit_domain? ? submit_root_path : search_root_path
   end
   helper_method :root_path
-
-  def set_cookie_form
-    @cookie_form = CookieForm.new(session: session)
-  end
 
   def try_to_clear_non_essential_cookies
     return if session[:accept_analytics_cookies]
