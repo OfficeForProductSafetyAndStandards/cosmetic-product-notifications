@@ -65,7 +65,7 @@ module NotificationStateConcern
         transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE,
                     after: proc { __elasticsearch__.index_document } do
           guard do
-            !missing_information?
+            valid?(:accept_and_submit)
           end
         end
       end

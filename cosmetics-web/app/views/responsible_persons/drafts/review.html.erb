@@ -13,14 +13,17 @@
       <p class="govuk-body govuk-!-font-weight-bold opss-error-colour">You cannot Accept and submit this draft because:</p>
 
       <ul class="govuk-list govuk-list--bullet govuk-error-summary__list govuk-!-margin-bottom-4">
-        <% @notification.errors.messages[:base].each do |error| %>
+        <% @notification.errors.each do |error| %>
           <li>
-            <%= error %>
+            <%= error.message %>
           </li>
         <% end %>
       </ul>
 
-      <p class="govuk-body govuk-!-margin-bottom-1">Remove the nanomaterial(s) or include it in an item. <br class="opss-br-desktop">
+      <% if @notification.errors.messages_for(:nano_materials).present? %>
+        <p class="govuk-body govuk-!-margin-bottom-1">Remove the nanomaterial(s) or include it in an item. <br class="opss-br-desktop">
+      <% end %>
+
       <a href="<%= responsible_person_notification_draft_path(@responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">Return to the tasks list page</a>.</p>
 
     </div>
