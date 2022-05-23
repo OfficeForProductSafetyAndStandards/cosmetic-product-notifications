@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   include SecondaryAuthenticationConcern
 
   protect_from_forgery with: :exception
+  before_action :set_cookie_form
   before_action :authorize_user!
   before_action :authenticate_user!
   before_action :ensure_secondary_authentication
@@ -22,7 +23,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_cookie_form
   after_action :try_to_clear_non_essential_cookies
 
   rescue_from "ActiveRecord::RecordNotFound" do |_e|
