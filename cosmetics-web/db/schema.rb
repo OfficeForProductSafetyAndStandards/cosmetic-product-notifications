@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_19_155041) do
+ActiveRecord::Schema.define(version: 2022_05_20_184518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -130,8 +130,8 @@ ActiveRecord::Schema.define(version: 2022_05_19_155041) do
   end
 
   create_table "exact_formulas", force: :cascade do |t|
-    t.string "inci_name"
-    t.decimal "quantity"
+    t.string "inci_name", null: false
+    t.decimal "quantity", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "component_id"
