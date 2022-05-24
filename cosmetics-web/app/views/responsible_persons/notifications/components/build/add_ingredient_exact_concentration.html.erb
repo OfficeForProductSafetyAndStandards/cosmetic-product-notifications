@@ -85,4 +85,19 @@
       </div>
     <% end %>
   </div>
+  <% if @component.exact_formulas.any? %>
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-s">Already added</h2>
+
+      <ol class="govuk-list govuk-list--number govuk-!-font-size-16 opss-secondary-text">
+        <% @component.exact_formulas.each do |exact_formula| %>
+          <li><%= exact_formula.inci_name %></li>
+        <% end %>
+      </ol>
+
+      <p class="govuk-body-s opss-secondary-text">
+        These ingredients have already been added to the product. <!-- or .... already been added to the item. -->
+      </p>
+    </div>
+  <% end %>
 </div>
