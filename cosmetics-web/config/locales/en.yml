@@ -234,6 +234,12 @@ en:
           attributes:
             component_id:
               blank: "Select an item"
+        responsible_persons/notifications/exact_concentration_form:
+          attributes:
+            name:
+              blank: "Enter a name"
+            exact_concentration:
+              blank: "Enter the concentration"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:

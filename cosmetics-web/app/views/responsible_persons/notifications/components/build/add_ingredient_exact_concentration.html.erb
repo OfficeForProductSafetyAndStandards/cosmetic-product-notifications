@@ -1,9 +1,11 @@
 <% title = "Add the ingredients" %>
 
-<% page_title title, errors: @component.errors.any? %>
+<% page_title title, errors: @exact_concentration_form.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
+
+<%= error_summary(@exact_concentration_form.errors) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
@@ -23,18 +25,28 @@
 
     <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
 
-    <%= form_with model: @ingredients_exact_concentration_form, url: wizard_path, method: :put, html: { novalidate: true } do |form| %>
+    <%= form_with model: @exact_concentration_form, scope: :exact_concentration_form, url: wizard_path, method: :put, html: { novalidate: true } do |form| %>
       <div class="govuk-form-group">
-        <%= render "components/govuk_fieldset", legend: { text: "Ingredient 1", classes: "govuk-fieldset__legend--s" } do %>
-          <%= render "form_components/govuk_input", form: form, key: :name, label: { text: "What is the name?" } %>
+        <%= render "components/govuk_fieldset", legend: { text: "Ingredient #{@component.exact_formulas.count + 1}", classes: "govuk-fieldset__legend--s" } do %>
+          <%= render "form_components/govuk_input", form: form, id: "name", key: :name, label: { text: "What is the name?" } %>
 
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-half">
-              <div class="govuk-form-group">
+              <% concentration_error = @exact_concentration_form.errors[:exact_concentration]&.first %>
+              <div class="govuk-form-group <%= "govuk-form-group--error" if concentration_error %>">
                 <%= govukLabel(for: :exact_concentration, text: "What is the exact concentration?", classes: "govuk-label--s govuk-!-font-weight-regular")%>
+                <% if concentration_error %>
+                  <%= render "components/govuk_error_message", id: "exact_concentration-error", text: concentration_error %>
+                <% end %>
                 <div class="govuk-input__wrapper">
-                  <%= form.text_field :exact_concentration, class: "govuk-input govuk-input--width-3", maxlength: 3 %>
-                  <div class="govuk-input__suffix" aria-hidden="true"><span title="Percentage weight by weight">% w/w</span></div>
+                  <%= form.text_field(:exact_concentration,
+                                      id: "exact_concentration",
+                                      class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if concentration_error}",
+                                      maxlength: 3,
+                                      "aria-describedby" => ("exact_concentration-error" if concentration_error)) %>
+                  <div class="govuk-input__suffix" aria-hidden="true">
+                    <span title="Percentage weight by weight">% w/w</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -45,6 +57,7 @@
                   <%= render "form_components/govuk_input",
                             form: form,
                             key: :cas_number,
+                            id: "cas_number",
                             label: { text: "What is the CAS number?", classes: "govuk-label--s govuk-!-font-weight-regular" },
                             classes: "govuk-input--width-10" %>
                 </div>
@@ -56,9 +69,10 @@
             <div class="govuk-grid-column-one-half">
               <%= render "form_components/govuk_checkboxes",
                         form: form,
-                        key: :poisonous,
+                        key: :poisonous_check,
+                        id: "poisonous_check",
                         classes: " govuk-!-padding-top-6",
-                        items: [{ key: :poisonous_yes,  text: "Is it poisonous?" }] %>
+                        items: [{ key: :poisonous,  text: "Is it poisonous?" }] %>
             </div>
           </div>
         <% end %>

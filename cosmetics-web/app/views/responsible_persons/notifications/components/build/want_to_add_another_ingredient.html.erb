@@ -1,0 +1,43 @@
+<% title = "Do you want to add another ingredient?" %>
+
+<% page_title title, errors: @component.errors.any? %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+
+<% if @component.errors.any? %>
+  <%= error_summary(@component.errors, map_errors: { add_another_ingredient: "add_another_ingredient_yes" }) %>
+<% else %>
+  <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+      <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        Success
+      </h2>
+    </div>
+    <div class="govuk-notification-banner__content">
+      <h3 class="govuk-notification-banner__heading">
+        The ingredient was added
+      </h3>
+      <p class="govuk-body">The ingredient was successfully added to the product<!-- or item-->.</p>
+    </div>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <%= form_with model: @component, scope: "", url: wizard_path, method: :put, html: { novalidate: true } do |form| %>
+      <%= render "form_components/govuk_radios",
+                 form: form,
+                 key: :add_another_ingredient,
+                 idPrefix: "add_another_ingredient",
+                 fieldset: { legend: { text: "Do you want to add another ingredient?",
+                                       classes: "govuk-fieldset__legend--l",
+                                       isPageHeading: true } },
+                 items: [{ text: "Yes", value: :yes },
+                         { text: "No", value: :no }] %>
+      <%= govukButton text: "Continue" %>
+    <% end %>
+  </div>
+</div>
