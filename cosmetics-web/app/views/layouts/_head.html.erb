@@ -1,6 +1,6 @@
 <head>
   <% # Google Analytics %>
-  <% if Rails.env.production? %>
+  <% if true || Rails.env.production? %>
     <% if session[:accept_analytics_cookies] %>
       <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
       <%= javascript_tag nonce: true do %>
