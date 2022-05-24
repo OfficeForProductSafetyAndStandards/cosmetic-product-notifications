@@ -77,7 +77,12 @@
           </div>
         <% end %>
       </div>
-      <%= govukButton text: "Save and continue" %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+        <% if @component.exact_formulas.any? %>
+          <%= link_to("Skip", wizard_path(:select_ph_option), class: "govuk-link govuk-link--no-visited-state") %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
