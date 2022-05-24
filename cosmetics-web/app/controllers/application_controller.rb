@@ -137,7 +137,7 @@ private
       NON_ESSENTIAL_COOKIES.any? { |regexp| name =~ regexp }
     }.map(&:first)
     cookies_to_delete.each do |cookie_name|
-      request.cookie_jar.delete(cookie_name, secure: false)
+      headers["Set-Cookie"] = "#{cookie_name}=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT"
     end
   end
 end
