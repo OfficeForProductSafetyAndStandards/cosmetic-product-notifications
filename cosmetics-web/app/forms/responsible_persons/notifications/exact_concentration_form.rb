@@ -16,10 +16,10 @@ module ResponsiblePersons::Notifications
   private
 
     def unique_name
-      return if name.blank?
+      return if name.blank? || component.blank?
 
       if ExactFormula.where(component_id: component).where("LOWER(inci_name) = ?", name.downcase).any?
-        errors.add(:name, :taken)
+        errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
       end
     end
   end

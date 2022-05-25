@@ -238,7 +238,7 @@ en:
           attributes:
             name:
               blank: "Enter a name"
-              taken: "Enter a name which is unique to this product"
+              taken: "Enter a name which is unique to this %{entity}"
             exact_concentration:
               blank: "Enter the concentration"
         responsible_persons/notifications/product/contains_nanomaterials_form:

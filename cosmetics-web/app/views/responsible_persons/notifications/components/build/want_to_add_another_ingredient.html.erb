@@ -19,7 +19,7 @@
       <h3 class="govuk-notification-banner__heading">
         The ingredient was added
       </h3>
-      <p class="govuk-body">The ingredient was successfully added to the product<!-- or item-->.</p>
+      <p class="govuk-body">The ingredient was successfully added to the <%= @component.notification.is_multicomponent? ? "item" : "product" %>.</p>
     </div>
   </div>
 <% end %>
