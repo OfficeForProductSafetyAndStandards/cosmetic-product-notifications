@@ -272,8 +272,9 @@ private
   end
 
   def update_add_ingredient_exact_concentration
-    @exact_concentration_form =
-      ResponsiblePersons::Notifications::ExactConcentrationForm.new(exact_concentration_params)
+    @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new(
+      exact_concentration_params.merge(component: @component),
+    )
     return rerender_current_step unless @exact_concentration_form.valid?
 
     exact_formula = @component.exact_formulas.new(
