@@ -45,10 +45,10 @@ RSpec.describe CasNumberValidator do
     "51a-43-4",
   ]
 
-  invalid_length_cas_numbers = [
-    "1-12-1",
-    "12345678-12-1",
-    "1234567-12-12",
+  invalid_length_cas_numbers = %w[
+    1-12-1
+    12345678-12-1
+    1234567-12-12
   ]
 
   valid_cas_numbers.each do |cas_number|
