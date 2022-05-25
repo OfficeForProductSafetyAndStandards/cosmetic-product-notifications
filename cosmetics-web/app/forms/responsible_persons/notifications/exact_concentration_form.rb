@@ -2,10 +2,10 @@ module ResponsiblePersons::Notifications
   class ExactConcentrationForm < Form
     include StripWhitespace
 
-    attribute :name
-    attribute :exact_concentration
-    attribute :cas_number
-    attribute :poisonous
+    attribute :name, :string
+    attribute :exact_concentration, :float
+    attribute :cas_number, :string
+    attribute :poisonous, :boolean
     attribute :component
 
     validates :name, presence: true
