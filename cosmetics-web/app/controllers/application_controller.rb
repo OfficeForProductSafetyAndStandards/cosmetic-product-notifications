@@ -127,7 +127,7 @@ private
   helper_method :root_path
 
   def set_cookie_form
-    @cookie_form = CookieForm.new(session: session)
+    @cookie_form = CookieForm.new(accept_analytics_cookies: session[:accept_analytics_cookies])
   end
 
   def try_to_clear_non_essential_cookies
