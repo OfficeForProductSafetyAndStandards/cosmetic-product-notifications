@@ -14,13 +14,13 @@
       </div>
 
       <div class="govuk-button-group">
-        <%= form_for @cookie_form, url: cookie_form_path do |f| %>
+        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-accept-cookies' } do |f| %>
           <%= f.hidden_field :accept_analytics_cookies, value: true %>
           <button value="accept" type="submit" name="cookies" class="govuk-button" data-module="govuk-button">
             Accept analytics cookies
           </button>
         <% end %>
-        <%= form_for @cookie_form, url: cookie_form_path do |f| %>
+        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-reject-cookies' } do |f| %>
           <%= f.hidden_field :accept_analytics_cookies, value: false %>
           <button value="reject" type="submit" name="cookies" class="govuk-button" data-module="govuk-button">
             Reject analytics cookies
