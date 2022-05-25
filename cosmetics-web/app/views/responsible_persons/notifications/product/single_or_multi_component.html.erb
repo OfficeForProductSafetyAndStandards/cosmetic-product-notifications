@@ -52,7 +52,7 @@
                      { text: "No, this is a single product",
                        value: "single",
                        id: "single_or_multi_component_single",
-                       checked: errors.exclude?(:components_count) &&
+                       checked: errors.exclude?(:components_count) ||
                                   (form.object.single_component? || (form.object.multi_component? && @notification.components.count == 1)) },
                    ]
                   ) %>
