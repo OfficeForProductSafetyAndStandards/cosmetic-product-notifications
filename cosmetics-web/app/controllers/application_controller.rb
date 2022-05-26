@@ -1,3 +1,5 @@
+requre "cookie_domain_cleaner"
+
 class ApplicationController < ActionController::Base
   NON_ESSENTIAL_COOKIES = [/_ga.*/, /_gid/, /_ga_.*/].freeze
 
