@@ -137,7 +137,7 @@ private
       NON_ESSENTIAL_COOKIES.any? { |regexp| name =~ regexp }
     }.map(&:first)
     cookies_to_delete.each do |cookie_name|
-      request.cookie_jar.delete(cookie_name, domain: request.host)
+      request.cookie_jar.delete(cookie_name, domain: CookieDomainCleaner.clean(request.host))
     end
   end
 end
