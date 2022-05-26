@@ -7,6 +7,10 @@
 @import "opss-search";
 @import "opss-pagination";
 
+form.opss-cookie-form {
+    display: flex;
+}
+
 .govuk-list *[class^="govuk-heading"] .govuk-link {
     @include word-wrap;
 }
@@ -16,16 +20,6 @@
         color: govuk-colour("black") !important;
         text-decoration: none;
         cursor: text;
-    }
-}
-
-.opss-warning-text--s {
-    strong {
-        @include opss-font-size($s: 16px, $l: 1.3);
-    }
-
-    & + .opss-warning-text--s > span {
-        display: none;
     }
 }
 
@@ -373,7 +367,42 @@ li.opss-task-sub {
             }
         }
     }
+
+    .opss-date-input--tight {
+        .govuk-date-input__item {
+            margin-right: govuk-spacing(1);
+
+            .govuk-label {
+                @include opss-font-size($s: 16px, $l: 1.5);//1.0
+            }
+        }
+    }
 }
+
+
+tbody.opss-table-grouped-by--1,
+tbody.opss-table-grouped-by--2 {
+    th, td {
+        border-bottom: 1px solid $govuk-border-colour;
+    }
+}/*thead + tbody.opss-table-grouped-by--1, */
+tbody.opss-table-grouped-by--2 + tbody.opss-table-grouped-by--1,
+tbody.opss-table-grouped-by--1 + tbody.opss-table-grouped-by--2,
+tbody.opss-table-grouped-by--1 + tbody.opss-table-grouped-by--none,
+tbody.opss-table-grouped-by--2 + tbody.opss-table-grouped-by--none {
+    tr:first-child {
+        th, td {
+            border-top: 3px dashed  $govuk-text-colour;
+            position: relative;
+            top: -2px; /* avoids swapping top borders with bottom */
+        }
+    }
+}
+
+
+
+
+/* check if this code BELOW is still required? .... */
 
 /* used on the search page - starts */
 body.js-enabled .govuk-radios__conditional--hidden.opss-nojs-hide {

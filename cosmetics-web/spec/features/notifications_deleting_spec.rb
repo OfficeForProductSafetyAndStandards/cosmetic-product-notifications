@@ -15,7 +15,6 @@ RSpec.describe "Notifications delete", type: :feature do
     draft_notification
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on draft_notification.product_name
-    click_on "task list page"
     click_on "Delete this draft"
 
     expect(page).to have_h1("Do you want to delete this draft?")

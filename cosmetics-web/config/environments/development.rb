@@ -41,4 +41,5 @@ Rails.application.configure do
   end
 
   config.active_record.verbose_query_logs = true
+  config.slowpoke.timeout = 90
 end

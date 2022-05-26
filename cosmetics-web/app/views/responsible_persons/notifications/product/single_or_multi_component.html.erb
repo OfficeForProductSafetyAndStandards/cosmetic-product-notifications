@@ -41,7 +41,8 @@
         <%= render("form_components/govuk_radios",
                    form: form,
                    key: :single_or_multi_component,
-                   fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m" } },
+                   hint: { text: "The product draft is currently a single item product. You can add more items by making it a multi-item kit.", classes: "govuk-!-font-size-16 govuk-!-width-three-quarters govuk-!-margin-botton-6", id: "single_or_multi_component_form_single_or_multi_component-hint" },
+                   fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m"}},
                    items: [
                      { text: "Yes",
                        value: "multiple",
