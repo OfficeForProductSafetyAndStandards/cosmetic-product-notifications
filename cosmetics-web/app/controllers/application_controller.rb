@@ -1,3 +1,5 @@
+require "cookie_domain_cleaner"
+
 class ApplicationController < ActionController::Base
   NON_ESSENTIAL_COOKIES = [/_ga.*/, /_gid/, /_ga_.*/].freeze
 
@@ -137,7 +139,7 @@ private
       NON_ESSENTIAL_COOKIES.any? { |regexp| name =~ regexp }
     }.map(&:first)
     cookies_to_delete.each do |cookie_name|
-      request.cookie_jar.delete(cookie_name, domain: request.host)
+      request.cookie_jar.delete(cookie_name, domain: CookieDomainCleaner.clean(request.host))
     end
   end
 end
