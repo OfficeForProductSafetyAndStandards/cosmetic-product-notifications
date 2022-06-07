@@ -1,7 +1,7 @@
 <head>
   <% # Google Analytics %>
   <% if true || Rails.env.production? %>
-    <% if session[:accept_analytics_cookies] %>
+    <% if analytics_cookies_accepted? %>
       <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
       <%= javascript_tag nonce: true do %>
         window.dataLayer = window.dataLayer || [];

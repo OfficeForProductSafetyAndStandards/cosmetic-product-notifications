@@ -1,4 +1,4 @@
-<% if session[:accept_analytics_cookies].nil? %>
+<% if analytics_cookies_not_set? %>
   <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on Cosmetics Notification Service">
     <div class="govuk-cookie-banner__message govuk-width-container">
 
@@ -30,4 +30,27 @@
       </div>
     </div>
   </div>
+<% elsif flash[:cookies_banner_confirmation] %>
+  <form method="POST">
+    <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on Cosmetics Notification Service">
+      <div class="govuk-cookie-banner__message govuk-width-container">
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column">
+
+            <div class="govuk-cookie-banner__content">
+              <p class="govuk-body">You’ve accepted additional cookies. You can <a class="govuk-link" href="<%= cookies_path %>">change your cookie settings</a> at any time.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-button-group">
+          <a href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+            Hide cookie message
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </form>
 <% end %>
