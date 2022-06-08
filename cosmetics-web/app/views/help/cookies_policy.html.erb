@@ -3,26 +3,40 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Cookies policy</h1>
+    <div class="cookie-settings__confirmation display: block;">
+
+    <% if flash[:cookies_updated_successfully] %>
+      <div class="gem-c-success-alert govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-0" role="alert" tabindex="-1" aria-labelledby="govuk-notification-banner-title-1e84d50f" data-module="initial-focus" data-initial-focus-module-started="true">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title-1e84d50f">Success</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <h3 class="govuk-notification-banner__heading">Your cookie settings were saved</h3>
+          <p class="govuk-body">Government services may set additional cookies and, if so, will have their own cookie policy and banner.</p>
+          <a class="govuk-link govuk-notification-banner__link cookie-settings__prev-page" href="/" style="display: inline;">Go to the Submit cosmetic product notifications home page</a>
+        </div>
+      </div>
+    <% end %>
+    <h1 class="govuk-heading-l govuk-!-margin-top-8">Cookies policy</h1>
 
     <h2 class="govuk-heading-m">What are cookies?</h2>
 
     <p>Cookies are small text files that are saved on your device to help the website perform a number of functions.
-        On your first visit to our website, a popup banner asked you to accept our use of cookies and similar
-        technologies. The information these cookies collect is based on your browsing device’s IP-address
-        (hardware identifier).</p>
+    On your first visit to our website, a popup banner asked you to accept our use of cookies and similar
+    technologies. The information these cookies collect is based on your browsing device’s IP-address
+    (hardware identifier).</p>
 
     <h2 class="govuk-heading-m">What do the cookies do?</h2>
 
     <p>The cookies we use:</p>
 
     <p>DO NOT: store personally identifiable information about you; store information such as passwords
-        (and cannot) allow us to access other information stored on your device, store information about
-        you others could understand, compromise your security</p>
+    (and cannot) allow us to access other information stored on your device, store information about
+    you others could understand, compromise your security</p>
 
     <p>DO: allow us to see how many people use our website and monitor their activities; allow us to see
-        how people arrive at our site (e.g. via search engine); allow us to gather geographic location and
-        browser information.</p>
+    how people arrive at our site (e.g. via search engine); allow us to gather geographic location and
+    browser information.</p>
 
     <h2 class="govuk-heading-m">What cookies does this website use?</h2>
 
@@ -30,13 +44,13 @@
 
     <ol class="govuk-list govuk-list--number">
       <li>Persistent cookies, which remain on your device to capture and remember your preferences (if chosen)
-          for any future re-visit (e.g. your location).
-      <li>Session cookies, which are deleted when your browser is closed. These cookies are used for analytical
+        for any future re-visit (e.g. your location).
+        <li>Session cookies, which are deleted when your browser is closed. These cookies are used for analytical
           services provided by Google Inc. in the US on our behalf. The analysis allows an insight into where and
           how our website is used so that we can continuously work on its improvement. Google will not associate
           your IP address with any other data held by Google. However, if you do not wish to be part of this analysis,
           feel free to amend your browser settings or
-        <% link_to "install a browser plug-in", "https://tools.google.com/dlpage/gaoptout" %> to opt-out.
+          <% link_to "install a browser plug-in", "https://tools.google.com/dlpage/gaoptout" %> to opt-out.
     </ol>
 
     <p>The cookies we use, what they are used for and how long they remain on your device are set out below:</p>
@@ -84,13 +98,18 @@
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">_cosmetics_session</td>
           <td class="govuk-table__cell">This stores information relating to recent actions that have been taken.
-              For example, partial information from a wizard.</td>
-          <td class="govuk-table__cell">When you close your browser</td>
+            For example, partial information from a wizard.</td>
+          <td class="govuk-table__cell">1 month</td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">two-factor-*</td>
           <td class="govuk-table__cell">Required for secondary authentication method; There could be several instances of this cookies</td>
-          <td class="govuk-table__cell">When you close your browser</td>
+          <td class="govuk-table__cell">1 month</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">accept_analytics_settings</td>
+          <td class="govuk-table__cell">Required for secondary authentication method; There could be several instances of this cookies</td>
+          <td class="govuk-table__cell">1 month</td>
         </tr>
       </tbody>
     </table>
@@ -102,12 +121,12 @@
     <h2 class="govuk-heading-m">How are cookies deleted?</h2>
 
     <p>To delete or stop cookies being placed on your device, please check the help menu of your internet browser.
-        Blocking cookies may reduce the functionality of this website.</p>
+    Blocking cookies may reduce the functionality of this website.</p>
 
     <h2 class="govuk-heading-m">For more information</h2>
 
     <p>To learn more about cookies and similar technologies, we recommend you visit:
-      <%= link_to "http://www.allaboutcookies.org/", "http://www.allaboutcookies.org/" %></p>
+    <%= link_to "http://www.allaboutcookies.org/", "http://www.allaboutcookies.org/" %></p>
 
   </div>
 </div>

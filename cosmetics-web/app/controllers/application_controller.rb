@@ -1,6 +1,9 @@
 require "cookie_domain_cleaner"
 
 class ApplicationController < ActionController::Base
+  #   before_action do
+  #     binding.pry
+  #   end
   include AuthenticationConcern
   include CacheConcern
   include HttpAuthConcern

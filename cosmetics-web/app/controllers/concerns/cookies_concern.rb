@@ -6,12 +6,13 @@ module CookiesConcern
   included do
     before_action :set_cookie_form
 
-    add_flash_types :cookies_banner_confirmation, :cookies_settings_changed
+    add_flash_types :cookies_banner_confirmation, :cookies_updated_successfully
 
     after_action :try_to_clear_non_essential_cookies
 
     helper_method :analytics_cookies_accepted?
     helper_method :analytics_cookies_not_set?
+    helper_method :previously_visited_page
   end
 
   def set_cookie_form
@@ -38,10 +39,10 @@ module CookiesConcern
   end
 
   def analytics_cookies
-    session[:accept_analytics_cookies]
+    cookies[:accept_analytics_cookies]
   end
 
   def set_analytics_cookies(accept_analytics_cookies)
-    session[:accept_analytics_cookies] = accept_analytics_cookies
+    cookies[:accept_analytics_cookies] = accept_analytics_cookies
   end
 end

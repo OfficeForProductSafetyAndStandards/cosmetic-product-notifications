@@ -26,12 +26,12 @@
             Reject analytics cookies
           </button>
         <% end %>
-        <a class="govuk-link" href="<%= cookies_path %>">View cookies</a>
+        <a class="govuk-link" href="<%= cookies_policy_path %>">View cookies</a>
       </div>
     </div>
   </div>
 <% elsif flash[:cookies_banner_confirmation] %>
-  <form method="POST">
+  <form action="<%= request.path %>" method="get">
     <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on Cosmetics Notification Service">
       <div class="govuk-cookie-banner__message govuk-width-container">
 
@@ -39,13 +39,13 @@
           <div class="govuk-grid-column">
 
             <div class="govuk-cookie-banner__content">
-              <p class="govuk-body">You’ve accepted additional cookies. You can <a class="govuk-link" href="<%= cookies_path %>">change your cookie settings</a> at any time.</p>
+              <p class="govuk-body">You’ve accepted additional cookies. You can <a class="govuk-link" href="<%= cookies_policy_path %>">change your cookie settings</a> at any time.</p>
             </div>
           </div>
         </div>
 
         <div class="govuk-button-group">
-          <a href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+          <button draggable="false" type="submit" class="govuk-button" data-module="govuk-button">
             Hide cookie message
           </a>
         </div>
