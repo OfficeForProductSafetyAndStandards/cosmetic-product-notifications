@@ -570,6 +570,28 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
+  scenario "accepting an invitation for an existing user uncomfirmed new email address" do
+    invited_user.update(new_email: "new_email@example.com")
+    pending = create(:pending_responsible_person_user,
+                     email_address: invited_user.new_email,
+                     responsible_person: responsible_person)
+
+    sign_in invited_user
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+
+    select_secondary_authentication_sms
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
+    complete_secondary_authentication_sms_with(invited_user.direct_otp)
+
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(invited_user.responsible_persons).to include(responsible_person)
+
+    # Confirms user new email address
+    expect(invited_user.email).to eq("new_email@example.com")
+    expect(invited_user.new_email).to be_nil
+  end
+
   scenario "following an invitation link with a token that does not match any invitation" do
     join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=8cfa59f3-6b61-44f9-871b-c471651f234b"
     visit join_path

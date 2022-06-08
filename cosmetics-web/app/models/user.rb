@@ -83,6 +83,12 @@ class User < ApplicationRecord
            account_security_completed: false)
   end
 
+  def uses_email_address?(email_address)
+    return false if email_address.blank?
+
+    email.casecmp(email_address).zero? || (new_email.present? && new_email.casecmp(email_address).zero?)
+  end
+
 private
 
   def secondary_authentication_set?

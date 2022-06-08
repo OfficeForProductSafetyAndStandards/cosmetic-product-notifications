@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_28_133505) do
+ActiveRecord::Schema.define(version: 2022_04_29_141342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2022_03_28_133505) do
   enable_extension "plpgsql"
 
   # These are custom enum types that must be created before they can be used in the schema definition
-  create_enum "user_roles", ["poison_centre", "market_surveilance_authority"]
+  create_enum "user_roles", ["poison_centre", "market_surveilance_authority", "opss_science"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false

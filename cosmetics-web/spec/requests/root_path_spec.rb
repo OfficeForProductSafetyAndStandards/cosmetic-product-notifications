@@ -137,6 +137,23 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
         expect(response).to redirect_to("/notifications")
       end
     end
+
+    context "when signed in as a OPSS Science user" do
+      let(:user) { create(:opss_science_user) }
+
+      before do
+        sign_in_as_opss_science_user(user: user)
+        get "/"
+      end
+
+      after do
+        sign_out(:search_user)
+      end
+
+      it "redirects to the notifications page" do
+        expect(response).to redirect_to("/notifications")
+      end
+    end
   end
 
   context "when requested from localhost" do

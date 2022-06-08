@@ -1,0 +1,17 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column">
+    <h2 class="govuk-heading-m">Change your cookie settings</h2>
+    <%= form_for @cookie_form, url: cookie_form_path do |f| %>
+      <div class="govuk-form-group">
+        <%= render "form_components/govuk_radios", form: f, key: :accept_analytics_cookies,
+                fieldset: { legend: { text: "Do you want to accept analytics cookies?", classes: "govuk-fieldset__legend--s", isPageHeading: false } },
+                items: [{ text: "Yes", value: "true" },
+                        { text: "No", value: "false" }] %>
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button">
+        Save cookie settings
+      </button>
+    <% end %>
+  </div>
+</div>

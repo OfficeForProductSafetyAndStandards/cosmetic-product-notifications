@@ -1,0 +1,33 @@
+<% if session[:accept_analytics_cookies].nil? %>
+  <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on Cosmetics Notification Service">
+    <div class="govuk-cookie-banner__message govuk-width-container">
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on Cosmetics Notification Service</h2>
+
+          <div class="govuk-cookie-banner__content">
+            <p class="govuk-body">We use some essential cookies to make this service work.</p>
+            <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="govuk-button-group">
+        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-accept-cookies', class: 'opss-cookie-form' } do |f| %>
+          <%= f.hidden_field :accept_analytics_cookies, value: true %>
+          <button value="accept" type="submit" name="cookies" class="govuk-button" data-module="govuk-button">
+            Accept analytics cookies
+          </button>
+        <% end %>
+        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-reject-cookies', class: 'opss-cookie-form' } do |f| %>
+          <%= f.hidden_field :accept_analytics_cookies, value: false %>
+          <button value="reject" type="submit" name="cookies" class="govuk-button" data-module="govuk-button">
+            Reject analytics cookies
+          </button>
+        <% end %>
+        <a class="govuk-link" href="<%= cookies_path %>">View cookies</a>
+      </div>
+    </div>
+  </div>
+<% end %>
