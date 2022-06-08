@@ -21,6 +21,9 @@
 
 $std-font-family: "GDS Transport", "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
+/*input[type="checkbox"]:disabled, input[type="checkbox"]:disabled + label {color:  govuk-colour("mid-grey"); }
+input[type="checkbox"]:disabled + label {opacity: 1 !important; }*/
+
 /* not normalised by gds library - starts */
 figure,
 figcaption {
@@ -276,7 +279,9 @@ abbr[title]{
         }
     }
 }
-kbd {
+
+kbd,
+samp {
     font-family: inherit;
     font-weight: inherit;
 }
@@ -315,6 +320,90 @@ kbd {
     top: 2px;
 }
 
+.opss-2-col-flow,
+.opss-3-col-flow {
+    dl div dd:last-of-type {
+        margin-bottom: 0 !important;
+    }
+}
+
+@include govuk-media-query($from: desktop) {
+    .opss-desktop-min-height--s {
+        min-height: 180px;
+    }
+    .opss-desktop-min-height--m {
+        min-height: 300px;
+    }
+    .opss-desktop-padding-0 {
+        padding: 0 !important ;
+    }
+    .opss-desktop-padding-top-3 {
+        padding-top: govuk-spacing(3) !important ;
+    }
+    .opss-desktop-padding-bottom-4 {
+        padding-bottom: govuk-spacing(4) !important ;
+    }
+
+    .opss-summary-list__row--split {
+        margin-top: govuk-spacing(9);
+    }
+
+    .opss-2-col-flow {
+        -moz-column-count: 2; -webkit-column-count: 2; column-count: 2;
+        column-gap: 80px;
+
+        .opss-summary-list-mixed > div {
+            break-inside: avoid-column;
+        }
+        .opss-summary-list-mixed.opss-summary-list-mixed--sm {
+            margin-bottom: 0;
+
+            dt {
+                width: 36% !important;
+                @include word-wrap;
+            }
+
+            /*dt + dd {    //FF dosen't like
+                text-align: center;
+            }*/
+        }
+    }
+    .opss-3-col-flow {
+        -moz-column-count: 3; -webkit-column-count: 3; column-count: 3;
+        column-gap: govuk-spacing(3);
+
+        .opss-summary-list-mixed > div {
+            break-inside: avoid-column;
+        }
+        .opss-summary-list-mixed.opss-summary-list-mixed--sm {
+            margin-bottom: 0;
+
+            dt {
+                width: inherit !important;
+                @include word-wrap;
+
+                span {
+                    @include opss-font-size($s: 14px, $l: 1.2);
+                    /*position: relative; top: -1px;*/
+                }
+            }
+        }
+    }
+
+    @-moz-document url-prefix() {/*firefox only: col flow bug */
+        .opss-2-col-flow,
+        .opss-3-col-flow {
+            .govuk-summary-list {
+                display: unset;
+            }
+            .govuk-summary-list__row {
+                display: table;
+                width: 100%;
+            }
+        }
+    }
+}
+
 .opss-list {
     @include govuk-media-query($from: tablet) {
         &.opss-list--inline {
@@ -327,6 +416,89 @@ kbd {
             }
         }
     }
+}
+
+@mixin menu-inset-anchors {
+    ul li {
+        padding-bottom: 0;
+        @include opss-font-size($s: 16px, $l: 1.2);
+
+        &:before {
+            content: "—";
+            margin-left: - govuk-spacing(4);
+            color: $govuk-secondary-text-colour;
+        }
+    }
+}
+
+ul.opss-left-nav {
+    padding: 0;
+
+    ul.govuk-list {
+        margin-top: 0;
+    }
+
+    & > li.opss-left-nav__active {
+        @include menu-inset-anchors;
+    }
+
+    li {
+        margin-bottom: 0;
+        padding: 8px 0 5px 0;
+        @include opss-font-size($s: 17px, $l: 1.2);
+
+            ul {
+                padding-left: govuk-spacing(4);
+                margin-bottom: 0;
+            }
+
+            ul li.opss-left-nav__active {/* 3rd nested ULs */
+                @include menu-inset-anchors;
+            }
+
+            a {
+                text-decoration: none !important;
+                text-underline-offset: 0.1em;
+
+                &:hover {
+                    text-decoration: underline !important;
+                    text-decoration-thickness: 0.2em !important;
+                    text-decoration-thickness: 3px !important;
+                    -webkit-text-decoration-skip-ink: none;
+                    text-decoration-skip-ink: none;
+                    -webkit-text-decoration-skip: none;
+                    text-decoration-skip: none;
+                }
+
+                span {
+                    font-size: 90%;
+                }
+            }
+    }
+
+    /*& > li > ul.govuk-list { // 2nd nested ULs
+        padding-top: govuk-spacing(1); margin: govuk-spacing(4) 0 govuk-spacing(2) 0;
+    } */
+
+    & > li:first-child {
+        padding-top: 5px;
+    }
+
+    .opss-left-nav__active {
+        ul {
+            padding-left: govuk-spacing(6);
+        }
+
+        & > a {
+            font-weight: bold;
+            margin-left: govuk-spacing(2);
+        }
+
+        display: block;
+        margin-left: - govuk-spacing(2) - 4;
+        border-left: 4px solid $govuk-brand-colour;
+    }
+
 }
 
 .opss-secondary-text {
@@ -416,15 +588,15 @@ kbd {
     }
 
     &.opss-details-img--thumbnail + .opss-img-caption {
-        max-width: 174px; 
+        max-width: 174px;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis; 
+        text-overflow: ellipsis;
     }
 }
 
 .opss-img-caption {
-    font-family: $std-font-family; 
+    font-family: $std-font-family;
     @include opss-font-size($s: 14px, $l: 1.25);
 }
 
@@ -533,11 +705,11 @@ dl.opss-summary-list-aside {
     @include govuk-media-query($from: desktop) {
         &.opss-summary-list-mixed--compact > div {
             dt, dd {
-                margin-top: 0; 
-                margin-bottom: 0; 
-                padding-top: 0; 
-                padding-bottom: govuk-spacing(1);  
-                @include opss-font-size($s: 16px, $l: 1.2); 
+                margin-top: 0;
+                margin-bottom: 0;
+                padding-top: 0;
+                padding-bottom: govuk-spacing(1);
+                @include opss-font-size($s: 16px, $l: 1.2);
                 color: $govuk-secondary-text-colour;
             }
         }
@@ -568,27 +740,53 @@ dl.opss-summary-list-aside {
             padding-bottom: govuk-spacing(0);
         }
     }
+    .opss-summary-list-mixed.opss-summary-list-mixed--sm-font {/* a mixed and small font version */
+        margin-bottom: govuk-spacing(4);
+
+        dt, dd {
+            @include opss-font-size($s: 16px, $l: 1.2);
+            padding-top: govuk-spacing(1);
+            padding-bottom: govuk-spacing(1);
+        }
+
+        .govuk-accordion__section-content & {
+            margin-bottom: govuk-spacing(7);
+
+            div:last-child {
+                dt, dd {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    .opss-summary-list-mixed.opss-summary-list--equal-widths {
+        div {
+            dt,  dd {
+                width: 33%;
+            }
+        }
+    }
 }
 
 dd dl.opss-nested-definition-list {
-    margin: 0; 
+    margin: 0;
     @include opss-font-size($s: 16px, $l: 1.6);
 
     & > div {
-        width: 100%; 
+        width: 100%;
     }
 
     dt {
-        font-weight: bold; 
-        display: inline-block; 
-        margin: 0 govuk-spacing(2) 0 0; 
+        font-weight: bold;
+        display: inline-block;
+        margin: 0 govuk-spacing(2) 0 0;
         width: 45%;
     }
 
     dd {
-        display: inline-block; 
-        padding-right: 0; 
-        margin-left: 0; 
+        display: inline-block;
+        padding-right: 0;
+        margin-left: 0;
     }
 }
 
@@ -608,6 +806,7 @@ dd dl.opss-nested-definition-list {
     @include govuk-media-query($from: desktop) {
         & > div {
             display: inline-block;
+            width: 100%;
         }
     }
 
@@ -816,9 +1015,9 @@ dd dl.opss-nested-definition-list {
         tbody tr {
             th, td {
                 border-bottom: 1px solid $govuk-border-colour;
-                padding-top: govuk-spacing(2); 
-                padding-bottom: govuk-spacing(2); 
-                vertical-align: middle; 
+                padding-top: govuk-spacing(2);
+                padding-bottom: govuk-spacing(2);
+                vertical-align: middle;
             }
         }
     }
@@ -850,7 +1049,7 @@ dd dl.opss-nested-definition-list {
         @include govuk-media-query($from: tablet) {
             thead th:nth-child(1) {width: 50%; }
         }
-    }    
+    }
 }
 
 .opss-table-stripes {
@@ -859,7 +1058,7 @@ dd dl.opss-nested-definition-list {
             border-top: 1px solid govuk-colour("light-grey");
         }
     }
-    tbody tr:first-child, 
+    tbody tr:first-child,
     tbody tr:last-child {
         th, td {
             border-bottom: none;
@@ -869,8 +1068,8 @@ dd dl.opss-nested-definition-list {
     &.opss-table-items--sm {
         tbody tr {
             th, td {
-                padding-top: govuk-spacing(2); 
-                padding-bottom: govuk-spacing(2); 
+                padding-top: govuk-spacing(2);
+                padding-bottom: govuk-spacing(2);
             }
         }
     }
