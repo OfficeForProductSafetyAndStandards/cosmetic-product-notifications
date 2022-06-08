@@ -1,3 +1,5 @@
+require "cookie_domain_cleaner"
+
 module CookiesConcern
   extend ActiveSupport::Concern
 
