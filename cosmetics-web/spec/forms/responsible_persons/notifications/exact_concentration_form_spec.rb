@@ -44,6 +44,18 @@ RSpec.describe ResponsiblePersons::Notifications::ExactConcentrationForm do
       expect(form.errors[:cas_number]).to eq ["CAS number is invalid"]
     end
 
+    it "is not valid when the concentration is not a number" do
+      form.exact_concentration = "not a number"
+      expect(form).not_to be_valid
+      expect(form.errors[:exact_concentration]).to eq ["Enter a number for the concentration"]
+    end
+
+    it "is not valid when the concentration is 0" do
+      form.exact_concentration = 0.0
+      expect(form).not_to be_valid
+      expect(form.errors[:exact_concentration]).to eq ["Enter a number for the concentration"]
+    end
+
     describe "name taken validation" do
       it "is invalid when the ingredient already exists for the component" do
         create(:exact_formula, component: component, inci_name: name)

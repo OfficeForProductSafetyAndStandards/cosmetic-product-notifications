@@ -10,7 +10,7 @@ module ResponsiblePersons::Notifications
 
     validates :name, presence: true
     validate :unique_name
-    validates :exact_concentration, presence: true
+    validates :exact_concentration, presence: true, numericality: { allow_blank: true, greater_than: 0 }
     validates_with CasNumberValidator
 
     def save

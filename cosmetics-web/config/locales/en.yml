@@ -241,6 +241,7 @@ en:
               taken: "Enter a name which is unique to this %{entity}"
             exact_concentration:
               blank: "Enter the concentration"
+              greater_than: "Enter a number for the concentration"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:
