@@ -33,7 +33,7 @@ module CookiesConcern
   end
 
   def analytics_cookies_accepted?
-    !!analytics_cookies
+    analytics_cookies == "true"
   end
 
   def analytics_cookies_not_set?

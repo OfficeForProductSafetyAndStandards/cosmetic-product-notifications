@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# rubocop:disable Rspec/AnyInstance
 describe "user declarations", type: :request do
   before do
     cookies["essential"] = "cosmetics"
@@ -8,7 +7,7 @@ describe "user declarations", type: :request do
     cookies["_gid"] = "bar"
     cookies["_gat_gtag_UA_126364208_2"] = "baz"
 
-    allow_any_instance_of(ActionDispatch::Request).to receive(:session) { { accept_analytics_cookies: accept_analytics_cookies } }
+    cookies["accept_analytics_cookies"] = accept_analytics_cookies
 
     get "/help/terms-and-conditions"
   end
@@ -18,7 +17,8 @@ describe "user declarations", type: :request do
 
     it "has analytics cookies" do
       # response is not returning any cookies to delete
-      expect(response.cookies.to_hash.size).to eq(0)
+      # returned cookie is the one that stores cookie options
+      expect(response.cookies.to_hash.size).to eq(1)
     end
   end
 
@@ -26,10 +26,12 @@ describe "user declarations", type: :request do
     let(:accept_analytics_cookies) { false }
 
     it "removes analytics" do
+      cookies_to_delete = response.cookies.to_hash.select do |_, v|
+        v.nil?
+      end
+
       # response is returning 3 cookies that should be deleted
-      expect(response.cookies.to_hash.keys).to eq(%w[_ga_NSLSMEMX9S _gat_gtag_UA_126364208_2 _gid])
-      expect(response.cookies.to_hash.values.uniq).to eq([nil])
+      expect(cookies_to_delete.to_hash.keys).to eq(%w[_ga_NSLSMEMX9S _gat_gtag_UA_126364208_2 _gid])
     end
   end
 end
-# rubocop:enable Rspec/AnyInstance
