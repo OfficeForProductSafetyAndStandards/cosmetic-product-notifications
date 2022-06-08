@@ -275,15 +275,7 @@ private
     @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new(
       exact_concentration_params.merge(component: @component),
     )
-    return rerender_current_step unless @exact_concentration_form.valid?
-
-    exact_formula = @component.exact_formulas.new(
-      inci_name: @exact_concentration_form.name,
-      quantity: @exact_concentration_form.exact_concentration,
-      cas_number: @exact_concentration_form.cas_number,
-      poisonous: @exact_concentration_form.poisonous,
-    )
-    if exact_formula.save
+    if @exact_concentration_form.save
       render_next_step @component
     else
       rerender_current_step

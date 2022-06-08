@@ -13,6 +13,17 @@ module ResponsiblePersons::Notifications
     validates :exact_concentration, presence: true
     validates_with CasNumberValidator
 
+    def save
+      return false unless component.present? && valid?
+
+      component.exact_formulas.create(
+        inci_name: name,
+        quantity: exact_concentration,
+        cas_number: cas_number,
+        poisonous: poisonous,
+      )
+    end
+
   private
 
     def unique_name

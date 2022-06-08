@@ -77,4 +77,48 @@ RSpec.describe ResponsiblePersons::Notifications::ExactConcentrationForm do
       end
     end
   end
+
+  describe "#save" do
+    context "when the form has no component" do
+      let(:component) { nil }
+
+      it "returns false" do
+        expect(form.save).to be false
+      end
+
+      it "does not create an exact formula" do
+        expect { form.save }.not_to change(ExactFormula, :count)
+      end
+    end
+
+    context "when the form is invalid" do
+      let(:name) { "" }
+
+      it "returns false" do
+        expect(form.save).to eq false
+      end
+
+      it "does not create an exact formula" do
+        expect { form.save }.not_to change(ExactFormula, :count)
+      end
+    end
+
+    context "when the form is valid" do
+      it "creates an exact formula" do
+        expect { form.save }.to change(ExactFormula, :count).by(1)
+      end
+
+      # rubocop :disable RSpec/ExampleLength
+      it "returns the created exact formula" do
+        expect(form.save).to be_an_instance_of(ExactFormula).and have_attributes(
+          component_id: component.id,
+          inci_name: name,
+          quantity: exact_concentration.to_f,
+          cas_number: "111111",
+          poisonous: true,
+        )
+      end
+      # rubocop :enable RSpec/ExampleLength
+    end
+  end
 end
