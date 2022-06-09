@@ -37,7 +37,7 @@ en:
         notification:
           attributes:
             components_are_mixed:
-              inclusion: "Select yes if the kit contains items that need to be mixed"
+              inclusion: "Select yes if the product contains poisonous ingredients"
             under_three_years:
               inclusion: "Select yes if the product is intended to be used on children under 3 years old"
             ph_min_value:
