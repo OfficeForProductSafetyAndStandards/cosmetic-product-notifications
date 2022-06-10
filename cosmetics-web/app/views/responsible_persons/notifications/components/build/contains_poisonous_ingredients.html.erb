@@ -8,17 +8,14 @@
 <%= error_summary_for(@component, first_values: {contains_poisonous_ingredients: "true"}) %>
 
 <div class="govuk-grid-row">
-  <%= render 'poisonous_ingredients' %>
-</div>
-
-<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
     <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
 
 
       <%= render "form_components/govuk_radios", form: form, key:   :contains_poisonous_ingredients,
-              fieldset: { legend: { classes: "govuk-fieldset__legend--m", isPageHeading: false } },
+        fieldset: { legend: { html: "<h1 class=\"govuk-fieldset__heading\">Does the product contain poisonous ingredients?</h1>".html_safe, classes: "govuk-fieldset__legend--l", isPageHeading: false } },
+              hint: { html: render('poisonous_ingredients') },
               items: [{ text: "Yes", value: "true" },
                       { text: "No", value: "false" }] %>
 
