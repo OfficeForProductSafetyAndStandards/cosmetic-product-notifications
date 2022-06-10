@@ -15,9 +15,9 @@
 
       <%= render "form_components/govuk_radios", form: form, key:   :contains_poisonous_ingredients,
         fieldset: { legend: { html: "<h1 class=\"govuk-fieldset__heading\">Does the product contain poisonous ingredients?</h1>".html_safe, classes: "govuk-fieldset__legend--l", isPageHeading: false } },
-              hint: { html: render('poisonous_ingredients') },
-              items: [{ text: "Yes", value: "true" },
-                      { text: "No", value: "false" }] %>
+        hint: { html: render('poisonous_ingredients'), classes: "govuk-!-font-size-16 govuk-!-margin-top-3" },
+        items: [{ text: "Yes", value: "true" },
+                { text: "No", value: "false" }] %>
 
       <%= govukButton text: "Continue" %>
     <% end %>
