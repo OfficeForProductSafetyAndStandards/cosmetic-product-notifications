@@ -14,7 +14,6 @@ module CookiesConcern
 
     helper_method :analytics_cookies_accepted?
     helper_method :analytics_cookies_not_set?
-    helper_method :previously_visited_page
   end
 
   def set_cookie_form
