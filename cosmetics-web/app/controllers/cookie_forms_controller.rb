@@ -7,9 +7,9 @@ class CookieFormsController < PubliclyAccessibleController
 
     set_analytics_cookies(cookie_form.accept_analytics_cookies)
     if first_time && !cookie_form.referrer_is_cookie_policy_page
-      redirect_back(fallback_location: root_path, cookies_banner_confirmation: true)
+      redirect_back(fallback_location: cookies_policy_path, cookies_banner_confirmation: true)
     else
-      redirect_back(fallback_location: root_path, cookies_updated_successfully: true)
+      redirect_back(fallback_location: cookies_policy_path, cookies_updated_successfully: true)
     end
   end
 
