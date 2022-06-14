@@ -26,7 +26,9 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :select_sub_category,
         :select_sub_sub_category,
         :select_formulation_type,
-        :upload_formulation, # only for range and exact
+        :add_ingredient_exact_concentration, # only for exact
+        :want_to_add_another_ingredient, # only for exact
+        :upload_formulation, # only for range
         :select_frame_formulation, # only for frame formulation
         :contains_poisonous_ingredients, # only for frame formulation
         :upload_poisonus_ingredients, # only for frame formulation
@@ -55,11 +57,14 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     select_sub_category: :select_root_category,
     select_sub_sub_category: :select_sub_category,
     select_formulation_type: :select_sub_sub_category,
+    add_ingredient_exact_concentration: :select_formulation_type,
+    want_to_add_another_ingredient: :select_formulation_type,
     upload_formulation: :select_formulation_type, # only for range and exact,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_poisonous_ingredients: :select_formulation_type, # only for frame formulation,
     upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulation,
     select_ph_option: {
+      select_formulation_type: -> { @component.exact? },
       contains_poisonous_ingredients: -> { @component.predefined? },
       upload_formulation: -> { true },
     },
@@ -80,6 +85,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
+    when :add_ingredient_exact_concentration
+      @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new
     when :completed
       @component.update_state("component_complete")
       # TODO: write spec
@@ -116,6 +123,10 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_select_category_step
     when :select_formulation_type
       update_select_formulation_type
+    when :add_ingredient_exact_concentration
+      update_add_ingredient_exact_concentration
+    when :want_to_add_another_ingredient
+      update_want_to_add_another_ingredient
     when :select_frame_formulation
       update_frame_formulation
     when :upload_formulation
@@ -260,6 +271,29 @@ private
     render_next_step @component
   end
 
+  def update_add_ingredient_exact_concentration
+    @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new(
+      exact_concentration_params.merge(component: @component),
+    )
+    if @exact_concentration_form.save
+      render_next_step @component
+    else
+      rerender_current_step
+    end
+  end
+
+  def update_want_to_add_another_ingredient
+    case params[:add_another_ingredient]
+    when "yes"
+      jump_to_step(:add_ingredient_exact_concentration)
+    when "no"
+      jump_to_step(:select_ph_option)
+    else
+      @component.errors.add(:add_another_ingredient, "Select yes if you want to add an ingredient")
+      rerender_current_step
+    end
+  end
+
   # for frame formulation only
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
@@ -384,6 +418,16 @@ private
         exposure_routes: [],
         cmrs_attributes: %i[id name cas_number ec_number],
         shades: [],
+      )
+  end
+
+  def exact_concentration_params
+    params.fetch(:exact_concentration_form, {})
+      .permit(
+        :name,
+        :exact_concentration,
+        :cas_number,
+        :poisonous,
       )
   end
 
