@@ -214,6 +214,10 @@ class Component < ApplicationRecord
     predefined?
   end
 
+  def ingredients
+    (exact_formulas + range_formulas).sort_by(&:created_at)
+  end
+
 private
 
   # This takes any value and returns nil if the value

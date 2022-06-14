@@ -5,7 +5,10 @@
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-<%= error_summary(@ingredient_concentration_form.errors) %>
+<% errors = @ingredient_concentration_form.errors %>
+<%= error_summary(errors,
+                  %i[name cas_number exact_concentration range_concentration],
+                  map_errors: { range_concentration: ingredient_range_concentration_items.first[:id] }) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
@@ -29,9 +32,14 @@
       <div class="govuk-form-group">
         <%= render "components/govuk_fieldset", legend: { text: "Ingredient #{@component.ingredients.count + 1}", classes: "govuk-fieldset__legend--s" } do %>
           <%= render "form_components/govuk_input", form: form, id: "name", key: :name, label: { text: "What is the name?" } %>
+          <%= render "form_components/govuk_input",
+                    form: form,
+                    key: :cas_number,
+                    id: "cas_number",
+                    label: { text: "What is the CAS number?", classes: "govuk-label--s govuk-!-font-weight-regular" },
+                    classes: "govuk-input--width-10" %>
 
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
+          <% exact_concentration_html = capture do %>
               <% concentration_error = @ingredient_concentration_form.errors[:exact_concentration]&.first %>
               <div class="govuk-form-group <%= "govuk-form-group--error" if concentration_error %>">
                 <%= govukLabel(for: :exact_concentration, text: "What is the exact concentration?", classes: "govuk-label--s govuk-!-font-weight-regular")%>
@@ -49,32 +57,38 @@
                   </div>
                 </div>
               </div>
-            </div>
+          <% end %>
 
-            <div class="govuk-grid-column-one-half">
-              <div class="govuk-form-group">
-                <div class="govuk-checkboxes opss-float-right-desktop">
-                  <%= render "form_components/govuk_input",
-                            form: form,
-                            key: :cas_number,
-                            id: "cas_number",
-                            label: { text: "What is the CAS number?", classes: "govuk-label--s govuk-!-font-weight-regular" },
-                            classes: "govuk-input--width-10" %>
-                </div>
-              </div>
-            </div>
-          </div>
+          <% range_concentration_html = capture do %>
+            <%= render "form_components/govuk_radios",
+                       form: form,
+                       key: :range_concentration,
+                       classes: "govuk-radios--small",
+                       fieldset: { legend: { text: "What is the concentration range?",
+                                             classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular",
+                                             isPageHeading: false } },
+                       items: ingredient_range_concentration_items %>
+          <% end %>
 
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
-              <%= render "form_components/govuk_checkboxes",
-                        form: form,
-                        key: :poisonous_check,
-                        id: "poisonous_check",
-                        classes: " govuk-!-padding-top-6",
-                        items: [{ key: :poisonous,  text: "Is it poisonous?" }] %>
-            </div>
-          </div>
+          <%= render "form_components/govuk_radios",
+                     form: form,
+                     key: :poisonous,
+                     id: "poisonous",
+                     fieldset: { legend: { text: "Is it poisonous?",
+                                           classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular",
+                                           isPageHeading: false } },
+                     items: [
+                       { text: "Yes",
+                         value: "true",
+                         id: "poisonous_true",
+                         conditional: { html: exact_concentration_html },
+                         checked: errors.include?(:exact_concentration) || form.object.exact? },
+                       { text: "No",
+                         value: "false",
+                         id: "poisonous_false",
+                         conditional: { html: range_concentration_html },
+                         checked: errors.include?(:range_concentration) || form.object.range? },
+                     ] %>
         <% end %>
       </div>
       <div class="govuk-button-group">

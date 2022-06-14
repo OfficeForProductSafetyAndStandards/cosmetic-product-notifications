@@ -27,6 +27,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :select_sub_sub_category,
         :select_formulation_type,
         :add_ingredient_exact_concentration, # only for exact
+        :add_ingredient_range_concentration, # only for range
         :want_to_add_another_ingredient, # only for exact
         :upload_formulation, # only for range
         :select_frame_formulation, # only for frame formulation
@@ -58,6 +59,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     select_sub_sub_category: :select_sub_category,
     select_formulation_type: :select_sub_sub_category,
     add_ingredient_exact_concentration: :select_formulation_type,
+    add_ingredient_range_concentration: :select_formulation_type,
     want_to_add_another_ingredient: :select_formulation_type,
     upload_formulation: :select_formulation_type, # only for range and exact,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
@@ -85,8 +87,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
-    when :add_ingredient_exact_concentration
-      @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new
+    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration
+      @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new
     when :completed
       @component.update_state("component_complete")
       # TODO: write spec
@@ -124,7 +126,9 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :select_formulation_type
       update_select_formulation_type
     when :add_ingredient_exact_concentration
-      update_add_ingredient_exact_concentration
+      update_add_ingredient_concentration("exact")
+    when :add_ingredient_range_concentration
+      update_add_ingredient_concentration("range")
     when :want_to_add_another_ingredient
       update_want_to_add_another_ingredient
     when :select_frame_formulation
@@ -263,20 +267,24 @@ private
     end
 
     if @component.predefined? # predefined == frame_formulation
-      jump_to(:select_frame_formulation)
+      jump_to_step(:select_frame_formulation)
     elsif @component.frame_formulation.present?
       @component.update(frame_formulation: nil)
     end
 
-    render_next_step @component
+    if @component.range?
+      jump_to_step(:add_ingredient_range_concentration)
+    elsif @component.exact?
+      jump_to_step(:add_ingredient_exact_concentration)
+    end
   end
 
-  def update_add_ingredient_exact_concentration
-    @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new(
-      exact_concentration_params.merge(component: @component),
+  def update_add_ingredient_concentration(type)
+    @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new(
+      ingredient_concentration_params.merge(component: @component, type: type),
     )
-    if @exact_concentration_form.save
-      render_next_step @component
+    if @ingredient_concentration_form.save
+      jump_to_step(:want_to_add_another_ingredient)
     else
       rerender_current_step
     end
@@ -285,7 +293,11 @@ private
   def update_want_to_add_another_ingredient
     case params[:add_another_ingredient]
     when "yes"
-      jump_to_step(:add_ingredient_exact_concentration)
+      if @component.exact?
+        jump_to_step(:add_ingredient_exact_concentration)
+      elsif @component.range?
+        jump_to_step(:add_ingredient_range_concentration)
+      end
     when "no"
       jump_to_step(:select_ph_option)
     else
@@ -421,11 +433,12 @@ private
       )
   end
 
-  def exact_concentration_params
-    params.fetch(:exact_concentration_form, {})
+  def ingredient_concentration_params
+    params.fetch(:ingredient_concentration_form, {})
       .permit(
         :name,
         :exact_concentration,
+        :range_concentration,
         :cas_number,
         :poisonous,
       )

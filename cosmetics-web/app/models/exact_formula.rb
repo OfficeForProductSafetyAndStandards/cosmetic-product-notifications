@@ -14,6 +14,6 @@ class ExactFormula < ApplicationRecord
 private
 
   def normalise_cas_number
-    cas_number&.delete!("-")
+    self.cas_number = cas_number.presence&.delete("-")
   end
 end
