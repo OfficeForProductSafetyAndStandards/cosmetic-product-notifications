@@ -7,5 +7,5 @@ class HelpController < PubliclyAccessibleController
 
   def accessibility_statement; end
 
-  def cookies; end
+  def cookies_policy; end
 end
