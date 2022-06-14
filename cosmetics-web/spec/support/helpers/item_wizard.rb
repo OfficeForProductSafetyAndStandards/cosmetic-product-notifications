@@ -43,7 +43,7 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
 
   answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration", item_name: label_name
 
-  upload_ingredients_pdf
+  fill_ingredients_exact_concentrations(single_item: single_item)
 
   answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
   expect_task_has_been_completed_page
@@ -145,11 +145,27 @@ def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
   click_button "Continue"
 end
 
-def upload_ingredients_pdf
-  unless page.has_css?("#formulation-files-table")
-    page.attach_file "spec/fixtures/files/testPdf.pdf"
+def fill_ingredients_exact_concentrations(single_item: false)
+  if page.has_no_css?("li", text: "FooBar ingredient")
+    expect(page).to have_css("h1", text: "Add the ingredients")
+    expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient 1")
+    fill_in "name", with: "FooBar ingredient"
+    fill_in "exact_concentration", with: "0.5"
+    fill_in "cas_number", with: "123456-78-9"
+    click_on "Save and continue"
+
+    expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
+    expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
+    page.choose "Yes"
+    click_button "Continue"
   end
-  click_button "Continue"
+
+  expect(page).to have_css("h1", text: "Add the ingredients")
+  expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient 2")
+  expect(page).to have_css("h2", text: "Already added")
+  expect(page).to have_css("ol.govuk-list--number li", text: "FooBar ingredient")
+
+  click_link "Skip"
 end
 
 def answer_what_is_ph_range_of_product_with(answer)
