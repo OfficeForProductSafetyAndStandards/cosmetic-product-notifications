@@ -1,38 +1,40 @@
 <% content_for :page_title, "Search cosmetic products" %>
 
 <div class="govuk-grid-row">
-  <section class="govuk-grid-column-full">
-    <%= error_summary(@search_form.errors) %>
+  <div class="govuk-grid-column-full opss-desktop-min-height--s">
 
-    <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { 'novalidate' => true }) do |form| %>
-      <div class="govuk-form-group">
-        <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="notification_search_form_q">
-            Search cosmetic products
-          </label>
-        </h1>
-        <div id="search-hint" class="govuk-hint">
-          Use one or more keywords to search for product notifications.
-        </div>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      Cosmetic products search
+    </h1>
 
-        <div class="govuk-input__wrapper opss-search__wrapper">
-          <%= form.search_field :q, class: "govuk-input govuk-!-width-one-half", 'aria-describedby' => "search-hint" %>
-          <%= form.hidden_field :category, id: 'notification_search_form_category_hidden' %>
-          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact, id: :keyword_form } %>
-          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from, id: :keyword_form } %>
-          <%= render partial: 'hidden_date_fields', locals: { attribute: :date_to, id: :keyword_form } %>
-          <%= form.hidden_field :date_filter, id: 'notification_search_form_date_filter_hidden' %>
-          <%= form.hidden_field :sort_by, id: 'notification_search_form_sort_by_hidden' %>
-          <button class="govuk-button" data-module="govuk-button">
-            <span class="govuk-visually-hidden">Search</span>
-          </button>
-        </div>
+    <p class="govuk-body opss-secondary-text">
+    Search for notified cosmetic products.
+    </p>
+
+    <details class="govuk-details govuk-!-width-two-thirds opss-details--sm" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Help with the cosmetic products search
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+
+        <p class="govuk-body-s govuk-!-margin-bottom-4">
+        <span id="search-hint">You can search for a cosmetic product notification using the keywords that describe it and by filtering the results.</span> Searching on a <abbr>UK</abbr> cosmetic product number will return the product notification followed by any notifications with a similar number.
+        </p>
+
+        <p class="govuk-body-s govuk-!-margin-bottom-1">
+        You can also filter all notified product records without any search input.
+        </p>
+
       </div>
-    <% end %>
-  </section>
+    </details>
+
+    <%= error_summary(@search_form.errors) %>
+  </div>
 </div>
 
-<div class="govuk-grid-row">
+<div class="govuk-grid-row opss-full-height">
   <%= render "filters" %>
   <%= render "results", results: @notifications, search_response: @search_response %>
 </div>
