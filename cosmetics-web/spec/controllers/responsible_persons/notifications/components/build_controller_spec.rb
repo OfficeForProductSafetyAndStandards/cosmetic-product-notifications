@@ -93,37 +93,44 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       end
     end
 
-    describe "upload product ingredients page" do
-      before { get(:show, params: params.merge(id: :upload_formulation)) }
+    describe "add component ingredient exact concentration page" do
+      let(:component_type) { "exact" }
+
+      before { get(:show, params: params.merge(id: :add_ingredient_exact_concentration)) }
 
       render_views
 
-      describe "page title" do
-        context "with a component with predefined formulation" do
-          let(:component_type) { "predefined" }
+      # rubocop:disable RSpec/MultipleExpectations
+      it "shows the page for adding ingredients with exact concentration" do
+        expect(response.body).to match(/<title>Add the ingredients .+<\/title>/)
+        expect(response.body).to include("What is the exact concentration?")
+        expect(response.body).not_to include("What is the concentration range?")
+      end
+      # rubocop:enable RSpec/MultipleExpectations
 
-          it "sets the page title to poisonous ingredients" do
-            expect(response.body).to match(/<title>Ingredients the National Poisons Information Service needs to know about.+<\/title>/)
-          end
-        end
+      it "links to the select formulation type page" do
+        expect(response.body).to have_back_link_to(
+          responsible_person_notification_component_build_path(responsible_person, notification, component, :select_formulation_type),
+        )
+      end
+    end
 
-        context "with a component without predefined formulation" do
-          let(:component_type) { "exact" }
+    describe "add component ingredient range concentration page" do
+      let(:component_type) { "range" }
 
-          it "sets the page title to product ingredients" do
-            expect(response.body).to match(/<title>Upload list of ingredients .+<\/title>/)
-          end
-        end
+      before { get(:show, params: params.merge(id: :add_ingredient_range_concentration)) }
+
+      render_views
+
+      it "shows the page for adding ingredients with exact concentration" do
+        expect(response.body).to match(/<title>Add the ingredients .+<\/title>/)
+        expect(response.body).to include("What is the concentration range?")
       end
 
-      describe "back link" do
-        context "with a component without predefined formulation" do
-          let(:component_type) { "exact" }
-
-          it "links to the select formulation type page" do
-            expect(response.body).to have_back_link_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :select_formulation_type))
-          end
-        end
+      it "links to the select formulation type page" do
+        expect(response.body).to have_back_link_to(
+          responsible_person_notification_component_build_path(responsible_person, notification, component, :select_formulation_type),
+        )
       end
     end
   end

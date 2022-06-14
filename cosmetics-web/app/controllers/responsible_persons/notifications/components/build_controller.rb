@@ -29,7 +29,6 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :add_ingredient_exact_concentration, # only for exact
         :add_ingredient_range_concentration, # only for range
         :want_to_add_another_ingredient, # only for exact
-        :upload_formulation, # only for range
         :select_frame_formulation, # only for frame formulation
         :contains_poisonous_ingredients, # only for frame formulation
         :upload_poisonus_ingredients, # only for frame formulation
@@ -61,14 +60,12 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     add_ingredient_exact_concentration: :select_formulation_type,
     add_ingredient_range_concentration: :select_formulation_type,
     want_to_add_another_ingredient: :select_formulation_type,
-    upload_formulation: :select_formulation_type, # only for range and exact,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_poisonous_ingredients: :select_formulation_type, # only for frame formulation,
     upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulation,
     select_ph_option: {
-      select_formulation_type: -> { @component.exact? },
+      select_formulation_type: -> { @component.exact? || @component.range? },
       contains_poisonous_ingredients: -> { @component.predefined? },
-      upload_formulation: -> { true },
     },
     min_max_ph: :select_ph_option,
   }.freeze
@@ -133,8 +130,6 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_want_to_add_another_ingredient
     when :select_frame_formulation
       update_frame_formulation
-    when :upload_formulation
-      update_upload_formulation
     when :contains_poisonous_ingredients
       update_contains_poisonous_ingredients
     when :upload_poisonus_ingredients
@@ -328,35 +323,6 @@ private
       jump_to(:select_ph_option)
     end
     render_next_step @component
-  end
-
-  # For exact and range formulations only
-  def update_upload_formulation
-    formulation_file = params.dig(:component, :formulation_file)
-    if formulation_file.blank? && @component.formulation_file.present?
-      if params[:back_to_edit] == "true"
-        return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      else
-        return jump_to_step(:select_ph_option)
-      end
-    end
-
-    if formulation_file.present?
-      @component.formulation_file.attach(formulation_file)
-      if @component.valid?
-        if params[:back_to_edit] == "true"
-          redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-        else
-          jump_to_step :select_ph_option
-        end
-      else
-        @component.formulation_file.purge if @component.formulation_file.attached?
-        rerender_current_step
-      end
-    else
-      @component.errors.add :formulation_file, "Upload a list of ingredients"
-      rerender_current_step
-    end
   end
 
   # For frame formulation only

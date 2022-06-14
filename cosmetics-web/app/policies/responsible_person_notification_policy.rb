@@ -21,10 +21,6 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     create?
   end
 
-  def upload_formulation?
-    update?
-  end
-
   def index?
     update?
   end

@@ -175,10 +175,6 @@ def answer_what_is_ph_range_of_product_with(answer)
   click_button "Continue"
 end
 
-def upload_formulation_file
-  upload_formulation_file
-end
-
 def expect_product_details_task_completed
   expect_item_task_completed("Product details")
 end
