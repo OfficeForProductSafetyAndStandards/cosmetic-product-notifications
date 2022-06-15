@@ -269,7 +269,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
 
         it "re-renders the question with an error" do
           expect(response.status).to be(200)
-          expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select yes if the product contains any of these ingredients")
+          expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select yes if the product contains poisonous ingredients")
         end
       end
     end

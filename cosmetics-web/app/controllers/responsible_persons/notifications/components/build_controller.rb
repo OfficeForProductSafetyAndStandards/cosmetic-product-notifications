@@ -307,7 +307,7 @@ private
     model.save_routing_answer(step, params.dig(:component, :contains_poisonous_ingredients))
 
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
-      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
+      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains poisonous ingredients"
       return render :contains_poisonous_ingredients
     end
 
