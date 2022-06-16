@@ -16,7 +16,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
   let(:cas_number) { "111-11-1" }
   let(:exact_concentration) { "4.2" }
   let(:range_concentration) { nil }
-  let(:poisonous) { "1" }
+  let(:poisonous) { "true" }
   let(:type) { "exact" }
 
   describe "#initialize" do
@@ -80,11 +80,6 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
       expect(form.errors[:name]).to eq ["Enter a name"]
     end
 
-    it "is valid when poisonous is not present" do
-      form.poisonous = nil
-      expect(form).to be_valid
-    end
-
     it "is valid when cas number is not present" do
       form.cas_number = nil
       expect(form).to be_valid
@@ -94,6 +89,27 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
       form.cas_number = "111111-11-11"
       expect(form).not_to be_valid
       expect(form.errors[:cas_number]).to eq ["CAS number is invalid"]
+    end
+
+    describe "poisonous validation" do
+      context "when the poisonous value is not present" do
+        let(:poisonous) { nil }
+
+        context "with an 'exact' type" do
+          let(:type) { "exact" }
+
+          it { expect(form).to be_valid }
+        end
+
+        context "with a 'range' type" do
+          let(:type) { "range" }
+
+          it "is invalid" do
+            expect(form).not_to be_valid
+            expect(form.errors[:poisonous]).to eq ["Select yes if the ingredient is poisonous"]
+          end
+        end
+      end
     end
 
     describe "exact concentration validation" do
@@ -119,7 +135,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
 
-      context "with an 'range' type" do
+      context "with a 'range' type" do
         let(:type) { "range" }
         let(:poisonous) { "false" }
         let(:range_concentration) { "greater_than_10_less_than_25_percent" }
@@ -151,7 +167,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
 
-      context "with an 'range' type" do
+      context "with a 'range' type" do
         let(:type) { "range" }
         let(:poisonous) { "false" }
 

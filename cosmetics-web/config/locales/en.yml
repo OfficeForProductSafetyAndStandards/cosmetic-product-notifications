@@ -244,6 +244,8 @@ en:
             name:
               blank: "Enter a name"
               taken: "Enter a name which is unique to this %{entity}"
+            poisonous:
+              inclusion: "Select yes if the ingredient is poisonous"
             range_concentration:
               blank: "Select a concentration range"
             type:

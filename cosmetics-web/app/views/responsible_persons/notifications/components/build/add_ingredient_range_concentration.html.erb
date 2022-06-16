@@ -7,8 +7,8 @@
 
 <% errors = @ingredient_concentration_form.errors %>
 <%= error_summary(errors,
-                  %i[name cas_number exact_concentration range_concentration],
-                  map_errors: { range_concentration: ingredient_range_concentration_items.first[:id] }) %>
+                  %i[name cas_number poisonous exact_concentration range_concentration],
+                  map_errors: { range_concentration: ingredient_range_concentration_items.first[:id], poisonous: "poisonous_true" }) %>
 
 <%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
   <%= render "form_components/govuk_input", form: form, id: "name", key: :name, label: { text: "What is the name?" } %>
@@ -46,11 +46,11 @@
                  value: "true",
                  id: "poisonous_true",
                  conditional: { html: exact_concentration_html },
-                 checked: errors.include?(:exact_concentration) || form.object.exact? },
+                 checked: errors.include?(:exact_concentration) || @ingredient_concentration_form.poisonous == true },
                { text: "No",
                  value: "false",
                  id: "poisonous_false",
                  conditional: { html: range_concentration_html },
-                 checked: errors.include?(:range_concentration) || form.object.range? },
+                 checked: errors.include?(:range_concentration) || @ingredient_concentration_form.poisonous == false },
              ] %>
 <% end %>

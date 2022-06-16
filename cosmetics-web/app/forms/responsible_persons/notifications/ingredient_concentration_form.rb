@@ -15,6 +15,7 @@ module ResponsiblePersons::Notifications
 
     validates :component, presence: true
     validates :type, inclusion: { in: [EXACT, RANGE] }
+    validates :poisonous, inclusion: { in: [true, false] }, if: :range?
     validates :name, presence: true
     validate :unique_name
     validates :exact_concentration,
@@ -23,7 +24,7 @@ module ResponsiblePersons::Notifications
               if: :exact?
     validates :range_concentration,
               presence: true,
-              if: :range?
+              if: -> { range? && poisonous == false }
     validates_with CasNumberValidator
 
     def initialize(params = {})
