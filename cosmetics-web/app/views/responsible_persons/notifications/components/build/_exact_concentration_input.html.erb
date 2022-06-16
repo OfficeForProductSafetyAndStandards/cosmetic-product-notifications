@@ -9,9 +9,10 @@
                         id: "exact_concentration",
                         class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if concentration_error}",
                         maxlength: 3,
+                        size: nil,
                         "aria-describedby" => ("exact_concentration-error" if concentration_error)) %>
     <div class="govuk-input__suffix" aria-hidden="true">
-      <span title="Percentage weight by weight">% w/w</span>
+      <span title="Percentage weight by weight">&percnt; w/w</span>
     </div>
   </div>
 </div>

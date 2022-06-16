@@ -11,7 +11,13 @@
                   map_errors: { range_concentration: ingredient_range_concentration_items.first[:id], poisonous: "poisonous_true" }) %>
 
 <%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
-  <%= render "form_components/govuk_input", form: form, id: "name", key: :name, label: { text: "What is the name?" } %>
+  <%= render "form_components/govuk_input",
+             form: form,
+             id: "name",
+             key: :name,
+             label: { text: "What is the name?" },
+             attributes: { spellcheck: "false" } %>
+
   <%= render "form_components/govuk_input",
              form: form,
              key: :cas_number,

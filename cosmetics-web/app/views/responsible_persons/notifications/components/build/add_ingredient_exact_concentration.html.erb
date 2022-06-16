@@ -8,7 +8,11 @@
 <%= error_summary(@ingredient_concentration_form.errors) %>
 
 <%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
-  <%= render "form_components/govuk_input", form: form, id: "name", key: :name, label: { text: "What is the name?" } %>
+  <%= render "form_components/govuk_input",
+             form: form, id: "name",
+             key: :name,
+             label: { text: "What is the name?" },
+             attributes: { spellcheck: "false" } %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
