@@ -23,16 +23,9 @@ module ComponentBuildHelper
 
   def ingredient_range_concentration_item(above, up_to)
     {
-      html: ingredient_range_concentration_html_for(above, up_to).html_safe,
+      html: render("ingredient_range_concentration_option", above: above, up_to: up_to),
       value: "greater_than_#{above}_less_than_#{up_to}_percent",
       id: "greater_than_#{above}_less_than_#{up_to}_percent",
     }
-  end
-
-  def ingredient_range_concentration_html_for(above, up_to)
-    "Above <span class='govuk-!-font-weight-bold'>#{above}%</span> " \
-    "<abbr class='govuk-!-font-size-16' title='Weight by weight'>w/w</abbr> " \
-    "up to <span class='govuk-!-font-weight-bold'>#{up_to}%</span> " \
-    "<abbr class='govuk-!-font-size-16'>w/w</abbr>"
   end
 end
