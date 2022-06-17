@@ -14,7 +14,6 @@ RSpec.describe ResponsiblePersonNotificationPolicy, type: :policy do
     it { is_expected.not_to permit(:update)  }
     it { is_expected.not_to permit(:edit)    }
     it { is_expected.not_to permit(:destroy) }
-    it { is_expected.not_to permit(:upload_formulation) }
     it { is_expected.not_to permit(:confirm) }
   end
 
@@ -32,7 +31,6 @@ RSpec.describe ResponsiblePersonNotificationPolicy, type: :policy do
     it { is_expected.to permit(:show) }
     it { is_expected.to permit(:update)  }
     it { is_expected.to permit(:edit)    }
-    it { is_expected.to permit(:upload_formulation) }
     it { is_expected.to permit(:confirm) }
 
     it { is_expected.to permit(:destroy) }

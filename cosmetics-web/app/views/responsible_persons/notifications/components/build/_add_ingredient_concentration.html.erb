@@ -1,0 +1,53 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-3"><%= title %></h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body-s opss-secondary-text">For every ingredient:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
+      <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
+      <li>Confirm if poisonous - especially if the details match ingredients listed in the following poison tables </li>
+    </ul>
+
+    <%= link_to "Skip poisonous ingredients tables.", "#skip-to-form", class: "govuk-skip-link opss-skip-link" %>
+
+    <%= govukDetails(summaryText: "Show the poison tables", classes: "govuk-!-margin-left-0 govuk-!-font-size-16") do %>
+      <%= render "poison_tables" %>
+    <% end %>
+
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+
+    <%= form_with model: model, scope: :ingredient_concentration_form, url: wizard_path, method: :put, id: "skip-to-form", html: { novalidate: true } do |form| %>
+      <div class="govuk-form-group">
+        <%= render "components/govuk_fieldset", legend: { text: "Ingredient #{component.ingredients.size + 1}", classes: "govuk-fieldset__legend--s" } do %>
+          <%= yield form %>
+        <% end %>
+      </div>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+        <% if component.ingredients.any? %>
+          <%= link_to("Skip", wizard_path(:select_ph_option), class: "govuk-link govuk-link--no-visited-state") %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if component.ingredients.any? %>
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-s">Already added</h2>
+
+      <ol class="govuk-list govuk-list--number govuk-!-font-size-16 opss-secondary-text">
+        <% component.ingredients.each do |ingredient| %>
+          <li><%= ingredient.inci_name %></li>
+        <% end %>
+      </ol>
+
+      <p class="govuk-body-s opss-secondary-text">
+        These ingredients have already been added to the <%= component.notification.is_multicomponent? ? "item" : "product" %>.
+      </p>
+    </div>
+  <% end %>
+</div>

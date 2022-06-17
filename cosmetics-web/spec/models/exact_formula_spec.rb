@@ -5,4 +5,9 @@ RSpec.describe ExactFormula, type: :model do
     exact_formula = build(:exact_formula, cas_number: "123-45-6")
     expect { exact_formula.save! }.to change(exact_formula, :cas_number).from("123-45-6").to("123456")
   end
+
+  it "doesn't save empty cas number" do
+    exact_formula = build(:exact_formula, cas_number: "")
+    expect { exact_formula.save! }.to change(exact_formula, :cas_number).from("").to(nil)
+  end
 end

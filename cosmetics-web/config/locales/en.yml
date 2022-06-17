@@ -234,14 +234,22 @@ en:
           attributes:
             component_id:
               blank: "Select an item"
-        responsible_persons/notifications/exact_concentration_form:
+        responsible_persons/notifications/ingredient_concentration_form:
           attributes:
-            name:
-              blank: "Enter a name"
-              taken: "Enter a name which is unique to this %{entity}"
+            component:
+              blank: "Provide a component to associate the ingredient to"
             exact_concentration:
               blank: "Enter the concentration"
               greater_than: "Enter a number for the concentration"
+            name:
+              blank: "Enter a name"
+              taken: "Enter a name which is unique to this %{entity}"
+            poisonous:
+              inclusion: "Select yes if the ingredient is poisonous"
+            range_concentration:
+              blank: "Select a concentration range"
+            type:
+              inclusion: "Type must be 'exact' or 'range'"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:

@@ -353,26 +353,6 @@ def expect_back_link_to_formulation_method_page
   expect_back_link_to(/\/build\/select_formulation_type$/)
 end
 
-# Exact concentrations of the ingredients
-# Concentration ranges of the ingredients
-def expect_to_be_on__upload_ingredients_page(header_text)
-  expect(page.current_path).to end_with("/build/upload_formulation")
-  expect(page).to have_h1(header_text)
-end
-
-def expect_back_link_to_upload_ingredients_page
-  expect_back_link_to(/\/build\/upload_formulation$/)
-end
-
-def expect_to_be_on__upload_poisonous_ingredients_page
-  expect(page.current_path).to end_with("/build/upload_formulation")
-  expect(page).to have_h1("Ingredients the National Poisons Information Service needs to know about")
-end
-
-def expect_back_link_to_upload_poisonous_ingredients_page
-  expect_back_link_to(/\/build\/upload_formulation$/)
-end
-
 def expect_to_be_on__poisonous_ingredients_page
   expect(page.current_path).to end_with("/contains_poisonous_ingredients")
   expect(page).to have_h1("Ingredients the National Poisons Information Service needs to know about")
@@ -425,11 +405,6 @@ end
 
 def expect_back_link_to_upload_item_label_page
   expect_back_link_to_upload_product_label_page
-end
-
-def expect_to_be_on__upload_formulation_document_page(header_text)
-  expect(page.current_path).to end_with("/formulation_file/new")
-  expect(page).to have_h1(header_text)
 end
 
 def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)

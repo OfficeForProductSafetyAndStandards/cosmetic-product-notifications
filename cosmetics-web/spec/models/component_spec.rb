@@ -592,4 +592,16 @@ RSpec.describe Component, type: :model do
       end
     end
   end
+
+  describe "#ingredients" do
+    it "returns a collection of all the component exact and range formulas ordered by their creation time" do
+      component = create(:component, :using_range)
+      range_first = create(:range_formula, component: component, created_at: 1.day.ago)
+      exact_first = create(:exact_formula, component: component, created_at: 1.hour.ago)
+      exact_second = create(:exact_formula, component: component, created_at: 2.minutes.ago)
+      range_second = create(:range_formula, component: component, created_at: 3.seconds.ago)
+
+      expect(component.ingredients).to eq([range_first, exact_first, exact_second, range_second])
+    end
+  end
 end
