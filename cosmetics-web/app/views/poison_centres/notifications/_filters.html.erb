@@ -1,11 +1,37 @@
-<section class="govuk-grid-column-one-quarter govuk-!-padding-right-0">
+<section class="govuk-grid-column-one-quarter govuk-!-padding-right-1 opss-full-height__col">
+
+  <a href="#search-results-section" class="govuk-skip-link opss-skip-link">
+    Skip to the main content
+  </a>
+
+  <nav aria-label="Secondary">
+    <ul class="govuk-list opss-left-nav">
+      <li class="opss-left-nav__active">
+        <a href="<%= root_path %>" class="govuk-link govuk-link--no-visited-state" aria-current="page">
+          Cosmetic products search
+        </a>
+      </li>
+      <li>
+        <a href="#" class="govuk-link govuk-link--no-visited-state">
+          Ingredients search
+        </a>
+      </li>
+    </ul>
+  </nav>
 
 
-   <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
+  <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-1 govuk-!-margin-bottom-6 govuk-!-margin-right-6">
+
+
+  <a href="#results-order" class="govuk-skip-link opss-skip-link opss-skip-link--mb">
+    Skip past the filter options
+  </a>
+
+  <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
 
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
           <h2 class="govuk-fieldset__heading">
             Filter the results by<span class="govuk-visually-hidden">:</span>
           </h2>
