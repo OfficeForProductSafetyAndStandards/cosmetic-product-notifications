@@ -9,7 +9,13 @@
     <p class="govuk-body-s opss-secondary-text">For every ingredient:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
       <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
-      <li>Confirm if poisonous - especially if the details match ingredients listed in the following poison tables </li>
+      <li>
+        <% if local_assigns[:poisonous] == true %>
+          The exact concentration of a poisonous ingredient is required - especially if the details match ingredients listed in the following poison tables
+        <% else %>
+          Confirm if poisonous - especially if the details match ingredients listed in the following poison tables
+        <% end %>
+      </li>
     </ul>
 
     <%= link_to "Skip poisonous ingredients tables.", "#skip-to-form", class: "govuk-skip-link opss-skip-link" %>

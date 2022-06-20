@@ -1,4 +1,4 @@
-<% title = "Add the ingredients" %>
+<% title = "Add the poisonous ingredients" %>
 
 <% page_title title, errors: @ingredient_concentration_form.errors.any? %>
 <% content_for :after_header do %>
@@ -7,7 +7,7 @@
 
 <%= error_summary(@ingredient_concentration_form.errors) %>
 
-<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
+<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form, poisonous: true do |form| %>
   <%= render "form_components/govuk_input",
              form: form,
              id: "name",
@@ -43,7 +43,8 @@
                  classes: " govuk-!-padding-top-6",
                  items: [{ key: :poisonous,
                            text: "Is it poisonous?",
-                           value: true }] %>
+                           disabled: "disabled",
+                           attributes: { checked: "checked", "aria-disabled" => "true" } }] %>
     </div>
   </div>
 <% end %>

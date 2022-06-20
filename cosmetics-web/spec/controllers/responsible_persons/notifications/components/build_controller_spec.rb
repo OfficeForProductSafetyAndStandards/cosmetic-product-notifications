@@ -77,19 +77,25 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       expect(assigns(:component).cmrs).to all(have_attributes(name: be_nil))
     end
 
-    describe "upload poisonus ingredients page" do
-      before { get(:show, params: params.merge(id: :upload_poisonus_ingredients)) }
+    describe "add component predefined frame formulation poisonous ingredient" do
+      let(:component_type) { "predefined" }
+
+      before { get(:show, params: params.merge(id: :add_poisonous_ingredient)) }
 
       render_views
 
-      describe "back link" do
-        context "with a component with predefined formulation" do
-          let(:component_type) { "predefined" }
+      # rubocop:disable RSpec/MultipleExpectations
+      it "shows the page for adding poisonous ingredients to a predefined formulation component" do
+        expect(response.body).to match(/<title>Add the poisonous ingredients .+<\/title>/)
+        expect(response.body).to include("What is the exact concentration?")
+        expect(response.body).not_to include("What is the concentration range?")
+      end
+      # rubocop:enable RSpec/MultipleExpectations
 
-          it "links to the poisonous materials page" do
-            expect(response.body).to have_back_link_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients))
-          end
-        end
+      it " contains a back link to the 'contains poisonous ingredients' page" do
+        expect(response.body).to have_back_link_to(
+          responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients),
+        )
       end
     end
 
@@ -257,8 +263,8 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
         end
 
         context "when the answer is true" do
-          it "redirects to the upload formulation page" do
-            expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :upload_poisonus_ingredients))
+          it "redirects to the add poisonous ingredient" do
+            expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :add_poisonous_ingredient))
           end
         end
 
