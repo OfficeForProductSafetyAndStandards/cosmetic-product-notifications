@@ -12,6 +12,6 @@ class Search::LandingPageController < SearchApplicationController
 private
 
   def redirect_to_notifications
-    redirect_to poison_centre_notifications_path if user_signed_in?
+    redirect_to poison_centre_notifications_search_path if user_signed_in?
   end
 end

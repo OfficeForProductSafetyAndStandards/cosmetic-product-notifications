@@ -12,7 +12,7 @@
         </a>
       </li>
       <li>
-        <a href="<%= poison_centre_ingredients_path %>" class="govuk-link govuk-link--no-visited-state">
+        <a href="<%= poison_centre_ingredients_search_path %>" class="govuk-link govuk-link--no-visited-state">
           Ingredients search
         </a>
       </li>
@@ -27,7 +27,7 @@
     Skip past the filter options
   </a>
 
-  <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
+  <%= form_for(@search_form, url: poison_centre_notifications_search_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
 

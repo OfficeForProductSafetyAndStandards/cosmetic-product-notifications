@@ -66,7 +66,7 @@ private
       if submit_domain?
         dashboard_path
       else
-        poison_centre_notifications_path
+        poison_centre_notifications_search_path
       end
   end
 

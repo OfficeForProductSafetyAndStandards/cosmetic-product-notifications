@@ -23,4 +23,8 @@ module PoisonCentresNotificationsHelper
   def display_filters_informations
     "using the current filters," if @search_form.valid? && (@search_form.date_filter.present? || @search_form.category.present?)
   end
+
+  def back_to_notifications?
+    params[:ingredient_search_form].blank?
+  end
 end
