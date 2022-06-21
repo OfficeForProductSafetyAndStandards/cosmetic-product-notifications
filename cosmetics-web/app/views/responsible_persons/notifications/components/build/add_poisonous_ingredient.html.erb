@@ -8,32 +8,7 @@
 <%= error_summary(@ingredient_concentration_form.errors) %>
 
 <%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form, poisonous: true do |form| %>
-  <%= render "form_components/govuk_input",
-             form: form,
-             id: "name",
-             key: :name,
-             label: { text: "What is the name?" },
-             attributes: { spellcheck: "false" } %>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-      <%= render "exact_concentration_input", model: @ingredient_concentration_form, form: form %>
-    </div>
-
-    <div class="govuk-grid-column-one-half">
-      <div class="govuk-form-group">
-        <div class="govuk-checkboxes opss-float-right-desktop">
-          <%= render "form_components/govuk_input",
-                     form: form,
-                     key: :cas_number,
-                     id: "cas_number",
-                     label: { text: "What is the CAS number?", classes: "govuk-label--s govuk-!-font-weight-regular" },
-                     classes: "govuk-input--width-10" %>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <%= render "ingredient_exact_concentration_fields", model: @ingredient_concentration_form, form: form %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <%= render "form_components/govuk_checkboxes",
