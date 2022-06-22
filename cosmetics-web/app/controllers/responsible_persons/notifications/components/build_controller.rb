@@ -27,11 +27,11 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :select_sub_sub_category,
         :select_formulation_type,
         :add_ingredient_exact_concentration, # only for exact
-        :want_to_add_another_ingredient, # only for exact
-        :upload_formulation, # only for range
+        :add_ingredient_range_concentration, # only for range
         :select_frame_formulation, # only for frame formulation
         :contains_poisonous_ingredients, # only for frame formulation
-        :upload_poisonus_ingredients, # only for frame formulation
+        :add_poisonous_ingredient, # only for frame formulation
+        :want_to_add_another_ingredient,
         :select_ph_option,
         :min_max_ph,
         :completed
@@ -58,15 +58,14 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     select_sub_sub_category: :select_sub_category,
     select_formulation_type: :select_sub_sub_category,
     add_ingredient_exact_concentration: :select_formulation_type,
+    add_ingredient_range_concentration: :select_formulation_type,
     want_to_add_another_ingredient: :select_formulation_type,
-    upload_formulation: :select_formulation_type, # only for range and exact,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_poisonous_ingredients: :select_formulation_type, # only for frame formulation,
-    upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulation,
+    add_poisonous_ingredient: :contains_poisonous_ingredients, # only for frame formulation,
     select_ph_option: {
-      select_formulation_type: -> { @component.exact? },
+      select_formulation_type: -> { @component.exact? || @component.range? },
       contains_poisonous_ingredients: -> { @component.predefined? },
-      upload_formulation: -> { true },
     },
     min_max_ph: :select_ph_option,
   }.freeze
@@ -85,8 +84,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
-    when :add_ingredient_exact_concentration
-      @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new
+    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_poisonous_ingredient
+      @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new
     when :completed
       @component.update_state("component_complete")
       # TODO: write spec
@@ -124,17 +123,17 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :select_formulation_type
       update_select_formulation_type
     when :add_ingredient_exact_concentration
-      update_add_ingredient_exact_concentration
-    when :want_to_add_another_ingredient
-      update_want_to_add_another_ingredient
+      update_add_ingredient_concentration("exact")
+    when :add_ingredient_range_concentration
+      update_add_ingredient_concentration("range")
+    when :add_poisonous_ingredient
+      update_add_ingredient_concentration("exact", force_poisonous: true)
     when :select_frame_formulation
       update_frame_formulation
-    when :upload_formulation
-      update_upload_formulation
     when :contains_poisonous_ingredients
       update_contains_poisonous_ingredients
-    when :upload_poisonus_ingredients
-      update_upload_poisonus_ingredients
+    when :want_to_add_another_ingredient
+      update_want_to_add_another_ingredient
     when :select_ph_option
       update_select_component_ph_options
     when :min_max_ph
@@ -263,20 +262,24 @@ private
     end
 
     if @component.predefined? # predefined == frame_formulation
-      jump_to(:select_frame_formulation)
+      jump_to_step(:select_frame_formulation)
     elsif @component.frame_formulation.present?
       @component.update(frame_formulation: nil)
     end
 
-    render_next_step @component
+    if @component.range?
+      jump_to_step(:add_ingredient_range_concentration)
+    elsif @component.exact?
+      jump_to_step(:add_ingredient_exact_concentration)
+    end
   end
 
-  def update_add_ingredient_exact_concentration
-    @exact_concentration_form = ResponsiblePersons::Notifications::ExactConcentrationForm.new(
-      exact_concentration_params.merge(component: @component),
-    )
-    if @exact_concentration_form.save
-      render_next_step @component
+  def update_add_ingredient_concentration(type, force_poisonous: false)
+    form_attrs = ingredient_concentration_params.merge(component: @component, type: type)
+    form_attrs[:poisonous] = true if force_poisonous == true
+    @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new(form_attrs)
+    if @ingredient_concentration_form.save
+      jump_to_step(:want_to_add_another_ingredient)
     else
       rerender_current_step
     end
@@ -285,7 +288,13 @@ private
   def update_want_to_add_another_ingredient
     case params[:add_another_ingredient]
     when "yes"
-      jump_to_step(:add_ingredient_exact_concentration)
+      if @component.exact?
+        jump_to_step(:add_ingredient_exact_concentration)
+      elsif @component.range?
+        jump_to_step(:add_ingredient_range_concentration)
+      elsif @component.predefined?
+        jump_to_step(:add_poisonous_ingredient)
+      end
     when "no"
       jump_to_step(:select_ph_option)
     else
@@ -316,64 +325,6 @@ private
       jump_to(:select_ph_option)
     end
     render_next_step @component
-  end
-
-  # For exact and range formulations only
-  def update_upload_formulation
-    formulation_file = params.dig(:component, :formulation_file)
-    if formulation_file.blank? && @component.formulation_file.present?
-      if params[:back_to_edit] == "true"
-        return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      else
-        return jump_to_step(:select_ph_option)
-      end
-    end
-
-    if formulation_file.present?
-      @component.formulation_file.attach(formulation_file)
-      if @component.valid?
-        if params[:back_to_edit] == "true"
-          redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-        else
-          jump_to_step :select_ph_option
-        end
-      else
-        @component.formulation_file.purge if @component.formulation_file.attached?
-        rerender_current_step
-      end
-    else
-      @component.errors.add :formulation_file, "Upload a list of ingredients"
-      rerender_current_step
-    end
-  end
-
-  # For frame formulation only
-  def update_upload_poisonus_ingredients
-    formulation_file = params.dig(:component, :formulation_file)
-    if formulation_file.blank? && @component.formulation_file.present?
-      if params[:back_to_edit] == "true"
-        return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      else
-        return render_next_step @component
-      end
-    end
-
-    if formulation_file.present?
-      @component.formulation_file.attach(formulation_file)
-      if @component.valid?
-        if params[:back_to_edit] == "true"
-          redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-        else
-          render_next_step @component
-        end
-      else
-        @component.formulation_file.purge if @component.formulation_file.attached?
-        rerender_current_step
-      end
-    else
-      @component.errors.add :formulation_file, "Upload a list of poisonous ingredients"
-      rerender_current_step
-    end
   end
 
   # In views, the wording here is about range. Its confusing, as param name here is ph
@@ -421,11 +372,12 @@ private
       )
   end
 
-  def exact_concentration_params
-    params.fetch(:exact_concentration_form, {})
+  def ingredient_concentration_params
+    params.fetch(:ingredient_concentration_form, {})
       .permit(
         :name,
         :exact_concentration,
+        :range_concentration,
         :cas_number,
         :poisonous,
       )
