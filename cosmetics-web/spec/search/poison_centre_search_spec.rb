@@ -48,6 +48,6 @@ RSpec.describe "Poison centre search" do
 end
 
 def keyword_search(keyword)
-  query = OpensearchQuery::Notification.new(keyword: keyword, category: nil, from_date: nil, to_date: nil, sort_by: nil)
+  query = OpenSearchQuery::Notification.new(keyword: keyword, category: nil, from_date: nil, to_date: nil, sort_by: nil)
   Notification.full_search(query)
 end
