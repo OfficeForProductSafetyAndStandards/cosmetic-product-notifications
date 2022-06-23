@@ -165,24 +165,16 @@ end
 
 def fill_ingredients_concentrations(single_item: false)
   if page.has_no_css?("li", text: "FooBar ingredient")
-    expect(page).to have_css("h1", text: "Add the ingredients")
-    expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient 1")
+    expect_to_be_on_add_ingredients_page
     fill_in "name", with: "FooBar ingredient"
     yield # Fill/Select ingredient concentration
     fill_in "cas_number", with: "123456-78-9"
     click_on "Save and continue"
 
-    expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
-    expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
-    page.choose "Yes"
-    click_button "Continue"
+    answer_add_another_ingredient_with("Yes", single_item: single_item)
   end
 
-  expect(page).to have_css("h1", text: "Add the ingredients")
-  expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient 2")
-  expect(page).to have_css("h2", text: "Already added")
-  expect(page).to have_css("ol.govuk-list--number li", text: "FooBar ingredient")
-
+  expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
   click_link "Skip"
 end
 
@@ -191,6 +183,47 @@ def answer_what_is_ph_range_of_product_with(answer)
     page.choose(answer)
   end
   click_button "Continue"
+end
+
+def answer_select_formulation_with(answer)
+  page.select answer, from: "component_frame_formulation"
+  click_button "Continue"
+end
+
+def answer_contain_poisonous_ingredients_with(answer)
+  expect(page).to have_css("h1", text: "Does the product contain poisonous ingredients?")
+  page.choose answer
+  click_button "Continue"
+end
+
+def select_item_and_remove(answer)
+  within_fieldset("Select which item to remove") do
+    page.choose(answer)
+  end
+  click_button "Delete and continue"
+end
+
+def answer_add_another_ingredient_with(answer, single_item: true)
+  expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
+  expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
+  page.choose answer
+  click_button "Continue"
+end
+
+def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: [], forced_poisonous: false)
+  expect(page).to have_css("h1", text: "Add the#{forced_poisonous ? ' poisonous' : ''} ingredients")
+  expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient #{ingredient_number}")
+
+  if forced_poisonous # Poisonous checkbox is pre-selected and disabled
+    expect(page).to have_checked_field("ingredient_concentration_form_poisonous", disabled: true)
+  end
+
+  if already_added.any?
+    expect(page).to have_css("h2", text: "Already added")
+    already_added.each do |ingredient|
+      expect(page).to have_css("ol.govuk-list--number li", text: ingredient)
+    end
+  end
 end
 
 def expect_product_details_task_completed
@@ -211,11 +244,4 @@ end
 
 def expect_item_task_not_started(name)
   expect_task_not_started name
-end
-
-def select_item_and_remove(answer)
-  within_fieldset("Select which item to remove") do
-    page.choose(answer)
-  end
-  click_button "Delete and continue"
 end
