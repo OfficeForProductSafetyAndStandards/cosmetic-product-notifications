@@ -135,14 +135,6 @@ class Component < ApplicationRecord
     get_category_name(root_category)
   end
 
-  def formulation_file_required?
-    return false if formulation_file.attached?
-
-    (range? && range_formulas&.empty?) ||
-      (exact? && exact_formulas&.empty?) ||
-      (predefined? && contains_poisonous_ingredients)
-  end
-
   def formulation_file_failed_antivirus_check?
     formulation_file.attached? && formulation_file.metadata["safe"] == false
   end

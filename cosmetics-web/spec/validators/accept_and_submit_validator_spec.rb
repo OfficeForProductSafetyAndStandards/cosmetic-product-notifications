@@ -70,12 +70,4 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
       expect(notification.errors.messages_for(:formulation_uploads)).to eq(["File #{component.formulation_file.filename} is still being processed"])
     end
   end
-
-  describe "formulation file is missing" do
-    let(:component) { create(:ranges_component, name: "Item 1", notification: notification) } # ranges component requires file
-
-    it "complains about missing file" do
-      expect(notification.errors.messages_for(:formulation_uploads)).to eq(["Item #{component.name} is missing formulation file"])
-    end
-  end
 end

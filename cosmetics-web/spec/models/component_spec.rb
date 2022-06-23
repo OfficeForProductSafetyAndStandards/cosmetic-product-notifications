@@ -115,59 +115,6 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "formulation_required", :with_stubbed_antivirus do
-    context "when component uses frame formulation" do
-      it "returns false for predefined formulation when no file attached" do
-        expect(predefined_component.formulation_file_required?).to be false
-      end
-    end
-
-    context "when component uses frame formulation and has harmful ingredients" do
-      let(:contains_poisonous_ingredients) { true }
-
-      it "returns false when there is no file" do
-        expect(predefined_component.formulation_file_required?).to be true
-      end
-
-      it "returns false for predefined formulation even if no file attached" do
-        predefined_component.formulation_file.attach text_file
-        expect(predefined_component.formulation_file_required?).to be false
-      end
-    end
-
-    context "when component uses range formulation" do
-      it "returns true if file is not attached" do
-        expect(ranges_component.formulation_file_required?).to be true
-      end
-
-      it "returns false if file is attached" do
-        ranges_component.formulation_file.attach text_file
-        expect(ranges_component.formulation_file_required?).to be false
-      end
-
-      it "returns false if manually entered data present" do
-        ranges_component.range_formulas.create
-        expect(ranges_component.formulation_file_required?).to be false
-      end
-    end
-
-    context "when component uses exact formulation" do
-      it "returns true for exact formulation if no file attached" do
-        expect(exact_component.formulation_file_required?).to be true
-      end
-
-      it "returns false if file is attached" do
-        exact_component.formulation_file.attach text_file
-        expect(exact_component.formulation_file_required?).to be false
-      end
-
-      it "returns false if manually entered data present" do
-        exact_component.exact_formulas.create
-        expect(exact_component.formulation_file_required?).to be false
-      end
-    end
-  end
-
   describe "updating special_applicator" do
     it "adds errors if special_applicator updated to be blank" do
       predefined_component.special_applicator = nil
