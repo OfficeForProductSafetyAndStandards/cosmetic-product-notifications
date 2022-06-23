@@ -114,12 +114,11 @@ class Notification < ApplicationRecord
   def searchable_ingredients
     ingredients = []
     components.each do |c|
-      c.exact_formulas.each do |f|
-        ingredients << f.inci_name
-      end
+      ingredients << c.exact_formulas.pluck(:inci_name)
+      ingredients << c.range_formulas.pluck(:inci_name)
     end
 
-    ingredients.join(",")
+    ingredients.flatten.join(",")
   end
 
   def reference_number_for_display
