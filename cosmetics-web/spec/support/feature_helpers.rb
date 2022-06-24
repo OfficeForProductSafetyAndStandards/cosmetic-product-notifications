@@ -363,7 +363,7 @@ def expect_back_link_to_poisonous_ingredients_page
 end
 
 def expect_to_be_on__what_is_ph_range_of_product_page
-  expect(page.current_path).to end_with("/trigger_question/select_ph_range")
+  expect(page.current_path).to end_with("/build/select_ph_option")
   expect(page).to have_h1("What is the pH range of the product?")
 end
 
@@ -526,6 +526,14 @@ end
 
 def expect_to_be_on__responsible_person_declaration_page
   expect(page).to have_h1("Responsible Person Declaration")
+end
+
+def expect_form_to_have_errors(errors)
+  expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+  errors.each do |attribute, error|
+    expect(page).to have_link(error[:message], href: "##{attribute}")
+    expect(page).to have_css("span##{error[:id]}-error", text: error[:message])
+  end
 end
 
 # ---- Page interactions ----
