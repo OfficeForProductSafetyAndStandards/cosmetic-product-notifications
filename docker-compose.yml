@@ -11,15 +11,12 @@ services:
     ports:
       - "5432:5432"
 
-
   opensearch:
     image: opensearchproject/opensearch:1.2.3
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.2
     environment:
       - "discovery.type=single-node"
       - "OPENSEARCH_JAVA_OPTS=-Xms750m -Xmx750m"
       - "DISABLE_SECURITY_PLUGIN=true"
-      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
     volumes:
       - opensearch-volume:/usr/share/opensearch/data
     hostname: opensearch
@@ -32,16 +29,6 @@ services:
       - "ELASTICSEARCH_HOSTS=http://opensearch:9200"
     ports:
       - "5601:5601"
-
-  opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:1.2.0
-    ports:
-      - "5601:5601"
-    environment:
-      - "OPENSEARCH_HOSTS=[\"http://opensearch:9200\"]"
-      - "OPENSEARCH_SSL_ENABLED=false"
-      - "OPENSEARCH_USERNAME=admin"
-      - "OPENSEARCH_PASSWORD=admin"
 
   redis:
     image: redis

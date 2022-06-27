@@ -327,4 +327,4 @@ private
   end
 end
 
-# Notification.opensearch.import force: true if Rails.env.development? # for auto sync model with Opensearch
+Notification.opensearch.import force: true if Rails.env.development? # for auto sync model with Opensearch

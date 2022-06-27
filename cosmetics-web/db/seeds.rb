@@ -92,7 +92,7 @@ ActiveRecord::Base.transaction do
     ],
   ]
   # Create Notifications
-  30.times do |i|
+  ENV.fetch("SEED_NOTIFICATIONS_COUNT", 30).to_i.times do |i|
     notification_attributes = {
       product_name: "Scrub shower bubbles #{keywords[i % 3]} #{i} (#{category_names[i % 4]})",
       state: "notification_complete",
