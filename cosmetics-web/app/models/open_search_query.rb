@@ -1,0 +1,1 @@
+module OpenSearchQuery; end

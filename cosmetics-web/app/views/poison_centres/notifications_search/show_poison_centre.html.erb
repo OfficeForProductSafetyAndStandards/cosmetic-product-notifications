@@ -3,7 +3,7 @@
   <% if back_to_notifications? %>
     <%= govukBackLink text: "Back", href: poison_centre_notifications_search_path(notification_search_form: search_params) %>
   <% else %>
-    <%= govukBackLink text: "Back", href: poison_centre_ingredients_search_path(ingredient_search_form: search_params) %>
+    <%= govukBackLink text: "Back", href: poison_centre_ingredients_search_path(search_params) %>
   <% end %>
 <% end %>
 

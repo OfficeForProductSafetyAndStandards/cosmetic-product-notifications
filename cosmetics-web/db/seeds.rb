@@ -54,8 +54,45 @@ ActiveRecord::Base.transaction do
   keywords = %w[cream luxury premium]
   category_names = %i[skin hair nail oral]
   categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
+  ingredients = [
+    [
+      "aqua",
+      "dimethicone",
+      "glycerin",
+      "propylene glycol",
+      "PEG",
+      "PEG stearate",
+      "ceteareth",
+      "sodium silicate",
+      "sodium carbonate",
+    ],
+    [
+      "aqua",
+      "sodium metasilicate",
+      "stearamidopropyl dimethylamine",
+      "ammonium chloride",
+      "dicetyldimonium chloride",
+      "distearyldimonium chloride",
+      "cetrimonium chloride",
+      "phosphoric acid",
+      "magnesium silicate",
+      "citric acid",
+    ],
+    [
+      "aqua",
+      "cyclopentasiloxane",
+      "dimethicone",
+      "amodimethicone",
+      "silanes",
+      "alcoxysilanes",
+      "cysteine derivatives",
+      "magnesium silicate",
+      "cellulose derivatives",
+      "fatty acid esters",
+    ],
+  ]
   # Create Notifications
-  30.times do |i|
+  ENV.fetch("SEED_NOTIFICATIONS_COUNT", 30).to_i.times do |i|
     notification_attributes = {
       product_name: "Scrub shower bubbles #{keywords[i % 3]} #{i} (#{category_names[i % 4]})",
       state: "notification_complete",
@@ -71,15 +108,17 @@ ActiveRecord::Base.transaction do
     component_attributes = {
       state: "component_complete",
       notification_id: 121,
-      notification_type: "predefined",
-      frame_formulation: "skin_care_cream_lotion_gel",
+      notification_type: "exact",
       sub_sub_category: (categories[i % 4]),
       physical_form: "other_physical_form",
       contains_poisonous_ingredients: false,
       ph: "not_applicable",
       notification: notification,
     }
-    Component.create!(component_attributes)
+    c = Component.create!(component_attributes)
+    ingredients[i % 3].each do |ingredient|
+      ExactFormula.create(inci_name: ingredient, cas_number: "11-12-1", quantity: 10, component: c)
+    end
 
     notification.cache_notification_for_csv!
   end

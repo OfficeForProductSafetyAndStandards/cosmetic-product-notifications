@@ -58,6 +58,20 @@ FactoryBot.define do
       with_nano_materials { [] }
     end
 
+    transient do
+      with_ingredients { [] }
+    end
+
+    after(:create) do |component, evaluator|
+      evaluator.with_nano_materials.each do |nano_material|
+        component.nano_materials << nano_material
+      end
+
+      evaluator.with_ingredients.each do |ingredient|
+        component.exact_formulas << ExactFormula.create(inci_name: ingredient, cas_number: "12-34-5", quantity: 10)
+      end
+    end
+
     after(:create) do |component, evaluator|
       evaluator.with_nano_materials.each do |nano_material|
         component.nano_materials << nano_material

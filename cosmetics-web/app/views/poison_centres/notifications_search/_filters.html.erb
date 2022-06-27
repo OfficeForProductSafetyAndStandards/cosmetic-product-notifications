@@ -12,22 +12,20 @@
         </a>
       </li>
       <li>
-        <a href="<%= poison_centre_ingredients_path %>" class="govuk-link govuk-link--no-visited-state">
+        <a href="<%= poison_centre_ingredients_search_path %>" class="govuk-link govuk-link--no-visited-state">
           Ingredients search
         </a>
       </li>
     </ul>
   </nav>
 
-
   <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-1 govuk-!-margin-bottom-6 govuk-!-margin-right-6">
-
 
   <a href="#results-order" class="govuk-skip-link opss-skip-link opss-skip-link--mb">
     Skip past the filter options
   </a>
 
-  <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
+  <%= form_for(@search_form, url: poison_centre_notifications_search_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
 
@@ -86,7 +84,6 @@
                 To<span class="govuk-visually-hidden">:</span>
               </div>
               <%= render partial: 'date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day' } %>
-
 
             </div>
           </div>
