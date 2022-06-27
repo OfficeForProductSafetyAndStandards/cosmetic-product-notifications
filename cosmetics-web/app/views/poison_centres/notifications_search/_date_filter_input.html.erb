@@ -1,9 +1,7 @@
-<% if @search_form.errors[attribute].present? %>
-  <% @search_form.errors[attribute].each do |error| %>
-    <span class="govuk-error-message">
-      <span class="govuk-visually-hidden">Error:</span> <%= error %>
-    </span>
-  <% end %>
+<% @search_form.errors[attribute].each do |error| %>
+  <span class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span> <%= error %>
+  </span>
 <% end %>
 
 <div class="govuk-date-input" id="<%= attribute %>">
