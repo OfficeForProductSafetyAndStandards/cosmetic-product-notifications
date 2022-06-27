@@ -4140,10 +4140,10 @@ govuk-country-and-territory-autocomplete@1.0.2:
     core-js "3.2.1"
     openregister-picker-engine "^1.2.1"
 
-govuk-frontend@3.14.0:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-3.14.0.tgz#d3a9c54437c08f5188f87b1f4480ba60e95c8eb6"
-  integrity sha512-y7FTuihCSA8Hty+e9h0uPhCoNanCAN+CLioNFlPmlbeHXpbi09VMyxTcH+XfnMPY4Cp++7096v0rLwwdapTXnA==
+govuk-frontend@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.2.0.tgz#1248eb8025c5f8aa6a80282e92da4c81263caf0c"
+  integrity sha512-IHbnz5DbnPjuCv4lQvtJGoCNAKAN6byKqmaej8hjd6Y/KTaAuw10npijeqfRJNO4WdDX9a34+n+SC/UmWdjfGQ==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.6:
   version "4.2.9"
