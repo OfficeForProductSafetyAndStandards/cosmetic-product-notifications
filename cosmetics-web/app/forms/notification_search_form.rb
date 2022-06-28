@@ -80,4 +80,8 @@ class NotificationSearchForm < Form
       errors.add(:date_to, :date_from_is_later_than_date_to)
     end
   end
+
+  def filters_present?
+    date_filter.present? || category.present?
+  end
 end
