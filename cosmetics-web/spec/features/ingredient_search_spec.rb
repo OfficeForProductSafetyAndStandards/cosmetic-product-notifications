@@ -4,7 +4,7 @@ require "support/feature_helpers"
 RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
   let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
-  let(:component1) { create(:component, with_ingredients: %w[aqua sodium]) }
+  let(:component1) { create(:component, with_ingredients: %w[aqua tin sodium]) }
   let(:component2) { create(:component, with_ingredients: %w[aqua tin]) }
 
   let(:cream) { create(:notification, :registered, components: [component1], notification_complete_at: 1.day.ago, product_name: "Cream") }
@@ -31,6 +31,22 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     fill_in "ingredient_search_form_q", with: "sodium"
     click_on "Search"
+
+    expect(page).to have_link("Cream")
+    expect(page).not_to have_link("Shower Bubbles")
+  end
+
+  scenario "Searching for notifications with specific ingredients - exact match" do
+    sign_in user
+
+    expect(page).to have_h1("Cosmetic products search")
+
+    click_link "Ingredients search"
+
+    fill_in "ingredient_search_form_q", with: "tin sodium"
+    click_on "Search"
+    choose "Exact match only"
+    click_on "Apply"
 
     expect(page).to have_link("Cream")
     expect(page).not_to have_link("Shower Bubbles")
