@@ -1,5 +1,6 @@
 <%= form_for(@search_form, url: poison_centre_ingredients_search_path, method: :get, html: { 'novalidate' => true }) do |form| %>
   <div class="govuk-form-group govuk-!-padding-botton-2">
+  <%= form.hidden_field :exact_or_any_match, id: :ingredients_search_form_exact_or_any_match_hidden %>
   <%= form.label :q, 'Search', class: 'govuk-label' %>
     <div class="govuk-input__wrapper opss-search__wrapper">
       <%= form.search_field :q, class: "govuk-input govuk-!-width-full", 'aria-describedby' => "search-hint" %>
