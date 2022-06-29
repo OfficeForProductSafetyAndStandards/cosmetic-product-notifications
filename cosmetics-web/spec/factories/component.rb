@@ -4,11 +4,45 @@ FactoryBot.define do
     notification
 
     factory :predefined_component
+
     factory :ranges_component do
       notification_type { "range" }
+
+      trait :completed do
+        state { "component_complete" }
+        physical_form { "foam" }
+        sub_sub_category { "shampoo" }
+        ph { "between_3_and_10" }
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "single-or-no-shades",
+            "select_formulation_type" => "range",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+      end
     end
+
     factory :exact_component do
       notification_type { "exact" }
+
+      trait :completed do
+        state { "component_complete" }
+        physical_form { "foam" }
+        sub_sub_category { "shampoo" }
+        ph { "between_3_and_10" }
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "single-or-no-shades",
+            "select_formulation_type" => "exact",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+      end
     end
 
     trait :with_poisonous_ingredients do

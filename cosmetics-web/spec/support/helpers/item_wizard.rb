@@ -164,7 +164,11 @@ def fill_ingredients_range_concentrations(single_item: false)
 end
 
 def fill_ingredients_concentrations(single_item: false)
-  if page.has_no_css?("li", text: "FooBar ingredient")
+  if page.has_css?("li", text: "FooBar ingredient") # Updating existing ingredients
+    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["FooBar ingredient"])
+    click_button "Save and continue"
+    answer_add_another_ingredient_with("No", single_item: single_item)
+  else
     expect_to_be_on_add_ingredients_page
     fill_in "name", with: "FooBar ingredient"
     yield # Fill/Select ingredient concentration
@@ -172,10 +176,9 @@ def fill_ingredients_concentrations(single_item: false)
     click_on "Save and continue"
 
     answer_add_another_ingredient_with("Yes", single_item: single_item)
+    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+    click_link "Skip"
   end
-
-  expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
-  click_link "Skip"
 end
 
 def answer_what_is_ph_range_of_product_with(answer)

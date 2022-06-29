@@ -28,13 +28,15 @@
 
     <%= form_with model: model, scope: :ingredient_concentration_form, url: wizard_path, method: :put, id: "skip-to-form", html: { novalidate: true } do |form| %>
       <div class="govuk-form-group">
-        <%= render "components/govuk_fieldset", legend: { text: "Ingredient #{component.ingredients.size + 1}", classes: "govuk-fieldset__legend--s" } do %>
+        <% number = model.ingredient_number ? (model.ingredient_number + 1) : (component.ingredients.size + 1) %>
+        <%= render "components/govuk_fieldset", legend: { text: "Ingredient #{number}", classes: "govuk-fieldset__legend--s" } do %>
           <%= yield form %>
+          <%= form.hidden_field(:ingredient_number, value: model.ingredient_number) if model.ingredient_number.present? %>
         <% end %>
       </div>
       <div class="govuk-button-group">
         <%= govukButton text: "Save and continue" %>
-        <% if component.ingredients.any? %>
+        <% if component.ingredients.any? && model.ingredient_number.blank? %>
           <%= link_to("Skip", wizard_path(:select_ph_option), class: "govuk-link govuk-link--no-visited-state") %>
         <% end %>
       </div>
@@ -46,8 +48,16 @@
       <h2 class="govuk-heading-s">Already added</h2>
 
       <ol class="govuk-list govuk-list--number govuk-!-font-size-16 opss-secondary-text">
-        <% component.ingredients.each do |ingredient| %>
-          <li><%= ingredient.inci_name %></li>
+        <% component.ingredients.each_with_index do |ingredient, index| %>
+          <li>
+            <% if model.ingredient_number == index %>
+              <span class="govuk-!-font-weight-bold">
+                <%= ingredient.inci_name %>
+              </span>
+            <% else %>
+              <%= ingredient.inci_name %>
+            <% end %>
+          </li>
         <% end %>
       </ol>
 
