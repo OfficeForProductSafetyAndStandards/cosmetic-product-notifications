@@ -167,7 +167,7 @@ def fill_ingredients_concentrations(single_item: false)
   if page.has_css?("li", text: "FooBar ingredient") # Updating existing ingredients
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["FooBar ingredient"])
     click_button "Save and continue"
-    answer_add_another_ingredient_with("No", single_item: single_item)
+    answer_add_another_ingredient_with("No", success_banner: false, single_item: single_item)
   else
     expect_to_be_on_add_ingredients_page
     fill_in "name", with: "FooBar ingredient"
@@ -175,7 +175,7 @@ def fill_ingredients_concentrations(single_item: false)
     fill_in "cas_number", with: "123456-78-9"
     click_on "Save and continue"
 
-    answer_add_another_ingredient_with("Yes", single_item: single_item)
+    answer_add_another_ingredient_with("Yes", success_banner: true, single_item: single_item)
     expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
     click_link "Skip"
   end
@@ -206,9 +206,11 @@ def select_item_and_remove(answer)
   click_button "Delete and continue"
 end
 
-def answer_add_another_ingredient_with(answer, single_item: true)
+def answer_add_another_ingredient_with(answer, success_banner: true, single_item: true)
   expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
-  expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
+  if success_banner
+    expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
+  end
   page.choose answer
   click_button "Continue"
 end

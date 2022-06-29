@@ -88,6 +88,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       @ingredient_concentration_form = ingredient_concentration_form
     when :add_poisonous_ingredient
       @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new
+    when :want_to_add_another_ingredient
+      @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
       @component.update_state("component_complete")
       # TODO: write spec
@@ -299,7 +301,7 @@ private
       if ingredient_number.present? && @component.reload.ingredients.size > ingredient_number + 1
         jump_to_step(step, ingredient_number: ingredient_number + 1)
       else
-        jump_to_step(:want_to_add_another_ingredient)
+        jump_to_step(:want_to_add_another_ingredient, success_banner: updating_ingredient.nil?)
       end
     else
       rerender_current_step

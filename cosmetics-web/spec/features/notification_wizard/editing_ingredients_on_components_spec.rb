@@ -54,7 +54,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     fill_in "What is the CAS number?", with: "123456-78-9"
 
     click_on "Save and continue"
-    answer_add_another_ingredient_with "No"
+    answer_add_another_ingredient_with("No", success_banner: false)
 
     expect_to_be_on__what_is_ph_range_of_product_page
 
@@ -126,7 +126,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     page.choose("Above 25% w/w up to 50% w/w")
 
     click_on "Save and continue"
-    answer_add_another_ingredient_with "No"
+    answer_add_another_ingredient_with("No", success_banner: false)
 
     expect_to_be_on__what_is_ph_range_of_product_page
 
