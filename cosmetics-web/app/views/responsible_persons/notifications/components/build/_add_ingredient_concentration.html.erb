@@ -1,7 +1,20 @@
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-3"><%= title %></h1>
-  </div>
+  <% if model.ingredient_number.present? %>
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-3"><%= title %></h1>
+    </div>
+    <div class="govuk-grid-column-one-quarter govuk-!-margin-bottom-4">
+      <div class="opss-text-align-right">
+        <%= link_to("Remove this ingredient",
+                    responsible_person_notification_component_delete_ingredient_path(@notification.responsible_person, @notification, @component, model.ingredient_number),
+                    class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset") %>
+      </div>
+    </div>
+  <% else %>
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-3"><%= title %></h1>
+    </div>
+  <% end %>
 </div>
 
 <div class="govuk-grid-row">

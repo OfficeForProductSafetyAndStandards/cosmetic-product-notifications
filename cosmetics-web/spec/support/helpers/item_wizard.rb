@@ -215,6 +215,13 @@ def answer_add_another_ingredient_with(answer, success_banner: true, single_item
   click_button "Continue"
 end
 
+def answer_remove_ingredient_with(answer, name: nil)
+  expect(page).to have_css("h1", text: "Do you want to remove this ingredient?")
+  expect(page).to have_css("#confirmation-hint", text: "Ingredient '#{name}' will be removed from this product.")
+  page.choose answer
+  click_button "Save and continue"
+end
+
 def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: [], forced_poisonous: false)
   expect(page).to have_css("h1", text: "Add the#{forced_poisonous ? ' poisonous' : ''} ingredients")
   expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient #{ingredient_number}")
@@ -229,6 +236,10 @@ def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: []
       expect(page).to have_css("ol.govuk-list--number li", text: ingredient)
     end
   end
+end
+
+def expect_to_be_on_ingredient_removed_confirmation_page
+  expect(page).to have_css("h1", text: "The ingredient was removed")
 end
 
 def expect_product_details_task_completed

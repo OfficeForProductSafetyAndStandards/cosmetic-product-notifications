@@ -1,0 +1,37 @@
+<% page_title "Remove ingredient", errors: @notification.errors.any? %>
+<% content_for :after_header do %>
+  <% ingredients_page = if @component.range?
+                          :add_ingredient_range_concentration
+                        elsif @component.exact?
+                          :add_ingredient_exact_concentration
+                        end %>
+
+  <%= link_to("Back", responsible_person_notification_component_build_path(
+                @notification.responsible_person, @notification, @component, ingredients_page, ingredient_number: @ingredient_number
+              ), class: "govuk-back-link") %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= error_summary(@ingredient.errors, map_errors: { confirmation: :confirmation_yes }) %>
+    <% deletion_url = responsible_person_notification_component_delete_ingredient_path(
+                        @notification.responsible_person,
+                        @notification,
+                        @component,
+                        @ingredient_number)%>
+    <%= form_with model: @ingredient, scope: "", url: deletion_url, html: { novalidate: true}, method: :delete do |form| %>
+      <%= render "form_components/govuk_radios",
+            form: form,
+            id: "confirmation",
+            key: :confirmation,
+            hint: { text: "Ingredient '#{@ingredient.inci_name}' will be removed from this product." },
+            fieldset: { legend: { text: "Do you want to remove this ingredient?", isPageHeading: true, classes: "govuk-fieldset__legend--l" } },
+            items: [{ text: "Yes", value: :yes },
+                    { text: "No", value: :no }] %>
+
+      <div class="govuk-button-group">
+        <%= govukButton(text: "Save and continue") %>
+      </div>
+    <% end %>
+  </div>
+</div>
