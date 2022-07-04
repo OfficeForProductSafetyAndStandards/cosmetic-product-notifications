@@ -486,6 +486,22 @@ RSpec.describe Component, type: :model do
       end
     end
 
+    context "when changing from legacy predefined with a formulation file to current predefined" do
+      let(:component) { create(:component, :using_frame_formulation, :with_formulation_file) }
+
+      it "sets frame formulation type" do
+        component.update_formulation_type("predefined")
+
+        expect(component.notification_type).to eq("predefined")
+      end
+
+      it "deletes the legacy formulation file" do
+        component.update_formulation_type("predefined")
+
+        expect(component.reload.formulation_file).to be_blank
+      end
+    end
+
     context "when changing from legacy exact with a formulation file to predefined" do
       let(:component) { create(:component, :using_exact, :with_formulation_file) }
 
@@ -513,70 +529,6 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "formulation file virus related methods", :with_stubbed_antivirus do
-    let(:component) { create(:ranges_component, :with_formulation_file) }
-
-    describe "formulation_file_failed_antivirus_check?" do
-      context "when virus is present" do
-        let(:with_stubbed_antivirus_result) { false }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(true)
-        end
-      end
-
-      context "when file is not infected" do
-        let(:with_stubbed_antivirus_result) { true }
-
-        it "returns false" do
-          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(false)
-        end
-      end
-
-      context "when no file is present" do
-        let(:component) { create(:ranges_component) }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(false)
-        end
-      end
-    end
-
-    describe "formulation_file_pending_antivirus_check?", :with_stubbed_antivirus do
-      context "when result is nil" do
-        let(:with_stubbed_antivirus_result) { nil }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(true)
-        end
-      end
-
-      context "when result is false" do
-        let(:with_stubbed_antivirus_result) { false }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
-        end
-      end
-
-      context "when result is true" do
-        let(:with_stubbed_antivirus_result) { true }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
-        end
-      end
-
-      context "when no file is present" do
-        let(:component) { create(:ranges_component) }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
-        end
-      end
-    end
-  end
-
   describe "#ingredients" do
     it "returns a collection of all the component exact and range formulas ordered by their creation time" do
       component = create(:component, :using_range)
@@ -586,6 +538,44 @@ RSpec.describe Component, type: :model do
       range_second = create(:range_formula, component: component, created_at: 3.seconds.ago)
 
       expect(component.ingredients).to eq([range_first, exact_first, exact_second, range_second])
+    end
+  end
+
+  describe "#missing_ingredients?" do
+    it "returns true for a range component with no ingredients" do
+      component = create(:component, :using_range)
+      expect(component.missing_ingredients?).to eq(true)
+    end
+
+    it "returns falsefor a range component with ingredients" do
+      component = create(:component, :with_range_formulas)
+      expect(component.missing_ingredients?).to eq(false)
+    end
+
+    it "returns true for an exact component with no ingredients" do
+      component = create(:component, :using_exact)
+      expect(component.missing_ingredients?).to eq(true)
+    end
+
+    it "returns false for an exact component with ingredients" do
+      component = create(:component, :with_exact_formulas)
+      expect(component.missing_ingredients?).to eq(false)
+    end
+
+    it "returns true for a predefined component that needs poisonous ingredients but has no ingredients" do
+      component = create(:component, :using_frame_formulation, :with_poisonous_ingredients)
+      expect(component.missing_ingredients?).to eq(true)
+    end
+
+    it "returns false for a predefined component that needs poisonous ingredients and has a poisonous ingredients" do
+      component = create(:component, :using_frame_formulation, :with_poisonous_ingredients)
+      create(:exact_formula, component: component, poisonous: true)
+      expect(component.missing_ingredients?).to eq(false)
+    end
+
+    it "returns false for a predefined component that does not need poisonous ingredients" do
+      component = create(:component, :using_frame_formulation)
+      expect(component.missing_ingredients?).to eq(false)
     end
   end
 end
