@@ -6,6 +6,7 @@ module OpenSearchQuery
     FIELDS = %w[searchable_ingredients].freeze
 
     def initialize(keyword:, match_type:, from_date:, to_date:)
+      puts match_type
       @keyword    = keyword
       @match_type = match_type
       @from_date = from_date
@@ -32,14 +33,10 @@ module OpenSearchQuery
 
     def any_match_query
       {
-        bool: {
-          must: {
-            multi_match: {
-              query: (@keyword || ""),
-              fuzziness: "AUTO",
-              fields: FIELDS,
-            },
-          },
+        multi_match: {
+          query: (@keyword || ""),
+          fuzziness: "AUTO",
+          fields: FIELDS,
         },
       }
     end
