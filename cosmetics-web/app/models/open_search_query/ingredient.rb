@@ -5,14 +5,21 @@ module OpenSearchQuery
 
     FIELDS = %w[searchable_ingredients].freeze
 
-    def initialize(keyword:, match_type:)
+    def initialize(keyword:, match_type:, from_date:, to_date:)
       @keyword    = keyword
       @match_type = match_type
+      @from_date = from_date
+      @to_date   = to_date
     end
 
     def build_query
       {
-        query: select_query,
+        query: {
+          bool: {
+            must: select_query,
+            filter: filter_query,
+          },
+        },
       }
     end
 
@@ -42,6 +49,25 @@ module OpenSearchQuery
         match_phrase: {
           searchable_ingredients: {
             query: (@keyword || ""),
+          },
+        },
+      }
+    end
+
+    def filter_query
+      [
+        filter_dates_query,
+      ].compact
+    end
+
+    def filter_dates_query
+      return if @from_date.nil? || @to_date.nil?
+
+      {
+        range: {
+          notification_complete_at: {
+            gte: @from_date,
+            lte: @to_date,
           },
         },
       }

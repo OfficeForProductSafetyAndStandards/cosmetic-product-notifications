@@ -55,6 +55,30 @@
         </div>
       </fieldset>
     </div>
+    <div class="govuk-form-group govuk-!-margin-bottom-7">
+      <fieldset class="govuk-fieldset" aria-describedby="by-date-range-hint">
+
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular">
+          Notified dates
+        </legend>
+
+        <div class="govuk-form-group">
+
+          <div id="by-date-range-hint" class="govuk-hint govuk-!-font-size-16">
+            Filter searches by notified dates within a date range. For example, from <span class="opss-no-wrap">01 04 2020</span> to <span class="opss-no-wrap">30 09 2022</span>.
+          </div>
+
+          <div class="govuk-hint govuk-!-font-size-16">
+            From<span class="govuk-visually-hidden">:</span>
+          </div>
+
+          <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_from, id: 'by-date-form-day', extra_classes: "opss-date-input--tight", search_type: "ingredient" } %>
+          <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
+            To<span class="govuk-visually-hidden">:</span>
+          </div>
+          <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day', extra_classes: "opss-date-input--tight", search_type: "ingredient" } %>
+      </fieldset>
+        </div>
 
     <div class="govuk-button-group">
       <button type="submit" class="govuk-button" data-module="govuk-button">
