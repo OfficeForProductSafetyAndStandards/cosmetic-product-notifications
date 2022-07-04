@@ -148,4 +148,35 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
       cas_number: "123456789",
     )
   end
+
+  scenario "Changing the formulation type for a component with existing ingredients" do
+    component = create(:ranges_component, :completed, notification: notification)
+    create(:range_formula, inci_name: "Ingredient A", component: component)
+    create(:exact_formula, inci_name: "Ingredient B", poisonous: true, component: component)
+
+    visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
+
+    expect_product_details_task_completed
+
+    click_link "Product details"
+    answer_is_item_available_in_shades_with "No"
+    answer_what_is_physical_form_of_item_with "Foam"
+    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+    answer_does_item_contain_cmrs_with "No"
+    answer_item_category_with "Hair and scalp products"
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+    answer_item_sub_subcategory_with "Shampoo"
+    # Change component from exact concentration to range
+    expect(page).to have_text("Changing this setting will remove any ingredients already added")
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+
+    # Starts from scratch without ingredients
+    expect(component.ingredients).to eq []
+    expect_to_be_on_add_ingredients_page
+    expect(page).to have_field("What is the name?")
+    expect(page).not_to have_field("What is the name?", with: "Ingredient A")
+    expect(page).not_to have_css("h2", text: "Already added")
+    expect(page).not_to have_css("ol.govuk-list--number li", text: "Ingredient A")
+    expect(page).not_to have_css("ol.govuk-list--number li", text: "Ingredient B")
+  end
 end

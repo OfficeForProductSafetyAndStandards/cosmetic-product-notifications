@@ -193,12 +193,14 @@ class Component < ApplicationRecord
 
   def update_formulation_type(type)
     old_type = notification_type
-
     self.notification_type = type
-
     return unless save(context: :select_formulation_type)
 
-    formulation_file.purge if predefined? && old_type != notification_type
+    if old_type != notification_type
+      formulation_file.purge if predefined?
+      exact_formulas.destroy_all
+      range_formulas.destroy_all
+    end
     update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
   end
 

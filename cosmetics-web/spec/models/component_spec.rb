@@ -408,23 +408,72 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "select formulation", :with_stubbed_antivirus do
-    context "when no formulation was selected before" do
+  describe "#update_formulation_type", :with_stubbed_antivirus do
+    context "when no formulation type was selected before" do
       let(:component) { create(:component, notification_type: nil) }
 
-      it "sets proper formulation" do
+      it "sets formulation type" do
         component.update_formulation_type("range")
 
         expect(component.notification_type).to eq("range")
       end
     end
 
-    context "when different then formulation was selected before frame formulation" do
+    context "when exact formulation type is set again" do
+      let(:component) { create(:component, :with_exact_formulas) }
+
+      it "leaves the existing ingredients" do
+        expect { component.update_formulation_type("exact") }
+          .not_to change { component.exact_formulas.count }.from(1)
+      end
+    end
+
+    context "when changing from predefined with poisonous ingredients" do
+      let(:component) { create(:component, :using_frame_formulation, contains_poisonous_ingredients: true) }
+
+      before do
+        create(:exact_formula, poisonous: true, component: component)
+      end
+
+      it "removes the poisonous ingredients formulas" do
+        expect { component.update_formulation_type("range") }
+          .to change { component.exact_formulas.count }.from(1).to(0)
+      end
+
+      it "removes information about poisonus ingredients" do
+        component.update_formulation_type("range")
+
+        expect(component.reload.contains_poisonous_ingredients).to eq nil
+      end
+    end
+
+    context "when changing from exact to range" do
+      let(:component) { create(:component, :with_exact_formulas) }
+
+      it "removes the ingredients formulas" do
+        expect { component.update_formulation_type("range") }
+          .to change { component.exact_formulas.count }.from(1).to(0)
+      end
+    end
+
+    context "when changing from range to exact" do
+      let(:component) { create(:component, :with_range_formulas) }
+
+      before do
+        create(:exact_formula, poisonous: true, component: component)
+      end
+
+      it "removes the ingredients formulas" do
+        expect { component.update_formulation_type("exact") }
+          .to change { component.range_formulas.count }.from(1).to(0)
+          .and change { component.exact_formulas.count }.from(1).to(0)
+      end
+    end
+
+    context "when changing from exact to predefined" do
       let(:component) { create(:component, :using_exact, :with_formulation_file) }
 
-      before { component }
-
-      it "sets proper formulation" do
+      it "sets frame formulation type" do
         component.update_formulation_type("predefined")
 
         expect(component.notification_type).to eq("predefined")
@@ -437,31 +486,19 @@ RSpec.describe Component, type: :model do
       end
     end
 
-    context "when exact formulation was reselected" do
+    context "when changing from legacy exact with a formulation file to predefined" do
       let(:component) { create(:component, :using_exact, :with_formulation_file) }
 
-      before { component }
+      it "sets frame formulation type" do
+        component.update_formulation_type("predefined")
 
-      it "leaves the file" do
-        component.update_formulation_type("range")
-
-        expect(component.reload.formulation_file).to be_present
-      end
-    end
-
-    context "when changing from frame formulation" do
-      let(:component) { create(:component, :using_frame_formulation, contains_poisonous_ingredients: true) }
-
-      it "removes frame formulation" do
-        component.update_formulation_type("range")
-
-        expect(component.reload.frame_formulation).to be_blank
+        expect(component.notification_type).to eq("predefined")
       end
 
-      it "removes information about poisonus ingredients" do
-        component.update_formulation_type("range")
+      it "deletes the legacy formulation file" do
+        component.update_formulation_type("predefined")
 
-        expect(component.reload.contains_poisonous_ingredients).to eq nil
+        expect(component.reload.formulation_file).to be_blank
       end
     end
 
