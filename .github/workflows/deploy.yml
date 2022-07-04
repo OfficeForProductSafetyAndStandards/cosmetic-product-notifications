@@ -50,6 +50,7 @@ jobs:
         WORKER_INSTANCES: 2
         CF_USERNAME: ${{ secrets.PaaSUsernameStaging }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordStaging }}
+        SENTRY_SERVICE_NAME: cosmetics-staging-sentry-env
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
@@ -102,6 +103,7 @@ jobs:
         WORKER_INSTANCES: 4
         CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
+        SENTRY_SERVICE_NAME: cosmetics-sentry-env
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
