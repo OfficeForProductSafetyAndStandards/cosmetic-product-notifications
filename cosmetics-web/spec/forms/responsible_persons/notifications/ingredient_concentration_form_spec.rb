@@ -131,6 +131,12 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           expect(form.errors[:exact_concentration]).to eq ["Enter a number for the concentration"]
         end
 
+        it "is not valid when the concentration contains extra characters mixed with a number" do
+          form.exact_concentration = "58:0887"
+          expect(form).not_to be_valid
+          expect(form.errors[:exact_concentration]).to eq ["Enter a number for the concentration"]
+        end
+
         it "is not valid when the concentration is 0" do
           form.exact_concentration = 0.0
           expect(form).not_to be_valid

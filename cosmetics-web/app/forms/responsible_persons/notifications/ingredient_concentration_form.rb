@@ -6,7 +6,7 @@ module ResponsiblePersons::Notifications
     include StripWhitespace
 
     attribute :name, :string
-    attribute :exact_concentration, :float
+    attribute :exact_concentration
     attribute :range_concentration, :string
     attribute :cas_number, :string
     attribute :poisonous, :boolean

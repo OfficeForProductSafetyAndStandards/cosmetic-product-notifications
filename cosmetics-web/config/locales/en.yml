@@ -241,6 +241,7 @@ en:
             exact_concentration:
               blank: "Enter the concentration"
               greater_than: "Enter a number for the concentration"
+              not_a_number: "Enter a number for the concentration"
             name:
               blank: "Enter a name"
               taken: "Enter a name which is unique to this %{entity}"
