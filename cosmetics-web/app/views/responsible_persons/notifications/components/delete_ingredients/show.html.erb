@@ -26,6 +26,7 @@
             key: :confirmation,
             hint: { text: "Ingredient '#{@ingredient.inci_name}' will be removed from this product." },
             fieldset: { legend: { text: "Do you want to remove this ingredient?", isPageHeading: true, classes: "govuk-fieldset__legend--l" } },
+            classes: "govuk-!-padding-top-3",
             items: [{ text: "Yes", value: :yes },
                     { text: "No", value: :no }] %>
 
