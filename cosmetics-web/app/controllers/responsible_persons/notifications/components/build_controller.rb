@@ -383,16 +383,14 @@ private
   def ingredient_form_values(ingredient, ingredient_number)
     return {} if ingredient.blank?
 
-    {
-      name: ingredient.inci_name,
-      cas_number: ingredient.cas_number,
-      updating_ingredient: ingredient,
-      ingredient_number: ingredient_number,
-    }.tap do |h|
-      case ingredient
-      when ExactFormula then h.merge!(exact_concentration: ingredient.quantity, poisonous: ingredient.poisonous)
-      when RangeFormula then h.merge!(range_concentration: ingredient.range, poisonous: false)
-      end
+    values = { name: ingredient.inci_name,
+               cas_number: ingredient.cas_number,
+               updating_ingredient: ingredient,
+               ingredient_number: ingredient_number }
+
+    case ingredient
+    when ExactFormula then values.merge!(exact_concentration: ingredient.quantity, poisonous: ingredient.poisonous)
+    when RangeFormula then values.merge!(range_concentration: ingredient.range, poisonous: false)
     end
   end
 
