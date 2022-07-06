@@ -6,7 +6,6 @@ module OpenSearchQuery
     FIELDS = %w[searchable_ingredients].freeze
 
     def initialize(keyword:, match_type:, from_date:, to_date:)
-      Rails.logger.debug match_type
       @keyword    = keyword
       @match_type = match_type
       @from_date = from_date
