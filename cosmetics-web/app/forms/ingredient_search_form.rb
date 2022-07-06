@@ -7,6 +7,21 @@ class IngredientSearchForm < Form
   attribute :date_from, :govuk_date
   attribute :date_to, :govuk_date
 
+  validates :date_from,
+            presence: true,
+            real_date: true,
+            complete_date: true,
+            not_in_future: true,
+            if: :date_range_selected?
+
+  validates :date_to,
+            presence: true,
+            real_date: true,
+            complete_date: true,
+            if: :date_range_selected?
+
+  validate :date_from_lower_than_date_to
+
   def filters_present?
     false
   end
@@ -22,21 +37,6 @@ class IngredientSearchForm < Form
 
     return date_to if date_range_selected?
   end
-
-  validates :date_from,
-            presence: true,
-            real_date: true,
-            complete_date: true,
-            not_in_future: true,
-            if: :date_range_selected?
-
-  validates :date_to,
-            presence: true,
-            real_date: true,
-            complete_date: true,
-            if: :date_range_selected?
-
-  validate :date_from_lower_than_date_to
 
   def date_from_lower_than_date_to
     if date_range_selected? && date_from.is_a?(Date) && date_to.is_a?(Date) && (date_from > date_to)
