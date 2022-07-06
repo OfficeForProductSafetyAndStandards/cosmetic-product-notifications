@@ -186,14 +186,14 @@ en:
             date_from:
               blank: Enter a From date
               in_future: The From date must be today or in the past
-              must_be_real: 'The From date must be a real date'
+              must_be_real: The From date must be a real date
               incomplete: The From date must include a %{missing_date_parts}
             date_to:
               blank: Enter a To date
               in_future: From date cannot be set for the future
-              must_be_real: 'The To date must be a real date'
+              must_be_real: The To date must be a real date
               incomplete: The To date must include a %{missing_date_parts}
-              date_from_is_later_than_date_to: The to date must be after From date
+              date_from_is_later_than_date_to: The To date must be after From date
         registration/new_account_form:
           attributes:
             full_name:
