@@ -8,8 +8,8 @@
   </button>
   <%= form.hidden_field :q, id: :notification_search_form_q_sort_hidden %>
   <%= form.hidden_field :category, id: 'notification_search_form_category_sort_hidden' %>
-  <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact, id: :sort_form } %>
-  <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from, id: :sort_form } %>
-  <%= render partial: 'hidden_date_fields', locals: { attribute: :date_to, id: :sort_form } %>
+  <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact, id: :sort_form, search_type: 'notification' } %>
+  <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from, id: :sort_form, search_type: 'notification' } %>
+  <%= render partial: 'hidden_date_fields', locals: { attribute: :date_to, id: :sort_form, search_type: 'notification' } %>
   <%= form.hidden_field :date_filter, id: 'notification_search_form_date_filter_sort_hidden' %>
 <% end %>
