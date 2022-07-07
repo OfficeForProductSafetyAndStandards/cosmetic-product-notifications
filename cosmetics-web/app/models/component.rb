@@ -137,7 +137,7 @@ class Component < ApplicationRecord
 
   def missing_ingredients?
     if predefined?
-      (contains_poisonous_ingredients && ingredients.none?) == true
+      contains_poisonous_ingredients? && ingredients.none?
     else
       ingredients.none?
     end
