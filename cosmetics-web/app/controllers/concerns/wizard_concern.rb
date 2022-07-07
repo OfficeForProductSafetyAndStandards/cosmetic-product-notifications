@@ -70,8 +70,8 @@ module WizardConcern
     render_wizard object
   end
 
-  def jump_to_step(step)
-    jump_to(step)
+  def jump_to_step(step, **params)
+    jump_to(step, **params)
     render_next_step model
   end
 

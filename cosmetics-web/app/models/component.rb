@@ -135,12 +135,12 @@ class Component < ApplicationRecord
     get_category_name(root_category)
   end
 
-  def formulation_file_failed_antivirus_check?
-    formulation_file.attached? && formulation_file.metadata["safe"] == false
-  end
-
-  def formulation_file_pending_antivirus_check?
-    formulation_file.attached? && formulation_file.metadata["safe"].nil?
+  def missing_ingredients?
+    if predefined?
+      (contains_poisonous_ingredients && ingredients.none?) == true
+    else
+      ingredients.none?
+    end
   end
 
   def self.get_parent_category(category)
@@ -193,12 +193,16 @@ class Component < ApplicationRecord
 
   def update_formulation_type(type)
     old_type = notification_type
-
     self.notification_type = type
-
     return unless save(context: :select_formulation_type)
 
-    formulation_file.purge if predefined? && old_type != notification_type
+    # Purge formulation files added in old flow. Now ingredients need to be added manually or use a predefined formulation.
+    formulation_file.purge
+
+    if old_type != notification_type
+      exact_formulas.destroy_all
+      range_formulas.destroy_all
+    end
     update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
   end
 

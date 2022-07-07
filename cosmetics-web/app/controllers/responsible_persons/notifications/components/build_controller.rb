@@ -84,8 +84,12 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
-    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_poisonous_ingredient
+    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration
+      @ingredient_concentration_form = ingredient_concentration_form
+    when :add_poisonous_ingredient
       @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new
+    when :want_to_add_another_ingredient
+      @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
       @component.update_state("component_complete")
       # TODO: write spec
@@ -268,18 +272,37 @@ private
     end
 
     if @component.range?
-      jump_to_step(:add_ingredient_range_concentration)
+      if @component.ingredients.any?
+        jump_to_step(:add_ingredient_range_concentration, ingredient_number: 0) # Display first existing ingredient for edit
+      else
+        jump_to_step(:add_ingredient_range_concentration)
+      end
     elsif @component.exact?
-      jump_to_step(:add_ingredient_exact_concentration)
+      if @component.ingredients.any?
+        jump_to_step(:add_ingredient_exact_concentration, ingredient_number: 0) # Display first existing ingredient for edit
+      else
+        jump_to_step(:add_ingredient_exact_concentration)
+      end
     end
   end
 
   def update_add_ingredient_concentration(type, force_poisonous: false)
-    form_attrs = ingredient_concentration_params.merge(component: @component, type: type)
+    ingredient_number = ingredient_concentration_params[:ingredient_number]&.to_i
+    updating_ingredient = @component.ingredients[ingredient_number] if ingredient_number
+
+    form_attrs = ingredient_concentration_params.merge(
+      component: @component, type: type, updating_ingredient: updating_ingredient,
+    )
     form_attrs[:poisonous] = true if force_poisonous == true
+
     @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new(form_attrs)
     if @ingredient_concentration_form.save
-      jump_to_step(:want_to_add_another_ingredient)
+      # When updating an existing ingredient: Send to next ingredient page if there are more ingredients
+      if ingredient_number.present? && @component.reload.ingredients.size > ingredient_number + 1
+        jump_to_step(step, ingredient_number: ingredient_number + 1)
+      else
+        jump_to_step(:want_to_add_another_ingredient, success_banner: updating_ingredient.nil?)
+      end
     else
       rerender_current_step
     end
@@ -350,6 +373,27 @@ private
     end
   end
 
+  def ingredient_concentration_form
+    ingredient_number = params[:ingredient_number]&.to_i
+    updating_ingredient = @component.ingredients[ingredient_number] if ingredient_number
+    form_attrs = ingredient_form_values(updating_ingredient, ingredient_number) if updating_ingredient
+    ResponsiblePersons::Notifications::IngredientConcentrationForm.new(form_attrs)
+  end
+
+  def ingredient_form_values(ingredient, ingredient_number)
+    return {} if ingredient.blank?
+
+    values = { name: ingredient.inci_name,
+               cas_number: ingredient.cas_number,
+               updating_ingredient: ingredient,
+               ingredient_number: ingredient_number }
+
+    case ingredient
+    when ExactFormula then values.merge!(exact_concentration: ingredient.quantity, poisonous: ingredient.poisonous)
+    when RangeFormula then values.merge!(range_concentration: ingredient.range, poisonous: false)
+    end
+  end
+
   def component_params
     params.fetch(:component, {})
       .permit(
@@ -380,6 +424,7 @@ private
         :range_concentration,
         :cas_number,
         :poisonous,
+        :ingredient_number,
       )
   end
 
