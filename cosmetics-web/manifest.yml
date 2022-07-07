@@ -20,7 +20,7 @@ applications:
     - cosmetics-auth-env
     - cosmetics-health-env
     - cosmetics-rails-env
-    - cosmetics-sentry-env
+    - ((sentry-service-name))
     - cosmetics-notify-env
     - cosmetics-sidekiq-env
     - cosmetics-puma-env
