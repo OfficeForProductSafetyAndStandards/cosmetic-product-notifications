@@ -22,7 +22,7 @@ module ResponsiblePersons::Notifications
     validate :unique_name
     validates :exact_concentration,
               presence: true,
-              numericality: { allow_blank: true, greater_than: 0 },
+              numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
               if: :exact?
     validates :range_concentration,
               presence: true,
