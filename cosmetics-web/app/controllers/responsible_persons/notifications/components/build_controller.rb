@@ -262,20 +262,16 @@ private
     @component.update_formulation_type(formulation_type)
     return rerender_current_step if @component.errors.present?
 
-    if @component.predefined? # predefined == frame_formulation
-      jump_to_step(:select_frame_formulation)
-    elsif @component.range?
-      if @component.ingredients.any?
-        jump_to_step(:add_ingredient_range_concentration, ingredient_number: 0) # Display first existing ingredient for edit
-      else
-        jump_to_step(:add_ingredient_range_concentration)
-      end
-    elsif @component.exact?
-      if @component.ingredients.any?
-        jump_to_step(:add_ingredient_exact_concentration, ingredient_number: 0) # Display first existing ingredient for edit
-      else
-        jump_to_step(:add_ingredient_exact_concentration)
-      end
+    step = {
+      "predefined" => :select_frame_formulation,
+      "exact" => :add_ingredient_exact_concentration,
+      "range" => :add_ingredient_range_concentration,
+    }[@component.notification_type]
+
+    if @component.ingredients.any? && !@component.predefined?
+      jump_to_step(step, ingredient_number: 0) # Display first existing ingredient for edit
+    else
+      jump_to_step(step)
     end
   end
 
