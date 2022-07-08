@@ -45,19 +45,19 @@ RSpec.describe ExactFormula, type: :model do
     it "is not valid when the quantity is 0" do
       exact_formula.quantity = "0.0"
       expect(exact_formula).not_to be_valid
-      expect(exact_formula.errors[:quantity]).to eq ["Enter a number greater than 0 for the concentration"]
+      expect(exact_formula.errors[:quantity]).to eq ["Enter a concentration greater than 0"]
     end
 
     it "is not valid when the quantity is a negative number" do
       exact_formula.quantity = "-3.5"
       expect(exact_formula).not_to be_valid
-      expect(exact_formula.errors[:quantity]).to eq ["Enter a number greater than 0 for the concentration"]
+      expect(exact_formula.errors[:quantity]).to eq ["Enter a concentration greater than 0"]
     end
 
     it "is not valid when the quantity is greater than 100" do
       exact_formula.quantity = "101"
       expect(exact_formula).not_to be_valid
-      expect(exact_formula.errors[:quantity]).to eq ["Enter a number less than or equal to 100 for the concentration"]
+      expect(exact_formula.errors[:quantity]).to eq ["Enter a concentration less than or equal to 100"]
     end
   end
 end

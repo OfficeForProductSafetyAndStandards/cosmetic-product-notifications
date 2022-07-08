@@ -150,19 +150,19 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         it "is not valid when the concentration is 0" do
           form.exact_concentration = "0.0"
           expect(form).not_to be_valid
-          expect(form.errors[:exact_concentration]).to eq ["Enter a number greater than 0 for the concentration"]
+          expect(form.errors[:exact_concentration]).to eq ["Enter a concentration greater than 0"]
         end
 
         it "is not valid when the concentration is a negative number" do
           form.exact_concentration = "-3.5"
           expect(form).not_to be_valid
-          expect(form.errors[:exact_concentration]).to eq ["Enter a number greater than 0 for the concentration"]
+          expect(form.errors[:exact_concentration]).to eq ["Enter a concentration greater than 0"]
         end
 
         it "is not valid when the concentration is greater than 100" do
           form.exact_concentration = "100.1"
           expect(form).not_to be_valid
-          expect(form.errors[:exact_concentration]).to eq ["Enter a number less than or equal to 100 for the concentration"]
+          expect(form.errors[:exact_concentration]).to eq ["Enter a concentration less than or equal to 100"]
         end
       end
 

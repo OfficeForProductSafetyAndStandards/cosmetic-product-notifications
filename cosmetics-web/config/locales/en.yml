@@ -153,8 +153,8 @@ en:
               blank: "Enter a name"
             quantity:
               blank: "Enter the concentration"
-              greater_than: "Enter a number greater than 0 for the concentration"
-              less_than_or_equal_to: "Enter a number less than or equal to 100 for the concentration"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
               not_a_number: "Enter a number for the concentration"
   activemodel:
     attributes:
@@ -243,8 +243,8 @@ en:
               blank: "Provide a component to associate the ingredient to"
             exact_concentration:
               blank: "Enter the concentration"
-              greater_than: "Enter a number greater than 0 for the concentration"
-              less_than_or_equal_to: "Enter a number less than or equal to 100 for the concentration"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
               not_a_number: "Enter a number for the concentration"
             name:
               blank: "Enter a name"
