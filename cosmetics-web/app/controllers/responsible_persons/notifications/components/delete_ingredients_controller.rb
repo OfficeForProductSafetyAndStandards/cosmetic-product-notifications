@@ -9,7 +9,7 @@ class ResponsiblePersons::Notifications::Components::DeleteIngredientsController
     when "no"
       redirect_to ingredient_path
     when "yes"
-      delete_ingredient
+      delete_ingredient!
       render :success, locals: { post_deletion_path: post_deletion_path }
     else
       @ingredient.errors.add(:confirmation, "Select yes if you want to remove this ingredient")
@@ -19,7 +19,7 @@ class ResponsiblePersons::Notifications::Components::DeleteIngredientsController
 
 private
 
-  def delete_ingredient
+  def delete_ingredient!
     # TODO: Move this logic to the Component model once the ingredient model is unified.
     @ingredient.destroy
     @component.reload

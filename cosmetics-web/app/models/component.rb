@@ -196,7 +196,8 @@ class Component < ApplicationRecord
     self.notification_type = type
     return unless save(context: :select_formulation_type)
 
-    # Purge formulation files added in old flow. Now ingredients need to be added manually or use a predefined formulation.
+    # Purge formulation files added in old flow.
+    # Now ingredients need to be added manually or use a predefined formulation.
     formulation_file.purge
 
     if old_type != notification_type
