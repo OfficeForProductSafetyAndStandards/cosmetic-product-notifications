@@ -140,6 +140,15 @@ RSpec.describe Component, type: :model do
     end
   end
 
+  describe "updating 'contains_poisonous_ingredients' attribute on predefined components" do
+    it "deletes all poisonous ingredients when setting it to 'false'" do
+      component = described_class.create(name: "Component X", notification: notification, notification_type: "predefined", contains_poisonous_ingredients: true)
+      create_list(:exact_formula, 2, poisonous: true, component: component)
+      expect { component.update(contains_poisonous_ingredients: false) }
+        .to change { component.exact_formulas.count }.from(2).to(0)
+    end
+  end
+
   describe "#ph" do
     context "when not specified" do
       before { predefined_component.ph = nil }

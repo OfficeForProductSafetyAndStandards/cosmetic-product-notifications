@@ -1,14 +1,6 @@
 <% page_title "Remove ingredient", errors: @notification.errors.any? %>
 <% content_for :after_header do %>
-  <% ingredients_page = if @component.range?
-                          :add_ingredient_range_concentration
-                        elsif @component.exact?
-                          :add_ingredient_exact_concentration
-                        end %>
-
-  <%= link_to("Back", responsible_person_notification_component_build_path(
-                @notification.responsible_person, @notification, @component, ingredients_page, ingredient_number: @ingredient_number
-              ), class: "govuk-back-link") %>
+  <%= link_to("Back", edit_ingredient_path, class: "govuk-back-link") %>
 <% end %>
 
 <div class="govuk-grid-row">

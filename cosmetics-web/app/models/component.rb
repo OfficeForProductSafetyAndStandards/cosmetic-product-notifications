@@ -93,6 +93,12 @@ class Component < ApplicationRecord
 
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
+  # Deletes all the associated poisonous ingredients from predefined components when
+  # "contains_poisonous_ingredients" is set to "false"
+  after_update :remove_poisonous_ingredients!,
+               if: [:predefined?, -> { ingredients.any? }],
+               unless: :contains_poisonous_ingredients?
+
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :component_complete
@@ -252,5 +258,9 @@ private
     if (maximum_ph - minimum_ph).round(2) > 1.0
       errors.add(:maximum_ph, "The maximum pH cannot be more than 1 higher than the minimum pH")
     end
+  end
+
+  def remove_poisonous_ingredients!
+    exact_formulas.destroy_all
   end
 end

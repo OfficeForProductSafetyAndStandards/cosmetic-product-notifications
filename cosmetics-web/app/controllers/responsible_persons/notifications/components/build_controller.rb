@@ -84,10 +84,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
-    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration
+    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_poisonous_ingredient
       @ingredient_concentration_form = ingredient_concentration_form
-    when :add_poisonous_ingredient
-      @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
@@ -333,7 +331,9 @@ private
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    unless @component.contains_poisonous_ingredients?
+    if @component.contains_poisonous_ingredients?
+      jump_to(:add_poisonous_ingredient, ingredient_number: 0) if @component.ingredients.any?
+    else
       jump_to(:select_ph_option)
     end
     render_next_step @component

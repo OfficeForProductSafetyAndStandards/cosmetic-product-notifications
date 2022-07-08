@@ -7,7 +7,7 @@ class ResponsiblePersons::Notifications::Components::DeleteIngredientsController
   def destroy
     case params[:confirmation]
     when "no"
-      redirect_to ingredient_path
+      redirect_to edit_ingredient_path
     when "yes"
       delete_ingredient!
       render :success, locals: { post_deletion_path: post_deletion_path }
@@ -27,23 +27,29 @@ private
   end
 
   def post_deletion_path
+    # If no ingredients left, go to pre-adding ingredients component building wizard question.
     if @component.ingredients.none?
-      component_build_path(:select_formulation_type)
-    elsif @ingredient_number == @component.ingredients.count # Deleted the last ingredient of the list
+      step = @component.predefined? ? :contains_poisonous_ingredients : :select_formulation_type
+      component_build_path(step)
+    # If deleted the last ingredient of the list, go to add another ingredient component building wizard question.
+    elsif @ingredient_number == @component.ingredients.count
       component_build_path(:want_to_add_another_ingredient)
+    # If there are more ingredients after the deleted one, go to the next ingredient edit page.
     elsif @ingredient_number < @component.ingredients.count
-      ingredient_path
+      edit_ingredient_path
     end
   end
 
-  def ingredient_path
-    step = if @component.range?
-             :add_ingredient_range_concentration
-           elsif @component.exact?
-             :add_ingredient_exact_concentration
-           end
+  def edit_ingredient_path
+    step = {
+      "range" => :add_ingredient_range_concentration,
+      "exact" => :add_ingredient_exact_concentration,
+      "predefined" => :add_poisonous_ingredient,
+    }[@component.notification_type]
     component_build_path(step, ingredient_number: params[:id])
   end
+
+  helper_method :edit_ingredient_path
 
   def component_build_path(step, options = {})
     responsible_person_notification_component_build_path(
