@@ -260,18 +260,11 @@ private
     formulation_type = params.dig(:component, :notification_type)
     model.save_routing_answer(step, formulation_type)
     @component.update_formulation_type(formulation_type)
-
-    if @component.errors.present?
-      return rerender_current_step
-    end
+    return rerender_current_step if @component.errors.present?
 
     if @component.predefined? # predefined == frame_formulation
       jump_to_step(:select_frame_formulation)
-    elsif @component.frame_formulation.present?
-      @component.update(frame_formulation: nil)
-    end
-
-    if @component.range?
+    elsif @component.range?
       if @component.ingredients.any?
         jump_to_step(:add_ingredient_range_concentration, ingredient_number: 0) # Display first existing ingredient for edit
       else
