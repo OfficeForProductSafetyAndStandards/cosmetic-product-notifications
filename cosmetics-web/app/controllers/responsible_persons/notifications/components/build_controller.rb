@@ -84,10 +84,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
-    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration
+    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_poisonous_ingredient
       @ingredient_concentration_form = ingredient_concentration_form
-    when :add_poisonous_ingredient
-      @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
@@ -260,29 +258,18 @@ private
     formulation_type = params.dig(:component, :notification_type)
     model.save_routing_answer(step, formulation_type)
     @component.update_formulation_type(formulation_type)
+    return rerender_current_step if @component.errors.present?
 
-    if @component.errors.present?
-      return rerender_current_step
-    end
+    step = {
+      "predefined" => :select_frame_formulation,
+      "exact" => :add_ingredient_exact_concentration,
+      "range" => :add_ingredient_range_concentration,
+    }[@component.notification_type]
 
-    if @component.predefined? # predefined == frame_formulation
-      jump_to_step(:select_frame_formulation)
-    elsif @component.frame_formulation.present?
-      @component.update(frame_formulation: nil)
-    end
-
-    if @component.range?
-      if @component.ingredients.any?
-        jump_to_step(:add_ingredient_range_concentration, ingredient_number: 0) # Display first existing ingredient for edit
-      else
-        jump_to_step(:add_ingredient_range_concentration)
-      end
-    elsif @component.exact?
-      if @component.ingredients.any?
-        jump_to_step(:add_ingredient_exact_concentration, ingredient_number: 0) # Display first existing ingredient for edit
-      else
-        jump_to_step(:add_ingredient_exact_concentration)
-      end
+    if @component.ingredients.any? && !@component.predefined?
+      jump_to_step(step, ingredient_number: 0) # Display first existing ingredient for edit
+    else
+      jump_to_step(step)
     end
   end
 
@@ -344,7 +331,9 @@ private
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    unless @component.contains_poisonous_ingredients?
+    if @component.contains_poisonous_ingredients?
+      jump_to(:add_poisonous_ingredient, ingredient_number: 0) if @component.ingredients.any?
+    else
       jump_to(:select_ph_option)
     end
     render_next_step @component

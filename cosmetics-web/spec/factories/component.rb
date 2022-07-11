@@ -3,7 +3,27 @@ FactoryBot.define do
     notification_type { "predefined" }
     notification
 
-    factory :predefined_component
+    factory :predefined_component do
+      notification_type { "predefined" }
+
+      trait :completed do
+        state { "component_complete" }
+        physical_form { "foam" }
+        sub_sub_category { "shampoo" }
+        frame_formulation { "skin_care_cream_lotion_gel" }
+        contains_poisonous_ingredients { true }
+        ph { "between_3_and_10" }
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "single-or-no-shades",
+            "select_formulation_type" => "predefined",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+      end
+    end
 
     factory :ranges_component do
       notification_type { "range" }

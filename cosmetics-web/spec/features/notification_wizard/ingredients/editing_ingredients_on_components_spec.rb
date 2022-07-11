@@ -149,7 +149,69 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     )
   end
 
-  scenario "Changing the formulation type for a component with existing ingredients" do
+  scenario "Editing ingredients on a predefined formulation notification" do
+    component = create(:predefined_component, :completed, notification: notification)
+    create(:exact_formula, inci_name: "Ingredient A", quantity: 4.0, poisonous: true, component: component)
+    create(:exact_formula, inci_name: "Ingredient B", quantity: 3.0, poisonous: true, component: component)
+
+    visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
+
+    expect_product_details_task_completed
+
+    click_link "Product details"
+    answer_is_item_available_in_shades_with "No"
+    answer_what_is_physical_form_of_item_with "Foam"
+    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+    answer_does_item_contain_cmrs_with "No"
+    answer_item_category_with "Hair and scalp products"
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+    answer_item_sub_subcategory_with "Shampoo"
+    answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
+
+    expect_to_be_on__frame_formulation_select_page
+    answer_select_formulation_with "Skin Care Cream, Lotion, Gel"
+    answer_contain_poisonous_ingredients_with("Yes")
+
+    expect_to_be_on_add_ingredients_page(ingredient_number: 1, forced_poisonous: true, already_added: ["Ingredient A", "Ingredient B"])
+    expect(page).to have_field("What is the name?", with: "Ingredient A")
+    expect(page).to have_field("What is the exact concentration?", with: "4.0")
+    expect(page).to have_field("What is the CAS number?")
+    expect(page).not_to have_link("Skip", exact: true)
+
+    fill_in "What is the name?", with: "Ingredient A poisonous"
+    fill_in "exact_concentration", with: "5.1"
+    click_on "Save and continue"
+
+    expect_to_be_on_add_ingredients_page(ingredient_number: 2, forced_poisonous: true, already_added: ["Ingredient A poisonous", "Ingredient B"])
+    expect(page).to have_field("What is the name?", with: "Ingredient B")
+    expect(page).to have_field("What is the exact concentration?", with: "3.0")
+    expect(page).to have_field("What is the CAS number?")
+    expect(page).not_to have_link("Skip", exact: true)
+
+    fill_in "What is the name?", with: "Ingredient B poisonous"
+    fill_in "What is the CAS number?", with: "123456-78-9"
+    click_on "Save and continue"
+
+    answer_add_another_ingredient_with("No", success_banner: false)
+    expect_to_be_on__what_is_ph_range_of_product_page
+
+    # Updated the values in Database.
+    expect(component.exact_formulas).to have(2).items
+    expect(component.exact_formulas.first).to have_attributes(
+      inci_name: "Ingredient A poisonous",
+      quantity: 5.1,
+      poisonous: true,
+      cas_number: nil,
+    )
+    expect(component.exact_formulas.second).to have_attributes(
+      inci_name: "Ingredient B poisonous",
+      quantity: 3.0,
+      poisonous: true,
+      cas_number: "123456789",
+    )
+  end
+
+  scenario "Changing the formulation type from range to exact for a component with existing ingredients" do
     component = create(:ranges_component, :completed, notification: notification)
     create(:range_formula, inci_name: "Ingredient A", component: component)
     create(:exact_formula, inci_name: "Ingredient B", poisonous: true, component: component)
@@ -167,7 +229,38 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
     # Change component from exact concentration to range
-    expect(page).to have_text("Changing this setting will remove any ingredients already added")
+    expect(page).to have_text("Changing the formulation type will remove all ingredients already added")
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+
+    # Starts from scratch without ingredients
+    expect(component.ingredients).to eq []
+    expect_to_be_on_add_ingredients_page
+    expect(page).to have_field("What is the name?")
+    expect(page).not_to have_field("What is the name?", with: "Ingredient A")
+    expect(page).not_to have_css("h2", text: "Already added")
+    expect(page).not_to have_css("ol.govuk-list--number li", text: "Ingredient A")
+    expect(page).not_to have_css("ol.govuk-list--number li", text: "Ingredient B")
+  end
+
+  scenario "Changing the formulation type from predefined formulation to exact for a component with existing poisonous ingredients" do
+    component = create(:predefined_component, :using_frame_formulation, :completed, notification: notification)
+    create(:exact_formula, inci_name: "Ingredient A", poisonous: true, component: component)
+    create(:exact_formula, inci_name: "Ingredient B", poisonous: true, component: component)
+
+    visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
+
+    expect_product_details_task_completed
+
+    click_link "Product details"
+    answer_is_item_available_in_shades_with "No"
+    answer_what_is_physical_form_of_item_with "Foam"
+    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+    answer_does_item_contain_cmrs_with "No"
+    answer_item_category_with "Hair and scalp products"
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+    answer_item_sub_subcategory_with "Shampoo"
+    # Change component from exact concentration to range
+    expect(page).to have_text("Changing the formulation type will remove all ingredients already added")
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
 
     # Starts from scratch without ingredients
