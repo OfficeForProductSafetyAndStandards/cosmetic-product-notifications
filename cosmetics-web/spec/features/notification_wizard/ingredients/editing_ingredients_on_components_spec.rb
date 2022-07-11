@@ -229,7 +229,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
     # Change component from exact concentration to range
-    expect(page).to have_text("Changing this setting will remove any ingredients already added")
+    expect(page).to have_text("Changing the formulation type will remove all ingredients already added")
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
 
     # Starts from scratch without ingredients
@@ -260,7 +260,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
     # Change component from exact concentration to range
-    expect(page).to have_text("Changing this setting will remove any ingredients already added")
+    expect(page).to have_text("Changing the formulation type will remove all ingredients already added")
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
 
     # Starts from scratch without ingredients
