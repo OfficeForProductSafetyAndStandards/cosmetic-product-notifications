@@ -221,6 +221,14 @@ class Component < ApplicationRecord
     (exact_formulas + range_formulas).sort_by(&:created_at)
   end
 
+  def poisonous_ingredients
+    exact_formulas.where(poisonous: true)
+  end
+
+  def non_poisonous_ingredients
+    (exact_formulas.where.not(poisonous: true) + range_formulas).sort_by(&:created_at)
+  end
+
 private
 
   # This takes any value and returns nil if the value

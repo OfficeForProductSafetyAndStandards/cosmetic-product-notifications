@@ -49,12 +49,12 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
         {
           name: "Cream one",
           shades: "None",
-
           nanomaterials: "None",
           category: "Hair and scalp products",
           subcategory: "Hair and scalp care and cleansing products",
           sub_subcategory: "Shampoo",
           formulation_given_as: "Exact concentration",
+          ingredients: { "FooBar ingredient" => "0.5% w/w" },
           physical_form: "Liquid",
           ph: "No pH",
           poisonous_ingredients: "No",
@@ -62,12 +62,12 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
         {
           name: "Cream two",
           shades: "None",
-
           nanomaterials: "None",
           category: "Hair and scalp products",
           subcategory: "Hair and scalp care and cleansing products",
           sub_subcategory: "Shampoo",
           formulation_given_as: "Exact concentration",
+          ingredients: { "FooBar ingredient" => "0.5% w/w" },
           physical_form: "Liquid",
           ph: "No pH",
           poisonous_ingredients: "No",
@@ -128,12 +128,12 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
         {
           name: "Cream one",
           shades: "None",
-
           nanomaterials: "None",
           category: "Hair and scalp products",
           subcategory: "Hair and scalp care and cleansing products",
           sub_subcategory: "Shampoo",
           formulation_given_as: "Exact concentration",
+          ingredients: { "FooBar ingredient" => "0.5% w/w" },
           physical_form: "Liquid",
           ph: "No pH",
           poisonous_ingredients: "No",
@@ -141,12 +141,12 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
         {
           name: "Cream two",
           shades: "None",
-
           nanomaterials: "None",
           category: "Hair and scalp products",
           subcategory: "Hair and scalp care and cleansing products",
           sub_subcategory: "Shampoo",
           formulation_given_as: "Exact concentration",
+          ingredients: { "FooBar ingredient" => "0.5% w/w" },
           physical_form: "Liquid",
           ph: "No pH",
           poisonous_ingredients: "No",
