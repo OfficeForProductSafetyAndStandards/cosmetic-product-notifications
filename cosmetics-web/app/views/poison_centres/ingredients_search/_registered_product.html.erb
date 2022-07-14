@@ -1,5 +1,4 @@
 <%
-  notification_path = poison_centre_notification_path(notification)
   cell_headers = "item-#{index} meta-#{index}"
 %>
 
@@ -10,7 +9,7 @@
     </th>
     <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
       <%= link_to notification.product_name,
-                  poison_centre_notification_path(notification, ingredient_search_form: search_params),
+                  poison_centre_notification_path(notification, ingredient_search_form: search_params, back_to: back_to_controller),
                   class: "govuk-link govuk-link--no-visited-state" %>
     </th>
   </tr>
