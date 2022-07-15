@@ -1,0 +1,16 @@
+module IngredientHelper
+  # Transforms "greater_than_01_less_than_1_percent" a
+  # struct with 'above: 0.1' and 'upto: 1'
+  def ingredient_concentration_range(range)
+    range_klass = Struct.new(:above, :upto)
+    return range_klass.new(nil, nil) if range.blank?
+
+    above, upto = range.gsub("greater_than_", "") # "greater_than_01_less_than_1_percent" => "01_less_than_1_percent"
+                       .gsub("_percent", "") # => "01_less_than_1"
+                       .split(/_?less_than_/) # => ["01", "1"]
+                       .map { |n| n[0] == "0" ? n.insert(1, ".") : n } # => ["0.1", "1"]
+                       .map { |n| n.remove(/[^\d.]/) } # Removes any non digit/dot char
+                       .map(&:presence) # Converts ["", "0.1"] to [nil, "1"]
+    range_klass.new(above, upto)
+  end
+end

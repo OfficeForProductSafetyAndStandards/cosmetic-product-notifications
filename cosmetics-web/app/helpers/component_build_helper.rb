@@ -12,7 +12,7 @@ module ComponentBuildHelper
       ingredient_range_concentration_item("10", "25"),
       ingredient_range_concentration_item("5", "10"),
       ingredient_range_concentration_item("1", "5"),
-      ingredient_range_concentration_item("0.1", "1"),
+      ingredient_range_concentration_item("01", "1"),
       {
         html: "Up to and including <span class='govuk-!-font-weight-bold'>0.1%</span> <abbr class='govuk-!-font-size-16'>w/w</abbr>".html_safe,
         value: "less_than_01_percent",

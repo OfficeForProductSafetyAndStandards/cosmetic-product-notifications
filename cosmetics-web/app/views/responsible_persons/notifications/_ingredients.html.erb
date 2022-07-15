@@ -1,0 +1,25 @@
+<div class="govuk-!-margin-top-8 opss-2-col-flow">
+  <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0 opss-definition-list opss-definition-list--left">
+    <% ingredients.each do |ingredient| %>
+      <div class="govuk-!-margin-bottom-4">
+        <dt class="govuk-!-font-weight-bold"><%= ingredient.inci_name %></dt>
+        <% if ingredient.cas_number.present? %>
+          <dd><abbr>CAS</abbr>: <%= ingredient.cas_number %> </dd>
+        <% end %>
+        <% if ingredient.is_a?(ExactFormula) %>
+          <dd><%= ingredient.quantity %>% <abbr>w/w</abbr></dd>
+        <% elsif ingredient.is_a?(RangeFormula) %>
+          <% range = ingredient_concentration_range(ingredient.range) %>
+          <% if range.upto.present? %>
+            <% if range.above.present? %>
+               <dd>Above <%= range.above %>% <abbr>w/w</abbr></dd>
+               <dd>Up to <%= range.upto %>% <abbr>w/w</abbr></dd>
+            <% else %>
+               <dd>Up to and including <%= range.upto %>% <abbr>w/w</abbr></dd>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </dl>
+</div>

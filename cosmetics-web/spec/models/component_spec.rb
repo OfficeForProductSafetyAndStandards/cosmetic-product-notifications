@@ -587,4 +587,28 @@ RSpec.describe Component, type: :model do
       expect(component.missing_ingredients?).to eq(false)
     end
   end
+
+  describe "#non_poisonous_ingredients" do
+    it "returns all the component non poisonous exact and range formulas ordered by their creation time" do
+      component = create(:component, :using_range)
+      range_first = create(:range_formula, component: component, created_at: 1.day.ago)
+      exact_first = create(:exact_formula, component: component, created_at: 1.hour.ago)
+      range_second = create(:range_formula, component: component, created_at: 3.seconds.ago)
+      create(:exact_formula, component: component, poisonous: true, created_at: 2.minutes.ago)
+
+      expect(component.non_poisonous_ingredients).to eq([range_first, exact_first, range_second])
+    end
+  end
+
+  describe "#poisonous_ingredients" do
+    it "returns all the component poisonous formulas ordered by their creation time" do
+      component = create(:component, :using_range)
+      create(:range_formula, component: component, created_at: 1.day.ago)
+      create(:exact_formula, component: component, created_at: 2.minutes.ago)
+      poisonous_first = create(:exact_formula, component: component, poisonous: true, created_at: 1.hour.ago)
+      poisonous_second = create(:exact_formula, component: component, poisonous: true, created_at: 3.seconds.ago)
+
+      expect(component.poisonous_ingredients).to eq([poisonous_first, poisonous_second])
+    end
+  end
 end
