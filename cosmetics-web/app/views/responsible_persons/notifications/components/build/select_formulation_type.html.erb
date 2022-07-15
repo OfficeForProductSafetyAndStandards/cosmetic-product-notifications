@@ -9,7 +9,7 @@
 
 <% warning_html = if @component.notification_type.present?
     govukWarningText(iconFallbackText: "Warning",
-                     classes: "govuk-!-margin-top-3 opss-warning-text--m",
+                     classes: "govuk-!-width-three-quarters govuk-!-margin-top-3 opss-warning-text--m",
                      text: "Changing the formulation type will remove all ingredients already added")
   end
 %>
