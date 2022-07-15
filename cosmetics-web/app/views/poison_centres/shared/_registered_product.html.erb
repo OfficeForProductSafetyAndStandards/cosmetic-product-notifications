@@ -1,0 +1,30 @@
+<%
+  cell_headers = "item-#{index} meta-#{index}"
+%>
+
+<tbody class="govuk-table__body">
+  <tr class="govuk-table__row">
+    <th class="govuk-visually-hidden">
+      Name
+    </th>
+    <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
+      <%= link_to notification.product_name,
+                  poison_centre_notification_path(notification, form => search_params, :back_to => back_to),
+                  class: "govuk-link govuk-link--no-visited-state" %>
+    </th>
+  </tr>
+  <tr class="govuk-table__row">
+    <th headers="item-<%= index %>" id="meta-<%= index %>" class="govuk-visually-hidden">
+      Metadata
+    </th>
+    <td headers="uknotified <%= cell_headers %>" class="govuk-table__cell">
+      <%= notification.notification_complete_at.present? ? display_full_month_date(notification.notification_complete_at) : "&nbsp;".html_safe %>
+    </td>
+    <td headers="ukcosprodnumber <%= cell_headers %>" class="govuk-table__cell">
+      <%= notification.reference_number_for_display.presence || "&nbsp;".html_safe %>
+    </td>
+    <td headers="eurefnumber <%= cell_headers %>" class="govuk-table__cell">
+      <%= notification.cpnp_reference.presence || "&nbsp;".html_safe %>
+    </td>
+  </tr>
+</tbody>
