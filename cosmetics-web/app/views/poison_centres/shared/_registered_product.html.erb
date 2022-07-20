@@ -9,7 +9,7 @@
     </th>
     <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
       <%= link_to notification.product_name,
-                  poison_centre_notification_path(notification, form => search_params, :back_to => back_to),
+                  poison_centre_notification_path(notification, form => search_params, :back_to => back_to, page: params[:page]),
                   class: "govuk-link govuk-link--no-visited-state" %>
     </th>
   </tr>
