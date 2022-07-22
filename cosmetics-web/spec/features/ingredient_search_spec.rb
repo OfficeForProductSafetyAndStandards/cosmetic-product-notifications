@@ -7,8 +7,10 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   let(:component1) { create(:component, with_ingredients: %w[aqua tin sodium]) }
   let(:component2) { create(:component, with_ingredients: %w[aqua tin]) }
 
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+
   let(:cream) { create(:notification, :registered, components: [component1], notification_complete_at: 1.day.ago, product_name: "Cream") }
-  let(:shower_bubbles) { create(:notification, :registered, components: [component2], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
+  let(:shower_bubbles) { create(:notification, :registered, responsible_person: responsible_person, components: [component2], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
 
   before do
     configure_requests_for_search_domain
@@ -17,11 +19,11 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     shower_bubbles
 
     Notification.opensearch.import force: true
+
+    sign_in user
   end
 
   scenario "Searching for notifications with specific ingredients" do
-    sign_in user
-
     expect(page).to have_h1("Cosmetic products search")
 
     click_link "Ingredients search"
@@ -37,8 +39,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   end
 
   scenario "Searching for notifications with specific ingredients - exact match" do
-    sign_in user
-
     expect(page).to have_h1("Cosmetic products search")
 
     click_link "Ingredients search"
@@ -53,8 +53,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   end
 
   scenario "Searching for notifications with specific ingredients with date filter" do
-    sign_in user
-
     expect(page).to have_h1("Cosmetic products search")
 
     click_link "Ingredients search"
@@ -77,5 +75,20 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     expect(page).not_to have_link("Cream")
     expect(page).to have_link("Shower Bubbles")
+  end
+
+  scenario "Back link" do
+    expect(page).to have_h1("Cosmetic products search")
+
+    click_link "Ingredients search"
+
+    fill_in "ingredient_search_form_q", with: "aqua"
+    click_on "Search"
+
+    click_link "Shower Bubbles"
+
+    click_link "Back"
+
+    expect(page).to have_h1("Ingredients search")
   end
 end

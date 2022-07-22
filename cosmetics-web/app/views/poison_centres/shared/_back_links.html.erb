@@ -1,0 +1,5 @@
+<% if back_to_ingredients? %>
+  <%= govukBackLink text: "Back", href: poison_centre_ingredients_search_path(ingredient_search_form: search_params, page: params[:page]) %>
+<% else %>
+  <%= govukBackLink text: "Back", href: poison_centre_notifications_search_path(notification_search_form: search_params, page: params[:page]) %>
+<% end %>

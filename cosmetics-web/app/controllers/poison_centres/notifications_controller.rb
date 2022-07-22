@@ -24,7 +24,10 @@ private
                                                          :date_filter,
                                                          :sort_by)
     elsif params[:ingredient_search_form]
-      params.fetch(:ingredient_search_form, {}).permit(:q)
+      params.fetch(:ingredient_search_form, {}).permit(:q,
+                                                       { date_from: %i[day month year] },
+                                                       { date_to: %i[day month year] },
+                                                       :exact_or_any_match)
     end
   end
   helper_method :search_params
