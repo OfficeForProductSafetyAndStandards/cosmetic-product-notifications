@@ -132,6 +132,12 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
+    it "does not create nanomaterials when No is selected" do
+      expect {
+        put(:update, params: params.merge(id: :contains_nanomaterials, contains_nanomaterials_form: { nanomaterials_count: "3", contains_nanomaterials: "no" }))
+      }.not_to(change(NanoElement, :count))
+    end
+
     context "when the notification is already submitted" do
       subject(:request) { post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" })) }
 
