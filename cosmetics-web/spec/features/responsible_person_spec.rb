@@ -17,6 +17,7 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
     choose "First RP"
     click_button "Save and continue"
 
+    expect(page).not_to have_text("Responsible Person was changed")
     visit "/"
     click_on "Your cosmetic products"
     click_link "Responsible Person"
