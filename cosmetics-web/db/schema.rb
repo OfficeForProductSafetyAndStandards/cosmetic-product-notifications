@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_09_132858) do
+ActiveRecord::Schema.define(version: 2022_07_14_124143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2022_06_09_132858) do
   enable_extension "plpgsql"
 
   # These are custom enum types that must be created before they can be used in the schema definition
+  create_enum "concentration_range", ["less_than_01_percent", "greater_than_01_less_than_1_percent", "greater_than_1_less_than_5_percent", "greater_than_5_less_than_10_percent", "greater_than_10_less_than_25_percent", "greater_than_25_less_than_50_percent", "greater_than_50_less_than_75_percent", "greater_than_75_less_than_100_percent"]
   create_enum "user_roles", ["poison_centre", "market_surveilance_authority", "opss_science"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -146,6 +147,18 @@ ActiveRecord::Schema.define(version: 2022_06_09_132858) do
     t.datetime "updated_at", null: false
     t.bigint "notification_id"
     t.index ["notification_id"], name: "index_image_uploads_on_notification_id"
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "inci_name", null: false
+    t.string "cas_number"
+    t.decimal "exact_concentration"
+    t.enum "range_concentration", as: "concentration_range"
+    t.boolean "poisonous", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_ingredients_on_component_id"
   end
 
   create_table "nano_elements", force: :cascade do |t|
@@ -372,6 +385,7 @@ ActiveRecord::Schema.define(version: 2022_06_09_132858) do
   add_foreign_key "contact_persons", "responsible_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
+  add_foreign_key "ingredients", "components"
   add_foreign_key "nano_elements", "nano_materials"
   add_foreign_key "nano_materials", "components"
   add_foreign_key "nanomaterial_notifications", "responsible_persons"
