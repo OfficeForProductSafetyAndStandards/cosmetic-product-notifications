@@ -1,0 +1,49 @@
+<% content_for :page_title, "Ingredients index" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full opss-desktop-min-height--s">
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      Ingredients index
+    </h1>
+
+    <p class="govuk-body opss-secondary-text">
+     List of all ingredients used in notifications products. Click on ingredient to search for product.
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row opss-full-height">
+  <section class="govuk-grid-column-one-quarter govuk-!-padding-right-1 opss-full-height__col">
+    <nav aria-label="Secondary">
+      <%= render 'poison_centres/shared/secondary_navigation' %>
+    </nav>
+  </section>
+  <section class="govuk-grid-column-three-quarters" id="ingredients">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order" aria-live="polite">
+        <table id="table-items" class="govuk-table govuk-!-margin-top-5 opss-table-items opss-table-items--sm opss-table-items--first-col-33">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-visually-hidden">&nbsp;</th>
+              <th class="govuk-visually-hidden">Inci Name</th>
+            </tr>
+          </thead>
+          <% @ingredients.each_with_index do |ingredient, index| %>
+            <tr class="govuk-table__row">
+              <th class="govuk-visually-hidden">
+                Inci Name
+              </th>
+              <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
+                <%= link_to ingredient.inci_name,
+                  poison_centre_ingredients_search_path(ingredient_search_form: { q: ingredient.inci_name }),
+                    class: "govuk-link govuk-link--no-visited-state", target: :blank %>
+              </th>
+            </tr>
+          <% end %>
+        </table>
+        <%= paginate @ingredients, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
+      </div>
+    </div>
+  </section>
+</div>

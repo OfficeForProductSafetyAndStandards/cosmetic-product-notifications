@@ -30,4 +30,27 @@ module PoisonCentresNotificationsHelper
   def back_to_ingredients?
     params[:back_to] == INGREDIENTS_SEARCH
   end
+
+  def active_page_class(page)
+    if is_current_page(page)
+      "class='opss-left-nav__active'".html_safe
+    end
+  end
+
+  def aria_active(page)
+    if is_current_page(page)
+      "aria-current='page'".html_safe
+    end
+  end
+
+  def is_current_page(page)
+    case page
+    when :notifications_search
+      params[:controller] == "poison_centres/notifications_search"
+    when :ingredients_search
+      params[:controller] == "poison_centres/ingredients_search"
+    when :ingredients_list
+      params[:controller] == "poison_centres/ingredients"
+    end
+  end
 end
