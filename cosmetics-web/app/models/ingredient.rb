@@ -17,6 +17,9 @@ class Ingredient < ApplicationRecord
     _prefix: :range_concentration,
   )
 
+  scope :poisonous, -> { where(poisonous: true) }
+  scope :non_poisonous, -> { where(poisonous: false) }
+
   validates :inci_name, presence: true
   validate :unique_inci_name, if: :inci_name_changed?
 

@@ -56,10 +56,11 @@
           end,
         ].compact
       ) %>
-      <% if component.non_poisonous_ingredients.any? %>
-        <%= render(partial: "responsible_persons/notifications/ingredients", locals: { ingredients: component.non_poisonous_ingredients }) %>
+      <% if component.ingredients.non_poisonous.any? %>
+        <%= render(partial: "responsible_persons/notifications/ingredients",
+                   locals: { ingredients: component.ingredients.non_poisonous }) %>
       <% end %>
-      <% if component.poisonous_ingredients.any? %>
+      <% if component.ingredients.poisonous.any? %>
         <h4 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-2">
           Poisonous ingredients and ingredients the <abbr title="National Poisons Information Service">NPIS</abbr> needs to know about
         </h4>
@@ -70,7 +71,8 @@
             { key: { text: "Acute poisoning information" }, value: { text: component.acute_poisoning_info.presence || "None" } },
           ]
         ) %>
-        <%= render(partial: "responsible_persons/notifications/ingredients", locals: { ingredients: component.poisonous_ingredients }) %>
+        <%= render(partial: "responsible_persons/notifications/ingredients",
+                   locals: { ingredients: component.ingredients.poisonous }) %>
       <% end %>
     <% end %>
   </section>
