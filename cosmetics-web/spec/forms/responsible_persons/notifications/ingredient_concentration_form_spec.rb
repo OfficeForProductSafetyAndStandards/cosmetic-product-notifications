@@ -13,11 +13,11 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
                         ingredient_number: nil)
   end
 
-  let(:component) { create(:component) }
+  let(:component) { create(:exact_component) }
   let(:name) { "Ingredient Name" }
   let(:cas_number) { "111-11-1" }
   let(:exact_concentration) { "4.2" }
-  let(:range_concentration) { nil }
+  let(:range_concentration) { "greater_than_10_less_than_25_percent" }
   let(:poisonous) { "true" }
   let(:type) { "exact" }
   let(:updating_ingredient) { nil }
@@ -32,12 +32,20 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         it "changes the type to 'exact'" do
           expect(form.type).to eq("exact")
         end
+
+        it "deletes any given range concentration value" do
+          expect(form.range_concentration).to eq nil
+        end
       end
 
       context "with a non poisonous ingredient" do
         let(:poisonous) { "false" }
 
         it { expect(form.type).to eq("range") }
+
+        it "deletes any given exact concentration value" do
+          expect(form.exact_concentration).to eq nil
+        end
       end
     end
 
@@ -48,12 +56,20 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         let(:poisonous) { "true" }
 
         it { expect(form.type).to eq("exact") }
+
+        it "deletes any given range concentration value" do
+          expect(form.range_concentration).to eq nil
+        end
       end
 
       context "with a non poisonous ingredient" do
         let(:poisonous) { "false" }
 
         it { expect(form.type).to eq("exact") }
+
+        it "deletes any given range concentration value" do
+          expect(form.range_concentration).to eq nil
+        end
       end
     end
   end
@@ -106,6 +122,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
         context "with a 'range' type" do
           let(:type) { "range" }
+          let(:component) { create(:ranges_component) }
 
           it "is invalid" do
             expect(form).not_to be_valid
@@ -168,6 +185,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
       context "with a 'range' type" do
         let(:type) { "range" }
+        let(:component) { create(:ranges_component) }
         let(:poisonous) { "false" }
         let(:range_concentration) { "greater_than_10_less_than_25_percent" }
 
@@ -200,6 +218,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
       context "with a 'range' type" do
         let(:type) { "range" }
+        let(:component) { create(:ranges_component) }
         let(:poisonous) { "false" }
 
         it "is valid without an exact concentration" do
@@ -212,44 +231,45 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
     describe "name taken validation" do
       RSpec.shared_examples "name taken validations" do
-        %i[exact_formula range_formula].each do |ingredient_type|
-          context "when updgrading an existing ingredient keeping the same name" do
-            let(:updating_ingredient) { create(ingredient_type, inci_name: name, component: component) }
+        let(:ingredient_factory) { type == "exact" ? :exact_ingredient : :range_ingredient }
 
-            it { expect(form).to be_valid }
-          end
+        context "when updgrading an existing ingredient keeping the same name" do
+          let(:updating_ingredient) { create(ingredient_factory, inci_name: name, component: component) }
 
-          it "is valid when the ingredient already exists as #{ingredient_type} for a different component in the same notification" do
-            component2 = create(:component, notification: component.notification)
-            create(ingredient_type, component: component2, inci_name: name)
-            expect(form).to be_valid
-          end
+          it { expect(form).to be_valid }
+        end
 
-          it "is invalid when the ingredient already exists as #{ingredient_type} for the component" do
-            create(ingredient_type, component: component, inci_name: name)
-            expect(form).not_to be_valid
-            expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
-          end
+        it "is valid when the ingredient already exists for a different component in the same notification" do
+          component_factory = type == "exact" ? :exact_component : :ranges_component
+          different_component = create(component_factory, notification: component.notification)
+          create(ingredient_factory, component: different_component, inci_name: name)
+          expect(form).to be_valid
+        end
 
-          it "is invalid when the ingredient differs only in capitalisation from an existing component #{ingredient_type} ingredient" do
-            create(ingredient_type, component: component, inci_name: name.downcase)
-            expect(form).not_to be_valid
-            expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
-          end
+        it "is invalid when the ingredient already exists for the component" do
+          create(ingredient_factory, component: component, inci_name: name)
+          expect(form).not_to be_valid
+          expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
+        end
 
-          it "is invalid when the ingredient differs only in leading/trailing espaces from an existing component #{ingredient_type} ingredient" do
-            create(ingredient_type, component: component, inci_name: name)
-            form.name = " #{name} "
-            expect(form).not_to be_valid
-            expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
-          end
+        it "is invalid when the ingredient differs only in capitalisation from an existing component ingredient" do
+          create(ingredient_factory, component: component, inci_name: name.downcase)
+          expect(form).not_to be_valid
+          expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
+        end
 
-          it "shows a specific error message for already existing name for #{ingredient_type} ingredient in the multicomponent notification" do
-            allow(component.notification).to receive(:is_multicomponent?).and_return(true)
-            create(ingredient_type, component: component, inci_name: name)
-            expect(form).not_to be_valid
-            expect(form.errors[:name]).to eq ["Enter a name which is unique to this item"]
-          end
+        it "is invalid when the ingredient differs only in leading/trailing espaces from an existing component ingredient" do
+          create(ingredient_factory, component: component, inci_name: name)
+          form.name = " #{name} "
+          expect(form).not_to be_valid
+          expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
+        end
+
+        it "shows a specific error message for already existing name for ingredient in the multicomponent notification" do
+          allow(component.notification).to receive(:is_multicomponent?).and_return(true)
+          create(ingredient_factory, component: component, inci_name: name)
+          expect(form).not_to be_valid
+          expect(form.errors[:name]).to eq ["Enter a name which is unique to this item"]
         end
       end
 
@@ -261,6 +281,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
       context "with a 'range' type" do
         let(:type) { "range" }
+        let(:component) { create(:ranges_component) }
 
         include_examples "name taken validations"
       end
@@ -300,8 +321,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
       end
 
       it "does not create an ingredient record" do
-        expect { form.save }.to not_change(ExactFormula, :count)
-                            .and not_change(RangeFormula, :count)
+        expect { form.save }.to not_change(Ingredient, :count)
       end
     end
 
@@ -313,141 +333,132 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
       end
 
       it "does not create an ingredient record" do
-        expect { form.save }.to not_change(ExactFormula, :count)
-                            .and not_change(RangeFormula, :count)
+        expect { form.save }.to not_change(Ingredient, :count)
       end
     end
 
     context "with an exact type form" do
       let(:type) { "exact" }
 
-      it "creates an exact formula" do
-        expect { form.save }.to change(ExactFormula, :count).by(1)
+      it "creates an ingredient" do
+        expect { form.save }.to change(Ingredient, :count).by(1)
       end
 
-      it "does not create a range formula" do
-        expect { form.save }.not_to change(RangeFormula, :count)
-      end
-
-      # rubocop :disable RSpec/ExampleLength
-      it "returns the created exact formula" do
-        expect(form.save).to be_an_instance_of(ExactFormula).and have_attributes(
+      # rubocop:disable RSpec/ExampleLength
+      it "returns the created ingredient" do
+        expect(form.save).to be_an_instance_of(Ingredient).and have_attributes(
           component_id: component.id,
           inci_name: name,
-          quantity: exact_concentration.to_f,
+          exact_concentration: exact_concentration.to_f,
+          range_concentration: nil,
           cas_number: "111111",
           poisonous: true,
         )
       end
-      # rubocop :enable RSpec/ExampleLength
+      # rubocop:enable RSpec/ExampleLength
 
       context "when updating an exact ingredient" do
         let!(:updating_ingredient) do
-          create(:exact_formula, inci_name: "Ingredient pre-update", quantity: 2.0, poisonous: false, component: component)
+          create(:ingredient, inci_name: "Ingredient pre-update", exact_concentration: 2.0, poisonous: false, component: component)
         end
 
-        it "does not create a new formula" do
-          expect { form.save }.to not_change(ExactFormula, :count)
-                              .and not_change(RangeFormula, :count)
+        it "does not create a new ingredient" do
+          expect { form.save }.to not_change(Ingredient, :count)
         end
 
         it "updates the existing ingredient values" do
-          expect { form.save }.to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
-                              .and change(updating_ingredient, :quantity).from(2.0).to(exact_concentration.to_f)
-                              .and change(updating_ingredient, :poisonous).from(false).to(true)
-                              .and change(updating_ingredient, :cas_number).from(nil).to("111111")
+          expect { form.save }
+            .to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
+            .and change(updating_ingredient, :exact_concentration).from(2.0).to(exact_concentration.to_f)
+            .and change(updating_ingredient, :poisonous).from(false).to(true)
+            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
         end
       end
 
       context "when updating a range ingredient" do
+        let(:component) { create(:ranges_component) }
         let!(:updating_ingredient) do
-          create(:range_formula, inci_name: "Ingredient pre-update", range: "greater_than_5_less_than_10_percent", component: component)
+          create(:ingredient,
+                 inci_name: "Ingredient pre-update",
+                 range_concentration: "greater_than_5_less_than_10_percent",
+                 component: component)
         end
 
-        it "replaces the existing range ingredient with a new exact ingredient" do
-          expect { form.save }.to change(RangeFormula, :count).by(-1)
-                              .and change(ExactFormula, :count).by(1)
+        it "does not create a new ingredient" do
+          expect { form.save }.to not_change(Ingredient, :count)
         end
 
-        # rubocop :disable RSpec/ExampleLength
-        it "returns the created exact formula keeping the original ingredient creation timestamp" do
-          original_creation_timestamp = updating_ingredient.created_at
-
-          expect(form.save).to be_an_instance_of(ExactFormula).and have_attributes(
-            component_id: component.id,
-            inci_name: name,
-            quantity: exact_concentration.to_f,
-            cas_number: "111111",
-            poisonous: true,
-            created_at: original_creation_timestamp,
-          )
+        it "updates the ingredient" do
+          expect { form.save }
+            .to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
+            .and change(updating_ingredient, :exact_concentration).from(nil).to(exact_concentration.to_f)
+            .and change(updating_ingredient, :range_concentration).from("greater_than_5_less_than_10_percent").to(nil)
+            .and change(updating_ingredient, :poisonous).from(false).to(true)
+            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
         end
-        # rubocop :enable RSpec/ExampleLength
       end
     end
 
     context "with a range type form" do
       let(:type) { "range" }
+      let(:component) { create(:ranges_component) }
       let(:poisonous) { "false" }
       let(:range_concentration) { "greater_than_10_less_than_25_percent" }
 
-      it "creates an range formula" do
-        expect { form.save }.to change(RangeFormula, :count).by(1)
+      it "creates an ingredient" do
+        expect { form.save }.to change(Ingredient, :count).by(1)
       end
 
-      it "does not create an exact formula" do
-        expect { form.save }.not_to change(ExactFormula, :count)
-      end
-
-      it "returns the created exact formula" do
-        expect(form.save).to be_an_instance_of(RangeFormula).and have_attributes(
+      # rubocop:disable RSpec/ExampleLength
+      it "returns the created ingredient" do
+        expect(form.save).to be_an_instance_of(Ingredient).and have_attributes(
           component_id: component.id,
           inci_name: name,
-          range: range_concentration,
+          range_concentration: range_concentration,
+          exact_concentration: nil,
           cas_number: "111111",
+          poisonous: false,
         )
       end
+      # rubocop:enable RSpec/ExampleLength
 
       context "when updating a range ingredient" do
         let!(:updating_ingredient) do
-          create(:range_formula, inci_name: "Ingredient pre-update", range: "greater_than_5_less_than_10_percent", component: component)
+          create(:ingredient,
+                 inci_name: "Ingredient pre-update",
+                 range_concentration: "greater_than_5_less_than_10_percent",
+                 component: component)
         end
 
-        it "does not create a new formula" do
-          expect { form.save }.to not_change(ExactFormula, :count)
-                              .and not_change(RangeFormula, :count)
+        it "does not create a new ingredient" do
+          expect { form.save }.to not_change(Ingredient, :count)
         end
 
-        it "updates the existing ingredient values" do
-          expect { form.save }.to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
-                              .and change(updating_ingredient, :range).from("greater_than_5_less_than_10_percent").to("greater_than_10_less_than_25_percent")
-                              .and change(updating_ingredient, :cas_number).from(nil).to("111111")
+        it "updates the ingredient" do
+          expect { form.save }
+            .to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
+            .and change(updating_ingredient, :range_concentration).from("greater_than_5_less_than_10_percent").to(range_concentration)
+            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
         end
       end
 
       context "when updating an exact ingredient" do
         let!(:updating_ingredient) do
-          create(:exact_formula, inci_name: "Ingredient pre-update", quantity: 3.0, component: component)
+          create(:ingredient, inci_name: "Ingredient pre-update", exact_concentration: 3.0, poisonous: true, component: component)
         end
 
-        it "replaces the existing exact ingredient with a new range ingredient" do
-          expect { form.save }.to change(ExactFormula, :count).by(-1)
-                              .and change(RangeFormula, :count).by(1)
+        it "does not create a new ingredient" do
+          expect { form.save }.to not_change(Ingredient, :count)
         end
 
-        # rubocop :disable RSpec/ExampleLength
-        it "returns the created range formula keeping the original ingredient creation timestamp" do
-          original_creation_timestamp = updating_ingredient.created_at
-
-          expect(form.save).to be_an_instance_of(RangeFormula).and have_attributes(
-            component_id: component.id,
-            inci_name: name,
-            range: range_concentration,
-            cas_number: "111111",
-            created_at: original_creation_timestamp,
-          )
+        it "updates the ingredient" do
+          expect { form.save }
+            .to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
+            .and change(updating_ingredient, :range_concentration).from(nil).to(range_concentration)
+            .and change(updating_ingredient, :exact_concentration).from(3.0).to(nil)
+            .and change(updating_ingredient, :poisonous).from(true).to(false)
+            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
         end
-        # rubocop :enable RSpec/ExampleLength
       end
     end
   end
