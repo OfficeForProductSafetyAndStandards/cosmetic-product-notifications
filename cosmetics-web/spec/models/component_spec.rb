@@ -143,9 +143,9 @@ RSpec.describe Component, type: :model do
   describe "updating 'contains_poisonous_ingredients' attribute on predefined components" do
     it "deletes all poisonous ingredients when setting it to 'false'" do
       component = described_class.create(name: "Component X", notification: notification, notification_type: "predefined", contains_poisonous_ingredients: true)
-      create_list(:exact_formula, 2, poisonous: true, component: component)
+      create_list(:poisonous_ingredient, 2, component: component)
       expect { component.update(contains_poisonous_ingredients: false) }
-        .to change { component.exact_formulas.count }.from(2).to(0)
+        .to change { component.ingredients.poisonous.count }.from(2).to(0)
     end
   end
 
@@ -429,11 +429,11 @@ RSpec.describe Component, type: :model do
     end
 
     context "when exact formulation type is set again" do
-      let(:component) { create(:component, :with_exact_formulas) }
+      let(:component) { create(:component, :with_exact_ingredients) }
 
       it "leaves the existing ingredients" do
         expect { component.update_formulation_type("exact") }
-          .not_to change { component.exact_formulas.count }.from(1)
+          .not_to change { component.ingredients.count }.from(1)
       end
     end
 
@@ -441,12 +441,12 @@ RSpec.describe Component, type: :model do
       let(:component) { create(:component, :using_frame_formulation, contains_poisonous_ingredients: true) }
 
       before do
-        create(:exact_formula, poisonous: true, component: component)
+        create(:poisonous_ingredient, component: component)
       end
 
       it "removes the poisonous ingredients formulas" do
         expect { component.update_formulation_type("range") }
-          .to change { component.exact_formulas.count }.from(1).to(0)
+          .to change { component.ingredients.poisonous.count }.from(1).to(0)
       end
 
       it "removes information about poisonus ingredients" do
@@ -457,25 +457,24 @@ RSpec.describe Component, type: :model do
     end
 
     context "when changing from exact to range" do
-      let(:component) { create(:component, :with_exact_formulas) }
+      let(:component) { create(:component, :with_exact_ingredients) }
 
       it "removes the ingredients formulas" do
         expect { component.update_formulation_type("range") }
-          .to change { component.exact_formulas.count }.from(1).to(0)
+          .to change { component.ingredients.exact.count }.from(1).to(0)
       end
     end
 
     context "when changing from range to exact" do
-      let(:component) { create(:component, :with_range_formulas) }
+      let(:component) { create(:component, :with_range_ingredients) }
 
       before do
-        create(:exact_formula, poisonous: true, component: component)
+        create(:poisonous_ingredient, component: component)
       end
 
-      it "removes the ingredients formulas" do
+      it "removes the existing ingredients" do
         expect { component.update_formulation_type("exact") }
-          .to change { component.range_formulas.count }.from(1).to(0)
-          .and change { component.exact_formulas.count }.from(1).to(0)
+          .to change { component.ingredients.count }.from(2).to(0)
       end
     end
 
@@ -545,7 +544,7 @@ RSpec.describe Component, type: :model do
     end
 
     it "returns falsefor a range component with ingredients" do
-      component = create(:component, :with_range_formulas)
+      component = create(:component, :with_range_ingredients)
       expect(component.missing_ingredients?).to eq(false)
     end
 
@@ -555,7 +554,7 @@ RSpec.describe Component, type: :model do
     end
 
     it "returns false for an exact component with ingredients" do
-      component = create(:component, :with_exact_formulas)
+      component = create(:component, :with_exact_ingredients)
       expect(component.missing_ingredients?).to eq(false)
     end
 
@@ -566,7 +565,7 @@ RSpec.describe Component, type: :model do
 
     it "returns false for a predefined component that needs poisonous ingredients and has a poisonous ingredients" do
       component = create(:component, :using_frame_formulation, :with_poisonous_ingredients)
-      create(:exact_formula, component: component, poisonous: true)
+      create(:poisonous_ingredient, component: component)
       expect(component.missing_ingredients?).to eq(false)
     end
 

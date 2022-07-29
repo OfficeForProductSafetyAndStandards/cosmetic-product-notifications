@@ -19,6 +19,8 @@ class Ingredient < ApplicationRecord
 
   scope :poisonous, -> { where(poisonous: true) }
   scope :non_poisonous, -> { where(poisonous: false) }
+  scope :range, -> { where.not(range_concentration: nil) }
+  scope :exact, -> { where.not(exact_concentration: nil) }
 
   validates :inci_name, presence: true
   validate :unique_inci_name, if: :inci_name_changed?

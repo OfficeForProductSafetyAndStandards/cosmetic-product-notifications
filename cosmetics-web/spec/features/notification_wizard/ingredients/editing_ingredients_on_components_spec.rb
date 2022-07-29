@@ -12,8 +12,8 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
   scenario "Editing ingredients on a exact concentration notification" do
     component = create(:exact_component, :completed, notification: notification)
-    create(:exact_formula, inci_name: "Ingredient A", quantity: 4.0, poisonous: false, component: component)
-    create(:exact_formula, inci_name: "Ingredient B", quantity: 3.0, poisonous: true, component: component)
+    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component: component)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -59,16 +59,16 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect_to_be_on__what_is_ph_range_of_product_page
 
     # Updated the values in Database.
-    expect(component.exact_formulas).to have(2).items
-    expect(component.exact_formulas.first).to have_attributes(
+    expect(component.ingredients.exact).to have(2).items
+    expect(component.ingredients.exact.first).to have_attributes(
       inci_name: "Ingredient A poisonous",
-      quantity: 5.1,
+      exact_concentration: 5.1,
       poisonous: true,
       cas_number: nil,
     )
-    expect(component.exact_formulas.second).to have_attributes(
+    expect(component.ingredients.exact.second).to have_attributes(
       inci_name: "Ingredient B non poisonous",
-      quantity: 3.0,
+      exact_concentration: 3.0,
       poisonous: false,
       cas_number: "123456789",
     )
@@ -76,9 +76,10 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
   scenario "Editing ingredients on a range concentration notification" do
     component = create(:ranges_component, :completed, notification: notification)
-    create(:range_formula, inci_name: "Ingredient A", range: "greater_than_75_less_than_100_percent", component: component)
-    create(:range_formula, inci_name: "Ingredient B", range: "greater_than_10_less_than_25_percent", component: component)
-    create(:exact_formula, inci_name: "Ingredient C", quantity: 3.0, poisonous: true, component: component) # Poisonous ingredient on Range component
+    create(:range_ingredient, inci_name: "Ingredient A", range_concentration: "greater_than_75_less_than_100_percent", component: component)
+    create(:range_ingredient, inci_name: "Ingredient B", range_concentration: "greater_than_10_less_than_25_percent", component: component)
+    # Poisonous ingredient on Range component
+    create(:poisonous_ingredient, inci_name: "Ingredient C", exact_concentration: 3.0, component: component)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -131,28 +132,28 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect_to_be_on__what_is_ph_range_of_product_page
 
     # Updated the values in Database.
-    expect(component.range_formulas).to have(3).items
-    expect(component.range_formulas.first).to have_attributes(
+    expect(component.ingredients.range).to have(3).items
+    expect(component.ingredients.range.first).to have_attributes(
       inci_name: "Ingredient A",
-      range: "greater_than_75_less_than_100_percent",
+      range_concentration: "greater_than_75_less_than_100_percent",
       cas_number: nil,
     )
-    expect(component.range_formulas.second).to have_attributes(
+    expect(component.ingredients.range.second).to have_attributes(
       inci_name: "Ingredient B modified",
-      range: "greater_than_5_less_than_10_percent",
+      range_concentration: "greater_than_5_less_than_10_percent",
       cas_number: nil,
     )
-    expect(component.range_formulas.third).to have_attributes(
+    expect(component.ingredients.range.third).to have_attributes(
       inci_name: "Ingredient C non poisonous",
-      range: "greater_than_25_less_than_50_percent",
+      range_concentration: "greater_than_25_less_than_50_percent",
       cas_number: "123456789",
     )
   end
 
   scenario "Editing ingredients on a predefined formulation notification" do
     component = create(:predefined_component, :completed, notification: notification)
-    create(:exact_formula, inci_name: "Ingredient A", quantity: 4.0, poisonous: true, component: component)
-    create(:exact_formula, inci_name: "Ingredient B", quantity: 3.0, poisonous: true, component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component: component)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -196,16 +197,16 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect_to_be_on__what_is_ph_range_of_product_page
 
     # Updated the values in Database.
-    expect(component.exact_formulas).to have(2).items
-    expect(component.exact_formulas.first).to have_attributes(
+    expect(component.ingredients.exact).to have(2).items
+    expect(component.ingredients.exact.first).to have_attributes(
       inci_name: "Ingredient A poisonous",
-      quantity: 5.1,
+      exact_concentration: 5.1,
       poisonous: true,
       cas_number: nil,
     )
-    expect(component.exact_formulas.second).to have_attributes(
+    expect(component.ingredients.exact.second).to have_attributes(
       inci_name: "Ingredient B poisonous",
-      quantity: 3.0,
+      exact_concentration: 3.0,
       poisonous: true,
       cas_number: "123456789",
     )
@@ -213,8 +214,8 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
   scenario "Changing the formulation type from range to exact for a component with existing ingredients" do
     component = create(:ranges_component, :completed, notification: notification)
-    create(:range_formula, inci_name: "Ingredient A", component: component)
-    create(:exact_formula, inci_name: "Ingredient B", poisonous: true, component: component)
+    create(:range_ingredient, inci_name: "Ingredient A", component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", component: component)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -244,8 +245,8 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
   scenario "Changing the formulation type from predefined formulation to exact for a component with existing poisonous ingredients" do
     component = create(:predefined_component, :using_frame_formulation, :completed, notification: notification)
-    create(:exact_formula, inci_name: "Ingredient A", poisonous: true, component: component)
-    create(:exact_formula, inci_name: "Ingredient B", poisonous: true, component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient A", component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", component: component)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 

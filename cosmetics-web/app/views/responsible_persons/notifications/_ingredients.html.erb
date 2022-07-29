@@ -6,10 +6,10 @@
         <% if ingredient.cas_number.present? %>
           <dd><abbr>CAS</abbr>: <%= ingredient.cas_number %> </dd>
         <% end %>
-        <% if ingredient.is_a?(ExactFormula) %>
-          <dd><%= ingredient.quantity %>% <abbr>w/w</abbr></dd>
-        <% elsif ingredient.is_a?(RangeFormula) %>
-          <% range = ingredient_concentration_range(ingredient.range) %>
+        <% if ingredient.exact_concentration.present? %>
+          <dd><%= ingredient.exact_concentration %>% <abbr>w/w</abbr></dd>
+        <% elsif ingredient.range_concentration.present? %>
+          <% range = ingredient_concentration_range(ingredient.range_concentration) %>
           <% if range.upto.present? %>
             <% if range.above.present? %>
                <dd>Above <%= range.above %>% <abbr>w/w</abbr></dd>

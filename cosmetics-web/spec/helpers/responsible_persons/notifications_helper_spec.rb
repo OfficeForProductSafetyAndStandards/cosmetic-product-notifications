@@ -591,7 +591,7 @@ describe ResponsiblePersons::NotificationsHelper do
         allow(helper).to receive(:render).with("none_or_bullet_list",
                                                entities_list: entities_list,
                                                key_name: :inci_name,
-                                               value_name: :quantity,
+                                               value_name: :exact_concentration,
                                                list_classes: "")
                                          .and_return("Bullet list of elements")
 

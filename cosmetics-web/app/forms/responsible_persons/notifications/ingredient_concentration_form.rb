@@ -31,7 +31,9 @@ module ResponsiblePersons::Notifications
 
     def initialize(params = {})
       super(params)
-      if range? && !poisonous
+      return if type.blank?
+
+      if type == RANGE && !poisonous
         self.exact_concentration = nil
       else
         self.type = EXACT

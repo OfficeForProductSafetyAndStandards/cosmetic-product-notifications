@@ -72,6 +72,38 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
     end
+
+    context "without a type" do
+      let(:type) { nil }
+
+      context "with a poisonous ingredient" do
+        let(:poisonous) { "true" }
+
+        it { expect(form.type).to eq(nil) }
+
+        it "keeps the given exact concentration value" do
+          expect(form.exact_concentration).to eq exact_concentration
+        end
+
+        it "keeps the given range concentration value" do
+          expect(form.range_concentration).to eq range_concentration
+        end
+      end
+
+      context "with a non poisonous ingredient" do
+        let(:poisonous) { "false" }
+
+        it { expect(form.type).to eq(nil) }
+
+        it "keeps the given exact concentration value" do
+          expect(form.exact_concentration).to eq exact_concentration
+        end
+
+        it "keeps the given range concentration value" do
+          expect(form.range_concentration).to eq range_concentration
+        end
+      end
+    end
   end
 
   describe "validation" do
