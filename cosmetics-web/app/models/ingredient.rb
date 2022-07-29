@@ -4,7 +4,7 @@ class Ingredient < ApplicationRecord
   belongs_to :component
 
   enum(
-    concentration_range: {
+    range_concentration: {
       less_than_01_percent: "less_than_01_percent",
       greater_than_01_less_than_1_percent: "greater_than_01_less_than_1_percent",
       greater_than_1_less_than_5_percent: "greater_than_1_less_than_5_percent",
@@ -32,10 +32,7 @@ class Ingredient < ApplicationRecord
             numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
             if: -> { range_concentration.blank? }
 
-  validates :range_concentration,
-            presence: true,
-            inclusion: { allow_blank: true, in: concentration_ranges.keys },
-            if: -> { exact_concentration.blank? }
+  validates :range_concentration, presence: true, if: -> { exact_concentration.blank? }
 
   validate :poisonous_on_exact_concentration, unless: :exact_concentration?
   validate :non_poisonous_exact_component_type, unless: :range_concentration?

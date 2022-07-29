@@ -2,12 +2,6 @@ require "rails_helper"
 
 RSpec.describe Ingredient, type: :model do
   describe "validations" do
-    it "is not valid when provided a range not belonging to the list of valid ranges" do
-      ingredient = build_stubbed(:range_ingredient, range_concentration: "invalid")
-      expect(ingredient).not_to be_valid
-      expect(ingredient.errors[:range_concentration]).to eq(["Range concentration unknown"])
-    end
-
     describe "range or exact concentration validation" do
       # rubocop:disable RSpec/MultipleExpectations
       it "is not valid when both exact and range concentrations are set" do
