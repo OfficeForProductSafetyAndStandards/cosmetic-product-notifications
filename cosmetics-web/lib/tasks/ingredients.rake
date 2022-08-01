@@ -5,6 +5,8 @@ namespace :ingredients do
     ActiveRecord::Base.transaction do
       puts "Migrating data from ExactFormula to Ingredient..."
       ExactFormula.find_each do |exact_formula|
+        next if exact_formula.component.nil? || exact_formula.inci_name.blank? || exact_formula.quantity.blank?
+
         Ingredient.create!(
           component: exact_formula.component,
           inci_name: exact_formula.inci_name,
@@ -18,6 +20,8 @@ namespace :ingredients do
       end
       puts "Migrating data from RangeFormula to Ingredient..."
       RangeFormula.find_each do |range_formula|
+        next if range_formula.component.nil? || range_formula.inci_name.blank? || range_formula.range.blank?
+
         Ingredient.create!(
           component: range_formula.component,
           inci_name: range_formula.inci_name,
