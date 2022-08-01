@@ -5,7 +5,10 @@ namespace :ingredients do
     ActiveRecord::Base.transaction do
       puts "Migrating data from ExactFormula to Ingredient..."
       ExactFormula.find_each do |exact_formula|
-        next if exact_formula.component.nil? || exact_formula.inci_name.blank? || exact_formula.quantity.blank?
+        next if exact_formula.component.nil? ||
+          exact_formula.inci_name.blank? ||
+          exact_formula.quantity.blank? ||
+          exact_formula.quantity.zero?
 
         Ingredient.create!(
           component: exact_formula.component,
