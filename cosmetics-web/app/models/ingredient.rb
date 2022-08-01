@@ -44,6 +44,9 @@ private
 
   def unique_inci_name
     return if inci_name.blank? || component.blank?
+
+    notification = component.notification
+    return if notification&.via_zip_file? || notification&.deleted?
     return if inci_name_was&.casecmp(inci_name)&.zero? # Do not validate uniqueness if name is unchanged.
 
     if self.class.where(component_id: component).where("LOWER(inci_name) = ?", inci_name.downcase).any?

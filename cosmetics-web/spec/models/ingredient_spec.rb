@@ -113,6 +113,20 @@ RSpec.describe Ingredient, type: :model do
         ingredient = build(:poisonous_ingredient, inci_name: "Ingredient  A")
         expect(ingredient).to be_valid
       end
+
+      it "is valid when an ingredient with the same name exists in the same component for a deleted notification" do
+        component = build(:ranges_component, notification: build(:notification, :deleted))
+        create(:range_ingredient, inci_name: "A", component: component)
+        ingredient = build(:poisonous_ingredient, inci_name: "A", component: component)
+        expect(ingredient).to be_valid
+      end
+
+      it "is valid when an ingredient with the same name exists in the same component for a legacy zip imported notification" do
+        component = create(:ranges_component, notification: create(:notification, cpnp_reference: "3796528"))
+        create(:range_ingredient, inci_name: "A", component: component)
+        ingredient = build(:poisonous_ingredient, inci_name: "A", component: component)
+        expect(ingredient).to be_valid
+      end
     end
   end
 end
