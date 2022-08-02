@@ -65,7 +65,7 @@ GEM
     activerecord (6.1.6.1)
       activemodel (= 6.1.6.1)
       activesupport (= 6.1.6.1)
-    activerecord-pg_enum (1.2.2)
+    activerecord-pg_enum (2.0.0)
       activerecord (>= 4.1.0)
       activesupport
       pg
@@ -214,7 +214,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.11.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -504,7 +504,7 @@ GEM
     tilt (2.0.10)
     tins (1.29.1)
       sync
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
       unf_ext
