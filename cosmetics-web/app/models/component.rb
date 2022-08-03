@@ -206,7 +206,11 @@ class Component < ApplicationRecord
     # Purge formulation files added in old flow.
     # Now ingredients need to be added manually or use a predefined formulation.
     formulation_file.purge
-    ingredients.destroy_all if old_type != notification_type
+    if old_type != notification_type
+      ingredients.destroy_all
+      exact_formulas.destroy_all
+      range_formulas.destroy_all
+    end
     update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
   end
 
@@ -255,5 +259,6 @@ private
 
   def remove_poisonous_ingredients!
     ingredients.poisonous.destroy_all
+    exact_formulas.where(poisonous: true).destroy_all
   end
 end
