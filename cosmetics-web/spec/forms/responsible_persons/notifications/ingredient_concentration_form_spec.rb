@@ -271,6 +271,12 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           it { expect(form).to be_valid }
         end
 
+        context "when updgrading an existing ingredient name to different capitalisation" do
+          let(:updating_ingredient) { create(ingredient_factory, inci_name: name.upcase, component: component) }
+
+          it { expect(form).to be_valid }
+        end
+
         it "is valid when the ingredient already exists for a different component in the same notification" do
           component_factory = type == "exact" ? :exact_component : :ranges_component
           different_component = create(component_factory, notification: component.notification)

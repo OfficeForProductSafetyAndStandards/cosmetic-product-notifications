@@ -87,9 +87,8 @@ module ResponsiblePersons::Notifications
 
     def unique_name
       return if name.blank? || component.blank?
-      return if updating_ingredient&.inci_name&.casecmp(name)&.zero?
 
-      if Ingredient.where(component_id: component).where("LOWER(inci_name) = ?", name.downcase).any?
+      if Ingredient.where(component_id: component, inci_name: name).where.not(id: updating_ingredient).any?
         errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
       end
     end

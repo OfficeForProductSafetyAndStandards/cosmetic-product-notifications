@@ -23,7 +23,7 @@ class Ingredient < ApplicationRecord
   scope :exact, -> { where.not(exact_concentration: nil) }
 
   validates :inci_name, presence: true
-  validate :unique_inci_name, if: :inci_name_changed?
+  validates :inci_name, uniqueness: { scope: :component_id }, if: :validate_inci_name_uniqueness?
 
   # Exact and range concentration invalidate each other.
   validates :range_concentration, absence: true, if: -> { exact_concentration.present? }
@@ -42,16 +42,11 @@ class Ingredient < ApplicationRecord
 
 private
 
-  def unique_inci_name
-    return if inci_name.blank? || component.blank?
+  def validate_inci_name_uniqueness?
+    return false if inci_name.blank? || !inci_name_changed?
 
-    notification = component.notification
-    return if notification&.via_zip_file? || notification&.deleted?
-    return if inci_name_was&.casecmp(inci_name)&.zero? # Do not validate uniqueness if name is unchanged.
-
-    if self.class.where(component_id: component).where("LOWER(inci_name) = ?", inci_name.downcase).any?
-      errors.add(:inci_name, :taken)
-    end
+    notification = component&.notification
+    notification && !notification&.via_zip_file? && !notification&.deleted?
   end
 
   def poisonous_on_exact_concentration
