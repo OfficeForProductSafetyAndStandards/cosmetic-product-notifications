@@ -29,6 +29,7 @@ class CreateIngredient < ActiveRecord::Migration[6.1]
       add_index :ingredients, :poisonous, algorithm: :concurrently
       add_index :ingredients, :range_concentration, algorithm: :concurrently
       add_index :ingredients, :exact_concentration, algorithm: :concurrently
+      add_index :ingredients, :created_at, algorithm: :concurrently
     end
   end
 end

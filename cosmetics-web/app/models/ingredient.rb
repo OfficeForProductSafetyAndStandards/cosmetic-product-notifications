@@ -22,6 +22,8 @@ class Ingredient < ApplicationRecord
   scope :range, -> { where.not(range_concentration: nil) }
   scope :exact, -> { where.not(exact_concentration: nil) }
 
+  default_scope { order(created_at: :asc) }
+
   validates :inci_name, presence: true
   validates :inci_name, uniqueness: { scope: :component_id }, if: :validate_inci_name_uniqueness?
 

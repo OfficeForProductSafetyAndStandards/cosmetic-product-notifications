@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 2022_07_14_124143) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "component_id"
     t.index ["component_id"], name: "index_ingredients_on_component_id"
+    t.index ["created_at"], name: "index_ingredients_on_created_at"
     t.index ["exact_concentration"], name: "index_ingredients_on_exact_concentration"
     t.index ["inci_name"], name: "index_ingredients_on_inci_name"
     t.index ["poisonous"], name: "index_ingredients_on_poisonous"
