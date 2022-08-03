@@ -33,6 +33,10 @@ module ResponsiblePersons::Notifications
       super(params)
       return if type.blank?
 
+      # Clearing data coming from user form submission.
+      # If user fills concentration for an ingredient type, and then changes the type, this code clears the
+      # concentration for the previous type. So only the correct one is kept on form/saved in DB.
+      # Also enforces "exact" type for a "Range poisonous ingredient", that is provided as an exact concentration.
       if type == RANGE && !poisonous
         self.exact_concentration = nil
       else
