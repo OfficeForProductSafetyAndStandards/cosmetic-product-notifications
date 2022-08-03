@@ -16,13 +16,13 @@ module IngredientHelper
 
   def format_exact_ingredients(exact_ingredients)
     exact_ingredients.map do |ingredient|
-      { inci_name: ingredient.inci_name, quantity: display_concentration(ingredient.exact_concentration) }
+      { inci_name: ingredient.inci_name, exact_concentration: display_concentration(ingredient.exact_concentration) }
     end
   end
 
   def format_range_ingredients(range_ingredients)
     range_ingredients.map do |ingredient|
-      { inci_name: ingredient.inci_name, range: display_concentration_range(ingredient.range_concentration) }
+      { inci_name: ingredient.inci_name, range_concentration: display_concentration_range(ingredient.range_concentration) }
     end
   end
 end

@@ -11,7 +11,7 @@
               key_name: :inci_name, value_name: :exact_concentration %>
     <% end %>
     <% if component.ingredients.range.any? %>
-      <%= render "formulation_table", entities_list: format_range_ingredients(component.ingredients.range),
+      <%= render "formulation_table", entities_list: component.ingredients.range,
               key_name: :inci_name, value_name: :range_concentration %>
     <% end %>
     <% if component.formulation_file.attached? %>
