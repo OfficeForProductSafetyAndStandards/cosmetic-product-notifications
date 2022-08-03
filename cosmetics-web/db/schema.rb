@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2022_07_14_124143) do
   end
 
   create_table "ingredients", force: :cascade do |t|
-    t.string "inci_name", null: false
+    t.citext "inci_name", null: false
     t.string "cas_number"
     t.decimal "exact_concentration"
     t.enum "range_concentration", as: "ingredient_range_concentration"
@@ -159,6 +159,10 @@ ActiveRecord::Schema.define(version: 2022_07_14_124143) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "component_id"
     t.index ["component_id"], name: "index_ingredients_on_component_id"
+    t.index ["exact_concentration"], name: "index_ingredients_on_exact_concentration"
+    t.index ["inci_name"], name: "index_ingredients_on_inci_name"
+    t.index ["poisonous"], name: "index_ingredients_on_poisonous"
+    t.index ["range_concentration"], name: "index_ingredients_on_range_concentration"
   end
 
   create_table "nano_elements", force: :cascade do |t|

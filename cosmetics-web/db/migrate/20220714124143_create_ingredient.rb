@@ -1,4 +1,6 @@
 class CreateIngredient < ActiveRecord::Migration[6.1]
+  disable_ddl_transaction!
+
   def change
     safety_assured do
       create_enum :ingredient_range_concentration,
@@ -12,7 +14,7 @@ class CreateIngredient < ActiveRecord::Migration[6.1]
                      greater_than_75_less_than_100_percent]
 
       create_table :ingredients do |t|
-        t.string "inci_name", null: false
+        t.citext "inci_name", null: false
         t.string "cas_number"
         t.decimal "exact_concentration"
         t.enum "range_concentration", as: "ingredient_range_concentration"
@@ -21,7 +23,12 @@ class CreateIngredient < ActiveRecord::Migration[6.1]
         t.timestamps
       end
 
-      add_reference :ingredients, :component, foreign_key: true, index: true
+      add_reference :ingredients, :component, foreign_key: true, index: false
+      add_index :ingredients, :component_id, algorithm: :concurrently
+      add_index :ingredients, :inci_name, algorithm: :concurrently
+      add_index :ingredients, :poisonous, algorithm: :concurrently
+      add_index :ingredients, :range_concentration, algorithm: :concurrently
+      add_index :ingredients, :exact_concentration, algorithm: :concurrently
     end
   end
 end
