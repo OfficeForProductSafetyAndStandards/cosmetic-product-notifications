@@ -31,7 +31,18 @@ module ResponsiblePersons::Notifications
 
     def initialize(params = {})
       super(params)
-      self.type = EXACT if type == RANGE && poisonous
+      return if type.blank?
+
+      # Clearing data coming from user form submission.
+      # If user fills concentration for an ingredient type, and then changes the type, this code clears the
+      # concentration for the previous type. So only the correct one is kept on form/saved in DB.
+      # Also enforces "exact" type for a "Range poisonous ingredient", that is provided as an exact concentration.
+      if type == RANGE && !poisonous
+        self.exact_concentration = nil
+      else
+        self.type = EXACT
+        self.range_concentration = nil
+      end
     end
 
     def range?
@@ -45,93 +56,41 @@ module ResponsiblePersons::Notifications
     def save
       return false unless valid?
 
-      case type
-      when EXACT then save_exact_ingredient
-      when RANGE then save_range_ingredient
+      if updating_ingredient
+        update_ingredient
+      else
+        create_ingredient
       end
     end
 
   private
 
-    def save_exact_ingredient
-      case updating_ingredient
-      when nil then create_exact_ingredient
-      when ExactFormula then update_exact_ingredient
-      when RangeFormula then update_range_to_exact_ingredient
-      end
-    end
-
-    def save_range_ingredient
-      case updating_ingredient
-      when nil then create_range_ingredient
-      when ExactFormula then update_exact_to_range_ingredient
-      when RangeFormula then update_range_ingredient
-      end
-    end
-
-    def create_exact_ingredient(created_at: Time.zone.now)
-      component.exact_formulas.create(
+    def create_ingredient
+      component.ingredients.create(
         inci_name: name,
-        quantity: exact_concentration,
-        cas_number: cas_number,
-        poisonous: poisonous,
-        created_at: created_at,
-      )
-    end
-
-    def create_range_ingredient(created_at: Time.zone.now)
-      component.range_formulas.create(
-        inci_name: name,
-        range: range_concentration,
-        cas_number: cas_number,
-        created_at: created_at,
-      )
-    end
-
-    def update_exact_ingredient
-      updating_ingredient.update(
-        inci_name: name,
-        quantity: exact_concentration,
+        exact_concentration: exact_concentration,
+        range_concentration: range_concentration,
         cas_number: cas_number,
         poisonous: poisonous,
       )
     end
 
-    def update_range_ingredient
+    def update_ingredient
       updating_ingredient.update(
         inci_name: name,
-        range: range_concentration,
+        exact_concentration: exact_concentration,
+        range_concentration: range_concentration,
         cas_number: cas_number,
+        poisonous: poisonous,
       )
-    end
-
-    def update_range_to_exact_ingredient
-      ActiveRecord::Base.transaction do
-        new_ingredient = create_exact_ingredient(created_at: updating_ingredient.created_at)
-        updating_ingredient.destroy
-        new_ingredient
-      end
-    end
-
-    def update_exact_to_range_ingredient
-      ActiveRecord::Base.transaction do
-        new_ingredient = create_range_ingredient(created_at: updating_ingredient.created_at)
-        updating_ingredient.destroy
-        new_ingredient
-      end
     end
 
     def unique_name
       return if name.blank? || component.blank?
-      return if updating_ingredient&.inci_name&.casecmp(name)&.zero?
 
-      if ingredient_exists_in?(ExactFormula) || ingredient_exists_in?(RangeFormula)
+      if Ingredient.where(component_id: component, inci_name: name).where.not(id: updating_ingredient).any?
         errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
       end
-    end
-
-    def ingredient_exists_in?(ingredient_class)
-      ingredient_class.where(component_id: component).where("LOWER(inci_name) = ?", name.downcase).any?
     end
   end
 end

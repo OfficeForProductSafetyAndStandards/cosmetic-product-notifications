@@ -90,17 +90,17 @@ FactoryBot.define do
       frame_formulation { "skin_care_cream_lotion_gel_with_high_level_of_perfume" }
     end
 
-    trait :with_range_formulas do
+    trait :with_range_ingredients do
       notification_type { "range" }
       after(:create) do |component|
-        create(:range_formula, component: component)
+        create(:range_ingredient, component: component)
       end
     end
 
-    trait :with_exact_formulas do
+    trait :with_exact_ingredients do
       notification_type { "exact" }
       after(:create) do |component|
-        create(:exact_formula, component: component)
+        create(:exact_ingredient, component: component)
       end
     end
 

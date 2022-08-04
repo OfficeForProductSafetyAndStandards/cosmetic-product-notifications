@@ -156,6 +156,24 @@ en:
               greater_than: "Enter a concentration greater than 0"
               less_than_or_equal_to: "Enter a concentration less than or equal to 100"
               not_a_number: "Enter a number for the concentration"
+        ingredient:
+          attributes:
+            inci_name:
+              blank: "Enter a name"
+              taken: "Ingredient name already exists in this component"
+            exact_concentration:
+              blank: "Enter the exact or range concentration"
+              present: "Cannot have both exact and range concentrations"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
+              not_a_number: "Enter a number for the concentration"
+              non_poisonous_wrong_component_type: "non poisonous exact ingredients must belong to a exact component"
+            range_concentration:
+              blank: "Enter the exact or range concentration"
+              present: "Cannot have both exact and range concentrations"
+              non_range_component: "ingredient with range concentration must belong to a range component"
+            poisonous:
+              with_range_concentration: "ingredients with range concentration cannot be poisonous"
   activemodel:
     attributes:
       registration/account_security_form:

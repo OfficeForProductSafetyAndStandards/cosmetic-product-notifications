@@ -27,8 +27,8 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
   end
 
   scenario "Removing an ingredient from a component with multiple ingredients" do
-    create(:exact_formula, inci_name: "Ingredient A", quantity: 4.0, poisonous: false, component: component)
-    create(:exact_formula, inci_name: "Ingredient B", quantity: 3.0, poisonous: true, component: component)
+    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component: component)
 
     navigate_to_edit_first_ingredient_page
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A", "Ingredient B"])
@@ -44,8 +44,8 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
   end
 
   scenario "Removing the last ingredient from a component with multiple ingredients" do
-    create(:exact_formula, inci_name: "Ingredient A", quantity: 4.0, poisonous: false, component: component)
-    create(:exact_formula, inci_name: "Ingredient B", quantity: 3.0, poisonous: true, component: component)
+    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component: component)
 
     navigate_to_edit_first_ingredient_page
     # Move to the second ingredient
@@ -63,7 +63,7 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
   end
 
   scenario "Removing the only ingredient for the component" do
-    create(:exact_formula, inci_name: "Ingredient A", quantity: 4.0, poisonous: false, component: component)
+    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component: component)
 
     navigate_to_edit_first_ingredient_page
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A"])

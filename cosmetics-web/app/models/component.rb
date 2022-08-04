@@ -16,6 +16,7 @@ class Component < ApplicationRecord
 
   has_many :exact_formulas, dependent: :destroy
   has_many :range_formulas, dependent: :destroy
+  has_many :ingredients, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :component_nano_materials
@@ -205,8 +206,8 @@ class Component < ApplicationRecord
     # Purge formulation files added in old flow.
     # Now ingredients need to be added manually or use a predefined formulation.
     formulation_file.purge
-
     if old_type != notification_type
+      ingredients.destroy_all
       exact_formulas.destroy_all
       range_formulas.destroy_all
     end
@@ -215,18 +216,6 @@ class Component < ApplicationRecord
 
   def frame_formulation?
     predefined?
-  end
-
-  def ingredients
-    (exact_formulas + range_formulas).sort_by(&:created_at)
-  end
-
-  def poisonous_ingredients
-    exact_formulas.where(poisonous: true)
-  end
-
-  def non_poisonous_ingredients
-    (exact_formulas.where.not(poisonous: true) + range_formulas).sort_by(&:created_at)
   end
 
 private
@@ -269,6 +258,7 @@ private
   end
 
   def remove_poisonous_ingredients!
-    exact_formulas.destroy_all
+    ingredients.poisonous.destroy_all
+    exact_formulas.where(poisonous: true).destroy_all
   end
 end

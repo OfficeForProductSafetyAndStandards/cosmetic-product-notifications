@@ -13,4 +13,16 @@ module IngredientHelper
                        .map(&:presence) # Converts ["", "0.1"] to [nil, "1"]
     range_klass.new(above, upto)
   end
+
+  def format_exact_ingredients(exact_ingredients)
+    exact_ingredients.map do |ingredient|
+      { inci_name: ingredient.inci_name, exact_concentration: display_concentration(ingredient.exact_concentration) }
+    end
+  end
+
+  def format_range_ingredients(range_ingredients)
+    range_ingredients.map do |ingredient|
+      { inci_name: ingredient.inci_name, range_concentration: display_concentration_range(ingredient.range_concentration) }
+    end
+  end
 end

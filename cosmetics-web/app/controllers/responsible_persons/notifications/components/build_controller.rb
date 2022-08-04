@@ -372,15 +372,13 @@ private
   def ingredient_form_values(ingredient, ingredient_number)
     return {} if ingredient.blank?
 
-    values = { name: ingredient.inci_name,
-               cas_number: ingredient.cas_number,
-               updating_ingredient: ingredient,
-               ingredient_number: ingredient_number }
-
-    case ingredient
-    when ExactFormula then values.merge!(exact_concentration: ingredient.quantity, poisonous: ingredient.poisonous)
-    when RangeFormula then values.merge!(range_concentration: ingredient.range, poisonous: false)
-    end
+    { name: ingredient.inci_name,
+      cas_number: ingredient.cas_number,
+      exact_concentration: ingredient.exact_concentration,
+      range_concentration: ingredient.range_concentration,
+      poisonous: ingredient.poisonous,
+      updating_ingredient: ingredient,
+      ingredient_number: ingredient_number }
   end
 
   def component_params
