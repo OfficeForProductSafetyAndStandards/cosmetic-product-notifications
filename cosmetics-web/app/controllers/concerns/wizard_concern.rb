@@ -6,6 +6,10 @@ module WizardConcern
     helper_method :next_step_path
     before_action :check_minimum_state
     helper_method :model
+
+    rescue_from Wicked::Wizard::InvalidStepError do
+      raise ActionController::RoutingError, "Invalid step"
+    end
   end
 
   def notification

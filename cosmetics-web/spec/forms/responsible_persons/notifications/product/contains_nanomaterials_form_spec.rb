@@ -134,6 +134,14 @@ RSpec.describe ResponsiblePersons::Notifications::Product::ContainsNanomaterials
         expect(form.errors.full_messages_for(:contains_nanomaterials)).to be_empty
       end
 
+      context "when the nanomaterials count is higher" do
+        let(:nanomaterials_count) { "3" }
+
+        it "returns 0 as count" do
+          expect(form.nanomaterials_count).to eq 0
+        end
+      end
+
       context "when the nanomaterials count is invalid" do
         let(:nanomaterials_count) { "twelve" }
 
