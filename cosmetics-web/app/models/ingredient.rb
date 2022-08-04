@@ -38,8 +38,8 @@ class Ingredient < ApplicationRecord
 
   validates :range_concentration, presence: true, if: -> { exact_concentration.blank? }
 
-  validate :poisonous_on_exact_concentration, unless: :exact_concentration?
-  validate :non_poisonous_exact_component_type, unless: :range_concentration?
+  validate :poisonous_on_exact_concentration
+  validate :non_poisonous_exact_component_type
   validate :range_component_type
 
 private
@@ -52,7 +52,7 @@ private
   end
 
   def poisonous_on_exact_concentration
-    if poisonous? && range_concentration.present?
+    if poisonous? && exact_concentration.blank? && range_concentration.present?
       errors.add(:poisonous, :with_range_concentration)
     end
   end
@@ -64,7 +64,11 @@ private
   end
 
   def non_poisonous_exact_component_type
-    if exact_concentration.present? && !poisonous && component && component.notification_type != "exact"
+    if !poisonous &&
+        exact_concentration.present? &&
+        range_concentration.blank? &&
+        component &&
+        component.notification_type != "exact"
       errors.add(:exact_concentration, :non_poisonous_wrong_component_type)
     end
   end
