@@ -103,6 +103,10 @@ class Component < ApplicationRecord
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :component_complete
+
+    event :complete, after_commit: -> { notification.reload.try_to_complete_components! } do
+      transitions from: :empty, to: :component_complete
+    end
   end
 
   def self.exposure_routes_options
