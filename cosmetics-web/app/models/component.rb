@@ -97,7 +97,7 @@ class Component < ApplicationRecord
   # Deletes all the associated poisonous ingredients from predefined components when
   # "contains_poisonous_ingredients" is set to "false"
   after_update :remove_poisonous_ingredients!,
-               if: [:predefined?, -> { ingredients.any? }],
+               if: [:predefined?, -> { ingredients.poisonous.any? }],
                unless: :contains_poisonous_ingredients?
 
   aasm whiny_transitions: false, column: :state do
