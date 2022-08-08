@@ -20,7 +20,7 @@ jobs:
 
     - name: Create GitHub deployment for Staging
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: master
       run: |
         source cosmetics-web/deploy-github-functions.sh
@@ -28,7 +28,7 @@ jobs:
 
     - name: Initiate Staging deployment status
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
@@ -62,7 +62,7 @@ jobs:
     - name: Update Staging deployment status (success)
       if: success()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         environment_url=https://staging-submit.cosmetic-product-notifications.service.gov.uk/
@@ -71,14 +71,14 @@ jobs:
     - name: Update Staging deployment status (failure)
       if: failure()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure staging $LOG_URL
 
     - name: Create GitHub deployment for Production
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: master
       run: |
         source cosmetics-web/deploy-github-functions.sh
@@ -86,7 +86,7 @@ jobs:
 
     - name: Initiate Production deployment status
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_initiate production $LOG_URL
@@ -114,7 +114,7 @@ jobs:
     - name: Update Production deployment status (success)
       if: success()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         environment_url=https://submit.cosmetic-product-notifications.service.gov.uk/
@@ -123,7 +123,7 @@ jobs:
     - name: Update Production deployment status (failure)
       if: failure()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure production $LOG_URL
