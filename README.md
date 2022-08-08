@@ -1,4 +1,4 @@
-# Office for Product Safety & Standards Services
+# Cosmetics product notifications
 
 [![Build Status](https://travis-ci.org/UKGovernmentBEIS/beis-opss.svg?branch=master)](https://travis-ci.org/UKGovernmentBEIS/beis-opss)
 [![Coverage Status](https://coveralls.io/repos/github/UKGovernmentBEIS/beis-opss/badge.svg?branch=master)](https://coveralls.io/github/UKGovernmentBEIS/beis-opss?branch=master)
