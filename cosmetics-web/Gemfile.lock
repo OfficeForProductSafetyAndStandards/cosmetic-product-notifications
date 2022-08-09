@@ -84,6 +84,9 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    after_commit_everywhere (1.2.2)
+      activerecord (>= 4.2)
+      activesupport
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
@@ -541,6 +544,7 @@ DEPENDENCIES
   aasm (= 5.2.0)
   active_hash!
   activerecord-pg_enum
+  after_commit_everywhere
   aws-sdk-s3 (~> 1.60.1)
   brakeman (~> 4.7.2)
   capybara (~> 3.36.0)

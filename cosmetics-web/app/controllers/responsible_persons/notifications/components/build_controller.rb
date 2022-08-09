@@ -89,9 +89,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
-      @component.update_state("component_complete")
-      # TODO: write spec
-      @component.reload.notification.try_to_complete_components!
+      @component.complete!
       return render "responsible_persons/notifications/task_completed"
     end
 

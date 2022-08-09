@@ -97,12 +97,20 @@ class Component < ApplicationRecord
   # Deletes all the associated poisonous ingredients from predefined components when
   # "contains_poisonous_ingredients" is set to "false"
   after_update :remove_poisonous_ingredients!,
-               if: [:predefined?, -> { ingredients.any? }],
+               if: [:predefined?, -> { ingredients.poisonous.any? }],
                unless: :contains_poisonous_ingredients?
 
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :component_complete
+
+    event :complete, after_commit: -> { notification.reload.try_to_complete_components! } do
+      transitions from: :empty, to: :component_complete
+    end
+
+    event :reset_state, after_commit: -> { notification.reload.revert_to_ready_for_components! } do
+      transitions from: :component_complete, to: :empty
+    end
   end
 
   def self.exposure_routes_options
@@ -201,17 +209,19 @@ class Component < ApplicationRecord
   def update_formulation_type(type)
     old_type = notification_type
     self.notification_type = type
-    return unless save(context: :select_formulation_type)
+    transaction do
+      return unless save(context: :select_formulation_type)
 
-    # Purge formulation files added in old flow.
-    # Now ingredients need to be added manually or use a predefined formulation.
-    formulation_file.purge
-    if old_type != notification_type
-      ingredients.destroy_all
-      exact_formulas.destroy_all
-      range_formulas.destroy_all
+      # Purge formulation files added in old flow.
+      # Now ingredients need to be added manually or use a predefined formulation.
+      formulation_file.purge
+
+      if old_type != notification_type
+        delete_ingredients
+        reset_state!
+      end
+      update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
     end
-    update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
   end
 
   def frame_formulation?
@@ -260,5 +270,11 @@ private
   def remove_poisonous_ingredients!
     ingredients.poisonous.destroy_all
     exact_formulas.where(poisonous: true).destroy_all
+  end
+
+  def delete_ingredients
+    ingredients.destroy_all
+    exact_formulas.destroy_all
+    range_formulas.destroy_all
   end
 end
