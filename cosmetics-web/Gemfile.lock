@@ -1,10 +1,9 @@
 GIT
   remote: https://github.com/UKGovernmentBEIS/govuk-design-system-rails
-  revision: 924859834b4be0a877aec03ec257bc4745c17dff
-  tag: 0.8.2
+  revision: 9cf0f159074be22eaab1035ca05658c0d11f53a0
+  tag: 0.9.0
   specs:
-    govuk-design-system-rails (0.8.1)
-      slim-rails
+    govuk-design-system-rails (0.9.0)
 
 GIT
   remote: https://github.com/zilkey/active_hash.git

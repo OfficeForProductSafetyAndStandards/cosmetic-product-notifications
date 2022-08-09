@@ -48,7 +48,7 @@ gem "webpacker", "~> 5.0"
 gem "webrick", "~> 1.7"
 gem "wicked", "~> 1.3.4"
 
-gem "govuk-design-system-rails", git: "https://github.com/UKGovernmentBEIS/govuk-design-system-rails", tag: "0.8.2", require: "govuk_design_system"
+gem "govuk-design-system-rails", git: "https://github.com/UKGovernmentBEIS/govuk-design-system-rails", tag: "0.9.0", require: "govuk_design_system"
 
 group :development, :test do
   gem "brakeman", "~> 4.7.2"
