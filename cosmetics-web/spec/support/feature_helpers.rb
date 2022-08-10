@@ -110,8 +110,8 @@ end
 def expect_incorrect_email_or_password
   expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
   expect(page).to have_link("Enter correct email address and password", href: "#email")
-  expect(page).to have_css("span#email-error", text: "Error: Enter correct email address and password")
-  expect(page).to have_css("span#password-error", text: "")
+  expect(page).to have_css("p#email-error", text: "Error: Enter correct email address and password")
+  expect(page).to have_css("p#password-error", text: "")
 
   expect(page).not_to have_link("Cases")
 end

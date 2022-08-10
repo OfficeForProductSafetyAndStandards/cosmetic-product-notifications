@@ -32,7 +32,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
-    expect(page).to have_css("span#app_authentication_code-error", text: "Enter a correct code")
+    expect(page).to have_css("p#app_authentication_code-error", text: "Enter a correct code")
 
     # Third attempt introducing the correct app authentication code
     fill_in_account_details_with(full_name: "Bob Jones",
@@ -110,7 +110,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
-    expect(page).to have_css("span#app_authentication_code-error", text: "Enter a correct code")
+    expect(page).to have_css("p#app_authentication_code-error", text: "Enter a correct code")
 
     # Third attempt introducing the correct app authentication code
     fill_in_account_details_with(full_name: "Bob Jones",
