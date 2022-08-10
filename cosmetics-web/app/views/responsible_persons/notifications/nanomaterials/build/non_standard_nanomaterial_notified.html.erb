@@ -12,11 +12,10 @@
     <div class="govuk-grid-column-two-thirds">
 
       <%= error_summary_for(@nano_element, first_values: {confirm_toxicology_notified: "yes"}) %>
-      <%= render "form_components/govuk_radios",
-        form: form,
-          key: :confirm_toxicology_notified,
-            fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
-              items: items %>
+      <%= govukRadios(form: form,
+                      key: :confirm_toxicology_notified,
+                      fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
+                      items: items) %>
       <%= govukButton text: "Continue" %>
 
     </div>

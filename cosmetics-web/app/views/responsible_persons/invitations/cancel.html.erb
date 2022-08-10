@@ -16,16 +16,16 @@
         </h1>
       <% end %>
 
-      <%= render "form_components/govuk_radios",
-              form: form,
-              key: :cancel_invitation,
-              fieldset: { legend: { html: heading, classes: "govuk-fieldset__legend--l" } },
-              idPrefix: "cancel_invitation",
-              name: "cancel_invitation",
-              hint: { text: "Invitation emails already sent to the user will not work if you cancel the invitation." },
-              classes: "govuk-!-padding-top-3",
-              items: [{ text: "Yes", value: :yes },
-                      { text: "No", value: :no }] %>
+      <%= govukRadios(
+            form: form,
+            key: :cancel_invitation,
+            fieldset: { legend: { html: heading, classes: "govuk-fieldset__legend--l" } },
+            idPrefix: "cancel_invitation",
+            name: "cancel_invitation",
+            hint: { text: "Invitation emails already sent to the user will not work if you cancel the invitation." },
+            classes: "govuk-!-padding-top-3",
+            items: [{ text: "Yes", value: :yes },
+                    { text: "No", value: :no }]) %>
       <div class="govuk-button-group">
         <%= govukButton text: "Save and continue" %>
       </div>

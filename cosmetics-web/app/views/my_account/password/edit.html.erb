@@ -12,7 +12,7 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <%= form_with model: @user, url: my_account_password_path, method: :patch do |form| %>
-      <%= render "form_components/govuk_input",
+      <%= govukInput(
         key: :old_password,
         type: :password,
         form: form,
@@ -22,8 +22,8 @@
         },
         value: nil,
         id: "old_password"
-        %>
-      <%= render "form_components/govuk_input",
+      ) %>
+      <%= govukInput(
         key: :password,
         type: :password,
         form: form,
@@ -33,7 +33,7 @@
         },
         value: nil,
         id: "new_password"
-        %>
+      ) %>
       <%= govukButton(text: "Save") %>
     <% end %>
   </div>

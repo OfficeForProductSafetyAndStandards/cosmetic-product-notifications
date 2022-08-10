@@ -50,27 +50,26 @@
                        hint: { text: "This is the 6 digit access code shown on your authenticator app." } %>
       <% end %>
 
-      <%= render "form_components/govuk_checkboxes",
+      <%= govukCheckboxes(
             form: form,
             key: :secondary_authentication_methods,
             hint: { text: "Choose one or both options" },
             fieldset: {
-              legend: { text: "How do you want to get access codes?",
-                        classes: "govuk-label--m",
-                        isPageHeading: false }
-              },
-              items: [
-                { id: "app_authentication",
-                  key: :app_authentication,
-                  text: "Authenticator app for smartphone or tablet",
-                  conditional: { html: authenticartion_app_setup_html },
-                  checked: @account_security_form.app_authentication_selected? },
-                { id: "sms_authentication",
-                  key: :sms_authentication,
-                  text: "Text message",
-                  conditional: { html: mobile_number_input_html },
-                  checked: @account_security_form.sms_authentication_selected? }
-              ] %>
+              legend: { text: "How do you want to get access codes?", classes: "govuk-label--m", isPageHeading: false },
+            },
+            items: [
+              { id: "app_authentication",
+                key: :app_authentication,
+                text: "Authenticator app for smartphone or tablet",
+                conditional: { html: authenticartion_app_setup_html },
+                checked: @account_security_form.app_authentication_selected? },
+              { id: "sms_authentication",
+                key: :sms_authentication,
+                text: "Text message",
+                conditional: { html: mobile_number_input_html },
+                checked: @account_security_form.sms_authentication_selected? }
+            ],
+          ) %>
 
       <%= govukButton(text: "Continue") %>
 

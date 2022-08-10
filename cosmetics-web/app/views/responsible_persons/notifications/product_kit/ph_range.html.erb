@@ -11,17 +11,12 @@
     <div class="govuk-grid-column-two-thirds">
 
       <%= error_summary_for(@notification) %>
-      <%= render "components/govuk_fieldset",
-              legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } do %>
+      <%= govukFieldset(legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true }) do %>
         <div class="govuk-grid-column-one-third govuk-!-padding-left-0">
-          <%= render "form_components/govuk_input", key: :ph_min_value, form: form,
-                  classes: "govuk-input--width-4",
-                  label: { text: "Minimum pH" } %>
+          <%= govukInput(key: :ph_min_value, form: form, classes: "govuk-input--width-4", label: { text: "Minimum pH" }) %>
         </div>
         <div class="govuk-grid-column-one-third govuk-!-padding-left-0">
-          <%= render "form_components/govuk_input", key: :ph_max_value, form: form,
-                  classes: "govuk-input--width-4",
-                  label: { text: "Maximum pH" } %>
+          <%= govukInput(key: :ph_max_value, form: form, classes: "govuk-input--width-4", label: { text: "Maximum pH" }) %>
         </div>
       <% end %>
 
