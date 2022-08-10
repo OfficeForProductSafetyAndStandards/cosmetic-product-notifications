@@ -2,7 +2,7 @@
 <% question = "How is the user likely to be exposed to the nanomaterials?" %>
 <% exposure_routes = @component.exposure_routes %>
 <% items = Component.exposure_routes_options.map { |route|
-  { key: route, text: get_exposure_route_name(route), checked: exposure_routes&.include?(route.to_s) }
+  { key: route, text: get_exposure_route_name(route), checked: exposure_routes&.include?(route.to_s), disable_ghost: true }
 } %>
 
 <% page_title title, errors: @component.errors.messages.include?(:exposure_routes) %>

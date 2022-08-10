@@ -62,11 +62,13 @@
                 key: :app_authentication,
                 text: "Authenticator app for smartphone or tablet",
                 conditional: { html: authenticartion_app_setup_html },
+                disable_ghost: true,
                 checked: @account_security_form.app_authentication_selected? },
               { id: "sms_authentication",
                 key: :sms_authentication,
                 text: "Text message",
                 conditional: { html: mobile_number_input_html },
+                disable_ghost: true,
                 checked: @account_security_form.sms_authentication_selected? }
             ],
           ) %>

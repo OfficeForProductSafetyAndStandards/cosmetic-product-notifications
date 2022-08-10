@@ -21,7 +21,7 @@
             key: :confirmation,
             hint: { text: "The #{@notification.product_name} product notification #{ @notification.notification_complete? ? '' : 'draft ' }will be deleted." },
             fieldset: { legend: { text: "Do you want to delete this #{type}?", classes: "govuk-fieldset__legend--l", isPageHeading: true } },
-            items: [{ id: "yes", key: :yes, value: "yes", text: "Yes", checked: false }]) %>
+            items: [{ id: "yes", key: :yes, value: "yes", text: "Yes", checked: false, disable_ghost: true }]) %>
 
       <div class="govuk-button-group">
         <%= govukButton(text: "Delete") %>
