@@ -63,13 +63,13 @@ RSpec.describe "Poison centre page", type: :request do
       it "displays the Responsible Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
-        expect(response.body).to have_tag("dd", text: responsible_person.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Contact person")
-        expect(response.body).to have_tag("dd", text: responsible_person.contact_persons.first.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
 
@@ -107,13 +107,13 @@ RSpec.describe "Poison centre page", type: :request do
       it "displays the Responsible Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
-        expect(response.body).to have_tag("dd", text: responsible_person.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Contact person")
-        expect(response.body).to have_tag("dd", text: responsible_person.contact_persons.first.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
 
@@ -151,13 +151,13 @@ RSpec.describe "Poison centre page", type: :request do
       it "displays the Responsible Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
-        expect(response.body).to have_tag("dd", text: responsible_person.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Contact person")
-        expect(response.body).to have_tag("dd", text: responsible_person.contact_persons.first.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
   end
