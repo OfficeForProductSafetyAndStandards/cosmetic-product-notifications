@@ -40,7 +40,7 @@ jobs:
 
     - name: Deactivate Github deployment
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_deactivate_dangling review-app-$PR_NUMBER
