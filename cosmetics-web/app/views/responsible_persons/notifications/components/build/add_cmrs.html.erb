@@ -13,24 +13,25 @@
       <% if cmr_errors.any? %>
         <%= govukErrorSummary titleText: "There is a problem", errorList: cmr_errors %>
       <% end %>
-      <%= govukFieldset(legend: { text: question, classes: "govuk-label--l", isPageHeading: true }) %>
-      <%= form.fields_for :cmrs do |cmr_fields| %>
-        <%= cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-m" %>
-        <%= govukInput(form: cmr_fields,
-                       key: :name,
-                       label: { text: "International Nomenclature of Cosmetic Ingredients (INCI) name" }) %>
-        <div class="govuk-grid-row multi-field-row">
+      <%= govukFieldset(legend: { text: question, classes: "govuk-label--l", isPageHeading: true }) do %>
+        <%= form.fields_for :cmrs do |cmr_fields| %>
+          <%= cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-m" %>
           <%= govukInput(form: cmr_fields,
-                         key: :cas_number,
-                         label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
-                         hint: { text: "For example, 1111-11-1" },
-                         formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }) %>
-          <%= govukInput(form: cmr_fields,
-                         key: :ec_number,
-                         label: { text: "European Community (EC) number", classes: "multi-field-item-label" },
-                         hint: { text: "For example, 111-111-1" },
-                         formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }) %>
-        </div>
+                        key: :name,
+                        label: { text: "International Nomenclature of Cosmetic Ingredients (INCI) name" }) %>
+          <div class="govuk-grid-row multi-field-row">
+            <%= govukInput(form: cmr_fields,
+                          key: :cas_number,
+                          label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
+                          hint: { text: "For example, 1111-11-1" },
+                          formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }) %>
+            <%= govukInput(form: cmr_fields,
+                          key: :ec_number,
+                          label: { text: "European Community (EC) number", classes: "multi-field-item-label" },
+                          hint: { text: "For example, 111-111-1" },
+                          formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }) %>
+          </div>
+        <% end %>
       <% end %>
       <%= govukButton text: "Continue" %>
     </div>
