@@ -150,9 +150,25 @@ private
       ResponsiblePersons::Notifications::Product::ContainsNanomaterialsForm.new(contains_nanomaterials_params)
   end
 
+  def single_or_multi_component_values
+    return single_or_multi_component_params if single_or_multi_component_params.keys.any?
+
+    count = @notification.components.count
+    case count
+    when 0
+      {}
+    when 1
+      { single_or_multi_component: ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm::SINGLE,
+        components_count: count }
+    else
+      { single_or_multi_component: ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm::MULTI,
+        components_count: count }
+    end
+  end
+
   def single_or_multi_component_form
     @single_or_multi_component_form ||=
-      ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm.new(single_or_multi_component_params)
+      ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm.new(single_or_multi_component_values)
   end
 
   def model
