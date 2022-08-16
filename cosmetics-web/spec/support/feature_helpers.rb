@@ -117,7 +117,7 @@ def expect_incorrect_email_or_password
 end
 
 def expect_success_banner_with_text(text)
-  expect(page).to have_css("div.hmcts-banner--success", text: text)
+  expect(page).to have_css("div.govuk-notification-banner--success", text: text)
 end
 
 def otp_code(email = nil)
