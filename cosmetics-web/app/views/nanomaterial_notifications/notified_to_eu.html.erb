@@ -56,7 +56,7 @@
           }]) %>
 
 
-      <%= render "form_components/govuk_radios",
+      <%= govukRadios(
         form: form,
         key: :eu_notified,
         fieldset: {
@@ -78,8 +78,7 @@
             value: :false,
             text: "No",
           },
-        ]
-      %>
+        ]) %>
       <%= govukButton text: "Continue" %>
     <% end %>
 

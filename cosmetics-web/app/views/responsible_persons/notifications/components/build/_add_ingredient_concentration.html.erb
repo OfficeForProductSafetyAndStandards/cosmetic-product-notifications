@@ -42,7 +42,7 @@
     <%= form_with model: model, scope: :ingredient_concentration_form, url: wizard_path, method: :put, id: "skip-to-form", html: { novalidate: true } do |form| %>
       <div class="govuk-form-group">
         <% number = model.ingredient_number ? (model.ingredient_number + 1) : (component.ingredients.size + 1) %>
-        <%= render "components/govuk_fieldset", legend: { text: "Ingredient #{number}", classes: "govuk-fieldset__legend--s" } do %>
+        <%= govukFieldset(legend: { text: "Ingredient #{number}", classes: "govuk-fieldset__legend--s" }) do %>
           <%= yield form %>
           <%= form.hidden_field(:ingredient_number, value: model.ingredient_number) if model.ingredient_number.present? %>
         <% end %>

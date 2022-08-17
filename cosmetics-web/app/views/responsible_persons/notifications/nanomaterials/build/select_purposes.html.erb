@@ -1,7 +1,7 @@
 <% title = "Select nanomaterial purpose" %>
 <% question = "What is the purpose of #{@nano_element.inci_name}?" %>
 <% items = get_nanomaterial_purpose_options.map { |purpose, label|
-    { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose) }
+    { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose), disable_ghost: true }
   } %>
 
 <% page_title title, errors: @nano_element.errors.messages.include?(:purposes) %>
@@ -16,9 +16,12 @@
       <% if @nano_element.errors.messages.include?(:purposes) %>
         <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @nano_element.errors.messages[:purposes][0], href: "#nano_element_colorant"}] ) %>
       <% end %>
-      <%= render "form_components/govuk_checkboxes", form: form, key: :purposes,
-              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
-              items: items %>
+      <%= govukCheckboxes(
+            form: form,
+            key: :purposes,
+            fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
+            items: items,
+          ) %>
       <%= govukButton text: "Continue" %>
 
     </div>

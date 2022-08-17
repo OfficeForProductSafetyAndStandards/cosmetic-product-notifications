@@ -27,10 +27,13 @@
         <a href="#component_contains_poisonous_ingredients_true" class="govuk-skip-link opss-skip-link">Skip poisonous ingredients tables.</a>
 
 
-        <%= render 'ingredients_npis_needs_to_know' %>
-        <%= render "form_components/govuk_radios", form: form, key:   :contains_poisonous_ingredients,
-          items: [{ text: "Yes", value: "true" },
-                  { text: "No", value: "false" }] %>
+        <%= render "ingredients_npis_needs_to_know" %>
+        <%= govukRadios(
+              form: form,
+              key: :contains_poisonous_ingredients,
+              items: [{ text: "Yes", value: "true" },
+                      { text: "No", value: "false" }],
+            ) %>
 
       </fieldset>
       <%= govukButton text: "Continue" %>

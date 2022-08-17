@@ -6,33 +6,33 @@ RSpec.describe "User account page", type: :request do
   RSpec.shared_examples "can change name and security" do
     it "allows user to change their name" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "Full name", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: user.name, with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Change name")
+        with_tag("dt", text: optional_spaces("Full name"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces(user.name), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Change name"))
       end
     end
 
     it "allows user to change their password" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "Email address", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: "********", with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Change password")
+        with_tag("dt", text: optional_spaces("Email address"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces('\*\*\*\*\*\*\*\*'), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Change password"))
       end
     end
 
     it "allows user to change their account 2FA SMS" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "Text message", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: user.mobile_number, with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Change text message")
+        with_tag("dt", text: optional_spaces("Text message"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces(user.mobile_number), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", optional_spaces("Change text message"))
       end
     end
 
     it "allows user to change their account 2FA App" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "Authenticator app", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: "Authenticator app is set", with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Change authenticator app")
+        with_tag("dt", text: optional_spaces("Authenticator app"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces("Authenticator app is set"), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Change authenticator app"))
       end
     end
   end
@@ -40,9 +40,9 @@ RSpec.describe "User account page", type: :request do
   RSpec.shared_examples "can't change email" do
     it "does not allow user to change their email" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "Email address", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: user.email, with: { class: "govuk-summary-list__value" })
-        without_tag("dd.govuk-summary-list__actions a", text: "Change email address")
+        with_tag("dt", text: optional_spaces("Email address"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces(user.email), with: { class: "govuk-summary-list__value" })
+        without_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Change email address"))
       end
     end
   end
@@ -87,9 +87,9 @@ RSpec.describe "User account page", type: :request do
 
     it "allows user to change their email" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "Email address", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: user.email, with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Change email address")
+        with_tag("dt", text: optional_spaces("Email address"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces(user.email), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Change email address"))
       end
     end
   end
@@ -137,25 +137,25 @@ RSpec.describe "User account page", type: :request do
 
     it "allows user to download a list of cosmetic products containing nanomaterials" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "All notified cosmetic products containing nanomaterials", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Download products with nanomaterials")
+        with_tag("dt", text: optional_spaces("All notified cosmetic products containing nanomaterials"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces('Download as a CSV \(spreadsheet\) file'), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Download products with nanomaterials"))
       end
     end
 
     it "allows user to download a list of notified nanomaterials" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "All notified nanomaterials", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials")
+        with_tag("dt", text: optional_spaces("All notified nanomaterials"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces('Download as a CSV \(spreadsheet\) file'), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Download notified nanomaterials"))
       end
     end
 
     it "allows user to download all nanomaterial notifications pdfs" do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
-        with_tag("dt", text: "All notified nanomaterials as PDFs", with: { class: "govuk-summary-list__key" })
-        with_tag("dd", text: "Download as a ZIP file (containing PDFs)", with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials as PDFs")
+        with_tag("dt", text: optional_spaces("All notified nanomaterials as PDFs"), with: { class: "govuk-summary-list__key" })
+        with_tag("dd", text: optional_spaces('Download as a ZIP file \(containing PDFs\)'), with: { class: "govuk-summary-list__value" })
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Download notified nanomaterials as PDFs"))
       end
     end
   end

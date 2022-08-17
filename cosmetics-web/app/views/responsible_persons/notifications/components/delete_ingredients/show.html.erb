@@ -12,15 +12,18 @@
                         @component,
                         @ingredient_number)%>
     <%= form_with model: @ingredient, scope: "", url: deletion_url, html: { novalidate: true}, method: :delete do |form| %>
-      <%= render "form_components/govuk_radios",
+      <%= govukRadios(
             form: form,
             id: "confirmation",
             key: :confirmation,
             hint: { text: "Ingredient '#{@ingredient.inci_name}' will be removed from this product." },
-            fieldset: { legend: { text: "Do you want to remove this ingredient?", isPageHeading: true, classes: "govuk-fieldset__legend--l" } },
+            fieldset: { legend: { text: "Do you want to remove this ingredient?",
+                                  isPageHeading: true,
+                                  classes: "govuk-fieldset__legend--l" } },
             classes: "govuk-!-padding-top-3",
             items: [{ text: "Yes", value: :yes },
-                    { text: "No", value: :no }] %>
+                    { text: "No", value: :no }],
+          ) %>
 
       <div class="govuk-button-group">
         <%= govukButton(text: "Save and continue") %>

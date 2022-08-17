@@ -10,7 +10,9 @@
       <h1 class="govuk-heading-l">How do you want to get an access code?</h1>
     <% end %>
     <%= form_with(url: secondary_authentication_method_path, html: { novalidate: true }, method: :post) do |f| %>
-      <%= render "form_components/govuk_radios", form: f, key: :authentication_method,
+      <%= govukRadios(
+            form: f,
+            key: :authentication_method,
             fieldset: { legend: { html: heading } },
             errorMessage: format_errors_for(@form, @form.errors.full_messages_for(:authentication_method)),
             items: [{ text: "Text message",
@@ -21,7 +23,8 @@
                     { text: "Authenticator app for smartphone or tablet",
                       id: "app",
                       value: :app,
-                      classes: "govuk-label govuk-radios__label" }] %>
+                      classes: "govuk-label govuk-radios__label" }],
+          ) %>
       <div class="govuk-form-group">
         <%= govukButton text: "Continue" %>
       </div>

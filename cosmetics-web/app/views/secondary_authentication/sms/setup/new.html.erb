@@ -14,25 +14,21 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <%= form_with model: @form, url: secondary_authentication_sms_setup_path, method: :post  do |form| %>
-      <%= render "form_components/govuk_input",
-        key: :password,
-        type: :password,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: { text: "Password" },
-        hint: { text: "Confirm changes with your password." },
-        value: nil,
-        id: "old_password"
-        %>
-      <%= render "form_components/govuk_input",
-        key: :mobile_number,
-        type: :text,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: { text: "Mobile number" },
-        value: nil,
-        id: "new_mobile_number"
-        %>
+      <%= govukInput(key: :password,
+                     type: :password,
+                     form: form,
+                     classes: "app-!-max-width-two-thirds",
+                     label: { text: "Password" },
+                     hint: { text: "Confirm changes with your password." },
+                     value: nil,
+                     id: "old_password") %>
+      <%= govukInput(key: :mobile_number,
+                     type: :text,
+                     form: form,
+                     classes: "app-!-max-width-two-thirds",
+                     label: { text: "Mobile number" },
+                     value: nil,
+                     id: "new_mobile_number") %>
       <%= govukButton(text: "Continue") %>
     <% end %>
   </div>

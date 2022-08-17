@@ -1,10 +1,9 @@
 GIT
   remote: https://github.com/UKGovernmentBEIS/govuk-design-system-rails
-  revision: 924859834b4be0a877aec03ec257bc4745c17dff
-  tag: 0.8.2
+  revision: f3b51b911c45ac5f9dae3d7b750525713369d684
+  tag: 0.9.1
   specs:
-    govuk-design-system-rails (0.8.1)
-      slim-rails
+    govuk-design-system-rails (0.9.1)
 
 GIT
   remote: https://github.com/zilkey/active_hash.git
@@ -462,13 +461,6 @@ GEM
     simplecov-html (0.12.3)
     simplecov-lcov (0.7.0)
     simplecov_json_formatter (0.1.3)
-    slim (4.0.1)
-      temple (>= 0.7.6, < 0.9)
-      tilt (>= 2.0.6, < 2.1)
-    slim-rails (3.2.0)
-      actionpack (>= 3.1)
-      railties (>= 3.1)
-      slim (>= 3.0, < 5.0)
     slowpoke (0.3.2)
       actionpack
       rack-timeout (>= 0.4.0)
@@ -498,7 +490,6 @@ GEM
     strong_migrations (0.7.9)
       activerecord (>= 5)
     sync (0.5.0)
-    temple (0.8.2)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
     terminal-table (1.8.0)
@@ -602,7 +593,6 @@ DEPENDENCIES
   simplecov (~> 0.21.2)
   simplecov-console (~> 0.6.0)
   simplecov-lcov (~> 0.7.0)
-  slim-rails (~> 3.2.0)
   slowpoke (~> 0.3.0)
   solargraph (~> 0.44.2)
   sprockets (~> 3.7.2)

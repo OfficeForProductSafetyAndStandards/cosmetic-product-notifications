@@ -13,14 +13,11 @@
 
       <p>A contact person must provide information when the National Poisons Information Service (NPIS) or market surveillance authorities (for example, Trading Standards officers) ask for it.</p>
 
-      <%= render "form_components/govuk_input", form: form, key: :name,
-            label: { text: "Full name" } %>
+      <%= govukInput(form: form, key: :name, label: { text: "Full name" }) %>
 
-      <%= render "form_components/govuk_input", form: form, key: :email_address, type: :email,
-            label: { text: "Email address" } %>
+      <%= govukInput(form: form, key: :email_address, type: :email, label: { text: "Email address" }) %>
 
-      <%= render "form_components/govuk_input", form: form, key: :phone_number, type: :tel,
-            label: { text: "Telephone number" }, classes: "govuk-input--width-20" %>
+      <%= govukInput(form: form, key: :phone_number, type: :tel, label: { text: "Telephone number" }, classes: "govuk-input--width-20") %>
 
       <div class="govuk-form-group">
         <%= govukButton text: "Continue" %>
