@@ -57,32 +57,22 @@ module ResponsiblePersons::Notifications
       return false unless valid?
 
       if updating_ingredient
-        update_ingredient
+        updating_ingredient.update(ingredient_attributes)
       else
-        create_ingredient
+        component.ingredients.create(ingredient_attributes)
       end
     end
 
   private
 
-    def create_ingredient
-      component.ingredients.create(
+    def ingredient_attributes
+      {
         inci_name: name,
         exact_concentration: exact_concentration,
         range_concentration: range_concentration,
         cas_number: cas_number,
-        poisonous: poisonous,
-      )
-    end
-
-    def update_ingredient
-      updating_ingredient.update(
-        inci_name: name,
-        exact_concentration: exact_concentration,
-        range_concentration: range_concentration,
-        cas_number: cas_number,
-        poisonous: poisonous,
-      )
+        poisonous: poisonous.presence || false,
+      }
     end
 
     def unique_name
