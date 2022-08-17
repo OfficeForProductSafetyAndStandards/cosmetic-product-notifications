@@ -22,29 +22,29 @@
         </ul>
 
         <% count_input_html = capture do %>
-          <%= render("form_components/govuk_input",
-                     form: form,
-                     key: :nanomaterials_count,
-                     id: "nanomaterials_count",
-                     label: { text: "How many nanomaterials?" },
-                     classes: "govuk-input--width-3") %>
+          <%= govukInput(form: form,
+                         key: :nanomaterials_count,
+                         id: "nanomaterials_count",
+                         label: { text: "How many nanomaterials?" },
+                         classes: "govuk-input--width-3") %>
         <% end %>
-        <%= render("form_components/govuk_radios",
-                   form: form,
-                   key: :contains_nanomaterials,
-                   fieldset: { legend: { text: "Does #{@notification.product_name} contain nanomaterials?",
-                   classes: "govuk-label--m" } },
-                   items: [
-                     { text: "Yes",
-                       value: "yes",
-                       id: "contains_nanomaterials_yes",
-                       conditional: { html: count_input_html },
-                       checked: errors.include?(:nanomaterials_count) || form.object.contains_nanomaterials? },
-                     { text: "No",
-                       value: "no",
-                       id: "contains_nanomaterials_no",
-                       checked: errors.exclude?(:nanomaterials_count) && answer_checked?("no") },
-                    ]) %>
+        <%= govukRadios(
+              form: form,
+              key: :contains_nanomaterials,
+              fieldset: { legend: { text: "Does #{@notification.product_name} contain nanomaterials?",
+              classes: "govuk-label--m" } },
+              items: [
+                { text: "Yes",
+                  value: "yes",
+                  id: "contains_nanomaterials_yes",
+                  conditional: { html: count_input_html },
+                  checked: errors.include?(:nanomaterials_count) || form.object.contains_nanomaterials? },
+                { text: "No",
+                  value: "no",
+                  id: "contains_nanomaterials_no",
+                  checked: errors.exclude?(:nanomaterials_count) && answer_checked?("no") },
+              ],
+            ) %>
         <%= govukButton text: "Continue" %>
 
       </div>
