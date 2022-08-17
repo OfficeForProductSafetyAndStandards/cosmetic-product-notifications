@@ -33,7 +33,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect(page).to have_h1("Edit the assigned contact name")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Name can not be blank", href: "#contact_person_name")
-    expect(page).to have_css("span#contact_person_name-error", text: "Name can not be blank")
+    expect(page).to have_css("p#contact_person_name-error", text: "Name can not be blank")
 
     fill_in "Full name", with: "Foo Bar www.example.org"
     click_button "Continue"
@@ -41,7 +41,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect(page).to have_h1("Edit the assigned contact name")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a valid name", href: "#contact_person_name")
-    expect(page).to have_css("span#contact_person_name-error", text: "Enter a valid name")
+    expect(page).to have_css("p#contact_person_name-error", text: "Enter a valid name")
 
     # Successful attempt
     fill_in "Full name", with: "Mr Foo Bar"
@@ -71,7 +71,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expected_error = "Enter an email address in the correct format, like name@example.com"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_email_address")
-    expect(page).to have_css("span#contact_person_email_address-error", text: expected_error)
+    expect(page).to have_css("p#contact_person_email_address-error", text: expected_error)
 
     # Successful attempt
     fill_in "Email address", with: "mrFooBar@example.com"
@@ -100,7 +100,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expected_error = "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_phone_number")
-    expect(page).to have_css("span#contact_person_phone_number-error", text: expected_error)
+    expect(page).to have_css("p#contact_person_phone_number-error", text: expected_error)
 
     # Successful attempt
     fill_in "Telephone number", with: "+44(7123456789)"

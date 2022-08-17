@@ -99,9 +99,9 @@
                    classes: "govuk-!-width-three-quarters",
                    label: { html: "<span class='govuk-visually-hidden'>Building and street line 2 of 2</span>".html_safe }) %>
 
-        <%= render "form_components/govuk_input", form: form, key: :city, id: "city", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" } %>
-        <%= render "form_components/govuk_input", form: form, key: :county, id: "county", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" } %>
-        <%= render "form_components/govuk_input", form: form, key: :postal_code, id: "postal_code", label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
+        <%= govukInput(form: form, key: :city, id: "city", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" }) %>
+        <%= govukInput(form: form, key: :county, id: "county", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" }) %>
+        <%= govukInput(form: form, key: :postal_code, id: "postal_code", label: { text: "Postcode" }, classes: "govuk-input--width-10") %>
 
         <div class="govuk-form-group">
           <%= govukButton text: "Save and continue" %>

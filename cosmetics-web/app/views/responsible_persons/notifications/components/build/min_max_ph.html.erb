@@ -11,14 +11,11 @@
       <%= error_summary_for(@component) %>
       <%= form.fields_for :component do %>
 
-        <%= render "components/govuk_fieldset", legend: { text: title,
-          isPageHeading: true, classes: 'govuk-fieldset__legend--xl' } do %>
+        <%= govukFieldset(legend: { text: title, isPageHeading: true, classes: 'govuk-fieldset__legend--xl' }) do %>
 
-          <%= render "form_components/govuk_input", form: form, key: :minimum_ph,
-            label: { text: 'Minimum pH' }, classes: 'govuk-input--width-4' %>
+          <%= govukInput(form: form, key: :minimum_ph, label: { text: 'Minimum pH' }, classes: 'govuk-input--width-4') %>
 
-          <%= render "form_components/govuk_input", form: form, key: :maximum_ph,
-            label: { text: 'Maximum pH' }, classes: 'govuk-input--width-4' %>
+          <%= govukInput(form: form, key: :maximum_ph, label: { text: 'Maximum pH' }, classes: 'govuk-input--width-4') %>
         <% end %>
       <% end %>
 

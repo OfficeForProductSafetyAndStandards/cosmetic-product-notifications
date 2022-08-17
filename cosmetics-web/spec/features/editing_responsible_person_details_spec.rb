@@ -40,11 +40,11 @@ RSpec.describe "Editing responsible person details", :with_stubbed_mailer, type:
     expect(page).to have_h1("Edit the UK Responsible Person details")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a building and street", href: "#address_line_1")
-    expect(page).to have_css("span#address_line_1-error", text: "Enter a building and street")
+    expect(page).to have_css("p#address_line_1-error", text: "Enter a building and street")
     expect(page).to have_link("Enter a town or city", href: "#city")
-    expect(page).to have_css("span#city-error", text: "Enter a town or city")
+    expect(page).to have_css("p#city-error", text: "Enter a town or city")
     expect(page).to have_link("Enter a postcode", href: "#postal_code")
-    expect(page).to have_css("span#postal_code-error", text: "Enter a postcode")
+    expect(page).to have_css("p#postal_code-error", text: "Enter a postcode")
 
     # Successful attempt
     choose "Limited company or Limited Liability Partnership (LLP)"

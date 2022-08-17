@@ -22,12 +22,14 @@
     %>
     <%= form_with(model: @component, url: wizard_path, html: { novalidate: true }, method: :put) do |form| %>
       <%= form.hidden_field :name %>
-      <%= render "form_components/govuk_checkboxes", form: form, key: :nano_material_ids,
+      <%= govukCheckboxes(
+            form: form,
+            key: :nano_material_ids,
             fieldset: { legend: { text: "Select which nanomaterials are included in the item", classes: "govuk-label--l", isPageHeading: true } },
             items: nano_material_items,
             classes: "govuk-!-margin-top-7",
             hint: { text: "If a nanomaterial you require is not shown, return to the tasks list page and add it. You can then start this task again.",
-                    classes: "govuk-!-width-three-quarters" } %>
+                    classes: "govuk-!-width-three-quarters" }) %>
 
       <div class="govuk-button-group">
         <%= govukButton text: "Continue" %>

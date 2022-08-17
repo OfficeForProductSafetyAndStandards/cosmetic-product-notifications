@@ -12,7 +12,7 @@ module FormHelper
       value: value,
     )
 
-    render "components/govuk_input", options
+    govukInput(options)
   end
 
   def email_input(user)
@@ -26,7 +26,7 @@ module FormHelper
       value: user.email,
     }
 
-    render "components/govuk_input", options
+    govukInput(options)
   end
 
   def password_input(user, options = {})
@@ -39,7 +39,7 @@ module FormHelper
       errorMessage: format_errors_for(user, user.errors.full_messages_for(:password)),
     )
 
-    render "components/govuk_input", options
+    govukInput(options)
   end
 
   def password_confirmation_input(user, options = {})
@@ -52,7 +52,7 @@ module FormHelper
       errorMessage: format_errors_for(user, user.errors.full_messages_for(:password_confirmation)),
     )
 
-    render "components/govuk_input", options
+    govukInput(options)
   end
 
 private

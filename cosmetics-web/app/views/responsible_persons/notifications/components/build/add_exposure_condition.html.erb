@@ -15,9 +15,10 @@
         <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @component.errors.messages[:"exposure_condition"][0], href: "#component_nano_material_attributes_exposure_condition_rinse_off"}] ) %>
       <% end %>
       <%= form.hidden_field :exposure_condition, value: nil %>
-      <%= render "form_components/govuk_radios", form: form, key: :exposure_condition,
-              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
-              items: items %>
+      <%= govukRadios(form: form,
+                      key: :exposure_condition,
+                      fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
+                      items: items) %>
       <%= govukButton text: "Continue" %>
 
     </div>
