@@ -4,11 +4,11 @@
   <div class="govuk-grid-column-full opss-desktop-min-height--s">
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-      Ingredients index
+      Ingredients list
     </h1>
 
     <p class="govuk-body opss-secondary-text">
-     List of all ingredients used in notifications products. Click on ingredient to search for product.
+      Ingredients listed in cosmetic product notifications (notified after 1 September 2022).
     </p>
   </div>
 </div>
@@ -21,27 +21,46 @@
   </section>
   <section class="govuk-grid-column-three-quarters" id="ingredients">
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order" aria-live="polite">
-        <table id="table-items" class="govuk-table govuk-!-margin-top-5 opss-table-items opss-table-items--sm opss-table-items--first-col-33">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-visually-hidden">&nbsp;</th>
-              <th class="govuk-visually-hidden">Inci Name</th>
-            </tr>
-          </thead>
-          <% @ingredients.each_with_index do |ingredient, index| %>
-            <tr class="govuk-table__row">
-              <th class="govuk-visually-hidden">
-                Inci Name
-              </th>
-              <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
+      <div class="govuk-grid-column-one-third opss-text-align-right">
+        <div class="govuk-form-group opss-text-align-right">
+          <form id="new_notification_search_form_sort" novalidate="novalidate" action="#" accept-charset="UTF-8" method="get">
+            <label class="govuk-label govuk-body-s" for="notification_search_form_sort_by">
+              Order by
+            </label>
+
+            <select class="govuk-select govuk-!-margin-bottom-1" name="sort_by" id="notification_search_form_sort_by">
+              <%= ingredient_search_option("A - Z", "name_asc") %>
+              <%= ingredient_search_option("Z - A", "name_desc") %>
+              <%= ingredient_search_option("Newly added", "date") %>
+            </select>
+
+            <button class="govuk-button opss-js-enabled-hidden">
+              Order
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body-s">
+        There are currently 343 different searchable ingredients in cosmetic product notifications.
+        </p>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full" role="region" aria-label="Search results">
+        <div class="govuk-!-margin-top-5 opss-3-col-flow">
+          <ul class="govuk-list govuk-list--bullet">
+            <% @ingredients.each_with_index do |ingredient, index| %>
+              <li>
                 <%= link_to ingredient.inci_name,
                   poison_centre_ingredients_search_path(ingredient_search_form: { q: ingredient.inci_name }),
-                    class: "govuk-link govuk-link--no-visited-state", target: :blank %>
-              </th>
-            </tr>
-          <% end %>
-        </table>
+                  class: "govuk-link govuk-link--no-visited-state", target: :blank %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
         <%= paginate @ingredients, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
       </div>
     </div>

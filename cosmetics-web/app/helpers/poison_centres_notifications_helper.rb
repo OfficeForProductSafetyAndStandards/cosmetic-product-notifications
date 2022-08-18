@@ -53,4 +53,9 @@ module PoisonCentresNotificationsHelper
       params[:controller] == "poison_centres/ingredients"
     end
   end
+
+  def ingredient_search_option(label, value)
+    selected = params[:sort_by] == value ? "selected=\"selected\"" : ""
+    "<option value=\"#{value}\" #{selected}>#{label}</option>".html_safe
+  end
 end
