@@ -58,7 +58,7 @@ group :development, :test do
   gem "capybara-screenshot"
   gem "coveralls_reborn", "~> 0.22.0"
   gem "debase", "~> 0.2.5.beta2"
-  gem "debase-ruby_core_source", "~> 0.10.14"
+  gem "debase-ruby_core_source", "~> 0.10.16"
   gem "dotenv-rails", "~> 2.7.5"
   gem "factory_bot_rails"
   gem "faker"
