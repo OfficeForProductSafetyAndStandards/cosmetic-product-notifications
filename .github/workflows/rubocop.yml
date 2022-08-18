@@ -11,7 +11,7 @@ jobs:
     - name: Set up Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 3.0.x
+        ruby-version: 3.1.x
     # required to compile pg ruby gem
     - name: install PostgreSQL client
       run: sudo apt-get install libpq-dev
@@ -24,7 +24,7 @@ jobs:
     - name: Install ruby gems
       working-directory: cosmetics-web
       run: |
-        gem install bundler -v 2.1.4 --no-doc
+        gem install bundler -v 2.3.20 --no-doc
         bundle config path vendor/bundle
         bundle check || bundle install --jobs 4 --retry 3
     - name: Run ruby code style checks
@@ -40,7 +40,7 @@ jobs:
     - name: Set up Nodejs
       uses: actions/setup-node@v1
       with:
-        node-version: 14.18.x
+        node-version: 16.16.x
     - uses: actions/cache@v1
       with:
         path: cosmetics-web/node_modules
