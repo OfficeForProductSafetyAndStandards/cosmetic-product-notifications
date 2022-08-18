@@ -556,6 +556,7 @@ DEPENDENCIES
   cf-app-utils (~> 0.6)
   coveralls_reborn (~> 0.22.0)
   debase (~> 0.2.5.beta2)
+  debase-ruby_core_source (~> 0.10.14)
   devise
   devise-security
   dotenv-rails (~> 2.7.5)
