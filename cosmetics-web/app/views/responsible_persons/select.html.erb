@@ -24,14 +24,15 @@
         </h1>
       <% end %>
 
-      <%= render("form_components/govuk_radios",
-                form: form,
-                key: :selection,
-                idPrefix: "change-rp",
-                fieldset: { legend: { html: heading, classes: "govuk-fieldset__legend govuk-fieldset__legend--l" } },
-                hint: previous_present ? { text: "Replace #{ @responsible_persons_selection_form.previous.name } as the Responsible Person."  } : nil,
-                classes: "govuk-!-padding-top-3 govuk-!-padding-bottom-1",
-                items: @responsible_persons_selection_form.radio_items) %>
+      <%= govukRadios(
+            form: form,
+            key: :selection,
+            idPrefix: "change-rp",
+            fieldset: { legend: { html: heading, classes: "govuk-fieldset__legend govuk-fieldset__legend--l" } },
+            hint: previous_present ? { text: "Replace #{ @responsible_persons_selection_form.previous.name } as the Responsible Person."  } : nil,
+            classes: "govuk-!-padding-top-3 govuk-!-padding-bottom-1",
+            items: @responsible_persons_selection_form.radio_items,
+          ) %>
       <div class="govuk-button-group">
         <%= govukButton text: "Save and continue" %>
         <%= link_to("Cancel",

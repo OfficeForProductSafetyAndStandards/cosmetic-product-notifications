@@ -25,7 +25,7 @@
         <% error_class = "govuk-input--error" %>
       <% end %>
 
-      <% date_notified_to_eu_html = render("components/govuk_date_input",
+      <% date_notified_to_eu_html = govukDateInput(
         id: "notified_to_eu_on",
         fieldset: {
           legend: {

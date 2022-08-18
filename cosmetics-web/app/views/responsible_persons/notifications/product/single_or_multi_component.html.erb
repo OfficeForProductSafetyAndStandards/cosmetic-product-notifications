@@ -30,32 +30,33 @@
         </p>
 
         <% count_input_html = capture do %>
-          <%= render("form_components/govuk_input",
-                     form: form,
-                     key: :components_count,
-                     id: "components_count",
-                     classes: "govuk-input--width-3",
-                     label: { text: "How many items does it contain?" },
-                     value: @notification.components_count > 0 ? @notification.components_count : '') %>
+          <%= govukInput(form: form,
+                         key: :components_count,
+                         id: "components_count",
+                         classes: "govuk-input--width-3",
+                         label: { text: "How many items does it contain?" },
+                         value: @notification.components_count > 0 ? @notification.components_count : '') %>
         <% end %>
-        <%= render("form_components/govuk_radios",
-                   form: form,
-                   key: :single_or_multi_component,
-                   hint: { text: "The product draft is currently a single item product. You can add more items by making it a multi-item kit.", classes: "govuk-!-font-size-16 govuk-!-width-three-quarters govuk-!-margin-botton-6", id: "single_or_multi_component_form_single_or_multi_component-hint" },
-                   fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m"}},
-                   items: [
-                     { text: "Yes",
-                       value: "multiple",
-                       id: "single_or_multi_component_multiple",
-                       conditional: { html: count_input_html },
-                       checked: errors.include?(:components_count) || form.object.multi_component? },
-                     { text: "No, this is a single product",
-                       value: "single",
-                       id: "single_or_multi_component_single",
-                       checked: errors.exclude?(:components_count) &&
-                                  (form.object.single_component? || (form.object.multi_component? && @notification.components.count == 1)) },
-                   ]
-                  ) %>
+        <%= govukRadios(
+              form: form,
+              key: :single_or_multi_component,
+              hint: { text: "The product draft is currently a single item product. You can add more items by making it a multi-item kit.",
+                      classes: "govuk-!-font-size-16 govuk-!-width-three-quarters govuk-!-margin-botton-6",
+                      id: "single_or_multi_component_form_single_or_multi_component-hint" },
+              fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m"}},
+              items: [
+                { text: "Yes",
+                  value: "multiple",
+                  id: "single_or_multi_component_multiple",
+                  conditional: { html: count_input_html },
+                  checked: errors.include?(:components_count) || form.object.multi_component? },
+                { text: "No, this is a single product",
+                  value: "single",
+                  id: "single_or_multi_component_single",
+                  checked: errors.exclude?(:components_count) &&
+                            (form.object.single_component? || (form.object.multi_component? && @notification.components.count == 1)) },
+              ],
+            ) %>
         <%= govukButton text: "Continue" %>
       </div>
     </div>
