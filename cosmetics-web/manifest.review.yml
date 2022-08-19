@@ -2,7 +2,7 @@
 applications:
 - name: ((cosmetics-instance-name))
   buildpacks:
-    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.8.49
+    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.8.57
   path: .
   routes:
     - route: ((search-host))
@@ -24,7 +24,7 @@ applications:
     - cosmetics-auth-env
     - cosmetics-health-env
     - cosmetics-rails-env
-    - cosmetics-sentry-env
+    - cosmetics-review-apps-sentry-env
     - cosmetics-sidekiq-env
     - cosmetics-notify-env
     - cosmetics-devise-env

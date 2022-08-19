@@ -9,12 +9,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component) %>
-      <%= render "form_components/govuk_input",
-                 form: form,
-                 key: :name,
-                 classes: "govuk-!-margin-top-7",
-                 label: { text: title, classes: "govuk-label--l", isPageHeading: true },
-                 hint: { html: "For example, ‘cream peroxide’" } %>
+      <%= govukInput(form: form,
+                     key: :name,
+                     classes: "govuk-!-margin-top-7",
+                     label: { text: title, classes: "govuk-label--l", isPageHeading: true },
+                     hint: { html: "For example, ‘cream peroxide’" }) %>
       <%= govukButton text: "Save and continue" %>
     </div>
   </div>

@@ -61,6 +61,14 @@ module NotificationStateConcern
         transitions from: EMPTY, to: PRODUCT_NAME_ADDED
       end
 
+      event :try_to_complete_components do
+        transitions from: READY_FOR_COMPONENTS, to: COMPONENTS_COMPLETE, if: :all_components_completed?
+      end
+
+      event :revert_to_ready_for_components do
+        transitions from: COMPONENTS_COMPLETE, to: READY_FOR_COMPONENTS, unless: :all_components_completed?
+      end
+
       event :submit_notification, after: :cache_notification_for_csv! do
         transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE,
                     after: proc { __elasticsearch__.index_document } do
@@ -98,10 +106,8 @@ module NotificationStateConcern
     end
   end
 
-  def try_to_complete_components!
-    if components.all?(&:component_complete?)
-      update_state(COMPONENTS_COMPLETE)
-    end
+  def all_components_completed?
+    components.all?(&:component_complete?)
   end
 
   def product_wizard_completed?

@@ -18,12 +18,12 @@
       <% if error_message %>
         <%= govukErrorSummary(titleText: "There is a problem", errorList: [error_message]) %>
       <% end %>
-      <%= render "form_components/govuk_radios", form: form, key: :option,
-              errorMessage: error_message,
-              fieldset: { legend: { html: heading } },
-              items: [{ text: "Yes, I or my organisation have an account", value: :join_existing },
-                      { text: "No, I need to create an account",
-                              value: :create_new }] %>
+      <%= govukRadios(form: form,
+                      key: :option,
+                      errorMessage: error_message,
+                      fieldset: { legend: { html: heading } },
+                      items: [{ text: "Yes, I or my organisation have an account", value: :join_existing },
+                              { text: "No, I need to create an account", value: :create_new }]) %>
       <div class="govuk-form-group">
         <%= govukButton text: "Continue" %>
       </div>

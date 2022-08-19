@@ -11,14 +11,14 @@
   <%= render "ingredient_exact_concentration_fields", model: @ingredient_concentration_form, form: form %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <%= render "form_components/govuk_checkboxes",
-                 form: form,
-                 key: :poisonous_check,
-                 id: "poisonous_check",
-                 classes: " govuk-!-padding-top-6",
-                 items: [{ key: :poisonous,
-                           text: "Is it poisonous?",
-                           value: true }] %>
+      <%= govukCheckboxes(form: form,
+                          key: :poisonous_check,
+                          id: "poisonous_check",
+                          classes: " govuk-!-padding-top-6",
+                          items: [{ key: :poisonous,
+                                    text: "Is it poisonous?",
+                                    value: true,
+                                    disable_ghost: true }]) %>
     </div>
   </div>
 <% end %>

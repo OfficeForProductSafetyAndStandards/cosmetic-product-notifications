@@ -41,7 +41,7 @@ def expect_progress(current, total)
   expect(page).to have_text("Incomplete: #{current} of #{total} tasks have been completed")
 end
 
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
+def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil, ingredients: nil)
   within("#product-table") do
     expect(page).to have_summary_item(key: "Product name", value: product_name)
     expect(page).to have_summary_item(key: "Shades", value: shades)
@@ -64,6 +64,12 @@ def expect_check_your_answers_page_to_contain(product_name:, number_of_component
 
   if frame_formulation
     expect(page).to have_summary_item(key: "Frame formulation", value: frame_formulation)
+  end
+
+  if ingredients
+    ingredients.each do |ingredient, value|
+      expect(page).to have_summary_item(key: ingredient, value: value)
+    end
   end
 
   expect(page).to have_summary_item(key: "Physical form", value: physical_form)

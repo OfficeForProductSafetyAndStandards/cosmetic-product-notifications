@@ -15,6 +15,7 @@ require "policy_helpers"
 require "sidekiq/testing"
 Sidekiq.logger.level = Logger::FATAL
 
+# Test coverage
 require "simplecov"
 require "coveralls"
 require "simplecov-lcov"
@@ -22,8 +23,9 @@ require "simplecov-lcov"
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov::Formatter::LcovFormatter.config.single_report_path = "coverage/lcov.info"
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
-SimpleCov.start
-Coveralls.wear!("rails")
+unless SimpleCov.running
+  SimpleCov.start "rails"
+end
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)

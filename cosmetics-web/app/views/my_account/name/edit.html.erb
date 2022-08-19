@@ -13,7 +13,7 @@
 
     <%= form_with model: @user, url: my_account_name_path, method: :patch do |form| %>
 
-      <%= render "form_components/govuk_input",
+      <%= govukInput(
         key: :name,
         form: form,
         classes: "app-!-max-width-two-thirds",
@@ -22,7 +22,7 @@
         },
         value: nil,
         id: "name"
-        %>
+      ) %>
       <%= govukButton(text: "Continue") %>
     <% end %>
   </div>

@@ -262,6 +262,54 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_successful_submission
   end
 
+  scenario "Checking correct status - when changing formulation type in a completed component" do
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+
+    click_on "Add a cosmetic product"
+
+    complete_product_wizard(name: "Product no nano two items", items_count: 2)
+
+    expect_multi_item_kit_task_not_started
+
+    complete_multi_item_kit_wizard
+
+    expect_item_task_not_started "Item #1"
+    expect_item_task_not_started "Item #2"
+
+    complete_item_wizard("Cream one", item_number: 1, formulation_type: :exact)
+    expect_item_task_completed "Cream one"
+    expect_item_task_not_started "Item #2"
+
+    complete_item_wizard("Cream two", item_number: 2)
+    expect_item_task_completed "Cream two"
+    expect_accept_and_submit_not_started
+
+    # Go though the already completed item wizard steps
+    name = "Cream one"
+    click_on name
+    answer_item_name_with(name)
+    answer_is_item_available_in_shades_with "No", item_name: name
+    answer_what_is_physical_form_of_item_with "Liquid", item_name: name
+    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package", item_name: name
+    answer_does_item_contain_cmrs_with "No", item_name: name
+    answer_item_category_with "Hair and scalp products"
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+    answer_item_sub_subcategory_with "Shampoo"
+
+    # Change the formulation type from exact to range.
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range", item_name: name
+
+    # Leaves the item wizard without completing it.
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    click_link "Continue"
+    expect(page).to have_h1("Product notification draft for: Product no nano two items")
+    expect_item_task_completed "Cream two"
+
+    # Now the item status has been moved back and the submission is blocked.
+    expect_item_task_not_started "Cream one"
+    expect_accept_and_submit_blocked
+  end
+
   scenario "Checking correct status - when adding items after adding nanos" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 

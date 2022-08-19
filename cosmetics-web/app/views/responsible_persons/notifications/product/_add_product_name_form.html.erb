@@ -4,10 +4,9 @@
 
 <p class="govuk-body">Include the trade mark or brand, the product line and the specific name of the product as it appears on the packaging. Include the type of product (for example, ‘shower gel’) unless it’s included in the product name.</p>
 
-<%= render "form_components/govuk_input",
-        form: form,
-        key: :product_name,
-        label: { text: "Product name", classes: "govuk-label--m", isPageHeading: false },
-        hint: { text: "For example, ‘SkinSoft body fresh with aloe vera, shower gel’." } %>
+<%= govukInput(form: form,
+               key: :product_name,
+               label: { text: "Product name", classes: "govuk-label--m", isPageHeading: false },
+               hint: { text: "For example, ‘SkinSoft body fresh with aloe vera, shower gel’." }) %>
 
 <%= govukButton text: "Continue" %>

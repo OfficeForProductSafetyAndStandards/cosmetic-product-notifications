@@ -164,18 +164,21 @@ def fill_ingredients_range_concentrations(single_item: false)
 end
 
 def fill_ingredients_concentrations(single_item: false)
-  if page.has_no_css?("li", text: "FooBar ingredient")
+  if page.has_css?("li", text: "FooBar ingredient") # Updating existing ingredients
+    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["FooBar ingredient"])
+    click_button "Save and continue"
+    answer_add_another_ingredient_with("No", success_banner: false, single_item: single_item)
+  else
     expect_to_be_on_add_ingredients_page
     fill_in "name", with: "FooBar ingredient"
     yield # Fill/Select ingredient concentration
     fill_in "cas_number", with: "123456-78-9"
     click_on "Save and continue"
 
-    answer_add_another_ingredient_with("Yes", single_item: single_item)
+    answer_add_another_ingredient_with("Yes", success_banner: true, single_item: single_item)
+    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+    click_link "Skip"
   end
-
-  expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
-  click_link "Skip"
 end
 
 def answer_what_is_ph_range_of_product_with(answer)
@@ -203,11 +206,20 @@ def select_item_and_remove(answer)
   click_button "Delete and continue"
 end
 
-def answer_add_another_ingredient_with(answer, single_item: true)
+def answer_add_another_ingredient_with(answer, success_banner: true, single_item: true)
   expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
-  expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
+  if success_banner
+    expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
+  end
   page.choose answer
   click_button "Continue"
+end
+
+def answer_remove_ingredient_with(answer, name: nil)
+  expect(page).to have_css("h1", text: "Do you want to remove this ingredient?")
+  expect(page).to have_css("#confirmation-hint", text: "Ingredient '#{name}' will be removed from this product.")
+  page.choose answer
+  click_button "Save and continue"
 end
 
 def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: [], forced_poisonous: false)
@@ -224,6 +236,10 @@ def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: []
       expect(page).to have_css("ol.govuk-list--number li", text: ingredient)
     end
   end
+end
+
+def expect_to_be_on_ingredient_removed_confirmation_page
+  expect(page).to have_css("h1", text: "The ingredient was removed")
 end
 
 def expect_product_details_task_completed
