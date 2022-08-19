@@ -18,9 +18,10 @@ jobs:
     # https://github.com/actions/example-services/tree/master/.github/workflows
     services:
       postgres:
-        image: postgres:11.5
+        image: postgres:13.6
         env:
           POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_PASSWORD: ""
           POSTGRES_DB: postgres
         ports: ["5432:5432"]
