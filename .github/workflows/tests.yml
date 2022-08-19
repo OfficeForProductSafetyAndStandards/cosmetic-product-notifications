@@ -12,8 +12,8 @@ env:
   RAILS_ENV: test
 
 jobs:
-  ruby:
-    name: "Ruby"
+  rspec:
+    name: "RSpec"
     runs-on: ubuntu-latest
 
     # Example for can be found here:
