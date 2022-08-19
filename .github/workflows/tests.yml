@@ -34,6 +34,14 @@ jobs:
           DISABLE_SECURITY_PLUGIN: true
         ports: ["9200:9200"]
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        rspec-group:
+          - spec/features
+          - spec --exclude-pattern "spec/features/**/*_spec.rb"
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
@@ -83,7 +91,7 @@ jobs:
       run: |
         cd cosmetics-web
         # to display branch properly, coveralls needs GIT_BRANCH env var to be set
-        GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec spec
+        GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec ${{ matrix.rspec-group }}
     - name: Dump docker logs
       uses: jwalton/gh-docker-logs@v1
       if: always()
