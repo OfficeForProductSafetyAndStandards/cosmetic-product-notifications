@@ -12,7 +12,7 @@ module Matchers
       @html = html
       @main = Nokogiri::HTML(@html).at_css("main")
       @h1s = @main.css("h1")
-      @h1s.length == 1 && @h1s[0].text == @expected_text
+      @h1s.length == 1 && @h1s[0].text.strip == @expected_text
     end
 
     def failure_message

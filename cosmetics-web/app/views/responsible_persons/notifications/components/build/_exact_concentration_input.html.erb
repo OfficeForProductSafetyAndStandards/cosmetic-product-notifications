@@ -2,13 +2,13 @@
 <div class="govuk-form-group <%= "govuk-form-group--error" if concentration_error %>">
   <%= govukLabel(for: :exact_concentration, text: "What is the exact concentration?", classes: "govuk-label--s govuk-!-font-weight-regular")%>
   <% if concentration_error %>
-    <%= render "components/govuk_error_message", id: "exact_concentration-error", text: concentration_error %>
+    <%= govukErrorMessage(id: "exact_concentration-error", text: concentration_error) %>
   <% end %>
   <div class="govuk-input__wrapper">
     <%= form.text_field(:exact_concentration,
                         id: "exact_concentration",
-                        class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if concentration_error}",
-                        maxlength: 3,
+                        class: "govuk-input govuk-input--width-5 #{'govuk-input--error' if concentration_error}",
+                        maxlength: 12,
                         size: nil,
                         "aria-describedby" => ("exact_concentration-error" if concentration_error)) %>
     <div class="govuk-input__suffix" aria-hidden="true">

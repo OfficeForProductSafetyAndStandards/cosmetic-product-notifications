@@ -6,11 +6,13 @@ module ResponsiblePersons::Notifications
     include StripWhitespace
 
     attribute :name, :string
-    attribute :exact_concentration, :float
+    attribute :exact_concentration
     attribute :range_concentration, :string
     attribute :cas_number, :string
     attribute :poisonous, :boolean
     attribute :component
+    attribute :updating_ingredient
+    attribute :ingredient_number, :integer
     attribute :type, :string
 
     validates :component, presence: true
@@ -20,7 +22,7 @@ module ResponsiblePersons::Notifications
     validate :unique_name
     validates :exact_concentration,
               presence: true,
-              numericality: { allow_blank: true, greater_than: 0 },
+              numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
               if: :exact?
     validates :range_concentration,
               presence: true,
@@ -29,7 +31,18 @@ module ResponsiblePersons::Notifications
 
     def initialize(params = {})
       super(params)
-      self.type = EXACT if type == RANGE && poisonous
+      return if type.blank?
+
+      # Clearing data coming from user form submission.
+      # If user fills concentration for an ingredient type, and then changes the type, this code clears the
+      # concentration for the previous type. So only the correct one is kept on form/saved in DB.
+      # Also enforces "exact" type for a "Range poisonous ingredient", that is provided as an exact concentration.
+      if type == RANGE && !poisonous
+        self.exact_concentration = nil
+      else
+        self.type = EXACT
+        self.range_concentration = nil
+      end
     end
 
     def range?
@@ -43,41 +56,31 @@ module ResponsiblePersons::Notifications
     def save
       return false unless valid?
 
-      case type
-      when EXACT then create_exact_ingredient
-      when RANGE then create_range_ingredient
+      if updating_ingredient
+        updating_ingredient.update(ingredient_attributes)
+      else
+        component.ingredients.create(ingredient_attributes)
       end
     end
 
   private
 
-    def create_exact_ingredient
-      component.exact_formulas.create(
+    def ingredient_attributes
+      {
         inci_name: name,
-        quantity: exact_concentration,
+        exact_concentration: exact_concentration,
+        range_concentration: range_concentration,
         cas_number: cas_number,
-        poisonous: poisonous,
-      )
-    end
-
-    def create_range_ingredient
-      component.range_formulas.create(
-        inci_name: name,
-        range: range_concentration,
-        cas_number: cas_number,
-      )
+        poisonous: poisonous.presence || false,
+      }
     end
 
     def unique_name
       return if name.blank? || component.blank?
 
-      if ingredient_exists_in?(ExactFormula) || ingredient_exists_in?(RangeFormula)
+      if Ingredient.where(component_id: component, inci_name: name).where.not(id: updating_ingredient).any?
         errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
       end
-    end
-
-    def ingredient_exists_in?(ingredient_class)
-      ingredient_class.where(component_id: component).where("LOWER(inci_name) = ?", name.downcase).any?
     end
   end
 end

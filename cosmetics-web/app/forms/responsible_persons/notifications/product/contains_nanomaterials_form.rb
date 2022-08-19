@@ -13,5 +13,13 @@ module ResponsiblePersons::Notifications::Product
     def contains_nanomaterials?
       contains_nanomaterials == "yes"
     end
+
+    def nanomaterials_count
+      if contains_nanomaterials?
+        super
+      else
+        0
+      end
+    end
   end
 end

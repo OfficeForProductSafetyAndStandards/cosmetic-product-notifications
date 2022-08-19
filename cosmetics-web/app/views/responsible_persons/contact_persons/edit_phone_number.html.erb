@@ -1,4 +1,7 @@
 <%= render "edit_field", field: "telephone number" do |form| %>
-      <%= render "form_components/govuk_input", form: form, key: :phone_number, type: :tel,
-            label: { text: "Telephone number" }, classes: "govuk-input--width-20" %>
+  <%= govukInput(form: form,
+                 key: :phone_number,
+                 type: :tel,
+                 label: { text: "Telephone number" },
+                 classes: "govuk-input--width-20") %>
 <% end %>

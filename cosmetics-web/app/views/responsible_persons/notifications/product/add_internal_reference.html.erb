@@ -16,15 +16,19 @@
         <p>You can use this to identify your products. Only people in your organisation can see this reference.</p>
 
         <% reference_input_html = capture do %>
-          <%= render "form_components/govuk_input", form: form, key: :industry_reference,
-              label: { text: "Internal reference" } %>
+          <%= govukInput(form: form, key: :industry_reference, label: { text: "Internal reference" }) %>
         <% end %>
 
-        <%= render "form_components/govuk_radios", form: form, key: :add_internal_reference,
-            fieldset: { legend: { text: "Do you want to add an internal reference?", classes: "govuk-label--m" } },
-            items: [{ text: "Yes", value: "yes", conditional: { html: reference_input_html },
-                    checked: preselect_internal_reference_yes},
-                    { text: "No", value: "no", checked: answer_checked?("no") }] %>
+        <%= govukRadios(
+              form: form,
+              key: :add_internal_reference,
+              fieldset: { legend: { text: "Do you want to add an internal reference?", classes: "govuk-label--m" } },
+              items: [{ text: "Yes",
+                        value: "yes",
+                        conditional: { html: reference_input_html },
+                        checked: preselect_internal_reference_yes },
+                      { text: "No", value: "no", checked: answer_checked?("no") }],
+            ) %>
 
         <%= govukButton text: "Continue" %>
       <% end %>

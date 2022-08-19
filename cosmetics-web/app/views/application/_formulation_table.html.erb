@@ -5,7 +5,11 @@
         <%= entity[key_name] %>
       </th>
       <td class="govuk-table__cell govuk-table__cell--numeric">
-        <%= display_concentration(entity[value_name]) %>
+        <% if value_name.start_with?("range")%>
+          <%= display_concentration_range(entity[value_name]) %>
+        <% else %>
+          <%= display_concentration(entity[value_name]) %>
+        <% end %>
       </td>
     </tr>
   <% end %>

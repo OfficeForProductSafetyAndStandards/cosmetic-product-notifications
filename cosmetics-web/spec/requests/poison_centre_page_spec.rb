@@ -4,24 +4,21 @@ RSpec.describe "Poison centre page", type: :request do
   include RSpecHtmlMatchers
 
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:crm) { create(:cmr, name: "Foo CMR") }
-  let(:exact_formula) { create(:exact_formula, quantity: 4, inci_name: "Foo Ingredient") }
-  let(:nano_element) { create(:nano_element, inci_name: "Foo Nanomaterial") }
-  let(:nano_material) { create(:nano_material, nano_elements: [nano_element]) }
-  let(:notification) do
-    create(:draft_notification, responsible_person: responsible_person) do |n|
-      create(:component,
-             notification: n,
-             notification_type: "exact",
-             cmrs: [crm],
-             exact_formulas: [exact_formula],
-             with_nano_materials: [nano_material])
-    end
-  end
+  let(:notification) { create(:draft_notification, responsible_person: responsible_person) }
   let(:params) do
     {
       reference_number: notification.reference_number,
     }
+  end
+
+  before do
+    component = create(:exact_component, notification: notification)
+    create(:cmr, name: "Foo CMR", component: component)
+    create(:exact_ingredient, exact_concentration: 4, inci_name: "Foo Ingredient", component: component)
+
+    nano_material = create(:nano_material, notification: notification)
+    create(:component_nano_material, component: component, nano_material: nano_material)
+    create(:nano_element, inci_name: "Foo Nanomaterial", nano_material: nano_material)
   end
 
   after do
@@ -63,13 +60,13 @@ RSpec.describe "Poison centre page", type: :request do
       it "displays the Responsible Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
-        expect(response.body).to have_tag("dd", text: responsible_person.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Contact person")
-        expect(response.body).to have_tag("dd", text: responsible_person.contact_persons.first.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
 
@@ -107,13 +104,13 @@ RSpec.describe "Poison centre page", type: :request do
       it "displays the Responsible Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
-        expect(response.body).to have_tag("dd", text: responsible_person.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Contact person")
-        expect(response.body).to have_tag("dd", text: responsible_person.contact_persons.first.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
 
@@ -151,13 +148,13 @@ RSpec.describe "Poison centre page", type: :request do
       it "displays the Responsible Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
-        expect(response.body).to have_tag("dd", text: responsible_person.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params)
         expect(response.body).to have_tag("h2", text: "Contact person")
-        expect(response.body).to have_tag("dd", text: responsible_person.contact_persons.first.name)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
   end

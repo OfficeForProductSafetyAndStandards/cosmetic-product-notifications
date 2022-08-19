@@ -1,6 +1,6 @@
 // JS
 import Rails from 'rails-ujs'
-import GOVUKFrontend from 'govuk-frontend'
+import * as GOVUKFrontend from 'govuk-frontend'
 
 import '../application/javascripts/location_picker'
 import '../application/javascripts/autocomplete'

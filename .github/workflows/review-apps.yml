@@ -15,7 +15,7 @@ jobs:
 
     - name: Create GitHub deployment
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: ${{ github.head_ref }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
@@ -23,7 +23,7 @@ jobs:
 
     - name: Initiate deployment status
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
@@ -62,7 +62,7 @@ jobs:
     - name: Update deployment status (success)
       if: success()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
@@ -73,7 +73,7 @@ jobs:
     - name: Update deployment status (failure)
       if: failure()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL

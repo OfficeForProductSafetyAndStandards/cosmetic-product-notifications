@@ -1,0 +1,20 @@
+<% page_title "Remove ingredient" %>
+
+<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h1 class="govuk-notification-banner__heading">
+      The ingredient was removed
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= link_to "Continue", post_deletion_path, class: "govuk-button" %>
+  </div>
+</div>

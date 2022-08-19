@@ -20,14 +20,13 @@
 
     <%= form_with(url: secondary_authentication_app_path, method: :post, html: { novalidate: true }) do |f| %>
       <%= f.hidden_field :user_id, value: @form.user_id %>
-      <%= render "form_components/govuk_input",
-            key: :otp_code,
-            form: f,
-            classes: "govuk-input--width-5",
-            label: { text: "Access code" },
-            attributes: { pattern: "[0-9]*", inputmode: "numeric" },
-            errorMessage: format_errors_for(@form, @form.errors.full_messages_for(:otp_code)),
-            autocomplete: "one-time-code" %>
+      <%= govukInput(key: :otp_code,
+                     form: f,
+                     classes: "govuk-input--width-5",
+                     label: { text: "Access code" },
+                     attributes: { pattern: "[0-9]*", inputmode: "numeric" },
+                     errorMessage: format_errors_for(@form, @form.errors.full_messages_for(:otp_code)),
+                     autocomplete: "one-time-code") %>
 
       <%= govukButton(text: "Continue") %>
     <% end %>

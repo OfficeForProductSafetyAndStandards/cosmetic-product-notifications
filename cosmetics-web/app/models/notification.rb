@@ -258,6 +258,7 @@ class Notification < ApplicationRecord
       self.state = :deleted
 
       save!(validate: false)
+      ReindexOpensearchJob.perform_later
     end
   end
 

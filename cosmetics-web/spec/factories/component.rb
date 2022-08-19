@@ -3,12 +3,66 @@ FactoryBot.define do
     notification_type { "predefined" }
     notification
 
-    factory :predefined_component
+    factory :predefined_component do
+      notification_type { "predefined" }
+
+      trait :completed do
+        state { "component_complete" }
+        physical_form { "foam" }
+        sub_sub_category { "shampoo" }
+        frame_formulation { "skin_care_cream_lotion_gel" }
+        contains_poisonous_ingredients { true }
+        ph { "between_3_and_10" }
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "single-or-no-shades",
+            "select_formulation_type" => "predefined",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+      end
+    end
+
     factory :ranges_component do
       notification_type { "range" }
+
+      trait :completed do
+        state { "component_complete" }
+        physical_form { "foam" }
+        sub_sub_category { "shampoo" }
+        ph { "between_3_and_10" }
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "single-or-no-shades",
+            "select_formulation_type" => "range",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+      end
     end
+
     factory :exact_component do
       notification_type { "exact" }
+
+      trait :completed do
+        state { "component_complete" }
+        physical_form { "foam" }
+        sub_sub_category { "shampoo" }
+        ph { "between_3_and_10" }
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "single-or-no-shades",
+            "select_formulation_type" => "exact",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+      end
     end
 
     trait :with_poisonous_ingredients do
@@ -36,17 +90,17 @@ FactoryBot.define do
       frame_formulation { "skin_care_cream_lotion_gel_with_high_level_of_perfume" }
     end
 
-    trait :with_range_formulas do
+    trait :with_range_ingredients do
       notification_type { "range" }
       after(:create) do |component|
-        create(:range_formula, component: component)
+        create(:range_ingredient, component: component)
       end
     end
 
-    trait :with_exact_formulas do
+    trait :with_exact_ingredients do
       notification_type { "exact" }
       after(:create) do |component|
-        create(:exact_formula, component: component)
+        create(:exact_ingredient, component: component)
       end
     end
 

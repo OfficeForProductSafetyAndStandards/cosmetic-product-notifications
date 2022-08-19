@@ -10,10 +10,13 @@
     <div class="govuk-grid-column-two-thirds">
 
       <%= error_summary_for(@notification, first_values: {is_ph_between_3_and_10: "yes"}) %>
-      <%= render "form_components/govuk_radios", form: form, key: :is_ph_between_3_and_10,
-              fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
-              items: [{ text: "Lower than 3 or higher than 10", value: "yes", checked: answer_checked?("yes") },
-                      { text: "Between 3 and 10, or does not have a pH", value: "no", checked: answer_checked?("no") }] %>
+      <%= govukRadios(
+            form: form,
+            key: :is_ph_between_3_and_10,
+            fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
+            items: [{ text: "Lower than 3 or higher than 10", value: "yes", checked: answer_checked?("yes") },
+                    { text: "Between 3 and 10, or does not have a pH", value: "no", checked: answer_checked?("no") }],
+          ) %>
       <%= govukButton text: "Continue" %>
 
     </div>
