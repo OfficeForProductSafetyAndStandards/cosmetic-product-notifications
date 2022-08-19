@@ -192,7 +192,7 @@ private
   def update_add_shades
     @component.update(component_params)
 
-    if params.key?(:add_shade) && params[:add_shade]
+    if params[:add_shade]
       @component.shades.push ""
       render :add_shades
     elsif params.key?(:remove_shade_with_id)
