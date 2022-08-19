@@ -42,9 +42,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16.16.x
-    # required to compile pg ruby gem
-    - name: install PostgreSQL client
-      run: sudo apt-get install libpq-dev
     - uses: actions/cache@v3
       with:
         path: cosmetics-web/vendor/bundle
