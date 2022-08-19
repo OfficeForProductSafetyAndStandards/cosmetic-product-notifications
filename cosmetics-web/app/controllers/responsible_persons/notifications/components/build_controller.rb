@@ -71,7 +71,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :select_nanomaterials
       return jump_to_step(:number_of_shades) if @component.notification.nano_materials.blank?
     when :add_shades
-      @component.shades = ["", ""] if @component.shades.nil?
+      @component.shades = ["", ""] if @component.shades.blank?
     when :add_cmrs
       create_required_cmrs
     when :after_select_nanomaterials_routing
