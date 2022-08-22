@@ -9,6 +9,10 @@ jobs:
   reviewapp:
     name: Deploy
     runs-on: ubuntu-latest
+    # Skip if it is a Dependabot created PR.
+    # For security reasons they do not have write permissions to deploy or access to secrets.
+    # https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+    if: ${{ github.actor != 'dependabot[bot]' }}
 
     steps:
     - uses: actions/checkout@v3
