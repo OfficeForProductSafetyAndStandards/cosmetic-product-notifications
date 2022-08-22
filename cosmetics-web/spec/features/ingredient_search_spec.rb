@@ -4,8 +4,8 @@ require "support/feature_helpers"
 RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
   let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
-  let(:component1) { create(:component, with_ingredients: %w[aqua tin sodium]) }
-  let(:component2) { create(:component, with_ingredients: %w[aqua tin]) }
+  let(:component1) { create(:component, :using_exact, with_ingredients: %w[aqua tin sodium]) }
+  let(:component2) { create(:component, :using_exact, with_ingredients: %w[aqua tin]) }
 
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 

@@ -117,7 +117,7 @@ ActiveRecord::Base.transaction do
     }
     c = Component.create!(component_attributes)
     ingredients[i % 3].each do |ingredient|
-      ExactFormula.create(inci_name: ingredient, cas_number: "11-12-1", quantity: 10, component: c)
+      Ingredient.create(inci_name: ingredient, cas_number: "11-12-1", exact_concentration: 10, component: c)
     end
 
     notification.cache_notification_for_csv!

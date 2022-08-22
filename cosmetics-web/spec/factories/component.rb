@@ -122,7 +122,7 @@ FactoryBot.define do
       end
 
       evaluator.with_ingredients.each do |ingredient|
-        component.exact_formulas << ExactFormula.create(inci_name: ingredient, cas_number: "12-34-5", quantity: 10)
+        component.ingredients << create(:exact_ingredient, component: component, inci_name: ingredient)
       end
     end
 

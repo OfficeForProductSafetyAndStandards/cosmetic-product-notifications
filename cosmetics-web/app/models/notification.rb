@@ -114,8 +114,7 @@ class Notification < ApplicationRecord
   def searchable_ingredients
     ingredients = []
     components.each do |c|
-      ingredients << c.exact_formulas.pluck(:inci_name)
-      ingredients << c.range_formulas.pluck(:inci_name)
+      ingredients << c.ingredients.pluck(:inci_name)
     end
 
     ingredients.flatten.join(",")
@@ -327,5 +326,3 @@ private
     end
   end
 end
-
-Notification.opensearch.import force: true if Rails.env.development? # for auto sync model with Opensearch
