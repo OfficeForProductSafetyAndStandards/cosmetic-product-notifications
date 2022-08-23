@@ -14,6 +14,9 @@
 </div>
 
 <div class="govuk-grid-row opss-full-height">
+  <a href="#ingredients" class="govuk-skip-link opss-skip-link">
+    Skip to the main content
+  </a>
   <section class="govuk-grid-column-one-quarter govuk-!-padding-right-1 opss-full-height__col">
     <nav aria-label="Secondary">
       <%= render 'poison_centres/shared/secondary_navigation' %>
@@ -44,7 +47,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <p class="govuk-body-s">
-        There are currently 343 different searchable ingredients in cosmetic product notifications.
+        There are currently <%= @ingredients.total_count %> different searchable ingredients in cosmetic product notifications.
         </p>
       </div>
     </div>

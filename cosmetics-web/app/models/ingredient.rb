@@ -42,6 +42,18 @@ class Ingredient < ApplicationRecord
   validate :non_poisonous_exact_component_type
   validate :range_component_type
 
+  def self.for_list(order: nil)
+    query = unscoped.select("DISTINCT (inci_name)")
+    case order
+    when "date"
+      unscoped.select("ingredients.*").joins("LEFT JOIN ingredients f2 on ingredients.inci_name = f2.inci_name AND ingredients.created_at > f2.created_at").where("f2.id IS NULL")
+    when "name_desc"
+      query.order("inci_name DESC")
+    else
+      query.order("inci_name")
+    end
+  end
+
 private
 
   def validate_inci_name_uniqueness?

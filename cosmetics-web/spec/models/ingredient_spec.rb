@@ -129,4 +129,23 @@ RSpec.describe Ingredient, type: :model do
       end
     end
   end
+
+  describe ".for_list" do
+    context "when asked to order by date" do
+      let(:ingredient1) { create(:exact_ingredient, inci_name: "Aqua", created_at: 1.week.ago) }
+      let(:ingredient2) { create(:exact_ingredient, inci_name: "Sodium", created_at: 2.weeks.ago) }
+      let(:ingredient3) { create(:exact_ingredient, inci_name: "Aqua", created_at: 3.weeks.ago) }
+
+      before do
+        ingredient1
+        ingredient2
+        ingredient3
+      end
+
+      it "displays correct data" do
+        result = described_class.for_list(order: "date")
+        expect(result.map(&:inci_name)).to eq(%w[Sodium Aqua])
+      end
+    end
+  end
 end
