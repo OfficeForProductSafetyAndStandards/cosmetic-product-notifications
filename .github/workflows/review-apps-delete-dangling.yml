@@ -3,6 +3,7 @@ name: Delete dangling review apps
 on:
   schedule:
     - cron: "0 1 * * *" # Every night at 1am
+  workflow_dispatch:
 
 jobs:
   cleanup_reviewapp:
@@ -16,7 +17,7 @@ jobs:
       CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
       CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Install cf client
       env:
         CF_CLI_VERSION: v7
@@ -74,11 +75,12 @@ jobs:
       env:
         DANGLING_REVIEW_APPS: ${{ steps.identify-dangling.outputs.DANGLING_REVIEW_APPS }}
       run: |
+        TIMESTAMP=$(date +'%F-%H-%M-%S')
         for dangling in ${DANGLING_REVIEW_APPS[@]}; do
           echo "Deleting ${dangling}"
           cf stop ${dangling}
-          cf run-task ${dangling} --command "./env/delete-opensearch-indexes.sh" --name delete-opensearch-indexes
-          task_status=0; until [ $task_status = "SUCCEEDED" ]; do task_status="$(cf tasks cosmetics-pr-${dangling} | grep delete-opensearch-indexes | awk '{print $3}')" && if [ "$task_status" = "FAILED" ]; then break; else echo "waiting" && sleep 10; fi; done;
+          cf run-task ${dangling} --command "./env/delete-opensearch-indexes.sh" --name "delete-opensearch-indexes-${TIMESTAMP}"
+          task_status=0; until [ "$task_status" = "SUCCEEDED" ]; do task_status="$(cf tasks ${dangling} | grep "delete-opensearch-indexes-${TIMESTAMP}" | awk '{print $3}')" && if [ "$task_status" = "FAILED" ]; then break; else echo "waiting (status: $task_status)" && sleep 10; fi; done;
           cf delete -f -r ${dangling}
           cf delete-service -f cosmetics-review-redis-${dangling:13} # Substring from 13th char contains the PR number
         done
