@@ -29,13 +29,18 @@
                   <%= link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state") %>
                 </th>
                 <td class="govuk-table__cell">
-                  <%=
-                    if image_count > 1
-                      link_to("Remove <span class='govuk-visually-hidden'>#{image.filename}</span>".html_safe,
-                              responsible_person_notification_draft_delete_product_image_path(@notification.responsible_person, @notification, image_id: image.id),
-                              method: :delete)
-                    end
-                  %>
+                  <% if image_count > 1 %>
+                    <%=
+                      deletion_url = responsible_person_notification_draft_delete_product_image_path(@notification.responsible_person,
+                                                                                                     @notification,
+                                                                                                     image_id: image.id)
+                      form_with(url: deletion_url, method: :delete) do |f|
+                        govukButton(type: :submit,
+                                    classes: "govuk-button--secondary",
+                                    html: "Remove <span class='govuk-visually-hidden'>#{image.filename}</span>".html_safe)
+                      end
+                    %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>

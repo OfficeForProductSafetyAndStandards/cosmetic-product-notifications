@@ -77,7 +77,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       click_button "Save and upload another image"
       expect_product_label_images(["testImage.png", "testLabelImage.jpg"])
 
-      click_link("Remove", match: :first)
+      click_button("Remove", match: :first)
       expect_product_label_images(["testImage.png"])
 
       click_button "Save and continue"
