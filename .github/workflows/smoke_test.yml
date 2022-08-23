@@ -18,9 +18,10 @@ jobs:
     # https://github.com/actions/example-services/tree/master/.github/workflows
     services:
       postgres:
-        image: postgres:11.5
+        image: postgres:13.6
         env:
           POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_PASSWORD: ""
           POSTGRES_DB: postgres
         ports: ["5432:5432"]
@@ -32,19 +33,16 @@ jobs:
         ports: ["9200:9200"]
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Set up Ruby
-      uses: actions/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.1.x
+        ruby-version: 3.1.2
     - name: Set up Node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: 16.16.x
-    # required to compile pg ruby gem
-    - name: install PostgreSQL client
-      run: sudo apt-get install libpq-dev
-    - uses: actions/cache@v1
+    - uses: actions/cache@v3
       with:
         path: cosmetics-web/vendor/bundle
         key: ${{ runner.OS }}-gems
@@ -52,7 +50,7 @@ jobs:
           ${{ runner.OS }}-gems
           ${{ runner.OS }}-gems-
           ${{ runner.OS }}-
-    - uses: actions/cache@v1
+    - uses: actions/cache@v3
       with:
         path: cosmetics-web/node_modules
         key: ${{ runner.OS }}-node
