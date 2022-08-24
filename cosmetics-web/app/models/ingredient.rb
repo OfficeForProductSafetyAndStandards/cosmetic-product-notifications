@@ -46,7 +46,7 @@ class Ingredient < ApplicationRecord
     query = unscoped.select("DISTINCT (inci_name)")
     case order
     when "date"
-      unscoped.select("ingredients.*").joins("LEFT JOIN ingredients f2 on ingredients.inci_name = f2.inci_name AND ingredients.created_at > f2.created_at").where("f2.id IS NULL")
+      unscoped.select("ingredients.*").joins("LEFT JOIN ingredients f2 on ingredients.inci_name = f2.inci_name AND ingredients.created_at > f2.created_at").where("f2.id IS NULL").order("ingredients.created_at DESC")
     when "name_desc"
       query.order("inci_name DESC")
     else
