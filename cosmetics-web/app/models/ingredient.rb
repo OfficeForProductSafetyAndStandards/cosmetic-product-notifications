@@ -21,6 +21,15 @@ class Ingredient < ApplicationRecord
   scope :non_poisonous, -> { where(poisonous: false) }
   scope :range, -> { where.not(range_concentration: nil) }
   scope :exact, -> { where.not(exact_concentration: nil) }
+  scope :unique_names, -> { unscoped.select(:inci_name).distinct }
+  scope :by_name_asc, -> { order(inci_name: :asc) }
+  scope :by_name_desc, -> { order(inci_name: :desc) }
+  scope :unique_names_by_created_last, lambda {
+    unscoped.select("ingredients.*")
+            .joins("LEFT JOIN ingredients f2 on ingredients.inci_name = f2.inci_name AND ingredients.created_at > f2.created_at")
+            .where("f2.id IS NULL")
+            .order("ingredients.created_at DESC")
+  }
 
   default_scope { order(created_at: :asc) }
 
@@ -41,18 +50,6 @@ class Ingredient < ApplicationRecord
   validate :poisonous_on_exact_concentration
   validate :non_poisonous_exact_component_type
   validate :range_component_type
-
-  def self.for_list(order: nil)
-    query = unscoped.select("DISTINCT (inci_name)")
-    case order
-    when "date"
-      unscoped.select("ingredients.*").joins("LEFT JOIN ingredients f2 on ingredients.inci_name = f2.inci_name AND ingredients.created_at > f2.created_at").where("f2.id IS NULL").order("ingredients.created_at DESC")
-    when "name_desc"
-      query.order("inci_name DESC")
-    else
-      query.order("inci_name")
-    end
-  end
 
 private
 

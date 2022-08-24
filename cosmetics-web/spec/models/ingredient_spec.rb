@@ -130,24 +130,22 @@ RSpec.describe Ingredient, type: :model do
     end
   end
 
-  describe ".for_list" do
-    context "when asked to order by date" do
-      let(:ingredient1) { create(:exact_ingredient, inci_name: "NaCl", created_at: 2.days.ago) }
-      let(:ingredient2) { create(:exact_ingredient, inci_name: "Aqua", created_at: 1.week.ago) }
-      let(:ingredient3) { create(:exact_ingredient, inci_name: "Sodium", created_at: 2.weeks.ago) }
-      let(:ingredient4) { create(:exact_ingredient, inci_name: "Aqua", created_at: 3.weeks.ago) }
+  describe ".unique_names_by_created_last" do
+    let(:ingredient1) { create(:exact_ingredient, inci_name: "NaCl", created_at: 2.days.ago) }
+    let(:ingredient2) { create(:exact_ingredient, inci_name: "Aqua", created_at: 1.week.ago) }
+    let(:ingredient3) { create(:exact_ingredient, inci_name: "Sodium", created_at: 2.weeks.ago) }
+    let(:ingredient4) { create(:exact_ingredient, inci_name: "Aqua", created_at: 3.weeks.ago) }
 
-      before do
-        ingredient1
-        ingredient2
-        ingredient3
-        ingredient4
-      end
+    before do
+      ingredient1
+      ingredient2
+      ingredient3
+      ingredient4
+    end
 
-      it "displays correct data" do
-        result = described_class.for_list(order: "date")
-        expect(result.map(&:id)).to eq([ingredient1.id, ingredient3.id, ingredient4.id])
-      end
+    it "returns unique ingredients from newest to oldest creation" do
+      expect(described_class.unique_names_by_created_last.map(&:id))
+        .to eq([ingredient1.id, ingredient3.id, ingredient4.id])
     end
   end
 end

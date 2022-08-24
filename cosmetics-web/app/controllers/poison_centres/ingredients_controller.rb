@@ -2,6 +2,14 @@ class PoisonCentres::IngredientsController < SearchApplicationController
   PER_PAGE = 20
 
   def index
-    @ingredients = Ingredient.for_list(order: params[:sort_by]).page(params[:page]).per(PER_PAGE)
+    ingredient_list = case params[:sort_by]
+                      when "date"
+                        Ingredient.unique_names_by_created_last
+                      when "name_desc"
+                        Ingredient.unique_names.by_name_desc
+                      else
+                        Ingredient.unique_names.by_name_asc
+                      end
+    @ingredients = ingredient_list.page(params[:page]).per(PER_PAGE)
   end
 end
