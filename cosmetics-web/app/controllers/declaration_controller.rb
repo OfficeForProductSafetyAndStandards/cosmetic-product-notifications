@@ -16,7 +16,7 @@ private
   def show_declaration
     if current_user&.poison_centre_user?
       render "poison_centre_declaration"
-    elsif current_user&.msa_user?
+    elsif current_user&.msa_user? || current_user&.opss_science_user?
       render "msa_user_declaration"
     else
       render "business_declaration"

@@ -11,6 +11,8 @@ jobs:
   cleanup_reviewapp:
     name: Delete review app
     runs-on: ubuntu-latest
+    # Skip if it is a Dependabot created PR. They do not have Review Apps to delete.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     env:
       SPACE: int
       CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
@@ -40,7 +42,7 @@ jobs:
 
     - name: Deactivate Github deployment
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_deactivate_dangling review-app-$PR_NUMBER

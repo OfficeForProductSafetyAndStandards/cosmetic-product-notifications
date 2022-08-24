@@ -44,23 +44,24 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for(@responsible_person, method: :put, html: { novalidate: true }) do |form| %>
-      <%= render("form_components/govuk_radios",
-                 form: form,
-                 key: :account_type,
-                 formGroup: { classes: "govuk-!-margin-top-6" },
-                 fieldset: { legend: { html: "Is the <abbr>UK</abbr> Responsible Person a business or an individual?".html_safe,
-                             classes: "govuk-fieldset__legend--s" } },
-                 classes: "govuk-radios--small",
-                 items: [
-                   { html: "Limited company or Limited Liability Partnership (<abbr>LLP</abbr>)".html_safe,
-                     id: "account_type_business",
-                     value: :business,
-                     label: { classes: "govuk-!-padding-bottom-0" } },
-                   { text: "Individual or sole trader",
-                     id: "account_type_individual",
-                     value: :individual,
-                     label: { classes: "govuk-!-padding-bottom-0" } },
-                 ]) %>
+      <%= govukRadios(
+            form: form,
+            key: :account_type,
+            formGroup: { classes: "govuk-!-margin-top-6" },
+            fieldset: { legend: { html: "Is the <abbr>UK</abbr> Responsible Person a business or an individual?".html_safe,
+                        classes: "govuk-fieldset__legend--s" } },
+            classes: "govuk-radios--small",
+            items: [
+              { html: "Limited company or Limited Liability Partnership (<abbr>LLP</abbr>)".html_safe,
+                id: "account_type_business",
+                value: :business,
+                label: { classes: "govuk-!-padding-bottom-0" } },
+              { text: "Individual or sole trader",
+                id: "account_type_individual",
+                value: :individual,
+                label: { classes: "govuk-!-padding-bottom-0" } },
+            ],
+          ) %>
       <fieldset class="govuk-fieldset ">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
           <h2 class="govuk-fieldset__heading">
@@ -71,25 +72,27 @@
           The address of the legal entity named as the Responsible Person.
         </div>
 
-        <%= render("form_components/govuk_input",
-                   form: form,
-                   key: :address_line_1,
-                   id: "address_line_1",
-                   classes: "govuk-!-width-three-quarters",
-                   formGroup: { classes: "govuk-!-margin-bottom-5" },
-                   described_by: "address-hint",
-                   label: { html: "Building and street <span class='govuk-visually-hidden'>line 1 of 2</span>".html_safe }) %>
+        <%= govukInput(
+              form: form,
+              key: :address_line_1,
+              id: "address_line_1",
+              classes: "govuk-!-width-three-quarters",
+              formGroup: { classes: "govuk-!-margin-bottom-5" },
+              described_by: "address-hint",
+              label: { html: "Building and street <span class='govuk-visually-hidden'>line 1 of 2</span>".html_safe },
+            ) %>
 
-        <%= render("form_components/govuk_input",
-                   form: form,
-                   key: :address_line_2,
-                   id: "address_line_2",
-                   classes: "govuk-!-width-three-quarters",
-                   label: { html: "<span class='govuk-visually-hidden'>Building and street line 2 of 2</span>".html_safe }) %>
+        <%= govukInput(
+              form: form,
+              key: :address_line_2,
+              id: "address_line_2",
+              classes: "govuk-!-width-three-quarters",
+              label: { html: "<span class='govuk-visually-hidden'>Building and street line 2 of 2</span>".html_safe },
+            ) %>
 
-        <%= render "form_components/govuk_input", form: form, key: :city, id: "city", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" } %>
-        <%= render "form_components/govuk_input", form: form, key: :county, id: "county", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" } %>
-        <%= render "form_components/govuk_input", form: form, key: :postal_code, id: "postal_code", label: { text: "Postcode" }, classes: "govuk-input--width-10" %>
+        <%= govukInput(form: form, key: :city, id: "city", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "Town or city" }) %>
+        <%= govukInput(form: form, key: :county, id: "county", classes: "govuk-input govuk-!-width-two-thirds", label: { text: "County" }) %>
+        <%= govukInput(form: form, key: :postal_code, id: "postal_code", label: { text: "Postcode" }, classes: "govuk-input--width-10") %>
 
         <div class="govuk-form-group">
           <%= govukButton text: "Save and continue" %>

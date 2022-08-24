@@ -6,4 +6,6 @@ class HelpController < PubliclyAccessibleController
   def privacy_notice; end
 
   def accessibility_statement; end
+
+  def cookies_policy; end
 end

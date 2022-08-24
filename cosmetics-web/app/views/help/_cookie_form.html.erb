@@ -1,0 +1,19 @@
+<h2 class="govuk-heading-m">Change your cookie settings</h2>
+<%= form_for @cookie_form, url: cookie_form_path do |f| %>
+  <div class="govuk-form-group">
+    <%= govukRadios(
+          form: f,
+          key: :accept_analytics_cookies,
+          fieldset: { legend: { text: "Do you want to accept analytics cookies?",
+                                classes: "govuk-fieldset__legend--s",
+                                isPageHeading: false } },
+          items: [{ text: "Yes", value: "true" },
+                  { text: "No", value: "false" }]
+        ) %>
+  </div>
+  <%= f.hidden_field :referrer_is_cookie_policy_page, value: true %>
+
+  <button class="govuk-button" data-module="govuk-button">
+    Save cookie settings
+  </button>
+<% end %>

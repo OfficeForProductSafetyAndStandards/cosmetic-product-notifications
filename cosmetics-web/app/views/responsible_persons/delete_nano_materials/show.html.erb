@@ -34,13 +34,12 @@
         <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @form.errors.messages[:nano_material_ids][0], href: "#nano-#{@notification.nano_materials.map(&:nano_elements).flatten.first.id}"}] ) %>
       <% end %>
       <%= form.hidden_field "nano_material_ids[]" %>
-      <%= render "form_components/govuk_checkboxes",
-              form: form,
-              key: :nano_material_ids,
-              classes: "govuk-!-margin-top-7",
-              fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
-              items: items,
-              hint: { text: hint_text, classes: 'govuk-!-width-three-quarters' } %>
+      <%= govukCheckboxes(form: form,
+                          key: :nano_material_ids,
+                          classes: "govuk-!-margin-top-7",
+                          fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
+                          items: items,
+                          hint: { text: hint_text, classes: 'govuk-!-width-three-quarters' }) %>
       <div class="govuk-button-group">
         <%= govukButton text: "Delete and continue" %>
 

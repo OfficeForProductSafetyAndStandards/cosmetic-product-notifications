@@ -105,22 +105,6 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
       expect(assigns(:notification)).to eq(draft_notification)
     end
 
-    it "adds error if failed attempt to submit when images are pending antivirus check" do
-      attach_image_to_draft_with_metadata({})
-      get :edit, params: { responsible_person_id: responsible_person.id,
-                           reference_number: draft_notification.reference_number,
-                           submit_failed: true }
-      expect(assigns(:notification).errors[:image_uploads]).to include("waiting for files to pass anti virus check. Refresh to update")
-    end
-
-    it "adds error if failed attempt to submit when images have failed antivirus check" do
-      attach_image_to_draft_with_metadata(safe: false)
-      get :edit, params: { responsible_person_id: responsible_person.id,
-                           reference_number: draft_notification.reference_number,
-                           submit_failed: true }
-      expect(assigns(:notification).errors[:image_uploads]).to include("failed anti virus check")
-    end
-
     it "does not allow the user to edit notification for a Responsible Person they not belong to" do
       other_responsible_person = create(:responsible_person)
       other_notification = create(:draft_notification, responsible_person: other_responsible_person)

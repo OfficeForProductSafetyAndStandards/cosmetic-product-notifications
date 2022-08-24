@@ -19,18 +19,16 @@
         <li>submit cosmetic product notifications</li>
         <li>invite team members</li>
       </ul>
-      <%= render("form_components/govuk_input",
-        key: :name,
-        id: "responsible_persons_invite_member_form_name",
-        type: :text,
-        form: form,
-        label: { text: "Full name" }) %>
-      <%= render("form_components/govuk_input",
-        key: :email,
-        id: "responsible_persons_invite_member_form_email",
-        type: :email_field,
-        form: form,
-        label: { text: "Email address" }) %>
+      <%= govukInput(key: :name,
+                     id: "responsible_persons_invite_member_form_name",
+                     type: :text,
+                     form: form,
+                     label: { text: "Full name" }) %>
+      <%= govukInput(key: :email,
+                     id: "responsible_persons_invite_member_form_email",
+                     type: :email_field,
+                     form: form,
+                     label: { text: "Email address" }) %>
 
       <div class="govuk-form-group">
         <%= govukButton text: "Send invitation" %>

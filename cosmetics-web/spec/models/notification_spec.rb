@@ -39,170 +39,13 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "#images_missing_or_with_virus?" do
-    context "when notifiying with no images uploaded yet" do
-      let(:notification) { build_stubbed(:draft_notification) }
-
-      it "requires images" do
-        expect(notification.images_missing_or_with_virus?).to be true
-      end
-    end
-
-    context "when notifiying with 1 image uploaded but not virus-scanned" do
-      let(:image_upload) { build_stubbed(:image_upload) }
-      let(:notification) { build_stubbed(:draft_notification, image_uploads: [image_upload]) }
-
-      it "does not require images" do
-        expect(notification.images_missing_or_with_virus?).to be false
-      end
-    end
-
-    context "when notifiying with 1 image uploaded and flagged by the antivirus" do
-      let(:image_upload) { build_stubbed(:image_upload, :uploaded_and_virus_identified) }
-      let(:notification) { build_stubbed(:draft_notification, image_uploads: [image_upload]) }
-
-      it "requires images" do
-        expect(notification.images_missing_or_with_virus?).to be true
-      end
-    end
-
-    context "when notifiying with 1 image uploaded and virus-scanned" do
-      let(:image_upload) { build_stubbed(:image_upload, :uploaded_and_virus_scanned) }
-      let(:notification) { build_stubbed(:draft_notification, image_uploads: [image_upload]) }
-
-      it "does not require images" do
-        expect(notification.images_missing_or_with_virus?).to be false
-      end
-    end
-  end
-
-  describe "#images_missing_or_not_passed_antivirus_check?" do
-    context "when notifiying with no images uploaded yet" do
-      let(:notification) { build_stubbed(:draft_notification) }
-
-      it "requires images" do
-        expect(notification.images_missing_or_not_passed_antivirus_check?).to be true
-      end
-    end
-
-    context "when notifiying with 1 image uploaded but not virus-scanned" do
-      let(:image_upload) { build_stubbed(:image_upload) }
-      let(:notification) { build_stubbed(:draft_notification, image_uploads: [image_upload]) }
-
-      it "does not require images" do
-        expect(notification.images_missing_or_not_passed_antivirus_check?).to be true
-      end
-    end
-
-    context "when notifiying with 1 image uploaded and flagged by the antivirus" do
-      let(:image_upload) { build_stubbed(:image_upload, :uploaded_and_virus_identified) }
-      let(:notification) { build_stubbed(:draft_notification, image_uploads: [image_upload]) }
-
-      it "requires images" do
-        expect(notification.images_missing_or_not_passed_antivirus_check?).to be true
-      end
-    end
-
-    context "when notifiying with 1 image uploaded and virus-scanned" do
-      let(:image_upload) { build_stubbed(:image_upload, :uploaded_and_virus_scanned) }
-      let(:notification) { build_stubbed(:draft_notification, image_uploads: [image_upload]) }
-
-      it "does not require images" do
-        expect(notification.images_missing_or_not_passed_antivirus_check?).to be false
-      end
-    end
-  end
-
-  describe "#missing_information?" do
-    let(:notification) { build(:notification) }
-
-    before do
-      allow(notification).to receive(:nano_material_required?).and_return(true)
-      allow(notification).to receive(:formulation_required?).and_return(true)
-      allow(notification).to receive(:images_missing_or_not_passed_antivirus_check?).and_return(true)
-    end
-
-    it "has no missing information" do
-      expect(notification).to be_missing_information
-    end
-
-    it "nano material is complete" do
-      allow(notification).to receive(:nano_material_required?).and_return(false)
-
-      expect(notification).to be_missing_information
-    end
-
-    it "frame formation is not required" do
-      allow(notification).to receive(:formulation_required?).and_return(false)
-
-      expect(notification).to be_missing_information
-    end
-
-    it "does not need a product image" do
-      allow(notification).to receive(:images_missing_or_not_passed_antivirus_check?).and_return(false)
-
-      expect(notification).to be_missing_information
-    end
-
-    context "when there is no more information required" do
-      it "has no missing information" do
-        allow(notification).to receive(:nano_material_required?).and_return(false)
-        allow(notification).to receive(:formulation_required?).and_return(false)
-        allow(notification).to receive(:images_missing_or_not_passed_antivirus_check?).and_return(false)
-
-        expect(notification).not_to be_missing_information
-      end
-    end
-  end
-
-  describe "#nano_material_required?" do
-    let(:nano_element) { create(:nano_element, nano_material: nano_material) }
-
-    before do
-      component
-    end
-
-    context "when notification does not have nano materials" do
-      let(:notification) { create(:notification) }
-      let(:component) { create(:component, notification: notification) }
-
-      it "returns false" do
-        expect(notification).not_to be_nano_material_required
-      end
-    end
-
-    context "when notification does have nano material but component doesn't" do
-      let(:notification) { create(:notification) }
-      let(:nano_material) { create(:nano_material, notification: notification) }
-      let(:component) { create(:component, notification: notification) }
-
-      before { nano_material }
-
-      it "returns true" do
-        expect(notification).to be_nano_material_required
-      end
-    end
-
-    context "when notification and component does have nano material" do
-      let(:notification) { create(:notification) }
-      let(:nano_material) { create(:nano_material, notification: notification) }
-      let(:component) { create(:component, notification: notification, with_nano_materials: [nano_material]) }
-
-      before { nano_material }
-
-      it "returns false" do
-        expect(notification).not_to be_nano_material_required
-      end
-    end
-  end
-
   describe "#may_submit_notification?", :with_stubbed_antivirus do
     let(:nano_element) { build(:nano_element, confirm_toxicology_notified: "yes", purposes: %w[other]) }
     let(:nano_material) { build(:nano_material, nano_elements: [nano_element]) }
     let(:component) { build(:component, with_nano_materials: [nano_material]) }
+    let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
 
     context "when no information is missing" do
-      let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
       let(:notification) { build(:draft_notification, image_uploads: [image_upload], components: [component]) }
 
       it "can submit a notification" do
@@ -211,7 +54,12 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
 
     context "when information is missing" do
-      let(:notification) { build(:draft_notification, components: [component]) }
+      let(:with_stubbed_antivirus_result) { false }
+      let(:notification) { build(:draft_notification, image_uploads: [image_upload], components: [component]) }
+
+      before do
+        image_upload.reload
+      end
 
       it "can not submit a notification" do
         expect(notification).not_to be_may_submit_notification
@@ -376,39 +224,6 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           }.to change(DeletedNotification, :count).by(-1)
           expect { deleted_notification.reload }.to raise_error ActiveRecord::RecordNotFound
         end
-      end
-    end
-  end
-
-  describe "confirm and accept validation" do
-    context "when there is nano material not assigned to component" do
-      let(:notification) { create(:notification) }
-
-      let(:nano_material1) { create(:nano_material, notification: notification) }
-      let(:nano_element1) { create(:nano_element, nano_material: nano_material1, inci_name: "Nano 1") }
-
-      let(:nano_material2) { create(:nano_material, notification: notification) }
-      let(:nano_element2) { create(:nano_element, nano_material: nano_material2, inci_name: "Nano 2") }
-
-      let(:component) { create(:component, notification: notification) }
-
-      before do
-        nano_element1
-        nano_element2
-      end
-
-      it "is not valid" do
-        expect(notification.valid?(:accept_and_submit)).to eq false
-      end
-
-      it "is valid" do
-        expect(notification.valid?).to eq true
-      end
-
-      it "has proper error messages" do
-        notification.valid?(:accept_and_submit)
-
-        expect(notification.errors.messages[:base]).to eq(["Nano 1 is not included in any items", "Nano 2 is not included in any items"])
       end
     end
   end

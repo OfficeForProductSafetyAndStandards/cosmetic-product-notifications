@@ -15,5 +15,11 @@ FactoryBot.define do
         image_upload.file.metadata["safe"] = false
       end
     end
+
+    trait :still_processing do
+      after(:stub, :create) do |image_upload|
+        image_upload.file.metadata["safe"] = nil
+      end
+    end
   end
 end

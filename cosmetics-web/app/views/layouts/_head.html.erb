@@ -1,14 +1,16 @@
 <head>
   <% # Google Analytics %>
-  <% if Rails.env.production? %>
-    <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
-    <%= javascript_tag nonce: true do %>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'UA-126364208-2');
+  <% if true || Rails.env.production? %>
+    <% if analytics_cookies_accepted? %>
+      <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
+      <%= javascript_tag nonce: true do %>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-126364208-2');
+      <% end %>
     <% end %>
   <% end %>
   <meta charset="utf-8" />

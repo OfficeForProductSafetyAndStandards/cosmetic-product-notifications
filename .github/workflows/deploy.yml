@@ -10,7 +10,7 @@ jobs:
     name: Deploy to Staging and Production
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Install cf client
       env:
         CF_CLI_VERSION: v7
@@ -20,7 +20,7 @@ jobs:
 
     - name: Create GitHub deployment for Staging
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: master
       run: |
         source cosmetics-web/deploy-github-functions.sh
@@ -28,7 +28,7 @@ jobs:
 
     - name: Initiate Staging deployment status
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
 
@@ -50,6 +50,7 @@ jobs:
         WORKER_INSTANCES: 2
         CF_USERNAME: ${{ secrets.PaaSUsernameStaging }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordStaging }}
+        SENTRY_SERVICE_NAME: cosmetics-staging-sentry-env
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
@@ -61,7 +62,7 @@ jobs:
     - name: Update Staging deployment status (success)
       if: success()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         environment_url=https://staging-submit.cosmetic-product-notifications.service.gov.uk/
@@ -70,14 +71,14 @@ jobs:
     - name: Update Staging deployment status (failure)
       if: failure()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure staging $LOG_URL
 
     - name: Create GitHub deployment for Production
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: master
       run: |
         source cosmetics-web/deploy-github-functions.sh
@@ -85,7 +86,7 @@ jobs:
 
     - name: Initiate Production deployment status
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_initiate production $LOG_URL
@@ -102,6 +103,7 @@ jobs:
         WORKER_INSTANCES: 4
         CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
         CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
+        SENTRY_SERVICE_NAME: cosmetics-sentry-env
       run: |
         cf api api.london.cloud.service.gov.uk
         cf auth
@@ -112,7 +114,7 @@ jobs:
     - name: Update Production deployment status (success)
       if: success()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         environment_url=https://submit.cosmetic-product-notifications.service.gov.uk/
@@ -121,7 +123,7 @@ jobs:
     - name: Update Production deployment status (failure)
       if: failure()
       env:
-        GITHUB_TOKEN: ${{ secrets.GithubApiDeploymentToken }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure production $LOG_URL

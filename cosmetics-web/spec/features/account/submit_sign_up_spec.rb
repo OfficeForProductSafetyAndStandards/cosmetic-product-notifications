@@ -18,10 +18,10 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_current_path("/create-an-account")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter your full name", href: "#full_name")
-    expect(page).to have_css("span#full_name-error", text: "Enter your full name")
+    expect(page).to have_css("p#full_name-error", text: "Enter your full name")
 
     expect(page).to have_link("Enter an email address", href: "#email")
-    expect(page).to have_css("span#email-error", text: "Enter an email address")
+    expect(page).to have_css("p#email-error", text: "Enter an email address")
 
     # Second attempt with no validation issues
     fill_in "Full name", with: "Joe Doe"
@@ -71,8 +71,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
     expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
-    expect(page).to have_css("span#app_authentication_code-error", text: "Enter a correct code")
-    expect(page).to have_css("span#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
+    expect(page).to have_css("p#app_authentication_code-error", text: "Enter a correct code")
+    expect(page).to have_css("p#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
 
     # New attempt setting both secondary authentication methods with no issues
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
@@ -182,10 +182,10 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_current_path("/create-an-account")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter your full name", href: "#full_name")
-    expect(page).to have_css("span#full_name-error", text: "Enter your full name")
+    expect(page).to have_css("p#full_name-error", text: "Enter your full name")
 
     expect(page).to have_link("Enter an email address", href: "#email")
-    expect(page).to have_css("span#email-error", text: "Enter an email address")
+    expect(page).to have_css("p#email-error", text: "Enter an email address")
 
     fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
@@ -453,7 +453,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_current_path("/create-an-account")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Enter a valid name", href: "#full_name")
-    expect(page).to have_css("span#full_name-error", text: "Enter a valid name")
+    expect(page).to have_css("p#full_name-error", text: "Enter a valid name")
   end
 
   def expect_to_be_on_check_your_email_page
