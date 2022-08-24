@@ -103,9 +103,9 @@ def expect_product_label_images(images_names)
       expect(page).to have_link(name)
     end
     if images_count > 1
-      expect(page).to have_link("Remove", count: images_count)
+      expect(page).to have_button("Remove", count: images_count)
     else
-      expect(page).not_to have_link("Remove")
+      expect(page).not_to have_button("Remove")
     end
   end
 end
