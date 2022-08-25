@@ -43,7 +43,12 @@
 
         <p class="govuk-body">You need to notify OPSS about every cosmetic product available to consumers in GB.</p>
 
-        <%= govukWarningText iconFallbackText: "Warning", text: "You may face a fine and a prison term of up to 3 months if you do not notify OPSS about a cosmetic product. This fine could be unlimited in England and Wales or up to £5,000 in Scotland and Northern Ireland." %>
+        <%= govukWarningText(
+              iconFallbackText: "Warning",
+              html: "You may face a fine and a prison term of up to 3 months if you do not notify " \
+                    "<abbr title='Office for Product Safety and Standards'>OPSS</abbr> about a cosmetic product. " \
+                    "This fine could be unlimited in England and Wales or up to &pound;5,000 in Scotland and Northern Ireland.".html_safe
+            ) %>
 
         <h2 class="govuk-heading-m">What you will need to tell us</h2>
 
