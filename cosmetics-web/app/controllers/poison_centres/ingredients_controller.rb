@@ -1,5 +1,5 @@
 class PoisonCentres::IngredientsController < SearchApplicationController
-  PER_PAGE = 20
+  PER_PAGE = 200
 
   def index
     ingredient_list = case params[:sort_by]
