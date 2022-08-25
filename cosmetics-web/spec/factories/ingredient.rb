@@ -23,6 +23,7 @@ FactoryBot.define do
 
     trait :exact do
       exact_concentration { 10 }
+      association :component, notification_type: "exact"
     end
 
     trait :range do

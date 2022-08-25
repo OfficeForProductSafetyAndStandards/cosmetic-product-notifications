@@ -54,43 +54,6 @@ ActiveRecord::Base.transaction do
   keywords = %w[cream luxury premium]
   category_names = %i[skin hair nail oral]
   categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
-  ingredients = [
-    [
-      "aqua",
-      "dimethicone",
-      "glycerin",
-      "propylene glycol",
-      "PEG",
-      "PEG stearate",
-      "ceteareth",
-      "sodium silicate",
-      "sodium carbonate",
-    ],
-    [
-      "aqua",
-      "sodium metasilicate",
-      "stearamidopropyl dimethylamine",
-      "ammonium chloride",
-      "dicetyldimonium chloride",
-      "distearyldimonium chloride",
-      "cetrimonium chloride",
-      "phosphoric acid",
-      "magnesium silicate",
-      "citric acid",
-    ],
-    [
-      "aqua",
-      "cyclopentasiloxane",
-      "dimethicone",
-      "amodimethicone",
-      "silanes",
-      "alcoxysilanes",
-      "cysteine derivatives",
-      "magnesium silicate",
-      "cellulose derivatives",
-      "fatty acid esters",
-    ],
-  ]
   # Create Notifications
   ENV.fetch("SEED_NOTIFICATIONS_COUNT", 30).to_i.times do |i|
     notification_attributes = {
@@ -116,6 +79,43 @@ ActiveRecord::Base.transaction do
       notification: notification,
     }
     c = Component.create!(component_attributes)
+    ingredients = [
+      [
+        "aqua",
+        "dimethicone",
+        "glycerin",
+        "propylene glycol",
+        "PEG",
+        "PEG stearate",
+        "ceteareth",
+        "sodium silicate",
+        "sodium carbonate",
+      ],
+      [
+        "aqua",
+        "sodium metasilicate",
+        "stearamidopropyl dimethylamine",
+        "ammonium chloride",
+        "dicetyldimonium chloride",
+        "distearyldimonium chloride",
+        "cetrimonium chloride",
+        "phosphoric acid",
+        "magnesium silicate",
+        "citric acid",
+      ],
+      [
+        "aqua",
+        "cyclopentasiloxane",
+        "dimethicone",
+        "amodimethicone",
+        "silanes",
+        "alcoxysilanes",
+        "cysteine derivatives",
+        "magnesium silicate",
+        "cellulose derivatives",
+        "fatty acid esters",
+      ],
+    ]
     ingredients[i % 3].each do |ingredient|
       Ingredient.create(inci_name: ingredient, cas_number: "11-12-1", exact_concentration: 10, component: c)
     end

@@ -5,18 +5,7 @@
   </a>
 
   <nav aria-label="Secondary">
-    <ul class="govuk-list opss-left-nav">
-      <li class="opss-left-nav__active">
-        <a href="<%= root_path %>" class="govuk-link govuk-link--no-visited-state" aria-current="page">
-          Cosmetic products search
-        </a>
-      </li>
-      <li>
-        <a href="<%= poison_centre_ingredients_search_path %>" class="govuk-link govuk-link--no-visited-state">
-          Ingredients search
-        </a>
-      </li>
-    </ul>
+    <%= render 'poison_centres/shared/secondary_navigation' %>
   </nav>
 
   <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-1 govuk-!-margin-bottom-6 govuk-!-margin-right-6">
