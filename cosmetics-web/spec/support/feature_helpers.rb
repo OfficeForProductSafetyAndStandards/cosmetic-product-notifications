@@ -156,7 +156,7 @@ end
 
 def expect_to_be_on__what_is_product_called_page
   expect(page.current_path).to end_with("/build/add_product_name")
-  expect(page).to have_h1("What’s the product called?")
+  expect(page).to have_h1("What is the product name??")
 end
 
 def expect_back_link_to_what_is_product_called_page
