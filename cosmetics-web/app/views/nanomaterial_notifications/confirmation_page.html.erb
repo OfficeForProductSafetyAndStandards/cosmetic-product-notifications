@@ -21,8 +21,12 @@
 
       <p class="govuk-body">The Office for Product Safety and Standards may contact you for more information about the nanomaterial.</p>
 
-      <p class="govuk-body">Notified products containing the nanomaterial You have told us about can be made available on the UK market from <%= @nanomaterial_notification.can_be_made_available_on_uk_market_from.in_time_zone("London").strftime("%-d %B %Y") %>.</p>
-
+      <% available_date = @nanomaterial_notification.can_be_made_available_on_uk_market_from.in_time_zone("London").strftime("%-d %B %Y") %>
+      <%= govukWarningText(
+            iconFallbackText: "Warning",
+            classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-2",
+            text: "Notified products containing the nanomaterial You have told us about can be made available on the UK market from #{available_date}."
+          )%>
     <% end %>
 
     <p class="govuk-body"><%= link_to "Return to Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link" %></p>
