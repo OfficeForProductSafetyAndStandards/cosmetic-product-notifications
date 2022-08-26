@@ -56,7 +56,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_selector("h1", text: "Check your answers")
     click_button "Accept and send"
 
-    expect(page).to have_text("You’ve told us about My nanomaterial")
+    expect(page).to have_text("You have told us about My nanomaterial")
     click_link "Return to Nanomaterials"
 
     id = NanomaterialNotification.last.id
@@ -96,7 +96,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_selector("h1", text: "Check your answers")
     click_button "Accept and send"
 
-    expect(page).to have_text("You’ve told us about My EU nanomaterial")
+    expect(page).to have_text("You have told us about My EU nanomaterial")
     click_link "Return to Nanomaterials"
 
     id = NanomaterialNotification.last.id
