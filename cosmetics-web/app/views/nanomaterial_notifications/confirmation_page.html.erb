@@ -29,7 +29,9 @@
           )%>
     <% end %>
 
-    <p class="govuk-body"><%= link_to "Return to Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link" %></p>
+    <p class="govuk-body">
+      <%= link_to "Return to Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link govuk-link--no-visited-state" %>
+    </p>
 
   </div>
 </div>
