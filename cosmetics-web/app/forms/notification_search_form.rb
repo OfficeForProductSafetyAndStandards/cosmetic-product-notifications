@@ -6,14 +6,14 @@ class NotificationSearchForm < Form
 
   CATEGORIES = get_main_categories.map { |c| get_category_name(c) }
   SORT_WITH_QUERY_OPTIONS = {
-    "Relevance" => OpensearchQuery::SCORE_SORTING,
-    "Newest" => OpensearchQuery::DATE_DESCENDING_SORTING,
-    "Oldest" => OpensearchQuery::DATE_ASCENDING_SORTING,
+    "Relevance" => OpenSearchQuery::Notification::SCORE_SORTING,
+    "Newest" => OpenSearchQuery::Notification::DATE_DESCENDING_SORTING,
+    "Oldest" => OpenSearchQuery::Notification::DATE_ASCENDING_SORTING,
   }.freeze
 
   SORT_WITHOUT_QUERY_OPTIONS = {
-    "Newest" => OpensearchQuery::DATE_DESCENDING_SORTING,
-    "Oldest" => OpensearchQuery::DATE_ASCENDING_SORTING,
+    "Newest" => OpenSearchQuery::Notification::DATE_DESCENDING_SORTING,
+    "Oldest" => OpenSearchQuery::Notification::DATE_ASCENDING_SORTING,
   }.freeze
 
   attribute :q
@@ -79,5 +79,9 @@ class NotificationSearchForm < Form
     if date_range_selected? && date_from.is_a?(Date) && date_to.is_a?(Date) && (date_from > date_to)
       errors.add(:date_to, :date_from_is_later_than_date_to)
     end
+  end
+
+  def filters_present?
+    date_filter.present? || category.present?
   end
 end

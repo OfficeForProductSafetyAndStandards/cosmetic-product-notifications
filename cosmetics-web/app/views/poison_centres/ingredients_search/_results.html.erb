@@ -5,9 +5,6 @@
     </div>
 
     <div class="govuk-grid-column-one-third">
-      <div class="govuk-form-group opss-text-align-right">
-        <%= render partial: 'sort_form' %>
-      </div>
     </div>
   </div>
 
@@ -33,7 +30,7 @@
             </tr>
           </thead>
           <% results.each.with_index(1) do |notification, index| %>
-            <%= render "registered_product", notification: notification, index: index %>
+            <%= render "poison_centres/shared/registered_product", notification: notification, index: index, form: :ingredient_search_form, back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH %>
           <% end %>
           <% if results.size > 11 %>
             <tfoot class="govuk-table__head">

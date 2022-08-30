@@ -1,17 +1,17 @@
 require "rails_helper"
 
-RSpec.describe OpensearchQuery, type: :model do
+RSpec.describe OpenSearchQuery::Notification, type: :model do
+  let(:fields) { OpenSearchQuery::Notification::FIELDS }
+  let(:from_date) { nil }
+  let(:to_date)   { nil }
+  let(:sort_by)   { nil }
+  let(:query) { described_class.new(keyword: q, category: category, from_date: from_date, to_date: to_date, sort_by: sort_by).build_query }
+
   shared_examples_for "correct query" do
     specify do
       expect(query).to eq expected_es_query
     end
   end
-
-  let(:from_date) { nil }
-  let(:to_date)   { nil }
-  let(:sort_by)   { nil }
-
-  let(:query) { described_class.new(keyword: q, category: category, from_date: from_date, to_date: to_date, sort_by: sort_by).build_query }
 
   context "when search term is provided and category filter is empty" do
     it_behaves_like "correct query" do
@@ -19,7 +19,7 @@ RSpec.describe OpensearchQuery, type: :model do
       let(:category) { nil }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { multi_match: { fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [], must: { multi_match: { fields: fields, fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
       end
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe OpensearchQuery, type: :model do
       let(:category) { "Bar baz" }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { multi_match: { fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { multi_match: { fields: fields, fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
       end
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe OpensearchQuery, type: :model do
     it_behaves_like "correct query" do
       let(:q) { nil }
       let(:category) { nil }
-      let(:sort_by) { OpensearchQuery::DATE_ASCENDING_SORTING }
+      let(:sort_by) { OpenSearchQuery::Notification::DATE_ASCENDING_SORTING }
 
       let(:expected_es_query) do
         { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :asc } }] }
@@ -62,7 +62,7 @@ RSpec.describe OpensearchQuery, type: :model do
     it_behaves_like "correct query" do
       let(:q) { nil }
       let(:category) { nil }
-      let(:sort_by) { OpensearchQuery::DATE_DESCENDING_SORTING }
+      let(:sort_by) { OpenSearchQuery::Notification::DATE_DESCENDING_SORTING }
 
       let(:expected_es_query) do
         { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :desc } }] }
@@ -101,7 +101,7 @@ RSpec.describe OpensearchQuery, type: :model do
       let(:to_date) { Date.new(2021, 6, 16) }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }], must: { multi_match: { fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }], must: { multi_match: { fields: fields, fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
       end
     end
   end
