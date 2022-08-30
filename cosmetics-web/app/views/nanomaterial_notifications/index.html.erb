@@ -48,6 +48,7 @@
               <th class="govuk-visually-hidden">&nbsp;</th>
               <th id="uknotified" scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
               <th id="eunotified" scope="col" class="govuk-table__header"><abbr>EU</abbr> notified</th>
+              <th id="reviewperiodenddate" scope="col" class="govuk-table__header">6 month review period end</th>
               <th id="uknumber" scope="col" class="govuk-table__header"><abbr>UK</abbr> nanomaterial number</th>
           </tr>
         </thead>
@@ -80,6 +81,9 @@
                     else
                       "No"
                     end %>
+              </td>
+              <td headers="reviewperiodenddate <%= item %> <%= meta %>" class="govuk-table__cell">
+                <%= display_full_month_date notification.can_be_made_available_on_uk_market_from %>
               </td>
               <td headers="uknumber <%= item %> <%= meta %>" class="govuk-table__cell">
                 <abbr>UKN</abbr>-<%= notification.id %>
