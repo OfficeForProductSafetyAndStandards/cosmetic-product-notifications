@@ -71,6 +71,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_h1("My nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
+    expect(page).to have_summary_item(key: "Review period end", value: "10 December 2021")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
     expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end
@@ -112,6 +113,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_h1("My EU nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
+    expect(page).to have_summary_item(key: "Review period end", value: "1 August 2017")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
     expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end
