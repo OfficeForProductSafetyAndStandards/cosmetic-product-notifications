@@ -1,4 +1,4 @@
-<% page_title = safe_join(["You’ve told us about ", @nanomaterial_notification.name]) %>
+<% page_title = safe_join(["You have told us about ", @nanomaterial_notification.name]) %>
 <% content_for :page_title, page_title %>
 
 <div class="govuk-grid-row">
@@ -21,11 +21,17 @@
 
       <p class="govuk-body">The Office for Product Safety and Standards may contact you for more information about the nanomaterial.</p>
 
-      <p class="govuk-body">Notified products containing the nanomaterial you’ve told us about can be made available on the UK market from <%= @nanomaterial_notification.can_be_made_available_on_uk_market_from.in_time_zone("London").strftime("%-d %B %Y") %>.</p>
-
+      <% available_date = display_full_month_date(@nanomaterial_notification.can_be_made_available_on_uk_market_from.in_time_zone("London")) %>
+      <%= govukWarningText(
+            iconFallbackText: "Warning",
+            classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-2",
+            text: "Notified products containing the nanomaterial You have told us about can be made available on the UK market from #{available_date}."
+          )%>
     <% end %>
 
-    <p class="govuk-body"><%= link_to "Return to Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link" %></p>
+    <p class="govuk-body">
+      <%= link_to "Return to Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link govuk-link--no-visited-state" %>
+    </p>
 
   </div>
 </div>
