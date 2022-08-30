@@ -646,11 +646,11 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       it "has a page heading" do
-        expect(response.body).to have_h1_with_text("You’ve told us about Zinc oxide")
+        expect(response.body).to have_h1_with_text("You have told us about Zinc oxide")
       end
 
       it "has a page title" do
-        expect(response.body).to have_title("You’ve told us about Zinc oxide")
+        expect(response.body).to have_title("You have told us about Zinc oxide")
       end
     end
 
