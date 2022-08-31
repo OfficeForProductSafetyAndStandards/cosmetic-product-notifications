@@ -26,11 +26,19 @@
               <th class="govuk-visually-hidden">&nbsp;</th>
               <th id="uknotified" scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
               <th id="ukcosprodnumber" scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
-              <th id="eurefnumber" scope="col" class="govuk-table__header"><abbr>EU</abbr> reference number</th>
+              <th id="eurefnumber" scope="col" class="govuk-table__header">Responsible Person</th>
             </tr>
           </thead>
+          <% rp_classes = ["opss-table-grouped-by--1", "opss-table-grouped-by--2"] %>
+          <% current_rp_class_index = 0 %>
+          <% previous_rp_id = results.first.responsible_person_id %>
+
           <% results.each.with_index(1) do |notification, index| %>
-            <%= render "poison_centres/shared/registered_product", notification: notification, index: index, form: :ingredient_search_form, back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH %>
+            <% if previous_rp_id != notification.responsible_person_id %>
+              <% current_rp_class_index += 1 %>
+              <% previous_rp_id = notification.responsible_person_id %>
+            <% end %>
+            <%= render "poison_centres/ingredients_search/result_row", notification: notification, index: index, form: :ingredient_search_form, back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH, additional_classes: rp_classes[current_rp_class_index % 2] %>
           <% end %>
           <% if results.size > 11 %>
             <tfoot class="govuk-table__head">
@@ -38,7 +46,7 @@
                 <th class="govuk-visually-hidden">&nbsp;</th>
                 <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
                 <th scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
-                <th scope="col" class="govuk-table__header"><abbr>EU</abbr> reference number</th>
+                <th scope="col" class="govuk-table__header">Responsible Person</th>
               </tr>
             </tfoot>
           <% end %>

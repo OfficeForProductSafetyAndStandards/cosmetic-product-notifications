@@ -15,7 +15,7 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
 private
 
   def search_notifications
-    query = OpenSearchQuery::Ingredient.new(keyword: @search_form.q, match_type: @search_form.exact_or_any_match, from_date: @search_form.date_from_for_search, to_date: @search_form.date_to_for_search)
+    query = OpenSearchQuery::Ingredient.new(keyword: @search_form.q, match_type: @search_form.exact_or_any_match, from_date: @search_form.date_from_for_search, to_date: @search_form.date_to_for_search, sort_by: @search_form.sort_by)
     Rails.logger.debug query.build_query.to_json
     # Pagination needs to be kept together with the full search query to automatically paginate the query with Kaminari values
     # instead of defaulting to OpenSearch returning the first 10 hits.
@@ -26,6 +26,7 @@ private
     params.fetch(:ingredient_search_form, {}).permit(:q,
                                                      { date_from: %i[day month year] },
                                                      { date_to: %i[day month year] },
+                                                     :sort_by,
                                                      :exact_or_any_match)
   end
   helper_method :search_params

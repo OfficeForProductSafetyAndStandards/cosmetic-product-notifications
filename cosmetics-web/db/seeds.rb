@@ -32,6 +32,23 @@ ActiveRecord::Base.transaction do
                                 phone_number: "07700 900000",
                                 responsible_person: rp }
   ContactPerson.create!(contact_person_attributes)
+
+  rp_attributes = {
+    account_type: "individual",
+    name: "Some Trader Another",
+    address_line_1: "Goverment Court",
+    address_line_2: "18 High Road",
+    city: "LONDON",
+    county: "Hertfordshire",
+    postal_code: "SO14 5QF",
+  }
+  rp2 = ResponsiblePerson.create!(rp_attributes)
+  # Create Contact Person
+  contact_person_attributes = { name: "John Doe",
+                                email_address: "example@example.org",
+                                phone_number: "07700 900000",
+                                responsible_person: rp2 }
+  ContactPerson.create!(contact_person_attributes)
   # Create SearchUser
 
   search_user_attributes = {
@@ -55,7 +72,7 @@ ActiveRecord::Base.transaction do
   category_names = %i[skin hair nail oral]
   categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
   # Create Notifications
-  ENV.fetch("SEED_NOTIFICATIONS_COUNT", 30).to_i.times do |i|
+  ENV.fetch("SEED_NOTIFICATIONS_COUNT", 60).to_i.times do |i|
     notification_attributes = {
       product_name: "Scrub shower bubbles #{keywords[i % 3]} #{i} (#{category_names[i % 4]})",
       state: "notification_complete",
@@ -63,7 +80,7 @@ ActiveRecord::Base.transaction do
       was_notified_before_eu_exit: false,
       under_three_years: false,
       notification_complete_at: (Time.zone.now - i.days),
-      responsible_person: rp,
+      responsible_person: [rp, rp2][i % 2],
     }
     notification = Notification.create!(notification_attributes)
 

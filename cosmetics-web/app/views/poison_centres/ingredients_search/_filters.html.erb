@@ -17,6 +17,33 @@
   <%= form_for(@search_form, url: poison_centre_ingredients_search_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
     <%= form.hidden_field :q, id: :ingredients_search_form_q_hidden %>
     <h2 class="govuk-heading-s">
+      Display<span class="govuk-visually-hidden">:</span>
+    </h2>
+    <div class="govuk-form-group opss-form-group opss-form-group--sm-labels">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular">
+          Group by
+        </legend>
+
+        <div class="govuk-radios govuk-radios--small">
+          <div class="govuk-radios__item">
+            <%= form.radio_button :sort_by, OpenSearchQuery::Ingredient::SORT_BY_NONE, 'class' => "govuk-radios__input" %>
+            <label class="govuk-label govuk-radios__label" for="exact-match">
+              None
+            </label>
+          </div>
+
+          <div class="govuk-radios__item">
+            <%= form.radio_button :sort_by, OpenSearchQuery::Ingredient::SORT_BY_RESPONSIBLE_PERSON_ASC, 'class' => "govuk-radios__input" %>
+            <label class="govuk-label govuk-radios__label" for="any-match">
+              Responsible Person
+            </label>
+          </div>
+        </div>
+
+      </fieldset>
+    </div>
+    <h2 class="govuk-heading-s">
       Filters<span class="govuk-visually-hidden">:</span>
     </h2>
 
@@ -28,14 +55,14 @@
 
         <div class="govuk-radios govuk-radios--small">
           <div class="govuk-radios__item">
-            <%= form.radio_button :exact_or_any_match, @search_form.class::EXACT_MATCH, 'class' => "govuk-radios__input", 'id' => "exact-match" %>
+            <%= form.radio_button :exact_or_any_match, OpenSearchQuery::Ingredient::EXACT_MATCH, 'class' => "govuk-radios__input", 'id' => "exact-match" %>
             <label class="govuk-label govuk-radios__label" for="exact-match">
               Exact match only
             </label>
           </div>
 
           <div class="govuk-radios__item">
-            <%= form.radio_button :exact_or_any_match, @search_form.class::ANY_MATCH, 'class' => "govuk-radios__input", 'id' => "any-match" %>
+            <%= form.radio_button :exact_or_any_match, OpenSearchQuery::Ingredient::ANY_MATCH, 'class' => "govuk-radios__input", 'id' => "any-match" %>
             <label class="govuk-label govuk-radios__label" for="any-match">
               Match any words
             </label>
@@ -71,6 +98,9 @@
     <div class="govuk-button-group">
       <button type="submit" class="govuk-button" data-module="govuk-button">
         Apply
+      </button>
+      <button type="reset" class="govuk-button govuk-!-font-size-16 opss-button-link" id="opss-reset">
+        Reset
       </button>
     </div>
   <% end %>
