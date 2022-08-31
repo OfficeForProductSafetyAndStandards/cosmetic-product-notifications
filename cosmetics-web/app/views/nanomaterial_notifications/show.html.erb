@@ -24,14 +24,6 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Notified in the <abbr>UK</abbr>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= display_full_month_date @nanomaterial_notification.submitted_at %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
           Notified in the <abbr>EU</abbr>
         </dt>
         <dd class="govuk-summary-list__value">
@@ -40,6 +32,22 @@
               else
                 "No"
               end %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Notified in the <abbr>UK</abbr>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= display_full_month_date @nanomaterial_notification.submitted_at %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Review period end
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= display_full_month_date @nanomaterial_notification.can_be_made_available_on_uk_market_from %>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
