@@ -5,17 +5,29 @@
   <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
 
+<% input_hint = capture do %>
+    <p>This is the International Nomenclature for Cosmetic Ingredients name.</p>
+    <p>
+      View the <%= link_to("Annex 4 list of colourants",
+                          get_ec_regulation_link_for_annex_number(4),
+                          class: "govuk-link govuk-link--no-visited-state",
+                          target: "_blank",
+                          rel: "noopener") %>
+    </p>
+<% end %>
+
+
 <%= form_with model: @nano_element, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@nano_element) %>
       <%= govukInput(form: form,
                      key: :inci_name,
-                     classes: "govuk-!-margin-top-7",
+                     classes: "govuk-!-margin-top-2",
                      label: { html: "What is the nanomaterial <abbr title='International Nomenclature for Cosmetic Ingredients'>INCI</abbr> name?".html_safe ,
                              classes: "govuk-label--l",
                              isPageHeading: true },
-                     hint: { html: 'This is the International Nomenclature for Cosmetic Ingredients name.' }) %>
+                     hint: { html: input_hint }) %>
       <%= govukButton text: "Save and continue" %>
     </div>
   </div>
