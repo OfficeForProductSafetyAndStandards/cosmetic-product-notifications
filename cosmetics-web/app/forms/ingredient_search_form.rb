@@ -3,7 +3,7 @@ class IngredientSearchForm < Form
   attribute :exact_or_any_match, default: OpenSearchQuery::Ingredient::ANY_MATCH
   attribute :date_from, :govuk_date
   attribute :date_to, :govuk_date
-  attribute :sort_by
+  attribute :sort_by, default: OpenSearchQuery::Ingredient::SORT_BY_NONE
 
   validates :date_from,
             presence: true,

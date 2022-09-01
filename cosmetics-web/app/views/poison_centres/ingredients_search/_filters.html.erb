@@ -20,55 +20,46 @@
       Display<span class="govuk-visually-hidden">:</span>
     </h2>
     <div class="govuk-form-group opss-form-group opss-form-group--sm-labels">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular">
-          Group by
-        </legend>
-
-        <div class="govuk-radios govuk-radios--small">
-          <div class="govuk-radios__item">
-            <%= form.radio_button :sort_by, OpenSearchQuery::Ingredient::SORT_BY_NONE, 'class' => "govuk-radios__input" %>
-            <label class="govuk-label govuk-radios__label" for="exact-match">
-              None
-            </label>
-          </div>
-
-          <div class="govuk-radios__item">
-            <%= form.radio_button :sort_by, OpenSearchQuery::Ingredient::SORT_BY_RESPONSIBLE_PERSON_ASC, 'class' => "govuk-radios__input" %>
-            <label class="govuk-label govuk-radios__label" for="any-match">
-              Responsible Person
-            </label>
-          </div>
-        </div>
-
-      </fieldset>
+      <%= govukRadios(
+            form: form,
+            key: :sort_by,
+            idPrefix: "change-rp",
+            fieldset: { legend: { text: "Group by", classes: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
+            classes: "govuk-radios--small",
+            items: [
+              {
+                value: OpenSearchQuery::Ingredient::SORT_BY_NONE,
+                text: 'None'
+              },
+              {
+                value: OpenSearchQuery::Ingredient::SORT_BY_RESPONSIBLE_PERSON_ASC,
+                text: 'Responsible Person'
+              },
+            ],
+          ) %>
     </div>
     <h2 class="govuk-heading-s">
       Filters<span class="govuk-visually-hidden">:</span>
     </h2>
 
     <div class="govuk-form-group opss-form-group opss-form-group--sm-labels">
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular">
-          Match type
-        </legend>
-
-        <div class="govuk-radios govuk-radios--small">
-          <div class="govuk-radios__item">
-            <%= form.radio_button :exact_or_any_match, OpenSearchQuery::Ingredient::EXACT_MATCH, 'class' => "govuk-radios__input", 'id' => "exact-match" %>
-            <label class="govuk-label govuk-radios__label" for="exact-match">
-              Exact match only
-            </label>
-          </div>
-
-          <div class="govuk-radios__item">
-            <%= form.radio_button :exact_or_any_match, OpenSearchQuery::Ingredient::ANY_MATCH, 'class' => "govuk-radios__input", 'id' => "any-match" %>
-            <label class="govuk-label govuk-radios__label" for="any-match">
-              Match any words
-            </label>
-          </div>
-        </div>
-      </fieldset>
+      <%= govukRadios(
+            form: form,
+            key: :exact_or_any_match,
+            idPrefix: "match-by",
+            fieldset: { legend: { text: "Match type", classes: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
+            classes: "govuk-radios--small",
+            items: [
+              {
+                value: OpenSearchQuery::Ingredient::EXACT_MATCH,
+                text: 'Exact match only',
+              },
+              {
+                value: OpenSearchQuery::Ingredient::ANY_MATCH,
+                text: 'Match any words'
+              },
+            ],
+          ) %>
     </div>
     <div class="govuk-form-group govuk-!-margin-bottom-7">
       <fieldset class="govuk-fieldset" aria-describedby="by-date-range-hint">
