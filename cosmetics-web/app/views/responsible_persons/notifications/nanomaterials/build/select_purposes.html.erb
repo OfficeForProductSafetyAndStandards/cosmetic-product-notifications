@@ -1,8 +1,13 @@
-<% title = "Select nanomaterial purpose" %>
-<% question = "What is the purpose of this nanomaterial?" %>
-<% items = nanomaterial_purpose_options.map { |purpose, label|
-    { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose), disable_ghost: true }
-  } %>
+<%
+  title = "Select nanomaterial purpose"
+  question = "What is the purpose of this nanomaterial?"
+  items = NanoElementPurposes.all.map do |purpose|
+    { key: purpose.name,
+      text: purpose.display_name.upcase_first,
+      checked: @nano_element.purposes&.include?(purpose.name),
+      disable_ghost: true }
+  end
+%>
 
 <% page_title title, errors: @nano_element.errors.messages.include?(:purposes) %>
 <% content_for :after_header do %>
@@ -27,3 +32,13 @@
     </div>
   </div>
 <% end %>
+<%#
+  <%= govukRadios(
+        form: form,
+        key: :purposes,
+        fieldset: { legend: { text: question,
+                              classes: "govuk-label--l",
+                              isPageHeading: true } },
+        items: [{ text: "Yes", value: "true" },
+                { text: "No", value: "false" }]
+      ) %>
