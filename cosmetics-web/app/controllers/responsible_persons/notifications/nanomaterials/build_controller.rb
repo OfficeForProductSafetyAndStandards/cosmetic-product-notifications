@@ -101,7 +101,7 @@ private
 
   def purpose_params
     selected_purposes = params
-        .permit(nano_element: NanoElement.purposes).fetch(:nano_element, {})
+        .permit(nano_element: NanoElementPurposes.all).fetch(:nano_element, {})
         .select { |_, value| value == "1" }.keys
     { purposes: selected_purposes }
   end

@@ -8,8 +8,9 @@
 <% input_hint = capture do %>
     <p>This is the International Nomenclature for Cosmetic Ingredients name.</p>
     <p>
-      View the <%= link_to("Annex 4 list of colourants",
-                          get_ec_regulation_link_for_annex_number(4),
+      <% colorant = NanoElementPurposes.colorant %>
+      View the <%= link_to("Annex #{colorant.annex_number} list of colourants",
+                          colorant.link,
                           class: "govuk-link govuk-link--no-visited-state",
                           target: "_blank",
                           rel: "noopener") %>
