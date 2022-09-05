@@ -1,6 +1,6 @@
 <% title = "Select nanomaterial purpose" %>
-<% question = "What is the purpose of #{@nano_element.inci_name}?" %>
-<% items = get_nanomaterial_purpose_options.map { |purpose, label|
+<% question = "What is the purpose of this nanomaterial?" %>
+<% items = nanomaterial_purpose_options.map { |purpose, label|
     { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose), disable_ghost: true }
   } %>
 
