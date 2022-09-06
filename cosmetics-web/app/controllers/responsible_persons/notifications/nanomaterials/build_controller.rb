@@ -100,10 +100,15 @@ private
   end
 
   def purpose_params
-    selected_purposes = params
-        .permit(nano_element: NanoElementPurposes.all).fetch(:nano_element, {})
-        .select { |_, value| value == "1" }.keys
-    { purposes: selected_purposes }
+    form_params = params.permit(nano_element: [:purpose_type, *NanoElementPurposes.predefined]).fetch(:nano_element, {})
+    purpose_type = form_params[:purpose_type]
+    return { purposes: [] } unless purpose_type
+
+    if purpose_type == NanoElementPurposes.other.name
+      { purposes: [NanoElementPurposes.other.name] }
+    else
+      { purposes: form_params.select { |_, v| v == "1" }.keys }
+    end
   end
 
   def update_select_purposes_step

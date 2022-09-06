@@ -1,5 +1,9 @@
 class NanoElementPurposes
-  Purpose = Struct.new(:name, :display_name, :annex_number, :link, keyword_init: true)
+  Purpose = Struct.new(:name, :display_name, :annex_number, :link, keyword_init: true) do
+    def upcase_display_name
+      display_name.upcase_first
+    end
+  end
 
   COLORANT = Purpose.new(
     name: "colorant",

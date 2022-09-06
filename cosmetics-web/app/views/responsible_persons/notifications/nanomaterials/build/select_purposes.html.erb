@@ -1,44 +1,46 @@
 <%
-  title = "Select nanomaterial purpose"
-  question = "What is the purpose of this nanomaterial?"
-  items = NanoElementPurposes.all.map do |purpose|
+  predefined_purposes = NanoElementPurposes.predefined
+  predefined_purposes_items = predefined_purposes.map do |purpose|
     { key: purpose.name,
-      text: purpose.display_name.upcase_first,
-      checked: @nano_element.purposes&.include?(purpose.name),
-      disable_ghost: true }
+      text: purpose.upcase_display_name,
+      checked: @nano_element.purposes&.include?(purpose.name) }
   end
 %>
 
-<% page_title title, errors: @nano_element.errors.messages.include?(:purposes) %>
+<% page_title("Select nanomaterial purpose", errors: @nano_element.errors.messages.include?(:purposes)) %>
 <% content_for :after_header do %>
-  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+  <%= govukBackLink text: "Back", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>
 <% end %>
 
 <%= form_with(model: @nano_element, url: wizard_path, method: :put) do |form| %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
+    <div class="govuk-grid-column-full">
       <% if @nano_element.errors.messages.include?(:purposes) %>
-        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @nano_element.errors.messages[:purposes][0], href: "#nano_element_colorant"}] ) %>
+        <%= govukErrorSummary(titleText: "There is a problem",
+                              errorList: [{text: @nano_element.errors.messages[:purposes][0],
+                              href: "#nano_element_colorant"}] ) %>
       <% end %>
-      <%= govukCheckboxes(
+      <% predefined_purposes_checkboxes_html = capture do %>
+        <%= govukCheckboxes(
+              form: form,
+              key: :purposes,
+              fieldset: { legend: { text: "Select all that apply", isPageHeading: false } },
+              items: predefined_purposes_items,
+            ) %>
+      <% end %>
+      <%= govukRadios(
             form: form,
-            key: :purposes,
-            fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
-            items: items,
+            key: :purpose_type,
+            fieldset: { legend: { text: "What is the purpose of this nanomaterial?",
+                                  classes: "govuk-label--l",
+                                  isPageHeading: true } },
+            items: [{ text: to_sentence(predefined_purposes.map(&:upcase_display_name), last_word_connector: " or "),
+                      value: "predefined",
+                      conditional: { html: predefined_purposes_checkboxes_html } },
+                    { text: NanoElementPurposes.other.upcase_display_name,
+                      value: NanoElementPurposes.other.name }]
           ) %>
       <%= govukButton text: "Continue" %>
-
     </div>
   </div>
 <% end %>
-<%#
-  <%= govukRadios(
-        form: form,
-        key: :purposes,
-        fieldset: { legend: { text: question,
-                              classes: "govuk-label--l",
-                              isPageHeading: true } },
-        items: [{ text: "Yes", value: "true" },
-                { text: "No", value: "false" }]
-      ) %>
