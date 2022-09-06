@@ -30,7 +30,7 @@ class NanoElement < ApplicationRecord
   end
 
   def non_standard?
-    purposes.present? && purposes.include?("other")
+    purposes.present? && purposes.include?(NanoElementPurposes.other.name)
   end
 
   def multi_purpose?
@@ -39,7 +39,7 @@ class NanoElement < ApplicationRecord
 
   def completed?
     ((standard? && inci_name.present? && confirm_usage == "yes" && confirm_restrictions == "yes") ||
-      (purposes&.include?("other") && confirm_toxicology_notified == "yes")) && !blocked?
+      (non_standard? && confirm_toxicology_notified == "yes")) && !blocked?
   end
 
   def blocked?
@@ -47,7 +47,7 @@ class NanoElement < ApplicationRecord
   end
 
   def toxicology_required?
-    purposes&.include?("other") && (confirm_toxicology_notified == "not sure" || confirm_toxicology_notified == "no")
+    non_standard? && (confirm_toxicology_notified == "not sure" || confirm_toxicology_notified == "no")
   end
 
   def toxicology_required_or_empty?
