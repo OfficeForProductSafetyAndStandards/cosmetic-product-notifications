@@ -5,8 +5,8 @@ class ResponsiblePersons::Notifications::Nanomaterials::BuildController < Submit
   before_action :set_notification
   before_action :set_nano_element
 
-  steps :add_nanomaterial_name,
-        :select_purposes,
+  steps :select_purposes,
+        :add_nanomaterial_name,
         :after_select_purposes_routing, # step to do routing after select purposes
         :confirm_restrictions,
         :confirm_usage,
@@ -22,7 +22,7 @@ class ResponsiblePersons::Notifications::Nanomaterials::BuildController < Submit
   # In case of array, the first block that evaluates to true will determine back page
   BACK_ROUTING = {
     # first 3 checkboxes
-    select_purposes: :add_nanomaterial_name,
+    add_nanomaterial_name: :select_purposes,
     confirm_restrictions: :select_purposes,
     confirm_usage: :confirm_restrictions,
     non_standard_nanomaterial_notified: {
