@@ -1,4 +1,8 @@
 class NanoElement < ApplicationRecord
+  YES = "yes".freeze
+  NO = "no".freeze
+  NOT_SURE = "not sure".freeze
+
   belongs_to :nano_material
 
   # TODO: add uniqueness validation across notifications
@@ -38,16 +42,19 @@ class NanoElement < ApplicationRecord
   end
 
   def completed?
-    ((standard? && inci_name.present? && confirm_usage == "yes" && confirm_restrictions == "yes") ||
-      (non_standard? && confirm_toxicology_notified == "yes")) && !blocked?
+    ((standard? && inci_name.present? && confirm_usage == YES && confirm_restrictions == YES) ||
+      (non_standard? && confirm_toxicology_notified == YES)) && !blocked?
   end
 
   def blocked?
-    confirm_usage == "no" || confirm_restrictions == "no" || confirm_toxicology_notified == "no" || confirm_toxicology_notified == "not sure"
+    confirm_usage == NO ||
+      confirm_restrictions == NO ||
+      confirm_toxicology_notified == NO ||
+      confirm_toxicology_notified == NOT_SURE
   end
 
   def toxicology_required?
-    non_standard? && (confirm_toxicology_notified == "not sure" || confirm_toxicology_notified == "no")
+    non_standard? && (confirm_toxicology_notified == NOT_SURE || confirm_toxicology_notified == NO)
   end
 
   def toxicology_required_or_empty?
@@ -55,18 +62,16 @@ class NanoElement < ApplicationRecord
   end
 
   def conforms_to_restrictions?
-    (confirm_restrictions != "no" && confirm_usage != "no") && !toxicology_required_or_empty?
+    (confirm_restrictions != NO && confirm_usage != NO) && !toxicology_required_or_empty?
   end
 
 private
 
   def restrictions_confirmed_required?
     confirm_restrictions.nil? ||
-      (confirm_restrictions == "no") ||
-      (
-        (confirm_restrictions == "yes" && usage_confirmed_required?) ||
-       (confirm_usage == "no" && toxicology_required_or_empty?)
-      )
+      (confirm_restrictions == NO) ||
+      ((confirm_restrictions == YES && usage_confirmed_required?) ||
+       (confirm_usage == NO && toxicology_required_or_empty?))
   end
 
   def usage_confirmed_required?
