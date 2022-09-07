@@ -228,6 +228,15 @@ en:
           attributes:
             component_id:
               blank: "Select an item"
+        responsible_persons/notifications/nanomaterials/nano_element_purposes_form:
+          attributes:
+            purpose_type:
+              blank: "Select either the predefined or another purposes"
+              inclusion: "%{value} is not a valid purpose type"
+            purposes:
+              blank: "Select one or more purposes"
+              inclusion: "%{purpose} is not a valid purpose"
+              predefined_or_other: "Select either any predefined or 'other' as purposes"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:
