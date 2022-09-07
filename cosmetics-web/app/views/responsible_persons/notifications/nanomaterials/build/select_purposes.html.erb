@@ -1,6 +1,6 @@
 <%
-  predefined_purposes = NanoElementPurposes.predefined
-  predefined_purposes_items = predefined_purposes.map do |purpose|
+  standard_purposes = NanoElementPurposes.standard
+  standard_purposes_items = standard_purposes.map do |purpose|
     { key: purpose.name,
       text: purpose.upcase_display_name,
       checked: @purposes_form.purposes&.include?(purpose.name) }
@@ -16,14 +16,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= error_summary(@purposes_form.errors,
-                        map_errors: { purpose_type: :purposes_form_purpose_type_predefined,
+                        map_errors: { purpose_type: :purposes_form_purpose_type_standard,
                                       purposes: :purposes_form_colorant }) %>
-      <% predefined_purposes_checkboxes_html = capture do %>
+      <% standard_purposes_checkboxes_html = capture do %>
         <%= govukCheckboxes(
               form: f,
               key: :purposes,
               fieldset: { legend: { text: "Select all that apply", isPageHeading: false } },
-              items: predefined_purposes_items,
+              items: standard_purposes_items,
             ) %>
       <% end %>
       <%= govukRadios(
@@ -32,9 +32,9 @@
             fieldset: { legend: { text: "What is the purpose of this nanomaterial?",
                                   classes: "govuk-label--l",
                                   isPageHeading: true } },
-            items: [{ text: to_sentence(predefined_purposes.map(&:upcase_display_name), last_word_connector: " or "),
-                      value: "predefined",
-                      conditional: { html: predefined_purposes_checkboxes_html } },
+            items: [{ text: to_sentence(standard_purposes.map(&:upcase_display_name), last_word_connector: " or "),
+                      value: "standard",
+                      conditional: { html: standard_purposes_checkboxes_html } },
                     { text: NanoElementPurposes.other.upcase_display_name,
                       value: NanoElementPurposes.other.name }]
           ) %>

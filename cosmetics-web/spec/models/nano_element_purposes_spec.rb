@@ -7,9 +7,9 @@ RSpec.describe NanoElementPurposes, type: :model do
     end
   end
 
-  describe ".predefined" do
-    it "returns all the predefined purposes" do
-      expect(described_class.predefined.map(&:name)).to eq(%w[colorant preservative uv_filter])
+  describe ".standard" do
+    it "returns all the standard purposes" do
+      expect(described_class.standard.map(&:name)).to eq(%w[colorant preservative uv_filter])
     end
   end
 

@@ -33,15 +33,15 @@ class NanoElementPurposes
     link: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:32009R1223",
   ).freeze
 
-  PREDEFINED_PURPOSES = [COLORANT, PRESERVATIVE, UV_FILTER].freeze
-  ALL_PURPOSES = (PREDEFINED_PURPOSES + [OTHER]).freeze
+  STANDARD_PURPOSES = [COLORANT, PRESERVATIVE, UV_FILTER].freeze
+  ALL_PURPOSES = (STANDARD_PURPOSES + [OTHER]).freeze
 
-  private_constant :COLORANT, :PRESERVATIVE, :UV_FILTER, :OTHER, :PREDEFINED_PURPOSES, :ALL_PURPOSES
+  private_constant :COLORANT, :PRESERVATIVE, :UV_FILTER, :OTHER, :STANDARD_PURPOSES, :ALL_PURPOSES
 
   class << self
     def find(purpose) = ALL_PURPOSES.find { |p| p.name == purpose }
     def all = ALL_PURPOSES
-    def predefined = PREDEFINED_PURPOSES
+    def standard = STANDARD_PURPOSES
     def colorant = COLORANT
     def preservative = PRESERVATIVE
     def uv_filter = UV_FILTER

@@ -103,7 +103,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
     end
 
     def purpose_params
-      form_params = params.permit(purposes_form: [:purpose_type, *NanoElementPurposes.predefined.map(&:name)])
+      form_params = params.permit(purposes_form: [:purpose_type, *NanoElementPurposes.standard.map(&:name)])
                           .fetch(:purposes_form, {})
 
       { purposes: form_params.select { |_, v| v == "1" }.keys, purpose_type: form_params[:purpose_type] }

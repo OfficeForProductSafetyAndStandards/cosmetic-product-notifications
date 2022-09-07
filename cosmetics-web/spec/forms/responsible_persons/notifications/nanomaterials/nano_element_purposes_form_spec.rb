@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurposesForm do
-  let(:predefined_type) { described_class::PREDEFINED_TYPE }
+  let(:standard_type) { described_class::STANDARD_TYPE }
   let(:other_type) { described_class::OTHER_TYPE }
   let(:allowed_purposes) { described_class::ALLOWED_PURPOSES }
-  let(:predefined_purposes) { allowed_purposes - [other_type]}
+  let(:standard_purposes) { allowed_purposes - [other_type]}
 
   describe "#initialize" do
     it "sets the given purposes" do
@@ -14,8 +14,8 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurp
     end
 
     it "sets the given purpose_type" do
-      form = described_class.new(purpose_type: predefined_type)
-      expect(form.purpose_type).to eq(predefined_type)
+      form = described_class.new(purpose_type: standard_type)
+      expect(form.purpose_type).to eq(standard_type)
     end
 
     it "defaults the purpose_type to 'nil' if no purpose_type is given" do
@@ -37,9 +37,9 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurp
       expect(form.purpose_type).to eq(other_type)
     end
 
-    it "defaults the purpose_type to 'predefined' if the given purposes do not include 'other'" do
-      form = described_class.new(purposes: [predefined_purposes.sample])
-      expect(form.purpose_type).to eq(predefined_type)
+    it "defaults the purpose_type to 'standard' if the given purposes do not include 'other'" do
+      form = described_class.new(purposes: [standard_purposes.sample])
+      expect(form.purpose_type).to eq(standard_type)
     end
 
     context "when the provided purpose_type is 'other'" do
@@ -50,28 +50,28 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurp
         expect(form.purposes).to eq([other_type])
       end
 
-      it "overrides any predefined purposes with 'other'" do
-        form = described_class.new(purpose_type:, purposes: predefined_purposes)
+      it "overrides any standard purposes with 'other'" do
+        form = described_class.new(purpose_type:, purposes: standard_purposes)
         expect(form.purposes).to eq([other_type])
       end
     end
   end
 
   describe "validations" do
-    let(:purpose_type) { predefined_type }
-    let(:purposes) { predefined_purposes }
+    let(:purpose_type) { standard_type }
+    let(:purposes) { standard_purposes }
 
-    it "is valid with a predefined purpose type and a single predefined purpose" do
+    it "is valid with a standard purpose type and a single standard purpose" do
       form = described_class.new(purpose_type:, purposes: [purposes.first])
       expect(form).to be_valid
     end
 
-    it "is valid with a predefined purpose type and multiple predefined purposes" do
+    it "is valid with a standard purpose type and multiple standard purposes" do
       form = described_class.new(purpose_type:, purposes:)
       expect(form).to be_valid
     end
 
-    it "is valid with other purpose type and no predefined purposes" do
+    it "is valid with other purpose type and no standard purposes" do
       form = described_class.new(purpose_type: "other", purposes: [])
       expect(form).to be_valid
     end
@@ -90,10 +90,10 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurp
     it "requires a purpose type when no purposes are present" do
       form = described_class.new(purpose_type: nil, purposes: [])
       expect(form).not_to be_valid
-      expect(form.errors[:purpose_type]).to include("Select either the predefined or another purposes")
+      expect(form.errors[:purpose_type]).to include("Select either the standard or another purposes")
     end
 
-    it "requires a purpose if the purpose type is predefined" do
+    it "requires a purpose if the purpose type is standard" do
       form = described_class.new(purpose_type:, purposes: [])
       expect(form).not_to be_valid
       expect(form.errors[:purposes]).to include("Select one or more purposes")
@@ -105,10 +105,10 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurp
       expect(form.errors[:purposes]).to eq(["fooPurpose is not a valid purpose", "barPurpose is not a valid purpose"])
     end
 
-    it "does not allow to combine both predefined and other purposes" do
+    it "does not allow to combine both standard and other purposes" do
       form = described_class.new(purpose_type:, purposes: [purposes.first, other_type])
       expect(form).not_to be_valid
-      expect(form.errors[:purposes]).to eq(["Select either any predefined or 'other' as purposes"])
+      expect(form.errors[:purposes]).to eq(["Select either any standard or 'other' as purposes"])
     end
   end
 end
