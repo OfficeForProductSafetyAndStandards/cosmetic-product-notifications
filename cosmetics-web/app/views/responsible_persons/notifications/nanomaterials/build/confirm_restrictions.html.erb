@@ -6,14 +6,13 @@
   <h1 class="govuk-fieldset__heading govuk-label--l"><%= question %></h1>
 
   <p>
-    <%
-      @nano_element.purposes.reject { |p| p == "other" }.each do |purpose|
-        purpose = NanoElementPurposes.find(purpose)
-        link_text = "Annex #{purpose.annex_number} list of #{purpose.display_name.pluralize}"
-        concat("View the " + link_to(link_text, purpose.link, target: "_blank", rel: "noopener"))
-        concat "<br>"
-      end
-    %>
+    <% @nano_element.purposes.reject { |p| p == "other" }.each do |purpose| %>
+      <% purpose = NanoElementPurposes.find(purpose)
+         link_text = "Annex #{purpose.annex_number} list of #{purpose.display_name.pluralize}" %>
+      View the
+      <%= link_to(link_text, purpose.link, target: "_blank", rel: "noopener") %>
+      <br>
+    <% end %>
   </p>
 <% end %>
 
