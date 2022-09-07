@@ -7,8 +7,8 @@ module  ResponsiblePersons::Notifications::Nanomaterials
     before_action :set_nano_element
 
     steps :select_purposes,
-          :add_nanomaterial_name,
           :after_select_purposes_routing, # step to do routing after select purposes
+          :add_nanomaterial_name,
           :confirm_restrictions,
           :confirm_usage,
           :after_standard_nanomaterial_routing, # step to check if non standard route needs to take place
@@ -48,7 +48,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
         if @nano_element.non_standard? && @nano_element.purposes.one?
           return jump_to_step(:non_standard_nanomaterial_notified)
         else
-          return jump_to_step(:confirm_restrictions)
+          return jump_to_step(:add_nanomaterial_name)
         end
       when :after_standard_nanomaterial_routing
         if @nano_element.non_standard?
