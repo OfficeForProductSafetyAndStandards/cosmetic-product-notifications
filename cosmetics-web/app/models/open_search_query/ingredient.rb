@@ -3,17 +3,21 @@ module OpenSearchQuery
     EXACT_MATCH = "exact_match".freeze
     ANY_MATCH   = "any_match".freeze
 
+    SORT_BY_NONE                   = "none".freeze
+    SORT_BY_RESPONSIBLE_PERSON_ASC = "responsible_person_asc".freeze
+
     FIELDS = %w[searchable_ingredients].freeze
 
-    def initialize(keyword:, match_type:, from_date:, to_date:)
+    def initialize(keyword:, match_type:, from_date:, to_date:, sort_by: nil)
       @keyword    = keyword
       @match_type = match_type
-      @from_date = from_date
-      @to_date   = to_date
+      @from_date  = from_date
+      @to_date    = to_date
+      @sort_by    = sort_by
     end
 
     def build_query
-      {
+      query = {
         query: {
           bool: {
             must: select_query,
@@ -21,6 +25,12 @@ module OpenSearchQuery
           },
         },
       }
+      case @sort_by
+      when SORT_BY_RESPONSIBLE_PERSON_ASC
+        query.merge(sort: [{ "responsible_person.id" => { order: "asc" } }])
+      else
+        query
+      end
     end
 
     def select_query

@@ -14,10 +14,10 @@
 </div>
 
 <div class="govuk-grid-row opss-full-height">
-  <a href="#ingredients" class="govuk-skip-link opss-skip-link">
-    Skip to the main content
-  </a>
   <section class="govuk-grid-column-one-quarter govuk-!-padding-right-1 opss-full-height__col">
+    <a href="#ingredients" class="govuk-skip-link opss-skip-link">
+      Skip to the main content
+    </a>
     <nav aria-label="Secondary">
       <%= render 'poison_centres/shared/secondary_navigation' %>
     </nav>
@@ -53,7 +53,7 @@
     </div>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full" role="region" aria-label="Search results">
-        <div class="govuk-!-margin-top-5 opss-3-col-flow">
+        <div class="govuk-!-margin-top-5 opss-2-col-flow">
           <ul class="govuk-list govuk-list--bullet">
             <% @ingredients.each_with_index do |ingredient, index| %>
               <li>

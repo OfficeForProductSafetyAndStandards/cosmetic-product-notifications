@@ -33,7 +33,7 @@
             </tr>
           </thead>
           <% results.each.with_index(1) do |notification, index| %>
-            <%= render "poison_centres/shared/registered_product", notification: notification, index: index, form: :notification_search_form, back_to: PoisonCentresNotificationsHelper::NOTIFICATIONS_SEARCH %>
+            <%= render "poison_centres/notifications_search/result_row", notification: notification, index: index, form: :notification_search_form, back_to: PoisonCentresNotificationsHelper::NOTIFICATIONS_SEARCH %>
           <% end %>
           <% if results.size > 11 %>
             <tfoot class="govuk-table__head">

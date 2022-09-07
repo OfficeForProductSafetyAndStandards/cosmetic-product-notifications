@@ -1,11 +1,9 @@
 class IngredientSearchForm < Form
-  EXACT_MATCH = "exact_match".freeze
-  ANY_MATCH   = "any_match".freeze
-
   attribute :q
-  attribute :exact_or_any_match, default: ANY_MATCH
+  attribute :exact_or_any_match, default: OpenSearchQuery::Ingredient::ANY_MATCH
   attribute :date_from, :govuk_date
   attribute :date_to, :govuk_date
+  attribute :sort_by, default: OpenSearchQuery::Ingredient::SORT_BY_NONE
 
   validates :date_from,
             presence: true,

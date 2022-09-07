@@ -2,7 +2,7 @@
   cell_headers = "item-#{index} meta-#{index}"
 %>
 
-<tbody class="govuk-table__body">
+<tbody class="govuk-table__body <%= additional_classes %>">
   <tr class="govuk-table__row">
     <th class="govuk-visually-hidden">
       Name
@@ -24,7 +24,7 @@
       <%= notification.reference_number_for_display.presence || "&nbsp;".html_safe %>
     </td>
     <td headers="eurefnumber <%= cell_headers %>" class="govuk-table__cell">
-      <%= notification.cpnp_reference.presence || "&nbsp;".html_safe %>
+      <%= notification.responsible_person.name %>
     </td>
   </tr>
 </tbody>
