@@ -90,13 +90,13 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurp
     it "requires a purpose type when no purposes are present" do
       form = described_class.new(purpose_type: nil, purposes: [])
       expect(form).not_to be_valid
-      expect(form.errors[:purpose_type]).to include("Select either the standard or another purposes")
+      expect(form.errors[:purpose_type]).to include("Select the purpose of this nanomaterial")
     end
 
     it "requires a purpose if the purpose type is standard" do
       form = described_class.new(purpose_type:, purposes: [])
       expect(form).not_to be_valid
-      expect(form.errors[:purposes]).to include("Select one or more purposes")
+      expect(form.errors[:purposes]).to include("Select the purpose")
     end
 
     it "does not allow invalid purposes" do
