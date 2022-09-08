@@ -4,7 +4,7 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::NanoElementPurp
   let(:standard_type) { described_class::STANDARD_TYPE }
   let(:other_type) { described_class::OTHER_TYPE }
   let(:allowed_purposes) { described_class::ALLOWED_PURPOSES }
-  let(:standard_purposes) { allowed_purposes - [other_type]}
+  let(:standard_purposes) { allowed_purposes - [other_type] }
 
   describe "#initialize" do
     it "sets the given purposes" do
