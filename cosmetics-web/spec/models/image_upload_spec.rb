@@ -6,7 +6,7 @@ RSpec.describe ImageUpload, type: :model do
   let(:file_metadata) { {} }
   # rubocop:disable RSpec/VerifiedDoubles
   # ActiveStorage associations between ActiveStorage::Attached::One and ActiveStorage::Blob make this quite complex to stub with a verified stub.
-  let(:file_stub) { double(attachment: attachment, metadata: file_metadata) }
+  let(:file_stub) { double(attachment:, metadata: file_metadata) }
   # rubocop:enable RSpec/VerifiedDoubles
 
   describe "image validation", :with_stubbed_antivirus do

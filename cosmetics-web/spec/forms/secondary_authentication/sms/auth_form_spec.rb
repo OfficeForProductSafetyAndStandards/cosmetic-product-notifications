@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe SecondaryAuthentication::Sms::AuthForm, :with_stubbed_notify do
-  subject(:form) { described_class.new(otp_code: otp_code, user_id: user.id) }
+  subject(:form) { described_class.new(otp_code:, user_id: user.id) }
 
-  let(:user) { create(:submit_user, second_factor_attempts_count: attempts, direct_otp_sent_at: direct_otp_sent_at) }
+  let(:user) { create(:submit_user, second_factor_attempts_count: attempts, direct_otp_sent_at:) }
 
   let(:attempts) { 0 }
   let(:direct_otp_sent_at) { Time.zone.now }

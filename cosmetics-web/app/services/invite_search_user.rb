@@ -16,7 +16,7 @@ class InviteSearchUser
 private
 
   def create_user
-    SearchUser.find_or_create_by!(email: email) do |user|
+    SearchUser.find_or_create_by!(email:) do |user|
       user.name = name
       user.skip_password_validation = true
       user.role = role

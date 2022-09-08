@@ -17,7 +17,7 @@ class SearchNotifyMailer < NotifyMailer
 
     invitation_url = complete_registration_user_url(user.id, invitation: user.invitation_token, host: @host)
 
-    set_personalisation(invitation_url: invitation_url)
+    set_personalisation(invitation_url:)
     mail(to: user.email)
   end
 end

@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Notifications delete", type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:user) { responsible_person.responsible_person_users.first.user }
-  let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
-  let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+  let(:draft_notification) { create(:draft_notification, responsible_person:) }
+  let(:notification) { create(:registered_notification, responsible_person:) }
 
   before do
     configure_requests_for_submit_domain
@@ -52,7 +52,7 @@ RSpec.describe "Notifications delete", type: :feature do
 
   scenario "not being able to delete a submitted notification outside its deletion window" do
     notification = create(:registered_notification,
-                          responsible_person: responsible_person,
+                          responsible_person:,
                           notification_complete_at: 1.month.ago)
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on notification.product_name

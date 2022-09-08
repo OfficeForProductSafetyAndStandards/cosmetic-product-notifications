@@ -29,7 +29,7 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
   end
 
   describe "GET #join" do
-    let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person: responsible_person, inviting_user: user) }
+    let(:pending_responsible_person_user) { create(:pending_responsible_person_user, responsible_person:, inviting_user: user) }
     let(:params) { { responsible_person_id: responsible_person.id, invitation_token: pending_responsible_person_user.invitation_token } }
 
     context "when signed in as the invited user" do
@@ -39,18 +39,18 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
       end
 
       it "adds user with a pending invite to the responsible person" do
-        expect { get(:join, params: params) }
+        expect { get(:join, params:) }
           .to change { responsible_person.reload.responsible_person_users.size }.from(1).to(2)
       end
 
       it "deletes any existing invites to the responsible person for this user" do
-        expect { get(:join, params: params) }
+        expect { get(:join, params:) }
           .to change { responsible_person.pending_responsible_person_users.size }
           .from(1).to(0)
       end
 
       it "redirects to the responsible person notifications page" do
-        get(:join, params: params)
+        get(:join, params:)
         expect(response).to redirect_to(responsible_person_notifications_path(responsible_person))
       end
     end

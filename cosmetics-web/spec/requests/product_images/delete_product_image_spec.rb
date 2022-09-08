@@ -5,7 +5,7 @@ RSpec.describe "Delete product image", type: :request do
     let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
     let(:image) { create(:image_upload) }
     let(:notification) do
-      create(:draft_notification, responsible_person: responsible_person, image_uploads: [image])
+      create(:draft_notification, responsible_person:, image_uploads: [image])
     end
     let(:delete_path) do
       "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft/delete_product_image?image_id=#{image.id}"

@@ -5,7 +5,7 @@ RSpec.describe Registration::NewAccountForm do
   let(:email) { "email@example.com" }
 
   let(:form) do
-    described_class.new(email: email, full_name: full_name)
+    described_class.new(email:, full_name:)
   end
 
   describe "name validations" do

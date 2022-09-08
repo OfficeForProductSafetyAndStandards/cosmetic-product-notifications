@@ -66,7 +66,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect(page).to have_h1("Add a Responsible Person")
 
     name = "Some other responsible person"
-    fill_in_rp_business_details(name: name)
+    fill_in_rp_business_details(name:)
     fill_in_rp_contact_details
 
     expect(page).to have_h1("Responsible Person")
@@ -88,7 +88,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     expect(page).to have_h1("Add a Responsible Person")
 
     name = "Some other responsible person"
-    fill_in_rp_business_details(name: name)
+    fill_in_rp_business_details(name:)
 
     visit "/"
 

@@ -83,7 +83,7 @@ private
 
   def unique_name_per_nanomaterial
     nano_elements_with_same_name = NanoElement.where(nano_material: nano_material.notification.nano_materials)
-                                              .where.not(id: id)
+                                              .where.not(id:)
                                               .where("trim(lower(inci_name)) = ?", inci_name.downcase.strip)
     if nano_elements_with_same_name.any?
       errors.add(:inci_name)

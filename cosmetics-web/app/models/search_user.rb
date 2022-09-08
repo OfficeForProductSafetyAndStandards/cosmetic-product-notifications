@@ -76,7 +76,7 @@ private
     SearchNotifyMailer.account_locked(
       self,
       unlock_token: raw,
-      reset_password_token: reset_password_token,
+      reset_password_token:,
     ).deliver_later
     raw
   end

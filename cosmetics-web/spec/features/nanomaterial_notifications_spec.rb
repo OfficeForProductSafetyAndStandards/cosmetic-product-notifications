@@ -13,9 +13,9 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     context "when nanomaterial notications are present", :with_stubbed_antivirus do
       let(:user_id) { submit_user.id }
       let(:rp) { responsible_person }
-      let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
-      let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
-      let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id: user_id, responsible_person: rp) }
+      let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp) }
+      let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
+      let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id:, responsible_person: rp) }
 
       before do
         nanomaterial_notification1

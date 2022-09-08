@@ -62,7 +62,7 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
   end
 
   describe "viewing the edit pages" do
-    let(:contact_person) { create(:contact_person, responsible_person: responsible_person) }
+    let(:contact_person) { create(:contact_person, responsible_person:) }
 
     context "when signed in as a member of the Contact Person Responsible Person" do
       before do
@@ -181,7 +181,7 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
              name: "Alpha Person",
              email_address: "alpha@example.com",
              phone_number: "07711 111111",
-             responsible_person: responsible_person)
+             responsible_person:)
     end
     let(:contact_person_params) { {} }
 

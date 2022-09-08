@@ -19,7 +19,7 @@ RSpec.describe "Edit product image page", type: :request do
     end
 
     context "when the notification has a single component" do
-      let(:notification) { create(:notification, responsible_person: responsible_person, components: [create(:component)]) }
+      let(:notification) { create(:notification, responsible_person:, components: [create(:component)]) }
 
       it "has a singular page title" do
         expect(response.body).to have_tag("h1", text: "Upload an image of the product label")
@@ -27,7 +27,7 @@ RSpec.describe "Edit product image page", type: :request do
     end
 
     context "when the notification has multiple components" do
-      let(:notification) { create(:notification, responsible_person: responsible_person, components: [create(:component), create(:component)]) }
+      let(:notification) { create(:notification, responsible_person:, components: [create(:component), create(:component)]) }
 
       it "has a plural page title" do
         expect(response.body).to have_tag("h1", text: "Upload images of the item labels")
@@ -36,7 +36,7 @@ RSpec.describe "Edit product image page", type: :request do
 
     context "when the notification has a single image" do
       let(:notification) do
-        create(:notification, responsible_person: responsible_person, image_uploads: [create(:image_upload)])
+        create(:notification, responsible_person:, image_uploads: [create(:image_upload)])
       end
 
       it "has a section for the label images" do
@@ -55,7 +55,7 @@ RSpec.describe "Edit product image page", type: :request do
     context "when the notification has multiple images" do
       let(:notification) do
         create(:notification,
-               responsible_person: responsible_person,
+               responsible_person:,
                image_uploads: [create(:image_upload, filename: "testImage.png"), create(:image_upload, filename: "testLabelImage.jpg")])
       end
 
@@ -75,7 +75,7 @@ RSpec.describe "Edit product image page", type: :request do
 
     context "when the notification does not have an image" do
       let(:notification) do
-        create(:notification, responsible_person: responsible_person, image_uploads: [])
+        create(:notification, responsible_person:, image_uploads: [])
       end
 
       it "does not have a section for the label images" do

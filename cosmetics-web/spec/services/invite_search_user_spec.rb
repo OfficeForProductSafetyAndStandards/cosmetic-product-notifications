@@ -87,7 +87,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
   end
 
   context "when an user is provided" do
-    subject(:inviter) { described_class.new(name: "John Doe", role: "msa", user: user) }
+    subject(:inviter) { described_class.new(name: "John Doe", role: "msa", user:) }
 
     let(:user) do
       create(:search_user, :registration_incomplete, email: "existentuser@example.com")

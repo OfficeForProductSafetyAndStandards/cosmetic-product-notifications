@@ -21,7 +21,7 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
 
     it "render back to add team member form if no email is provided" do
       post responsible_person_invitations_path(responsible_person),
-           params: params.merge(invite_member_form: { email: "", name: name })
+           params: params.merge(invite_member_form: { email: "", name: })
       expect(response).to render_template(:new)
     end
 
@@ -35,33 +35,33 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
       post responsible_person_invitations_path(responsible_person),
            params: params.merge(invite_member_form: {
              email: user.email,
-             name: name,
+             name:,
            })
       expect(response).to render_template(:new)
     end
 
     it "render back to add team member form if user has already been invited to the team" do
-      create(:pending_responsible_person_user, responsible_person: responsible_person, email_address: email_address)
+      create(:pending_responsible_person_user, responsible_person:, email_address:)
 
       post responsible_person_invitations_path(responsible_person),
-           params: params.merge(invite_member_form: { email: email_address, name: name })
+           params: params.merge(invite_member_form: { email: email_address, name: })
       expect(response).to render_template(:new)
     end
 
     it "creates an invitation with the given data plus the user that created the invitation" do
       expect {
         post responsible_person_invitations_path(responsible_person),
-             params: params.merge(invite_member_form: { email: email_address, name: name })
+             params: params.merge(invite_member_form: { email: email_address, name: })
       }.to change(PendingResponsiblePersonUser, :count).by(1)
       expect(PendingResponsiblePersonUser.last)
-        .to have_attributes(inviting_user: user, email_address: email_address, name: name)
+        .to have_attributes(inviting_user: user, email_address:, name:)
     end
 
     it "uses the existing user name for the invitation when inviting an email belonging to an existing user" do
       create(:submit_user, email: email_address, name: "John Original Name")
       expect {
         post responsible_person_invitations_path(responsible_person),
-             params: params.merge(invite_member_form: { email: email_address, name: name })
+             params: params.merge(invite_member_form: { email: email_address, name: })
       }.to change(PendingResponsiblePersonUser, :count).by(1)
       expect(PendingResponsiblePersonUser.last.name).to eq("John Original Name")
     end
@@ -71,21 +71,21 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
         .and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
 
       post responsible_person_invitations_path(responsible_person),
-           params: params.merge(invite_member_form: { email: email_address, name: name })
+           params: params.merge(invite_member_form: { email: email_address, name: })
 
       expect(SubmitNotifyMailer).to have_received(:send_responsible_person_invite_email)
     end
 
     it "redirects to the responsible person team members page" do
       post responsible_person_invitations_path(responsible_person),
-           params: params.merge(invite_member_form: { email: email_address, name: name })
+           params: params.merge(invite_member_form: { email: email_address, name: })
       expect(response).to redirect_to(responsible_person_team_members_path(responsible_person))
     end
   end
 
   describe "Resending an invitation" do
     let(:invitation) do
-      create(:pending_responsible_person_user, responsible_person: responsible_person, inviting_user: user)
+      create(:pending_responsible_person_user, responsible_person:, inviting_user: user)
     end
 
     it "does not change the invitation token" do
@@ -142,7 +142,7 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
   end
 
   describe "Visiting invitation cancellation page" do
-    let(:invitation) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
+    let(:invitation) { create(:pending_responsible_person_user, responsible_person:) }
 
     it "renders the cancellation page" do
       get cancel_responsible_person_invitation_path(responsible_person, invitation)
@@ -161,14 +161,14 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
   end
 
   describe "Cancelling an invitation" do
-    let!(:invitation) { create(:pending_responsible_person_user, responsible_person: responsible_person) }
+    let!(:invitation) { create(:pending_responsible_person_user, responsible_person:) }
 
     context "when the invitation cancelation is confirmed" do
       let(:params) { { cancel_invitation: "yes" } }
 
       it "destroys the invitation" do
         expect {
-          delete responsible_person_invitation_path(responsible_person, invitation), params: params
+          delete responsible_person_invitation_path(responsible_person, invitation), params:
         }.to change(PendingResponsiblePersonUser, :count).from(1).to(0)
       end
 
@@ -189,7 +189,7 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
 
       it "does not destroy the invitation" do
         expect {
-          delete responsible_person_invitation_path(responsible_person, invitation), params: params
+          delete responsible_person_invitation_path(responsible_person, invitation), params:
         }.not_to change(PendingResponsiblePersonUser, :count)
       end
 
@@ -209,7 +209,7 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
 
       it "does not destroy the invitation" do
         expect {
-          delete responsible_person_invitation_path(responsible_person, invitation), params: params
+          delete responsible_person_invitation_path(responsible_person, invitation), params:
         }.not_to change(PendingResponsiblePersonUser, :count)
       end
 

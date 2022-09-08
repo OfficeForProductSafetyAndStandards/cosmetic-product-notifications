@@ -74,18 +74,18 @@ RSpec.describe ResponsiblePersonAddressLog, type: :model do
     context "when there where other previous addresses associated with the responsible person" do
       before do
         create(:responsible_person_address_log,
-               responsible_person: responsible_person,
+               responsible_person:,
                start_date: Time.zone.local(2021, 7, 1),
                end_date: Time.zone.local(2021, 8, 1))
         create(:responsible_person_address_log,
-               responsible_person: responsible_person,
+               responsible_person:,
                start_date: Time.zone.local(2021, 8, 1),
                end_date: Time.zone.local(2021, 9, 1))
       end
 
       it "populates the start date with the last previous address end date" do
         address_log = build_stubbed(:responsible_person_address_log,
-                                    responsible_person: responsible_person,
+                                    responsible_person:,
                                     start_date: nil)
         address_log.validate
         expect(address_log.start_date).to eq(Time.zone.local(2021, 9, 1))
@@ -95,7 +95,7 @@ RSpec.describe ResponsiblePersonAddressLog, type: :model do
     context "when there aren't previous addresses associated with the responsible person" do
       it "populates the start date with the Responsible Person creation date" do
         address_log = build_stubbed(:responsible_person_address_log,
-                                    responsible_person: responsible_person,
+                                    responsible_person:,
                                     start_date: nil)
         address_log.validate
         expect(address_log.start_date).to eq(responsible_person.created_at)

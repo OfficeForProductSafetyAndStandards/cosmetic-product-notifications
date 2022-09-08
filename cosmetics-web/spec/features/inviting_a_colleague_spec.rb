@@ -6,7 +6,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   let(:invited_user) { create(:submit_user, name: "John Doeinvited", email: "inviteduser@example.com") }
 
   before do
-    create(:responsible_person_user, user: user, responsible_person: responsible_person)
+    create(:responsible_person_user, user:, responsible_person:)
 
     configure_requests_for_submit_domain
   end
@@ -55,7 +55,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "sending an invitation to an user that already belongs to the team" do
-    create(:responsible_person_user, user: invited_user, responsible_person: responsible_person)
+    create(:responsible_person_user, user: invited_user, responsible_person:)
 
     sign_in(user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
@@ -82,7 +82,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "sending an invitation to an user that had been already invited to the team" do
-    create(:pending_responsible_person_user, email_address: invited_user.email, responsible_person: responsible_person)
+    create(:pending_responsible_person_user, email_address: invited_user.email, responsible_person:)
 
     sign_in(user)
     visit "/responsible_persons/#{responsible_person.id}/team_members"
@@ -157,7 +157,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   scenario "re-sending an invitation" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
-    invitation = create(:pending_responsible_person_user, responsible_person: responsible_person, name: "John Doeinvited")
+    invitation = create(:pending_responsible_person_user, responsible_person:, name: "John Doeinvited")
 
     team_path = "/responsible_persons/#{responsible_person.id}/team_members"
     visit team_path
@@ -288,7 +288,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
   scenario "cancelling an invitation" do
     sign_in_as_member_of_responsible_person(responsible_person, user)
-    invitation = create(:pending_responsible_person_user, responsible_person: responsible_person, name: "John Doeinvited")
+    invitation = create(:pending_responsible_person_user, responsible_person:, name: "John Doeinvited")
 
     team_path = "/responsible_persons/#{responsible_person.id}/team_members"
     visit team_path
@@ -315,7 +315,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   end
 
   scenario "accepting an invitation for a new user when not signed in" do
-    pending = create(:pending_responsible_person_user, responsible_person: responsible_person)
+    pending = create(:pending_responsible_person_user, responsible_person:)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_current_path("/account-security")
@@ -354,7 +354,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     pending = create(:pending_responsible_person_user,
                      email_address: invited_user.email,
-                     responsible_person: responsible_person)
+                     responsible_person:)
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     sign_in(invited_user)
     select_secondary_authentication_sms
@@ -371,7 +371,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     invitation = create(:pending_responsible_person_user,
                         email_address: invited_user.email,
-                        responsible_person: responsible_person)
+                        responsible_person:)
 
     join_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
 
@@ -389,7 +389,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     pending = create(:pending_responsible_person_user,
                      email_address: invited_user.email.upcase,
-                     responsible_person: responsible_person)
+                     responsible_person:)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     select_secondary_authentication_sms
@@ -408,7 +408,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
 
     pending = create(:pending_responsible_person_user,
                      email_address: invited_user.email.upcase,
-                     responsible_person: responsible_person)
+                     responsible_person:)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_css("h1", text: "You are already signed in")
@@ -509,7 +509,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
     pending = create(:pending_responsible_person_user,
                      email_address: "newusertoregister@example.com",
-                     responsible_person: responsible_person)
+                     responsible_person:)
 
     # Invited user originally accepts the invitation
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
@@ -552,7 +552,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
   scenario "accepting an invitation for an existent user when not signed in" do
     pending = create(:pending_responsible_person_user,
                      email_address: invited_user.email.upcase,
-                     responsible_person: responsible_person)
+                     responsible_person:)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
     expect(page).to have_css("h1", text: "Sign in")
@@ -574,7 +574,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     invited_user.update(new_email: "new_email@example.com")
     pending = create(:pending_responsible_person_user,
                      email_address: invited_user.new_email,
-                     responsible_person: responsible_person)
+                     responsible_person:)
 
     sign_in invited_user
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"

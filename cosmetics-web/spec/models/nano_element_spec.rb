@@ -34,8 +34,8 @@ RSpec.describe NanoElement, type: :model do
       let(:existing_name) { "Nanomaterial" }
       let(:new_name) { existing_name }
 
-      let(:nano_material1) { create(:nano_material, notification: notification) }
-      let(:nano_material2) { create(:nano_material, notification: notification) }
+      let(:nano_material1) { create(:nano_material, notification:) }
+      let(:nano_material2) { create(:nano_material, notification:) }
 
       let(:nano_element1) { create(:nano_element, inci_name: existing_name, nano_material: nano_material1) }
       let(:nano_element) { build(:nano_element, inci_name: new_name, nano_material: nano_material2) }

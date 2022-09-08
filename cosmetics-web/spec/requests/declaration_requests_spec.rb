@@ -43,7 +43,7 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
     let(:user) { create(:msa_user, has_accepted_declaration: false) }
 
     before do
-      sign_in_as_msa_user(user: user)
+      sign_in_as_msa_user(user:)
     end
 
     after do
@@ -80,7 +80,7 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
     let(:user) { create(:poison_centre_user, has_accepted_declaration: false) }
 
     before do
-      sign_in_as_poison_centre_user(user: user)
+      sign_in_as_poison_centre_user(user:)
     end
 
     after do
@@ -117,7 +117,7 @@ RSpec.describe "User declarations", :with_stubbed_antivirus, type: :request do
     let(:user) { create(:opss_science_user, has_accepted_declaration: false) }
 
     before do
-      sign_in_as_opss_science_user(user: user)
+      sign_in_as_opss_science_user(user:)
     end
 
     after do

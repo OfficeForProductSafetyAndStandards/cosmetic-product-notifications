@@ -9,7 +9,7 @@ RSpec.describe "Poison centre page", type: :request do
   let(:nano_element) { create(:nano_element, inci_name: "Foo Nanomaterial") }
   let(:nano_material) { create(:nano_material, nano_elements: [nano_element]) }
   let(:notification) do
-    create(:draft_notification, responsible_person: responsible_person) do |n|
+    create(:draft_notification, responsible_person:) do |n|
       create(:component,
              notification: n,
              notification_type: "exact",

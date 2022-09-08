@@ -14,7 +14,7 @@ RSpec.describe "Edit Responsible Person Details", type: :request do
   end
 
   describe "POST /accept" do
-    let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
+    let(:draft_notification) { create(:draft_notification, responsible_person:) }
     let(:params) { { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number } }
     let(:accept_path) { accept_responsible_person_notification_draft_path(responsible_person, draft_notification) }
 

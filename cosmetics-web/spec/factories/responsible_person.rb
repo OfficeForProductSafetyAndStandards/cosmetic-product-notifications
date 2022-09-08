@@ -8,7 +8,7 @@ FactoryBot.define do
 
     trait :with_a_contact_person do
       after(:create) do |responsible_person|
-        create(:contact_person, responsible_person: responsible_person)
+        create(:contact_person, responsible_person:)
         responsible_person.reload
       end
     end
@@ -19,7 +19,7 @@ FactoryBot.define do
 
     factory :responsible_person_with_user do
       after(:create) do |responsible_person|
-        create_list(:responsible_person_user, 1, responsible_person: responsible_person)
+        create_list(:responsible_person_user, 1, responsible_person:)
       end
     end
   end
