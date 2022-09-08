@@ -7,7 +7,7 @@
   end
 %>
 
-<% page_title("Select nanomaterial purpose", errors: @purposes_form.errors.messages.include?(:purposes)) %>
+<% page_title("Select nanomaterial purpose", errors: @purposes_form.errors.any?) %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>
 <% end %>
