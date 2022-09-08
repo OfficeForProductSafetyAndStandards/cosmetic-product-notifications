@@ -385,7 +385,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_multi_item_kit_task_completed
 
-    # Does not create the nanomaterial until the name is added.
+    # Does not create the nanomaterial until the purposes are choosen.
     click_on "Add another nanomaterial"
     click_link "Back"
     expect(page).to have_current_path(/\/draft/)
@@ -393,19 +393,19 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_multi_item_kit_task_completed
 
     click_on "Add another nanomaterial"
-    answer_inci_name_with "Nano four"
+    answer_what_is_purpose_of_nanomaterial_with(%w[Preservative])
     click_link "Back"
-    expect(page).to have_current_path(/\/add_nanomaterial_name/)
+    expect(page).to have_current_path(/\/select_purposes/)
 
     click_link "Back"
     expect(page).to have_current_path(/\/draft/)
-    expect_task_not_started "Nano four"
+    expect_task_not_started "Nanomaterial #4"
     expect_multi_item_kit_task_blocked
 
     expect_task_blocked "Item #1"
     expect_task_blocked "Item #2"
 
-    complete_nano_material_wizard("Nano four", purposes: %w[Preservative])
+    complete_nano_material_wizard("Nano four", nano_material_number: 4, purposes: %w[Preservative])
 
     expect_multi_item_kit_task_completed
 

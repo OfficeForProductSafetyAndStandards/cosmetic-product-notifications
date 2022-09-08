@@ -7,7 +7,7 @@
   end
 %>
 
-<%= form_with(model: purposes_form, url: form_url, scope: :purposes_form, method: form_method) do |f| %>
+<%= form_with(model: purposes_form, url: form_url, scope: :purposes_form, method: form_method, html: { novalidate: true }) do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= error_summary(purposes_form.errors,

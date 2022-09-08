@@ -9,9 +9,9 @@ def complete_nano_material_wizard(name, nano_material_number: nil, purposes: %w[
     end
   end
 
+  answer_what_is_purpose_of_nanomaterial_with(purposes)
   answer_inci_name_with name
 
-  answer_what_is_purpose_of_nanomaterial_with(purposes, nanomaterial_name: name)
   answer_is_nanomaterial_listed_in_ec_regulation_with("Yes", nanomaterial_name: name)
   answer_does_nanomaterial_conform_to_restrictions_with("Yes", nanomaterial_name: name)
 
@@ -26,9 +26,10 @@ def answer_inci_name_with(name)
   click_button "Save and continue"
 end
 
-def answer_what_is_purpose_of_nanomaterial_with(purposes, nanomaterial_name:)
-  purposes.each do |purpose|
-    within_fieldset("What is the purpose of #{nanomaterial_name}?") do
+def answer_what_is_purpose_of_nanomaterial_with(purposes)
+  within_fieldset("What is the purpose of this nanomaterial?") do
+    page.choose "Colourant, Preservative or UV filter"
+    purposes.each do |purpose|
       page.check(purpose)
     end
   end
