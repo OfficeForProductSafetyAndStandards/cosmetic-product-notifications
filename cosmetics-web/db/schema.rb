@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_29_141342) do
+ActiveRecord::Schema.define(version: 2022_09_09_124102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -285,6 +285,13 @@ ActiveRecord::Schema.define(version: 2022_04_29_141342) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "search_histories", force: :cascade do |t|
+    t.string "query"
+    t.integer "results"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "trigger_question_elements", force: :cascade do |t|
