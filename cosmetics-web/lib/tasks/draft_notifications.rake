@@ -42,7 +42,7 @@ module DraftNotificationData
         new_nano_material = NanoMaterial.create!(notification: component.notification)
         nano_element.update!(nano_material_id: new_nano_material.id)
         # add component relation for new nanomaterial
-        ComponentNanoMaterial.create(nano_material: new_nano_material, component: component)
+        ComponentNanoMaterial.create(nano_material: new_nano_material, component:)
       end
     end
   end
@@ -86,9 +86,9 @@ module DraftNotificationData
       next if component.nil?
 
       # Ommit relations that already exist
-      next if ComponentNanoMaterial.find_by(nano_material: nano_material, component: component)
+      next if ComponentNanoMaterial.find_by(nano_material:, component:)
 
-      ComponentNanoMaterial.create(nano_material: nano_material, component: component)
+      ComponentNanoMaterial.create(nano_material:, component:)
     end
   end
 

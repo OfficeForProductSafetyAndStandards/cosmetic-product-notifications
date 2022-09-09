@@ -1,7 +1,7 @@
 require "support/matchers/capybara_matchers"
 
 def complete_product_details(nanos: [])
-  complete_item_wizard("Product details", single_item: true, nanos: nanos)
+  complete_item_wizard("Product details", single_item: true, nanos:)
 end
 
 def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false)

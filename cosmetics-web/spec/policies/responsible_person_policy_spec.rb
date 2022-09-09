@@ -19,13 +19,13 @@ RSpec.describe ResponsiblePersonPolicy, type: :policy do
     end
 
     it "permits when user and responsible person are in the same team" do
-      ResponsiblePersonUser.create(user: user, responsible_person: responsible_person)
+      ResponsiblePersonUser.create(user:, responsible_person:)
 
       expect(policy).to permit(:show)
     end
 
     it "permits when user is invited by responsible person" do
-      create(:pending_responsible_person_user, email_address: user.email, responsible_person: responsible_person)
+      create(:pending_responsible_person_user, email_address: user.email, responsible_person:)
 
       expect(policy).to permit(:show)
     end

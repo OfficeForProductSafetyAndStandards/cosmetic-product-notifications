@@ -43,40 +43,40 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
   end
 
   it "fails when no user is provided" do
-    result = described_class.call(responsible_person: responsible_person, details: new_details)
+    result = described_class.call(responsible_person:, details: new_details)
     expect(result).to be_failure
     expect(result.error).to eq "No user provided"
   end
 
   it "fails when no responsible person is provided" do
-    result = described_class.call(user: user, details: new_details)
+    result = described_class.call(user:, details: new_details)
     expect(result).to be_failure
     expect(result.error).to eq "No Responsible Person provided"
   end
 
   it "fails when no details are provided" do
-    result = described_class.call(user: user, responsible_person: responsible_person)
+    result = described_class.call(user:, responsible_person:)
     expect(result).to be_failure
     expect(result.error).to eq "No details provided"
   end
 
   it "fails when given user does not belong to responsible person" do
     other_user = create(:submit_user)
-    result = described_class.call(user: other_user, responsible_person: responsible_person, details: new_details)
+    result = described_class.call(user: other_user, responsible_person:, details: new_details)
     expect(result).to be_failure
     expect(result.error).to eq "User does not belong to Responsible Person"
   end
 
   it "fails when not allowed fields are provided" do
     new_details[:name] = "foobar"
-    result = described_class.call(user: user, responsible_person: responsible_person, details: new_details)
+    result = described_class.call(user:, responsible_person:, details: new_details)
     expect(result).to be_failure
     expect(result.error).to eq "Details contain invalid attributes"
   end
 
   context "when the provided details are the same as the original ones" do
     let!(:result) do
-      described_class.call(user: user, responsible_person: responsible_person, details: original_details)
+      described_class.call(user:, responsible_person:, details: original_details)
     end
 
     it "succeeds" do
@@ -102,8 +102,8 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
 
   context "when the business type has changed but the address has not" do
     let!(:result) do
-      described_class.call(user: user,
-                           responsible_person: responsible_person,
+      described_class.call(user:,
+                           responsible_person:,
                            details: original_details.merge(account_type: "business"))
     end
 
@@ -131,7 +131,7 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
   context "when the provided address is different from the original one" do
     context "without any exception" do
       let!(:result) do
-        described_class.call(user: user, responsible_person: responsible_person, details: new_details)
+        described_class.call(user:, responsible_person:, details: new_details)
       end
 
       it "succeeds" do
@@ -209,7 +209,7 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
                         end_date: nil)
       end
       let(:result) do
-        described_class.call(user: user, responsible_person: responsible_person, details: new_details)
+        described_class.call(user:, responsible_person:, details: new_details)
       end
 
       before do

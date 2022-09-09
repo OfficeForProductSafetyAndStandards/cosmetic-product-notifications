@@ -96,7 +96,7 @@ private
   end
 
   def email_not_pending_change_for_other_user
-    if email.present? && self.class.where(new_email: email).where.not(id: id).any?
+    if email.present? && self.class.where(new_email: email).where.not(id:).any?
       errors.add(:email, :taken)
     end
   end

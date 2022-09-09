@@ -15,11 +15,11 @@ RSpec.describe "Nanomaterial usage within product notifications", type: :request
 
   describe "PUT #confirm_usage" do
     let(:notification) do
-      create(:notification, responsible_person: responsible_person)
+      create(:notification, responsible_person:)
     end
 
-    let(:nano_material) { create(:nano_material, notification: notification) }
-    let(:nano_element) { create(:nano_element, nano_material: nano_material) }
+    let(:nano_material) { create(:nano_material, notification:) }
+    let(:nano_element) { create(:nano_element, nano_material:) }
 
     before do
       put "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/nanomaterials/#{nano_element.id}/build/confirm_usage", params: { nano_element: { confirm_usage: "yes" } }

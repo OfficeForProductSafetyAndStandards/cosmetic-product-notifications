@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "Asset security", type: :request do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
-  let(:notification) { create(:notification, responsible_person: responsible_person) }
-  let(:image_upload) { create(:image_upload, filename: "fooFile", notification: notification) }
+  let(:notification) { create(:notification, responsible_person:) }
+  let(:image_upload) { create(:image_upload, filename: "fooFile", notification:) }
   let(:signed_id) { image_upload.file.signed_id }
 
   before do
@@ -42,7 +42,7 @@ RSpec.describe "Asset security", type: :request do
     let(:image_upload) do
       create(:image_upload,
              file: Rack::Test::UploadedFile.new("spec/fixtures/files/testImage.png", "image/png"),
-             notification: notification)
+             notification:)
     end
     let(:image_variant) { image_upload.file.variant(resize_to_limit: [100, 100]) }
     let(:asset_url) do
@@ -54,7 +54,7 @@ RSpec.describe "Asset security", type: :request do
     context "when user is submit user" do
       let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
-      let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
+      let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person:) }
 
       before do
         configure_requests_for_submit_domain
@@ -140,7 +140,7 @@ RSpec.describe "Asset security", type: :request do
     context "when user is submit user" do
       let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
-      let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
+      let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person:) }
 
       before do
         configure_requests_for_submit_domain

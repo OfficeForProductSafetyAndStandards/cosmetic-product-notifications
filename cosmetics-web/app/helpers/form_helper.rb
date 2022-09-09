@@ -9,7 +9,7 @@ module FormHelper
       classes: "app-!-max-width-two-thirds",
       label: { text: user.class.human_attribute_name(field.to_sym) },
       errorMessage: format_errors_for(user, user.errors.full_messages_for(field)),
-      value: value,
+      value:,
     )
 
     govukInput(options)

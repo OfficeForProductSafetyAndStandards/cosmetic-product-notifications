@@ -8,14 +8,14 @@ RSpec.describe Registration::AccountSecurityForm do
   let(:secret_key) { "QSE5PUJFT4ZGTBRPGOOOW3QJWWVZNUP7" }
 
   let(:form) do
-    described_class.new(password: password,
+    described_class.new(password:,
                         app_authentication: "1",
                         sms_authentication: "1",
                         app_authentication_code: "123456",
-                        mobile_number: mobile_number,
-                        full_name: full_name,
-                        user: user,
-                        secret_key: secret_key)
+                        mobile_number:,
+                        full_name:,
+                        user:,
+                        secret_key:)
   end
 
   before do
@@ -202,10 +202,10 @@ RSpec.describe Registration::AccountSecurityForm do
 
     describe "name validations" do
       let(:form) do
-        described_class.new(password: password,
-                            mobile_number: mobile_number,
-                            user: user,
-                            full_name: full_name,
+        described_class.new(password:,
+                            mobile_number:,
+                            user:,
+                            full_name:,
                             app_authentication: "0",
                             sms_authentication: "1")
       end

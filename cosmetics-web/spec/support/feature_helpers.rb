@@ -26,7 +26,7 @@ def expect_user_to_have_received_sms_code(code, current_user = nil)
     current_user = user
   end
   expect(notify_stub).to have_received(:send_sms).with(
-    hash_including(phone_number: current_user.mobile_number, personalisation: { code: code }),
+    hash_including(phone_number: current_user.mobile_number, personalisation: { code: }),
   ).once
 end
 
@@ -117,11 +117,11 @@ def expect_incorrect_email_or_password
 end
 
 def expect_success_banner_with_text(text)
-  expect(page).to have_css("div.govuk-notification-banner--success", text: text)
+  expect(page).to have_css("div.govuk-notification-banner--success", text:)
 end
 
 def otp_code(email = nil)
-  user_with_code = User.find_by(email: email) || user
+  user_with_code = User.find_by(email:) || user
   user_with_code.reload.direct_otp
 end
 
@@ -606,12 +606,12 @@ end
 
 def fill_in_rp_business_details(name: "Auto-test rpuser")
   choose "Limited company or Limited Liability Partnership (LLP)"
-  fill_in_rp_details(name: name)
+  fill_in_rp_details(name:)
 end
 
 def fill_in_rp_sole_trader_details(name: "Auto-test rpuser")
   choose "Individual or sole trader"
-  fill_in_rp_details(name: name)
+  fill_in_rp_details(name:)
 end
 
 def fill_in_rp_contact_details

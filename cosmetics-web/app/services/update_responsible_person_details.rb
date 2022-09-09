@@ -70,7 +70,7 @@ private
 
   def previous_address
     @previous_address ||= ResponsiblePersonAddressLog.new(
-      responsible_person: responsible_person,
+      responsible_person:,
       line_1: responsible_person.address_line_1,
       line_2: responsible_person.address_line_2,
       city: responsible_person.city,

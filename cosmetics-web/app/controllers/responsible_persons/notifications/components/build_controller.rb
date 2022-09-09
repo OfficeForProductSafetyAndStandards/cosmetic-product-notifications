@@ -182,7 +182,7 @@ private
 
   def update_add_exposure_routes
     exposure_routes = params[:component].select { |_key, value| value == "1" }.keys
-    if @component.update_with_context({ exposure_routes: exposure_routes }, step)
+    if @component.update_with_context({ exposure_routes: }, step)
       render_next_step @component
     else
       rerender_current_step

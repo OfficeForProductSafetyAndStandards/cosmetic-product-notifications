@@ -23,7 +23,7 @@ RSpec.describe ResponsiblePersonNotificationPolicy, type: :policy do
 
     before do
       notification.responsible_person = responsible_person
-      create(:responsible_person_user, user: user, responsible_person: responsible_person)
+      create(:responsible_person_user, user:, responsible_person:)
     end
 
     it { is_expected.to permit(:index) }

@@ -30,7 +30,7 @@ class ResponsiblePersonsController < SubmitApplicationController
                                                  details: update_params.to_h)
     if result.success?
       confirmation = "Responsible Person details changed successfully" if result.changed
-      redirect_to(responsible_person_path(@responsible_person), confirmation: confirmation)
+      redirect_to(responsible_person_path(@responsible_person), confirmation:)
     else
       render :edit
     end

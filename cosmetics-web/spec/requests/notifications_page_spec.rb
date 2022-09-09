@@ -39,8 +39,8 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
         travel_to(Time.zone.local(2021, 2, 20, 13))
 
         # Setup notifications belonging to the company
-        create(:draft_notification, responsible_person: responsible_person)
-        create(:registered_notification, product_name: "Product 1", reference_number: 1, responsible_person: responsible_person)
+        create(:draft_notification, responsible_person:)
+        create(:registered_notification, product_name: "Product 1", reference_number: 1, responsible_person:)
 
         # Setup notifications belonging to other companies or users
         create(:draft_notification, responsible_person: other_responsible_person)
@@ -68,7 +68,7 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
       context "when downloading notifications as a file" do
         before do
           travel_to(Time.zone.local(2021, 2, 20, 13, 1))
-          create(:registered_notification, product_name: "Product 2", reference_number: 2, responsible_person: responsible_person)
+          create(:registered_notification, product_name: "Product 2", reference_number: 2, responsible_person:)
 
           Notification.all.each(&:cache_notification_for_csv!)
 

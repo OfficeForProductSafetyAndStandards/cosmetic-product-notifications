@@ -8,7 +8,7 @@ RSpec.describe "Delete Notifications page", type: :request do
   let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:other_user) { build(:submit_user) }
 
-  let(:notification1) { create(:notification, responsible_person: responsible_person) }
+  let(:notification1) { create(:notification, responsible_person:) }
   let(:component1) { create(:component, notification: notification1) }
   let(:component1_2) { create(:component, notification: notification1) }
   let(:component1_3) { create(:component, notification: notification1) }

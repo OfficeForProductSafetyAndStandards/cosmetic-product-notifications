@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SecondaryAuthentication::Sms::SetupForm do
   subject(:form) do
-    described_class.new(user: user, password: password, mobile_number: mobile_number)
+    described_class.new(user:, password:, mobile_number:)
   end
 
   let(:password) { user.password }

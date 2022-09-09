@@ -67,7 +67,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       let(:notification) { rp_1_notifications.first }
       let(:reference_number) { notification.reference_number }
 
-      before { get :show, params: { reference_number: reference_number } }
+      before { get :show, params: { reference_number: } }
 
       it "assigns the correct notification" do
         expect(assigns(:notification)).to eq(notification)
@@ -111,7 +111,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       describe "displayed information" do
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions) }
         let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person:) }
 
         render_views
 
@@ -161,7 +161,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         let(:cmr) { create(:cmr) }
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
         let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person: responsible_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person:) }
 
         render_views
 

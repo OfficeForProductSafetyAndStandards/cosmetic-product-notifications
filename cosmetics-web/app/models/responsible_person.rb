@@ -33,7 +33,7 @@ class ResponsiblePerson < ApplicationRecord
                    if: :name_changed?
 
   def add_user(user)
-    responsible_person_users << ResponsiblePersonUser.create(user: user)
+    responsible_person_users << ResponsiblePersonUser.create(user:)
   end
 
   def address_lines

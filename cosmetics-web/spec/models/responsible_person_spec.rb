@@ -101,7 +101,7 @@ RSpec.describe ResponsiblePerson, type: :model do
 
   describe "#has_user_with_email?" do
     let(:user) { build(:submit_user, email: "member@example.org") }
-    let(:responsible_person_user) { build(:responsible_person_user, user: user) }
+    let(:responsible_person_user) { build(:responsible_person_user, user:) }
 
     before do
       responsible_person.responsible_person_users << responsible_person_user

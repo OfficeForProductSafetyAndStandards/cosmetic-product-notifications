@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:notification) { create(:notification, responsible_person: responsible_person) }
-  let(:component) { create(:component, notification: notification) }
+  let(:notification) { create(:notification, responsible_person:) }
+  let(:component) { create(:component, notification:) }
 
   let(:nanomaterial) do
     create(:nano_material,
-           notification: notification,
+           notification:,
            nano_elements: [
              create(:nano_element, inci_name: "nanomaterial1"),
              create(:nano_element, inci_name: "nanomaterial2"),
@@ -34,7 +34,7 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
 
   describe "GET #new" do
     it "redirects to the first step of the wizard" do
-      get(:new, params: params)
+      get(:new, params:)
       expect(response).to redirect_to(responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_element1, :add_nanomaterial_name))
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
     context "when the notification is already submitted" do
       subject(:request) { get(:show, params: params.merge({ id: "confirm_usage" })) }
 
-      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
         expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))

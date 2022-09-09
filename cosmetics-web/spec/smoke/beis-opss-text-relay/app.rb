@@ -26,7 +26,7 @@ private
                  uri = CF::App::Credentials.find_by_service_name("beis-opss-text-relay-redis")["uri"]
                  Redis.new(url: uri)
                else
-                 Redis.new(host: host, port: port, db: 15)
+                 Redis.new(host:, port:, db: 15)
                end
   end
 
