@@ -4,7 +4,7 @@ RSpec.describe "Poison centre page", type: :request do
   include RSpecHtmlMatchers
 
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:notification) { create(:draft_notification, responsible_person: responsible_person) }
+  let(:notification) { create(:draft_notification, responsible_person:) }
   let(:params) do
     {
       reference_number: notification.reference_number,
@@ -12,13 +12,13 @@ RSpec.describe "Poison centre page", type: :request do
   end
 
   before do
-    component = create(:exact_component, notification: notification)
-    create(:cmr, name: "Foo CMR", component: component)
-    create(:exact_ingredient, exact_concentration: 4, inci_name: "Foo Ingredient", component: component)
+    component = create(:exact_component, notification:)
+    create(:cmr, name: "Foo CMR", component:)
+    create(:exact_ingredient, exact_concentration: 4, inci_name: "Foo Ingredient", component:)
 
-    nano_material = create(:nano_material, notification: notification)
-    create(:component_nano_material, component: component, nano_material: nano_material)
-    create(:nano_element, inci_name: "Foo Nanomaterial", nano_material: nano_material)
+    nano_material = create(:nano_material, notification:)
+    create(:component_nano_material, component:, nano_material:)
+    create(:nano_element, inci_name: "Foo Nanomaterial", nano_material:)
   end
 
   after do

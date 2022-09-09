@@ -1,7 +1,7 @@
 require "support/matchers/capybara_matchers"
 
 def complete_product_details(nanos: [])
-  complete_item_wizard("Product details", single_item: true, nanos: nanos)
+  complete_item_wizard("Product details", single_item: true, nanos:)
 end
 
 def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false, formulation_type: :exact)
@@ -44,10 +44,10 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
   case formulation_type
   when :exact
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration", item_name: label_name
-    fill_ingredients_exact_concentrations(single_item: single_item)
+    fill_ingredients_exact_concentrations(single_item:)
   when :range
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range", item_name: label_name
-    fill_ingredients_range_concentrations(single_item: single_item)
+    fill_ingredients_range_concentrations(single_item:)
   end
 
   answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
@@ -151,13 +151,13 @@ def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
 end
 
 def fill_ingredients_exact_concentrations(single_item: false)
-  fill_ingredients_concentrations(single_item: single_item) do
+  fill_ingredients_concentrations(single_item:) do
     fill_in "exact_concentration", with: "0.5"
   end
 end
 
 def fill_ingredients_range_concentrations(single_item: false)
-  fill_ingredients_concentrations(single_item: single_item) do
+  fill_ingredients_concentrations(single_item:) do
     page.choose("No")
     page.choose("Above 5% w/w up to 10% w/w")
   end
@@ -167,7 +167,7 @@ def fill_ingredients_concentrations(single_item: false)
   if page.has_css?("li", text: "FooBar ingredient") # Updating existing ingredients
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["FooBar ingredient"])
     click_button "Save and continue"
-    answer_add_another_ingredient_with("No", success_banner: false, single_item: single_item)
+    answer_add_another_ingredient_with("No", success_banner: false, single_item:)
   else
     expect_to_be_on_add_ingredients_page
     fill_in "name", with: "FooBar ingredient"
@@ -175,7 +175,7 @@ def fill_ingredients_concentrations(single_item: false)
     fill_in "cas_number", with: "123456-78-9"
     click_on "Save and continue"
 
-    answer_add_another_ingredient_with("Yes", success_banner: true, single_item: single_item)
+    answer_add_another_ingredient_with("Yes", success_banner: true, single_item:)
     expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
     click_link "Skip"
   end

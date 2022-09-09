@@ -7,7 +7,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream") }
-  let(:shower_bubbles) { create(:notification, :registered, :with_component, responsible_person: responsible_person, notification_complete_at: 2.days.ago, product_name: "Shower Bubbles") }
+  let(:shower_bubbles) { create(:notification, :registered, :with_component, responsible_person:, notification_complete_at: 2.days.ago, product_name: "Shower Bubbles") }
   let(:bath_bubbles) { create(:notification, :registered, :with_component, notification_complete_at: 3.days.ago, product_name: "Bath Bubbles", category: :face_care_products_other_than_face_mask) }
 
   before do

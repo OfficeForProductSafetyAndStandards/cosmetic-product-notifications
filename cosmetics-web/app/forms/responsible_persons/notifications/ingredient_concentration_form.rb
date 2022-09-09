@@ -68,9 +68,9 @@ module ResponsiblePersons::Notifications
     def ingredient_attributes
       {
         inci_name: name,
-        exact_concentration: exact_concentration,
-        range_concentration: range_concentration,
-        cas_number: cas_number,
+        exact_concentration:,
+        range_concentration:,
+        cas_number:,
         poisonous: poisonous.presence || false,
       }
     end

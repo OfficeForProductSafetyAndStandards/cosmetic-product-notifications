@@ -20,7 +20,7 @@ module ErrorSummaryHelper
           href += "_#{first_values[attribute]}"
         end
 
-        error_list << { text: messages[0], href: href }
+        error_list << { text: messages[0], href: }
       end
 
       govukErrorSummary(titleText: "There is a problem", errorList: error_list)

@@ -17,7 +17,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     let(:user) { responsible_person.responsible_person_users.first.user }
 
     before do
-      create(:draft_notification, responsible_person: responsible_person)
+      create(:draft_notification, responsible_person:)
     end
 
     it "displays the draft notification" do

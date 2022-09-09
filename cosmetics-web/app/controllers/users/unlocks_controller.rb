@@ -21,7 +21,7 @@ module Users
       @user_with_unlock_token ||= begin
         unlock_token = Devise.token_generator.digest(self, :unlock_token, params[:unlock_token])
 
-        User.find_by!(unlock_token: unlock_token)
+        User.find_by!(unlock_token:)
       end
     end
 

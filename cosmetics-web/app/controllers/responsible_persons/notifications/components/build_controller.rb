@@ -192,7 +192,7 @@ private
 
   def update_add_exposure_routes
     exposure_routes = params[:component].select { |_key, value| value == "1" }.keys
-    if @component.update_with_context({ exposure_routes: exposure_routes }, step)
+    if @component.update_with_context({ exposure_routes: }, step)
       render_next_step @component
     else
       rerender_current_step
@@ -276,7 +276,7 @@ private
     updating_ingredient = @component.ingredients[ingredient_number] if ingredient_number
 
     form_attrs = ingredient_concentration_params.merge(
-      component: @component, type: type, updating_ingredient: updating_ingredient,
+      component: @component, type:, updating_ingredient:,
     )
     form_attrs[:poisonous] = true if force_poisonous == true
 
@@ -376,7 +376,7 @@ private
       range_concentration: ingredient.range_concentration,
       poisonous: ingredient.poisonous,
       updating_ingredient: ingredient,
-      ingredient_number: ingredient_number }
+      ingredient_number: }
   end
 
   def component_params

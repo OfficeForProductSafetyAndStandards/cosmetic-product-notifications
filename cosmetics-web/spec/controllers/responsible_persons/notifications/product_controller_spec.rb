@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubbed_antivirus, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:notification) { create(:notification, responsible_person: responsible_person) }
+  let(:notification) { create(:notification, responsible_person:) }
   let(:image_file) { fixture_file_upload("testImage.png", "image/png") }
   let(:text_file) { fixture_file_upload("testText.txt", "application/text") }
 
@@ -23,7 +23,7 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
 
   describe "GET #new" do
     it "redirects to the first step of the notification submission process" do
-      get(:new, params: params)
+      get(:new, params:)
       expect(response).to redirect_to(responsible_person_notification_product_path(responsible_person, notification, :add_product_name))
     end
 
@@ -54,7 +54,7 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
     context "when the notification is already submitted" do
       subject(:request) { get(:show, params: params.merge({ id: "add_internal_reference" })) }
 
-      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
         expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
@@ -141,7 +141,7 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
     context "when the notification is already submitted" do
       subject(:request) { post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" })) }
 
-      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
         expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))

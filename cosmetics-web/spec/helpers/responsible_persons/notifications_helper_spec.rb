@@ -14,7 +14,7 @@ describe ResponsiblePersons::NotificationsHelper do
 
   describe "#notification_summary_label_image_link" do
     subject(:label_image_link) do
-      helper.notification_summary_label_image_link(image, notification.responsible_person, notification, allow_edits: allow_edits)
+      helper.notification_summary_label_image_link(image, notification.responsible_person, notification, allow_edits:)
     end
 
     let(:notification) { build_stubbed(:notification) }
@@ -106,7 +106,7 @@ describe ResponsiblePersons::NotificationsHelper do
 
   describe "#notification_summary_product_rows" do
     subject(:summary_product_rows) do
-      helper.notification_summary_product_rows(notification, allow_edits: allow_edits)
+      helper.notification_summary_product_rows(notification, allow_edits:)
     end
 
     let(:allow_edits) { false }
@@ -239,7 +239,7 @@ describe ResponsiblePersons::NotificationsHelper do
 
   describe "#notification_summary_component_rows" do
     subject(:summary_component_rows) do
-      helper.notification_summary_component_rows(component, include_shades: include_shades, allow_edits: allow_edits)
+      helper.notification_summary_component_rows(component, include_shades:, allow_edits:)
     end
 
     let(:include_shades) { false }
@@ -589,7 +589,7 @@ describe ResponsiblePersons::NotificationsHelper do
           .and_return([instance_double(TriggerQuestionElement), element])
         allow(helper).to receive(:format_trigger_question_elements).and_return(entities_list)
         allow(helper).to receive(:render).with("none_or_bullet_list",
-                                               entities_list: entities_list,
+                                               entities_list:,
                                                key_name: :inci_name,
                                                value_name: :exact_concentration,
                                                list_classes: "")

@@ -16,7 +16,7 @@ module ResponsiblePersons
   private
 
     def email_not_invited
-      if PendingResponsiblePersonUser.where(responsible_person: responsible_person, email_address: email).any?
+      if PendingResponsiblePersonUser.where(responsible_person:, email_address: email).any?
         errors.add :email, :taken
       end
     end

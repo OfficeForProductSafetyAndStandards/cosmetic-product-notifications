@@ -23,7 +23,7 @@ module ComponentBuildHelper
 
   def ingredient_range_concentration_item(above, up_to)
     {
-      html: render("ingredient_range_concentration_option", above: above, up_to: up_to),
+      html: render("ingredient_range_concentration_option", above:, up_to:),
       value: "greater_than_#{above}_less_than_#{up_to}_percent",
       id: "greater_than_#{above}_less_than_#{up_to}_percent",
     }

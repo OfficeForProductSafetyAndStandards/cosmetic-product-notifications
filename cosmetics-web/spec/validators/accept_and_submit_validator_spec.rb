@@ -4,10 +4,10 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
   let(:nano_name) { "Nano 1" }
 
   let(:notification) { create(:notification) }
-  let(:component) { create(:component, notification: notification) }
-  let(:nano_material) { create(:nano_material, notification: notification) }
-  let(:nano_element) { create(:nano_element, inci_name: nano_name, nano_material: nano_material) }
-  let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification: notification) }
+  let(:component) { create(:component, notification:) }
+  let(:nano_material) { create(:nano_material, notification:) }
+  let(:nano_element) { create(:nano_element, inci_name: nano_name, nano_material:) }
+  let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification:) }
 
   before do
     nano_element
@@ -25,7 +25,7 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
 
   describe "image failed antivirus check" do
     let(:with_stubbed_antivirus_result) { false }
-    let(:image_upload) { create(:image_upload, :uploaded_and_virus_identified, notification: notification) }
+    let(:image_upload) { create(:image_upload, :uploaded_and_virus_identified, notification:) }
 
     it "complains about image" do
       expect(notification.errors.messages_for(:image_uploads)).to eq(["Image #{image_upload.filename} failed antivirus check. Remove image and try again"])
@@ -46,7 +46,7 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
 
   describe "image still being processed" do
     let(:with_stubbed_antivirus_result) { nil }
-    let(:image_upload) { create(:image_upload, notification: notification) }
+    let(:image_upload) { create(:image_upload, notification:) }
 
     it "complains about image" do
       expect(notification.errors.messages_for(:image_uploads)).to eq(["Image #{image_upload.filename} is still being processed"])
@@ -54,7 +54,7 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
   end
 
   describe "formulation ingredients are missing for the component" do
-    let(:component) { create(:component, :using_range, notification: notification) }
+    let(:component) { create(:component, :using_range, notification:) }
 
     before do
       allow(component).to receive(:missing_ingredients?).and_return(true)

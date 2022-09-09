@@ -7,7 +7,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
   let(:submit_user) { responsible_person.responsible_person_users.first.user }
   let(:other_company) { create(:responsible_person, :with_a_contact_person) }
 
-  let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person) }
+  let(:submitted_nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person:) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, submit_user)
@@ -41,7 +41,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       it "does not list a non submitted nanomaterial notification" do
-        create(:nanomaterial_notification, :not_submitted, name: "Not submitted nano", responsible_person: responsible_person)
+        create(:nanomaterial_notification, :not_submitted, name: "Not submitted nano", responsible_person:)
         get "/responsible_persons/#{responsible_person.id}/nanomaterials"
         expect(response.body).not_to have_tag("th a", text: /"Not submitted nano"/)
       end
@@ -66,9 +66,9 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       CSV
     end
     let(:user_id)                    { submit_user.id }
-    let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
-    let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
-    let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id: user_id, responsible_person: rp) }
+    let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp) }
+    let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
+    let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id:, responsible_person: rp) }
 
     before do
       travel_to(Time.zone.local(2021, 7, 20, 13))
@@ -92,7 +92,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
   describe "GET /nanomaterials/ID" do
     context "when user is associated with the responsible person" do
       let(:nanomaterial_notification) do
-        create(:nanomaterial_notification, :submitted, responsible_person: responsible_person)
+        create(:nanomaterial_notification, :submitted, responsible_person:)
       end
 
       before do
@@ -151,7 +151,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     before do
       post "/responsible_persons/#{responsible_person.id}/nanomaterials", params: {
         nanomaterial_notification: {
-          name: name,
+          name:,
         },
       }
     end
@@ -194,7 +194,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "GET /nanomaterials/ID/name" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Zinc oxide") }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:, name: "Zinc oxide") }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/name"
@@ -214,7 +214,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     context "when all the other questions have been answered" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person:) }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/name"
@@ -250,13 +250,13 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     before do
       patch "/nanomaterials/#{nanomaterial_notification.id}/name", params: {
         nanomaterial_notification: {
-          name: name,
+          name:,
         },
       }
     end
 
     context "when the user has access and notification is submittable" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person, name: "Previous name") }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person:, name: "Previous name") }
 
       context "with a valid new name" do
         let(:name) { "Updated name" }
@@ -284,7 +284,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     context "when the user has access but EU question not yet answered" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Previous name", eu_notified: nil) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:, name: "Previous name", eu_notified: nil) }
 
       context "with a valid new name" do
         let(:name) { "Updated name" }
@@ -298,7 +298,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "GET /nanomaterials/ID/notified_to_eu" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Zinc oxide") }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:, name: "Zinc oxide") }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu"
@@ -322,7 +322,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     context "when all the other questions have been answered" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person:) }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu"
@@ -356,7 +356,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "PATCH /nanomaterials/ID/notified_to_eu" do
     context "when the user has access but the file hasn’t been uploaded yet" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:) }
 
       before do
         patch "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu", params: nanomaterial_params
@@ -422,7 +422,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     context "when the user has access and the file has been uploaded" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person:) }
 
       before do
         patch "/nanomaterials/#{nanomaterial_notification.id}/notified_to_eu", params: nanomaterial_params
@@ -450,7 +450,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "GET /nanomaterials/ID/upload_file" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:) }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/upload_file"
@@ -474,7 +474,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     context "when all questions have been answered" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person:) }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/upload_file"
@@ -508,15 +508,15 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "PATCH /nanomaterials/ID/file" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:) }
 
       before do
-        patch "/nanomaterials/#{nanomaterial_notification.id}/file", params: params
+        patch "/nanomaterials/#{nanomaterial_notification.id}/file", params:
       end
 
       context "when a file is selected" do
         let(:file) { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf", true) }
-        let(:params) { { nanomaterial_notification: { file: file } } }
+        let(:params) { { nanomaterial_notification: { file: } } }
 
         it "redirects to the Check your answers page" do
           expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/review")
@@ -549,7 +549,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "GET /nanomaterials/ID/review" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:) }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/review"
@@ -591,7 +591,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "PATCH /nanomaterials/ID/submission" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submittable, responsible_person:) }
 
       before do
         patch "/nanomaterials/#{nanomaterial_notification.id}/submission"
@@ -607,7 +607,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     context "when there is no file attached" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person: responsible_person, name: "Test", eu_notified: false) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, responsible_person:, name: "Test", eu_notified: false) }
 
       before do
         patch "/nanomaterials/#{nanomaterial_notification.id}/submission"
@@ -635,7 +635,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
 
   describe "GET /nanomaterials/ID/confirmation" do
     context "when the user has access" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person: responsible_person, name: "Zinc oxide") }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :submitted, responsible_person:, name: "Zinc oxide") }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"
@@ -665,7 +665,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     context "when the nanomaterial notification has not yet been submitted" do
-      let(:nanomaterial_notification) { create(:nanomaterial_notification, :not_submitted, responsible_person: responsible_person) }
+      let(:nanomaterial_notification) { create(:nanomaterial_notification, :not_submitted, responsible_person:) }
 
       before do
         get "/nanomaterials/#{nanomaterial_notification.id}/confirmation"

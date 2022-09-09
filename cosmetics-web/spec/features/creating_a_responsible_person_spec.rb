@@ -64,7 +64,7 @@ RSpec.describe "Creating a responsible person", type: :feature do
 
   scenario "creating a responsible person with the same name as another responbible person the user belongs to" do
     rp = create(:responsible_person, :with_a_contact_person, name: "Auto-test rpuser")
-    create(:responsible_person_user, responsible_person: rp, user: user)
+    create(:responsible_person_user, responsible_person: rp, user:)
 
     visit("/responsible_persons/#{rp.id}")
 

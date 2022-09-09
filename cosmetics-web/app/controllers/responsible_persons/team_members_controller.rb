@@ -15,7 +15,7 @@ class ResponsiblePersons::TeamMembersController < SubmitApplicationController
 
     user = SubmitUser.find_by(email: invitation.email_address) ||
       SubmitUser.find_by(new_email: invitation.email_address)
-    return render("signed_as_another_user", locals: { user: user }) if signed_as_another_user?(invitation)
+    return render("signed_as_another_user", locals: { user: }) if signed_as_another_user?(invitation)
 
     if user&.account_security_completed?
       authenticate_user!

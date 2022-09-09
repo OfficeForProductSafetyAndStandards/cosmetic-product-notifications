@@ -93,7 +93,7 @@ ActiveRecord::Base.transaction do
       physical_form: "other_physical_form",
       contains_poisonous_ingredients: false,
       ph: "not_applicable",
-      notification: notification,
+      notification:,
     }
     c = Component.create!(component_attributes)
     ingredients = [
@@ -143,8 +143,8 @@ ActiveRecord::Base.transaction do
   get_users(ENV["SEED_USERS"]).each do |user|
     name, email = user.split(":")
     user_params = {
-      email: email,
-      name: name,
+      email:,
+      name:,
       account_security_completed: true,
       password: "testpassword",
       secondary_authentication_methods: %w[sms],

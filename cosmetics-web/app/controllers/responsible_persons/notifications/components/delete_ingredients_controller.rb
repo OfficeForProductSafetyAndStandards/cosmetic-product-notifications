@@ -10,7 +10,7 @@ class ResponsiblePersons::Notifications::Components::DeleteIngredientsController
       redirect_to edit_ingredient_path
     when "yes"
       delete_ingredient!
-      render :success, locals: { post_deletion_path: post_deletion_path }
+      render :success, locals: { post_deletion_path: }
     else
       @ingredient.errors.add(:confirmation, "Select yes if you want to remove this ingredient")
       render :show

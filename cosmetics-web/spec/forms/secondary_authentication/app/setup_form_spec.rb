@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SecondaryAuthentication::App::SetupForm, :with_2fa_app do
   subject(:form) do
-    described_class.new(user: user, password: password, app_authentication_code: app_authentication_code)
+    described_class.new(user:, password:, app_authentication_code:)
   end
 
   let(:app_authentication_code) { "123456" }

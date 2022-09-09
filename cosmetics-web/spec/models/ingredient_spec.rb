@@ -87,24 +87,24 @@ RSpec.describe Ingredient, type: :model do
 
       it "is invalid when an ingredient with the same name exists in the same component" do
         component = create(:ranges_component)
-        create(:range_ingredient, inci_name: "A", component: component)
-        ingredient = build(:poisonous_ingredient, inci_name: "A", component: component)
+        create(:range_ingredient, inci_name: "A", component:)
+        ingredient = build(:poisonous_ingredient, inci_name: "A", component:)
         expect(ingredient).not_to be_valid
         expect(ingredient.errors[:inci_name]).to eq(["Ingredient name already exists in this component"])
       end
 
       it "is invalid when an ingredient with name differing in capitalisation exists in the same component" do
         component = create(:ranges_component)
-        create(:range_ingredient, inci_name: "a", component: component)
-        ingredient = build(:poisonous_ingredient, inci_name: "A", component: component)
+        create(:range_ingredient, inci_name: "a", component:)
+        ingredient = build(:poisonous_ingredient, inci_name: "A", component:)
         expect(ingredient).not_to be_valid
         expect(ingredient.errors[:inci_name]).to eq(["Ingredient name already exists in this component"])
       end
 
       it "is valid when an ingredient with name differing in spacing exists in the same component" do
         component = create(:ranges_component)
-        create(:range_ingredient, inci_name: "Ingredient A", component: component)
-        ingredient = build(:poisonous_ingredient, inci_name: "Ingredient  A", component: component)
+        create(:range_ingredient, inci_name: "Ingredient A", component:)
+        ingredient = build(:poisonous_ingredient, inci_name: "Ingredient  A", component:)
         expect(ingredient).to be_valid
       end
 
@@ -116,15 +116,15 @@ RSpec.describe Ingredient, type: :model do
 
       it "is valid when an ingredient with the same name exists in the same component for a deleted notification" do
         component = build(:ranges_component, notification: build(:notification, :deleted))
-        create(:range_ingredient, inci_name: "A", component: component)
-        ingredient = build(:poisonous_ingredient, inci_name: "A", component: component)
+        create(:range_ingredient, inci_name: "A", component:)
+        ingredient = build(:poisonous_ingredient, inci_name: "A", component:)
         expect(ingredient).to be_valid
       end
 
       it "is valid when an ingredient with the same name exists in the same component for a legacy zip imported notification" do
         component = create(:ranges_component, notification: create(:notification, cpnp_reference: "3796528"))
-        create(:range_ingredient, inci_name: "A", component: component)
-        ingredient = build(:poisonous_ingredient, inci_name: "A", component: component)
+        create(:range_ingredient, inci_name: "A", component:)
+        ingredient = build(:poisonous_ingredient, inci_name: "A", component:)
         expect(ingredient).to be_valid
       end
     end

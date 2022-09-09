@@ -209,7 +209,7 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
 
       context "when user haven't verified their mobile number" do
         subject(:request_code) do
-          post new_secondary_authentication_sms_resend_path, params: { submit_user: { mobile_number: mobile_number } }
+          post new_secondary_authentication_sms_resend_path, params: { submit_user: { mobile_number: } }
         end
 
         let(:user) do
@@ -233,7 +233,7 @@ RSpec.describe "User requests new secondary authentication sms code", type: :req
 
       context "when user haven't verified their mobile number" do
         subject(:request_code) do
-          post new_secondary_authentication_sms_resend_path, params: { submit_user: { mobile_number: mobile_number } }
+          post new_secondary_authentication_sms_resend_path, params: { submit_user: { mobile_number: } }
         end
 
         let(:user) do

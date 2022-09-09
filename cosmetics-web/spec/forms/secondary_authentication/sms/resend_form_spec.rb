@@ -6,8 +6,8 @@ RSpec.describe SecondaryAuthentication::Sms::ResendForm, :with_stubbed_mailer, :
   let(:user) { create(:submit_user, has_viewed_introduction: true) }
   let(:params) do
     {
-      mobile_number: mobile_number,
-      user: user,
+      mobile_number:,
+      user:,
     }
   end
 

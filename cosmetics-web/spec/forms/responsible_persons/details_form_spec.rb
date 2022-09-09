@@ -2,14 +2,14 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::DetailsForm do
   subject(:form) do
-    described_class.new(user: user,
-                        account_type: account_type,
-                        name: name,
-                        address_line_1: address_line_1,
-                        address_line_2: address_line_2,
-                        city: city,
-                        county: county,
-                        postal_code: postal_code)
+    described_class.new(user:,
+                        account_type:,
+                        name:,
+                        address_line_1:,
+                        address_line_2:,
+                        city:,
+                        county:,
+                        postal_code:)
   end
 
   let(:user) { build_stubbed(:submit_user) }
@@ -94,8 +94,8 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       let(:user) { create(:submit_user) }
 
       before do
-        rp = create(:responsible_person, :with_a_contact_person, name: name)
-        create(:responsible_person_user, responsible_person: rp, user: user)
+        rp = create(:responsible_person, :with_a_contact_person, name:)
+        create(:responsible_person_user, responsible_person: rp, user:)
         form.validate
       end
 
@@ -114,7 +114,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
 
       before do
         rp = create(:responsible_person, :with_a_contact_person, name: "resp person name")
-        create(:responsible_person_user, responsible_person: rp, user: user)
+        create(:responsible_person_user, responsible_person: rp, user:)
         form.validate
       end
 
@@ -131,7 +131,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       let(:user) { create(:submit_user) }
 
       before do
-        rp = create(:responsible_person, :with_a_contact_person, name: name)
+        rp = create(:responsible_person, :with_a_contact_person, name:)
         create(:pending_responsible_person_user, responsible_person: rp, email_address: user.email)
         form.validate
       end
@@ -170,7 +170,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
       let(:user) { create(:submit_user) }
 
       before do
-        rp = create(:responsible_person, :with_a_contact_person, name: name)
+        rp = create(:responsible_person, :with_a_contact_person, name:)
         create(:pending_responsible_person_user, :expired, responsible_person: rp, email_address: user.email)
         form.validate
       end

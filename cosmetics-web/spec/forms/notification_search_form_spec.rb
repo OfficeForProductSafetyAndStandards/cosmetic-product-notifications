@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe NotificationSearchForm do
   subject(:form) do
-    described_class.new(q: q,
-                        category: category,
-                        date_from: date_from,
-                        date_to: date_to,
-                        date_exact: date_exact,
-                        date_filter: date_filter)
+    described_class.new(q:,
+                        category:,
+                        date_from:,
+                        date_to:,
+                        date_exact:,
+                        date_filter:)
   end
 
   let(:q) { "Soap" }

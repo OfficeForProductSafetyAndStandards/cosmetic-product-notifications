@@ -7,7 +7,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
   let(:to_date)    { nil }
   let(:sort_by)    { nil }
 
-  let(:query) { described_class.new(keyword: q, match_type: match_type, from_date: from_date, to_date: to_date, sort_by: sort_by).build_query }
+  let(:query) { described_class.new(keyword: q, match_type:, from_date:, to_date:, sort_by:).build_query }
 
   shared_examples_for "correct query" do
     specify do

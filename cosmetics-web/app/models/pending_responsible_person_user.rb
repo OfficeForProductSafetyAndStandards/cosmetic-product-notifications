@@ -44,8 +44,8 @@ private
   def remove_duplicate
     PendingResponsiblePersonUser.where(
       responsible_person_id: responsible_person.id,
-      email_address: email_address,
-      inviting_user: inviting_user,
+      email_address:,
+      inviting_user:,
     ).delete_all
   end
 end

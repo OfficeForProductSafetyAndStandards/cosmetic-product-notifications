@@ -68,7 +68,7 @@ def expect_check_your_answers_page_to_contain(product_name:, number_of_component
 
   if ingredients
     ingredients.each do |ingredient, value|
-      expect(page).to have_summary_item(key: ingredient, value: value)
+      expect(page).to have_summary_item(key: ingredient, value:)
     end
   end
 

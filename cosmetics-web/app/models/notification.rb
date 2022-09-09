@@ -249,7 +249,7 @@ class Notification < ApplicationRecord
     return if deleted?
 
     transaction do
-      DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self, state: state))
+      DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self, state:))
       DELETABLE_ATTRIBUTES.each do |field|
         self[field] = nil
       end
@@ -258,7 +258,6 @@ class Notification < ApplicationRecord
       self.state = :deleted
 
       save!(validate: false)
-      ReindexOpensearchJob.perform_later
     end
   end
 

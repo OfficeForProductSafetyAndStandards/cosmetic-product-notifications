@@ -3,17 +3,17 @@ require "rails_helper"
 RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:user) { responsible_person.responsible_person_users.first.user }
-  let(:notification) { create(:notification, :draft_complete, responsible_person: responsible_person) }
-  let(:component) { create(:component, notification: notification) }
+  let(:notification) { create(:notification, :draft_complete, responsible_person:) }
+  let(:component) { create(:component, notification:) }
 
   before do
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
   scenario "Editing ingredients on a exact concentration notification" do
-    component = create(:exact_component, :completed, notification: notification)
-    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component: component)
-    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component: component)
+    component = create(:exact_component, :completed, notification:)
+    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component:)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component:)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -75,11 +75,11 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
   end
 
   scenario "Editing ingredients on a range concentration notification" do
-    component = create(:ranges_component, :completed, notification: notification)
-    create(:range_ingredient, inci_name: "Ingredient A", range_concentration: "greater_than_75_less_than_100_percent", component: component)
-    create(:range_ingredient, inci_name: "Ingredient B", range_concentration: "greater_than_10_less_than_25_percent", component: component)
+    component = create(:ranges_component, :completed, notification:)
+    create(:range_ingredient, inci_name: "Ingredient A", range_concentration: "greater_than_75_less_than_100_percent", component:)
+    create(:range_ingredient, inci_name: "Ingredient B", range_concentration: "greater_than_10_less_than_25_percent", component:)
     # Poisonous ingredient on Range component
-    create(:poisonous_ingredient, inci_name: "Ingredient C", exact_concentration: 3.0, component: component)
+    create(:poisonous_ingredient, inci_name: "Ingredient C", exact_concentration: 3.0, component:)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -151,9 +151,9 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
   end
 
   scenario "Editing ingredients on a predefined formulation notification" do
-    component = create(:predefined_component, :completed, notification: notification)
-    create(:poisonous_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component: component)
-    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component: component)
+    component = create(:predefined_component, :completed, notification:)
+    create(:poisonous_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component:)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component:)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -213,9 +213,9 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
   end
 
   scenario "Changing the formulation type from range to exact for a component with existing ingredients" do
-    component = create(:ranges_component, :completed, notification: notification)
-    create(:range_ingredient, inci_name: "Ingredient A", component: component)
-    create(:poisonous_ingredient, inci_name: "Ingredient B", component: component)
+    component = create(:ranges_component, :completed, notification:)
+    create(:range_ingredient, inci_name: "Ingredient A", component:)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", component:)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
@@ -244,9 +244,9 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
   end
 
   scenario "Changing the formulation type from predefined formulation to exact for a component with existing poisonous ingredients" do
-    component = create(:predefined_component, :using_frame_formulation, :completed, notification: notification)
-    create(:poisonous_ingredient, inci_name: "Ingredient A", component: component)
-    create(:poisonous_ingredient, inci_name: "Ingredient B", component: component)
+    component = create(:predefined_component, :using_frame_formulation, :completed, notification:)
+    create(:poisonous_ingredient, inci_name: "Ingredient A", component:)
+    create(:poisonous_ingredient, inci_name: "Ingredient B", component:)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 

@@ -227,7 +227,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     context "when user was invited to a responsible persons and followed the link but haven't completed their registration" do
       let(:responsible_person) { create(:responsible_person, :with_a_contact_person, name: "Responsible Person") }
       let(:invitation) do
-        create(:pending_responsible_person_user, email_address: "inviteduser@example.com", responsible_person: responsible_person)
+        create(:pending_responsible_person_user, email_address: "inviteduser@example.com", responsible_person:)
       end
 
       scenario "resends the responsible person invitation email and shows the confirmation page" do

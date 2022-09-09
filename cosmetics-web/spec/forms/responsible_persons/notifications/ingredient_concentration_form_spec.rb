@@ -2,14 +2,14 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
   subject(:form) do
-    described_class.new(component: component,
-                        type: type,
-                        name: name,
-                        cas_number: cas_number,
-                        exact_concentration: exact_concentration,
-                        range_concentration: range_concentration,
-                        poisonous: poisonous,
-                        updating_ingredient: updating_ingredient,
+    described_class.new(component:,
+                        type:,
+                        name:,
+                        cas_number:,
+                        exact_concentration:,
+                        range_concentration:,
+                        poisonous:,
+                        updating_ingredient:,
                         ingredient_number: nil)
   end
 
@@ -266,13 +266,13 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         let(:ingredient_factory) { type == "exact" ? :exact_ingredient : :range_ingredient }
 
         context "when updgrading an existing ingredient keeping the same name" do
-          let(:updating_ingredient) { create(ingredient_factory, inci_name: name, component: component) }
+          let(:updating_ingredient) { create(ingredient_factory, inci_name: name, component:) }
 
           it { expect(form).to be_valid }
         end
 
         context "when updgrading an existing ingredient name to different capitalisation" do
-          let(:updating_ingredient) { create(ingredient_factory, inci_name: name.upcase, component: component) }
+          let(:updating_ingredient) { create(ingredient_factory, inci_name: name.upcase, component:) }
 
           it { expect(form).to be_valid }
         end
@@ -285,19 +285,19 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
 
         it "is invalid when the ingredient already exists for the component" do
-          create(ingredient_factory, component: component, inci_name: name)
+          create(ingredient_factory, component:, inci_name: name)
           expect(form).not_to be_valid
           expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
         end
 
         it "is invalid when the ingredient differs only in capitalisation from an existing component ingredient" do
-          create(ingredient_factory, component: component, inci_name: name.downcase)
+          create(ingredient_factory, component:, inci_name: name.downcase)
           expect(form).not_to be_valid
           expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
         end
 
         it "is invalid when the ingredient differs only in leading/trailing espaces from an existing component ingredient" do
-          create(ingredient_factory, component: component, inci_name: name)
+          create(ingredient_factory, component:, inci_name: name)
           form.name = " #{name} "
           expect(form).not_to be_valid
           expect(form.errors[:name]).to eq ["Enter a name which is unique to this product"]
@@ -305,7 +305,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
         it "shows a specific error message for already existing name for ingredient in the multicomponent notification" do
           allow(component.notification).to receive(:is_multicomponent?).and_return(true)
-          create(ingredient_factory, component: component, inci_name: name)
+          create(ingredient_factory, component:, inci_name: name)
           expect(form).not_to be_valid
           expect(form.errors[:name]).to eq ["Enter a name which is unique to this item"]
         end
@@ -397,7 +397,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
       context "when updating an exact ingredient" do
         let!(:updating_ingredient) do
-          create(:ingredient, inci_name: "Ingredient pre-update", exact_concentration: 2.0, poisonous: false, component: component)
+          create(:ingredient, inci_name: "Ingredient pre-update", exact_concentration: 2.0, poisonous: false, component:)
         end
 
         it "does not create a new ingredient" do
@@ -419,7 +419,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           create(:ingredient,
                  inci_name: "Ingredient pre-update",
                  range_concentration: "greater_than_5_less_than_10_percent",
-                 component: component)
+                 component:)
         end
 
         it "does not create a new ingredient" do
@@ -452,7 +452,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         expect(form.save).to be_an_instance_of(Ingredient).and have_attributes(
           component_id: component.id,
           inci_name: name,
-          range_concentration: range_concentration,
+          range_concentration:,
           exact_concentration: nil,
           cas_number: "111111",
           poisonous: false,
@@ -465,7 +465,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           create(:ingredient,
                  inci_name: "Ingredient pre-update",
                  range_concentration: "greater_than_5_less_than_10_percent",
-                 component: component)
+                 component:)
         end
 
         it "does not create a new ingredient" do
@@ -482,7 +482,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
       context "when updating an exact ingredient" do
         let!(:updating_ingredient) do
-          create(:ingredient, inci_name: "Ingredient pre-update", exact_concentration: 3.0, poisonous: true, component: component)
+          create(:ingredient, inci_name: "Ingredient pre-update", exact_concentration: 3.0, poisonous: true, component:)
         end
 
         it "does not create a new ingredient" do

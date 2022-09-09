@@ -93,14 +93,14 @@ FactoryBot.define do
     trait :with_range_ingredients do
       notification_type { "range" }
       after(:create) do |component|
-        create(:range_ingredient, component: component)
+        create(:range_ingredient, component:)
       end
     end
 
     trait :with_exact_ingredients do
       notification_type { "exact" }
       after(:create) do |component|
-        create(:exact_ingredient, component: component)
+        create(:exact_ingredient, component:)
       end
     end
 
@@ -122,7 +122,7 @@ FactoryBot.define do
       end
 
       evaluator.with_ingredients.each do |ingredient|
-        component.ingredients << create(:exact_ingredient, component: component, inci_name: ingredient)
+        component.ingredients << create(:exact_ingredient, component:, inci_name: ingredient)
       end
     end
 

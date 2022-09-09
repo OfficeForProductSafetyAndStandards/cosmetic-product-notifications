@@ -49,7 +49,7 @@ class Component < ApplicationRecord
   # so the uniquness validation has to allow non-unique null values.
   validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false },
                    unless: -> { notification.via_zip_file? },
-                   presence: { if: -> { notification.reload.components.where.not(id: id).count.positive? }, on: :add_component_name }
+                   presence: { if: -> { notification.reload.components.where.not(id:).count.positive? }, on: :add_component_name }
 
   validates :special_applicator, presence: true, on: :select_special_applicator_type
 
@@ -203,7 +203,7 @@ class Component < ApplicationRecord
   end
 
   def update_state(state)
-    update(state: state)
+    update(state:)
   end
 
   def update_formulation_type(type)

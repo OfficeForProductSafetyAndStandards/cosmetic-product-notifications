@@ -8,7 +8,7 @@ FactoryBot.define do
       state { NotificationStateConcern::COMPONENTS_COMPLETE }
 
       after(:create) do |notification|
-        create(:component, notification: notification)
+        create(:component, notification:)
         notification.reload
       end
     end
@@ -35,29 +35,29 @@ FactoryBot.define do
       end
 
       after(:create) do |notification, evaluator|
-        create(:component, notification: notification, sub_sub_category: evaluator.category)
+        create(:component, notification:, sub_sub_category: evaluator.category)
         notification.reload
       end
     end
 
     trait :with_components do
       after(:create) do |notification|
-        create(:component, notification: notification, sub_sub_category: "nonoxidative_hair_colour_products")
-        create(:component, notification: notification, sub_sub_category: "nonoxidative_hair_colour_products")
+        create(:component, notification:, sub_sub_category: "nonoxidative_hair_colour_products")
+        create(:component, notification:, sub_sub_category: "nonoxidative_hair_colour_products")
         notification.reload
       end
     end
 
     trait :with_nano_material do
       after(:create) do |notification|
-        create(:nano_material, notification: notification)
+        create(:nano_material, notification:)
         notification.reload
       end
     end
 
     trait :with_nano_materials do
       after(:create) do |notification|
-        create_list(:nano_material, 2, notification: notification)
+        create_list(:nano_material, 2, notification:)
         notification.reload
       end
     end
@@ -79,7 +79,7 @@ FactoryBot.define do
       end
 
       after(:create) do |notification|
-        create(:deleted_notification, notification: notification)
+        create(:deleted_notification, notification:)
         notification.reload
       end
     end

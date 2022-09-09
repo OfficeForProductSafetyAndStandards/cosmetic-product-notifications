@@ -13,9 +13,9 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     context "when nanomaterial notications are present", :with_stubbed_antivirus do
       let(:user_id) { submit_user.id }
       let(:rp) { responsible_person }
-      let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp) }
-      let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id: user_id, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
-      let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id: user_id, responsible_person: rp) }
+      let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp) }
+      let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
+      let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id:, responsible_person: rp) }
 
       before do
         nanomaterial_notification1
@@ -30,7 +30,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
       end
     end
 
-    scenario "CSV downloas link is invisible when no nano notifications" do
+    scenario "CSV download link is invisible when no nano notifications" do
       visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
 
       expect(page).not_to have_selector("a", text: "Download a CSV file of notified nanomaterials")
@@ -63,6 +63,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_link("My nanomaterial")
     expect(page).to have_selector("td[headers='uknotified item-1 meta-1']", text: "10 June 2021")
     expect(page).to have_selector("td[headers='eunotified item-1 meta-1']", text: "No")
+    expect(page).to have_selector("td[headers='reviewperiodenddate item-1 meta-1']", text: "10 December 2021")
     expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: "UKN-#{id}")
 
     click_link("My nanomaterial")
@@ -70,6 +71,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_h1("My nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
+    expect(page).to have_summary_item(key: "Review period end", value: "10 December 2021")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
     expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end
@@ -103,6 +105,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_link("My EU nanomaterial")
     expect(page).to have_selector("td[headers='uknotified item-1 meta-1']", text: "10 June 2021")
     expect(page).to have_selector("td[headers='eunotified item-1 meta-1']", text: "1 February 2017")
+    expect(page).to have_selector("td[headers='reviewperiodenddate item-1 meta-1']", text: "1 August 2017")
     expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: "UKN-#{id}")
 
     click_link("My EU nanomaterial")
@@ -110,6 +113,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_h1("My EU nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
+    expect(page).to have_summary_item(key: "Review period end", value: "1 August 2017")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
     expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end

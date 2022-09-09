@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::InviteMemberForm do
   subject(:form) do
-    described_class.new(email: email,
-                        name: name,
-                        responsible_person: responsible_person)
+    described_class.new(email:,
+                        name:,
+                        responsible_person:)
   end
 
   let(:email) { "invited.user@example.com" }
@@ -63,8 +63,8 @@ RSpec.describe ResponsiblePersons::InviteMemberForm do
 
     context "when the email belongs to the responsible person" do
       before do
-        user = build_stubbed(:submit_user, email: email)
-        rpu = build_stubbed(:responsible_person_user, user: user, responsible_person: responsible_person)
+        user = build_stubbed(:submit_user, email:)
+        rpu = build_stubbed(:responsible_person_user, user:, responsible_person:)
         responsible_person.responsible_person_users << rpu
       end
 
@@ -81,7 +81,7 @@ RSpec.describe ResponsiblePersons::InviteMemberForm do
 
     context "when the email has already been invited to the responsible person" do
       before do
-        create(:pending_responsible_person_user, responsible_person: responsible_person, email_address: email)
+        create(:pending_responsible_person_user, responsible_person:, email_address: email)
       end
 
       it "is not valid" do

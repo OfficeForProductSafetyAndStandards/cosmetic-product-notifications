@@ -10,7 +10,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
   let(:cream) { create(:notification, :registered, components: [component1], notification_complete_at: 1.day.ago, product_name: "Cream") }
-  let(:shower_bubbles) { create(:notification, :registered, responsible_person: responsible_person, components: [component2], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
+  let(:shower_bubbles) { create(:notification, :registered, responsible_person:, components: [component2], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
 
   before do
     configure_requests_for_search_domain

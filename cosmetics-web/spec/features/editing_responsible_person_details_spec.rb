@@ -7,7 +7,7 @@ RSpec.describe "Editing responsible person details", :with_stubbed_mailer, type:
 
   before do
     configure_requests_for_submit_domain
-    create(:responsible_person_user, user: other_member, responsible_person: responsible_person)
+    create(:responsible_person_user, user: other_member, responsible_person:)
   end
 
   scenario "user not belonging to the responsible person cannot edit the Contact Person details" do

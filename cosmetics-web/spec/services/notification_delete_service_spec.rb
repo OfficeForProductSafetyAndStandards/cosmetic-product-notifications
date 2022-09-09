@@ -15,7 +15,7 @@ RSpec.describe NotificationDeleteService do
     # Attributes needs to be cached after time freezing and notification creation,
     # but before removing the notification, so instance variable has a use here.
     @notification_attributes = OpenStruct.new(notification.attributes.merge(responsible_person: notification.responsible_person))
-    create(:responsible_person_user, user: submit_user, responsible_person: responsible_person)
+    create(:responsible_person_user, user: submit_user, responsible_person:)
   end
 
   context "when the notification is completed" do
@@ -39,7 +39,7 @@ RSpec.describe NotificationDeleteService do
       log = NotificationDeleteLog.first
 
       expect(log).to have_attributes(
-        submit_user: submit_user,
+        submit_user:,
         notification_product_name: notification_attributes.product_name,
         responsible_person: notification_attributes.responsible_person,
         notification_created_at: notification_attributes.created_at,

@@ -66,6 +66,6 @@ private
   end
 
   def find_responsible_person(id)
-    current_user.responsible_persons.find_by id: id
+    current_user.responsible_persons.find_by id:
   end
 end

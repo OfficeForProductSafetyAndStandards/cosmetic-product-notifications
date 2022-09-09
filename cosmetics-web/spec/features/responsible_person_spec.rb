@@ -6,7 +6,7 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
   let(:user) { responsible_person.responsible_person_users.first.user }
 
   before do
-    create(:responsible_person_user, user: user, responsible_person: responsible_person2)
+    create(:responsible_person_user, user:, responsible_person: responsible_person2)
 
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end

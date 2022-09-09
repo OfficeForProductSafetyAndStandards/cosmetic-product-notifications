@@ -10,7 +10,7 @@ module SecondaryAuthentication
       user_id = session[:secondary_authentication_user_id]
       return redirect_to(root_path) unless user_id && app_authentication_available?
 
-      @form = App::AuthForm.new(user_id: user_id)
+      @form = App::AuthForm.new(user_id:)
     end
 
     def create

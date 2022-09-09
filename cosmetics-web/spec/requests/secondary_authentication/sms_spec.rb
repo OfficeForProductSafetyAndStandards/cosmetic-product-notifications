@@ -61,9 +61,9 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
         :with_responsible_person,
         :with_sms_secondary_authentication,
         mobile_number_verified: false,
-        direct_otp_sent_at: direct_otp_sent_at,
+        direct_otp_sent_at:,
         second_factor_attempts_count: attempts,
-        second_factor_attempts_locked_at: second_factor_attempts_locked_at,
+        second_factor_attempts_locked_at:,
       )
     end
 
