@@ -86,7 +86,7 @@ RSpec.describe User, type: :model do # rubocop:todo RSpec/FilePath
       let(:user) do
         create(:submit_user,
                email: old_email,
-               new_email: new_email,
+               new_email:,
                new_email_confirmation_token: expected_token,
                new_email_confirmation_token_expires_at: new_email_expiration)
       end
@@ -143,7 +143,7 @@ RSpec.describe User, type: :model do # rubocop:todo RSpec/FilePath
       let(:user) do
         create(:submit_user,
                email: old_email,
-               new_email: new_email,
+               new_email:,
                new_email_confirmation_token: expected_token,
                new_email_confirmation_token_expires_at: new_email_expiration)
       end

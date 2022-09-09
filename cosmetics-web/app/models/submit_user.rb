@@ -25,7 +25,7 @@ class SubmitUser < User
   end
 
   def self.find_user_by_confirmation_token!(confirmation_token)
-    new_user = SubmitUser.find_by!(confirmation_token: confirmation_token)
+    new_user = SubmitUser.find_by!(confirmation_token:)
 
     if new_user.send(:confirmation_period_expired?)
       new_user.resend_confirmation_instructions
@@ -99,7 +99,7 @@ private
     SubmitNotifyMailer.account_locked(
       self,
       unlock_token: raw,
-      reset_password_token: reset_password_token,
+      reset_password_token:,
     ).deliver_later
     raw
   end

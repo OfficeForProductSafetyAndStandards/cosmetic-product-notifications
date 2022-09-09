@@ -7,7 +7,7 @@ RSpec.describe "Delete product image", type: :request do
   let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:other_user) { build(:submit_user) }
 
-  let(:notification1) { create(:notification, :with_label_image, responsible_person: responsible_person) }
+  let(:notification1) { create(:notification, :with_label_image, responsible_person:) }
 
   let(:notification2) { create(:notification, :with_label_image, responsible_person: other_responsible_person) }
 

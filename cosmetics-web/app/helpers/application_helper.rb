@@ -33,9 +33,9 @@ module ApplicationHelper
       # Errors for attributes that are not included in the ordered list will be
       # added at the end after the errors for ordered attributes.
       if ordered_errors[error.attribute]
-        ordered_errors[error.attribute] << { text: error.message, href: href }
+        ordered_errors[error.attribute] << { text: error.message, href: }
       else
-        ordered_errors[error.attribute] = [{ text: error.message, href: href }]
+        ordered_errors[error.attribute] = [{ text: error.message, href: }]
       end
     end
     error_list = ordered_errors.values.flatten.compact

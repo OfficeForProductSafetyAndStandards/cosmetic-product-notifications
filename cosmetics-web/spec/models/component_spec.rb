@@ -4,7 +4,7 @@ RSpec.describe Component, type: :model do
   let(:contains_poisonous_ingredients) { false }
 
   let(:notification) { create(:notification) }
-  let(:predefined_component) { create(:component, contains_poisonous_ingredients: contains_poisonous_ingredients) }
+  let(:predefined_component) { create(:component, contains_poisonous_ingredients:) }
   let(:ranges_component) { create(:ranges_component) }
   let(:exact_component) { create(:exact_component) }
   let(:text_file) { fixture_file_upload("/testText.txt", "application/text") }
@@ -28,10 +28,10 @@ RSpec.describe Component, type: :model do
 
   describe "name validation" do
     context "when there is already a component with the same name for the same notification" do
-      let(:component) { described_class.new(name: "Component X", notification: notification) }
+      let(:component) { described_class.new(name: "Component X", notification:) }
 
       before do
-        create(:component, name: "Component X", notification: notification)
+        create(:component, name: "Component X", notification:)
       end
 
       it "is not valid" do
@@ -45,10 +45,10 @@ RSpec.describe Component, type: :model do
     end
 
     context "when there is already a component with the same name but using uppercase for the same notification" do
-      let(:component) { described_class.new(name: "Component X", notification: notification) }
+      let(:component) { described_class.new(name: "Component X", notification:) }
 
       before do
-        create(:component, name: "COMPONENT X", notification: notification)
+        create(:component, name: "COMPONENT X", notification:)
       end
 
       it "is not valid" do
@@ -62,10 +62,10 @@ RSpec.describe Component, type: :model do
     end
 
     context "when there is already a component with no name for the same notification" do
-      let(:component) { described_class.new(name: nil, notification: notification) }
+      let(:component) { described_class.new(name: nil, notification:) }
 
       before do
-        create(:component, name: nil, notification: notification)
+        create(:component, name: nil, notification:)
       end
 
       it "is valid" do
@@ -74,7 +74,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when component belongs to single component notification" do
-      let(:component) { described_class.new(name: "", notification: notification) }
+      let(:component) { described_class.new(name: "", notification:) }
 
       it "is valid" do
         expect(component).to be_valid
@@ -90,10 +90,10 @@ RSpec.describe Component, type: :model do
     end
 
     context "when component belongs to multi component notification" do
-      let(:component) { described_class.new(name: "", notification: notification) }
+      let(:component) { described_class.new(name: "", notification:) }
 
       before do
-        create(:component, name: "COMPONENT X", notification: notification)
+        create(:component, name: "COMPONENT X", notification:)
       end
 
       context "when context is provided" do

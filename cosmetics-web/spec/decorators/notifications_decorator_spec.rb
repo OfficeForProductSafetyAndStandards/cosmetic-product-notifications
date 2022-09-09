@@ -12,9 +12,9 @@ RSpec.describe NotificationsDecorator do
   end
 
   let(:responsible_person) { create(:responsible_person) }
-  let(:notification1) { create(:notification, :registered, :with_component, responsible_person: responsible_person, product_name: "Product 1", reference_number: 111) }
-  let(:notification2) { create(:notification, :registered, :with_component, responsible_person: responsible_person, product_name: "Product 2", reference_number: 222) }
-  let(:notification3) { create(:notification, :registered, :with_components, responsible_person: responsible_person, product_name: "Product 3", reference_number: 333, industry_reference: "foo bar") }
+  let(:notification1) { create(:notification, :registered, :with_component, responsible_person:, product_name: "Product 1", reference_number: 111) }
+  let(:notification2) { create(:notification, :registered, :with_component, responsible_person:, product_name: "Product 2", reference_number: 222) }
+  let(:notification3) { create(:notification, :registered, :with_components, responsible_person:, product_name: "Product 3", reference_number: 333, industry_reference: "foo bar") }
 
   let(:notifications) { [notification1, notification2, notification3] }
 

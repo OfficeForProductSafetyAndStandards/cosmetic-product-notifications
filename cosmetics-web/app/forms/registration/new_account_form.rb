@@ -10,11 +10,11 @@ module Registration
     def save
       return false unless valid?
 
-      if (user = SubmitUser.where(email: email).or(SubmitUser.where(new_email: email)).first)
+      if (user = SubmitUser.where(email:).or(SubmitUser.where(new_email: email)).first)
         send_link(user)
         true
       else
-        user = SubmitUser.new(name: full_name, email: email)
+        user = SubmitUser.new(name: full_name, email:)
         user.save(validate: false)
         user
       end

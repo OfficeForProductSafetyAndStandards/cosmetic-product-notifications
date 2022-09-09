@@ -40,8 +40,8 @@ module Registration
       return false unless valid?
 
       user.update!(
-        mobile_number: mobile_number,
-        password: password,
+        mobile_number:,
+        password:,
         name: full_name,
         account_security_completed: true,
         confirmation_token: nil,

@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:component) { create(:component, notification: notification, notification_type: component_type) }
+  let(:component) { create(:component, notification:, notification_type: component_type) }
   let(:notification) do
     create(:notification,
-           responsible_person: responsible_person,
+           responsible_person:,
            state: NotificationStateConcern::READY_FOR_COMPONENTS)
   end
   let(:component_type) { nil }
@@ -28,7 +28,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
 
   describe "GET #new" do
     it "redirects to the first step of the wizard" do
-      get(:new, params: params)
+      get(:new, params:)
       expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :number_of_shades))
     end
 
@@ -64,7 +64,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
     context "when the notification is already submitted" do
       subject(:request) { get(:show, params: params.merge(id: :number_of_shades)) }
 
-      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
         expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
@@ -183,7 +183,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
     context "when the notification is already submitted" do
       subject(:request) { post(:update, params: params.merge(id: :add_shades, component: { shades: %w[red blue] })) }
 
-      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
         expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))

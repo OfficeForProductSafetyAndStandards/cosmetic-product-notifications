@@ -7,8 +7,8 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
   let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:other_user) { build(:submit_user) }
 
-  let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
-  let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+  let(:draft_notification) { create(:draft_notification, responsible_person:) }
+  let(:notification) { create(:registered_notification, responsible_person:) }
 
   context "when deleting notification user notification" do
     before do

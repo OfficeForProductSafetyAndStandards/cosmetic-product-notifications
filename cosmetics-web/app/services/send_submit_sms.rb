@@ -13,7 +13,7 @@ class SendSubmitSMS
     new.client.send_sms(
       phone_number: mobile_number,
       template_id: TEMPLATES[:otp_code],
-      personalisation: { code: code },
+      personalisation: { code: },
     )
   end
 end

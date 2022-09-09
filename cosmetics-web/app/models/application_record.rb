@@ -4,7 +4,7 @@ class ApplicationRecord < ActiveRecord::Base
   def update_with_context(attributes, context)
     with_transaction_returning_status do
       assign_attributes(attributes)
-      save(context: context)
+      save(context:)
     end
   end
 end

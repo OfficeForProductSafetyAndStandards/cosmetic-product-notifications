@@ -39,14 +39,14 @@ FactoryBot.define do
     trait :with_range_formulas do
       notification_type { "range" }
       after(:create) do |component|
-        create(:range_formula, component: component)
+        create(:range_formula, component:)
       end
     end
 
     trait :with_exact_formulas do
       notification_type { "exact" }
       after(:create) do |component|
-        create(:exact_formula, component: component)
+        create(:exact_formula, component:)
       end
     end
 

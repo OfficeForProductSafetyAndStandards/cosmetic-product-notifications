@@ -22,12 +22,12 @@ RSpec.describe "Creating an account when having pending responsible person invit
     create(:pending_responsible_person_user,
            :expired,
            email_address: invited_user_email,
-           responsible_person: responsible_person,
-           inviting_user: inviting_user,
+           responsible_person:,
+           inviting_user:,
            created_at: 3.days.ago)
     create(:pending_responsible_person_user,
            email_address: invited_user_email,
-           inviting_user: inviting_user,
+           inviting_user:,
            responsible_person: responsible_person2)
 
     user_creates_an_account_with_invitation_email
@@ -50,8 +50,8 @@ RSpec.describe "Creating an account when having pending responsible person invit
     create(:pending_responsible_person_user,
            :expired,
            email_address: invited_user_email,
-           inviting_user: inviting_user,
-           responsible_person: responsible_person,
+           inviting_user:,
+           responsible_person:,
            created_at: 5.days.ago)
 
     user_creates_an_account_with_invitation_email

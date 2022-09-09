@@ -99,7 +99,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
   describe "notification submision" do
     let(:notification) { create(:notification, :draft_complete, :with_components) }
-    let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification: notification) }
+    let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification:) }
 
     before do
       image_upload
@@ -113,8 +113,8 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
   describe "deletion" do
     let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
-    let(:notification) { create(:notification, :registered, :with_components, responsible_person: responsible_person) }
-    let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification: notification) }
+    let(:notification) { create(:notification, :registered, :with_components, responsible_person:) }
+    let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification:) }
     let(:deleted_notification) { DeletedNotification.first }
 
     describe "#soft_delete!" do

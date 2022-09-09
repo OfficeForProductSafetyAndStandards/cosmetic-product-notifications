@@ -11,7 +11,7 @@ RSpec.describe OpensearchQuery, type: :model do
   let(:to_date)   { nil }
   let(:sort_by)   { nil }
 
-  let(:query) { described_class.new(keyword: q, category: category, from_date: from_date, to_date: to_date, sort_by: sort_by).build_query }
+  let(:query) { described_class.new(keyword: q, category:, from_date:, to_date:, sort_by:).build_query }
 
   context "when search term is provided and category filter is empty" do
     it_behaves_like "correct query" do

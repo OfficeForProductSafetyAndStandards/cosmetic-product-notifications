@@ -57,7 +57,7 @@ FactoryBot.define do
 
       trait :with_responsible_person do
         after(:create) do |user|
-          create_list(:responsible_person_user, 1, user: user)
+          create_list(:responsible_person_user, 1, user:)
         end
       end
 
@@ -101,7 +101,7 @@ FactoryBot.define do
       end
 
       after :create do |user, options|
-        create(:user_attributes, user: user, declaration_accepted: !options.first_login)
+        create(:user_attributes, user:, declaration_accepted: !options.first_login)
       end
 
       trait :registration_incomplete do

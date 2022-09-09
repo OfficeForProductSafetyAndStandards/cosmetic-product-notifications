@@ -26,13 +26,13 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
 
     it "gets the correct number of unfinished notifications" do
-      create(:draft_notification, responsible_person: responsible_person)
+      create(:draft_notification, responsible_person:)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:unfinished_notifications).count).to eq(1)
     end
 
     it "gets the correct number of submitted notifications" do
-      create(:registered_notification, responsible_person: responsible_person)
+      create(:registered_notification, responsible_person:)
       get :index, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:registered_notifications).count).to eq(1)
     end
@@ -45,7 +45,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
   end
 
   describe "GET /show" do
-    let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+    let(:notification) { create(:registered_notification, responsible_person:) }
 
     it "assigns the correct notification" do
       get :show, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }
@@ -68,7 +68,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     it "does not shows deleted notification" do
       reference_number = notification.reference_number
       notification.destroy!
-      get :show, params: { responsible_person_id: responsible_person.id, reference_number: reference_number }
+      get :show, params: { responsible_person_id: responsible_person.id, reference_number: }
       expect(response).to redirect_to("/404")
     end
   end
@@ -98,7 +98,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
   end
 
   describe "GET /edit" do
-    let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person) }
+    let(:draft_notification) { create(:draft_notification, responsible_person:) }
 
     it "assigns the correct notification" do
       get :edit, params: { responsible_person_id: responsible_person.id, reference_number: draft_notification.reference_number }
@@ -116,14 +116,14 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     it "does not shows deleted notification" do
       reference_number = draft_notification.reference_number
       draft_notification.destroy!
-      get :edit, params: { responsible_person_id: responsible_person.id, reference_number: reference_number }
+      get :edit, params: { responsible_person_id: responsible_person.id, reference_number: }
       expect(response).to redirect_to("/404")
     end
 
     context "when the notification is already submitted" do
       subject(:request) { get(:edit, params: { responsible_person_id: responsible_person.id, reference_number: notification.reference_number }) }
 
-      let(:notification) { create(:registered_notification, responsible_person: responsible_person) }
+      let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
         expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))

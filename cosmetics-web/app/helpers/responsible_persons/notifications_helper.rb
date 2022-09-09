@@ -55,8 +55,8 @@ module ResponsiblePersons::NotificationsHelper
       {
         key: { text: "Label image" },
         value: { html: render("notifications/product_details_label_images",
-                              notification: notification,
-                              allow_edits: allow_edits) },
+                              notification:,
+                              allow_edits:) },
       },
       {
         key: { text: "Are the items mixed?" },
@@ -151,8 +151,8 @@ module ResponsiblePersons::NotificationsHelper
         {
           key: { text: "Formulation" },
           value: { html: render("notifications/component_details_formulation_ingredients",
-                                component: component,
-                                allow_edits: allow_edits) },
+                                component:,
+                                allow_edits:) },
         }
       end,
       {
@@ -187,8 +187,8 @@ module ResponsiblePersons::NotificationsHelper
         {
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
-                                component: component,
-                                allow_edits: allow_edits) },
+                                component:,
+                                allow_edits:) },
         }
       end,
     ].concat(component_ph_trigger_questions_rows(component))

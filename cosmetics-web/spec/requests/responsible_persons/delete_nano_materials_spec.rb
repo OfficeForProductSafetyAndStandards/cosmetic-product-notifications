@@ -8,7 +8,7 @@ RSpec.describe "Delete Nano material page", type: :request do
   let(:other_responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:other_user) { build(:submit_user) }
 
-  let(:notification1) { create(:notification, responsible_person: responsible_person) }
+  let(:notification1) { create(:notification, responsible_person:) }
   let(:nano_material1) { create(:nano_material, notification: notification1) }
   let(:nano_element1) { create(:nano_element, nano_material: nano_material1) }
   let(:notification2) { create(:notification, responsible_person: other_responsible_person) }

@@ -78,7 +78,7 @@ private
 
     redirect_path = request.original_fullpath unless request.original_fullpath == root_path
 
-    redirect_to declaration_path(redirect_path: redirect_path) unless current_user.has_accepted_declaration?
+    redirect_to declaration_path(redirect_path:) unless current_user.has_accepted_declaration?
   end
 
   def current_user
