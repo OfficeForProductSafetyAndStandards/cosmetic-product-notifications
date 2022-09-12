@@ -6,17 +6,21 @@ module  ResponsiblePersons::Notifications::Nanomaterials
     before_action :set_notification
     before_action :set_nano_material
 
-    steps :select_purposes,
-          :after_select_purposes_routing, # step to do routing after select purposes
+    steps :select_purposes, # selects standard/non-standard purposes
+          # Standard only steps
+          :after_select_purposes_routing,
           :add_nanomaterial_name,
-          :confirm_restrictions,
-          :confirm_usage,
-          :after_standard_nanomaterial_routing, # step to check if non standard route needs to take place
-          :non_standard_nanomaterial_notified, # when non standard
+          :confirm_restrictions, # "Is listed in regulation?"
+          :confirm_usage, # "Does conform to restrictions?"
+          # Check if non standard route needs to take place
+          :after_standard_nanomaterial_routing,
+          # Non-standard only steps
+          :non_standard_nanomaterial_notified, # "Have you Submited a notification since...?"
           :when_products_containing_nanomaterial_can_be_placed_on_market,
-          :notify_your_nanomaterial, # FLOW TERMINATION
-          :must_be_listed, # used when confirm restrictions fails - FLOW TERMINATION
-          :must_conform_to_restrictions, # used when confirm usage fails - FLOW TERMINATION
+          # FLOW TERMINATION steps
+          :notify_your_nanomaterial, # Non-standard. "You cannot notify this product until you have notified the nanomaterial you want to use" page.
+          :must_be_listed, # Standard. When confirm restrictions fails
+          :must_conform_to_restrictions, # Standard. When confirm usage fails
           :completed
 
     # Key is current page, value is page to go back to.
