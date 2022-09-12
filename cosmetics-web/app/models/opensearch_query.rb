@@ -41,7 +41,8 @@ class OpensearchQuery
     {
       multi_match: {
         query: @keyword,
-        fuzziness: "AUTO",
+        fuzziness: 0,
+        operator: "AND",
       },
     }
   end

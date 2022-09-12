@@ -56,11 +56,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         get :index, params: { notification_search_form: { q: "bbbb" } }
         expect(assigns(:notifications).records.to_a).to eq([distinct_notification])
       end
-
-      it "finds similar notifications with fuzzy search" do
-        get :index, params: { notification_search_form: { q: "aaaa" } }
-        expect(assigns(:notifications).records.to_a.sort).to eq([similar_notification_one, similar_notification_two].sort)
-      end
     end
 
     describe "GET #show" do
