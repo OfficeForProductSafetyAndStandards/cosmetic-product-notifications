@@ -1,5 +1,5 @@
 <% title = "Confirm use in accordance with the restrictions" %>
-<% annex_details = get_ec_regulation_annex_details_for_nanomaterial_purposes(@nano_material.purposes) %>
+<% annex_details = ec_regulation_annex_details_for_nanomaterial_purposes(@nano_material.purposes) %>
 <% question = "Is #{@nano_material.inci_name} listed in EC regulation 1223/2009, #{annex_details}?" %>
 
 <% legend_html = capture do %>
@@ -7,11 +7,10 @@
 
   <p>
     <% @nano_material.purposes.reject { |p| p == "other" }.each do |purpose| %>
-      <% purpose_name = get_display_name_for_nanomaterial_purpose(purpose) %>
-      <% annex_number = get_ec_regulation_annex_number_for_nanomaterial_purpose(purpose) %>
-      <% link_text = "Annex #{annex_number} list of #{purpose_name.pluralize}" %>
-      <% link_url = get_ec_regulation_link_for_annex_number(annex_number) %>
-      View the <%= link_to link_text, link_url, target: "_blank", rel: "noopener" %>
+      <% purpose = NanoMaterialPurposes.find(purpose)
+         link_text = "Annex #{purpose.annex_number} list of #{purpose.display_name.pluralize}" %>
+      View the
+      <%= link_to(link_text, purpose.link, target: "_blank", rel: "noopener") %>
       <br>
     <% end %>
   </p>
