@@ -287,6 +287,15 @@ en:
               blank: "Select a concentration range"
             type:
               inclusion: "Type must be 'exact' or 'range'"
+        responsible_persons/notifications/nanomaterials/purposes_form:
+          attributes:
+            purpose_type:
+              blank: "Select the purpose of this nanomaterial"
+              inclusion: "%{value} is not a valid purpose type"
+            purposes:
+              blank: "Select the purpose"
+              inclusion: "%{purpose} is not a valid purpose"
+              standard_or_other: "Select either any standard or 'other' as purposes"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:

@@ -1,5 +1,7 @@
 class NanoMaterial < ApplicationRecord
-  PURPOSES = %w[colorant preservative uv_filter other].freeze
+  YES = "yes".freeze
+  NO = "no".freeze
+  NOT_SURE = "not sure".freeze
 
   belongs_to :notification, optional: false
 
@@ -11,16 +13,12 @@ class NanoMaterial < ApplicationRecord
   validates :inci_name, presence: true, on: :add_nanomaterial_name
   validate :unique_name_per_notification, on: :add_nanomaterial_name
   validates :purposes, presence: true, on: :select_purposes
-  validates :purposes, array: { presence: true, inclusion: { in: PURPOSES } }
+  validates :purposes, array: { presence: true, inclusion: { in: NanoMaterialPurposes.all.map(&:name) } }
 
   after_save do
     if blocked?
       notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
     end
-  end
-
-  def self.purposes
-    PURPOSES
   end
 
   def display_name
@@ -33,7 +31,7 @@ class NanoMaterial < ApplicationRecord
   end
 
   def non_standard?
-    purposes.present? && purposes.include?("other")
+    purposes.present? && purposes.include?(NanoMaterialPurposes.other.name)
   end
 
   def multi_purpose?
@@ -41,20 +39,23 @@ class NanoMaterial < ApplicationRecord
   end
 
   def completed?
-    ((standard? && inci_name.present? && confirm_usage == "yes" && confirm_restrictions == "yes") ||
-      (purposes&.include?("other") && confirm_toxicology_notified == "yes")) && !blocked?
+    ((standard? && inci_name.present? && confirm_usage == YES && confirm_restrictions == YES) ||
+      (non_standard? && confirm_toxicology_notified == YES)) && !blocked?
   end
 
   def blocked?
-    confirm_usage == "no" || confirm_restrictions == "no" || confirm_toxicology_notified == "no" || confirm_toxicology_notified == "not sure"
+    confirm_usage == NO ||
+      confirm_restrictions == NO ||
+      confirm_toxicology_notified == NO ||
+      confirm_toxicology_notified == NOT_SURE
   end
 
   def toxicology_required?
-    purposes&.include?("other") && (confirm_toxicology_notified == "not sure" || confirm_toxicology_notified == "no")
+    non_standard? && (confirm_toxicology_notified == NOT_SURE || confirm_toxicology_notified == NO)
   end
 
   def conforms_to_restrictions?
-    confirm_restrictions != "no" && confirm_usage != "no" && !toxicology_required_or_empty?
+    (confirm_restrictions != NO && confirm_usage != NO) && !toxicology_required_or_empty?
   end
 
   def name
