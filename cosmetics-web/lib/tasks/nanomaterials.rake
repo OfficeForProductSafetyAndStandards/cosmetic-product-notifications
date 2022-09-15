@@ -41,4 +41,17 @@ namespace :nanomaterials do
     nanomaterials_without_nanoelements.delete_all # Dont delete associated objects
     puts "#{affected_count} nanomaterials without nanoelements deleted"
   end
+
+  # TODO: Remove this task once the NanoMaterial and NanoElement models are merged.
+  desc "Delete NanoMaterial and their nanoelements without any associated component or notification"
+  task delete_orphan_nanomaterials: :environment do
+    orphan_nanomaterials = NanoMaterial.left_joins(:component_nano_materials)
+                                       .where(component_nano_materials: { nano_material_id: nil },
+                                              nano_materials: { component_id: nil, notification_id: nil })
+    affected_count = orphan_nanomaterials.count
+    puts "Found #{affected_count} orphan nanomaterials without any associated components or notifications"
+    puts "Deleting them..."
+    orphan_nanomaterials.destroy_all # Also destroy associated Nano Elements.
+    puts "#{affected_count} orphan nanomaterials deleted"
+  end
 end
