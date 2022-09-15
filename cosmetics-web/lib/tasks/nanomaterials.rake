@@ -30,4 +30,15 @@ namespace :nanomaterials do
     puts "To download the file, execute in YOUR COMPUTER shell:"
     puts "cf ssh APPNAME -c 'cat ~/app/tmp/nanomaterial_notifications.zip' > nanomaterial_notifications.zip"
   end
+
+  # TODO: Remove this task once the NanoMaterial and NanoElement models are merged.
+  desc "Delete nanomaterials without associated nanoelements"
+  task delete_nanomaterials_without_nanoelements: :environment do
+    nanomaterials_without_nanoelements = NanoMaterial.left_joins(:nano_elements).where(nano_elements: { id: nil })
+    affected_count = nanomaterials_without_nanoelements.count
+    puts "Found #{affected_count} nanomaterials without any associated nanoelement"
+    puts "Deleting them..."
+    nanomaterials_without_nanoelements.delete_all # Dont delete associated objects
+    puts "#{affected_count} nanomaterials without nanoelements deleted"
+  end
 end
