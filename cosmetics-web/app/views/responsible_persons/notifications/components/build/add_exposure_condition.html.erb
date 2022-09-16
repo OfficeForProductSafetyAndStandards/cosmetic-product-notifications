@@ -2,7 +2,7 @@
 <% question = "Is #{@component_name} intended to be rinsed off or left on?" %>
 <% items = Component.exposure_conditions.map { |key, value| { text: get_exposure_condition_name(key), value: value } } %>
 
-<% page_title title, errors: @component.errors.messages.include?(:"nano_material.exposure_condition") %>
+<% page_title title, errors: @component.errors.messages.include?(:exposure_condition) %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
@@ -11,8 +11,8 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <% if @component.errors.messages.include?(:"nano_material.exposure_condition") %>
-        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @component.errors.messages[:"exposure_condition"][0], href: "#component_nano_material_attributes_exposure_condition_rinse_off"}] ) %>
+      <% if @component.errors.messages.include?(:exposure_condition) %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @component.errors.messages[:"exposure_condition"][0], href: "#component_exposure_condition_rinse_off"}] ) %>
       <% end %>
       <%= form.hidden_field :exposure_condition, value: nil %>
       <%= govukRadios(form: form,
