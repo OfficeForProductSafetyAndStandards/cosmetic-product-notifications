@@ -181,7 +181,7 @@ private
   end
 
   def update_add_exposure_routes
-    exposure_routes = params[:component].select { |_key, value| value == "1" }.keys
+    exposure_routes = params.fetch(:component, {}).select { |_key, value| value == "1" }.keys
     if @component.update_with_context({ exposure_routes: }, step)
       render_next_step @component
     else
