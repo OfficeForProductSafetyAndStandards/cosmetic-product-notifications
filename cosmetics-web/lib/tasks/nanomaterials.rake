@@ -54,4 +54,27 @@ namespace :nanomaterials do
     orphan_nanomaterials.destroy_all # Also destroy associated Nano Elements.
     puts "#{affected_count} orphan nanomaterials deleted"
   end
+
+  desc "Associate nanoelements with unique nanomaterials"
+  task single_nanoelement_per_nanomaterial: :environment do
+    puts "invoked task single_nanoelement_per_nanomaterial"
+    nanos_with_multiple_elems = NanoMaterial.joins(:nano_elements)
+                                            .group("nano_materials.id")
+                                            .having("count(nano_material_id) > 1")
+
+    affected_count = nanos_with_multiple_elems.count.size # .count returns a hash with the count for each nanomaterial
+    puts "Found #{affected_count} nanomaterials associated with multiple nanoelements"
+
+    nanos_with_multiple_elems.each do |nanomaterial|
+      nanomaterial.nano_elements.drop(1).each do |nanoelement| # All but first nanoelement
+        ActiveRecord::Base.transaction do
+          # Copy the original nanomaterial, including timestamps, save it as new record with different id.
+          new_nanomaterial = NanoMaterial.create!(**nanomaterial.attributes.except("id"))
+          nanomaterial.components.each { |component| new_nanomaterial.components << component }
+          new_nanomaterial.save!
+          nanoelement.update!(nano_material: new_nanomaterial)
+        end
+      end
+    end
+  end
 end
