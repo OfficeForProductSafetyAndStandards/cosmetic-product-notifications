@@ -7,6 +7,10 @@ describe "nanomaterials.rake" do
     allow($stdout).to receive(:puts) # Silence console output while testing tasks
   end
 
+  after do
+    task&.reenable # Reenable task so it can be invoked again in another test
+  end
+
   describe ":delete_nanomaterials_without_nanoelements" do
     subject(:task) { Rake::Task["nanomaterials:delete_nanomaterials_without_nanoelements"] }
 
@@ -18,7 +22,7 @@ describe "nanomaterials.rake" do
       expect(NanoMaterial.all).to include(nano_with_element)
     end
 
-    it "does not delet nano materials with associated nano elements" do
+    it "does not delete nano materials with associated nano elements" do
       nano = create(:nano_element).nano_material
 
       expect { task.invoke }.not_to change(NanoMaterial, :count)
