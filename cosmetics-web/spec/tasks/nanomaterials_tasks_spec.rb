@@ -34,28 +34,20 @@ describe "nanomaterials.rake" do
     subject(:task) { Rake::Task["nanomaterials:delete_orphan_nanomaterials"] }
 
     it "deletes any nano materials without an associated component or notification" do
-      create_list(:nano_material, 2, :skip_validations, component_id: nil, notification_id: nil)
+      create_list(:nano_material, 2, :skip_validations, notification_id: nil)
 
       expect { task.invoke }.to change(NanoMaterial, :count).by(-2)
     end
 
     it "does not delete nanomaterials with an associated notification" do
-      nano = create(:nano_material, component_id: nil)
-
-      expect { task.invoke }.not_to change(NanoMaterial, :count)
-      expect(NanoMaterial.all).to eq [nano]
-    end
-
-    it "does not delete nanomaterials with a deprecated reference to component id" do
-      component = create(:component)
-      nano = create(:nano_material, :skip_validations, notification_id: nil, component_id: component.id)
+      nano = create(:nano_material)
 
       expect { task.invoke }.not_to change(NanoMaterial, :count)
       expect(NanoMaterial.all).to eq [nano]
     end
 
     it "does not delete nanomaterials with an associated component" do
-      nano = create(:nano_material, :skip_validations, notification_id: nil, component_id: nil)
+      nano = create(:nano_material, :skip_validations, notification_id: nil)
       nano.components << create(:component)
 
       expect { task.invoke }.not_to change(NanoMaterial, :count)
@@ -88,7 +80,6 @@ describe "nanomaterials.rake" do
         expect(new_nano_material).to have_attributes(
           exposure_condition: nano_material.exposure_condition,
           exposure_routes: nano_material.exposure_routes,
-          component_id: nano_material.component_id,
           notification_id: nano_material.notification_id,
           created_at: nano_material.created_at,
           updated_at: nano_material.updated_at,
