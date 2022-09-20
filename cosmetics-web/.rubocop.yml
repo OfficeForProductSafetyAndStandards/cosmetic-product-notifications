@@ -105,6 +105,7 @@ RSpec/DescribeClass:
   Exclude:
     - spec/requests/*
     - spec/search/*
+    - spec/tasks/*
 
 RSpec/FilePath:
   Exclude:
