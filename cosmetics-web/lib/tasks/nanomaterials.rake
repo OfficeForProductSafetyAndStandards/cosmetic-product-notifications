@@ -49,7 +49,7 @@ namespace :nanomaterials do
     task_name = "[nanomaterials:delete_orphan_nanomaterials]"
     orphan_nanomaterials = NanoMaterial.left_joins(:component_nano_materials)
                                        .where(component_nano_materials: { nano_material_id: nil },
-                                              nano_materials: { component_id: nil, notification_id: nil })
+                                              nano_materials: { notification_id: nil })
     affected_count = orphan_nanomaterials.count
     Rails.logger.info "#{task_name} Found #{affected_count} orphan nanomaterials without any associated components or notifications"
     Rails.logger.info "#{task_name} Deleting them..."
