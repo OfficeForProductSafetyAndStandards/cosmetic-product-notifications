@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_20_110832) do
+ActiveRecord::Schema.define(version: 2022_09_20_133052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -166,10 +166,8 @@ ActiveRecord::Schema.define(version: 2022_09_20_110832) do
   end
 
   create_table "nano_materials", force: :cascade do |t|
-    t.string "exposure_condition"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "exposure_routes", array: true
     t.integer "notification_id"
     t.index ["notification_id"], name: "index_nano_materials_on_notification_id"
   end

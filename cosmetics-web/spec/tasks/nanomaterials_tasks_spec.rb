@@ -78,8 +78,6 @@ describe "nanomaterials.rake" do
         expect { task.invoke }.to change(NanoMaterial, :count).by(1)
         new_nano_material = NanoMaterial.last
         expect(new_nano_material).to have_attributes(
-          exposure_condition: nano_material.exposure_condition,
-          exposure_routes: nano_material.exposure_routes,
           notification_id: nano_material.notification_id,
           created_at: nano_material.created_at,
           updated_at: nano_material.updated_at,
