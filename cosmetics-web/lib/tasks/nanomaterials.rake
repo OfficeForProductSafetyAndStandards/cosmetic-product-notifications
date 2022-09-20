@@ -82,4 +82,23 @@ namespace :nanomaterials do
     end
     Rails.logger.info "#{task_name} #{created_nanos} nanomaterials created and associated with nanoelements"
   end
+
+  desc "Import nanoelements information into nanomaterials"
+  task import_nanoelements_info: :environment do
+    NanoMaterial.includes(:nano_elements).find_each do |nanomaterial|
+      nano_element = nanomaterial.nano_elements.first
+      nanomaterial.update!(inci_name: nano_element.inci_name,
+                           inn_name: nano_element.inn_name,
+                           iupac_name: nano_element.iupac_name,
+                           xan_name: nano_element.xan_name,
+                           cas_number: nano_element.cas_number,
+                           ec_number: nano_element.ec_number,
+                           einecs_number: nano_element.einecs_number,
+                           elincs_number: nano_element.elincs_number,
+                           purposes: nano_element.purposes,
+                           confirm_toxicology_notified: nano_element.confirm_toxicology_notified,
+                           confirm_usage: nano_element.confirm_usage,
+                           confirm_restrictions: nano_element.confirm_restrictions)
+    end
+  end
 end
