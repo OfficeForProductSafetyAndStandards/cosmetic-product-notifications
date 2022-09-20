@@ -34,37 +34,40 @@ namespace :nanomaterials do
   # TODO: Remove this task once the NanoMaterial and NanoElement models are merged.
   desc "Delete nanomaterials without associated nanoelements"
   task delete_nanomaterials_without_nanoelements: :environment do
+    task_name = "[nanomaterials:delete_nanomaterials_without_nanoelements]"
     nanomaterials_without_nanoelements = NanoMaterial.left_joins(:nano_elements).where(nano_elements: { id: nil })
     affected_count = nanomaterials_without_nanoelements.count
-    puts "Found #{affected_count} nanomaterials without any associated nanoelement"
-    puts "Deleting them..."
+    Rails.logger.info "#{task_name} Found #{affected_count} nanomaterials without any associated nanoelement"
+    Rails.logger.info "#{task_name} Deleting them..."
     nanomaterials_without_nanoelements.delete_all # Dont delete associated objects
-    puts "#{affected_count} nanomaterials without nanoelements deleted"
+    Rails.logger.info "#{task_name} #{affected_count} nanomaterials without nanoelements deleted"
   end
 
   # TODO: Remove this task once the NanoMaterial and NanoElement models are merged.
   desc "Delete NanoMaterial and their nanoelements without any associated component or notification"
   task delete_orphan_nanomaterials: :environment do
+    task_name = "[nanomaterials:delete_orphan_nanomaterials]"
     orphan_nanomaterials = NanoMaterial.left_joins(:component_nano_materials)
                                        .where(component_nano_materials: { nano_material_id: nil },
                                               nano_materials: { component_id: nil, notification_id: nil })
     affected_count = orphan_nanomaterials.count
-    puts "Found #{affected_count} orphan nanomaterials without any associated components or notifications"
-    puts "Deleting them..."
+    Rails.logger.info "#{task_name} Found #{affected_count} orphan nanomaterials without any associated components or notifications"
+    Rails.logger.info "#{task_name} Deleting them..."
     orphan_nanomaterials.destroy_all # Also destroy associated Nano Elements.
-    puts "#{affected_count} orphan nanomaterials deleted"
+    Rails.logger.info "#{task_name} #{affected_count} orphan nanomaterials deleted"
   end
 
   desc "Associate nanoelements with unique nanomaterials"
   task single_nanoelement_per_nanomaterial: :environment do
-    puts "invoked task single_nanoelement_per_nanomaterial"
+    task_name = "[nanomaterials:single_nanoelement_per_nanomaterial]"
     nanos_with_multiple_elems = NanoMaterial.joins(:nano_elements)
                                             .group("nano_materials.id")
                                             .having("count(nano_material_id) > 1")
 
     affected_count = nanos_with_multiple_elems.count.size # .count returns a hash with the count for each nanomaterial
-    puts "Found #{affected_count} nanomaterials associated with multiple nanoelements"
-
+    Rails.logger.info "#{task_name} Found #{affected_count} nanomaterials associated with multiple nanoelements"
+    Rails.logger.info "#{task_name} Associating each nanomaterial with a single nanoelement..."
+    created_nanos = 0
     nanos_with_multiple_elems.each do |nanomaterial|
       nanomaterial.nano_elements.drop(1).each do |nanoelement| # All but first nanoelement
         ActiveRecord::Base.transaction do
@@ -74,7 +77,9 @@ namespace :nanomaterials do
           new_nanomaterial.save!
           nanoelement.update!(nano_material: new_nanomaterial)
         end
+        created_nanos += 1
       end
     end
+    Rails.logger.info "#{task_name} #{created_nanos} nanomaterials created and associated with nanoelements"
   end
 end

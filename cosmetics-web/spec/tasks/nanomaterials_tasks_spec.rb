@@ -4,7 +4,7 @@ Rails.application.load_tasks
 
 describe "nanomaterials.rake" do
   before do
-    allow($stdout).to receive(:puts) # Silence console output while testing tasks
+    allow(Rails.logger).to receive(:info) # Silence logging while testing tasks
   end
 
   after do
