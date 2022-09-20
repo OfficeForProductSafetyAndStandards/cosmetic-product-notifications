@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_20_133052) do
+ActiveRecord::Schema.define(version: 2022_09_20_133257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -169,6 +169,18 @@ ActiveRecord::Schema.define(version: 2022_09_20_133052) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "notification_id"
+    t.string "inci_name"
+    t.string "inn_name"
+    t.string "iupac_name"
+    t.string "xan_name"
+    t.string "cas_number"
+    t.string "ec_number"
+    t.string "einecs_number"
+    t.string "elincs_number"
+    t.string "purposes", array: true
+    t.string "confirm_toxicology_notified"
+    t.string "confirm_usage"
+    t.string "confirm_restrictions"
     t.index ["notification_id"], name: "index_nano_materials_on_notification_id"
   end
 
