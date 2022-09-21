@@ -32,6 +32,10 @@
   <% if confirmation %>
     <div class="govuk-!-margin-top-4"></div>
     <%= govukNotificationBanner(text: confirmation, type: "success") %>
+  <% elsif submit_domain? %>
+    <div class="govuk-!-margin-top-4"></div>
+    <%= govukNotificationBanner(text: "This service is updating on the 3 October 2022. <br class='opss-br-desktop'> " \
+                                      "<abbr>PDF</abbr> ingredient documents will be deleted from unsubmitted draft notifications.".html_safe) %>
   <% end %>
 
   <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">
