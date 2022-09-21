@@ -161,12 +161,6 @@ private
     end
   end
 
-  def get_next_nano_element
-    @nano_element.nano_material.nano_elements.order(:id).each_cons(2) do |element, next_element|
-      return next_element if element == @nano_element
-    end
-  end
-
   def model
     @nano_element
   end

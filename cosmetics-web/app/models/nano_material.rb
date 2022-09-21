@@ -59,10 +59,6 @@ class NanoMaterial < ApplicationRecord
     confirm_restrictions != "no" && confirm_usage != "no" && !toxicology_required_or_empty?
   end
 
-  def nano_elements_required?
-    nano_elements.any?(&:required?)
-  end
-
   def name
     nano_elements.first.inci_name
   end
