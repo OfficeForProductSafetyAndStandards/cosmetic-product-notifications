@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :nano_material do
+    inci_name { "Nano foo" }
     notification
   end
 
