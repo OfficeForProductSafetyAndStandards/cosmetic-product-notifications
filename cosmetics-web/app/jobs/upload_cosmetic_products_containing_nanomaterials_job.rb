@@ -6,9 +6,7 @@ class UploadCosmeticProductsContainingNanomaterialsJob < PostgresCsvUploadJob
            reference_number as "UKCP number",
            inci_name as "INCI name",
            purposes as "Nanomaterial purposes"
-    FROM nano_elements
-    INNER JOIN nano_materials
-      ON nano_elements.nano_material_id = nano_materials.id
+    FROM nano_materials
     INNER JOIN notifications
       ON nano_materials.notification_id = notifications.id
     INNER JOIN responsible_persons

@@ -6,20 +6,22 @@
   <%= govukBackLink text: "Back", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>
 <% end %>
 
-<% items = @notification.nano_materials.order(:created_at).map(&:nano_elements).flatten.each_with_index.map { |n, i|
-  hint = nil
-  if n.nano_material.components.present?
-    hint = { text: "Included in item(s): #{n.nano_material.components.map(&:name).join(', ')}.", classes: 'govuk-checkboxes__hint govuk-!-font-size-16' }
-  end
+<%
+  items = @notification.nano_materials.order(:created_at).each_with_index.map do |nano_material, i|
+    hint = if nano_material.components.present?
+             { text: "Included in item(s): #{nano_material.components.map(&:name).join(', ')}.",
+               classes: 'govuk-checkboxes__hint govuk-!-font-size-16' }
+           end
 
-  { name: 'responsible_persons_notifications_delete_nano_material_form[nano_material_ids][]',
-    text: (n.inci_name.present? ? n.inci_name : "Nanomaterial ##{i+1}"),
-    value: n.nano_material.id,
-    key: :nil, # TODO: investigate design library to get rid of required key attribute
-    id: "nano-#{n.id}",
-    disable_ghost: true,
-    hint: hint }
-} %>
+    { name: 'responsible_persons_notifications_delete_nano_material_form[nano_material_ids][]',
+      text: nano_material.inci_name.presence || "Nanomaterial ##{i+1}",
+      value: nano_material.id,
+      key: :nil, # TODO: investigate design library to get rid of required key attribute
+      id: "nano-#{nano_material.id}",
+      disable_ghost: true,
+      hint: hint }
+  end
+%>
 
 <% hint_text = tag.p('The selected nanomaterial(s) will be removed and deleted from this draft. If you delete all of them you can add nanomaterials to the draft by completing the first task again.', class: 'govuk-body opss-secondary-text') %>
 
@@ -31,7 +33,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <% if @form.errors.present? %>
-        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @form.errors.messages[:nano_material_ids][0], href: "#nano-#{@notification.nano_materials.map(&:nano_elements).flatten.first.id}"}] ) %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @form.errors.messages[:nano_material_ids][0], href: "#nano-#{@notification.nano_materials.first.id}"}] ) %>
       <% end %>
       <%= form.hidden_field "nano_material_ids[]" %>
       <%= govukCheckboxes(form: form,

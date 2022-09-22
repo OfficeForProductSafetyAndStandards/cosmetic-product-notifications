@@ -89,7 +89,7 @@ module NotificationStateConcern
   def try_to_complete_nanomaterials!
     return if state != "ready_for_nanomaterials"
 
-    if nano_materials.map(&:nano_elements).flatten.all?(&:completed?)
+    if nano_materials.all?(&:completed?)
       if multi_component?
         update_state(DETAILS_COMPLETE)
       else

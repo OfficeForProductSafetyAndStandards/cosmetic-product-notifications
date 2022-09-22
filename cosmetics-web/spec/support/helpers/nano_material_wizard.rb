@@ -22,7 +22,7 @@ def complete_nano_material_wizard(name, nano_material_number: nil, purposes: %w[
 end
 
 def answer_inci_name_with(name)
-  fill_in "nano_element_inci_name", with: name
+  fill_in "nano_material_inci_name", with: name
   click_button "Save and continue"
 end
 

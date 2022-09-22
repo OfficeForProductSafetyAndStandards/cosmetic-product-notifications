@@ -6,8 +6,7 @@ RSpec.describe "Poison centre page", type: :request do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:crm) { create(:cmr, name: "Foo CMR") }
   let(:exact_formula) { create(:exact_formula, quantity: 4, inci_name: "Foo Ingredient") }
-  let(:nano_element) { create(:nano_element, inci_name: "Foo Nanomaterial") }
-  let(:nano_material) { create(:nano_material, nano_elements: [nano_element]) }
+  let(:nano_material) { create(:nano_material, inci_name: "Foo Nanomaterial") }
   let(:notification) do
     create(:draft_notification, responsible_person:) do |n|
       create(:component,

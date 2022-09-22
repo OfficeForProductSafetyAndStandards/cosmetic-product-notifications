@@ -1,6 +1,6 @@
 module NanomaterialHelper
   def get_nanomaterial_purpose_options
-    NanoElement.purposes.index_with { |purpose| get_label_for_nanomaterial_purpose(purpose) }
+    NanoMaterial.purposes.index_with { |purpose| get_label_for_nanomaterial_purpose(purpose) }
   end
 
   def get_label_for_nanomaterial_purpose(purpose)

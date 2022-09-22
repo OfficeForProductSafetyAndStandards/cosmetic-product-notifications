@@ -3,13 +3,9 @@ require "rails_helper"
 RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
   let(:notification1) { create(:notification) }
   let(:nano_material1) { create(:nano_material, notification: notification1) }
-  let(:nano_element1) { create(:nano_element, nano_material: nano_material1) }
-  let(:nano_material1_2) { create(:nano_material, notification: notification1) }
-  let(:nano_element1_2) { create(:nano_element, nano_material: nano_material1) }
 
   let(:notification2) { create(:notification) }
   let(:nano_material2) { create(:nano_material, notification: notification2) }
-  let(:nano_element2) { create(:nano_element, nano_material: nano_material2) }
 
   describe "validation" do
     context "when nano_material_ids attribute is missing" do
@@ -67,20 +63,11 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
 
       before do
         form
-        nano_element1
       end
 
-      # rubocop:disable RSpec/MultipleExpectations
       it "removes the nano_material" do
-        expect(NanoMaterial.count).to eq(1)
-        expect(NanoElement.count).to eq(1)
-
-        form.delete
-
-        expect(NanoMaterial.count).to eq(0)
-        expect(NanoElement.count).to eq(0)
+        expect { form.delete }.to change(NanoMaterial, :count).from(1).to(0)
       end
-      # rubocop:enable RSpec/MultipleExpectations
 
       it "returns true" do
         expect(form.delete).to be_truthy

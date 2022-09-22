@@ -6,7 +6,6 @@ class NanoMaterial < ApplicationRecord
   has_many :component_nano_materials, dependent: :destroy
   has_many :components, through: :component_nano_materials
   has_many :nano_elements, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :nano_material
-  accepts_nested_attributes_for :nano_elements
 
   delegate :component_name, to: :component
 
@@ -60,7 +59,7 @@ class NanoMaterial < ApplicationRecord
   end
 
   def name
-    nano_elements.first.inci_name
+    inci_name
   end
 
 private

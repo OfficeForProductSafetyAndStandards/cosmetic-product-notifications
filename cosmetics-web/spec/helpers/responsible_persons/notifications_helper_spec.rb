@@ -296,7 +296,7 @@ describe ResponsiblePersons::NotificationsHelper do
     end
 
     describe "nanomaterials" do
-      context "when there aren't any nano elements present" do
+      context "when there aren't any nano materials present" do
         it "contains a row indication that there are no nanomaterials" do
           allow(helper).to receive(:render).and_return("None")
           expect(summary_component_rows).to include({ key: { text: "Nanomaterials" }, value: { html: "None" } })
@@ -312,20 +312,17 @@ describe ResponsiblePersons::NotificationsHelper do
         end
       end
 
-      context "when there are nano elements present" do
-        let(:nano_material) do
-          instance_double(NanoMaterial,
-                          nano_elements: [instance_double(NanoElement, display_name: "NanoEl name")])
-        end
+      context "when there are nano materials present" do
+        let(:nano_material) { build_stubbed(:nano_material, inci_name: "Nano name") }
 
         before do
           allow(component).to receive(:nano_materials).and_return([nano_material])
         end
 
-        it "contains a row with the nano element names" do
-          allow(helper).to receive(:render).and_return("NanoEl name")
-          expect(summary_component_rows).to include({ key: { text: "Nanomaterials" }, value: { html: "NanoEl name" } })
-          expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: ["NanoEl name"]))
+        it "contains a row with the nano material names" do
+          allow(helper).to receive(:render).and_return("Nano name")
+          expect(summary_component_rows).to include({ key: { text: "Nanomaterials" }, value: { html: "Nano name" } })
+          expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: ["Nano name"]))
         end
 
         it "contains a row with the nano material application instruction" do

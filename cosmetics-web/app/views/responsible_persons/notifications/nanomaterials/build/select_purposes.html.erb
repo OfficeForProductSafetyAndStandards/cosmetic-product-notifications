@@ -1,20 +1,20 @@
 <% title = "Select nanomaterial purpose" %>
-<% question = "What is the purpose of #{@nano_element.inci_name}?" %>
+<% question = "What is the purpose of #{@nano_material.inci_name}?" %>
 <% items = get_nanomaterial_purpose_options.map { |purpose, label|
-    { key: purpose, text: label, checked: @nano_element.purposes&.include?(purpose), disable_ghost: true }
+    { key: purpose, text: label, checked: @nano_material.purposes&.include?(purpose), disable_ghost: true }
   } %>
 
-<% page_title title, errors: @nano_element.errors.messages.include?(:purposes) %>
+<% page_title title, errors: @nano_material.errors.messages.include?(:purposes) %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-<%= form_with(model: @nano_element, url: wizard_path, method: :put) do |form| %>
+<%= form_with(model: @nano_material, url: wizard_path, method: :put) do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <% if @nano_element.errors.messages.include?(:purposes) %>
-        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @nano_element.errors.messages[:purposes][0], href: "#nano_element_colorant"}] ) %>
+      <% if @nano_material.errors.messages.include?(:purposes) %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @nano_material.errors.messages[:purposes][0], href: "#nano_material_colorant"}] ) %>
       <% end %>
       <%= govukCheckboxes(
             form: form,
