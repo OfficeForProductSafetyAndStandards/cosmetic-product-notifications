@@ -35,6 +35,10 @@
         <div class="govuk-!-margin-top-4"></div>
         <%= govukNotificationBanner(text: "This service is updating on the 3 October 2022. <br class='opss-br-desktop'> " \
                                           "<abbr>PDF</abbr> ingredient documents will be deleted from unsubmitted draft notifications.".html_safe) %>
+      <% else %>
+        <div class="govuk-!-margin-top-4"></div>
+        <%= govukNotificationBanner(text: "From the 3 October 2022 ingredients will no longer be added to notifications as <abbr>PDF</abbr> documents. <br class='opss-br-desktop'> " \
+                                          "Thereafter, new notifications will include ingredients which are searchable.".html_safe) %>
       <% end %>
 
       <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">
