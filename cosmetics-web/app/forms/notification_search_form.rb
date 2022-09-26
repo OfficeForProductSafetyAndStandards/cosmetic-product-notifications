@@ -27,6 +27,10 @@ class NotificationSearchForm < Form
 
   attribute :sort_by
 
+  attribute :search_fields, default: OpensearchQuery::SEARCH_ALL_FIELDS
+
+  attribute :match_similar
+
   validates :date_exact,
             presence: true,
             real_date: true,

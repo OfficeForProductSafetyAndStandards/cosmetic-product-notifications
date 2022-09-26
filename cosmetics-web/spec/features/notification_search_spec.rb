@@ -4,7 +4,11 @@ require "support/feature_helpers"
 RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
   let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
-  let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream") }
+  let(:responsible_person_name) { "Responsible Person" }
+
+  let(:responsible_person) { create(:responsible_person, name: responsible_person_name) }
+
+  let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream", responsible_person:) }
   let(:shower_bubbles) { create(:notification, :registered, :with_component, notification_complete_at: 2.days.ago, product_name: "Shower Bubbles") }
   let(:bath_bubbles) { create(:notification, :registered, :with_component, notification_complete_at: 3.days.ago, product_name: "Bath Bubbles", category: :face_care_products_other_than_face_mask) }
 
@@ -191,5 +195,63 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_link("Sun Lotion 0")
     expect(page).to have_text("Page 2")
     expect(page).to have_link("Previous page")
+  end
+
+  context "when using advanced search" do
+    scenario "Searching by partial number number" do
+      sign_in user
+
+      expect(page).to have_h1("Search cosmetic products")
+
+      expect(page).to have_link("Cream")
+      expect(page).to have_link("Shower Bubbles")
+      expect(page).to have_link("Bath Bubbles")
+
+      fill_in "notification_search_form_q", with: cream.reference_number.to_s[0..5]
+
+      click_on "Search"
+
+      check "Match similar words"
+
+      click_on "Apply"
+
+      expect(page).to have_text("1 product matching keyword(s)")
+
+      expect(page).to have_link("Cream")
+      expect(page).not_to have_link("Shower Bubbles")
+      expect(page).not_to have_link("Bath Bubbles")
+    end
+
+    context "when choosing fields to search" do
+      let(:responsible_person_name) { "Bubbles RP" }
+
+      scenario "Searching for notifications" do
+        sign_in user
+
+        expect(page).to have_h1("Search cosmetic products")
+
+        fill_in "notification_search_form_q", with: "Bubbles"
+        click_on "Search"
+
+        expect(page).to have_link("Cream")
+
+        expect(page).to have_link("Shower Bubbles")
+        expect(page).to have_link("Bath Bubbles")
+
+        choose "Only notification name"
+        click_on "Apply"
+
+        expect(page).not_to have_link("Cream")
+        expect(page).to have_link("Shower Bubbles")
+        expect(page).to have_link("Bath Bubbles")
+
+        choose "Only responsible person data"
+        click_on "Apply"
+
+        expect(page).to have_link("Cream")
+        expect(page).not_to have_link("Shower Bubbles")
+        expect(page).not_to have_link("Bath Bubbles")
+      end
+    end
   end
 end
