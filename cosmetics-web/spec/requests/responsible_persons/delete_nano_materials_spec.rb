@@ -10,7 +10,6 @@ RSpec.describe "Delete Nano material page", type: :request do
 
   let(:notification1) { create(:notification, responsible_person:) }
   let(:nano_material1) { create(:nano_material, notification: notification1) }
-  let(:nano_element1) { create(:nano_element, nano_material: nano_material1) }
   let(:notification2) { create(:notification, responsible_person: other_responsible_person) }
   let(:nano_material2) { create(:nano_material, notification: notification2) }
 
@@ -20,7 +19,7 @@ RSpec.describe "Delete Nano material page", type: :request do
 
   describe "success" do
     before do
-      nano_element1
+      nano_material1
     end
 
     it "destroys nano_material" do
@@ -38,7 +37,7 @@ RSpec.describe "Delete Nano material page", type: :request do
 
   context "when form is invalid" do
     before do
-      nano_element1
+      nano_material1
     end
 
     it "renders form again on nil params" do

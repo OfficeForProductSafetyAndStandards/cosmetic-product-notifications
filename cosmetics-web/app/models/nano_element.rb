@@ -23,12 +23,6 @@ class NanoElement < ApplicationRecord
       .reject(&:blank?).join(", ")
   end
 
-  def required?
-    purposes.blank? ||
-      (non_standard? && toxicology_required_or_empty?) ||
-      (standard? && restrictions_confirmed_required?)
-  end
-
   def standard?
     purposes.present? && !non_standard?
   end
@@ -63,19 +57,6 @@ class NanoElement < ApplicationRecord
   end
 
 private
-
-  def restrictions_confirmed_required?
-    confirm_restrictions.nil? ||
-      (confirm_restrictions == "no") ||
-      (
-        (confirm_restrictions == "yes" && usage_confirmed_required?) ||
-       (confirm_usage == "no" && toxicology_required_or_empty?)
-      )
-  end
-
-  def usage_confirmed_required?
-    confirm_usage.nil?
-  end
 
   def notification
     nano_material.notification

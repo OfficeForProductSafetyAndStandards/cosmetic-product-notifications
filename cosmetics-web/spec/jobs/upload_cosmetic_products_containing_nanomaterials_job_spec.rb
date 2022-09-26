@@ -8,10 +8,8 @@ RSpec.describe UploadCosmeticProductsContainingNanomaterialsJob do
   it "generates a CSV containing all the products with nanomaterials" do
     travel_to Time.zone.local(2022, 3, 12, 12, 0, 0) do
       rp = create(:responsible_person, :with_a_contact_person, name: "Soaps LTD")
-      nano_elem = create(:nano_element, inci_name: "Zinc oxide", purposes: %w[colorant preservative])
-      nano = create(:nano_material, nano_elements: [nano_elem])
+      nano = create(:nano_material, inci_name: "Zinc oxide", purposes: %w[colorant preservative])
       create(:notification,
-             :with_nano_material,
              responsible_person: rp,
              product_name: "Soapy Soaps",
              reference_number: 123_456,
