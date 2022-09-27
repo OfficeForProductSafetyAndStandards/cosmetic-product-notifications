@@ -96,27 +96,27 @@ module DraftHelper
     end
   end
 
-  def nanomaterial_link(nano_element, index)
-    text = nano_element.inci_name || "Nanomaterial ##{index + 1}"
+  def nanomaterial_link(nano_material, index)
+    text = nano_material.inci_name.presence || "Nanomaterial ##{index + 1}"
 
-    if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_element.blocked?
+    if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_material.blocked?
       link_to(text,
-              new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_element),
+              new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material),
               class: "govuk-link govuk-link--no-visited-state",
-              aria: { describedby: html_id_for(nano_element) })
+              aria: { describedby: html_id_for(nano_material) })
     else
       text
     end
   end
 
-  def nanomaterial_badge(nano_element)
-    id = html_id_for(nano_element)
+  def nanomaterial_badge(nano_material)
+    id = html_id_for(nano_material)
 
     return cannot_start_yet_badge(id) unless section_can_be_used?(NANOMATERIALS_SECTION)
 
-    if nano_element.completed?
+    if nano_material.completed?
       completed_badge(id)
-    elsif nano_element.blocked?
+    elsif nano_material.blocked?
       blocked_badge(id)
     else
       not_started_badge(id)
@@ -163,25 +163,23 @@ module DraftHelper
   end
 
   def nano_materials_blocked?
-    @notification.nano_materials.map(&:nano_elements).flatten.any?(&:blocked?)
+    @notification.nano_materials.any?(&:blocked?)
   end
 
   def nano_material_should_be_notified?
-    @notification.nano_materials.map(&:nano_elements).flatten.any?(&:toxicology_required?)
+    @notification.nano_materials.any?(&:toxicology_required?)
   end
 
   def nano_material_conforms_to_restrictions?
-    @notification.nano_materials.map(&:nano_elements).flatten.all?(&:conforms_to_restrictions?)
+    @notification.nano_materials.all?(&:conforms_to_restrictions?)
   end
 
   def first_non_notified_blocked_nanomaterial_name
-    nano = @notification.nano_materials.map(&:nano_elements).flatten.find(&:toxicology_required?)
-    nano.inci_name
+    @notification.nano_materials.find(&:toxicology_required?)&.name
   end
 
   def first_restricted_blocked_nanomaterial_name
-    nano = @notification.nano_materials.map(&:nano_elements).flatten.find { |n| !n.conforms_to_restrictions? }
-    nano.inci_name
+    @notification.nano_materials.find { |n| !n.conforms_to_restrictions? }&.name
   end
 
   def progress_bar

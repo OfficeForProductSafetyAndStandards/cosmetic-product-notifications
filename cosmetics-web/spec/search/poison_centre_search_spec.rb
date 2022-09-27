@@ -25,7 +25,7 @@ RSpec.describe "Poison centre search" do
       let(:keyword) { "N12 8AA" }
 
       it "finds proper notifications" do
-        expect(notifications.to_a).to eq [notification1, notification2]
+        expect(notifications.to_a).to eq [notification1]
       end
     end
 

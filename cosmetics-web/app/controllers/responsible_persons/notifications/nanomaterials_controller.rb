@@ -2,18 +2,18 @@ class ResponsiblePersons::Notifications::NanomaterialsController < SubmitApplica
   before_action :set_notification
 
   def new
-    @nano_element = NanoElement.new
+    @nano_material = NanoMaterial.new
   end
 
   def create
-    @nano_element = NanoElement.new(nano_element_params.merge(nano_material: @notification.nano_materials.new))
+    @nano_material = NanoMaterial.new(inci_name: params.dig(:nano_material, :inci_name), notification: @notification)
 
-    if @nano_element.save(context: :add_nanomaterial_name)
+    if @nano_material.save(context: :add_nanomaterial_name)
       @notification.update_state(NotificationStateConcern::READY_FOR_NANOMATERIALS)
       redirect_to responsible_person_notification_nanomaterial_build_path(
         @notification.responsible_person,
         @notification,
-        @nano_element,
+        @nano_material,
         :select_purposes,
       )
     else
@@ -29,9 +29,5 @@ private
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
-  end
-
-  def nano_element_params
-    params.fetch(:nano_element, {}).permit(:inci_name)
   end
 end

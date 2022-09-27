@@ -44,7 +44,8 @@ module OpenSearchQuery
       {
         multi_match: {
           query: (@keyword || ""),
-          fuzziness: "AUTO",
+          fuzziness: 0,
+          operator: "AND",
           fields: FIELDS,
         },
       }

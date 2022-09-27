@@ -20,6 +20,10 @@
   <% if confirmation %>
     <div class="govuk-!-margin-top-4"></div>
     <%= govukNotificationBanner(text: confirmation, type: "success") %>
+  <% else %>
+    <div class="govuk-!-margin-top-4"></div>
+    <%= govukNotificationBanner(text: "From the 3 October 2022 ingredients will no longer be added to notifications as <abbr>PDF</abbr> documents. <br class='opss-br-desktop'> " \
+                                      "Thereafter, new notifications will include ingredients which are searchable.".html_safe) %>
   <% end %>
 
   <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">

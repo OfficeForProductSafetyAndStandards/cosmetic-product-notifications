@@ -67,6 +67,14 @@ en:
               inclusion: "%{value} is not a valid purpose"
             inci_name:
               invalid: "Enter a name which has not already been used in this notification"
+        nano_material:
+          attributes:
+            purposes:
+              blank: "Choose an option"
+              inclusion: "%{value} is not a valid purpose"
+            inci_name:
+              blank: "Enter a name"
+              invalid: "Enter a name which has not already been used in this notification"
         new_account:
           attributes:
             full_name:

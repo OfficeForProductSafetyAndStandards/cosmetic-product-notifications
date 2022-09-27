@@ -1,14 +1,14 @@
 <% title = "What is the nanomaterial INCI name?" %>
 
-<% page_title title, errors: @nano_element.errors.any? %>
+<% page_title title, errors: @nano_material.errors.any? %>
 <% content_for :after_header do %>
   <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
 
-<%= form_with model: @nano_element, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
+<%= form_with model: @nano_material, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= error_summary_for(@nano_element) %>
+      <%= error_summary_for(@nano_material) %>
       <%= govukInput(form: form,
                      key: :inci_name,
                      classes: "govuk-!-margin-top-7",

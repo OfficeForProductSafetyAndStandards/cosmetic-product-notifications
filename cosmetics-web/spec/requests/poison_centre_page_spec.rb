@@ -16,9 +16,8 @@ RSpec.describe "Poison centre page", type: :request do
     create(:cmr, name: "Foo CMR", component:)
     create(:exact_ingredient, exact_concentration: 4, inci_name: "Foo Ingredient", component:)
 
-    nano_material = create(:nano_material, notification:)
+    nano_material = create(:nano_material, notification:, inci_name: "Foo Nanomaterial")
     create(:component_nano_material, component:, nano_material:)
-    create(:nano_element, inci_name: "Foo Nanomaterial", nano_material:)
   end
 
   after do

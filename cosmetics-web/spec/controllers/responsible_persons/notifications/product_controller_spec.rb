@@ -135,7 +135,7 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
     it "does not create nanomaterials when No is selected" do
       expect {
         put(:update, params: params.merge(id: :contains_nanomaterials, contains_nanomaterials_form: { nanomaterials_count: "3", contains_nanomaterials: "no" }))
-      }.not_to(change(NanoElement, :count))
+      }.not_to(change(NanoMaterial, :count))
     end
 
     context "when the notification is already submitted" do

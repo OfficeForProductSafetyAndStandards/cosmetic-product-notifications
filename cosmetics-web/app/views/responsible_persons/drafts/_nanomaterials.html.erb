@@ -5,13 +5,13 @@
   </h3>
 
   <ul class="app-task-list__items opss-task-sub__list">
-    <% @notification.nano_materials.order(:created_at).map(&:nano_elements).flatten.each_with_index do |nano_element, i| %>
+    <% @notification.nano_materials.order(:created_at).each_with_index do |nano_material, i| %>
       <li class="app-task-list__item">
         <span class="app-task-list__task-name">
-          <%= nanomaterial_link(nano_element, i) %>
+          <%= nanomaterial_link(nano_material, i) %>
         </span>
 
-        <%= nanomaterial_badge(nano_element) %>
+        <%= nanomaterial_badge(nano_material) %>
       </li>
     <% end %>
 

@@ -50,7 +50,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   scenario "Sorting search results" do
     expect(page).to have_h1("Cosmetic products search")
 
-    fill_in "notification_search_form_q", with: "Shower Bubbles"
+    fill_in "notification_search_form_q", with: "Bubbles"
     click_on "Search"
 
     links = page.all("table#table-items .govuk-link").map(&:text)
@@ -115,9 +115,9 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
       click_on "Search"
 
-      expect(page).to have_text("1 notification matching keyword(s)")
+      expect(page).to have_text("0 notifications matching keyword(s)")
 
-      expect(page).to have_link("Cream")
+      expect(page).not_to have_link("Cream")
       expect(page).not_to have_link("Shower Bubbles")
       expect(page).not_to have_link("Bath Bubbles")
     end
@@ -136,7 +136,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
         click_on "Search"
 
-        expect(page).to have_text("3 notifications matching keyword(s)")
+        expect(page).to have_text("1 notification matching keyword(s)")
 
         expect(page).to have_link("Cream")
       end

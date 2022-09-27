@@ -19,7 +19,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:category) { nil }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { multi_match: { fields:, fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:category) { "Bar baz" }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { multi_match: { fields:, fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end
@@ -101,7 +101,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:to_date) { Date.new(2021, 6, 16) }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }], must: { multi_match: { fields:, fuzziness: "AUTO", query: "Foo bar" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end

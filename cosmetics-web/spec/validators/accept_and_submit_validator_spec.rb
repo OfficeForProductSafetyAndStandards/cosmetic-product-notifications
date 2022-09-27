@@ -5,12 +5,11 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
 
   let(:notification) { create(:notification) }
   let(:component) { create(:component, notification:) }
-  let(:nano_material) { create(:nano_material, notification:) }
-  let(:nano_element) { create(:nano_element, inci_name: nano_name, nano_material:) }
+  let(:nano_material) { create(:nano_material, notification:, inci_name: nano_name) }
   let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification:) }
 
   before do
-    nano_element
+    nano_material
     component
     image_upload
 

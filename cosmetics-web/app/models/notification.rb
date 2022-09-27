@@ -188,11 +188,7 @@ class Notification < ApplicationRecord
     return 0 unless count.positive? && nano_materials.none?
 
     transaction do
-      count.times do
-        nano_materials.create.tap do |nano|
-          nano.nano_elements.create!
-        end
-      end
+      count.times { nano_materials.create! }
       revert_to_ready_for_nanomaterials
     end
     count
