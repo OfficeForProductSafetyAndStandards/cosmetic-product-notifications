@@ -8,17 +8,15 @@
   <div class="govuk-grid-column-full">
 
     <%
-      nano_elements = @notification.nano_materials.order("created_at").map(&:nano_elements).flatten
-      nano_material_items = nano_elements.map { |n|
+      nano_material_items = @notification.nano_materials.order("created_at").map do |n|
         { name: 'component[nano_material_ids][]',
           text: n.inci_name,
-          value: n.nano_material.id,
+          value: n.id,
           key: :nil, # TODO: investigate design library to get rid of required key attribute
           id: "nano_material_#{n.id}",
-          checked: (NanoElement.find(n.id).nano_material.components.include?(@component)),
-          disable_ghost: true
-        }
-      }
+          checked: (n.components.include?(@component)),
+          disable_ghost: true }
+      end
     %>
     <%= form_with(model: @component, url: wizard_path, html: { novalidate: true }, method: :put) do |form| %>
       <%= form.hidden_field :name %>

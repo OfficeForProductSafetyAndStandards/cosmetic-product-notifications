@@ -15,7 +15,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <% if @component.errors.messages.include?(:exposure_routes) %>
-        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @component.errors.messages[:exposure_routes][0], href: "#nano_material_dermal"}] ) %>
+        <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @component.errors.messages[:exposure_routes][0], href: "#component_dermal"}] ) %>
       <% end %>
       <%= govukCheckboxes(form: form,
                           key: :exposure_routes,

@@ -147,7 +147,7 @@ Rails.application.routes.draw do
           resources :build, controller: "responsible_persons/notifications/components/build", only: %i[show update new]
         end
 
-        resources :nanomaterials, controller: "responsible_persons/notifications/nanomaterials", param: :nano_element_id, only: %i[new create] do
+        resources :nanomaterials, controller: "responsible_persons/notifications/nanomaterials", only: %i[new create] do
           resources :build, controller: "responsible_persons/notifications/nanomaterials/build", only: %i[show update new]
         end
 

@@ -16,7 +16,7 @@ class LogDbMetricsJob < ApplicationJob
       business_rp_count: ResponsiblePerson.where(account_type: "business").count,
       individual_rp_count: ResponsiblePerson.where(account_type: "individual").count,
       nanomaterials_notified: NanomaterialNotification.where.not(submitted_at: nil).count,
-      notifications_with_nanomaterials: Notification.completed.joins(nano_materials: :nano_elements).distinct.count,
+      notifications_with_nanomaterials: Notification.completed.joins(:nano_materials).distinct.count,
     }
 
     Sidekiq.logger.info "CosmeticsStatistics #{stats.to_a.map { |x| x.join('=') }.join(' ')}"
