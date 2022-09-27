@@ -19,7 +19,7 @@
             items: [
               {
                 value: OpensearchQuery::SEARCH_ALL_FIELDS,
-                text: 'All'
+                text: 'All',
               },
               {
                 value: OpensearchQuery::SEARCH_NOTIFICATION_NAME_FIELD,
@@ -34,6 +34,7 @@
           <%= govukCheckboxes(
             form: form,
             key: :match_similar,
+            classes: "govuk-checkboxes--small",
             fieldset: { legend: { text: "Similarity", classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
             items: [{ key: 'match_similar', text: 'Match similar words', disable_ghost: true }],
           ) %>
