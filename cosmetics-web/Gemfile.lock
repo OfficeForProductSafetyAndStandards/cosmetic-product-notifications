@@ -267,10 +267,8 @@ GEM
     minitest (5.16.3)
     multi_json (1.15.0)
     multipart-post (2.1.1)
-    net-imap (0.2.3)
-      digest
+    net-imap (0.3.0)
       net-protocol
-      strscan
     net-pop (0.1.1)
       digest
       net-protocol
@@ -498,7 +496,6 @@ GEM
       sprockets (>= 3.0.0)
     strong_migrations (0.7.9)
       activerecord (>= 5)
-    strscan (3.0.4)
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
