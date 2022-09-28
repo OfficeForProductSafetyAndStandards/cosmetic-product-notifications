@@ -60,13 +60,6 @@ en:
               missing: "Select if %{component_name} is intended to be rinsed off or left on"
             exposure_routes:
               blank: "Select how the user is likely to be exposed to the nanomaterials"
-        nano_element:
-          attributes:
-            purposes:
-              blank: "Choose an option"
-              inclusion: "%{value} is not a valid purpose"
-            inci_name:
-              invalid: "Enter a name which has not already been used in this notification"
         nano_material:
           attributes:
             purposes:

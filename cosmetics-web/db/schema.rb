@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_20_133257) do
+ActiveRecord::Schema.define(version: 2022_09_23_161414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -144,25 +144,6 @@ ActiveRecord::Schema.define(version: 2022_09_20_133257) do
     t.datetime "updated_at", null: false
     t.bigint "notification_id"
     t.index ["notification_id"], name: "index_image_uploads_on_notification_id"
-  end
-
-  create_table "nano_elements", force: :cascade do |t|
-    t.string "inci_name"
-    t.string "inn_name"
-    t.string "iupac_name"
-    t.string "xan_name"
-    t.string "cas_number"
-    t.string "ec_number"
-    t.string "einecs_number"
-    t.string "elincs_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "nano_material_id"
-    t.string "purposes", array: true
-    t.string "confirm_toxicology_notified"
-    t.string "confirm_usage"
-    t.string "confirm_restrictions"
-    t.index ["nano_material_id"], name: "index_nano_elements_on_nano_material_id"
   end
 
   create_table "nano_materials", force: :cascade do |t|
@@ -384,7 +365,6 @@ ActiveRecord::Schema.define(version: 2022_09_20_133257) do
   add_foreign_key "contact_persons", "responsible_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
-  add_foreign_key "nano_elements", "nano_materials"
   add_foreign_key "nanomaterial_notifications", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "responsible_persons"
