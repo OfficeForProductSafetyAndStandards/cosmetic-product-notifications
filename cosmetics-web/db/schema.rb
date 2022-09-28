@@ -131,13 +131,11 @@ ActiveRecord::Schema.define(version: 2022_09_20_133257) do
   end
 
   create_table "exact_formulas", force: :cascade do |t|
-    t.string "inci_name", null: false
-    t.decimal "quantity", null: false
+    t.string "inci_name"
+    t.decimal "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "component_id"
-    t.string "cas_number"
-    t.boolean "poisonous", default: false, null: false
     t.index ["component_id"], name: "index_exact_formulas_on_component_id"
   end
 
@@ -278,7 +276,6 @@ ActiveRecord::Schema.define(version: 2022_09_20_133257) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "component_id"
-    t.string "cas_number"
     t.index ["component_id"], name: "index_range_formulas_on_component_id"
   end
 
