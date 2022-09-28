@@ -3,45 +3,44 @@
 
    <%= form_for(@search_form, url: poison_centre_notifications_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
     <div class="govuk-form-group">
+      <% if PoisonCentres::NotificationsController::ADVANCED_SEARCH_USER_ROLES.include? current_user.role %>
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              Advanced search
+            </h2>
+          </legend>
+          <%= govukRadios(
+              form: form,
+              key: :search_fields,
+              idPrefix: "search-by",
+              fieldset: { legend: { text: "Where to search", classes: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
+              classes: "govuk-radios--small",
+              items: [
+                {
+                  value: OpensearchQuery::SEARCH_ALL_FIELDS,
+                  text: 'All',
+                },
+                {
+                  value: OpensearchQuery::SEARCH_NOTIFICATION_NAME_FIELD,
+                  text: 'Only notification name'
+                },
+                {
+                  value: OpensearchQuery::SEARCH_RESPONSIBLE_PERSON_FIELDS,
+                  text: 'Only responsible person data'
+                },
+              ],
+            ) %>
+            <%= govukCheckboxes(
+              form: form,
+              key: :match_similar,
+              classes: "govuk-checkboxes--small",
+              fieldset: { legend: { text: "Similarity", classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
+              items: [{ key: 'match_similar', text: 'Match similar words', disable_ghost: true }],
+            ) %>
+        </fieldset>
+      <% end %>
       <fieldset class="govuk-fieldset">
-
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h2 class="govuk-fieldset__heading">
-            Advanced search
-          </h2>
-        </legend>
-        <%= govukRadios(
-            form: form,
-            key: :search_fields,
-            idPrefix: "search-by",
-            fieldset: { legend: { text: "Where to search", classes: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
-            classes: "govuk-radios--small",
-            items: [
-              {
-                value: OpensearchQuery::SEARCH_ALL_FIELDS,
-                text: 'All',
-              },
-              {
-                value: OpensearchQuery::SEARCH_NOTIFICATION_NAME_FIELD,
-                text: 'Only notification name'
-              },
-              {
-                value: OpensearchQuery::SEARCH_RESPONSIBLE_PERSON_FIELDS,
-                text: 'Only responsible person data'
-              },
-            ],
-          ) %>
-          <%= govukCheckboxes(
-            form: form,
-            key: :match_similar,
-            classes: "govuk-checkboxes--small",
-            fieldset: { legend: { text: "Similarity", classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
-            items: [{ key: 'match_similar', text: 'Match similar words', disable_ghost: true }],
-          ) %>
-
-      </fieldset>
-      <fieldset class="govuk-fieldset">
-
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           <h2 class="govuk-fieldset__heading">
             Filter the results by<span class="govuk-visually-hidden">:</span>
