@@ -198,6 +198,10 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   end
 
   context "when using advanced search" do
+    before do
+      pending "We don't allow users to access search yet"
+    end
+
     scenario "Searching by partial number number" do
       sign_in user
 
