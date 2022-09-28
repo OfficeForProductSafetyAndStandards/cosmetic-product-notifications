@@ -3,14 +3,23 @@ class OpensearchQuery
   DATE_ASCENDING_SORTING  = "date_ascending".freeze
   DATE_DESCENDING_SORTING = "date_descending".freeze
 
+  SEARCH_ALL_FIELDS = "all_fields".freeze
+  SEARCH_RESPONSIBLE_PERSON_FIELDS = "responsible_person_fields".freeze
+  SEARCH_NOTIFICATION_NAME_FIELD = "notification_name_field".freeze
+
   DEFAULT_SORT = SCORE_SORTING
 
-  def initialize(keyword:, category:, from_date:, to_date:, sort_by:)
+  NOTIFICATION_SEARCHABLE_FIELDS = %w[product_name reference_number].freeze
+  RESPONSIBLE_PERSON_SEARCHABLE_FIELDS = %w[responsible_person.name responsible_person.address_line_1 responsible_person.address_line_2 responsible_person.city responsible_person.county responsible_person.postal_code].freeze
+
+  def initialize(keyword:, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:)
     @keyword   = keyword
     @category  = category
     @from_date = from_date
     @to_date   = to_date
     @sort_by   = sort_by.presence || default_sorting
+    @match_similar = match_similar
+    @search_fields = search_fields
   end
 
   def build_query
@@ -38,13 +47,22 @@ class OpensearchQuery
   end
 
   def multi_match_query
-    {
+    query = {
       multi_match: {
         query: @keyword,
-        fuzziness: 0,
+        fuzziness: @match_similar.present? ? "AUTO" : 0,
         operator: "AND",
       },
     }
+
+    case @search_fields
+    when SEARCH_RESPONSIBLE_PERSON_FIELDS
+      query[:multi_match][:fields] = RESPONSIBLE_PERSON_SEARCHABLE_FIELDS
+    when SEARCH_NOTIFICATION_NAME_FIELD
+      query[:multi_match][:fields] = NOTIFICATION_SEARCHABLE_FIELDS
+    end
+
+    query
   end
 
   def filter_query
