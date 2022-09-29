@@ -1,23 +1,25 @@
 require "rails_helper"
 
 RSpec.describe OpenSearchQuery::Notification, type: :model do
-  let(:fields) { OpenSearchQuery::Notification::FIELDS }
-  let(:from_date) { nil }
-  let(:to_date)   { nil }
-  let(:sort_by)   { nil }
-  let(:query) { described_class.new(keyword: q, category:, from_date:, to_date:, sort_by:).build_query }
-
   shared_examples_for "correct query" do
     specify do
       expect(query).to eq expected_es_query
     end
   end
 
+  let(:q)              { "Foo bar" }
+  let(:category)       { nil }
+  let(:from_date)      { nil }
+  let(:to_date)        { nil }
+  let(:sort_by)        { nil }
+  let(:match_similar)  { nil }
+  let(:search_fields)  { nil }
+  let(:fields)         { described_class::ALL_FIELDS }
+
+  let(:query) { described_class.new(keyword: q, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:).build_query }
+
   context "when search term is provided and category filter is empty" do
     it_behaves_like "correct query" do
-      let(:q) { "Foo bar" }
-      let(:category) { nil }
-
       let(:expected_es_query) do
         { query: { bool: { filter: [], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
@@ -102,6 +104,16 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
 
       let(:expected_es_query) do
         { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
+      end
+    end
+  end
+
+  context "when using fuzzy finder" do
+    it_behaves_like "correct query" do
+      let(:match_similar) { true }
+
+      let(:expected_es_query) do
+        { query: { bool: { filter: [], must: { multi_match: { fields:, fuzziness: "AUTO", query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end

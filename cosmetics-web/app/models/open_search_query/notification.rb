@@ -3,27 +3,41 @@ module OpenSearchQuery
     SCORE_SORTING = "score".freeze
     DATE_ASCENDING_SORTING  = "date_ascending".freeze
     DATE_DESCENDING_SORTING = "date_descending".freeze
-
     DEFAULT_SORT = SCORE_SORTING
 
-    FIELDS = [
-      "product_name",
-      "reference_number",
-      "reference_number_for_display",
-      "responsible_person.name",
-      "responsible_person.address_line_1",
-      "responsible_person.address_line_2",
-      "responsible_person.city",
-      "responsible_person.county",
-      "responsible_person.postal_code",
-    ].freeze
+    SEARCH_ALL_FIELDS = "all_fields".freeze
+    SEARCH_RESPONSIBLE_PERSON_FIELDS = "responsible_person_fields".freeze
+    SEARCH_NOTIFICATION_NAME_FIELD = "notification_name_field".freeze
 
-    def initialize(keyword:, category:, from_date:, to_date:, sort_by:)
+    NOTIFICATION_SEARCHABLE_FIELDS = %w[product_name reference_number].freeze
+    RESPONSIBLE_PERSON_SEARCHABLE_FIELDS = %w[responsible_person.name
+                                              responsible_person.address_line_1
+                                              responsible_person.address_line_2
+                                              responsible_person.city
+                                              responsible_person.county
+                                              responsible_person.postal_code].freeze
+    ALL_FIELDS = %w[product_name
+                    reference_number
+                    reference_number_for_display
+                    responsible_person.name
+                    responsible_person.address_line_1
+                    responsible_person.address_line_2
+                    responsible_person.city
+                    responsible_person.county
+                    responsible_person.postal_code].freeze
+
+    MULTI_MATCH_FIELDS = { SEARCH_RESPONSIBLE_PERSON_FIELDS => RESPONSIBLE_PERSON_SEARCHABLE_FIELDS,
+                           SEARCH_NOTIFICATION_NAME_FIELD => NOTIFICATION_SEARCHABLE_FIELDS,
+                           SEARCH_ALL_FIELDS => ALL_FIELDS }.freeze
+
+    def initialize(keyword:, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:)
       @keyword   = keyword
       @category  = category
       @from_date = from_date
       @to_date   = to_date
       @sort_by   = sort_by.presence || default_sorting
+      @match_similar = match_similar
+      @search_fields = search_fields
     end
 
     def build_query
@@ -54,9 +68,9 @@ module OpenSearchQuery
       {
         multi_match: {
           query: @keyword,
-          fuzziness: 0,
+          fuzziness: @match_similar.present? ? "AUTO" : 0,
           operator: "AND",
-          fields: FIELDS,
+          fields: MULTI_MATCH_FIELDS[@search_fields].presence || ALL_FIELDS,
         },
       }
     end

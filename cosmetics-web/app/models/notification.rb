@@ -323,4 +323,7 @@ private
   end
 end
 
-Notification.opensearch.import force: true if Rails.env.development? # for auto sync model with Opensearch
+# for auto sync model with Opensearch
+if Rails.env.development? && ENV["DISABLE_LOCAL_AUTOINDEX"].blank?
+  Notification.opensearch.import force: true
+end

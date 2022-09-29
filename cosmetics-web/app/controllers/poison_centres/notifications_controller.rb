@@ -22,6 +22,8 @@ private
                                                          { date_to: %i[day month year] },
                                                          { date_exact: %i[day month year] },
                                                          :date_filter,
+                                                         :search_fields,
+                                                         :match_similar,
                                                          :sort_by)
     elsif params[:ingredient_search_form]
       params.fetch(:ingredient_search_form, {}).permit(:q,
