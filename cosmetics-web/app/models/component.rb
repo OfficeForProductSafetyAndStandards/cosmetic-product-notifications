@@ -269,7 +269,6 @@ private
 
   def remove_poisonous_ingredients!
     ingredients.poisonous.destroy_all
-    exact_formulas.where(poisonous: true).destroy_all
   end
 
   def delete_ingredients
