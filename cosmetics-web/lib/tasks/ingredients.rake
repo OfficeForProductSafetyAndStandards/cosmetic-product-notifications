@@ -15,8 +15,6 @@ namespace :ingredients do
           inci_name: exact_formula.inci_name,
           exact_concentration: exact_formula.quantity,
           range_concentration: nil,
-          cas_number: exact_formula.cas_number,
-          poisonous: exact_formula.poisonous,
           created_at: exact_formula.created_at,
           updated_at: exact_formula.updated_at,
         )
@@ -30,8 +28,6 @@ namespace :ingredients do
           inci_name: range_formula.inci_name,
           range_concentration: range_formula.range,
           exact_concentration: nil,
-          cas_number: range_formula.cas_number,
-          poisonous: false,
           created_at: range_formula.created_at,
           updated_at: range_formula.updated_at,
         )
