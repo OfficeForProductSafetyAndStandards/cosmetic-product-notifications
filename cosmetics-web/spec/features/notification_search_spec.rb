@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/feature_helpers"
 
 RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
-  let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
+  let(:user) { create(:opss_science_user, :with_sms_secondary_authentication) }
 
   let(:responsible_person_name) { "Responsible Person" }
 
@@ -200,10 +200,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   end
 
   context "when using advanced search" do
-    before do
-      pending "We don't allow users to access search yet"
-    end
-
     scenario "Searching by partial number number" do
       sign_in user
 
