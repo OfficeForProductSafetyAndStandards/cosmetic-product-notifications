@@ -201,8 +201,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
   context "when using advanced search" do
     scenario "Searching by partial number number" do
-      sign_in user
-
       expect(page).to have_h1("Cosmetic products search")
 
       expect(page).to have_link("Cream")
@@ -217,7 +215,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
       click_on "Apply"
 
-      expect(page).to have_text("1 product matching keyword(s)")
+      expect(page).to have_text("1 notification matching keyword(s)")
 
       expect(page).to have_link("Cream")
       expect(page).not_to have_link("Shower Bubbles")
@@ -228,8 +226,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       let(:responsible_person_name) { "Bubbles RP" }
 
       scenario "Searching for notifications" do
-        sign_in user
-
         expect(page).to have_h1("Cosmetic products search")
 
         fill_in "notification_search_form_q", with: "Bubbles"
