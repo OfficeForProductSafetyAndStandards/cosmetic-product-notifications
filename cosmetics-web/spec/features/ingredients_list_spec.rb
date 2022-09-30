@@ -13,6 +13,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   let(:shower_bubbles) { create(:notification, :registered, responsible_person:, components: [component2], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
 
   before do
+    skip("Awaiting for ingredients list to be approved to go live")
     configure_requests_for_search_domain
 
     cream
