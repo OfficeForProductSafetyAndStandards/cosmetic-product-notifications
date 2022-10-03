@@ -1,5 +1,4 @@
 <% title = "Poisonous ingredients" %>
-<% question = "Does the product contain any ingredients NPIS needs to know about?" %>
 
 <% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
@@ -9,22 +8,34 @@
 <%= error_summary_for(@component, first_values: {contains_poisonous_ingredients: "true"}) %>
 
 <div class="govuk-grid-row">
-  <%= render 'poisonous_ingredients' %>
-</div>
-
-<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
     <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
 
-      <%= govukRadios(
-            form: form,
-            key: :contains_poisonous_ingredients,
-            fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--m", isPageHeading: false } },
-            items: [{ text: "Yes", value: "true" },
-                    { text: "No", value: "false" }],
-          ) %>
+      <fieldset class="govuk-fieldset" aria-describedby="checkbox-hint">
 
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Does the product contain poisonous ingredients?
+          </h1>
+        </legend>
+
+        <div id="checkbox-hint" class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-3">
+          There are also particular poisons which the National Poisons Information Service (<abbr>NPIS</abbr>) needs to know about &ndash; especially if their details match ingredients listed in the following poison tables. The <abbr>NPIS</abbr> needs to know the exact concentrations (<span title="Percentage weight for weight">&percnt; <abbr>w</abbr>/<abbr>w</abbr></span>) of these ingredients. The information you provide will be used to help treat people who might accidentally be affected by them.
+        </div>
+
+        <a href="#component_contains_poisonous_ingredients_true" class="govuk-skip-link opss-skip-link">Skip poisonous ingredients tables.</a>
+
+
+        <%= render "ingredients_npis_needs_to_know" %>
+        <%= govukRadios(
+              form: form,
+              key: :contains_poisonous_ingredients,
+              items: [{ text: "Yes", value: "true" },
+                      { text: "No", value: "false" }],
+            ) %>
+
+      </fieldset>
       <%= govukButton text: "Continue" %>
     <% end %>
   </div>

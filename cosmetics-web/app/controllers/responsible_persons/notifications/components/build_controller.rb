@@ -26,10 +26,12 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :select_sub_category,
         :select_sub_sub_category,
         :select_formulation_type,
-        :upload_formulation, # only for range and exact
+        :add_ingredient_exact_concentration, # only for exact
+        :add_ingredient_range_concentration, # only for range
         :select_frame_formulation, # only for frame formulation
         :contains_poisonous_ingredients, # only for frame formulation
-        :upload_poisonus_ingredients, # only for frame formulation
+        :add_poisonous_ingredient, # only for frame formulation
+        :want_to_add_another_ingredient,
         :select_ph_option,
         :min_max_ph,
         :completed
@@ -55,13 +57,15 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     select_sub_category: :select_root_category,
     select_sub_sub_category: :select_sub_category,
     select_formulation_type: :select_sub_sub_category,
-    upload_formulation: :select_formulation_type, # only for range and exact,
+    add_ingredient_exact_concentration: :select_formulation_type,
+    add_ingredient_range_concentration: :select_formulation_type,
+    want_to_add_another_ingredient: :select_formulation_type,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_poisonous_ingredients: :select_formulation_type, # only for frame formulation,
-    upload_poisonus_ingredients: :contains_poisonous_ingredients, # only for frame formulation,
+    add_poisonous_ingredient: :contains_poisonous_ingredients, # only for frame formulation,
     select_ph_option: {
+      select_formulation_type: -> { @component.exact? || @component.range? },
       contains_poisonous_ingredients: -> { @component.predefined? },
-      upload_formulation: -> { true },
     },
     min_max_ph: :select_ph_option,
   }.freeze
@@ -80,10 +84,12 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
+    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_poisonous_ingredient
+      @ingredient_concentration_form = ingredient_concentration_form
+    when :want_to_add_another_ingredient
+      @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
-      @component.update_state("component_complete")
-      # TODO: write spec
-      @component.reload.notification.try_to_complete_components!
+      @component.complete!
       return render "responsible_persons/notifications/task_completed"
     end
 
@@ -116,14 +122,18 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_select_category_step
     when :select_formulation_type
       update_select_formulation_type
+    when :add_ingredient_exact_concentration
+      update_add_ingredient_concentration("exact")
+    when :add_ingredient_range_concentration
+      update_add_ingredient_concentration("range")
+    when :add_poisonous_ingredient
+      update_add_ingredient_concentration("exact", force_poisonous: true)
     when :select_frame_formulation
       update_frame_formulation
-    when :upload_formulation
-      update_upload_formulation
     when :contains_poisonous_ingredients
       update_contains_poisonous_ingredients
-    when :upload_poisonus_ingredients
-      update_upload_poisonus_ingredients
+    when :want_to_add_another_ingredient
+      update_want_to_add_another_ingredient
     when :select_ph_option
       update_select_component_ph_options
     when :min_max_ph
@@ -246,18 +256,59 @@ private
     formulation_type = params.dig(:component, :notification_type)
     model.save_routing_answer(step, formulation_type)
     @component.update_formulation_type(formulation_type)
+    return rerender_current_step if @component.errors.present?
 
-    if @component.errors.present?
-      return rerender_current_step
+    step = {
+      "predefined" => :select_frame_formulation,
+      "exact" => :add_ingredient_exact_concentration,
+      "range" => :add_ingredient_range_concentration,
+    }[@component.notification_type]
+
+    if @component.ingredients.any? && !@component.predefined?
+      jump_to_step(step, ingredient_number: 0) # Display first existing ingredient for edit
+    else
+      jump_to_step(step)
     end
+  end
 
-    if @component.predefined? # predefined == frame_formulation
-      jump_to(:select_frame_formulation)
-    elsif @component.frame_formulation.present?
-      @component.update(frame_formulation: nil)
+  def update_add_ingredient_concentration(type, force_poisonous: false)
+    ingredient_number = ingredient_concentration_params[:ingredient_number]&.to_i
+    updating_ingredient = @component.ingredients[ingredient_number] if ingredient_number
+
+    form_attrs = ingredient_concentration_params.merge(
+      component: @component, type:, updating_ingredient:,
+    )
+    form_attrs[:poisonous] = true if force_poisonous == true
+
+    @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new(form_attrs)
+    if @ingredient_concentration_form.save
+      # When updating an existing ingredient: Send to next ingredient page if there are more ingredients
+      if ingredient_number.present? && @component.reload.ingredients.size > ingredient_number + 1
+        jump_to_step(step, ingredient_number: ingredient_number + 1)
+      else
+        jump_to_step(:want_to_add_another_ingredient, success_banner: updating_ingredient.nil?)
+      end
+    else
+      rerender_current_step
     end
+  end
 
-    render_next_step @component
+  def update_want_to_add_another_ingredient
+    case params[:add_another_ingredient]
+    when "yes"
+      if @component.exact?
+        jump_to_step(:add_ingredient_exact_concentration)
+      elsif @component.range?
+        jump_to_step(:add_ingredient_range_concentration)
+      elsif @component.predefined?
+        jump_to_step(:add_poisonous_ingredient)
+      end
+    when "no"
+      jump_to_step(:select_ph_option)
+    else
+      @component.errors.add(:add_another_ingredient, "Select yes if you want to add an ingredient")
+      rerender_current_step
+    end
   end
 
   # for frame formulation only
@@ -273,73 +324,17 @@ private
     model.save_routing_answer(step, params.dig(:component, :contains_poisonous_ingredients))
 
     if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
-      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains any of these ingredients"
+      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains poisonous ingredients"
       return render :contains_poisonous_ingredients
     end
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
-    unless @component.contains_poisonous_ingredients?
+    if @component.contains_poisonous_ingredients?
+      jump_to(:add_poisonous_ingredient, ingredient_number: 0) if @component.ingredients.any?
+    else
       jump_to(:select_ph_option)
     end
     render_next_step @component
-  end
-
-  # For exact and range formulations only
-  def update_upload_formulation
-    formulation_file = params.dig(:component, :formulation_file)
-    if formulation_file.blank? && @component.formulation_file.present?
-      if params[:back_to_edit] == "true"
-        return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      else
-        return jump_to_step(:select_ph_option)
-      end
-    end
-
-    if formulation_file.present?
-      @component.formulation_file.attach(formulation_file)
-      if @component.valid?
-        if params[:back_to_edit] == "true"
-          redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-        else
-          jump_to_step :select_ph_option
-        end
-      else
-        @component.formulation_file.purge if @component.formulation_file.attached?
-        rerender_current_step
-      end
-    else
-      @component.errors.add :formulation_file, "Upload a list of ingredients"
-      rerender_current_step
-    end
-  end
-
-  # For frame formulation only
-  def update_upload_poisonus_ingredients
-    formulation_file = params.dig(:component, :formulation_file)
-    if formulation_file.blank? && @component.formulation_file.present?
-      if params[:back_to_edit] == "true"
-        return redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      else
-        return render_next_step @component
-      end
-    end
-
-    if formulation_file.present?
-      @component.formulation_file.attach(formulation_file)
-      if @component.valid?
-        if params[:back_to_edit] == "true"
-          redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-        else
-          render_next_step @component
-        end
-      else
-        @component.formulation_file.purge if @component.formulation_file.attached?
-        rerender_current_step
-      end
-    else
-      @component.errors.add :formulation_file, "Upload a list of poisonous ingredients"
-      rerender_current_step
-    end
   end
 
   # In views, the wording here is about range. Its confusing, as param name here is ph
@@ -365,6 +360,25 @@ private
     end
   end
 
+  def ingredient_concentration_form
+    ingredient_number = params[:ingredient_number]&.to_i
+    updating_ingredient = @component.ingredients[ingredient_number] if ingredient_number
+    form_attrs = ingredient_form_values(updating_ingredient, ingredient_number) if updating_ingredient
+    ResponsiblePersons::Notifications::IngredientConcentrationForm.new(form_attrs)
+  end
+
+  def ingredient_form_values(ingredient, ingredient_number)
+    return {} if ingredient.blank?
+
+    { name: ingredient.inci_name,
+      cas_number: ingredient.cas_number,
+      exact_concentration: ingredient.exact_concentration,
+      range_concentration: ingredient.range_concentration,
+      poisonous: ingredient.poisonous,
+      updating_ingredient: ingredient,
+      ingredient_number: }
+  end
+
   def component_params
     params.fetch(:component, {})
       .permit(
@@ -384,6 +398,18 @@ private
         exposure_routes: [],
         cmrs_attributes: %i[id name cas_number ec_number],
         shades: [],
+      )
+  end
+
+  def ingredient_concentration_params
+    params.fetch(:ingredient_concentration_form, {})
+      .permit(
+        :name,
+        :exact_concentration,
+        :range_concentration,
+        :cas_number,
+        :poisonous,
+        :ingredient_number,
       )
   end
 

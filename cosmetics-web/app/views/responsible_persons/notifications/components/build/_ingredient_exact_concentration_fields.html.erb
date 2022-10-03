@@ -1,0 +1,23 @@
+<%= govukInput(form: form,
+               id: "name",
+               key: :name,
+               label: { text: "What is the name?" },
+               attributes: { spellcheck: "false" }) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <%= render "exact_concentration_input", model: model, form: form %>
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+    <div class="govuk-form-group">
+      <div class="govuk-checkboxes opss-float-right-desktop">
+        <%= govukInput(form: form,
+                       key: :cas_number,
+                       id: "cas_number",
+                       label: { text: "What is the CAS number?", classes: "govuk-label--s govuk-!-font-weight-regular" },
+                       classes: "govuk-input--width-10") %>
+      </div>
+    </div>
+  </div>
+</div>

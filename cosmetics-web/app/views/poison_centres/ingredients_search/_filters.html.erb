@@ -1,0 +1,98 @@
+<section class="govuk-grid-column-one-quarter govuk-!-padding-right-1 opss-full-height__col">
+
+  <a href="#search-results-section" class="govuk-skip-link opss-skip-link">
+    Skip to the main content
+  </a>
+
+  <nav aria-label="Secondary">
+    <%= render 'poison_centres/shared/secondary_navigation' %>
+  </nav>
+
+  <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-1 govuk-!-margin-bottom-6 govuk-!-margin-right-6">
+
+  <a href="#results-order" class="govuk-skip-link opss-skip-link opss-skip-link--mb">
+    Skip past the filter options
+  </a>
+
+  <%= form_for(@search_form, url: poison_centre_ingredients_search_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
+    <%= form.hidden_field :q, id: :ingredients_search_form_q_hidden %>
+    <h2 class="govuk-heading-s">
+      Display<span class="govuk-visually-hidden">:</span>
+    </h2>
+    <div class="govuk-form-group opss-form-group opss-form-group--sm-labels">
+      <%= govukRadios(
+            form: form,
+            key: :sort_by,
+            idPrefix: "change-rp",
+            fieldset: { legend: { text: "Group by", classes: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
+            classes: "govuk-radios--small",
+            items: [
+              {
+                value: OpenSearchQuery::Ingredient::SORT_BY_NONE,
+                text: 'None'
+              },
+              {
+                value: OpenSearchQuery::Ingredient::SORT_BY_RESPONSIBLE_PERSON_ASC,
+                text: 'Responsible Person'
+              },
+            ],
+          ) %>
+    </div>
+    <h2 class="govuk-heading-s">
+      Filters<span class="govuk-visually-hidden">:</span>
+    </h2>
+
+    <div class="govuk-form-group opss-form-group opss-form-group--sm-labels">
+      <%= govukRadios(
+            form: form,
+            key: :exact_or_any_match,
+            idPrefix: "match-by",
+            fieldset: { legend: { text: "Match type", classes: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
+            classes: "govuk-radios--small",
+            items: [
+              {
+                value: OpenSearchQuery::Ingredient::EXACT_MATCH,
+                text: 'Exact match only',
+              },
+              {
+                value: OpenSearchQuery::Ingredient::ANY_MATCH,
+                text: 'Match any words'
+              },
+            ],
+          ) %>
+    </div>
+    <div class="govuk-form-group govuk-!-margin-bottom-7">
+      <fieldset class="govuk-fieldset" aria-describedby="by-date-range-hint">
+
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular">
+          Notified dates
+        </legend>
+
+        <div class="govuk-form-group">
+
+          <div id="by-date-range-hint" class="govuk-hint govuk-!-font-size-16">
+            Filter searches by notified dates within a date range. For example, from <span class="opss-no-wrap">01 04 2020</span> to <span class="opss-no-wrap">30 09 2022</span>.
+          </div>
+
+          <div class="govuk-hint govuk-!-font-size-16">
+            From<span class="govuk-visually-hidden">:</span>
+          </div>
+
+          <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_from, id: 'by-date-form-day', extra_classes: "opss-date-input--tight", search_type: "ingredient" } %>
+          <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
+            To<span class="govuk-visually-hidden">:</span>
+          </div>
+          <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day', extra_classes: "opss-date-input--tight", search_type: "ingredient" } %>
+        </div>
+      </fieldset>
+    </div>
+    <div class="govuk-button-group">
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Apply
+      </button>
+      <button type="reset" class="govuk-button govuk-!-font-size-16 opss-button-link" id="opss-reset">
+        Reset
+      </button>
+    </div>
+  <% end %>
+</section>

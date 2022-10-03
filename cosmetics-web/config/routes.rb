@@ -53,7 +53,10 @@ Rails.application.routes.draw do
     root "search/landing_page#index", as: :search_root
 
     scope module: "poison_centres", as: "poison_centre" do
-      resources :notifications, param: :reference_number, only: %i[index show]
+      resources :notifications, param: :reference_number, only: %i[show]
+      resource :notifications_search, path: "/notifications", controller: "notifications_search", only: %i[show]
+      resource :ingredients_search, path: "/ingredients", controller: "ingredients_search", only: %i[show]
+      resources :ingredients, path: "/ingredients-list", controller: "ingredients", only: %i[index]
     end
     resources :users, only: [:update] do
       member do
@@ -145,6 +148,7 @@ Rails.application.routes.draw do
 
         resources :components, controller: "responsible_persons/notifications/components", only: %i[new create] do
           resources :build, controller: "responsible_persons/notifications/components/build", only: %i[show update new]
+          resources :delete_ingredient, controller: "responsible_persons/notifications/components/delete_ingredients", only: %i[show destroy]
         end
 
         resources :nanomaterials, controller: "responsible_persons/notifications/nanomaterials", only: %i[new create] do

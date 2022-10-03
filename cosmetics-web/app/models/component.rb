@@ -16,6 +16,7 @@ class Component < ApplicationRecord
 
   has_many :exact_formulas, dependent: :destroy
   has_many :range_formulas, dependent: :destroy
+  has_many :ingredients, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :component_nano_materials
@@ -93,9 +94,23 @@ class Component < ApplicationRecord
 
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
 
+  # Deletes all the associated poisonous ingredients from predefined components when
+  # "contains_poisonous_ingredients" is set to "false"
+  after_update :remove_poisonous_ingredients!,
+               if: [:predefined?, -> { ingredients.poisonous.any? }],
+               unless: :contains_poisonous_ingredients?
+
   aasm whiny_transitions: false, column: :state do
     state :empty, initial: true
     state :component_complete
+
+    event :complete, after_commit: -> { notification.reload.try_to_complete_components! } do
+      transitions from: :empty, to: :component_complete
+    end
+
+    event :reset_state, after_commit: -> { notification.reload.revert_to_ready_for_components! } do
+      transitions from: :component_complete, to: :empty
+    end
   end
 
   def self.exposure_routes_options
@@ -135,20 +150,12 @@ class Component < ApplicationRecord
     get_category_name(root_category)
   end
 
-  def formulation_file_required?
-    return false if formulation_file.attached?
-
-    (range? && range_formulas&.empty?) ||
-      (exact? && exact_formulas&.empty?) ||
-      (predefined? && contains_poisonous_ingredients)
-  end
-
-  def formulation_file_failed_antivirus_check?
-    formulation_file.attached? && formulation_file.metadata["safe"] == false
-  end
-
-  def formulation_file_pending_antivirus_check?
-    formulation_file.attached? && formulation_file.metadata["safe"].nil?
+  def missing_ingredients?
+    if predefined?
+      contains_poisonous_ingredients? && ingredients.none?
+    else
+      ingredients.none?
+    end
   end
 
   def self.get_parent_category(category)
@@ -201,13 +208,20 @@ class Component < ApplicationRecord
 
   def update_formulation_type(type)
     old_type = notification_type
-
     self.notification_type = type
+    transaction do
+      return unless save(context: :select_formulation_type)
 
-    return unless save(context: :select_formulation_type)
+      # Purge formulation files added in old flow.
+      # Now ingredients need to be added manually or use a predefined formulation.
+      formulation_file.purge
 
-    formulation_file.purge if predefined? && old_type != notification_type
-    update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
+      if old_type != notification_type
+        delete_ingredients
+        reset_state!
+      end
+      update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
+    end
   end
 
   def frame_formulation?
@@ -251,5 +265,15 @@ private
     if (maximum_ph - minimum_ph).round(2) > 1.0
       errors.add(:maximum_ph, "The maximum pH cannot be more than 1 higher than the minimum pH")
     end
+  end
+
+  def remove_poisonous_ingredients!
+    ingredients.poisonous.destroy_all
+  end
+
+  def delete_ingredients
+    ingredients.destroy_all
+    exact_formulas.destroy_all
+    range_formulas.destroy_all
   end
 end

@@ -4,7 +4,7 @@ def complete_product_details(nanos: [])
   complete_item_wizard("Product details", single_item: true, nanos:)
 end
 
-def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false)
+def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false, formulation_type: :exact)
   label_name = single_item ? nil : name
 
   unless from_add
@@ -41,9 +41,14 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
 
   answer_item_sub_subcategory_with "Shampoo"
 
-  answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration", item_name: label_name
-
-  upload_ingredients_pdf
+  case formulation_type
+  when :exact
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration", item_name: label_name
+    fill_ingredients_exact_concentrations(single_item:)
+  when :range
+    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range", item_name: label_name
+    fill_ingredients_range_concentrations(single_item:)
+  end
 
   answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
   expect_task_has_been_completed_page
@@ -145,11 +150,35 @@ def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
   click_button "Continue"
 end
 
-def upload_ingredients_pdf
-  unless page.has_css?("#formulation-files-table")
-    page.attach_file "spec/fixtures/files/testPdf.pdf"
+def fill_ingredients_exact_concentrations(single_item: false)
+  fill_ingredients_concentrations(single_item:) do
+    fill_in "exact_concentration", with: "0.5"
   end
-  click_button "Continue"
+end
+
+def fill_ingredients_range_concentrations(single_item: false)
+  fill_ingredients_concentrations(single_item:) do
+    page.choose("No")
+    page.choose("Above 5% w/w up to 10% w/w")
+  end
+end
+
+def fill_ingredients_concentrations(single_item: false)
+  if page.has_css?("li", text: "FooBar ingredient") # Updating existing ingredients
+    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["FooBar ingredient"])
+    click_button "Save and continue"
+    answer_add_another_ingredient_with("No", success_banner: false, single_item:)
+  else
+    expect_to_be_on_add_ingredients_page
+    fill_in "name", with: "FooBar ingredient"
+    yield # Fill/Select ingredient concentration
+    fill_in "cas_number", with: "123456-78-9"
+    click_on "Save and continue"
+
+    answer_add_another_ingredient_with("Yes", success_banner: true, single_item:)
+    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+    click_link "Skip"
+  end
 end
 
 def answer_what_is_ph_range_of_product_with(answer)
@@ -159,8 +188,58 @@ def answer_what_is_ph_range_of_product_with(answer)
   click_button "Continue"
 end
 
-def upload_formulation_file
-  upload_formulation_file
+def answer_select_formulation_with(answer)
+  page.select answer, from: "component_frame_formulation"
+  click_button "Continue"
+end
+
+def answer_contain_poisonous_ingredients_with(answer)
+  expect(page).to have_css("h1", text: "Does the product contain poisonous ingredients?")
+  page.choose answer
+  click_button "Continue"
+end
+
+def select_item_and_remove(answer)
+  within_fieldset("Select which item to remove") do
+    page.choose(answer)
+  end
+  click_button "Delete and continue"
+end
+
+def answer_add_another_ingredient_with(answer, success_banner: true, single_item: true)
+  expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
+  if success_banner
+    expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
+  end
+  page.choose answer
+  click_button "Continue"
+end
+
+def answer_remove_ingredient_with(answer, name: nil)
+  expect(page).to have_css("h1", text: "Do you want to remove this ingredient?")
+  expect(page).to have_css("#confirmation-hint", text: "Ingredient '#{name}' will be removed from this product.")
+  page.choose answer
+  click_button "Save and continue"
+end
+
+def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: [], forced_poisonous: false)
+  expect(page).to have_css("h1", text: "Add the#{forced_poisonous ? ' poisonous' : ''} ingredients")
+  expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient #{ingredient_number}")
+
+  if forced_poisonous # Poisonous checkbox is pre-selected and disabled
+    expect(page).to have_checked_field("ingredient_concentration_form_poisonous", disabled: true)
+  end
+
+  if already_added.any?
+    expect(page).to have_css("h2", text: "Already added")
+    already_added.each do |ingredient|
+      expect(page).to have_css("ol.govuk-list--number li", text: ingredient)
+    end
+  end
+end
+
+def expect_to_be_on_ingredient_removed_confirmation_page
+  expect(page).to have_css("h1", text: "The ingredient was removed")
 end
 
 def expect_product_details_task_completed
@@ -181,11 +260,4 @@ end
 
 def expect_item_task_not_started(name)
   expect_task_not_started name
-end
-
-def select_item_and_remove(answer)
-  within_fieldset("Select which item to remove") do
-    page.choose(answer)
-  end
-  click_button "Delete and continue"
 end

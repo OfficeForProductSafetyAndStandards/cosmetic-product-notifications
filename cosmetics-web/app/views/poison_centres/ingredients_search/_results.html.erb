@@ -1,0 +1,67 @@
+<section class="govuk-grid-column-three-quarters" id="search-results-section">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render 'search_box' %>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <p class="govuk-body-s"><%= pluralize(search_response.results.total, 'notification') %> <%= display_keywords %> <%= display_filters_informations %> <%= search_response.results.total == 1 ? "was found." : "were found." %></p>
+    </div>
+  </div>
+
+  <% if results.present? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order" aria-live="polite">
+        <table id="table-items" class="govuk-table govuk-!-margin-top-5 opss-table-items opss-table-items--sm opss-table-items--first-col-33">
+          <caption class="govuk-visually-hidden">
+            Search results. Each notification is described across 2 rows within its own table body.
+          </caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-visually-hidden">&nbsp;</th>
+              <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+              <th scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
+              <th scope="col" class="govuk-table__header">Responsible Person</th>
+            </tr>
+          </thead>
+          <%
+          rp_classes = ["opss-table-grouped-by--1", "opss-table-grouped-by--2"]
+          current_rp_class_index = 0
+          previous_rp_id = results.first.responsible_person_id
+
+          results.each.with_index(1) do |notification, index|
+           if previous_rp_id != notification.responsible_person_id && sort_by_responsible_person?
+             current_rp_class_index += 1
+             previous_rp_id = notification.responsible_person_id
+           end
+           concat(
+             render("poison_centres/ingredients_search/result_row",
+               notification: notification,
+               index: index,
+               form: :ingredient_search_form,
+               back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH,
+               additional_classes: rp_classes[current_rp_class_index % 2])
+           )
+          end
+          %>
+          <% if results.size > 11 %>
+            <tfoot class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-visually-hidden">&nbsp;</th>
+                <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+                <th scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
+                <th scope="col" class="govuk-table__header">Responsible Person</th>
+              </tr>
+            </tfoot>
+          <% end %>
+        </table>
+        <%= paginate search_response, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
+      </div>
+    </div>
+  <% end %>
+</section>

@@ -7,10 +7,6 @@
 @import "opss-search";
 @import "opss-pagination";
 
-form.opss-cookie-form {
-    display: flex;
-}
-
 .govuk-list *[class^="govuk-heading"] .govuk-link {
     @include word-wrap;
 }
@@ -398,9 +394,6 @@ tbody.opss-table-grouped-by--2 + tbody.opss-table-grouped-by--none {
         }
     }
 }
-
-
-
 
 /* check if this code BELOW is still required? .... */
 
