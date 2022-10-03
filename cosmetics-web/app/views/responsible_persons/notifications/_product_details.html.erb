@@ -29,5 +29,51 @@
         allow_edits: allow_edits
       )
     ) %>
+
+    <% if current_user.can_view_product_ingredients? %>
+      <h3 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-2">
+        Ingredients
+      </h3>
+      <%= govukSummaryList(
+        classes: "opss-summary-list-mixed",
+        rows: [
+          {
+            key: { text: "Formulation given as" },
+            value: { text: get_notification_type_name(component.notification_type) },
+          },
+          if component.predefined?
+            {
+              key: { text: "Frame formulation" },
+              value: { text: get_frame_formulation_name(component.frame_formulation) },
+            }
+          elsif component.formulation_file.attached?
+            {
+              key: { text: "Formulation" },
+              value: { html: render("notifications/component_details_formulation_ingredients",
+                                    component: component,
+                                    allow_edits: allow_edits) },
+            }
+          end,
+        ].compact
+      ) %>
+      <% if component.ingredients.non_poisonous.any? %>
+        <%= render(partial: "responsible_persons/notifications/ingredients",
+                   locals: { ingredients: component.ingredients.non_poisonous }) %>
+      <% end %>
+      <% if component.ingredients.poisonous.any? %>
+        <h4 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-2">
+          Poisonous ingredients and ingredients the <abbr title="National Poisons Information Service">NPIS</abbr> needs to know about
+        </h4>
+        <%= govukSummaryList(
+          classes: "opss-summary-list-mixed",
+          rows: [
+            { key: { text: "Formulation given as" }, value: { text: "Exact concentration" } },
+            { key: { text: "Acute poisoning information" }, value: { text: component.acute_poisoning_info.presence || "None" } },
+          ]
+        ) %>
+        <%= render(partial: "responsible_persons/notifications/ingredients",
+                   locals: { ingredients: component.ingredients.poisonous }) %>
+      <% end %>
+    <% end %>
   </section>
 <% end %>

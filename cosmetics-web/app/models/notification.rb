@@ -75,11 +75,13 @@ class Notification < ApplicationRecord
       indexes :product_name, type: "text"
       indexes :reference_number, type: "text"
       indexes :reference_number_for_display, type: "text"
+      indexes :searchable_ingredients, type: "text"
       indexes :created_at, type: "date"
       indexes :notification_complete_at, type: "date", format: "strict_date_optional_time"
 
       indexes :responsible_person do
         indexes :name, type: "text"
+        indexes :id, type: "integer"
         indexes :address_line_1, type: "text"
         indexes :address_line_2, type: "text"
         indexes :city, type: "text"
@@ -98,16 +100,25 @@ class Notification < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       only: %i[product_name notification_complete_at reference_number],
-      methods: :reference_number_for_display,
+      methods: %i[reference_number_for_display searchable_ingredients],
       include: {
         responsible_person: {
-          only: %i[name address_line_1 address_line_2 city county postal_code],
+          only: %i[id name address_line_1 address_line_2 city county postal_code],
         },
         components: {
           methods: %i[display_sub_category display_sub_sub_category display_root_category],
         },
       },
     )
+  end
+
+  def searchable_ingredients
+    ingredients = []
+    components.each do |c|
+      ingredients << c.ingredients.pluck(:inci_name)
+    end
+
+    ingredients.flatten.join(",")
   end
 
   def reference_number_for_display

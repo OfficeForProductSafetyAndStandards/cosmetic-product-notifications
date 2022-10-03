@@ -52,29 +52,15 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
     end
   end
 
-  describe "formulation file failed antivirus check" do
-    let(:with_stubbed_antivirus_result) { false }
-    let(:component) { create(:component, :with_formulation_file, notification:) }
+  describe "formulation ingredients are missing for the component" do
+    let(:component) { create(:component, :using_range, notification:) }
+
+    before do
+      allow(component).to receive(:missing_ingredients?).and_return(true)
+    end
 
     it "complains about file" do
-      expect(notification.errors.messages_for(:formulation_uploads)).to eq(["File #{component.formulation_file.filename} failed antivirus check. Remove file and try again"])
-    end
-  end
-
-  describe "formulation file still being processed" do
-    let(:with_stubbed_antivirus_result) { nil }
-    let(:component) { create(:component, :with_formulation_file, notification:) }
-
-    it "complains about file" do
-      expect(notification.errors.messages_for(:formulation_uploads)).to eq(["File #{component.formulation_file.filename} is still being processed"])
-    end
-  end
-
-  describe "formulation file is missing" do
-    let(:component) { create(:ranges_component, name: "Item 1", notification:) } # ranges component requires file
-
-    it "complains about missing file" do
-      expect(notification.errors.messages_for(:formulation_uploads)).to eq(["Item #{component.name} is missing formulation file"])
+      expect(notification.errors.messages_for(:formulation_uploads)).to eq(["The notification has not listed any ingredients"])
     end
   end
 end

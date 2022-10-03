@@ -2,7 +2,7 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
   def validate(notification)
     validate_nano_materials(notification)
     validate_image_uploads(notification)
-    validate_frame_formulation_uploads(notification)
+    validate_ingredients(notification)
   end
 
   def validate_nano_materials(notification)
@@ -27,14 +27,10 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
     end
   end
 
-  def validate_frame_formulation_uploads(notification)
+  def validate_ingredients(notification)
     notification.components.each do |component|
-      if component.formulation_file_required?
-        notification.errors.add :formulation_uploads, "Item #{component.name} is missing formulation file"
-      elsif component.formulation_file_pending_antivirus_check?
-        notification.errors.add :formulation_uploads, "File #{component.formulation_file.filename} is still being processed"
-      elsif component.formulation_file_failed_antivirus_check?
-        notification.errors.add :formulation_uploads, "File #{component.formulation_file.filename} failed antivirus check. Remove file and try again"
+      if component.missing_ingredients?
+        notification.errors.add :formulation_uploads, "The notification has not listed any ingredients"
       end
     end
   end
