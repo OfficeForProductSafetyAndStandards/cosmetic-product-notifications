@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2022_09_23_161414) do
   enable_extension "plpgsql"
 
   # These are custom enum types that must be created before they can be used in the schema definition
+  create_enum "ingredient_range_concentration", ["less_than_01_percent", "greater_than_01_less_than_1_percent", "greater_than_1_less_than_5_percent", "greater_than_5_less_than_10_percent", "greater_than_10_less_than_25_percent", "greater_than_25_less_than_50_percent", "greater_than_50_less_than_75_percent", "greater_than_75_less_than_100_percent"]
   create_enum "user_roles", ["poison_centre", "market_surveilance_authority", "opss_science"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -144,6 +145,23 @@ ActiveRecord::Schema.define(version: 2022_09_23_161414) do
     t.datetime "updated_at", null: false
     t.bigint "notification_id"
     t.index ["notification_id"], name: "index_image_uploads_on_notification_id"
+  end
+
+  create_table "ingredients", force: :cascade do |t|
+    t.citext "inci_name", null: false
+    t.string "cas_number"
+    t.decimal "exact_concentration"
+    t.enum "range_concentration", as: "ingredient_range_concentration"
+    t.boolean "poisonous", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "component_id"
+    t.index ["component_id"], name: "index_ingredients_on_component_id"
+    t.index ["created_at"], name: "index_ingredients_on_created_at"
+    t.index ["exact_concentration"], name: "index_ingredients_on_exact_concentration"
+    t.index ["inci_name"], name: "index_ingredients_on_inci_name"
+    t.index ["poisonous"], name: "index_ingredients_on_poisonous"
+    t.index ["range_concentration"], name: "index_ingredients_on_range_concentration"
   end
 
   create_table "nano_materials", force: :cascade do |t|
@@ -365,6 +383,7 @@ ActiveRecord::Schema.define(version: 2022_09_23_161414) do
   add_foreign_key "contact_persons", "responsible_persons"
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
+  add_foreign_key "ingredients", "components"
   add_foreign_key "nanomaterial_notifications", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "responsible_persons"

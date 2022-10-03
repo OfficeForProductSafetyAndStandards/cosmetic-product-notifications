@@ -10,6 +10,7 @@ gem "aasm", "5.2.0"
 # TODO: Switch back to semantic versioning when a version > 3.1.0 is released.
 gem "active_hash", github: "zilkey/active_hash", ref: "1c95f99"
 gem "activerecord-pg_enum"
+gem "after_commit_everywhere"
 gem "aws-sdk-s3", "~> 1.60.1"
 gem "cf-app-utils", "~> 0.6"
 gem "devise"

@@ -1,10 +1,12 @@
-<% if component.exact? && component.exact_formulas.present? %>
-  <%= render "application/none_or_bullet_list", entities_list: format_exact_formulas(component.exact_formulas),
-          key_name: :inci_name, value_name: :quantity %>
-<% elsif component.range? && component.range_formulas.present? %>
-  <%= render "application/none_or_bullet_list", entities_list: format_range_formulas(component.range_formulas),
-          key_name: :inci_name, value_name: :range %>
-<% elsif component.formulation_file.attached? %>
+<% if component.ingredients.exact.any? %>
+  <%= render "application/none_or_bullet_list", entities_list: format_exact_ingredients(component.ingredients.exact),
+          key_name: :inci_name, value_name: :exact_concentration %>
+<% end %>
+<% if component.ingredients.range.any? %>
+  <%= render "application/none_or_bullet_list", entities_list: format_range_ingredients(component.ingredients.range),
+          key_name: :inci_name, value_name: :range_concentration %>
+<% end %>
+<% if component.formulation_file.attached? %>
   <% if component.formulation_file.metadata["safe"] %>
     <%= link_to component.formulation_file.filename,
                 url_for(component.formulation_file),
@@ -18,6 +20,7 @@
   <% else %>
     <%= "The uploaded file has been flagged as a virus" %>
   <% end %>
-<% else %>
+<% end %>
+<% if component.ingredients.none? && !component.formulation_file.attached? %>
   N/A
 <% end %>

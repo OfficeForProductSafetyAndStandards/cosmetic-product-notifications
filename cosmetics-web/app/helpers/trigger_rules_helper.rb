@@ -52,7 +52,7 @@ module TriggerRulesHelper
         if @component.predefined? && !@component.contains_poisonous_ingredients?
           :contains_poisonous_ingredients
         else
-          :upload_formulation
+          :select_formulation_type
         end
 
       responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)

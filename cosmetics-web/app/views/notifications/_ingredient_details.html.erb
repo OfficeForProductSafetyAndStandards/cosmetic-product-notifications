@@ -6,17 +6,20 @@
       <caption class="govuk-table__caption govuk-heading-m"><%= component.name %></caption>
     <% end %>
 
-    <% if component.exact? && component.exact_formulas.present? %>
-      <%= render "formulation_table", entities_list: component.exact_formulas,
-              key_name: :inci_name, value_name: :quantity %>
-    <% elsif component.range? && component.range_formulas.present? %>
-      <%= render "formulation_table", entities_list: format_range_formulas(component.range_formulas),
-              key_name: :inci_name, value_name: :range %>
-    <% elsif component.formulation_file.attached? %>
+    <% if component.ingredients.exact.any? %>
+      <%= render "formulation_table", entities_list: component.ingredients.exact,
+              key_name: :inci_name, value_name: :exact_concentration %>
+    <% end %>
+    <% if component.ingredients.range.any? %>
+      <%= render "formulation_table", entities_list: component.ingredients.range,
+              key_name: :inci_name, value_name: :range_concentration %>
+    <% end %>
+    <% if component.formulation_file.attached? %>
       <% if component.formulation_file.metadata["safe"] %>
         <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
       <% end %>
-    <% else %>
+    <% end %>
+    <% if component.ingredients.none? && !component.formulation_file.attached? %>
       <tr class="govuk-table__row">
         <th class="govuk-table__header govuk-!-width-one-half" scope="row">No ingredients data</th>
       </tr>

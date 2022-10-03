@@ -115,59 +115,6 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "formulation_required", :with_stubbed_antivirus do
-    context "when component uses frame formulation" do
-      it "returns false for predefined formulation when no file attached" do
-        expect(predefined_component.formulation_file_required?).to be false
-      end
-    end
-
-    context "when component uses frame formulation and has harmful ingredients" do
-      let(:contains_poisonous_ingredients) { true }
-
-      it "returns false when there is no file" do
-        expect(predefined_component.formulation_file_required?).to be true
-      end
-
-      it "returns false for predefined formulation even if no file attached" do
-        predefined_component.formulation_file.attach text_file
-        expect(predefined_component.formulation_file_required?).to be false
-      end
-    end
-
-    context "when component uses range formulation" do
-      it "returns true if file is not attached" do
-        expect(ranges_component.formulation_file_required?).to be true
-      end
-
-      it "returns false if file is attached" do
-        ranges_component.formulation_file.attach text_file
-        expect(ranges_component.formulation_file_required?).to be false
-      end
-
-      it "returns false if manually entered data present" do
-        ranges_component.range_formulas.create
-        expect(ranges_component.formulation_file_required?).to be false
-      end
-    end
-
-    context "when component uses exact formulation" do
-      it "returns true for exact formulation if no file attached" do
-        expect(exact_component.formulation_file_required?).to be true
-      end
-
-      it "returns false if file is attached" do
-        exact_component.formulation_file.attach text_file
-        expect(exact_component.formulation_file_required?).to be false
-      end
-
-      it "returns false if manually entered data present" do
-        exact_component.exact_formulas.create
-        expect(exact_component.formulation_file_required?).to be false
-      end
-    end
-  end
-
   describe "updating special_applicator" do
     it "adds errors if special_applicator updated to be blank" do
       predefined_component.special_applicator = nil
@@ -190,6 +137,15 @@ RSpec.describe Component, type: :model do
       predefined_component.save
 
       expect(predefined_component.other_special_applicator).to be_nil
+    end
+  end
+
+  describe "updating 'contains_poisonous_ingredients' attribute on predefined components" do
+    it "deletes all poisonous ingredients when setting it to 'false'" do
+      component = described_class.create(name: "Component X", notification:, notification_type: "predefined", contains_poisonous_ingredients: true)
+      create_list(:poisonous_ingredient, 2, component:)
+      expect { component.update(contains_poisonous_ingredients: false) }
+        .to change { component.ingredients.poisonous.count }.from(2).to(0)
     end
   end
 
@@ -461,23 +417,71 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "select formulation", :with_stubbed_antivirus do
-    context "when no formulation was selected before" do
+  describe "#update_formulation_type", :with_stubbed_antivirus do
+    context "when no formulation type was selected before" do
       let(:component) { create(:component, notification_type: nil) }
 
-      it "sets proper formulation" do
+      it "sets formulation type" do
         component.update_formulation_type("range")
 
         expect(component.notification_type).to eq("range")
       end
     end
 
-    context "when different then formulation was selected before frame formulation" do
+    context "when exact formulation type is set again" do
+      let(:component) { create(:component, :with_exact_ingredients) }
+
+      it "leaves the existing ingredients" do
+        expect { component.update_formulation_type("exact") }
+          .not_to change { component.ingredients.count }.from(1)
+      end
+    end
+
+    context "when changing from predefined with poisonous ingredients" do
+      let(:component) { create(:component, :using_frame_formulation, contains_poisonous_ingredients: true) }
+
+      before do
+        create(:poisonous_ingredient, component:)
+      end
+
+      it "removes the poisonous ingredients formulas" do
+        expect { component.update_formulation_type("range") }
+          .to change { component.ingredients.poisonous.count }.from(1).to(0)
+      end
+
+      it "removes information about poisonus ingredients" do
+        component.update_formulation_type("range")
+
+        expect(component.reload.contains_poisonous_ingredients).to eq nil
+      end
+    end
+
+    context "when changing from exact to range" do
+      let(:component) { create(:component, :with_exact_ingredients) }
+
+      it "removes the ingredients formulas" do
+        expect { component.update_formulation_type("range") }
+          .to change { component.ingredients.exact.count }.from(1).to(0)
+      end
+    end
+
+    context "when changing from range to exact" do
+      let(:component) { create(:component, :with_range_ingredients) }
+
+      before do
+        create(:poisonous_ingredient, component:)
+      end
+
+      it "removes the existing ingredients" do
+        expect { component.update_formulation_type("exact") }
+          .to change { component.ingredients.count }.from(2).to(0)
+      end
+    end
+
+    context "when changing from exact to predefined" do
       let(:component) { create(:component, :using_exact, :with_formulation_file) }
 
-      before { component }
-
-      it "sets proper formulation" do
+      it "sets frame formulation type" do
         component.update_formulation_type("predefined")
 
         expect(component.notification_type).to eq("predefined")
@@ -490,31 +494,35 @@ RSpec.describe Component, type: :model do
       end
     end
 
-    context "when exact formulation was reselected" do
-      let(:component) { create(:component, :using_exact, :with_formulation_file) }
+    context "when changing from legacy predefined with a formulation file to current predefined" do
+      let(:component) { create(:component, :using_frame_formulation, :with_formulation_file) }
 
-      before { component }
+      it "sets frame formulation type" do
+        component.update_formulation_type("predefined")
 
-      it "leaves the file" do
-        component.update_formulation_type("range")
+        expect(component.notification_type).to eq("predefined")
+      end
 
-        expect(component.reload.formulation_file).to be_present
+      it "deletes the legacy formulation file" do
+        component.update_formulation_type("predefined")
+
+        expect(component.reload.formulation_file).to be_blank
       end
     end
 
-    context "when changing from frame formulation" do
-      let(:component) { create(:component, :using_frame_formulation, contains_poisonous_ingredients: true) }
+    context "when changing from legacy exact with a formulation file to predefined" do
+      let(:component) { create(:component, :using_exact, :with_formulation_file) }
 
-      it "removes frame formulation" do
-        component.update_formulation_type("range")
+      it "sets frame formulation type" do
+        component.update_formulation_type("predefined")
 
-        expect(component.reload.frame_formulation).to be_blank
+        expect(component.notification_type).to eq("predefined")
       end
 
-      it "removes information about poisonus ingredients" do
-        component.update_formulation_type("range")
+      it "deletes the legacy formulation file" do
+        component.update_formulation_type("predefined")
 
-        expect(component.reload.contains_poisonous_ingredients).to eq nil
+        expect(component.reload.formulation_file).to be_blank
       end
     end
 
@@ -529,67 +537,41 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "formulation file virus related methods", :with_stubbed_antivirus do
-    let(:component) { create(:ranges_component, :with_formulation_file) }
-
-    describe "formulation_file_failed_antivirus_check?" do
-      context "when virus is present" do
-        let(:with_stubbed_antivirus_result) { false }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(true)
-        end
-      end
-
-      context "when file is not infected" do
-        let(:with_stubbed_antivirus_result) { true }
-
-        it "returns false" do
-          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(false)
-        end
-      end
-
-      context "when no file is present" do
-        let(:component) { create(:ranges_component) }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_failed_antivirus_check?).to eq(false)
-        end
-      end
+  describe "#missing_ingredients?" do
+    it "returns true for a range component with no ingredients" do
+      component = create(:component, :using_range)
+      expect(component.missing_ingredients?).to eq(true)
     end
 
-    describe "formulation_file_pending_antivirus_check?", :with_stubbed_antivirus do
-      context "when result is nil" do
-        let(:with_stubbed_antivirus_result) { nil }
+    it "returns falsefor a range component with ingredients" do
+      component = create(:component, :with_range_ingredients)
+      expect(component.missing_ingredients?).to eq(false)
+    end
 
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(true)
-        end
-      end
+    it "returns true for an exact component with no ingredients" do
+      component = create(:component, :using_exact)
+      expect(component.missing_ingredients?).to eq(true)
+    end
 
-      context "when result is false" do
-        let(:with_stubbed_antivirus_result) { false }
+    it "returns false for an exact component with ingredients" do
+      component = create(:component, :with_exact_ingredients)
+      expect(component.missing_ingredients?).to eq(false)
+    end
 
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
-        end
-      end
+    it "returns true for a predefined component that needs poisonous ingredients but has no ingredients" do
+      component = create(:component, :using_frame_formulation, :with_poisonous_ingredients)
+      expect(component.missing_ingredients?).to eq(true)
+    end
 
-      context "when result is true" do
-        let(:with_stubbed_antivirus_result) { true }
+    it "returns false for a predefined component that needs poisonous ingredients and has a poisonous ingredients" do
+      component = create(:component, :using_frame_formulation, :with_poisonous_ingredients)
+      create(:poisonous_ingredient, component:)
+      expect(component.missing_ingredients?).to eq(false)
+    end
 
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
-        end
-      end
-
-      context "when no file is present" do
-        let(:component) { create(:ranges_component) }
-
-        it "returns true" do
-          expect(component.reload.formulation_file_pending_antivirus_check?).to eq(false)
-        end
-      end
+    it "returns false for a predefined component that does not need poisonous ingredients" do
+      component = create(:component, :using_frame_formulation)
+      expect(component.missing_ingredients?).to eq(false)
     end
   end
 end

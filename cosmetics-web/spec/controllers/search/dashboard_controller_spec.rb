@@ -13,7 +13,7 @@ RSpec.describe Search::DashboardController, type: :controller do
     describe "GET #show" do
       it "redirects to the Poison Centre/MSA notifications index page" do
         get :show
-        expect(response).to redirect_to(poison_centre_notifications_path)
+        expect(response).to redirect_to(poison_centre_notifications_search_path)
       end
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe Search::DashboardController, type: :controller do
     describe "GET #show" do
       it "redirects to the Poison Centre/MSA notifications index page" do
         get :show
-        expect(response).to redirect_to(poison_centre_notifications_path)
+        expect(response).to redirect_to(poison_centre_notifications_search_path)
       end
     end
   end

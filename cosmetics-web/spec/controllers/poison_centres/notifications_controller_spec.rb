@@ -22,42 +22,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       sign_in_as_poison_centre_user
     end
 
-    describe "GET #index" do
-      before do
-        rp_1_notifications
-        rp_2_notifications
-        draft_notification
-        Notification.opensearch.import force: true
-        get :index
-      end
-
-      it "gets all submitted notifications" do
-        expect(assigns(:notifications).records.to_a.sort).to eq((rp_1_notifications + rp_2_notifications).sort)
-      end
-
-      it "excludes draft notifications" do
-        expect(assigns(:notifications).records.to_a).not_to include(draft_notification)
-      end
-
-      it "renders the index template" do
-        expect(response).to render_template("notifications/index")
-      end
-    end
-
-    describe "search on #index" do
-      before do
-        distinct_notification
-        similar_notification_one
-        similar_notification_two
-        Notification.opensearch.import force: true
-      end
-
-      it "finds the correct notification" do
-        get :index, params: { notification_search_form: { q: "bbbb" } }
-        expect(assigns(:notifications).records.to_a).to eq([distinct_notification])
-      end
-    end
-
     describe "GET #show" do
       let(:notification) { rp_1_notifications.first }
       let(:reference_number) { notification.reference_number }
@@ -85,13 +49,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an MSA user" do
     before do
       sign_in_as_msa_user
-    end
-
-    describe "GET #index" do
-      it "renders the index template" do
-        get :index
-        expect(response).to render_template("notifications/index")
-      end
     end
 
     describe "GET #show" do
@@ -170,12 +127,6 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as a Responsible Person user" do
     before do
       sign_in_as_member_of_responsible_person(responsible_person_1)
-    end
-
-    describe "GET #index" do
-      it "redirects to invalid account" do
-        expect(get(:index)).to redirect_to("/invalid-account")
-      end
     end
 
     describe "GET #show" do

@@ -367,21 +367,6 @@ describe ResponsiblePersons::NotificationsHelper do
         allow(user).to receive(:can_view_product_ingredients?).and_return(true)
       end
 
-      it "includes the component notification type" do
-        allow(helper).to receive(:get_notification_type_name).and_return("Notification type name")
-        expect(summary_component_rows).to include(
-          { key: { text: "Formulation given as" }, value: { text: "Notification type name" } },
-        )
-      end
-
-      it "includes the frame formulation for predefined components" do
-        allow(component).to receive(:predefined?).and_return(true)
-        allow(helper).to receive(:get_frame_formulation_name).and_return("Frame formulation name")
-        expect(summary_component_rows).to include(
-          { key: { text: "Frame formulation" }, value: { text: "Frame formulation name" } },
-        )
-      end
-
       it "indicates when the special applicator is used for the component" do
         allow(component).to receive(:special_applicator).and_return("Very special")
         expect(summary_component_rows).to include(
@@ -603,7 +588,7 @@ describe ResponsiblePersons::NotificationsHelper do
         allow(helper).to receive(:render).with("none_or_bullet_list",
                                                entities_list:,
                                                key_name: :inci_name,
-                                               value_name: :quantity,
+                                               value_name: :exact_concentration,
                                                list_classes: "")
                                          .and_return("Bullet list of elements")
 
