@@ -148,6 +148,33 @@ en:
             phone_number:
               blank: "Telephone number can not be blank"
               invalid: "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
+        exact_formula:
+          attributes:
+            inci_name:
+              blank: "Enter a name"
+            quantity:
+              blank: "Enter the concentration"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
+              not_a_number: "Enter a number for the concentration"
+        ingredient:
+          attributes:
+            inci_name:
+              blank: "Enter a name"
+              taken: "Ingredient name already exists in this component"
+            exact_concentration:
+              blank: "Enter the exact or range concentration"
+              present: "Cannot have both exact and range concentrations"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
+              not_a_number: "Enter a number for the concentration"
+              non_poisonous_wrong_component_type: "non poisonous exact ingredients must belong to a exact component"
+            range_concentration:
+              blank: "Enter the exact or range concentration"
+              present: "Cannot have both exact and range concentrations"
+              non_range_component: "ingredient with range concentration must belong to a range component"
+            poisonous:
+              with_range_concentration: "ingredients with range concentration cannot be poisonous"
   activemodel:
     attributes:
       registration/account_security_form:
@@ -176,6 +203,19 @@ en:
               must_be_real: 'The To date must be a real date'
               incomplete: The To date must include a %{missing_date_parts}
               date_from_is_later_than_date_to: The to date must be after From date
+        ingredient_search_form:
+          attributes:
+            date_from:
+              blank: Enter a From date
+              in_future: The From date must be today or in the past
+              must_be_real: The From date must be a real date
+              incomplete: The From date must include a %{missing_date_parts}
+            date_to:
+              blank: Enter a To date
+              in_future: From date cannot be set for the future
+              must_be_real: The To date must be a real date
+              incomplete: The To date must include a %{missing_date_parts}
+              date_from_is_later_than_date_to: The To date must be after From date
         registration/new_account_form:
           attributes:
             full_name:
@@ -229,6 +269,24 @@ en:
           attributes:
             component_id:
               blank: "Select an item"
+        responsible_persons/notifications/ingredient_concentration_form:
+          attributes:
+            component:
+              blank: "Provide a component to associate the ingredient to"
+            exact_concentration:
+              blank: "Enter the concentration"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
+              not_a_number: "Enter a number for the concentration"
+            name:
+              blank: "Enter a name"
+              taken: "Enter a name which is unique to this %{entity}"
+            poisonous:
+              inclusion: "Select yes if the ingredient is poisonous"
+            range_concentration:
+              blank: "Select a concentration range"
+            type:
+              inclusion: "Type must be 'exact' or 'range'"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:

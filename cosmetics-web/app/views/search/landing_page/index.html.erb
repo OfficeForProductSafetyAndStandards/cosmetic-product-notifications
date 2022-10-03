@@ -6,7 +6,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l govuk-!-margin-top-4 govuk-!-margin-bottom-6">
-          Search for cosmetic products
+          Cosmetic products search
         </h1>
         <p class="masthead-account-links govuk-!-padding-top-2 govuk-!-margin-bottom-5">
           <%= link_to "sign in", new_search_user_session_path, class: "govuk-link govuk-link--no-visited-state" %>
@@ -20,10 +20,6 @@
   <% if confirmation %>
     <div class="govuk-!-margin-top-4"></div>
     <%= govukNotificationBanner(text: confirmation, type: "success") %>
-  <% else %>
-    <div class="govuk-!-margin-top-4"></div>
-    <%= govukNotificationBanner(text: "From the 3 October 2022 ingredients will no longer be added to notifications as <abbr>PDF</abbr> documents. <br class='opss-br-desktop'> " \
-                                      "Thereafter, new notifications will include ingredients which are searchable.".html_safe) %>
   <% end %>
 
   <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">

@@ -353,26 +353,6 @@ def expect_back_link_to_formulation_method_page
   expect_back_link_to(/\/build\/select_formulation_type$/)
 end
 
-# Exact concentrations of the ingredients
-# Concentration ranges of the ingredients
-def expect_to_be_on__upload_ingredients_page(header_text)
-  expect(page.current_path).to end_with("/build/upload_formulation")
-  expect(page).to have_h1(header_text)
-end
-
-def expect_back_link_to_upload_ingredients_page
-  expect_back_link_to(/\/build\/upload_formulation$/)
-end
-
-def expect_to_be_on__upload_poisonous_ingredients_page
-  expect(page.current_path).to end_with("/build/upload_formulation")
-  expect(page).to have_h1("Ingredients the National Poisons Information Service needs to know about")
-end
-
-def expect_back_link_to_upload_poisonous_ingredients_page
-  expect_back_link_to(/\/build\/upload_formulation$/)
-end
-
 def expect_to_be_on__poisonous_ingredients_page
   expect(page.current_path).to end_with("/contains_poisonous_ingredients")
   expect(page).to have_h1("Ingredients the National Poisons Information Service needs to know about")
@@ -383,7 +363,7 @@ def expect_back_link_to_poisonous_ingredients_page
 end
 
 def expect_to_be_on__what_is_ph_range_of_product_page
-  expect(page.current_path).to end_with("/trigger_question/select_ph_range")
+  expect(page.current_path).to end_with("/build/select_ph_option")
   expect(page).to have_h1("What is the pH range of the product?")
 end
 
@@ -427,92 +407,6 @@ def expect_back_link_to_upload_item_label_page
   expect_back_link_to_upload_product_label_page
 end
 
-def expect_to_be_on__upload_formulation_document_page(header_text)
-  expect(page.current_path).to end_with("/formulation_file/new")
-  expect(page).to have_h1(header_text)
-end
-
-def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil)
-  within("#product-table") do
-    expect(page).to have_summary_item(key: "Product name", value: product_name)
-    expect(page).to have_summary_item(key: "Shades", value: shades)
-    expect(page).to have_summary_item(key: "Number of items", value: number_of_components)
-  end
-
-  expect(page).to have_summary_item(key: "Nanomaterials", value: nanomaterials)
-  expect(page).to have_summary_item(key: "Category of product", value: category)
-  expect(page).to have_summary_item(key: "Category of #{category.downcase.singularize}", value: subcategory)
-  expect(page).to have_summary_item(key: "Category of #{subcategory.downcase.singularize}", value: sub_subcategory)
-  expect(page).to have_summary_item(key: "Formulation given as", value: formulation_given_as)
-
-  if contains_cmrs
-    expect(page).to have_summary_item(key: "Contains CMR substances", value: contains_cmrs)
-  end
-
-  if eu_notification_date
-    expect(page).to have_summary_item(key: "EU notification date", value: eu_notification_date)
-  end
-
-  if frame_formulation
-    expect(page).to have_summary_item(key: "Frame formulation", value: frame_formulation)
-  end
-
-  expect(page).to have_summary_item(key: "Physical form", value: physical_form)
-
-  if poisonous_ingredients
-    expect(page).to have_summary_item(key: "Contains ingredients NPIS needs to know about", value: poisonous_ingredients)
-  end
-
-  if ph
-    expect(page).to have_summary_item(key: "pH", value: ph)
-  end
-
-  if application_instruction
-    expect(page).to have_summary_item(key: "Application instruction", value: application_instruction)
-  end
-
-  if exposure_condition
-    expect(page).to have_summary_item(key: "Exposure condition", value: exposure_condition)
-  end
-end
-
-def expect_check_your_answers_page_for_kit_items_to_contain(product_name:, number_of_components:, components_mixed:, kit_items:)
-  within("#product-table") do
-    expect(page).to have_summary_item(key: "Product name", value: product_name)
-    expect(page).to have_summary_item(key: "Number of items", value: number_of_components)
-    expect(page).to have_summary_item(key: "Are the items mixed?", value: components_mixed)
-  end
-
-  kit_items.each do |kit_item|
-    expect(page).to have_selector("h3", text: kit_item[:name])
-
-    within("##{kit_item[:name].parameterize}") do
-      expect(page).to have_summary_item(key: "Shades", value: kit_item[:shades])
-
-      if kit_item[:contains_cmrs]
-        expect(page).to have_summary_item(key: "Contains CMR substances", value: kit_item[:contains_cmrs])
-      end
-
-      expect(page).to have_summary_item(key: "Nanomaterials", value: kit_item[:nanomaterials])
-
-      if kit_item[:application_instruction]
-        expect(page).to have_summary_item(key: "Application instruction", value: kit_item[:application_instruction])
-      end
-
-      if kit_item[:exposure_condition]
-        expect(page).to have_summary_item(key: "Exposure condition", value: kit_item[:exposure_condition])
-      end
-
-      expect(page).to have_summary_item(key: "Category of product", value: kit_item[:category])
-      expect(page).to have_summary_item(key: "Category of #{kit_item[:category].downcase.singularize}", value: kit_item[:subcategory])
-      expect(page).to have_summary_item(key: "Category of #{kit_item[:subcategory].downcase.singularize}", value: kit_item[:sub_subcategory])
-      expect(page).to have_summary_item(key: "Formulation given as", value: kit_item[:formulation_given_as])
-      expect(page).to have_summary_item(key: "Physical form", value: kit_item[:physical_form])
-      # expect(page).to have_summary_item(key: "pH", value: kit_item[:ph])
-    end
-  end
-end
-
 def expect_to_be_on__your_cosmetic_products_page
   expect(page.current_path).to end_with("/responsible_persons/#{responsible_person.id}/notifications")
   expect(page).to have_h1("Cosmetic products")
@@ -551,6 +445,14 @@ end
 
 def expect_to_be_on__responsible_person_declaration_page
   expect(page).to have_h1("Responsible Person Declaration")
+end
+
+def expect_form_to_have_errors(errors)
+  expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+  errors.each do |attribute, error|
+    expect(page).to have_link(error[:message], href: "##{attribute}")
+    expect(page).to have_css("p##{error[:id]}-error", text: error[:message])
+  end
 end
 
 # ---- Page interactions ----

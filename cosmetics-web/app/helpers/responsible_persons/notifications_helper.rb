@@ -135,26 +135,6 @@ module ResponsiblePersons::NotificationsHelper
         key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
         value: { text: get_category_name(component.sub_sub_category) },
       },
-      if current_user.can_view_product_ingredients?
-        {
-          key: { text: "Formulation given as" },
-          value: { text: get_notification_type_name(component.notification_type) },
-        }
-      end,
-      if current_user.can_view_product_ingredients? && component.predefined?
-        {
-          key: { text: "Frame formulation" },
-          value: { text: get_frame_formulation_name(component.frame_formulation) },
-        }
-      end,
-      if current_user.can_view_product_ingredients? && !component.predefined?
-        {
-          key: { text: "Formulation" },
-          value: { html: render("notifications/component_details_formulation_ingredients",
-                                component:,
-                                allow_edits:) },
-        }
-      end,
       {
         key: { text: "Physical form" },
         value: { text: get_physical_form_name(component.physical_form) },
@@ -174,7 +154,7 @@ module ResponsiblePersons::NotificationsHelper
       if current_user.can_view_product_ingredients?
         {
           key: { text: "Acute poisoning information" },
-          value: { text: component.acute_poisoning_info },
+          value: { text: component.acute_poisoning_info.presence || "None" },
         }
       end,
       if current_user.can_view_product_ingredients? && component.predefined?
@@ -252,7 +232,7 @@ private
       render("none_or_bullet_list",
              entities_list: format_trigger_question_elements(elements),
              key_name: :inci_name,
-             value_name: :quantity,
+             value_name: :exact_concentration,
              list_classes: "")
     end
   end
