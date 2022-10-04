@@ -3,6 +3,7 @@ class NanoMaterial < ApplicationRecord
   NO = "no".freeze
   NOT_SURE = "not sure".freeze
 
+  belongs_to :nanomaterial_notification, optional: true
   belongs_to :notification, optional: false
 
   has_many :component_nano_materials, dependent: :destroy

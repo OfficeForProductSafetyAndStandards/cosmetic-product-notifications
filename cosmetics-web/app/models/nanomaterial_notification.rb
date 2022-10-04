@@ -2,6 +2,7 @@ class NanomaterialNotification < ApplicationRecord
   class AlreadySubmittedError < StandardError; end
 
   belongs_to :responsible_person
+  has_many :nano_materials
 
   validates :name, presence: true, on: :add_name
 

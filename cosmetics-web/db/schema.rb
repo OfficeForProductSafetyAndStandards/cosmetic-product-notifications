@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_23_161414) do
+ActiveRecord::Schema.define(version: 2022_10_04_162122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -180,6 +180,8 @@ ActiveRecord::Schema.define(version: 2022_09_23_161414) do
     t.string "confirm_toxicology_notified"
     t.string "confirm_usage"
     t.string "confirm_restrictions"
+    t.bigint "nanomaterial_notification_id"
+    t.index ["nanomaterial_notification_id"], name: "index_nano_materials_on_nanomaterial_notification_id"
     t.index ["notification_id"], name: "index_nano_materials_on_notification_id"
   end
 
@@ -384,6 +386,7 @@ ActiveRecord::Schema.define(version: 2022_09_23_161414) do
   add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "ingredients", "components"
+  add_foreign_key "nano_materials", "nanomaterial_notifications"
   add_foreign_key "nanomaterial_notifications", "responsible_persons"
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "responsible_persons"
