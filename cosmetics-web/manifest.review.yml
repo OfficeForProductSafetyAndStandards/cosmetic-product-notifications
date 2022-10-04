@@ -13,6 +13,8 @@ applications:
     COSMETICS_HOST: ((cosmetics-host))
     OS_NAMESPACE: ((cosmetics-instance-name))
     SENTRY_CURRENT_ENV: ((sentry-current-env))
+    RAILS_MAX_THREADS: ((web-max-threads))
+    WEB_CONCURRENCY: ((web-concurrency))
   stack: cflinuxfs3
   services:
     - ((cosmetics-web-database))
@@ -31,17 +33,12 @@ applications:
     - cosmetics-seed-env
   processes:
     - type: web
-      env:
-        RAILS_MAX_THREADS: ((web-max-threads))
-        WEB_CONCURRENCY: ((web-concurrency))
-      command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate db:seed open_search:reindex && RAILS_MIN_THREADS=((web-max-threads)) RAILS_MAX_THREADS=((web-max-threads)) WEB_CONCURRENCY=((web-concurrency)) bundle exec puma -C config/puma.rb
+      command: export $(./env/get-env-from-vcap.sh) && bin/rake cf:on_first_instance db:migrate db:seed open_search:reindex && bundle exec puma -C config/puma.rb
       instances: 1
       memory: 1G
       disk-quota: 2G
     - type: worker
-      env:
-        RAILS_MAX_THREADS: ((worker-max-threads))
-      command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && bin/sidekiq -C config/sidekiq.yml
+      command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && RAILS_MAX_THREADS=((worker-max-threads)) bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
       instances: 1
       memory: 500M
