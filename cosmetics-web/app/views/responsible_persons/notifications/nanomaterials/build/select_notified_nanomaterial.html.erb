@@ -1,0 +1,31 @@
+<% title = "Select a notified nanomaterial" %>
+
+<% page_title title, errors: @nano_material.errors.any? %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+
+<% items = @nanomaterial_notifications.map do |notification|
+     { text: notification.name, value: notification.id }
+   end %>
+
+<%= form_with model: @nano_material, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= error_summary(@nano_material.errors) %>
+
+      <h1 class="govuk-fieldset__heading govuk-label--l"><%= title %></h1>
+      <%= govukSelect(form: form,
+                      key: :nanomaterial_notification,
+                      id: "nanomaterial_notification",
+                      name: "nanomaterial_notification",
+                      show_all_values: true,
+                      is_autocomplete: true,
+                      hint: { text: "Select from your notified nanomaterials using the dropdown below" },
+                      items: items,
+                      value: @nano_material.nanomaterial_notification_id) %>
+      <%= govukButton text: "Save and continue" %>
+    </div>
+  </div>
+<% end %>

@@ -74,4 +74,60 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     return_to_tasks_list_page
     expect_task_completed "Nano material one"
   end
+
+  scenario "Completing a non-standard nanomaterial for a product notification" do
+    nanomaterial_notification = create(:nanomaterial_notification, name: "Nano Notified one", responsible_person:)
+    visit "/responsible_persons/#{responsible_person.id}/notifications"
+
+    click_on "Add a cosmetic product"
+
+    complete_product_wizard(name: "Product one nano one item", items_count: 1, nano_materials_count: 1)
+    expect_progress(1, 4)
+
+    click_on "Nanomaterial #1"
+    expect_to_be_on__what_is_the_purpose_of_nanomaterial_page
+    click_button "Continue"
+    expect_form_to_have_errors(purposes_form_purpose_type_standard: { message: "Select the purpose of this nanomaterial",
+                                                                      id: "purposes_form_purpose_type" })
+
+    page.choose "Another purpose"
+    click_button "Continue"
+    expect_to_be_on__have_you_submitted_a_notification_page
+
+    click_button "Continue"
+    expect_form_to_have_errors(nano_material_confirm_toxicology_notified_yes: {
+      message: "Select an option",
+      id: "nano_material_confirm_toxicology_notified",
+    })
+
+    page.choose "Not sure"
+    click_button "Continue"
+    expect_to_be_on__must_notify_your_nanomaterial
+    expect_back_link_to_have_you_submitted_a_notification_page
+
+    click_link "Back"
+    expect_to_be_on__have_you_submitted_a_notification_page
+
+    page.choose "Yes"
+    click_button "Continue"
+    expect_to_be_on__when_products_containing_nanomaterial_can_be_placed_page
+    expect_back_link_to_have_you_submitted_a_notification_page
+
+    click_button "Continue"
+    expect_to_be_on__select_notified_nanomaterial_page
+    expect_back_link_to_when_products_containing_nanomaterial_can_be_placed_page
+
+    click_button "Save and continue"
+    expect_form_to_have_errors(nanomaterial_notification: {
+      message: "Select a notified nanomaterial",
+      id: "nanomaterial_notification",
+    })
+    page.select(nanomaterial_notification.name, from: "nanomaterial_notification")
+    click_button "Save and continue"
+
+    expect_task_has_been_completed_page
+
+    return_to_tasks_list_page
+    expect_task_completed nanomaterial_notification.name
+  end
 end
