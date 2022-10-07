@@ -12,7 +12,9 @@ class NanoMaterial < ApplicationRecord
   delegate :component_name, to: :component
 
   validates :inci_name, presence: true, on: :add_nanomaterial_name
-  validate :unique_name_per_notification, on: :add_nanomaterial_name
+  validate :unique_name_per_product_notification, on: :add_nanomaterial_name
+  validate :nanomaterial_notification_association
+  validates :nanomaterial_notification, uniqueness: { scope: :notification_id, allow_blank: true }
   validates :purposes, presence: true, on: :select_purposes
   validates :purposes, array: { presence: true, inclusion: { in: NanoMaterialPurposes.all.map(&:name) } }
 
@@ -69,10 +71,19 @@ private
     confirm_toxicology_notified.blank? || toxicology_required?
   end
 
-  def unique_name_per_notification
+  def unique_name_per_product_notification
     nanos_with_same_name = self.class.where(notification:)
                                      .where.not(id:)
                                      .where("trim(lower(inci_name)) = ?", inci_name.downcase.strip)
     errors.add(:inci_name) if nanos_with_same_name.any?
+  end
+
+  def nanomaterial_notification_association
+    return if nanomaterial_notification.blank?
+
+    errors.add(:nanomaterial_notification, :standard) if standard?
+    if notification && nanomaterial_notification.responsible_person != notification.responsible_person
+      errors.add(:nanomaterial_notification, :wrong_responsible_person)
+    end
   end
 end

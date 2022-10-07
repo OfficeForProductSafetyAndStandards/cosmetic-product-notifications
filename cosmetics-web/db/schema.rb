@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_04_162122) do
+ActiveRecord::Schema.define(version: 2022_10_07_125127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 2022_10_04_162122) do
     t.string "confirm_restrictions"
     t.bigint "nanomaterial_notification_id"
     t.index ["nanomaterial_notification_id"], name: "index_nano_materials_on_nanomaterial_notification_id"
+    t.index ["notification_id", "nanomaterial_notification_id"], name: "index_nano_materials_on_notification_and_nano_notification", unique: true
     t.index ["notification_id"], name: "index_nano_materials_on_notification_id"
   end
 

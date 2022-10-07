@@ -113,6 +113,66 @@ RSpec.describe NanoMaterial, type: :model do
         end
       end
     end
+
+    describe "nanomaterial notification association" do
+      let(:product_notification) { build(:notification) }
+      let(:nanomaterial_notification) do
+        build(:nanomaterial_notification, responsible_person: product_notification.responsible_person)
+      end
+
+      describe "per nanomaterial purposes" do
+        it "is not valid with a standard nanomaterial" do
+          nano_material = build(:nano_material_standard, notification: product_notification, nanomaterial_notification:)
+          expect(nano_material).not_to be_valid
+          expect(nano_material.errors[:nanomaterial_notification])
+            .to eq ["Nanomaterial must be non standard to be associated with a nanomaterial notification"]
+        end
+
+        it "is valid with non-standard nanomaterial" do
+          nano_material = build(:nano_material, :non_standard, notification: product_notification, nanomaterial_notification:)
+          expect(nano_material).to be_valid
+        end
+      end
+
+      describe "uniqueness per product notification" do
+        before do
+          create(:nano_material_non_standard, notification: product_notification, nanomaterial_notification:)
+        end
+
+        it "accepts two nanomaterials belonging to different product notifications with the same nanomaterial notification" do
+          diff_product_notification = build(:notification, responsible_person: product_notification.responsible_person)
+          nano_material = build(:nano_material_non_standard,
+                                nanomaterial_notification:,
+                                notification: diff_product_notification)
+          expect(nano_material).to be_valid
+        end
+
+        it "rejects two nanomaterials belonging to the same product notification with the same nanomaterial notification" do
+          nano_material = build(:nano_material_non_standard,
+                                nanomaterial_notification:,
+                                notification: product_notification)
+          expect(nano_material).not_to be_valid
+          expect(nano_material.errors[:nanomaterial_notification])
+            .to eq ["This notified nanomaterial is already added to this product notification"]
+        end
+      end
+
+      describe "same responsible person as product notification" do
+        it "is valid when the nanomaterial notification belongs to the same responsible person as the product notification" do
+          product_notification = build(:notification, responsible_person: nanomaterial_notification.responsible_person)
+          nano_material = build(:nano_material, nanomaterial_notification:, notification: product_notification)
+          expect(nano_material).to be_valid
+        end
+
+        it "is not valid when the nanomaterial notification belongs to a different responsible person than the product notification" do
+          product_notification = build(:notification)
+          nano_material = build(:nano_material, nanomaterial_notification:, notification: product_notification)
+          expect(nano_material).not_to be_valid
+          expect(nano_material.errors[:nanomaterial_notification])
+            .to eq ["Nanomaterial notification must belong to the same responsible person as the product notification"]
+        end
+      end
+    end
   end
 
   describe "#non_standard?" do
