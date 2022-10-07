@@ -303,9 +303,18 @@ def expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
   expect_back_link_to(/\/build\/select_purposes$/)
 end
 
+def expect_to_be_on__what_is_the_nanomaterial_inci_name_page
+  expect(page.current_path).to end_with("/build/add_nanomaterial_name")
+  expect(page).to have_h1("What is the nanomaterial INCI name?")
+end
+
+def expect_back_link_to_what_is_the_nanomaterial_inci_name_page
+  expect_back_link_to(/\/build\/add_nanomaterial_name$/)
+end
+
 def expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/confirm_restrictions")
-  expect(page).to have_h1("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?")
+  expect(page).to have_h1("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annexes 4 and 5?")
 end
 
 def expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
@@ -314,7 +323,7 @@ end
 
 def expect_to_be_on__does_nanomaterial_conform_to_restrictions_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/confirm_usage")
-  expect(page).to have_h1("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?")
+  expect(page).to have_h1("Does the #{nanomaterial_name} conform to the restrictions set out in Annexes 4 and 5?")
 end
 
 def expect_back_link_to_does_nanomaterial_conform_to_restrictions_page
