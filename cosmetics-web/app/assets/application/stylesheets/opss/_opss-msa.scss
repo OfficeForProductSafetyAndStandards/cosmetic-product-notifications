@@ -179,6 +179,15 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
     }
 }
 
+.opss-font-size--reduced-s { /* inherited size - small amount reduced size*/
+    font-size: 92% !important;
+}
+
+a.govuk-link.opss-link--no-hover:hover {
+    text-decoration: none !important;
+    color: $govuk-link-colour !important;
+}
+
 /*.opss-list--borders {
     li {
         padding: govuk-spacing(4) 0 govuk-spacing(2) 0;
@@ -395,9 +404,10 @@ tbody.opss-table-grouped-by--2 + tbody.opss-table-grouped-by--none {
     }
 }
 
-/* check if this code BELOW is still required? .... */
+/*.opss-text-align-right > form > select {min-width: none; }*/
+select {min-width: 11.5em} /*localhost version not styling like new gds v?*/
 
-/* used on the search page - starts */
+/* used on the search page - starts.  (Required for filters in left col on search pgs) */
 body.js-enabled .govuk-radios__conditional--hidden.opss-nojs-hide {
     height: 0; overflow: hidden; float: left; margin: 0;
 }
@@ -408,3 +418,10 @@ body.js-enabled .govuk-radios__conditional.opss-nojs-hide {
     display: block;
 }
 /* used on the search page - ends */
+
+div[class*="radios--small"],
+div[class*="checkboxes--small"] {
+    label[class*="font-size-16"] {
+        line-height: 1.5 !important
+    }
+}
