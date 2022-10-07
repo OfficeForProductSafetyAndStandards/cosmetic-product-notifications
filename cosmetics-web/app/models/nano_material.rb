@@ -25,8 +25,15 @@ class NanoMaterial < ApplicationRecord
   end
 
   def display_name
-    [iupac_name, inci_name, inn_name, xan_name, cas_number, ec_number, einecs_number, elincs_number]
-      .reject(&:blank?).join(", ")
+    [iupac_name,
+     inci_name,
+     nanomaterial_notification&.name,
+     inn_name,
+     xan_name,
+     cas_number,
+     ec_number,
+     einecs_number,
+     elincs_number].reject(&:blank?).join(", ")
   end
 
   def standard?
@@ -62,7 +69,7 @@ class NanoMaterial < ApplicationRecord
   end
 
   def name
-    inci_name
+    inci_name.presence || nanomaterial_notification&.name
   end
 
 private

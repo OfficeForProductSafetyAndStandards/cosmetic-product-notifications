@@ -14,7 +14,7 @@
            end
 
     { name: 'responsible_persons_notifications_delete_nano_material_form[nano_material_ids][]',
-      text: nano_material.inci_name.presence || "Nanomaterial ##{i+1}",
+      text: nano_material.name.presence || "Nanomaterial ##{i+1}",
       value: nano_material.id,
       key: :nil, # TODO: investigate design library to get rid of required key attribute
       id: "nano-#{nano_material.id}",
