@@ -4,7 +4,8 @@ require "csv"
 # First, create extra RP's
 # business,Wyman Lowe,Eusebio Drive,39968,East Janside,Greater London,W4 2HF,Ian Abernathy,cesar@wintheiser.biz,07700 900000
 data = CSV.read("db/seeds/rp_data.csv")
-data = data[0..100]
+# uncomment for local testing
+# data = data[0..100]
 RP_COUNT = data.count
 
 ActiveRecord::Base.transaction do
@@ -35,7 +36,8 @@ ActiveRecord::Base.transaction do
 
   # lets create notifications based on names
   names = CSV.read("notification_names.csv", liberal_parsing: true)
-  names = names[0..1000]
+  # uncomment for local testing
+  # names = names[0..1000]
 
   ActiveRecord::Base.transaction do
     names.each_with_index do |row, i|

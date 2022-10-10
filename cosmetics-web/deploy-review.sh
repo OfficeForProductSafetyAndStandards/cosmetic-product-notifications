@@ -26,7 +26,7 @@ then
   DB_NAME=cosmetics-review-database
 fi
 
-DB_GUID=$(cf service cosmetics-db-staging-dump-26092022 --guid)
+DB_GUID=$(cf service cosmetics-database-template --guid)
 cf create-service postgres small-13 $DB_NAME -c "{\"restore_from_point_in_time_of\": \"$DB_GUID\" }"
 
 # Wait until db is prepared, might take up to 10 minutes
