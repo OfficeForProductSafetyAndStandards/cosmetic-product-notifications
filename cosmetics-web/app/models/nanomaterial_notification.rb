@@ -19,6 +19,8 @@ class NanomaterialNotification < ApplicationRecord
 
   has_one_attached :file
 
+  scope :submitted, -> { where.not(submitted_at: nil) }
+
   # Expects either a date object, or a hash containing
   # year, month and day, for example:
   #

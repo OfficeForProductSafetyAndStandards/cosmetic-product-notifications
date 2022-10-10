@@ -103,7 +103,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
     end
 
     def set_nanomaterial_notifications
-      @nanomaterial_notifications = @notification.responsible_person.nanomaterial_notifications
+      @nanomaterial_notifications = @notification.responsible_person.nanomaterial_notifications.submitted
     end
 
     def nano_material_params
