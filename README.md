@@ -4,24 +4,17 @@
 [![Coverage Status](https://coveralls.io/repos/github/UKGovernmentBEIS/beis-opss/badge.svg?branch=master)](https://coveralls.io/github/UKGovernmentBEIS/beis-opss?branch=master)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=UKGovernmentBEIS/beis-opss)](https://dependabot.com)
 
+#
+
+## Guides
+
+* [Review apps](cosmetics-web/docs/REVIEW_APPS.md)
 
 ## Inviting Search Users
 
 1. SSH and run rails console: `cd app && export $(./env/get-env-from-vcap.sh) && /tmp/lifecycle/launcher /home/vcap/app 'rails c' ''`.
 2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`.
 3. Role could be `poison_centre` or `msa`.
-
-## Creating ad-hoc reviews apps
-
-Useful for example for user testing:
-
-```
-DB_NAME=cosmetics-db-2021_09_21_092542 REVIEW_INSTANCE_NAME=cosmetics-test REDIS_NAME=cosmetics-test-redis cosmetics-web/deploy-review.sh
-```
-
-DB_NAME is name of database
-REVIEW_INSTANCE_NAME is name of domain eg `REVIEW_INSTANCE_NAME=user-testing` will become `cosmetics-user-testing`
-REDIS_NAME is name of redis instance
 
 ## Getting Setup
 
@@ -210,27 +203,6 @@ And those routes are explicitly disabled in application:
 Anything which is merged to `master` (via a Pull Request or push) will trigger the
 [Github Action Build](https://github.com/UKGovernmentBEIS/beis-opss-cosmetics/actions/workflows/deploy.yml)
 and cause deployments of the various components to the int space on GOV.UK PaaS.
-
-### Review applications
-
-In order to make PR review process fast and independent, there is possibility to create
-short lived environment for given change. In order to do start your environment, run
-`REVIEW_INSTANCE_NAME=ticket-123 ./cosmetics-web/deploy-review.sh`, where `ticket-123` is desired name of review app.
-
-This will create 2 urls:
-* `https://cosmetics-ticket-123-submit-web.london.cloudapps.digital`
-* `https://cosmetics-ticket-123-search-web.london.cloudapps.digital`
-
-And 2 applications (db is shared):
-* cosmetics-ticket-123-web
-* cosmetics-ticket-123-worker
-
-By default, database is shared with all review apps, but it can be overriden by setting `DB_NAME` env variable.
-
-#### Debuging review application
-
-
-Please run debug app deployment locally. See [".github/workflows/review-apps.yml"](https://github.com/UKGovernmentBEIS/beis-opss/blob/master/.github/workflows/review-apps.yml) for details.
 
 ### Deployment from scratch
 
