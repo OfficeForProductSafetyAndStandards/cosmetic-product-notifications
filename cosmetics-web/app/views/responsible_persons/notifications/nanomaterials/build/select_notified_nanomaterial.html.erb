@@ -25,7 +25,10 @@
                       hint: { text: "Select from your notified nanomaterials using the dropdown below" },
                       items: items,
                       value: @nano_material.nanomaterial_notification_id) %>
-      <%= govukButton text: "Save and continue" %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+        <%= link_to "My nanomaterial is not displayed", wizard_path(:notify_your_nanomaterial), class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
     </div>
   </div>
 <% end %>

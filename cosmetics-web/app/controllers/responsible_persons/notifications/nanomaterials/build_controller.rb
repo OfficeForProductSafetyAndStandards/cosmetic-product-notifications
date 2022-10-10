@@ -39,7 +39,10 @@ module  ResponsiblePersons::Notifications::Nanomaterials
       when_products_containing_nanomaterial_can_be_placed_on_market: :non_standard_nanomaterial_notified,
       select_notified_nanomaterial: :when_products_containing_nanomaterial_can_be_placed_on_market,
       cannot_place_until_review_period_ended: :select_notified_nanomaterial,
-      notify_your_nanomaterial: :non_standard_nanomaterial_notified,
+      notify_your_nanomaterial: {
+        non_standard_nanomaterial_notified: -> { @nano_material.confirm_toxicology_notified != "yes" },
+        select_notified_nanomaterial: -> { @nano_material.confirm_toxicology_notified == "yes" },
+      },
       must_be_listed: :confirm_restrictions,
       must_conform_to_restrictions: :confirm_usage,
     }.freeze

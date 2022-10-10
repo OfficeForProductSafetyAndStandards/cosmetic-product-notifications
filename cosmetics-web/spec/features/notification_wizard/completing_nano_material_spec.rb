@@ -120,6 +120,11 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_to_be_on__select_notified_nanomaterial_page
     expect_back_link_to_when_products_containing_nanomaterial_can_be_placed_page
 
+    click_link "My nanomaterial is not displayed"
+    expect_to_be_on__must_notify_your_nanomaterial
+    expect_back_link_to_select_notified_nanomaterial_page
+
+    click_link "Back"
     click_button "Save and continue"
     expect_form_to_have_errors(nanomaterial_notification: {
       message: "Select a notified nanomaterial",
