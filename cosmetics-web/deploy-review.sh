@@ -25,7 +25,9 @@ if [ -z "$DB_NAME" ]
 then
   DB_NAME=cosmetics-review-database
 fi
-cf create-service postgres small-13 $DB_NAME -c '{"enable_extensions": ["pgcrypto"]}'
+
+DB_GUID=$(cf service cosmetics-db-staging-dump-26092022 --guid)
+cf create-service postgres small-13 $DB_NAME -c "{\"restore_from_point_in_time_of\": \"$DB_GUID\" }"
 
 # Wait until db is prepared, might take up to 10 minutes
 until cf service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_exists; do sleep 20; echo "Waiting for db"; done
