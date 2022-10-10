@@ -353,6 +353,15 @@ def expect_to_be_on__select_notified_nanomaterial_page
   expect(page).to have_h1("Select a notified nanomaterial")
 end
 
+def expect_back_link_to_select_notified_nanomaterial_page
+  expect_back_link_to(/\/build\/select_notified_nanomaterial$/)
+end
+
+def expect_to_be_on__cannot_place_until_review_period_ended_page
+  expect(page.current_path).to end_with("/build/cannot_place_until_review_period_ended")
+  expect(page).to have_h1("You cannot place this cosmetic onto the GB market until the 6 month review period has ended")
+end
+
 def expect_to_be_on__must_notify_your_nanomaterial
   expect(page.current_path).to end_with("/build/notify_your_nanomaterial")
   expect(page).to have_h1("You cannot notify this product until you have notified the nanomaterial you want to use")

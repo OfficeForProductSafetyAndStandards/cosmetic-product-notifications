@@ -76,7 +76,10 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   end
 
   scenario "Completing a non-standard nanomaterial for a product notification" do
-    nanomaterial_notification = create(:nanomaterial_notification, name: "Nano Notified one", responsible_person:)
+    nanomaterial_notification = create(:nanomaterial_notification,
+                                       :submitted,
+                                       name: "Nano Notified one",
+                                       responsible_person:)
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
     click_on "Add a cosmetic product"
@@ -124,6 +127,10 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     })
     page.select(nanomaterial_notification.name, from: "nanomaterial_notification")
     click_button "Save and continue"
+
+    expect_to_be_on__cannot_place_until_review_period_ended_page
+    expect_back_link_to_select_notified_nanomaterial_page
+    click_button "Continue"
 
     expect_task_has_been_completed_page
 

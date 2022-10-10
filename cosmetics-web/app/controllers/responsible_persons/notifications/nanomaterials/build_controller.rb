@@ -21,6 +21,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
           :notify_your_nanomaterial, # FLOW TERMINATION when "Have you Submited..." fails.
           :when_products_containing_nanomaterial_can_be_placed_on_market,
           :select_notified_nanomaterial,
+          :cannot_place_until_review_period_ended,
           # Common: Completion step
           :completed
 
@@ -37,6 +38,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
       },
       when_products_containing_nanomaterial_can_be_placed_on_market: :non_standard_nanomaterial_notified,
       select_notified_nanomaterial: :when_products_containing_nanomaterial_can_be_placed_on_market,
+      cannot_place_until_review_period_ended: :select_notified_nanomaterial,
       notify_your_nanomaterial: :non_standard_nanomaterial_notified,
       must_be_listed: :confirm_restrictions,
       must_conform_to_restrictions: :confirm_usage,
@@ -82,7 +84,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
         update_confirm_usage_step
       when :non_standard_nanomaterial_notified
         update_non_standard_nanomaterial_step
-      when :when_products_containing_nanomaterial_can_be_placed_on_market
+      when :when_products_containing_nanomaterial_can_be_placed_on_market, :cannot_place_until_review_period_ended
         render_next_step @nano_material
       when :select_notified_nanomaterial
         update_select_notified_nanomaterial_step
@@ -182,16 +184,23 @@ module  ResponsiblePersons::Notifications::Nanomaterials
 
     def update_select_notified_nanomaterial_step
       set_nanomaterial_notifications
-      id = params[:nanomaterial_notification]
-
-      if id.blank?
+      if params[:nanomaterial_notification].blank?
         @nano_material.errors.add :nanomaterial_notification, :blank
         rerender_current_step
-      elsif @nano_material.update(nanomaterial_notification: @nanomaterial_notifications.find(id))
-        jump_to_step(:completed)
       else
-        rerender_current_step
+        nanomaterial_notification = @nanomaterial_notifications.find(params[:nanomaterial_notification])
+        if @nano_material.update(nanomaterial_notification:)
+          jump_to_step(next_step_from_nano_notification_selection(nanomaterial_notification))
+        else
+          rerender_current_step
+        end
       end
+    end
+
+    def next_step_from_nano_notification_selection(notification)
+      return unless notification
+
+      notification.can_be_made_available_on_uk_market? ? :completed : :cannot_place_until_review_period_ended
     end
 
     def model
