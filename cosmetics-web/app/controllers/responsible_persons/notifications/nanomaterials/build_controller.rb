@@ -193,17 +193,15 @@ module  ResponsiblePersons::Notifications::Nanomaterials
       else
         nanomaterial_notification = @nanomaterial_notifications.find(params[:nanomaterial_notification])
         if @nano_material.update(nanomaterial_notification:)
-          jump_to_step(next_step_from_nano_notification_selection(nanomaterial_notification))
+          if nanomaterial_notification.can_be_made_available_on_uk_market?
+            jump_to_step(:completed)
+          else
+            jump_to_step(:cannot_place_until_review_period_ended)
+          end
         else
           rerender_current_step
         end
       end
-    end
-
-    def next_step_from_nano_notification_selection(notification)
-      return unless notification
-
-      notification.can_be_made_available_on_uk_market? ? :completed : :cannot_place_until_review_period_ended
     end
 
     def model
