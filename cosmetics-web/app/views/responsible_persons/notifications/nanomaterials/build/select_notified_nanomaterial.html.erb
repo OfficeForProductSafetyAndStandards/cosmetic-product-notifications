@@ -6,9 +6,9 @@
 <% end %>
 
 
-<% items = @nanomaterial_notifications.map do |notification|
-             { text: notification.name, value: notification.id }
-           end.prepend({ text: "Select a nanomaterial", value: "" }) %>
+<% items = @nanomaterial_notifications
+             .map { |n|{ text: n.name, value: n.id, attributes: { class: "govuk-!-font-size-16" } }}
+             .prepend({ text: "Select a nanomaterial", value: "", attributes: {  class: "govuk-!-font-size-16" } }) %>
 
 
 
