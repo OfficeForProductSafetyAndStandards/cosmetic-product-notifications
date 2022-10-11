@@ -48,7 +48,11 @@ REDIS_NAME is name of redis instance
 ## Database
 
 To make testing easier we are using copy of staging data with extra notifications.
-The name of the template db is `cosmetics-db-staging-template`
+The name of the template db is `cosmetics-database-template`
+
+### Database preparation
+
+Instruction how to prepare template database that will be copied to new review app.
 
 To dump staging db:
 
@@ -75,7 +79,7 @@ and download it to localhost:
 cf ssh cosmetics-web -c 'cat app/notification_names.csv' > notification_names.csv
 ```
 
-On localhost, on stagingg DB, run script:
+On localhost, on staging DB, run script:
 
 `rails r db/seeds/enhance_db_with_extra_data.rb`
 
