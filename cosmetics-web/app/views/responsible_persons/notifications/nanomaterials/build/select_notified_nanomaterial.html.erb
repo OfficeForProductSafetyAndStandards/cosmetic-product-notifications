@@ -5,7 +5,12 @@
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-<% items = @nanomaterial_notifications.map { |n| { text: n.name, value: n.id } } %>
+
+<% items = @nanomaterial_notifications.map do |notification|
+             { text: notification.name, value: notification.id }
+           end.prepend({ text: "Select a nanomaterial", value: "" }) %>
+
+
 
 <%= form_with model: @nano_material, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
   <div class="govuk-grid-row">
@@ -23,11 +28,9 @@
                       name: "nanomaterial_notification",
                       described_by: "nanomaterial_notification-hint",
                       show_all_values: true,
-                      is_autocomplete: true,
-                      blank_text: "Select a nanomaterial",
                       hint: { text: "These are your notified nanomaterials." },
                       items: items,
-                      value: @nano_material.nanomaterial_notification_id) %>
+                      value: @nano_material.nanomaterial_notification_id.presence || "") %>
       <div class="govuk-button-group">
         <%= govukButton text: "Save and continue" %>
         <%= link_to "My nanomaterial is not displayed", wizard_path(:notify_your_nanomaterial), class: "govuk-link govuk-link--no-visited-state" %>
