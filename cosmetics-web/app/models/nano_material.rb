@@ -49,8 +49,7 @@ class NanoMaterial < ApplicationRecord
   end
 
   def completed?
-    ((standard? && inci_name.present? && confirm_usage == YES && confirm_restrictions == YES) ||
-      (non_standard? && confirm_toxicology_notified == YES)) && !blocked?
+    (standard_completed? || non_standard_completed?) && !blocked?
   end
 
   def blocked?
@@ -73,6 +72,14 @@ class NanoMaterial < ApplicationRecord
   end
 
 private
+
+  def standard_completed?
+    standard? && inci_name.present? && confirm_usage == YES && confirm_restrictions == YES
+  end
+
+  def non_standard_completed?
+    non_standard? && confirm_toxicology_notified == YES && nanomaterial_notification.present?
+  end
 
   def toxicology_required_or_empty?
     confirm_toxicology_notified.blank? || toxicology_required?

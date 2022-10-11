@@ -328,49 +328,62 @@ RSpec.describe NanoMaterial, type: :model do
       end
     end
 
-    context "when the non-standard purposes requirements are met" do
+    context "with non-standard purposes" do
       before do
         nano_material.purposes = %w[other]
       end
 
-      it "is completed when toxicology notification confirmation is positive" do
-        nano_material.confirm_toxicology_notified = "yes"
-        expect(nano_material).to be_completed
+      context "when associated with a nanomaterial notification" do
+        before do
+          nano_material.nanomaterial_notification = build(:nanomaterial_notification, :submitted)
+        end
+
+        it "is completed when toxicology notification confirmation is positive" do
+          nano_material.confirm_toxicology_notified = "yes"
+          expect(nano_material).to be_completed
+        end
+
+        it "is not completed when toxicology notification confirmation is negative" do
+          nano_material.confirm_toxicology_notified = "no"
+          expect(nano_material).not_to be_completed
+        end
+
+        it "is not completed when toxicology notification confirmation is dubious" do
+          nano_material.confirm_toxicology_notified = "not sure"
+          expect(nano_material).not_to be_completed
+        end
+
+        it "is not completed when toxicology notification confirmation is missing" do
+          nano_material.confirm_toxicology_notified = ""
+          expect(nano_material).not_to be_completed
+        end
+
+        it "is completed when missing an inci_name" do
+          nano_material.inci_name = ""
+          expect(nano_material).to be_completed
+        end
+
+        it "is completed when usage confirmation is missing" do
+          nano_material.confirm_usage = ""
+          expect(nano_material).to be_completed
+        end
+
+        it "is not completed when usage confirmation is negative" do
+          nano_material.confirm_usage = "no"
+          expect(nano_material).not_to be_completed
+        end
+
+        it "is completed when restrictions confirmation is missing" do
+          nano_material.confirm_restrictions = ""
+          expect(nano_material).to be_completed
+        end
       end
 
-      it "is not completed when toxicology notification confirmation is negative" do
-        nano_material.confirm_toxicology_notified = "no"
-        expect(nano_material).not_to be_completed
-      end
-
-      it "is not completed when toxicology notification confirmation is dubious" do
-        nano_material.confirm_toxicology_notified = "not sure"
-        expect(nano_material).not_to be_completed
-      end
-
-      it "is not completed when toxicology notification confirmation is missing" do
-        nano_material.confirm_toxicology_notified = ""
-        expect(nano_material).not_to be_completed
-      end
-
-      it "is completed when missing an inci_name" do
-        nano_material.inci_name = ""
-        expect(nano_material).to be_completed
-      end
-
-      it "is completed when usage confirmation is missing" do
-        nano_material.confirm_usage = ""
-        expect(nano_material).to be_completed
-      end
-
-      it "is not completed when usage confirmation is negative" do
-        nano_material.confirm_usage = "no"
-        expect(nano_material).not_to be_completed
-      end
-
-      it "is completed when restrictions confirmation is missing" do
-        nano_material.confirm_restrictions = ""
-        expect(nano_material).to be_completed
+      context "when not associated with a nanomaterial notification" do
+        it "is not completed even when toxicology notification confirmation is positive" do
+          nano_material.confirm_toxicology_notified = "yes"
+          expect(nano_material).not_to be_completed
+        end
       end
     end
   end
