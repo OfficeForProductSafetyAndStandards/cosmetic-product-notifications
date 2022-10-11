@@ -9,8 +9,12 @@
 <%
   items = @notification.nano_materials.order(:created_at).each_with_index.map do |nano_material, i|
     hint = if nano_material.components.present?
-             { text: "Included in item(s): #{nano_material.components.map(&:name).join(', ')}.",
-               classes: 'govuk-checkboxes__hint govuk-!-font-size-16' }
+             hint_text = if @notification.is_multicomponent?
+                            "Included in item(s): #{nano_material.components.map(&:name).join(', ')}."
+                         else
+                            "Included in the product notification."
+                         end
+             { text: hint_text, classes: 'govuk-checkboxes__hint govuk-!-font-size-16' }
            end
 
     { name: 'responsible_persons_notifications_delete_nano_material_form[nano_material_ids][]',
