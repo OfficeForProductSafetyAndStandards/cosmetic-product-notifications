@@ -17,7 +17,11 @@
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary(@nano_material.errors) %>
 
-      <h1 class="govuk-fieldset__heading govuk-label--l"><%= title %></h1>
+      <h1 class="govuk-fieldset__heading govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="nanomaterial_notification">
+          <%= title %>
+        </label>
+      </h1>
       <%= govukSelect(form: form,
                       key: :nanomaterial_notification,
                       id: "nanomaterial_notification",
