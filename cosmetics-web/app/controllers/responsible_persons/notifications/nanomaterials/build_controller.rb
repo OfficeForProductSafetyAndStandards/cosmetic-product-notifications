@@ -14,7 +14,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
           :must_be_listed, # FLOW TERMINATION when confirm restrictions fails
           :confirm_usage, # "Does conform to restrictions?"
           :must_conform_to_restrictions, # FLOW TERMINATION when confirm usage fails
-          # Check if non standard route needs to take place
+          # Checks if non standard route needs to take place
           :after_standard_nanomaterial_routing,
           # Non-standard only steps
           :non_standard_nanomaterial_notified, # "Have you Submited a notification since...?"
@@ -22,7 +22,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
           :when_products_containing_nanomaterial_can_be_placed_on_market,
           :select_notified_nanomaterial,
           :cannot_place_until_review_period_ended,
-          # Common: Completion step
+          # Common
           :completed
 
     # Key is current page, value is page to go back to.
