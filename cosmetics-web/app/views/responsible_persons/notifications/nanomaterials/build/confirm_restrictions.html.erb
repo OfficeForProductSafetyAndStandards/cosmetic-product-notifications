@@ -1,6 +1,6 @@
 <% title = "Confirm use in accordance with the restrictions" %>
 <% annex_details = ec_regulation_annex_details_for_nanomaterial_purposes(@nano_material.purposes) %>
-<% question = "Is #{@nano_material.inci_name} listed in EC regulation 1223/2009, #{annex_details}?" %>
+<% question = "Is #{@nano_material.name} listed in EC regulation 1223/2009, #{annex_details}?" %>
 
 <% legend_html = capture do %>
   <h1 class="govuk-fieldset__heading govuk-label--l"><%= question %></h1>

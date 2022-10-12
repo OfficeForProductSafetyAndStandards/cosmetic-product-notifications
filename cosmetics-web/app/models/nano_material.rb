@@ -3,6 +3,7 @@ class NanoMaterial < ApplicationRecord
   NO = "no".freeze
   NOT_SURE = "not sure".freeze
 
+  belongs_to :nanomaterial_notification, optional: true
   belongs_to :notification, optional: false
 
   has_many :component_nano_materials, dependent: :destroy
@@ -11,7 +12,9 @@ class NanoMaterial < ApplicationRecord
   delegate :component_name, to: :component
 
   validates :inci_name, presence: true, on: :add_nanomaterial_name
-  validate :unique_name_per_notification, on: :add_nanomaterial_name
+  validate :unique_name_per_product_notification, on: :add_nanomaterial_name
+  validate :nanomaterial_notification_association
+  validates :nanomaterial_notification, uniqueness: { scope: :notification_id, allow_blank: true }
   validates :purposes, presence: true, on: :select_purposes
   validates :purposes, array: { presence: true, inclusion: { in: NanoMaterialPurposes.all.map(&:name) } }
 
@@ -22,8 +25,15 @@ class NanoMaterial < ApplicationRecord
   end
 
   def display_name
-    [iupac_name, inci_name, inn_name, xan_name, cas_number, ec_number, einecs_number, elincs_number]
-      .reject(&:blank?).join(", ")
+    [iupac_name,
+     inci_name,
+     nanomaterial_notification&.name,
+     inn_name,
+     xan_name,
+     cas_number,
+     ec_number,
+     einecs_number,
+     elincs_number].reject(&:blank?).join(", ")
   end
 
   def standard?
@@ -39,8 +49,7 @@ class NanoMaterial < ApplicationRecord
   end
 
   def completed?
-    ((standard? && inci_name.present? && confirm_usage == YES && confirm_restrictions == YES) ||
-      (non_standard? && confirm_toxicology_notified == YES)) && !blocked?
+    (standard_completed? || non_standard_completed?) && !blocked?
   end
 
   def blocked?
@@ -59,19 +68,36 @@ class NanoMaterial < ApplicationRecord
   end
 
   def name
-    inci_name
+    inci_name.presence || nanomaterial_notification&.name
   end
 
 private
+
+  def standard_completed?
+    standard? && inci_name.present? && confirm_usage == YES && confirm_restrictions == YES
+  end
+
+  def non_standard_completed?
+    non_standard? && confirm_toxicology_notified == YES && nanomaterial_notification.present?
+  end
 
   def toxicology_required_or_empty?
     confirm_toxicology_notified.blank? || toxicology_required?
   end
 
-  def unique_name_per_notification
+  def unique_name_per_product_notification
     nanos_with_same_name = self.class.where(notification:)
                                      .where.not(id:)
                                      .where("trim(lower(inci_name)) = ?", inci_name.downcase.strip)
     errors.add(:inci_name) if nanos_with_same_name.any?
+  end
+
+  def nanomaterial_notification_association
+    return if nanomaterial_notification.blank?
+
+    errors.add(:nanomaterial_notification, :standard) if standard?
+    if notification && nanomaterial_notification.responsible_person != notification.responsible_person
+      errors.add(:nanomaterial_notification, :wrong_responsible_person)
+    end
   end
 end

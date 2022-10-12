@@ -2,6 +2,7 @@ class NanomaterialNotification < ApplicationRecord
   class AlreadySubmittedError < StandardError; end
 
   belongs_to :responsible_person
+  has_many :nano_materials
 
   validates :name, presence: true, on: :add_name
 
@@ -17,6 +18,8 @@ class NanomaterialNotification < ApplicationRecord
   validate :pdf_file_attached, on: :upload_file
 
   has_one_attached :file
+
+  scope :submitted, -> { where.not(submitted_at: nil) }
 
   # Expects either a date object, or a hash containing
   # year, month and day, for example:
