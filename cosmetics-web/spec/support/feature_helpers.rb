@@ -341,7 +341,7 @@ end
 
 def expect_to_be_on__when_products_containing_nanomaterial_can_be_placed_page
   expect(page.current_path).to end_with("/build/when_products_containing_nanomaterial_can_be_placed_on_market")
-  expect(page).to have_h1("When you can place products containing this nanomaterial on the market")
+  expect(page).to have_h1("When can you place products containing this nanomaterial on the market?")
 end
 
 def expect_back_link_to_when_products_containing_nanomaterial_can_be_placed_page
