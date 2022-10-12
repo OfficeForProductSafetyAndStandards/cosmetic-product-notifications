@@ -294,18 +294,27 @@ def expect_back_link_to_list_the_nanomaterials_page
   expect_back_link_to(/\/build\/list_nanomaterials$/)
 end
 
-def expect_to_be_on__what_is_the_purpose_of_nanomaterial_page(nanomaterial_name:)
+def expect_to_be_on__what_is_the_purpose_of_nanomaterial_page
   expect(page.current_path).to end_with("/build/select_purposes")
-  expect(page).to have_h1("What is the purpose of #{nanomaterial_name}?")
+  expect(page).to have_h1("What is the purpose of this nanomaterial?")
 end
 
 def expect_back_link_to_what_is_the_purpose_of_nanomaterial_page
   expect_back_link_to(/\/build\/select_purposes$/)
 end
 
+def expect_to_be_on__what_is_the_nanomaterial_inci_name_page
+  expect(page.current_path).to end_with("/build/add_nanomaterial_name")
+  expect(page).to have_h1("What is the nanomaterial INCI name?")
+end
+
+def expect_back_link_to_what_is_the_nanomaterial_inci_name_page
+  expect_back_link_to(/\/build\/add_nanomaterial_name$/)
+end
+
 def expect_to_be_on__is_nanomaterial_listed_in_ec_regulation_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/confirm_restrictions")
-  expect(page).to have_h1("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annex 4?")
+  expect(page).to have_h1("Is #{nanomaterial_name} listed in EC regulation 1223/2009, Annexes 4 and 5?")
 end
 
 def expect_back_link_to_is_nanomaterial_listed_in_ec_regulation_page
@@ -314,11 +323,58 @@ end
 
 def expect_to_be_on__does_nanomaterial_conform_to_restrictions_page(nanomaterial_name:)
   expect(page.current_path).to end_with("/build/confirm_usage")
-  expect(page).to have_h1("Does the #{nanomaterial_name} conform to the restrictions set out in Annex 4?")
+  expect(page).to have_h1("Does the #{nanomaterial_name} conform to the restrictions set out in Annexes 4 and 5?")
 end
 
 def expect_back_link_to_does_nanomaterial_conform_to_restrictions_page
   expect_back_link_to(/\/build\/confirm_usage$/)
+end
+
+def expect_to_be_on__have_you_submitted_a_notification_page
+  expect(page.current_path).to end_with("/build/non_standard_nanomaterial_notified")
+  expect(page).to have_h1("Have you submitted a notification about this nanomaterial in GB since 1 January 2021?")
+end
+
+def expect_back_link_to_have_you_submitted_a_notification_page
+  expect_back_link_to(/\/build\/non_standard_nanomaterial_notified$/)
+end
+
+def expect_to_be_on__when_products_containing_nanomaterial_can_be_placed_page
+  expect(page.current_path).to end_with("/build/when_products_containing_nanomaterial_can_be_placed_on_market")
+  expect(page).to have_h1("When can you place products containing this nanomaterial on the market?")
+end
+
+def expect_back_link_to_when_products_containing_nanomaterial_can_be_placed_page
+  expect_back_link_to(/\/build\/when_products_containing_nanomaterial_can_be_placed_on_market$/)
+end
+
+def expect_to_be_on__select_notified_nanomaterial_page
+  expect(page.current_path).to end_with("/build/select_notified_nanomaterial")
+  expect(page).to have_h1("Select a notified nanomaterial")
+end
+
+def expect_back_link_to_select_notified_nanomaterial_page
+  expect_back_link_to(/\/build\/select_notified_nanomaterial$/)
+end
+
+def expect_to_be_on__cannot_place_until_review_period_ended_page
+  expect(page.current_path).to end_with("/build/cannot_place_until_review_period_ended")
+  expect(page).to have_h1("You cannot place this cosmetic onto the GB market until the 6 month review period has ended")
+end
+
+def expect_to_be_on__must_notify_your_nanomaterial
+  expect(page.current_path).to end_with("/build/notify_your_nanomaterial")
+  expect(page).to have_h1("You cannot notify this product until you have notified the nanomaterial you want to use")
+end
+
+def expect_to_be_on__must_be_listed_page(nanomaterial_name:)
+  expect(page.current_path).to end_with("/build/must_be_listed")
+  expect(page).to have_h1("You cannot notify products containing #{nanomaterial_name}")
+end
+
+def expect_to_be_on__must_conform_to_restrictions_page(nanomaterial_name:)
+  expect(page.current_path).to end_with("/build/must_conform_to_restrictions")
+  expect(page).to have_h1("You cannot notify products containing #{nanomaterial_name}")
 end
 
 def expect_to_be_on__item_category_page

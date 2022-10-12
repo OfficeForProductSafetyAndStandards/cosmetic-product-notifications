@@ -1,0 +1,26 @@
+<% content_for :page_title, "You cannot place this cosmetic onto the GB market until the 6 month review period has ended" %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      You cannot place this cosmetic onto the <abbr>GB</abbr> market until the 6 month review period has ended
+    </h1>
+    <p class="govuk-body">
+      This cosmetic notification includes a nanomaterial that hasn't passed its 6 month review period.
+      </br>
+      This period is due to end on
+      <span class="no-wrap">
+        <%= display_full_month_date(@nano_material.nanomaterial_notification.can_be_made_available_on_uk_market_from) %>.
+      </span>
+    </p>
+
+    <%= form_with model: @nano_material, url: wizard_path, method: :put do |form| %>
+      <%= govukButton text: "Continue" %>
+    <% end %>
+
+  </div>
+</div>

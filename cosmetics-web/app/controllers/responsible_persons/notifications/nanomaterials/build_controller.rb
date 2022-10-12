@@ -6,17 +6,23 @@ module  ResponsiblePersons::Notifications::Nanomaterials
     before_action :set_notification
     before_action :set_nano_material
 
-    steps :select_purposes,
-          :after_select_purposes_routing, # step to do routing after select purposes
+    steps :select_purposes, # selects standard/non-standard purposes
+          # Standard only steps
+          :after_select_purposes_routing,
           :add_nanomaterial_name,
-          :confirm_restrictions,
-          :confirm_usage,
-          :after_standard_nanomaterial_routing, # step to check if non standard route needs to take place
-          :non_standard_nanomaterial_notified, # when non standard
+          :confirm_restrictions, # "Is listed in regulation?"
+          :must_be_listed, # FLOW TERMINATION when confirm restrictions fails
+          :confirm_usage, # "Does conform to restrictions?"
+          :must_conform_to_restrictions, # FLOW TERMINATION when confirm usage fails
+          # Checks if non standard route needs to take place
+          :after_standard_nanomaterial_routing,
+          # Non-standard only steps
+          :non_standard_nanomaterial_notified, # "Have you Submited a notification since...?"
+          :notify_your_nanomaterial, # FLOW TERMINATION when "Have you Submited..." fails.
           :when_products_containing_nanomaterial_can_be_placed_on_market,
-          :notify_your_nanomaterial, # FLOW TERMINATION
-          :must_be_listed, # used when confirm restrictions fails - FLOW TERMINATION
-          :must_conform_to_restrictions, # used when confirm usage fails - FLOW TERMINATION
+          :select_notified_nanomaterial,
+          :cannot_place_until_review_period_ended,
+          # Common
           :completed
 
     # Key is current page, value is page to go back to.
@@ -31,7 +37,12 @@ module  ResponsiblePersons::Notifications::Nanomaterials
         select_purposes: -> { !@nano_material.multi_purpose? },
       },
       when_products_containing_nanomaterial_can_be_placed_on_market: :non_standard_nanomaterial_notified,
-      notify_your_nanomaterial: :non_standard_nanomaterial_notified,
+      select_notified_nanomaterial: :when_products_containing_nanomaterial_can_be_placed_on_market,
+      cannot_place_until_review_period_ended: :select_notified_nanomaterial,
+      notify_your_nanomaterial: {
+        non_standard_nanomaterial_notified: -> { @nano_material.confirm_toxicology_notified != "yes" },
+        select_notified_nanomaterial: -> { @nano_material.confirm_toxicology_notified == "yes" },
+      },
       must_be_listed: :confirm_restrictions,
       must_conform_to_restrictions: :confirm_usage,
     }.freeze
@@ -56,6 +67,8 @@ module  ResponsiblePersons::Notifications::Nanomaterials
         else
           return jump_to_step(:completed)
         end
+      when :select_notified_nanomaterial
+        set_nanomaterial_notifications
       when :completed
         @notification.reload.try_to_complete_nanomaterials!
         return render "responsible_persons/notifications/task_completed"
@@ -74,8 +87,10 @@ module  ResponsiblePersons::Notifications::Nanomaterials
         update_confirm_usage_step
       when :non_standard_nanomaterial_notified
         update_non_standard_nanomaterial_step
-      when :when_products_containing_nanomaterial_can_be_placed_on_market
-        jump_to_step(:completed)
+      when :when_products_containing_nanomaterial_can_be_placed_on_market, :cannot_place_until_review_period_ended
+        render_next_step @nano_material
+      when :select_notified_nanomaterial
+        update_select_notified_nanomaterial_step
       else
         if @nano_material.update_with_context(nano_material_params, step)
           render_next_step @nano_material
@@ -90,6 +105,10 @@ module  ResponsiblePersons::Notifications::Nanomaterials
     def set_nano_material
       @nano_material = NanoMaterial.find(params[:nanomaterial_id])
       @notification = @nano_material.notification
+    end
+
+    def set_nanomaterial_notifications
+      @nanomaterial_notifications = @notification.responsible_person.nanomaterial_notifications.submitted
     end
 
     def nano_material_params
@@ -140,7 +159,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
       @nano_material.update_with_context(nano_material_params, step)
       case confirm_usage
       when "yes"
-        render_next_step @nano_material
+        jump_to_step :after_standard_nanomaterial_routing
       when "no"
         jump_to_step :must_conform_to_restrictions
       else
@@ -163,6 +182,25 @@ module  ResponsiblePersons::Notifications::Nanomaterials
       else
         @nano_material.errors.add :confirm_toxicology_notified, "Select an option"
         rerender_current_step
+      end
+    end
+
+    def update_select_notified_nanomaterial_step
+      set_nanomaterial_notifications
+      if params[:nanomaterial_notification].blank?
+        @nano_material.errors.add :nanomaterial_notification, :blank
+        rerender_current_step
+      else
+        nanomaterial_notification = @nanomaterial_notifications.find(params[:nanomaterial_notification])
+        if @nano_material.update(nanomaterial_notification:)
+          if nanomaterial_notification.can_be_made_available_on_uk_market?
+            jump_to_step(:completed)
+          else
+            jump_to_step(:cannot_place_until_review_period_ended)
+          end
+        else
+          rerender_current_step
+        end
       end
     end
 

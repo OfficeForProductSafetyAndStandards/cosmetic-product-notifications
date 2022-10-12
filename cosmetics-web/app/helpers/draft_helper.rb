@@ -97,7 +97,7 @@ module DraftHelper
   end
 
   def nanomaterial_link(nano_material, index)
-    text = nano_material.inci_name.presence || "Nanomaterial ##{index + 1}"
+    text = nano_material.name.presence || "Nanomaterial ##{index + 1}"
 
     if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_material.blocked?
       link_to(text,
