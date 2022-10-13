@@ -61,7 +61,7 @@ RSpec.describe SecondaryAuthentication::DirectOtp do
       end
     end
 
-    context "when using WHITELISTED_2FA_CODE env" do
+    context "when using WHITELISTED_OTP_CODE env" do
       shared_examples_for "successful auth" do
         specify do
           expect(secondary_authentication).to be_valid_otp(whitelisted_otp)
@@ -83,7 +83,7 @@ RSpec.describe SecondaryAuthentication::DirectOtp do
       end
 
       before do
-        allow(Rails.configuration).to receive(:whitelisted_2fa_code).and_return(whitelisted_otp)
+        stub_const("#{described_class}::WHITELISTED_OTP_CODE", whitelisted_otp)
         allow(Rails.configuration).to receive(:vcap_application).and_return(vcap_application)
       end
 

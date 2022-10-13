@@ -1,9 +1,12 @@
 module SecondaryAuthentication
   class DirectOtp
+    include OtpWhitelisting
+
     OTP_LENGTH = 5
     MAX_ATTEMPTS = Rails.configuration.two_factor_attempts
     MAX_ATTEMPTS_COOLDOWN = 3600 # 1 hour
     OTP_EXPIRY_SECONDS = 300
+    WHITELISTED_OTP_CODE = Rails.configuration.whitelisted_direct_otp_code
 
     attr_accessor :user
 
@@ -74,33 +77,6 @@ module SecondaryAuthentication
       if user.second_factor_attempts_count > MAX_ATTEMPTS
         user.update!(second_factor_attempts_locked_at: Time.zone.now, second_factor_attempts_count: 0)
       end
-    end
-
-    def whitelisted_code_valid?(otp)
-      return unless otp_whitelisting_allowed?
-
-      if Rails.configuration.whitelisted_2fa_code.present?
-        code = Rails.configuration.whitelisted_2fa_code
-        code == otp
-      else
-        false
-      end
-    end
-
-    def otp_whitelisting_allowed?
-      return true if Rails.env.development?
-
-      uris = JSON(Rails.configuration.vcap_application)["application_uris"]
-      return false if uris.blank?
-      return false if uris.length > 2
-
-      uris.all? do |uri|
-        Rails.application.config.domains_allowing_otp_whitelisting["domains-regexps"].any? do |domain_regexp|
-          uri =~ domain_regexp
-        end
-      end
-    rescue StandardError
-      false
     end
   end
 end
