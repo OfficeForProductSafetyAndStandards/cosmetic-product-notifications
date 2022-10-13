@@ -27,15 +27,40 @@
   </div>
 </div>
 
-<% if @nanomaterial_notifications.present? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govukDetails(summaryHtml: "When can you place products containing nanomaterials on the market".html_safe, classes: "opss-details--m govuk-!-margin-bottom-0") do %>
+      <p class="govuk-body-s">
+          Products containing a nanomaterial notified in the <abbr>EU</abbr> before 1 July 2020 and placed on the market
+          before 1 January 2021 can remain on the market if you submit a product notification before 31 March 2021.
+      </p>
+      <p class="govuk-body-s">
+        Products containing nanomaterials notified in the <abbr>EU</abbr> after 1 July 2020, but before 1 January 2021 can
+        be placed on the <abbr>GB</abbr> market 7 months after first being notified in the <abbr>EU</abbr>. As the cosmetic
+        product has not been on the <abbr>GB</abbr> market prior to 1 January 2021, the product must be notified before
+        being placed on the <abbr>GB</abbr> market.
+      </p>
+      <p class="govuk-body-s">
+        Products containing nanomaterials notified in <abbr>GB</abbr> after 1 January 2021 can be placed on the market 6
+        months after the nanomaterial has first been notified.
+      </p>
+      <p class="govuk-body-s govuk-!-font-weight-bold">
+        Note that you cannot use a nanomaterial as a preservative, <abbr>UV</abbr>-filter or colourant that is not listed
+        in the Annexes.
+      </p>
+    <% end %>
+  </div>
+
+  <% if @nanomaterial_notifications.present? %>
+    <div class="govuk-grid-column-one-third">
       <a href="<%= responsible_person_nanomaterials_path(@responsible_person, :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="download">
         <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of notified nanomaterials
       </a>
     </div>
-  </div>
+  <% end %>
+</div>
 
+<% if @nanomaterial_notifications.present? %>
   <div class="govuk-grid-row">
     <section class="govuk-grid-column-full">
       <table id="table-items" class="govuk-table opss-table-items govuk-!-margin-top-5">
