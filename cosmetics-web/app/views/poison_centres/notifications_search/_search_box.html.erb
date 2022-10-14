@@ -1,7 +1,7 @@
 <%= form_for(@search_form, url: poison_centre_notifications_search_path, method: :get, html: { 'novalidate' => true }) do |form| %>
   <div class="govuk-grid-column-full">
     <h1 class="govuk-label-wrapper">
-      <label class="govuk-label govuk-label--l" for="products-search">
+      <label class="govuk-label govuk-label--l" for="notification_search_form_q">
         Search cosmetic products
       </label>
     </h1>
@@ -10,7 +10,7 @@
         <div id="search-hint" class="govuk-hint">
           Use one or more keywords to search for product notifications.
         </div>
-        <div class="govuk-form-group govuk-!-padding-botton-2">
+        <div class="govuk-form-group">
           <div class="govuk-input__wrapper opss-search__wrapper">
             <%= form.search_field :q, class: "govuk-input govuk-!-width-three-quarters", 'aria-describedby' => "search-hint" %>
             <button class="govuk-button govuk-!-margin-bottom-2" data-module="govuk-button">
