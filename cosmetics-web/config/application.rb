@@ -48,7 +48,8 @@ module Cosmetics
     config.submit_notify_api_key = ENV.fetch("NOTIFY_API_KEY", "")
     config.secondary_authentication_enabled = ENV.fetch("TWO_FACTOR_AUTHENTICATION_ENABLED", "true") == "true"
     config.two_factor_attempts = 10
-    config.whitelisted_2fa_code = ENV["WHITELISTED_2FA_CODE"]
+    config.whitelisted_direct_otp_code = ENV["WHITELISTED_DIRECT_OTP_CODE"]
+    config.whitelisted_time_otp_code = ENV["WHITELISTED_TIME_OTP_CODE"]
     config.vcap_application = ENV["VCAP_APPLICATION"]
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob"
 
