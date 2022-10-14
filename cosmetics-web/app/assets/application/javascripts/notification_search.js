@@ -18,10 +18,12 @@ $(function () {
     const defaultInputs = filterForm.querySelectorAll('.govuk-radios input#search-by_all_fields')
 
     document.getElementById('opss-reset').addEventListener('click', function () { // click the filter's form reset link/button
-      prodSelect.querySelectorAll('option').forEach(function (s) { // all options
-        s.removeAttribute('selected')
-      })
-      prodSelect.querySelector('option').setAttribute('selected', 'selected') // the first option
+      if (prodSelect !== null) {
+        prodSelect.querySelectorAll('option').forEach(function (s) { // all options
+          s.removeAttribute('selected')
+        })
+        prodSelect.querySelector('option').setAttribute('selected', 'selected') // the first option
+      }
 
       radioConditionalElements.forEach(function (element) {
         element.classList.add('govuk-radios__conditional--hidden')
