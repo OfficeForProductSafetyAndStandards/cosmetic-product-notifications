@@ -299,7 +299,7 @@ GEM
     public_suffix (4.0.7)
     puma (4.3.12)
       nio4r (~> 2.0)
-    pundit (2.1.1)
+    pundit (2.2.0)
       activesupport (>= 3.0.0)
     raabro (1.1.6)
     racc (1.6.0)
@@ -532,7 +532,7 @@ GEM
       nokogiri (~> 1.8)
     yard (0.9.27)
       webrick (~> 1.7.0)
-    zeitwerk (2.6.0)
+    zeitwerk (2.6.1)
 
 PLATFORMS
   ruby
