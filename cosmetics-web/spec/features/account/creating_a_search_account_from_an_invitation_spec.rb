@@ -208,7 +208,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
   end
 
   def expect_to_be_on_the_search_homepage
-    expect(page).to have_css("h1", text: "Cosmetic product search")
+    expect(page).to have_css("h1", text: "Cosmetic products search")
     expect(page).to have_text("If you’re using this service for the first time")
   end
 

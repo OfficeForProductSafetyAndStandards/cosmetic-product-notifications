@@ -355,7 +355,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
           click_link("Sign out")
         end
 
-        expect(page).to have_css("h1", text: "Cosmetic product search")
+        expect(page).to have_css("h1", text: "Cosmetic products search")
         expect(page).to have_link("Sign in")
       end
 
