@@ -22,26 +22,33 @@
         <p  id="nanomaterial-notifications-hint" class="govuk-hint govuk-!-width-two-thirds">
           These are your notified nanomaterials.
         </p>
-        <%= govukDetails(summaryHtml: "Help with nanomaterials and market dates".html_safe, classes: "opss-details--sm") do %>
-          <p class="govuk-body-s">
-              Products containing a nanomaterial notified in the <abbr>EU</abbr> before 1 July 2020 and placed on the market
-              before 1 January 2021 can remain on the market if you submit a product notification before 31 March 2021.
-          </p>
-          <p class="govuk-body-s">
-            Products containing nanomaterials notified in the <abbr>EU</abbr> after 1 July 2020, but before 1 January 2021 can
-            be placed on the <abbr>GB</abbr> market 7 months after first being notified in the <abbr>EU</abbr>. As the cosmetic
-            product has not been on the <abbr>GB</abbr> market prior to 1 January 2021, the product must be notified before
-            being placed on the <abbr>GB</abbr> market.
-          </p>
-          <p class="govuk-body-s">
-            Products containing nanomaterials notified in <abbr>GB</abbr> after 1 January 2021 can be placed on the market 6
-            months after the nanomaterial has first been notified.
-          </p>
-          <p class="govuk-body-s govuk-!-font-weight-bold">
-            Note that you cannot use a nanomaterial as a preservative, <abbr>UV</abbr>-filter or colourant that is not listed
-            in the Annexes.
-          </p>
-        <% end %>
+        <details class="govuk-details opss-details--sm" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              Help with nanomaterials and market dates
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-!-width-three-quarters">
+            <p class="govuk-body-s">
+                Products containing a nanomaterial notified in the <abbr>EU</abbr> before 1 July 2020 and placed on the market
+                before 1 January 2021 can remain on the market if you submit a product notification before 31 March 2021.
+            </p>
+            <p class="govuk-body-s">
+              Products containing nanomaterials notified in the <abbr>EU</abbr> after 1 July 2020, but before 1 January 2021 can
+              be placed on the <abbr>GB</abbr> market 7 months after first being notified in the <abbr>EU</abbr>. As the cosmetic
+              product has not been on the <abbr>GB</abbr> market prior to 1 January 2021, the product must be notified before
+              being placed on the <abbr>GB</abbr> market.
+            </p>
+            <p class="govuk-body-s">
+              Products containing nanomaterials notified in <abbr>GB</abbr> after 1 January 2021 can be placed on the market 6
+              months after the nanomaterial has first been notified.
+            </p>
+            <p class="govuk-body-s govuk-!-font-weight-bold">
+              Note that you cannot use a nanomaterial as a preservative, <abbr>UV</abbr>-filter or colourant that is not listed
+              in the Annexes.
+            </p>
+          </div>
+        </details>
       </div>
     </div>
   </div>
