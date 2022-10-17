@@ -43,4 +43,28 @@ $(function () {
       })
     }, false)
   }
+
+  const ingredientsFilterForm = document.getElementById('ingredients_search_form_filters')
+  if (ingredientsFilterForm !== null) {
+    const radioInputs = ingredientsFilterForm.querySelectorAll('.govuk-radios__input')
+    const dateInputs = ingredientsFilterForm.querySelectorAll('.govuk-date-input__input')
+
+    document.getElementById('opss-reset').addEventListener('click', function () { // click the filter's form reset link/button
+
+      radioInputs.forEach(function (element) {
+        element.setAttribute('aria-expanded', false)
+        element.removeAttribute('checked')
+      })
+      const fieldsets = ingredientsFilterForm.querySelectorAll('fieldset')
+      fieldsets.forEach(function (fieldset) {
+        const radios = fieldset.querySelectorAll('.govuk-radios__input')
+        if (radios.length > 0) {
+          radios[0].setAttribute('checked', 'checked')
+        }
+      })
+      dateInputs.forEach(function (element) {
+        element.setAttribute('value', '')
+      })
+    }, false)
+  }
 })
