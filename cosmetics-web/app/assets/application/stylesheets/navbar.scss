@@ -21,7 +21,7 @@
         //@extend .bold-small;
         color:    $govuk-text-colour;
         display:  inline-block;
-        padding:  15px;
+        padding:  15px 10px;
         margin-right: 0;
         text-decoration: none;
         font-weight: 700;
@@ -62,10 +62,11 @@
 
 .responsible-person-name {
   float: right;
-  padding: 15px;
+  padding: 15px 10px;
   margin-bottom: 0;
   font-weight: 700;
-  font-size:  19px;
+  font-size:  16px;
+  line-height: 1.5;
 }
 
 @media only screen and (max-width: 600px) {
