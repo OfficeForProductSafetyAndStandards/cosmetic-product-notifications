@@ -50,7 +50,6 @@ $(function () {
     const dateInputs = ingredientsFilterForm.querySelectorAll('.govuk-date-input__input')
 
     document.getElementById('opss-reset').addEventListener('click', function () { // click the filter's form reset link/button
-
       radioInputs.forEach(function (element) {
         element.setAttribute('aria-expanded', false)
         element.removeAttribute('checked')
