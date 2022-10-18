@@ -96,7 +96,7 @@ Rails.application.routes.draw do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
         get "select", to: "responsible_persons#select"
         post "select", to: "responsible_persons#change"
-        get "products-redirect", to: "responsible_persons#products_redirect"
+        get "products-redirect", to: "responsible_persons#products_page_redirect"
       end
 
       resources :nanomaterials, controller: :nanomaterial_notifications, only: %i[index show new create], shallow: true do

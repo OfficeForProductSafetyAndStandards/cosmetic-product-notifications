@@ -1,12 +1,8 @@
 class ResponsiblePersonsController < SubmitApplicationController
-  include ResponsiblePersonConcern
-
   before_action :set_responsible_person, only: %i[show edit update]
   skip_before_action :create_or_join_responsible_person, only: %i[select change]
   before_action :validate_responsible_person
   before_action :responsible_persons_selection_form, only: %i[select change]
-
-  helper_method :current_responsible_person
 
   def show; end
 
@@ -40,7 +36,7 @@ class ResponsiblePersonsController < SubmitApplicationController
     end
   end
 
-  def products_redirect
+  def products_page_redirect
     redirect_to(responsible_person_notifications_path(current_responsible_person))
   end
 
