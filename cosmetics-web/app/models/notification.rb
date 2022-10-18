@@ -321,6 +321,12 @@ private
       errors.add :ph_range, "The minimum pH must be lower than the maximum pH"
     end
   end
+
+  def index_document
+    result = __elasticsearch__.index_document
+
+    Rails.logger.info "[NotificationIndex] Notification with id=#{id} indexed with result #{result}"
+  end
 end
 
 # for auto sync model with Opensearch
