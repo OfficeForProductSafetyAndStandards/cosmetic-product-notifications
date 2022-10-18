@@ -89,8 +89,8 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :w
     end
 
     let(:user) { create(:poison_centre_user) }
-    let(:expected_text) { "Cosmetic products search" }
-    let(:expected_host_header) { "Cosmetic products search" }
+    let(:expected_text) { "Search cosmetic products" }
+    let(:expected_host_header) { "Search cosmetic products" }
 
     include_examples "locked account"
   end

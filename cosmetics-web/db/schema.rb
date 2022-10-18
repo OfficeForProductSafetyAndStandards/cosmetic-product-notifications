@@ -294,6 +294,13 @@ ActiveRecord::Schema.define(version: 2022_09_23_161414) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "seach_histories", force: :cascade do |t|
+    t.string "query"
+    t.integer "results"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "search_histories", force: :cascade do |t|
     t.string "query"
     t.integer "results"
