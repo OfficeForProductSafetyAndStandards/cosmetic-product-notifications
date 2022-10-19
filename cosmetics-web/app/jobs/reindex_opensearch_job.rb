@@ -12,11 +12,13 @@ class ReindexOpensearchJob < ApplicationJob
       ActiveRecord::Base.descendants.each do |model|
         next unless model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
 
+        model.__elasticsearch__.create_index! unless model.__elasticsearch__.index_exists?
+
         total += 1
         if model.respond_to?(:opensearch)
-          model.opensearch.import force: true
+          model.opensearch.import
         else
-          model.import force: true
+          model.import
         end
       end
 
