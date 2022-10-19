@@ -24,6 +24,16 @@ class NanoMaterial < ApplicationRecord
     end
   end
 
+  class << self
+    def standard
+      where.not(purposes: [nil, ""]).where.not(purposes: [NanoMaterialPurposes.other.name])
+    end
+
+    def non_standard
+      where(purposes: [NanoMaterialPurposes.other.name])
+    end
+  end
+
   def display_name
     [iupac_name,
      inci_name,

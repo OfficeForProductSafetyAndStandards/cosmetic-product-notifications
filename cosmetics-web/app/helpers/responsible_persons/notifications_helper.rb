@@ -111,6 +111,15 @@ module ResponsiblePersons::NotificationsHelper
                               list_classes: "",
                               list_item_classes: "") },
       },
+      if nano_materials.non_standard.any?
+        {
+          key: { text: "Nanomaterials review period end date" },
+          value: { text: render("application/none_or_bullet_list",
+                                entities_list: nano_materials_with_review_period_end_date(nano_materials.non_standard),
+                                list_classes: "",
+                                list_item_classes: "") },
+        }
+      end,
       if nano_materials.present?
         {
           key: { text: "Application instruction" },
