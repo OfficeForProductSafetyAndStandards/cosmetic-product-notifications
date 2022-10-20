@@ -1,6 +1,8 @@
 class NanomaterialNotification < ApplicationRecord
   class AlreadySubmittedError < StandardError; end
 
+  include FileAntivirusCheckable
+
   belongs_to :responsible_person
   has_many :nano_materials
 
