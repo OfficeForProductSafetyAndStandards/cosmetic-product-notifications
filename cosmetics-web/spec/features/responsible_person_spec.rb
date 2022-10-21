@@ -19,7 +19,7 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
 
     expect(page).not_to have_text("Responsible Person was changed")
     visit "/"
-    click_on "Your cosmetic products"
+    click_on "cosmetic products page"
     click_link "Responsible Person"
     expect(page).to have_css("dd", text: "First RP")
     click_link "Change the Responsible Person"
