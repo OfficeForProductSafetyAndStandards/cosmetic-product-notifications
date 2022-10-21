@@ -107,7 +107,7 @@ module ResponsiblePersons::NotificationsHelper
       {
         key: { text: "Nanomaterials" },
         value: { html: render("application/none_or_bullet_list",
-                              entities_list: component_nano_materials_names(component),
+                              entities_list: nano_materials_with_pdf_links(nano_materials),
                               list_classes: "",
                               list_item_classes: "") },
       },

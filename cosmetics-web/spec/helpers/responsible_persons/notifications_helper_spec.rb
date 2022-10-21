@@ -318,12 +318,11 @@ describe ResponsiblePersons::NotificationsHelper do
         let(:nano_relation) { double("AR Relationship", :[] => [nano_material], non_standard: []) }
 
         before do
-          allow(helper).to receive(:component_nano_materials_names).and_return("Nano name")
+          allow(helper).to receive(:nano_materials_with_pdf_links).with(nano_relation).and_return(["Nano name"])
           allow(component).to receive(:nano_materials).and_return(nano_relation)
         end
 
         it "contains a row with the nano material names" do
-          allow(helper).to receive(:component_nano_materials_names).with(component).and_return(["Nano name"])
           allow(helper).to receive(:render).and_return("Nano name")
           expect(summary_component_rows).to include({ key: { text: "Nanomaterials" }, value: { html: "Nano name" } })
           expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: ["Nano name"]))
