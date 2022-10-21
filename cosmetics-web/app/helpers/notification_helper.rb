@@ -15,6 +15,7 @@ module NotificationHelper
   end
 
   def nanomaterial_notification_file_link(nanomaterial_notification)
+    return unless current_user.can_view_nanomaterial_notification_files?
     return unless nanomaterial_notification&.passed_antivirus_check?
 
     link_to(nanomaterial_notification.file.filename,

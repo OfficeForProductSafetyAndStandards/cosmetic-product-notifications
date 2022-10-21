@@ -63,28 +63,47 @@ describe NotificationHelper do
   describe "#nanomaterial_notification_file_link" do
     let(:stubbed_file) { instance_double(ActiveStorage::Blob, filename: "Nano.pdf") }
     let(:nanomaterial_notification) { instance_double(NanomaterialNotification, file: stubbed_file) }
+    let(:user) { instance_double(SearchUser, can_view_nanomaterial_notification_files?: false) }
 
     before do
-      allow(helper).to receive(:link_to).and_return("<a href='/url/for/pdf'>Nano.pdf</a>")
+      allow(helper).to receive_messages(link_to: nil, current_user: user)
     end
 
     it "returns nil when no nanomaterial notification is given" do
       expect(helper.nanomaterial_notification_file_link(nil)).to be_nil
     end
 
-    it "returns nil when the nano notification file haven't passed the antivirus check" do
-      allow(nanomaterial_notification).to receive(:passed_antivirus_check?).and_return(false)
-      expect(helper.nanomaterial_notification_file_link(nanomaterial_notification)).to be_nil
+    context "when the user cannot view nanomaterial notification files" do
+      let(:user) { instance_double(SearchUser, can_view_nanomaterial_notification_files?: false) }
+
+      it "returns nil when the nano notification file didn't pass the antivirus check" do
+        allow(nanomaterial_notification).to receive(:passed_antivirus_check?).and_return(false)
+        expect(helper.nanomaterial_notification_file_link(nanomaterial_notification)).to be_nil
+      end
+
+      it "returns nil when the nano notification file passed the antivirus check" do
+        allow(nanomaterial_notification).to receive(:passed_antivirus_check?).and_return(true)
+        expect(helper.nanomaterial_notification_file_link(nanomaterial_notification)).to be_nil
+      end
     end
 
-    it "returns the link to the file when the nano notification file have passed the antivirus check" do
-      allow(nanomaterial_notification).to receive(:passed_antivirus_check?).and_return(true)
-      allow(helper).to receive(:url_for).with(stubbed_file).and_return("/url/for/pdf")
-      allow(helper).to receive(:link_to).and_return("<a href='/url/for/pdf'>Nano.pdf</a>")
+    context "when the user can view nanomaterial notification files" do
+      let(:user) { instance_double(SearchUser, can_view_nanomaterial_notification_files?: true) }
 
-      expect(helper.nanomaterial_notification_file_link(nanomaterial_notification))
-        .to eq("<a href='/url/for/pdf'>Nano.pdf</a>")
-      expect(helper).to have_received(:link_to).with("Nano.pdf", "/url/for/pdf", anything)
+      it "returns nil when the nano notification file didn't pass the antivirus check" do
+        allow(nanomaterial_notification).to receive(:passed_antivirus_check?).and_return(false)
+        expect(helper.nanomaterial_notification_file_link(nanomaterial_notification)).to be_nil
+      end
+
+      it "returns the link to the file when the nano notification file passed the antivirus check" do
+        allow(nanomaterial_notification).to receive(:passed_antivirus_check?).and_return(true)
+        allow(helper).to receive(:url_for).with(stubbed_file).and_return("/url/for/pdf")
+        allow(helper).to receive(:link_to).and_return("<a href='/url/for/pdf'>Nano.pdf</a>")
+
+        expect(helper.nanomaterial_notification_file_link(nanomaterial_notification))
+          .to eq("<a href='/url/for/pdf'>Nano.pdf</a>")
+        expect(helper).to have_received(:link_to).with("Nano.pdf", "/url/for/pdf", anything)
+      end
     end
   end
 
