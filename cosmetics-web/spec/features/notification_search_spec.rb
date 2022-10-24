@@ -26,7 +26,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   end
 
   scenario "Searching for notifications" do
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
 
     expect(page).to have_link("Cream")
     expect(page).to have_link("Shower Bubbles")
@@ -51,7 +51,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   end
 
   scenario "Sorting search results" do
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
 
     fill_in "notification_search_form_q", with: "Bubbles"
     click_on "Search"
@@ -68,7 +68,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   end
 
   scenario "Searching for notifications with date filter" do
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
 
     expect(page).to have_link("Cream")
     expect(page).to have_link("Shower Bubbles")
@@ -90,7 +90,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
   describe "Reference number search" do
     scenario "Searching by whole number" do
-      expect(page).to have_h1("Cosmetic products search")
+      expect(page).to have_h1("Search cosmetic products")
 
       expect(page).to have_link("Cream")
       expect(page).to have_link("Shower Bubbles")
@@ -108,7 +108,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     end
 
     scenario "Searching by partial number" do
-      expect(page).to have_h1("Cosmetic products search")
+      expect(page).to have_h1("Search cosmetic products")
 
       expect(page).to have_link("Cream")
       expect(page).to have_link("Shower Bubbles")
@@ -129,7 +129,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream", reference_number: 12_345) }
 
       scenario "Searching by partial number" do
-        expect(page).to have_h1("Cosmetic products search")
+        expect(page).to have_h1("Search cosmetic products")
 
         expect(page).to have_link("Cream")
         expect(page).to have_link("Shower Bubbles")
@@ -154,7 +154,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     visit "/notifications"
 
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
     expect(page).to have_link("Cream")
     expect(page).to have_link("Shower Bubbles")
     expect(page).to have_link("Bath Bubbles")
@@ -171,7 +171,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     visit "/notifications"
 
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
     expect(page).to have_link("Cream")
     expect(page).to have_link("Shower Bubbles")
     expect(page).to have_link("Bath Bubbles")
@@ -183,25 +183,25 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_link("Next page")
 
     click_link("Next page")
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
     expect(page).to have_link("Sun Lotion 0")
     expect(page).to have_text("Page 2")
     expect(page).to have_link("Previous page")
   end
 
   scenario "Back link" do
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
 
     click_link "Shower Bubbles"
 
     click_link "Back"
 
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Search cosmetic products")
   end
 
   context "when using advanced search" do
     scenario "Searching by partial number number" do
-      expect(page).to have_h1("Cosmetic products search")
+      expect(page).to have_h1("Search cosmetic products")
 
       expect(page).to have_link("Cream")
       expect(page).to have_link("Shower Bubbles")
@@ -211,9 +211,9 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
       click_on "Search"
 
-      check "Match similar words"
+      check "Include similar words"
 
-      click_on "Apply"
+      click_on "Search"
 
       expect(page).to have_text("1 notification matching keyword(s)")
 
@@ -226,7 +226,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       let(:responsible_person_name) { "Bubbles RP" }
 
       scenario "Searching for notifications" do
-        expect(page).to have_h1("Cosmetic products search")
+        expect(page).to have_h1("Search cosmetic products")
 
         fill_in "notification_search_form_q", with: "Bubbles"
         click_on "Search"
@@ -236,15 +236,15 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
         expect(page).to have_link("Shower Bubbles")
         expect(page).to have_link("Bath Bubbles")
 
-        choose "Only notification name"
-        click_on "Apply"
+        choose "Notification name"
+        click_on "Search"
 
         expect(page).not_to have_link("Cream")
         expect(page).to have_link("Shower Bubbles")
         expect(page).to have_link("Bath Bubbles")
 
-        choose "Only responsible person data"
-        click_on "Apply"
+        choose "Responsible Person name&sol;address"
+        click_on "Search"
 
         expect(page).to have_link("Cream")
         expect(page).not_to have_link("Shower Bubbles")
