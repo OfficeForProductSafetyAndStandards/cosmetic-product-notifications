@@ -150,3 +150,5 @@ $RECYCLE.BIN/
 
 # Redis snapshots. See https://redis.io/topics/persistence
 dump.rdb
+
+cosmetics-web/.tool-versions
