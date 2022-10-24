@@ -36,6 +36,10 @@ class ResponsiblePersonsController < SubmitApplicationController
     end
   end
 
+  def products_page_redirect
+    redirect_to(responsible_person_notifications_path(current_responsible_person))
+  end
+
 private
 
   def set_responsible_person
