@@ -45,5 +45,11 @@
         <%= paginate search_response, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
       </div>
     </div>
+  <% else %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order" aria-live="polite">
+        <p class="govuk-body govuk-visually-hidden">No results</p>
+      </div>
+    </div>
   <% end %>
 </section>
