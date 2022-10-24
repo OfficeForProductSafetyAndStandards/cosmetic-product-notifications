@@ -14,7 +14,7 @@
     Skip past the filter options
   </a>
 
-  <%= form_for(@search_form, url: poison_centre_ingredients_search_path, method: :get, html: { novalidate: true , id: 'new_notification_search_form_filters' }) do |form| %>
+  <%= form_for(@search_form, url: poison_centre_ingredients_search_path, method: :get, html: { novalidate: true , id: 'ingredients_search_form_filters' }) do |form| %>
     <%= form.hidden_field :q, id: :ingredients_search_form_q_hidden %>
     <h2 class="govuk-heading-s">
       Display<span class="govuk-visually-hidden">:</span>
@@ -51,12 +51,12 @@
             classes: "govuk-radios--small",
             items: [
               {
-                value: OpenSearchQuery::Ingredient::EXACT_MATCH,
-                text: 'Exact match only',
-              },
-              {
                 value: OpenSearchQuery::Ingredient::ANY_MATCH,
                 text: 'Match any words'
+              },
+              {
+                value: OpenSearchQuery::Ingredient::EXACT_MATCH,
+                text: 'Exact match only',
               },
             ],
           ) %>
