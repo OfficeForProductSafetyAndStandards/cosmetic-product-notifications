@@ -8,6 +8,7 @@ FactoryBot.define do
     end
 
     trait :non_standard do
+      inci_name { nil }
       purposes { [NanoMaterialPurposes.other.name] }
       nanomaterial_notification { association :nanomaterial_notification, responsible_person: notification.responsible_person }
     end
