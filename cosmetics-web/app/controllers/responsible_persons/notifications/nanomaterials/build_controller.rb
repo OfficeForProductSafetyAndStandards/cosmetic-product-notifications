@@ -130,8 +130,12 @@ module  ResponsiblePersons::Notifications::Nanomaterials
 
     def update_select_purposes_step
       @purposes_form = PurposesForm.new(**purpose_params)
+      return rerender_current_step unless @purposes_form.valid?
 
-      if @purposes_form.valid? && @nano_material.update_with_context({ purposes: @purposes_form.purposes }, step)
+      attrs = { purposes: @purposes_form.purposes }
+      attrs[:inci_name] = nil if @purposes_form.purposes == [NanoMaterialPurposes.other.name]
+
+      if @nano_material.update_with_context(attrs, step)
         render_next_step @nano_material
       else
         rerender_current_step
