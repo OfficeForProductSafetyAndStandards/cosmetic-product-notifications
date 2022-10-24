@@ -71,7 +71,7 @@ module NotificationStateConcern
 
       event :submit_notification, after: :cache_notification_for_csv! do
         transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE,
-                    after: proc { __elasticsearch__.index_document } do
+                    after: proc { index_document } do
           guard do
             valid?(:accept_and_submit)
           end

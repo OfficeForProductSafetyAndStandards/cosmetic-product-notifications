@@ -1,19 +1,15 @@
 <section class="govuk-grid-column-three-quarters" id="search-results-section">
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= render 'search_box' %>
+      <p class="govuk-body"><span id="opss-qty"><%= pluralize(search_response.results.total, 'notification') %></span> <%= display_keywords %> <%= display_filters_informations %> <%= search_response.results.total == 1 ? "was found." : "were found." %></p>
     </div>
+
 
     <div class="govuk-grid-column-one-third">
       <div class="govuk-form-group opss-text-align-right">
         <%= render partial: 'sort_form' %>
       </div>
-    </div>
-  </div>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <p class="govuk-body-s"><%= pluralize(search_response.results.total, 'notification') %> <%= display_keywords %> <%= display_filters_informations %> <%= search_response.results.total == 1 ? "was found." : "were found." %></p>
     </div>
   </div>
 
