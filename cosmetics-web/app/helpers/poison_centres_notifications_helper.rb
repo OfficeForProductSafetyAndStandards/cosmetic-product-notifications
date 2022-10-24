@@ -24,7 +24,7 @@ module PoisonCentresNotificationsHelper
   end
 
   def display_filters_informations
-    "using the current filters," if @search_form.valid? && @search_form.filters_present?
+    "<span class=\"opss-filter-txt\">using the current filters,</span>".html_safe if @search_form.valid? && @search_form.filters_present?
   end
 
   def back_to_ingredients?

@@ -52,7 +52,9 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     expect_to_be_on_the_search_homepage
 
-    click_link "Sign in"
+    within("div.govuk-header__content") do
+      click_link "Sign in"
+    end
 
     fill_in "Email address", with: invited_user.email
     fill_in "Password", with: "testpassword123@"
@@ -145,7 +147,9 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
     expect_to_be_on_the_search_homepage
 
-    click_link "Sign in"
+    within("div.govuk-header__content") do
+      click_link "Sign in"
+    end
 
     fill_in "Email address", with: invited_user.email
     fill_in "Password", with: "testpassword123@"
@@ -203,7 +207,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
   # end
 
   def expect_to_be_signed_in_as_search_user
-    expect(page).to have_css("h1", text: "Cosmetic products search")
+    expect(page).to have_css("h1", text: "Search cosmetic products")
     expect(page).to have_css("a", text: "Sign out")
   end
 
