@@ -29,7 +29,7 @@ RSpec.describe "Landing page", :with_2fa, type: :request do
       it "loads the landing page with a link to the user notifications" do
         get submit_root_path
         expect(response).to render_template(:index)
-        expect(response.body).to include("Your cosmetic products")
+        expect(response.body).to include("cosmetic products page")
       end
     end
 
