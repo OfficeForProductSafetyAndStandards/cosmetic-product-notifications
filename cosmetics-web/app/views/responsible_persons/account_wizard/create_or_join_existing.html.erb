@@ -4,7 +4,7 @@
 <% end %>
 
 <%= form_with url: wizard_path, method: :put do |form| %>
-  <% error_message = @nothing_selected && { text: "Select yes, if you or your organisation has an account", href: "#option-error" } %>
+  <% error_message = @nothing_selected && { text: "Select yes, if you or your organisation have an account", href: "#option-error" } %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <% heading = capture do %>
