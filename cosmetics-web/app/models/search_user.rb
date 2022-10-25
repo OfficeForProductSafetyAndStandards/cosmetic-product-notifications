@@ -39,6 +39,14 @@ class SearchUser < User
     !msa_user?
   end
 
+  def can_view_nanomaterial_notification_files?
+    opss_science_user?
+  end
+
+  def can_view_nanomaterial_review_period_end_date?
+    msa_user? || opss_science_user?
+  end
+
   def resend_account_setup_link
     SearchNotifyMailer.invitation_email(self).deliver_later
   end

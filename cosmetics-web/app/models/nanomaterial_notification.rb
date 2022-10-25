@@ -1,6 +1,8 @@
 class NanomaterialNotification < ApplicationRecord
   class AlreadySubmittedError < StandardError; end
 
+  include FileAntivirusCheckable
+
   belongs_to :responsible_person
   has_many :nano_materials
 
@@ -83,6 +85,10 @@ class NanomaterialNotification < ApplicationRecord
 
   def can_be_made_available_on_uk_market?
     can_be_made_available_on_uk_market_from <= Time.zone.now
+  end
+
+  def ukn
+    "UKN-#{id}" if id.present?
   end
 
 private
