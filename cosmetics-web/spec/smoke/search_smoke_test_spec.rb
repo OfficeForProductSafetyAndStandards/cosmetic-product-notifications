@@ -7,7 +7,7 @@ RSpec.feature "Search smoke test" do
   if ENV["RUN_SMOKE"] == "true"
     scenario "sign-in and search notification product as poison center user" do
       session.visit(ENV["SMOKE_ENV_URL"])
-      expect(session).to have_css("h1", text: "Cosmetic products search")
+      expect(session).to have_css("h1", text: "Search cosmetic products")
 
       session.visit "#{ENV['SMOKE_ENV_URL']}/sign-in"
       smoke_fill_in_search_credentials(session)
@@ -20,13 +20,13 @@ RSpec.feature "Search smoke test" do
         code = get_code.scan(/\d{5}/).first
         smoke_complete_secondary_authentication_with(code, session)
         attempts += 1
-        break if session.has_css?("h1", text: "Cosmetic products search")
+        break if session.has_css?("h1", text: "Search cosmetic products")
         break if attempts > 3
 
         sleep attempts * 10
       end
 
-      expect(session).to have_css("h1", text: "Cosmetic products search")
+      expect(session).to have_css("h1", text: "Search cosmetic products")
       expect(session).to have_xpath("//input[contains(@id,'q')]")
 
       session.fill_in("notification_search_form_q", with: product_name)
