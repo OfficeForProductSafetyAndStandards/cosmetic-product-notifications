@@ -1,4 +1,6 @@
-<% content_for :page_title, "Create or join an existing account" %>
+<% title = "Create or join an existing account" %>
+<% page_title(title, errors: @nothing_selected) %>
+
 <% content_for :after_header do %>
   <%= link_to "Back", previous_wizard_path, class: "govuk-back-link" %>
 <% end %>
