@@ -1,0 +1,3 @@
+<a class="govuk-header__link govuk-header__link--service-name" href=<%= current_user.present? && current_user.has_completed_registration? ? poison_centre_notifications_search_path : "#" %>>
+  <%= @service_name %>
+</a>
