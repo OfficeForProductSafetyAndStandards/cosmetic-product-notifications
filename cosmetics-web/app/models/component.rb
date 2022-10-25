@@ -3,6 +3,7 @@ class Component < ApplicationRecord
   include NotificationProperties
   include NotificationPropertiesHelper
   include CategoryHelper
+  include Clonable
   include FileUploadConcern
   include RoutingQuestionCacheConcern
 

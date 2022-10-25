@@ -1,5 +1,6 @@
 class Ingredient < ApplicationRecord
   include CasNumberConcern
+  include Clonable
 
   belongs_to :component
 

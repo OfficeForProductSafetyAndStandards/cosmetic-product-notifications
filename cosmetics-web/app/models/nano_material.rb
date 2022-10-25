@@ -1,4 +1,6 @@
 class NanoMaterial < ApplicationRecord
+  include Clonable
+
   PURPOSES = %w[colorant preservative uv_filter other].freeze
 
   belongs_to :notification, optional: false

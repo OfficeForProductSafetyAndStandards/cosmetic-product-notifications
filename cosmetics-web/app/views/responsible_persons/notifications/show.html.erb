@@ -12,13 +12,20 @@
           <%= @notification.product_name %>
         </h1>
       </div>
-      <% if @notification.can_be_deleted? %>
-        <div class="govuk-grid-column-one-third govuk-!-margin-bottom-7">
+      <div class="govuk-grid-column-one-third">
+        <div class="opss-text-align-right govuk-!-margin-bottom-8">
+          <a class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-underline-offset" href="<%= clone_responsible_person_notification_path(@responsible_person, @notification) %>">
+            Create a draft notification using<br class="opss-br-desktop"> this notification as a template
+          </a>
+        </div>
+        <div class="opss-text-align-right govuk-!-margin-bottom-8">
+        <% if @notification.can_be_deleted? %>
           <%= link_to "Delete this notification",
               delete_responsible_person_delete_notification_path(@responsible_person, @notification),
               class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" %>
+        <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
     <% if @notification.can_be_deleted? %>
       <div class="govuk-grid-row">

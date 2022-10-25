@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_23_161414) do
+ActiveRecord::Schema.define(version: 2022_10_25_112037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 2022_09_23_161414) do
     t.datetime "deleted_at"
     t.jsonb "routing_questions_answers"
     t.string "previous_state"
+    t.integer "source_notification_id"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"

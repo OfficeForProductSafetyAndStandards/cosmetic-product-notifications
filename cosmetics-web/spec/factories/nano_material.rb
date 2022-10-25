@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :nano_material do
-    inci_name { "Nano foo" }
+    sequence(:inci_name) { |n| "Nano #{n}" }
     notification
   end
 

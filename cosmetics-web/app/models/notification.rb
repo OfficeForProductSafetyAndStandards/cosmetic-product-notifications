@@ -22,6 +22,7 @@ class Notification < ApplicationRecord
   include Searchable
   include CountriesHelper
   include RoutingQuestionCacheConcern
+  include Clonable
 
   belongs_to :responsible_person
 
@@ -30,6 +31,7 @@ class Notification < ApplicationRecord
   has_many :image_uploads, dependent: :destroy
 
   has_one :deleted_notification, dependent: :destroy
+  has_one :source_notification, class_name: "Notification", foreign_key: :source_notification_id
 
   accepts_nested_attributes_for :image_uploads
 

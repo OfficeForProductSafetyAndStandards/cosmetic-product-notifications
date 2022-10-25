@@ -1,4 +1,6 @@
 class Cmr < ApplicationRecord
+  include Clonable
+
   belongs_to :component
 
   validates :name, presence: true
