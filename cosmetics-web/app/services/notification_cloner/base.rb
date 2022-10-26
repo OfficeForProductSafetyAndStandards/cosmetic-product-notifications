@@ -59,7 +59,7 @@ module NotificationCloner
 
       def clone_cmrs(old_component, new_component)
         old_component.cmrs.each do |old_cmsr|
-          new_cmsr = clone_model(old_cmsr, NotificationCloner::Attributes::INGREDIENT)
+          new_cmsr = clone_model(old_cmsr, NotificationCloner::Attributes::CMR)
           new_cmsr.component = new_component
           new_cmsr.save!
         end

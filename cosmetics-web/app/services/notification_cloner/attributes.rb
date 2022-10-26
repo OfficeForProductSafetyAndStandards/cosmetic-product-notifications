@@ -56,6 +56,7 @@ module NotificationCloner
       :purposes,
       :confirm_toxicology_notified,
       :confirm_usage,
+      :nanomaterial_notification_id,
       #  :confirm_restrictions,
     ].freeze
     INGREDIENT = %i[

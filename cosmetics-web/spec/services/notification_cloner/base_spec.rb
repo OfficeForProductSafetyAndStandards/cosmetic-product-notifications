@@ -79,6 +79,7 @@ RSpec.describe NotificationCloner::Base do
     component1 = create(:ranges_component, :completed, :with_range_ingredients, notification:)
 
     create(:exact_component, :completed, :with_exact_ingredients, notification:)
+    create(:cmr, component: component1)
 
     component1.nano_materials << nanomaterial1
     component1.nano_materials << nanomaterial2
