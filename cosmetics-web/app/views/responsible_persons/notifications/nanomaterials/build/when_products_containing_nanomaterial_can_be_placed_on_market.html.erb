@@ -1,7 +1,4 @@
-<%
-  name = @nano_material.inci_name
-  title = "When you can place products containing #{name} on the market"
-%>
+<% title = "When can you place products containing this nanomaterial on the market?" %>
 
 <% content_for :page_title, title %>
 <% content_for :after_header do %>
@@ -13,25 +10,25 @@
 
     <h1 class="govuk-heading-l"><%= title %></h1>
 
-    <p>
-      The date depends on whether or not you notified the nanomaterial using CPNP before
-      <span class="no-wrap"><%= display_full_month_date(EU_EXIT_DATE) %>.</span>
+    <p class="govuk-body">
+      This will depend upon if and when you notified the nanomaterial using the <abbr>EU</abbr>
+      Cosmetic Products Notification Portal (<abbr>CPNP</abbr>).
     </p>
 
-    <p>
-      If you notified <%= name %> using CPNP before
+    <p class="govuk-body">
+      If you notified this nanomaterial using <abbr>CPNP</abbr> before
       <span class="no-wrap"><%= display_full_month_date(EU_EXIT_DATE) %>,</span>
-      and notified it in GB before
+      and notified it in <abbr>GB</abbr> before
       <span class="no-wrap"><%= display_full_month_date(SUBMISSION_WINDOW_END_DATE) %></span>
-      you must wait 7 months from the original EU notification before you can place products
-      containing <%= name %> on the market.
+      you must wait 7 months from the original <abbr>EU</abbr> notification before you can place products
+      containing this nanomaterial on the market.
     </p>
 
-    <p>
-      If you didn’t notify <%= name %> using CPNP before
+    <p class="govuk-body">
+      If you didn’t notify this nanomaterial using <abbr>CPNP</abbr> before
       <span class="no-wrap"><%= display_full_month_date(EU_EXIT_DATE) %></span>
-      you must wait 6 months from the date you notified it in GB before you can place products
-      containing <%= name %> on the market.
+      you must wait 6 months from the date you notified it in <abbr>GB</abbr> before you can place products
+      containing this nanomaterial on the market.
     </p>
 
     <%= form_with model: @nano_material, url: wizard_path, method: :put do |form| %>
