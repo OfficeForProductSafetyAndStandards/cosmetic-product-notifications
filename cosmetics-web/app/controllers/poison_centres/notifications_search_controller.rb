@@ -1,6 +1,5 @@
 class PoisonCentres::NotificationsSearchController < SearchApplicationController
   PER_PAGE = 20
-  ADVANCED_SEARCH_USER_ROLES = %w[opss_science].freeze
 
   def show
     @search_form = NotificationSearchForm.new(search_params)
