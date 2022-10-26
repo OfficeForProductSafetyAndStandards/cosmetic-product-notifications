@@ -357,4 +357,17 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
     end
   end
+
+  describe "#ukn" do
+    let(:notification) { build(:nanomaterial_notification) }
+
+    it "is null when the notification has no id" do
+      expect(notification.ukn).to be_nil
+    end
+
+    it "prefixes the notification id with UKN-" do
+      notification.id = 123
+      expect(notification.ukn).to eq("UKN-123")
+    end
+  end
 end
