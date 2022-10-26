@@ -1,7 +1,10 @@
 class NanomaterialNotification < ApplicationRecord
   class AlreadySubmittedError < StandardError; end
 
+  include FileAntivirusCheckable
+
   belongs_to :responsible_person
+  has_many :nano_materials
 
   validates :name, presence: true, on: :add_name
 
@@ -17,6 +20,8 @@ class NanomaterialNotification < ApplicationRecord
   validate :pdf_file_attached, on: :upload_file
 
   has_one_attached :file
+
+  scope :submitted, -> { where.not(submitted_at: nil) }
 
   # Expects either a date object, or a hash containing
   # year, month and day, for example:
@@ -80,6 +85,10 @@ class NanomaterialNotification < ApplicationRecord
 
   def can_be_made_available_on_uk_market?
     can_be_made_available_on_uk_market_from <= Time.zone.now
+  end
+
+  def ukn
+    "UKN-#{id}" if id.present?
   end
 
 private

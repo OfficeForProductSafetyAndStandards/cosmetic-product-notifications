@@ -40,8 +40,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     # Perform steps to block nano
     click_on "Nano one"
-    click_on "Save and continue" # Name page
     click_on "Continue" # Purpose page
+    click_on "Save and continue" # Name page
     answer_is_nanomaterial_listed_in_ec_regulation_with("No", nanomaterial_name: "Nano one")
     click_link "the task list page"
 

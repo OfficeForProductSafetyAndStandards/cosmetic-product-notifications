@@ -68,6 +68,11 @@ en:
             inci_name:
               blank: "Enter a name"
               invalid: "Enter a name which has not already been used in this notification"
+            nanomaterial_notification:
+              blank: "Select a notified nanomaterial"
+              standard: "Nanomaterial must be non standard to be associated with a nanomaterial notification"
+              taken: "This notified nanomaterial is already added to this product notification"
+              wrong_responsible_person: "Nanomaterial notification must belong to the same responsible person as the product notification"
         new_account:
           attributes:
             full_name:
@@ -287,6 +292,15 @@ en:
               blank: "Select a concentration range"
             type:
               inclusion: "Type must be 'exact' or 'range'"
+        responsible_persons/notifications/nanomaterials/purposes_form:
+          attributes:
+            purpose_type:
+              blank: "Select the purpose of this nanomaterial"
+              inclusion: "%{value} is not a valid purpose type"
+            purposes:
+              blank: "Select the purpose"
+              inclusion: "%{purpose} is not a valid purpose"
+              standard_or_other: "Select either any standard or 'other' as purposes"
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:

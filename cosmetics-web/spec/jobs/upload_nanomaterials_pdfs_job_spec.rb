@@ -15,7 +15,7 @@ RSpec.describe UploadNanomaterialsPdfsJob, :with_stubbed_antivirus do
     blob.open do |b|
       Zip::File.open(b) do |zip|
         zipped_files = zip.entries.map(&:name)
-        expect(zipped_files).to eq(["UKN-#{nano.id}.pdf"]) # Correct file name
+        expect(zipped_files).to eq(["#{nano.ukn}.pdf"]) # Correct file name
         zipped_file = zip.entries.first
 
         expect(zipped_file.size).to eq nano.file.open(&:size) # Same size as attachment
