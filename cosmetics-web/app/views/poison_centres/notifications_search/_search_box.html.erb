@@ -17,39 +17,37 @@
               <span class="govuk-visually-hidden">Search</span>
             </button>
           </div>
-          <% if PoisonCentres::NotificationsSearchController::ADVANCED_SEARCH_USER_ROLES.include? current_user.role %>
-            <%= govukRadios(
-              form: form,
-              key: :search_fields,
-              idPrefix: "search-by",
-              fieldset: { legend: { text: "Advanced search options", classes: "govuk-visually-hidden" } },
-              classes: "govuk-radios--inline govuk-radios--small",
-              formGroup: { classes: "govuk-!-margin-bottom-0" },
-              items: [
-                {
-                  value: OpenSearchQuery::Notification::SEARCH_NOTIFICATION_NAME_FIELD,
-                  text: 'Notification name',
-                  label: { classes: 'govuk-!-font-size-16' }
-                },
-                {
-                  value: OpenSearchQuery::Notification::SEARCH_RESPONSIBLE_PERSON_FIELDS,
-                  text: "Responsible Person name&sol;address".html_safe,
-                  label: { classes: 'govuk-!-font-size-16' }
-                },
-                {
-                  value: OpenSearchQuery::Notification::SEARCH_ALL_FIELDS,
-                  text: 'Both',
-                  label: { classes: 'govuk-!-font-size-16' }
-                },
-              ],
-            ) %>
-            <%= govukCheckboxes(
-              form: form,
-              key: :match_similar,
-              classes: "govuk-checkboxes--small",
-              items: [{ key: 'match_similar', text: 'Include similar words', disable_ghost: true, label: { classes: 'govuk-!-font-size-16' } }],
-            ) %>
-          <% end %>
+          <%= govukRadios(
+            form: form,
+            key: :search_fields,
+            idPrefix: "search-by",
+            fieldset: { legend: { text: "Advanced search options", classes: "govuk-visually-hidden" } },
+            classes: "govuk-radios--inline govuk-radios--small",
+            formGroup: { classes: "govuk-!-margin-bottom-0" },
+            items: [
+              {
+                value: OpenSearchQuery::Notification::SEARCH_NOTIFICATION_NAME_FIELD,
+                text: 'Notification name',
+                label: { classes: 'govuk-!-font-size-16' }
+              },
+              {
+                value: OpenSearchQuery::Notification::SEARCH_RESPONSIBLE_PERSON_FIELDS,
+                text: "Responsible Person name&sol;address".html_safe,
+                label: { classes: 'govuk-!-font-size-16' }
+              },
+              {
+                value: OpenSearchQuery::Notification::SEARCH_ALL_FIELDS,
+                text: 'Both',
+                label: { classes: 'govuk-!-font-size-16' }
+              },
+            ],
+          ) %>
+          <%= govukCheckboxes(
+            form: form,
+            key: :match_similar,
+            classes: "govuk-checkboxes--small",
+            items: [{ key: 'match_similar', text: 'Include similar words', disable_ghost: true, label: { classes: 'govuk-!-font-size-16' } }],
+          ) %>
           <%= form.hidden_field :category, id: 'notification_search_form_category_hidden' %>
           <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact, id: :keyword_form, search_type: 'notification' } %>
           <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from, id: :keyword_form, search_type: 'notification' } %>
