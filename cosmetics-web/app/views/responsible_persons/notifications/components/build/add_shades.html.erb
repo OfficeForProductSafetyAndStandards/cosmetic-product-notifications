@@ -15,12 +15,12 @@
             <%= form.text_field :shades, multiple: true, value: shade,
                     class: "govuk-input govuk-input--width-20 shade-input" %>
 
-            <%= govukButton text: "Remove", name: "remove_shade_with_id", value: "_index", classes: "govuk-button--secondary" %>
+            <%= govukButton text: "Remove shade", name: "remove_shade_with_id", value: "_index", classes: "govuk-button--secondary" %>
           </div>
         <% end %>
       <% end %>
       <div class="govuk-form-group">
-        <%= govukButton text: "Add another", classes: "govuk-button--secondary", name: "add_shade", value: "true" %>
+        <%= govukButton text: "Add a shade", classes: "govuk-button--secondary", name: "add_shade", value: "true" %>
       </div>
 
       <div class="govuk-form-group">

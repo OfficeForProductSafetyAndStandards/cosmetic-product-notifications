@@ -312,11 +312,14 @@ describe ResponsiblePersons::NotificationsHelper do
         end
       end
 
+      # rubocop:disable RSpec/VerifiedDoubles
       context "when there are nano materials present" do
-        let(:nano_material) { build_stubbed(:nano_material, inci_name: "Nano name") }
+        let(:nano_material) { instance_double(NanoMaterial) }
+        let(:nano_relation) { double("AR Relationship", :[] => [nano_material], non_standard: []) }
 
         before do
-          allow(component).to receive(:nano_materials).and_return([nano_material])
+          allow(helper).to receive(:nano_materials_with_pdf_links).with(nano_relation).and_return(["Nano name"])
+          allow(component).to receive(:nano_materials).and_return(nano_relation)
         end
 
         it "contains a row with the nano material names" do
@@ -334,7 +337,21 @@ describe ResponsiblePersons::NotificationsHelper do
           allow(helper).to receive(:get_exposure_condition_name).with("rinse_off").and_return("Condition name")
           expect(summary_component_rows).to include({ key: { text: "Exposure condition" }, value: { text: "Condition name" } })
         end
+
+        context "when there is a nano material notification associated with the component nanomaterial" do
+          let(:nano_relation) { double("AR Relationship", :[] => [nano_material], non_standard: [nano_material]) }
+
+          it "contains a row with the nano material notification review period end date" do
+            expected_data = "UKN-1 - Nano material 1 - 1 January 2022"
+            allow(helper).to receive(:nano_materials_with_review_period_end_date).with([nano_material]).and_return([expected_data])
+            allow(helper).to receive(:render).with("application/none_or_bullet_list",
+                                                   hash_including(entities_list: [expected_data])).and_return(expected_data)
+            expect(summary_component_rows).to include({ key: { text: "Nanomaterials review period end date" },
+                                                        value: { text: expected_data } })
+          end
+        end
       end
+      # rubocop:enable RSpec/VerifiedDoubles
     end
 
     describe "component categories" do

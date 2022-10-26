@@ -81,7 +81,7 @@ private
     when "join_existing"
       redirect_to wizard_path(:join_existing)
     else
-      @nothing_selected = true if params[:commit].present?
+      @nothing_selected = true if params[:option].nil?
       render step
     end
   end

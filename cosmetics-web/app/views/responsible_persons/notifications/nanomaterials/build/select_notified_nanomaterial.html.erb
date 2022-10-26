@@ -1,0 +1,40 @@
+<% title = "Select a notified nanomaterial" %>
+
+<% page_title title, errors: @nano_material.errors.any? %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+
+<% items = @nanomaterial_notifications
+             .map { |n|{ text: n.name, value: n.id, attributes: { class: "govuk-!-font-size-16" } }}
+             .prepend({ text: "Select a nanomaterial", value: "", attributes: {  class: "govuk-!-font-size-16" } }) %>
+
+
+
+<%= form_with model: @nano_material, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= error_summary(@nano_material.errors) %>
+
+      <h1 class="govuk-fieldset__heading govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="nanomaterial_notification">
+          <%= title %>
+        </label>
+      </h1>
+      <%= govukSelect(form: form,
+                      key: :nanomaterial_notification,
+                      id: "nanomaterial_notification",
+                      name: "nanomaterial_notification",
+                      described_by: "nanomaterial_notification-hint",
+                      show_all_values: true,
+                      hint: { text: "These are your notified nanomaterials." },
+                      items: items,
+                      value: @nano_material.nanomaterial_notification_id.presence || "") %>
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+        <%= link_to "My nanomaterial is not displayed", wizard_path(:notify_your_nanomaterial), class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+    </div>
+  </div>
+<% end %>
