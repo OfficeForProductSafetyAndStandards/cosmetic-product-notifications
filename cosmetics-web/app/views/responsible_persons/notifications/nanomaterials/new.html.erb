@@ -1,22 +1,8 @@
-<% title = "What is the nanomaterial INCI name?" %>
-
-<% page_title title, errors: @nano_material.errors.any? %>
+<% page_title("Select nanomaterial purpose", errors: @purposes_form.errors.any?) %>
 <% content_for :after_header do %>
-  <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
+  <%= govukBackLink text: "Back", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>
 <% end %>
 
-<%= form_with model: @nano_material, url: responsible_person_notification_nanomaterials_path(@notification.responsible_person, @notification), html: { novalidate: true }, method: :post do |form| %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= error_summary_for(@nano_material) %>
-      <%= govukInput(form: form,
-                     key: :inci_name,
-                     classes: "govuk-!-margin-top-7",
-                     label: { html: "What is the nanomaterial <abbr title='International Nomenclature for Cosmetic Ingredients'>INCI</abbr> name?".html_safe ,
-                             classes: "govuk-label--l",
-                             isPageHeading: true },
-                     hint: { html: 'This is the International Nomenclature for Cosmetic Ingredients name.' }) %>
-      <%= govukButton text: "Save and continue" %>
-    </div>
-  </div>
-<% end %>
+<% form_url = responsible_person_notification_nanomaterials_path(@notification.responsible_person, @notification) %>
+<%= render partial: "responsible_persons/notifications/nanomaterials/build/purposes_form",
+           locals: { purposes_form: @purposes_form, form_url: form_url, form_method: :post } %>

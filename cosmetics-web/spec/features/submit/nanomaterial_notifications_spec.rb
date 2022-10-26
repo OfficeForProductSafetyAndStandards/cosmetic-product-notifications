@@ -59,20 +59,20 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_text("You have told us about My nanomaterial")
     click_link "Return to Nanomaterials"
 
-    id = NanomaterialNotification.last.id
+    last_notification = NanomaterialNotification.last
     expect(page).to have_link("My nanomaterial")
     expect(page).to have_selector("td[headers='uknotified item-1 meta-1']", text: "10 June 2021")
     expect(page).to have_selector("td[headers='eunotified item-1 meta-1']", text: "No")
     expect(page).to have_selector("td[headers='reviewperiodenddate item-1 meta-1']", text: "10 December 2021")
-    expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: "UKN-#{id}")
+    expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: last_notification.ukn)
 
     click_link("My nanomaterial")
-    expect(page).to have_current_path("/nanomaterials/#{id}")
+    expect(page).to have_current_path("/nanomaterials/#{last_notification.id}")
     expect(page).to have_h1("My nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
     expect(page).to have_summary_item(key: "Review period end", value: "10 December 2021")
-    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: last_notification.ukn)
     expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end
 
@@ -101,20 +101,20 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_text("You have told us about My EU nanomaterial")
     click_link "Return to Nanomaterials"
 
-    id = NanomaterialNotification.last.id
+    last_notification = NanomaterialNotification.last
     expect(page).to have_link("My EU nanomaterial")
     expect(page).to have_selector("td[headers='uknotified item-1 meta-1']", text: "10 June 2021")
     expect(page).to have_selector("td[headers='eunotified item-1 meta-1']", text: "1 February 2017")
     expect(page).to have_selector("td[headers='reviewperiodenddate item-1 meta-1']", text: "1 August 2017")
-    expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: "UKN-#{id}")
+    expect(page).to have_selector("td[headers='uknumber item-1 meta-1']", text: last_notification.ukn)
 
     click_link("My EU nanomaterial")
-    expect(page).to have_current_path("/nanomaterials/#{id}")
+    expect(page).to have_current_path("/nanomaterials/#{last_notification.id}")
     expect(page).to have_h1("My EU nanomaterial")
     expect(page).to have_summary_item(key: "Notified in the UK", value: "10 June 2021")
     expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
     expect(page).to have_summary_item(key: "Review period end", value: "1 August 2017")
-    expect(page).to have_summary_item(key: "UK nanomaterial number", value: "UKN-#{id}")
+    expect(page).to have_summary_item(key: "UK nanomaterial number", value: last_notification.ukn)
     expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
   end
 end

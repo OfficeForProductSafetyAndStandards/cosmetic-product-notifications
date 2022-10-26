@@ -30,10 +30,13 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
 
     expect_to_be_on_responsible_person_notifications_page(responsible_person_1)
     click_on "Responsible Person"
+    expect(page).to have_css("dd", text: name_1)
     click_on "Change the Responsible Person"
     choose name_2
     click_on "Save and continue"
     expect(page).to have_h1("Responsible Person")
+    expect(page).to have_css("dd", text: name_2)
+    expect(page).to have_text("Responsible Person was changed")
     expect(page).to have_current_path("/responsible_persons/#{responsible_person_2.id}")
   end
 

@@ -2,8 +2,24 @@
 
 <% page_title title, errors: @nano_material.errors.any? %>
 <% content_for :after_header do %>
-  <%= link_to "Back", responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-back-link" %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
+
+<%
+  purposes_links = @nano_material.purposes.map do |purpose_name|
+    purpose = NanoMaterialPurposes.find(purpose_name)
+    link_to("Annex #{purpose.annex_number} list of #{purpose.display_name.pluralize}",
+             purpose.link,
+             class: "govuk-link govuk-link--no-visited-state",
+             target: "_blank",
+             rel: "noopener")
+  end
+%>
+<% input_hint = capture do %>
+    <p>This is the International Nomenclature for Cosmetic Ingredients name.</p>
+    <p>View the <%= to_sentence(purposes_links,last_word_connector: " and ").html_safe %></p>
+<% end %>
+
 
 <%= form_with model: @nano_material, url: wizard_path, html: { novalidate: true }, method: :put do |form| %>
   <div class="govuk-grid-row">
@@ -11,11 +27,11 @@
       <%= error_summary_for(@nano_material) %>
       <%= govukInput(form: form,
                      key: :inci_name,
-                     classes: "govuk-!-margin-top-7",
+                     classes: "govuk-!-margin-top-2",
                      label: { html: "What is the nanomaterial <abbr title='International Nomenclature for Cosmetic Ingredients'>INCI</abbr> name?".html_safe ,
                              classes: "govuk-label--l",
                              isPageHeading: true },
-                     hint: { html: 'This is the International Nomenclature for Cosmetic Ingredients name.' }) %>
+                     hint: { html: input_hint }) %>
       <%= govukButton text: "Save and continue" %>
     </div>
   </div>

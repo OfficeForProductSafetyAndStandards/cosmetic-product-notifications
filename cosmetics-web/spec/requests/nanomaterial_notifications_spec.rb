@@ -61,8 +61,8 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     let(:expected_csv) do
       <<~CSV
         Nanomaterial name,UK Nanomaterial number ,EU Notification date,UK Notification date
-        Zinc oxide,UKN-#{nanomaterial_notification1.id},,2021-07-20 12:00:00 +0100
-        Zinc oxide,UKN-#{nanomaterial_notification2.id},2021-07-17,2021-07-20 12:00:00 +0100
+        Zinc oxide,#{nanomaterial_notification1.ukn},,2021-07-20 12:00:00 +0100
+        Zinc oxide,#{nanomaterial_notification2.ukn},2021-07-17,2021-07-20 12:00:00 +0100
       CSV
     end
     let(:user_id)                    { submit_user.id }

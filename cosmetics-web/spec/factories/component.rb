@@ -125,11 +125,5 @@ FactoryBot.define do
         component.ingredients << create(:exact_ingredient, component:, inci_name: ingredient)
       end
     end
-
-    after(:create) do |component, evaluator|
-      evaluator.with_nano_materials.each do |nano_material|
-        component.nano_materials << nano_material
-      end
-    end
   end
 end
