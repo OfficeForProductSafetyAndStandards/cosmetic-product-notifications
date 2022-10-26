@@ -21,9 +21,14 @@ private
     # instead of defaulting to OpenSearch returning the first 10 hits.
     search_result = Notification.full_search(query).page(params[:page]).per(PER_PAGE)
 
-    SearchHistory.create(query: @search_form.q, results: search_result.results.total)
+    add_to_search_history(@search_form.q, search_result.results.total)
 
     search_result
+  end
+
+  def add_to_search_history(query, results)
+    Rails.logger.info "[SearchHistory] Type: Ingredients - Query: '#{query}' - Results: #{results}"
+    SearchHistory.create(query:, results:)
   end
 
   def search_params
