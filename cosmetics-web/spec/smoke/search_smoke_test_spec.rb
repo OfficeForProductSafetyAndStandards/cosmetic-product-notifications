@@ -7,7 +7,7 @@ RSpec.feature "Search smoke test" do
   if ENV["RUN_SMOKE"] == "true"
     scenario "sign-in and search notification product as poison center user" do
       session.visit(ENV["SMOKE_ENV_URL"])
-      expect(session).to have_css("h1", text: "Search cosmetic products")
+      expect(session).to have_css("h1", text: "Cosmetic products search")
 
       session.visit "#{ENV['SMOKE_ENV_URL']}/sign-in"
       smoke_fill_in_search_credentials(session)
@@ -36,6 +36,7 @@ RSpec.feature "Search smoke test" do
 
       session.find("a", text: product_name).click
 
+      # Poison Centre or OPSS user role view
       expect(session).to have_css("h2", text: "Product details")
       expect(session).to have_css("h2", text: "Ingredients")
     end
