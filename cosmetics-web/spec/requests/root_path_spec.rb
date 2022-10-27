@@ -22,6 +22,11 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       it "renders the homepage" do
         expect(response).to render_template("submit/landing_page/index")
       end
+
+      it "renders the correct header link" do
+        get submit_root_path
+        expect(response).to render_template(partial: "submit/_header_link")
+      end
     end
 
     context "when signed in as a user not associated with a responsible person" do
@@ -85,6 +90,11 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
 
       it "renders the homepage" do
         expect(response).to render_template("search/landing_page/index")
+      end
+
+      it "renders the correct header link" do
+        get search_root_path
+        expect(response).to render_template(partial: "search/_header_link")
       end
     end
 

@@ -19,9 +19,8 @@
       </a>
     </div>
     <div class="govuk-header__content">
-      <a class="govuk-header__link govuk-header__link--service-name" href=<%= current_user && !current_user.has_completed_registration? ? "#" :  products_redirect_responsible_persons_path %>>
-        <%= @service_name %>
-      </a>
+      <%= render partial: ("search/header_link") if search_domain? %>
+      <%= render partial: ("submit/header_link") if submit_domain? %>
       <button class="govuk-header__menu-button govuk-js-header-toggle" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
         <ul id="navigation" class="govuk-header__navigation" aria-label="Top Level Navigation">
