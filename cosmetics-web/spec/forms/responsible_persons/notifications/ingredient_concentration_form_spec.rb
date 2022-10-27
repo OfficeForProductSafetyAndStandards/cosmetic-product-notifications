@@ -131,6 +131,18 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
       expect(form.errors[:name]).to eq ["Enter a name"]
     end
 
+    it "is invalid with a name containing 'http'" do
+      form.name = "http://example.com"
+      expect(form).not_to be_valid
+      expect(form.errors[:name]).to eq ["Enter a valid ingredient name"]
+    end
+
+    it "is invalid with a name containing 'www'" do
+      form.name = "www.example.com"
+      expect(form).not_to be_valid
+      expect(form.errors[:name]).to eq ["Enter a valid ingredient name"]
+    end
+
     it "is valid when cas number is not present" do
       form.cas_number = nil
       expect(form).to be_valid

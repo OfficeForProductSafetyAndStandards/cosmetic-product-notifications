@@ -166,6 +166,7 @@ en:
           attributes:
             inci_name:
               blank: "Enter a name"
+              invalid: "Enter a valid ingredient name"
               taken: "Ingredient name already exists in this component"
             exact_concentration:
               blank: "Enter the exact or range concentration"
@@ -285,6 +286,7 @@ en:
               not_a_number: "Enter a number for the concentration"
             name:
               blank: "Enter a name"
+              invalid: "Enter a valid ingredient name"
               taken: "Enter a name which is unique to this %{entity}"
             poisonous:
               inclusion: "Select yes if the ingredient is poisonous"
