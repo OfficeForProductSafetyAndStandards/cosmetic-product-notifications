@@ -1,3 +1,3 @@
 class IngredientNameFormatValidator < NameFormatValidator
-  BANNED_REGEXP = /www|http/
+  BANNED_REGEXP = /<\/|www|http/
 end

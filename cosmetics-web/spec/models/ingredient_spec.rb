@@ -97,6 +97,12 @@ RSpec.describe Ingredient, type: :model do
         expect(ingredient.errors[:inci_name]).to eq(["Enter a valid ingredient name"])
       end
 
+      it "is invalid when name includes '</'" do
+        ingredient = build_stubbed(:exact_ingredient, inci_name: "<script>Soap</script>")
+        expect(ingredient).not_to be_valid
+        expect(ingredient.errors[:inci_name]).to eq(["Enter a valid ingredient name"])
+      end
+
       it "is invalid when an ingredient with the same name exists in the same component" do
         component = create(:ranges_component)
         create(:range_ingredient, inci_name: "A", component:)
