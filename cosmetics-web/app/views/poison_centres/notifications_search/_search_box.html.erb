@@ -17,7 +17,6 @@
               <span class="govuk-visually-hidden">Search</span>
             </button>
           </div>
-          <% if PoisonCentres::NotificationsSearchController::ADVANCED_SEARCH_USER_ROLES.include? current_user.role %>
             <%= govukRadios(
               form: form,
               key: :search_fields,
@@ -49,7 +48,6 @@
               classes: "govuk-checkboxes--small",
               items: [{ key: 'match_similar', text: 'Include similar words', disable_ghost: true, label: { classes: 'govuk-!-font-size-16' } }],
             ) %>
-          <% end %>
           <%= form.hidden_field :category, id: 'notification_search_form_category_hidden' %>
           <%= render partial: 'hidden_date_fields', locals: { attribute: :date_exact, id: :keyword_form, search_type: 'notification' } %>
           <%= render partial: 'hidden_date_fields', locals: { attribute: :date_from, id: :keyword_form, search_type: 'notification' } %>
