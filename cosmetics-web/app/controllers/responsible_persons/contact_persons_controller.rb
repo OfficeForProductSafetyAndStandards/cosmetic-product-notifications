@@ -70,7 +70,7 @@ private
   def confirmation_message(field, changed)
     return unless changed # Don't set confirmation message when submitted value does not change the current value
 
-    "Contact person #{field.humanize(capitalize: false)} changed successfully"
+    "The assigned contact #{ContactPerson.human_attribute_name(field).downcase} was changed"
   end
 
   def create_successful_message
