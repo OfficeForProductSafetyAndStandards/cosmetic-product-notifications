@@ -19,6 +19,7 @@ module NotificationCloner
           new_notification
         end
         NotificationCloner::ImageCloner.clone(old_notification, new_notification)
+        new_notification
       end
 
       def clone_notification(old_notification)
