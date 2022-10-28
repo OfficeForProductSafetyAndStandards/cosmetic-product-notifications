@@ -10,11 +10,15 @@ module FileAntivirusCheckable
   end
 
   def passed_antivirus_check?
+    return true if ENV["ANTIVIRUS_ENABLED"] == "false"
+
     # We want to return 'false' (not nil) when the virus_safe is 'nil'
     file_exists? && virus_safe == true
   end
 
   def pending_antivirus_check?
+    return false if ENV["ANTIVIRUS_ENABLED"] == "false"
+
     file_exists? && virus_safe.nil?
   end
 

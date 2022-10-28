@@ -6,6 +6,7 @@ module NotificationCloner
     #
     class << self
       def clone(old_notification)
+        new_notification = nil
         ActiveRecord::Base.transaction do
           new_notification = clone_notification(old_notification)
           cloned_components     = clone_components(new_notification, old_notification)
@@ -17,6 +18,7 @@ module NotificationCloner
           new_notification.save!
           new_notification
         end
+        NotificationCloner::ImageCloner.clone(old_notification, new_notification)
       end
 
       def clone_notification(old_notification)
