@@ -64,6 +64,10 @@ RSpec.describe NotificationCloner::Base do
 
         expect(new_attributes).to eq(old_attributes)
       end
+
+      it "keeps track of parent notification" do
+        expect(new_notification.reload.source_notification).to eq(notification)
+      end
     end
 
     context "when notification has range ingredients file"
