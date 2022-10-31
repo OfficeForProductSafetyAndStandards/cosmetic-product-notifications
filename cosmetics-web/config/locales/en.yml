@@ -32,6 +32,8 @@ en:
       cmr:
         cas_number: "CAS number"
         ec_number: "EC number"
+      contact_person:
+        phone_number: "Telephone number"
     errors:
       models:
         notification:

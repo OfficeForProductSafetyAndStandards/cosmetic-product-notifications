@@ -93,7 +93,7 @@ RSpec.describe "Edit Responsible Person Details", type: :request do
       it "response includes a confirmation message" do
         update_request
         follow_redirect!
-        expect(response.body).to include("Responsible Person details changed successfully")
+        expect(response.body).to include("The Responsible Person details were changed")
       end
 
       it "records the previous responsible person address into DB" do
