@@ -13,6 +13,10 @@ FactoryBot.define do
       nanomaterial_notification { association :nanomaterial_notification, responsible_person: notification.responsible_person }
     end
 
+    trait :toxicology_notified do
+      confirm_toxicology_notified { "yes" }
+    end
+
     trait :skip_validations do
       to_create { |instance| instance.save(validate: false) }
     end

@@ -1,13 +1,23 @@
 require "rails_helper"
 
 RSpec.describe NotificationCloner::Base do
+  let(:notification) { create(:registered_notification) }
+
+  let(:nanomaterial1) { create(:nano_material, notification:) }
+  let(:nanomaterial2) { create(:nano_material_non_standard, :toxicology_notified, notification:) }
+
+  let(:component1) { create(:ranges_component, :completed, :with_range_ingredients, notification:) }
+
   before do
-    prepare_complex_notification
+    create(:exact_component, :completed, :with_exact_ingredients, notification:)
+    create(:cmr, component: component1)
+
+    component1.nano_materials << nanomaterial1
+    component1.nano_materials << nanomaterial2
   end
 
   describe "Notification cloning" do
     context "when notification has components, nanomaterials and ingredients" do
-      let!(:notification) { prepare_complex_notification }
       let!(:new_notification) { described_class.clone(notification) }
 
       it "clones notification" do
@@ -21,6 +31,10 @@ RSpec.describe NotificationCloner::Base do
 
       it "clones notification nanomaterials" do
         expect(new_notification.nano_materials.map(&:id)).not_to eq(notification.nano_materials.map(&:id))
+      end
+
+      it "does not set cloned nanomaterials in complete state" do
+        expect(new_notification.nano_materials.map(&:completed?).uniq).to eq([false])
       end
 
       it "clones some notification attributes" do
@@ -72,22 +86,5 @@ RSpec.describe NotificationCloner::Base do
 
     context "when notification has range ingredients file"
     context "when notification has exact ingredients file"
-  end
-
-  def prepare_complex_notification
-    notification = create(:registered_notification)
-
-    nanomaterial1 = create(:nano_material, notification:)
-    nanomaterial2 = create(:nano_material, notification:)
-
-    component1 = create(:ranges_component, :completed, :with_range_ingredients, notification:)
-
-    create(:exact_component, :completed, :with_exact_ingredients, notification:)
-    create(:cmr, component: component1)
-
-    component1.nano_materials << nanomaterial1
-    component1.nano_materials << nanomaterial2
-
-    notification
   end
 end
