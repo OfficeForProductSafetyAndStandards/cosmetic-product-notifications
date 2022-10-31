@@ -1,0 +1,13 @@
+<%= nanomaterial_notification.ukn %> - <%= nanomaterial_notification.name %>
+<% if current_user.can_view_nanomaterial_notification_files? && nanomaterial_notification.passed_antivirus_check? %>
+    <% file = nanomaterial_notification.file %>
+    </br>
+    <%= link_to(file.filename,
+                url_for(file),
+                class: "govuk-link govuk-link--no-visited-state",
+                target: "_blank",
+                rel: "noopener") %>
+    <span class="govuk-!-font-size-16 opss-secondary-text opss-no-wrap">
+      (<abbr>PDF</abbr>,  <%= number_to_human_size(file.byte_size).sub("KB", "<abbr>KB</abbr>").html_safe %>)
+    </span>
+<% end %>

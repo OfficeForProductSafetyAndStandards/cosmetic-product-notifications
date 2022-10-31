@@ -37,7 +37,7 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
 
       expect(page).to have_h1("Cream")
       expect(page).to have_css("th", text: "Nanomaterials", exact_text: true)
-      expect(page).to have_css("td", text: "#{nanomaterial_notification.ukn} - Zinc oxide testPdf.pdf", exact_text: true)
+      expect(page).to have_css("td", text: "#{nanomaterial_notification.ukn} - Zinc oxide testPdf.pdf (PDF, 11.6 KB)", exact_text: true)
       expect(page).to have_summary_item(
         key: "Nanomaterials review period end date",
         value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
