@@ -10,7 +10,7 @@
                         rows: notification_summary_product_rows(notification, allow_edits: allow_edits)) %>
 </section>
 
-<% notification.components.each_with_index do |component, i| %>
+<% notification.components.order(:id).each_with_index do |component, i| %>
   <%
     item_count = "Item #{i + 1}"
     component_title = if notification.is_multicomponent?
