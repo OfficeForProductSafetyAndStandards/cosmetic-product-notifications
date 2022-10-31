@@ -60,7 +60,7 @@
               <span class="opss-download-link-m"></span>
               <%= @nanomaterial_notification.file.filename %>
             <% end %>
-            <%= render("notifications/pdf_size", file: @nanomaterial_notification.file) %>
+            <%= render("shared/pdf_size", file: @nanomaterial_notification.file) %>
           <% end %>
         </dd>
       </div>
