@@ -1,8 +1,10 @@
-<% if component.formulation_file.attached? %>
-  <% if component.formulation_file.metadata["safe"] %>
-    <%= link_to component.formulation_file.filename, url_for(component.formulation_file), target: "_blank" %>
-  <% elsif component.formulation_file.metadata["safe"].nil? %>
-    <%= "Processing file #{component.formulation_file.filename} ..." %>
+<% formulation_file = component.formulation_file %>
+<% if formulation_file.attached? %>
+  <% if formulation_file.metadata["safe"] %>
+    <%= link_to formulation_file.filename, url_for(formulation_file), target: "_blank" %>
+    <%= render("shared/pdf_size", file: formulation_file) %>
+  <% elsif formulation_file.metadata["safe"].nil? %>
+    <%= "Processing file #{formulation_file.filename} ..." %>
     <br>
     <%= link_to "Refresh",
             edit_responsible_person_notification_path(@responsible_person, @notification),
