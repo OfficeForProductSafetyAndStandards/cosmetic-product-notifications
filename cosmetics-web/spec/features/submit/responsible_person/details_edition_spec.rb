@@ -56,7 +56,7 @@ RSpec.describe "Editing responsible person details", :with_stubbed_mailer, type:
     click_button "Save and continue"
 
     expect_to_be_on__responsible_person_page
-    expect(page).to have_text("Responsible Person details changed successfully")
+    expect(page).to have_text("The Responsible Person details were changed")
     business_type_elem = page.find("dt", text: "Business type", exact_text: true)
     expect(business_type_elem).to have_sibling("td, dd",
                                                text: "Limited company or Limited Liability Partnership (LLP)",

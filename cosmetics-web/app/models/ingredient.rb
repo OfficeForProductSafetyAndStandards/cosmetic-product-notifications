@@ -34,7 +34,7 @@ class Ingredient < ApplicationRecord
 
   default_scope { order(created_at: :asc) }
 
-  validates :inci_name, presence: true
+  validates :inci_name, presence: true, ingredient_name_format: { message: :invalid }
   validates :inci_name, uniqueness: { scope: :component_id }, if: :validate_inci_name_uniqueness?
 
   # Exact and range concentration invalidate each other.
