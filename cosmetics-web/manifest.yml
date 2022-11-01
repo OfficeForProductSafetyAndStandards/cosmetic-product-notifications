@@ -29,11 +29,11 @@ applications:
   path: .
   processes:
     - type: web
-      command: export $(./env/get-env-from-vcap.sh) && STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate && bundle exec puma
+      command: STATEMENT_TIMEOUT=60s bin/rake cf:on_first_instance db:migrate && bundle exec puma
       instances: ((web-instances))
       memory: 4G
     - type: worker
-      command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && RAILS_MAX_THREADS=((worker-max-threads)) bin/sidekiq -C config/sidekiq.yml
+      command: bin/yarn install && RAILS_MAX_THREADS=((worker-max-threads)) bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
       instances: ((worker-instances))
       memory: 2G
