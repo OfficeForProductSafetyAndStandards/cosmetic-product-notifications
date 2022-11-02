@@ -28,6 +28,9 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     when :completed
       @notification.set_state_on_product_wizard_completed!
       render "responsible_persons/notifications/task_completed"
+    when :add_product_image
+      @job_tracker = NotificationCloner::JobTracker.new(@notification.id)
+      render_wizard
     else
       render_wizard
     end
