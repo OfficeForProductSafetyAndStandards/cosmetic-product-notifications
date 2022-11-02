@@ -209,7 +209,7 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
 
         it "response includes a confirmation message" do
           follow_redirect!
-          expect(response.body).to include("Contact person name changed successfully")
+          expect(response.body).to include("The assigned contact name was changed")
         end
       end
 
@@ -244,7 +244,7 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
 
         it "response includes a confirmation message" do
           follow_redirect!
-          expect(response.body).to include("Contact person email address changed successfully")
+          expect(response.body).to include("The assigned contact email address was changed")
         end
       end
 
@@ -279,7 +279,7 @@ RSpec.describe "Contact person pages", :with_stubbed_mailer, type: :request do
 
         it "response includes a confirmation message" do
           follow_redirect!
-          expect(response.body).to include("Contact person phone number changed successfully")
+          expect(response.body).to include("The assigned contact telephone number was changed")
         end
       end
 
