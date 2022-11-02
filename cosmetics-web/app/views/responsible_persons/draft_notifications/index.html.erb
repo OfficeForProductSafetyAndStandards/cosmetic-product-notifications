@@ -34,5 +34,6 @@
       </div>
     </div>
     <%= render 'draft_notifications_table' if @unfinished_notifications.present? %>
+    <%= paginate @unfinished_notifications, views_prefix: 'pagination', nav_class: 'opss-pagination-link--no-top-border' %>
   </section>
 </div>
