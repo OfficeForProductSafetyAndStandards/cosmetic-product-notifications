@@ -14,13 +14,13 @@
       <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @notification.errors.messages[:image_uploads][0], href: "#image_upload"}]) %>
     <% end %>
 
-    <% if @job_tracker.pending? %>
+    <% if @notification.cloned? && @job_tracker.pending? %>
       <%= govukNotificationBanner(
         text: 'The process of copying images or files from the original notification has not finished. Please complete this task later.'
       ) %>
     <% end %>
 
-    <% if @job_tracker.failed? %>
+    <% if @notification.cloned? && @job_tracker.failed? %>
       <%= govukNotificationBanner(
         text: 'The image copying process failed - please upload the image(s) to the new draft notification'
       ) %>

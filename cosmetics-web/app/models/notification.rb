@@ -277,6 +277,10 @@ class Notification < ApplicationRecord
     save!
   end
 
+  def cloned?
+    source_notification.present?
+  end
+
 private
 
   def all_required_attributes_must_be_set
