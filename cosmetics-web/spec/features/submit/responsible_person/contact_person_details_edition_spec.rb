@@ -48,7 +48,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     click_button "Continue"
 
     expect_to_be_on__responsible_person_page
-    expect(page).to have_text("Contact person name changed successfully")
+    expect(page).to have_text("The assigned contact name was changed")
     contact_person_name_elem = page.find_all("dt", text: "Name", exact_text: true).last
     expect(contact_person_name_elem).to have_sibling("td, dd", text: "Mr Foo Bar", exact_text: true)
   end
@@ -78,7 +78,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     click_button "Continue"
 
     expect_to_be_on__responsible_person_page
-    expect(page).to have_text("Contact person email address changed successfully")
+    expect(page).to have_text("The assigned contact email address was changed")
     expect(page).to have_summary_item(key: "Email", value: "mrFooBar@example.com")
   end
 
@@ -107,7 +107,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     click_button "Continue"
 
     expect_to_be_on__responsible_person_page
-    expect(page).to have_text("Contact person phone number changed successfully")
+    expect(page).to have_text("The assigned contact telephone number was changed")
     expect(page).to have_summary_item(key: "Telephone", value: "+44(7123456789)")
   end
 end
