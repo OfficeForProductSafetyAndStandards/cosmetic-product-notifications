@@ -16,7 +16,7 @@
     {
       key: { text: "Nanomaterials" },
       value: { html: render("application/none_or_bullet_list",
-                            entities_list: nano_materials_with_pdf_links(component.nano_materials)) },
+                            entities_list: nano_materials_details(component.nano_materials)) },
     },
     if component.nano_materials.non_standard.any? && current_user.can_view_nanomaterial_review_period_end_date?
       {

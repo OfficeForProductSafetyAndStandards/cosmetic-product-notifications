@@ -38,6 +38,7 @@
         <div class="govuk-inset-text">
           Previously uploaded file:
           <%= link_to @nanomaterial_notification.file.filename, @nanomaterial_notification.file %>
+          <%= render("shared/pdf_size", file: @nanomaterial_notification.file) %>
         </div>
       <% end %>
 

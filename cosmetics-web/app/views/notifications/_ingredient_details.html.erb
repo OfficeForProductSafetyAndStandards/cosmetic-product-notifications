@@ -17,6 +17,7 @@
     <% if component.formulation_file.attached? %>
       <% if component.formulation_file.metadata["safe"] %>
         <%= link_to component.formulation_file.filename, url_for(component.formulation_file) %>
+        <%= render("shared/pdf_size", file: component.formulation_file) %>
       <% end %>
     <% end %>
     <% if component.ingredients.none? && !component.formulation_file.attached? %>
