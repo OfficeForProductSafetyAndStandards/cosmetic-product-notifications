@@ -160,6 +160,7 @@ Rails.application.routes.draw do
           post :confirm
         end
       end
+      resources :draft_notifications, controller: "responsible_persons/draft_notifications", only: :index, path: "draft-notifications"
 
       resources :delete_notification, param: :reference_number, controller: "responsible_persons/delete_notification", only: [] do
         member do

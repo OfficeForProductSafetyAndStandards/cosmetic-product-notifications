@@ -1,0 +1,38 @@
+<% content_for :page_title, "Cosmetic product drafts" %>
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds opss-desktop-min-height--xs">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="cosmetic-products-hint">
+          Draft notifications
+        </h1>
+        <p id="cosmetic-products-hint" class="govuk-body opss-secondary-text govuk-!-margin-bottom-1">
+          These are your draft cosmetic product notifications.
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+        <a href="<%= new_responsible_person_draft_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
+          Add a cosmetic product
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <%= render 'responsible_persons/notifications/notification_nav' %>
+  <section id="page-content" class="govuk-grid-column-three-quarters" role="region" aria-label="Notified products">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <p id="incomplete-notifications" class="govuk-body govuk-!-margin-bottom-0">
+          There are currently <%= (count = @unfinished_notifications.count) > 0 ? count : 'no' %> draft notifications.
+        </p>
+      </div>
+    </div>
+    <%= render 'draft_notifications_table' if @unfinished_notifications.present? %>
+  </section>
+</div>

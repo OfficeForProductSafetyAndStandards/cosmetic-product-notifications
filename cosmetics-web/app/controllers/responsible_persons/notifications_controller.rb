@@ -4,7 +4,6 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   before_action :set_notification, only: %i[show]
 
   def index
-    @unfinished_notifications = get_unfinished_notifications
     @registered_notifications = get_registered_notifications(20)
     respond_to do |format|
       format.html
@@ -68,14 +67,6 @@ private
   def set_notification
     @notification = Notification.where.not(state: :deleted).find_by! reference_number: params[:reference_number]
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
-  end
-
-  def get_unfinished_notifications
-    @responsible_person.notifications
-      .where("state IN (?)", NotificationStateConcern::DISPLAYABLE_INCOMPLETE_STATES)
-      .where("reference_number IS NOT NULL")
-      .where("product_name IS NOT NULL")
-      .order("updated_at DESC")
   end
 
   def get_registered_notifications(page_size)
