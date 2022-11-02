@@ -4,7 +4,7 @@
   <tr class="govuk-table__row">
     <th scope="col" class="govuk-table__header">Product</th>
     <th scope="col" class="govuk-table__header">Created</th>
-    <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> <span class="govuk-visually-hidden">cosmetic product </span>number</th>
+    <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
     <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Continue</span></th>
   </tr>
   </thead>
@@ -24,4 +24,14 @@
     </tr>
   <% end %>
   </tbody>
+  <% if @unfinished_notifications.length > 11 %>
+    <tfoot class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Product</th>
+      <th scope="col" class="govuk-table__header">Created</th>
+      <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
+      <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Continue</span></th>
+    </tr>
+    </tfoot>
+  <% end %>
 </table>

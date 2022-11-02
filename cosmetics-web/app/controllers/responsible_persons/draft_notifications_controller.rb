@@ -1,5 +1,4 @@
 class ResponsiblePersons::DraftNotificationsController < ResponsiblePersons::NotificationsController
-
   def index
     @unfinished_notifications = get_unfinished_notifications(20)
   end
