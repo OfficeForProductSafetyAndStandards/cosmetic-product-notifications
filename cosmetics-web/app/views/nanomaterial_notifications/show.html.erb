@@ -55,9 +55,12 @@
           <abbr>PDF</abbr> file
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= link_to(url_for(@nanomaterial_notification.file), download: true, class: "govuk-link govuk-link--no-visited-state") do %>
-            <span class="opss-download-link-m"></span>
-            <%= @nanomaterial_notification.file.filename %>
+          <% if @nanomaterial_notification.passed_antivirus_check? %>
+            <%= link_to(url_for(@nanomaterial_notification.file), download: true, class: "govuk-link govuk-link--no-visited-state") do %>
+              <span class="opss-download-link-m"></span>
+              <%= @nanomaterial_notification.file.filename %>
+            <% end %>
+            <%= render("shared/pdf_size", file: @nanomaterial_notification.file) %>
           <% end %>
         </dd>
       </div>

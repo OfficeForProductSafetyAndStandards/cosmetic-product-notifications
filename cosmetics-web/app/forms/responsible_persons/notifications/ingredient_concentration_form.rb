@@ -18,7 +18,7 @@ module ResponsiblePersons::Notifications
     validates :component, presence: true
     validates :type, inclusion: { in: [EXACT, RANGE] }
     validates :poisonous, inclusion: { in: [true, false] }, if: :range?
-    validates :name, presence: true
+    validates :name, presence: true, ingredient_name_format: { message: :invalid }
     validate :unique_name
     validates :exact_concentration,
               presence: true,

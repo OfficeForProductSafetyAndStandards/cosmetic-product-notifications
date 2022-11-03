@@ -33,6 +33,13 @@
       <% end %>
     <% end %>
 
+    <% pdf_file_details = capture do %>
+      <% if @nanomaterial_notification.file.attached? %>
+        <%= link_to(@nanomaterial_notification.file.filename, @nanomaterial_notification.file) %>
+        <%= render("shared/pdf_size", file: @nanomaterial_notification.file) %>
+      <% end %>
+    <% end %>
+
     <%= govukSummaryList(rows: [
       {
         key: {text: 'Name'},
@@ -65,7 +72,7 @@
       {
         key: {text: 'PDF file'},
         value: {
-          text: (link_to(@nanomaterial_notification.file.filename, @nanomaterial_notification.file) if @nanomaterial_notification.file.attached?)
+          html: pdf_file_details
         },
         actions: {
           items: [

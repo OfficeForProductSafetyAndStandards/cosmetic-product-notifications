@@ -73,7 +73,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
     expect(page).to have_summary_item(key: "Review period end", value: "10 December 2021")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: last_notification.ukn)
-    expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
+    expect(page).to have_selector("dd.govuk-summary-list__value", text: "testPdf.pdf (PDF, 11.6 KB)")
   end
 
   scenario "submitting a nanomaterial which was previously notified to the EU", :with_stubbed_antivirus do
@@ -115,6 +115,6 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
     expect(page).to have_summary_item(key: "Review period end", value: "1 August 2017")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: last_notification.ukn)
-    expect(page).to have_summary_item(key: "PDF file", value: "testPdf.pdf")
+    expect(page).to have_selector("dd.govuk-summary-list__value", text: "testPdf.pdf (PDF, 11.6 KB)")
   end
 end
