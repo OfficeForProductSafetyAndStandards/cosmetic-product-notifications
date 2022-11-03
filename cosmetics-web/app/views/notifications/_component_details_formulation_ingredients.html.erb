@@ -11,6 +11,7 @@
     <%= link_to component.formulation_file.filename,
                 url_for(component.formulation_file),
                 class: "govuk-link govuk-link--no-visited-state", target: "_blank" %>
+    <%= render("shared/pdf_size", file: component.formulation_file) %>
   <% elsif component.formulation_file.metadata["safe"].nil? %>
     <%= "Processing file #{component.formulation_file.filename} ..." %>
     <br>

@@ -318,7 +318,7 @@ describe ResponsiblePersons::NotificationsHelper do
         let(:nano_relation) { double("AR Relationship", :[] => [nano_material], non_standard: []) }
 
         before do
-          allow(helper).to receive(:nano_materials_with_pdf_links).with(nano_relation).and_return(["Nano name"])
+          allow(helper).to receive(:nano_materials_details).with(nano_relation).and_return(["Nano name"])
           allow(component).to receive(:nano_materials).and_return(nano_relation)
         end
 
