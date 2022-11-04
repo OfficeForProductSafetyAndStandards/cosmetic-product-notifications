@@ -92,9 +92,11 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       end
       # rubocop:enable RSpec/MultipleExpectations
 
-      it " contains a back link to the 'contains poisonous ingredients' page" do
+      it " contains a back link to the 'ingredients the NPIS needs to know about' page" do
         expect(response.body).to have_back_link_to(
-          responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients),
+          responsible_person_notification_component_build_path(
+            responsible_person, notification, component, :contains_ingredients_npis_needs_to_know
+          ),
         )
       end
     end
@@ -238,10 +240,10 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
     end
 
     context "when selecting a frame formulation" do
-      it "saves and redirects to the 'poisonous ingredients' question if you select an answer" do
+      it "saves and redirects to the 'ingredients the NPIS needs to know about' question if you select an answer" do
         post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "skin_care_cream_lotion_gel" }))
 
-        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_poisonous_ingredients))
+        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_ingredients_npis_needs_to_know))
       end
 
       it "re-renders the question with an error if you don’t select a formulation" do
@@ -256,7 +258,10 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       context "when an answer is provided" do
         let(:answer) { "true" }
 
-        before { post(:update, params: params.merge(id: :contains_poisonous_ingredients, component: { contains_poisonous_ingredients: answer })) }
+        before do
+          post(:update, params: params.merge(id: :contains_ingredients_npis_needs_to_know,
+                                             component: { contains_ingredients_npis_needs_to_know: answer }))
+        end
 
         it "saves the component record" do
           expect(assigns(:component).contains_poisonous_ingredients).to be(true)
@@ -278,11 +283,12 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       end
 
       context "with no answer provided" do
-        before { post(:update, params: params.merge(id: :contains_poisonous_ingredients)) }
+        before { post(:update, params: params.merge(id: :contains_ingredients_npis_needs_to_know)) }
 
         it "re-renders the question with an error" do
           expect(response.status).to be(200)
-          expect(assigns(:component).errors[:contains_poisonous_ingredients]).to include("Select yes if the product contains poisonous ingredients")
+          expect(assigns(:component).errors[:contains_ingredients_npis_needs_to_know])
+            .to include("Select yes if the product contains ingredients the NPIS needs to know about")
         end
       end
     end

@@ -122,7 +122,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     expect_to_be_on__frame_formulation_select_page
     answer_select_formulation_with "Skin Care Cream, Lotion, Gel"
 
-    answer_contain_poisonous_ingredients_with("Yes")
+    answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
     expect_to_be_on_add_ingredients_page(forced_poisonous: true)
 
     # First attempt with validation errors

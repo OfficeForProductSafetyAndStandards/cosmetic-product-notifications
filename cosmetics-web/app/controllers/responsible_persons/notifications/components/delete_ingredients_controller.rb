@@ -29,7 +29,7 @@ private
   def post_deletion_path
     # If no ingredients left, go to pre-adding ingredients component building wizard question.
     if @component.ingredients.none?
-      step = @component.predefined? ? :contains_poisonous_ingredients : :select_formulation_type
+      step = @component.predefined? ? :contains_ingredients_npis_needs_to_know : :select_formulation_type
       component_build_path(step)
     # If deleted the last ingredient of the list, go to add another ingredient component building wizard question.
     elsif @ingredient_number == @component.ingredients.count

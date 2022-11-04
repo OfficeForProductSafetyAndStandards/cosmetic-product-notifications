@@ -29,7 +29,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :add_ingredient_exact_concentration, # only for exact
         :add_ingredient_range_concentration, # only for range
         :select_frame_formulation, # only for frame formulation
-        :contains_poisonous_ingredients, # only for frame formulation
+        :contains_ingredients_npis_needs_to_know, # only for frame formulation
         :add_poisonous_ingredient, # only for frame formulation
         :want_to_add_another_ingredient,
         :select_ph_option,
@@ -61,11 +61,11 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     add_ingredient_range_concentration: :select_formulation_type,
     want_to_add_another_ingredient: :select_formulation_type,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
-    contains_poisonous_ingredients: :select_formulation_type, # only for frame formulation,
-    add_poisonous_ingredient: :contains_poisonous_ingredients, # only for frame formulation,
+    contains_ingredients_npis_needs_to_know: :select_formulation_type, # only for frame formulation,
+    add_poisonous_ingredient: :contains_ingredients_npis_needs_to_know, # only for frame formulation,
     select_ph_option: {
       select_formulation_type: -> { @component.exact? || @component.range? },
-      contains_poisonous_ingredients: -> { @component.predefined? },
+      contains_ingredients_npis_needs_to_know: -> { @component.predefined? },
     },
     min_max_ph: :select_ph_option,
   }.freeze
@@ -130,8 +130,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_add_ingredient_concentration("exact", force_poisonous: true)
     when :select_frame_formulation
       update_frame_formulation
-    when :contains_poisonous_ingredients
-      update_contains_poisonous_ingredients
+    when :contains_ingredients_npis_needs_to_know
+      update_contains_ingredients_npis_needs_to_know
     when :want_to_add_another_ingredient
       update_want_to_add_another_ingredient
     when :select_ph_option
@@ -314,21 +314,22 @@ private
   # for frame formulation only
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
-      jump_to_step :contains_poisonous_ingredients
+      jump_to_step :contains_ingredients_npis_needs_to_know
     else
       render :select_frame_formulation
     end
   end
 
-  def update_contains_poisonous_ingredients
-    model.save_routing_answer(step, params.dig(:component, :contains_poisonous_ingredients))
+  def update_contains_ingredients_npis_needs_to_know
+    model.save_routing_answer(step, params.dig(:component, :contains_ingredients_npis_needs_to_know))
 
-    if params.fetch(:component, {})[:contains_poisonous_ingredients].blank?
-      @component.errors.add :contains_poisonous_ingredients, "Select yes if the product contains poisonous ingredients"
-      return render :contains_poisonous_ingredients
+    if params.fetch(:component, {})[:contains_ingredients_npis_needs_to_know].blank?
+      @component.errors.add(:contains_ingredients_npis_needs_to_know,
+                            "Select yes if the product contains ingredients the NPIS needs to know about")
+      return render :contains_ingredients_npis_needs_to_know
     end
 
-    @component.update!(contains_poisonous_ingredients: params[:component][:contains_poisonous_ingredients])
+    @component.update!(contains_poisonous_ingredients: params[:component][:contains_ingredients_npis_needs_to_know])
     if @component.contains_poisonous_ingredients?
       jump_to(:add_poisonous_ingredient, ingredient_number: 0) if @component.ingredients.any?
     else

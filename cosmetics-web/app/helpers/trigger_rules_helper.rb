@@ -50,7 +50,7 @@ module TriggerRulesHelper
 
       previous_step =
         if @component.predefined? && !@component.contains_poisonous_ingredients?
-          :contains_poisonous_ingredients
+          :contains_ingredients_npis_needs_to_know
         else
           :select_formulation_type
         end

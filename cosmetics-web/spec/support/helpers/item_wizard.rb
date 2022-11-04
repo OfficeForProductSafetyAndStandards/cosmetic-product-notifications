@@ -193,8 +193,8 @@ def answer_select_formulation_with(answer)
   click_button "Continue"
 end
 
-def answer_contain_poisonous_ingredients_with(answer)
-  expect(page).to have_css("h1", text: "Does the product contain poisonous ingredients?")
+def answer_contains_ingredients_npis_needs_to_know_about_with(answer)
+  expect(page).to have_css("h1", text: "Does the product contain ingredients the National Poisons Information Service (NPIS) needs to know about?")
   page.choose answer
   click_button "Continue"
 end
