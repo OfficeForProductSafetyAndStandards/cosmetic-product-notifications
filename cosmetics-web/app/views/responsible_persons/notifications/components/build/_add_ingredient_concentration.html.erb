@@ -21,14 +21,11 @@
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body-s opss-secondary-text">For every ingredient:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
+      <% unless local_assigns[:poisonous] == true %>
+        <li>If it is shown as an ingredient on the product label it must to be added to the notification as an ingredient</li>
+      <% end %>
       <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
-      <li>
-        <% if local_assigns[:poisonous] == true %>
-          Confirm if the ingredient is listed in the National Poisons Information Service (<abbr>NPIS</abbr>) tables and if it is an ingredient the <abbr>NPIS</abbr> needs to know about
-        <% else %>
-          Confirm if poisonous - especially if the details match ingredients listed in the following poison tables
-        <% end %>
-      </li>
+      <li>Confirm if the ingredient is listed in the National Poisons Information Service (<abbr>NPIS</abbr>) tables and if it is an ingredient the <abbr>NPIS</abbr> needs to know about</li>
     </ul>
 
     <%= link_to "Skip <abbr>NPIS</abbr> tables.", "#skip-to-form", class: "govuk-skip-link opss-skip-link" %>
