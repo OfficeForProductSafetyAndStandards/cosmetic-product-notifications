@@ -10,13 +10,16 @@
 <%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
   <%= render "ingredient_exact_concentration_fields", model: @ingredient_concentration_form, form: form %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
+    <div class="govuk-grid-column-full">
       <%= govukCheckboxes(form: form,
                           key: :poisonous_check,
                           id: "poisonous_check",
                           classes: " govuk-!-padding-top-6",
                           items: [{ key: :poisonous,
-                                    text: "Is it poisonous?",
+                                    text: "Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?".html_safe,
+                                    hint: { html: "The <abbr>NPIS</abbr> tables are included above<span class='govuk-visually-hidden'>/before</span> this form.".html_safe,
+                                            classes: "govuk-!-font-size-16" },
+                                    label: { classes: "govuk-!-padding-right-0" },
                                     value: true,
                                     disable_ghost: true }]) %>
     </div>

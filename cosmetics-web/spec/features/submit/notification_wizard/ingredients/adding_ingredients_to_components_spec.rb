@@ -54,7 +54,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
 
     # Adds a new poisonous ingredient
     fill_in "name", with: "newfoo poisonous"
-    check "Is it poisonous?"
+    check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
     fill_in "exact_concentration", with: "7.0"
     click_on "Save and continue"
 
