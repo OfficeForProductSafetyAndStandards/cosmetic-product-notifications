@@ -45,6 +45,7 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     when :single_or_multi_component
       update_single_or_multi_component_step
     when :add_product_image
+      @job_tracker = NotificationCloner::JobTracker.new(@notification.id)
       update_add_product_image_step
     else
       if @notification.update_with_context(notification_params, step)
