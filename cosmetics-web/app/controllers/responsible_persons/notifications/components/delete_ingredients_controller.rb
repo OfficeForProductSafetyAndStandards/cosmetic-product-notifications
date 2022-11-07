@@ -44,7 +44,7 @@ private
     step = {
       "range" => :add_ingredient_range_concentration,
       "exact" => :add_ingredient_exact_concentration,
-      "predefined" => :add_poisonous_ingredient,
+      "predefined" => :add_ingredient_npis_needs_to_know,
     }[@component.notification_type]
     component_build_path(step, ingredient_number: params[:id])
   end

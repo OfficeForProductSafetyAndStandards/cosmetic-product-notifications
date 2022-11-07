@@ -30,7 +30,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :add_ingredient_range_concentration, # only for range
         :select_frame_formulation, # only for frame formulation
         :contains_ingredients_npis_needs_to_know, # only for frame formulation
-        :add_poisonous_ingredient, # only for frame formulation
+        :add_ingredient_npis_needs_to_know, # only for frame formulation
         :want_to_add_another_ingredient,
         :select_ph_option,
         :min_max_ph,
@@ -62,7 +62,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     want_to_add_another_ingredient: :select_formulation_type,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_ingredients_npis_needs_to_know: :select_formulation_type, # only for frame formulation,
-    add_poisonous_ingredient: :contains_ingredients_npis_needs_to_know, # only for frame formulation,
+    add_ingredient_npis_needs_to_know: :contains_ingredients_npis_needs_to_know, # only for frame formulation,
     select_ph_option: {
       select_formulation_type: -> { @component.exact? || @component.range? },
       contains_ingredients_npis_needs_to_know: -> { @component.predefined? },
@@ -84,7 +84,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       else
         return jump_to_step(:number_of_shades)
       end
-    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_poisonous_ingredient
+    when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
       @ingredient_concentration_form = ingredient_concentration_form
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
@@ -126,7 +126,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_add_ingredient_concentration("exact")
     when :add_ingredient_range_concentration
       update_add_ingredient_concentration("range")
-    when :add_poisonous_ingredient
+    when :add_ingredient_npis_needs_to_know
       update_add_ingredient_concentration("exact", force_poisonous: true)
     when :select_frame_formulation
       update_frame_formulation
@@ -301,7 +301,7 @@ private
       elsif @component.range?
         jump_to_step(:add_ingredient_range_concentration)
       elsif @component.predefined?
-        jump_to_step(:add_poisonous_ingredient)
+        jump_to_step(:add_ingredient_npis_needs_to_know)
       end
     when "no"
       jump_to_step(:select_ph_option)
@@ -331,7 +331,7 @@ private
 
     @component.update!(contains_poisonous_ingredients: params[:component][:contains_ingredients_npis_needs_to_know])
     if @component.contains_poisonous_ingredients?
-      jump_to(:add_poisonous_ingredient, ingredient_number: 0) if @component.ingredients.any?
+      jump_to(:add_ingredient_npis_needs_to_know, ingredient_number: 0) if @component.ingredients.any?
     else
       jump_to(:select_ph_option)
     end

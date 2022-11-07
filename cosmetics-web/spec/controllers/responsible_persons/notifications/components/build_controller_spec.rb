@@ -80,7 +80,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
     describe "add component predefined frame formulation poisonous ingredient" do
       let(:component_type) { "predefined" }
 
-      before { get(:show, params: params.merge(id: :add_poisonous_ingredient)) }
+      before { get(:show, params: params.merge(id: :add_ingredient_npis_needs_to_know)) }
 
       render_views
 
@@ -269,7 +269,9 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
 
         context "when the answer is true" do
           it "redirects to the add poisonous ingredient" do
-            expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :add_poisonous_ingredient))
+            expect(response).to redirect_to(
+              responsible_person_notification_component_build_path(responsible_person, notification, component, :add_ingredient_npis_needs_to_know),
+            )
           end
         end
 
