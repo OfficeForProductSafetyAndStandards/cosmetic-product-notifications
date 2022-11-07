@@ -80,6 +80,7 @@ group :development, :test do
   gem "simplecov-console", "~> 0.6.0"
   gem "simplecov-lcov", "~> 0.7.0"
   gem "solargraph", "~> 0.44.2"
+  gem "solargraph-rails"
   gem "sprockets", "~> 3.7.2"
   gem "webmock", "~> 3.8"
 end

@@ -489,6 +489,9 @@ GEM
       thor (~> 1.0)
       tilt (~> 2.0)
       yard (~> 0.9, >= 0.9.24)
+    solargraph-rails (1.0.1)
+      activesupport
+      solargraph (~> 0.44.2)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -607,6 +610,7 @@ DEPENDENCIES
   simplecov-lcov (~> 0.7.0)
   slowpoke (~> 0.3.0)
   solargraph (~> 0.44.2)
+  solargraph-rails
   sprockets (~> 3.7.2)
   strong_migrations (~> 0.7.9)
   webmock (~> 3.8)

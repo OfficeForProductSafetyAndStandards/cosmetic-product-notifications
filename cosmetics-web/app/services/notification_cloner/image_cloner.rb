@@ -9,8 +9,13 @@ module NotificationCloner
         new_image_upload = ImageUpload.create(notification: new_notification, filename: old_image_upload.filename)
         blob = old_image_upload.file.blob
 
-        blob.open do |file|
-          new_image_upload.file.attach(io: file, filename: blob.filename, content_type: blob.content_type)
+        begin
+          blob.open do |file|
+            new_image_upload.file.attach(io: file, filename: blob.filename, content_type: blob.content_type)
+          end
+        rescue ActiveStorage::FileNotFoundError
+          new_image_upload.delete
+          raise
         end
       end
     end
