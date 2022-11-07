@@ -1,22 +1,26 @@
-<% title = "Add the poisonous ingredients" %>
-
-<% page_title title, errors: @ingredient_concentration_form.errors.any? %>
+<% page_title "Add an ingredient the NPIS needs to know about", errors: @ingredient_concentration_form.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
 <%= error_summary(@ingredient_concentration_form.errors) %>
 
-<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form, poisonous: true do |form| %>
+<%= render "add_ingredient_concentration",
+           title: "Add an ingredient the <abbr>NPIS</abbr> needs to know about".html_safe,
+           component: @component,
+           model: @ingredient_concentration_form,
+           poisonous: true do |form| %>
   <%= render "ingredient_exact_concentration_fields", model: @ingredient_concentration_form, form: form %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
+    <div class="govuk-grid-column-full">
       <%= govukCheckboxes(form: form,
                           key: :poisonous_check,
                           id: "poisonous_check",
                           classes: " govuk-!-padding-top-6",
                           items: [{ key: :poisonous,
-                                    text: "Is it poisonous?",
+                                    text: "Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?".html_safe,
+                                    hint: { html: "The <abbr>NPIS</abbr> tables are included above<span class='govuk-visually-hidden'>/before</span> this form.".html_safe,
+                                            classes: "govuk-!-font-size-16" },
                                     disabled: "disabled",
                                     disable_ghost: true,
                                     attributes: { checked: "checked", "aria-disabled" => "true" } }]) %>

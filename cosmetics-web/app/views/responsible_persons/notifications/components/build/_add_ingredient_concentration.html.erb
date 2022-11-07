@@ -24,16 +24,16 @@
       <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
       <li>
         <% if local_assigns[:poisonous] == true %>
-          The exact concentration of a poisonous ingredient is required - especially if the details match ingredients listed in the following poison tables
+          Confirm if the ingredient is listed in the National Poisons Information Service (<abbr>NPIS</abbr>) tables and if it is an ingredient the <abbr>NPIS</abbr> needs to know about
         <% else %>
           Confirm if poisonous - especially if the details match ingredients listed in the following poison tables
         <% end %>
       </li>
     </ul>
 
-    <%= link_to "Skip poisonous ingredients tables.", "#skip-to-form", class: "govuk-skip-link opss-skip-link" %>
+    <%= link_to "Skip <abbr>NPIS</abbr> tables.", "#skip-to-form", class: "govuk-skip-link opss-skip-link" %>
 
-    <%= govukDetails(summaryText: "Show the poison tables", classes: "govuk-!-margin-left-0 govuk-!-font-size-16") do %>
+    <%= govukDetails(summaryText: "Show the <abbr>NPIS</abbr> tables".html_safe, classes: "govuk-!-margin-left-0") do %>
       <%= render "npis_tables" %>
     <% end %>
 

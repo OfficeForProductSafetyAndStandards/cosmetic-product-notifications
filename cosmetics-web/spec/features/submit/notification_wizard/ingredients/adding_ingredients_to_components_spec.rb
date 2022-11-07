@@ -127,7 +127,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
 
     # First attempt with validation errors
     click_on "Save and continue"
-    expect(page).to have_css("h1", text: "Add the poisonous ingredients")
+    expect(page).to have_css("h1", text: "Add an ingredient the NPIS needs to know about")
     expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
                                exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
 

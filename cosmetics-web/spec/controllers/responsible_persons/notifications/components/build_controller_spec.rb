@@ -86,7 +86,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
 
       # rubocop:disable RSpec/MultipleExpectations
       it "shows the page for adding poisonous ingredients to a predefined formulation component" do
-        expect(response.body).to match(/<title>Add the poisonous ingredients .+<\/title>/)
+        expect(response.body).to match(/<title>Add an ingredient the NPIS needs to know about .+<\/title>/)
         expect(response.body).to include("What is the exact concentration?")
         expect(response.body).not_to include("What is the concentration range?")
       end
