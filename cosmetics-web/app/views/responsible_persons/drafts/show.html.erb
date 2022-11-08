@@ -6,6 +6,21 @@
     <div class="opss-text-align-right">
       <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset" if @notification.id || @notification.product_wizard_completed? %>
     </div>
+    <% if @notification.source_notification %>
+      <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-5 govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-1 govuk-!-padding-left-2 opss-border-all opss-rounded-corners">
+
+        <h2 class="govuk-heading-s govuk-!-font-size-16 opss-primary-text">Start each task</h2>
+
+        <p class="govuk-body govuk-!-font-size-16 opss-secondary-text">
+        This draft notification was created by copying a completed notification and is already prepopulated with data.
+        </p>
+
+        <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1 govuk-!-font-weight-bold opss-primary-text">
+        Start and then complete each task to edit or confirm the data.
+        </p>
+
+      </div>
+    <% end %>
     <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-4">
       <%= render "responsible_persons/drafts/guides/#{@notification.state}" %>
     </div>
