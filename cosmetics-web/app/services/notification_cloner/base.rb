@@ -2,10 +2,9 @@ require "notification_cloner/attributes"
 
 module NotificationCloner
   class Base
-    def self.clone(old_notification)
-      new_notification = nil
+    def self.clone(old_notification, new_notification)
       ActiveRecord::Base.transaction do
-        new_notification = clone_notification(old_notification)
+        new_notification = clone_notification(old_notification, new_notification)
         cloned_components     = clone_components(new_notification, old_notification)
         cloned_nano_materials = clone_nano_materials(new_notification, old_notification)
 
@@ -21,9 +20,8 @@ module NotificationCloner
       new_notification
     end
 
-    def self.clone_notification(old_notification)
-      new_notification = clone_model(old_notification, NotificationCloner::Attributes::NOTIFICATION)
-      new_notification.product_name = "Copy of #{old_notification.product_name}"
+    def self.clone_notification(old_notification, new_notification)
+      new_notification = clone_model(old_notification, NotificationCloner::Attributes::NOTIFICATION, use_model: new_notification)
       new_notification.save!
       new_notification
     end
@@ -83,8 +81,9 @@ module NotificationCloner
       end
     end
 
-    def self.clone_model(model, attributes_to_clone)
-      new_model = model.class.new
+    def self.clone_model(model, attributes_to_clone, use_model: nil)
+      new_model = use_model || model.class.new
+
       attributes_to_clone.each do |attribute|
         new_model[attribute] = model[attribute]
       end

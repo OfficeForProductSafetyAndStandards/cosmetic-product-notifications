@@ -43,14 +43,6 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     end
   end
 
-  def clone
-    notification = Notification.where.not(state: :deleted).find_by! reference_number: params[:reference_number]
-
-    new_notification = NotificationCloner::Base.clone(notification)
-
-    redirect_to responsible_person_notification_draft_path(new_notification.responsible_person, new_notification)
-  end
-
 private
 
   # Returns the path for the page the user must have been on prior to

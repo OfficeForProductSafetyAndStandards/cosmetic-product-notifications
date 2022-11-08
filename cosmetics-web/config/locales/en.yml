@@ -46,6 +46,8 @@ en:
               blank: "Enter the minimum\u00A0pH"
             ph_max_value:
               blank: "Enter the maximum\u00A0pH"
+            product_name:
+              taken: "Enter a name which has not been used in your active notifications"
         component:
           attributes:
             name:

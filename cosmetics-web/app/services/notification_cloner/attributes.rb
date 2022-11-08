@@ -1,7 +1,6 @@
 module NotificationCloner
   module Attributes
     NOTIFICATION = [
-      :product_name,
       :import_country,
       :responsible_person_id,
       :shades,

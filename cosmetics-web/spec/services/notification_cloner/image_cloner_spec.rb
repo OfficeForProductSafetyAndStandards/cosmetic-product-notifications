@@ -2,6 +2,7 @@ require "rails_helper"
 require "sidekiq/testing"
 
 RSpec.describe NotificationCloner::ImageCloner, :with_stubbed_antivirus do
+  let(:new_notification_with_name_only) { Notification.create!(product_name: "Cloned notification", responsible_person: notification.responsible_person) }
   let(:notification) { create(:registered_notification, :with_label_image) }
 
   let(:component1) { create(:ranges_component, :completed, :with_range_ingredients, notification:) }
@@ -11,7 +12,7 @@ RSpec.describe NotificationCloner::ImageCloner, :with_stubbed_antivirus do
   end
 
   describe "Notification cloning" do
-    let(:new_notification) { NotificationCloner::Base.clone(notification) }
+    let(:new_notification) { NotificationCloner::Base.clone(notification, new_notification_with_name_only) }
 
     it "schedules job to clone images" do
       notification

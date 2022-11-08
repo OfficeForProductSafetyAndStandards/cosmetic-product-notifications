@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe NotificationCloner::Base do
   let(:notification) { create(:registered_notification) }
+  let(:product_name) { "Cloned notification" }
+  let(:new_notification_with_name_only) { Notification.create!(product_name:, responsible_person: notification.responsible_person) }
 
   let(:nanomaterial1) { create(:nano_material, notification:) }
   let(:nanomaterial2) { create(:nano_material_non_standard, :toxicology_notified, notification:) }
@@ -18,7 +20,7 @@ RSpec.describe NotificationCloner::Base do
 
   describe "Notification cloning" do
     context "when notification has components, nanomaterials and ingredients" do
-      let!(:new_notification) { described_class.clone(notification) }
+      let!(:new_notification) { described_class.clone(notification, new_notification_with_name_only) }
 
       it "clones notification" do
         expect(new_notification.id).not_to eq(notification.id)
@@ -27,6 +29,10 @@ RSpec.describe NotificationCloner::Base do
 
       it "clones notification component" do
         expect(new_notification.components.map(&:id)).not_to eq(notification.components.map(&:id))
+      end
+
+      it "does not changes name" do
+        expect(new_notification.product_name).to eq(product_name)
       end
 
       it "clones notification nanomaterials" do
