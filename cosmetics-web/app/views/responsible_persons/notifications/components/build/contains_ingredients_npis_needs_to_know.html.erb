@@ -1,0 +1,45 @@
+<% page_title "Does the product contain ingredients the National Poisons Information Service (NPIS) needs to know about?",
+              errors: @component.errors.any? %>
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: previous_wizard_path %>
+<% end %>
+
+<%= error_summary_for(@component, first_values: {contains_ingredients_npis_needs_to_know: "true"}) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+
+      <fieldset class="govuk-fieldset" aria-describedby="checkbox-hint">
+
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            Does the product contain ingredients the National Poisons Information Service (<abbr>NPIS</abbr>) needs to know about?
+          </h1>
+        </legend>
+
+        <div id="checkbox-hint" class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-3">
+          If any of your product ingredients are listed in the following <abbr>NPIS</abbr> tables and their amounts meet the weight-by-weight (<abbr class="opss-no-wrap">w/w</abbr>) criteria,
+          then they are ingredients the <abbr>NPIS</abbr> needs to know about.
+          The information you provide will be used to help treat people who might accidentally be affected by them.
+        </div>
+
+        <a href="#component_contains_ingredients_npis_needs_to_know_true" class="govuk-skip-link opss-skip-link">
+          Skip ingredients the <abbr>NPIS</abbr> needs to know about tables.
+        </a>
+
+
+        <%= render "ingredients_npis_needs_to_know" %>
+        <%= govukRadios(
+              form: form,
+              key: :contains_ingredients_npis_needs_to_know,
+              items: [{ text: "Yes", value: "true" },
+                      { text: "No", value: "false" }],
+            ) %>
+
+      </fieldset>
+      <%= govukButton text: "Continue" %>
+    <% end %>
+  </div>
+</div>
