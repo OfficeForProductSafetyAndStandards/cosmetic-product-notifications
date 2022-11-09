@@ -33,12 +33,12 @@ applications:
     - cosmetics-seed-env
   processes:
     - type: web
-      command: export $(./env/get-env-from-vcap.sh) && bin/rake cf:on_first_instance db:migrate db:seed open_search:reindex && bundle exec puma -C config/puma.rb
+      command: bin/rake cf:on_first_instance db:migrate db:seed open_search:reindex && bundle exec puma -C config/puma.rb
       instances: 1
       memory: 1G
       disk-quota: 2G
     - type: worker
-      command: export $(./env/get-env-from-vcap.sh) && bin/yarn install && RAILS_MAX_THREADS=((worker-max-threads)) bin/sidekiq -C config/sidekiq.yml
+      command: bin/yarn install && RAILS_MAX_THREADS=((worker-max-threads)) bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
       instances: 1
       memory: 500M

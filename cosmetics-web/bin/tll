@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+/tmp/lifecycle/launcher /home/vcap/app "$*" ""
