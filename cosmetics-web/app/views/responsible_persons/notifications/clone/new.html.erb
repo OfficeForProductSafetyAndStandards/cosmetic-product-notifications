@@ -45,7 +45,11 @@
                      hint: { text: "For example, ‘SkinSoft body fresh with aloe vera, shower gel’." })
       %>
 
-      <%= govukButton text: "Continue" %>
+    <div class="govuk-button-group">
+      <%= govukButton text: "Save" %>
+
+      <a class="govuk-link govuk-link--no-visited-state" href="<%= responsible_person_notification_path(@responsible_person, @notification) %>">Cancel</a>
+    </div>
     <% end %>
   </section>
 </div>
