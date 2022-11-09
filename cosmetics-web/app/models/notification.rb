@@ -65,12 +65,10 @@ class Notification < ApplicationRecord
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, allow_nil: true
-  # rubocop:disable Rails/UniqueValidationWithoutIndex
-  # TODO: scope per responsible person
-  validates :product_name, presence: true, uniqueness: true, on: :cloning
-  # rubocop:enable Rails/UniqueValidationWithoutIndex
 
   validate :max_ph_is_greater_than_min_ph
+  # TODO: scope per responsible person
+  validate :product_name_uniqueness, on: :cloning
 
   validates_with AcceptAndSubmitValidator, on: :accept_and_submit
 
@@ -336,6 +334,14 @@ private
     result = __elasticsearch__.index_document
 
     Rails.logger.info "[NotificationIndex] Notification with id=#{id} indexed with result #{result}"
+  end
+
+  def product_name_uniqueness
+    raise ArgumentError if responsible_person.nil?
+
+    if Notification.where(responsible_person_id:).where("TRIM(LOWER(product_name))=TRIM(LOWER(?))", product_name).count.positive?
+      errors.add(:product_name, :taken)
+    end
   end
 end
 
