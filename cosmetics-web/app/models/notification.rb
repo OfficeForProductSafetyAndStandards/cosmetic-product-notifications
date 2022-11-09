@@ -66,6 +66,7 @@ class Notification < ApplicationRecord
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, allow_nil: true
   # rubocop:disable Rails/UniqueValidationWithoutIndex
+  # TODO: scope per responsible person
   validates :product_name, presence: true, uniqueness: true, on: :cloning
   # rubocop:enable Rails/UniqueValidationWithoutIndex
 

@@ -2,7 +2,7 @@
 
 <% page_title title, errors: @new_notification.errors.any? %>
 <% content_for :after_header do %>
-  <%= link_to "Back", new_responsible_person_draft_path(@responsible_person), class: "govuk-back-link" %>
+  <%= link_to "Back", responsible_person_notification_path(@responsible_person, @notification), class: "govuk-back-link" %>
 <% end %>
 
 <%= error_summary_for(@new_notification) %>
