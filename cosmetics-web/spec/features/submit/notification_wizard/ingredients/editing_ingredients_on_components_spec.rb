@@ -33,12 +33,12 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect(page).to have_field("What is the name?", with: "Ingredient A")
     expect(page).to have_field("What is the exact concentration?", with: "4.0")
     expect(page).to have_field("What is the CAS number?")
-    expect(page).to have_unchecked_field("Is it poisonous?")
+    expect(page).to have_unchecked_field("Is it listed in the NPIS tables and does the NPIS need to know about it?")
     expect(page).not_to have_link("Skip", exact: true)
 
     fill_in "What is the name?", with: "Ingredient A poisonous"
     fill_in "exact_concentration", with: "5.1"
-    check "Is it poisonous?"
+    check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
 
     click_on "Save and continue"
 
@@ -46,11 +46,11 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect(page).to have_field("What is the name?", with: "Ingredient B")
     expect(page).to have_field("What is the exact concentration?", with: "3.0")
     expect(page).to have_field("What is the CAS number?")
-    expect(page).to have_checked_field("Is it poisonous?")
+    expect(page).to have_checked_field("Is it listed in the NPIS tables and does the NPIS need to know about it?")
     expect(page).not_to have_link("Skip", exact: true)
 
     fill_in "What is the name?", with: "Ingredient B non poisonous"
-    uncheck "Is it poisonous?"
+    uncheck "Is it listed in the NPIS tables and does the NPIS need to know about it?"
     fill_in "What is the CAS number?", with: "123456-78-9"
 
     click_on "Save and continue"
@@ -171,7 +171,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
     expect_to_be_on__frame_formulation_select_page
     answer_select_formulation_with "Skin Care Cream, Lotion, Gel"
-    answer_contain_poisonous_ingredients_with("Yes")
+    answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
 
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, forced_poisonous: true, already_added: ["Ingredient A", "Ingredient B"])
     expect(page).to have_field("What is the name?", with: "Ingredient A")
