@@ -10,7 +10,7 @@
 
 ## Inviting Search Users
 
-1. SSH and run rails console: `cd app && bin/tll bin/rails c`.
+1. SSH and run rails console: `bin/tll bin/rails c`.
 2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`.
 3. Role could be `poison_centre` or `msa`.
 
@@ -328,7 +328,7 @@ cf login -a api.london.cloud.service.gov.uk -u some@email.com
 ```
 cf ssh APP-NAME
 
-cd app && bin/tll bin/rails c
+bin/tll bin/rails c
 ```
 
 #### List apps
