@@ -149,6 +149,12 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
       expect(form.errors[:name]).to eq ["Enter a valid ingredient name"]
     end
 
+    it "is invalid with a name containing over 100 characters" do
+      form.name = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      expect(form).not_to be_valid
+      expect(form.errors[:name]).to eq ["Name is too long (maximum is 100 characters)"]
+    end
+
     it "is valid when cas number is not present" do
       form.cas_number = nil
       expect(form).to be_valid
