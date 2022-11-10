@@ -36,7 +36,9 @@
 
     <%= form_with model: @new_notification, url: responsible_person_notification_clone_path(@responsible_person, @notification), method: :post do |form| %>
 
-      <h1 class="govuk-heading-l"><%= title %></h1>
+      <label class="govuk-label govuk-label--l" for="notification_product_name">
+        <%= title %>
+      </label>
 
       <p class="govuk-body">Provide the product name for the new draft notification: Include the trademark or brand, the product line and the specific name of the product as it appears on the packaging. Include the type of product (for example, 'shower gel') unless it's included in the product name.</p>
 
