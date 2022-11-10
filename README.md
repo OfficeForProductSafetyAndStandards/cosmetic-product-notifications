@@ -10,8 +10,7 @@
 
 ## Inviting Search Users
 
-1. SSH and run rails console: `cd app && export $(./env/get-env-from-vcap.sh) && /tmp/lifecycle/launcher /home/vcap/app 'rails c' ''`.
-    * you can also run console using `./app/bin/rconsole`
+1. SSH and run rails console: `app/bin/tll bin/rails c`.
 2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`.
 3. Role could be `poison_centre` or `msa`.
 
@@ -329,7 +328,7 @@ cf login -a api.london.cloud.service.gov.uk -u some@email.com
 ```
 cf ssh APP-NAME
 
-cd app && export $(./env/get-env-from-vcap.sh) && /tmp/lifecycle/launcher /home/vcap/app 'rails c' ''
+app/bin/tll bin/rails c
 ```
 
 #### List apps

@@ -193,8 +193,8 @@ def answer_select_formulation_with(answer)
   click_button "Continue"
 end
 
-def answer_contain_poisonous_ingredients_with(answer)
-  expect(page).to have_css("h1", text: "Does the product contain poisonous ingredients?")
+def answer_contains_ingredients_npis_needs_to_know_about_with(answer)
+  expect(page).to have_css("h1", text: "Does the product contain ingredients the National Poisons Information Service (NPIS) needs to know about?")
   page.choose answer
   click_button "Continue"
 end
@@ -223,7 +223,11 @@ def answer_remove_ingredient_with(answer, name: nil)
 end
 
 def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: [], forced_poisonous: false)
-  expect(page).to have_css("h1", text: "Add the#{forced_poisonous ? ' poisonous' : ''} ingredients")
+  if forced_poisonous
+    expect(page).to have_css("h1", text: "Add an ingredient the NPIS needs to know about")
+  else
+    expect(page).to have_css("h1", text: "Add the ingredients")
+  end
   expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient #{ingredient_number}")
 
   if forced_poisonous # Poisonous checkbox is pre-selected and disabled

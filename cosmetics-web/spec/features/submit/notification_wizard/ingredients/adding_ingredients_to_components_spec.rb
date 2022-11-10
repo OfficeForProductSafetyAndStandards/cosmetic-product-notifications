@@ -54,7 +54,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
 
     # Adds a new poisonous ingredient
     fill_in "name", with: "newfoo poisonous"
-    check "Is it poisonous?"
+    check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
     fill_in "exact_concentration", with: "7.0"
     click_on "Save and continue"
 
@@ -122,12 +122,12 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     expect_to_be_on__frame_formulation_select_page
     answer_select_formulation_with "Skin Care Cream, Lotion, Gel"
 
-    answer_contain_poisonous_ingredients_with("Yes")
+    answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
     expect_to_be_on_add_ingredients_page(forced_poisonous: true)
 
     # First attempt with validation errors
     click_on "Save and continue"
-    expect(page).to have_css("h1", text: "Add the poisonous ingredients")
+    expect(page).to have_css("h1", text: "Add an ingredient the NPIS needs to know about")
     expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
                                exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
 

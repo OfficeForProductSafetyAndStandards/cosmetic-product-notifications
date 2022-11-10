@@ -41,9 +41,11 @@
         form: form,
         key: :poisonous,
         id: "poisonous",
-        fieldset: { legend: { text: "Is it poisonous?",
+        fieldset: { legend: { html: "Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?".html_safe,
                               classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular",
                               isPageHeading: false } },
+        hint: { html: "The <abbr>NPIS</abbr> tables are included above<span class='govuk-visually-hidden'>/before</span> this form.".html_safe,
+                classes: "govuk-!-font-size-16" },
         items: [
           { text: "Yes",
             value: "true",
