@@ -21,9 +21,9 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     end
 
     it "displays the draft notification" do
-      visit responsible_person_notifications_path(responsible_person)
+      visit responsible_person_draft_notifications_path(responsible_person)
 
-      expect(body).to have_css("#incomplete-notifications", text: "Draft notifications (1)")
+      expect(body).to have_css("#incomplete-notifications", text: "There are currently 1 draft notifications.")
     end
   end
 end

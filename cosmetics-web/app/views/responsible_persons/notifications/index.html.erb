@@ -6,22 +6,18 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-grid-column-two-thirds opss-desktop-min-height--xs">
         <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="cosmetic-products-hint">
-          Cosmetic products
+          Product notifications
         </h1>
+        <p id="cosmetic-products-hint" class="govuk-body opss-secondary-text govuk-!-margin-bottom-1">
+          These are your notified cosmetic products.
+        </p>
       </div>
       <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
         <a href="<%= new_responsible_person_draft_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
           Add a cosmetic product
         </a>
-      </div>
-    </div>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <p id="cosmetic-products-hint" class="govuk-hint govuk-!-width-two-thirds">
-        These are your draft and notified cosmetic products.
-        </p>
       </div>
     </div>
   </div>
@@ -30,7 +26,7 @@
 <% if @registered_notifications.total_count.zero? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <p class="govuk-body govuk-!-margin-bottom-7">
+      <p class="govuk-body-s opss-secondary-text">
         <%= @responsible_person.name %> has not submitted any cosmetic product notifications in Great Britain (<abbr>GB</abbr>).
         All cosmetic products sold or given away in <abbr>GB</abbr> must be notified in <abbr>GB</abbr>.
       </p>
@@ -39,49 +35,26 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <% if @unfinished_notifications.present? %>
-      <div class="govuk-accordion opss-accordian__open-remove govuk-!-margin-bottom-0" data-module="govuk-accordion" id="accordion-opss">
-        <%= render 'incomplete_notifications' %>
-      </div>
-    <% else %>
-      <div class="opss-border-top govuk-!-padding-top-3 opss-border-bottom">
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-          Draft notifications (0)
-        </h2>
-        <p class="govuk-body">
-        There are currently no draft notifications.
+  <%= render 'responsible_persons/notifications/notification_nav' %>
+  <section id="page-content" class="govuk-grid-column-three-quarters" role="region" aria-label="Notified products">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body govuk-!-margin-bottom-0">
+          There are currently <%= (count = @registered_notifications.total_count) > 0 ? count : 'no' %> notified cosmetic products.
         </p>
       </div>
-    <% end %>
-
-    <section role="region" aria-label="Notified products">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds govuk-!-margin-top-7">
-          <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-            Product notifications (<%= @registered_notifications.total_count %>)
-          </h2>
-          <p class="govuk-body govuk-!-margin-bottom-0">
-          There are currently <%= (count = @registered_notifications.total_count) > 0 ? count : 'no' %> notified cosmetic products.
-          </p>
-        </div>
-        <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2 govuk-!-margin-top-7">
-
+      <div class="govuk-grid-column-one-third">
+        <div class="opss-text-align-right">
           <% if @registered_notifications.present? %>
-            <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-align-right" download="download">
-              <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file of your notified products
+            <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-underline-offset" download="">
+              <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file
             </a>
           <% end %>
         </div>
       </div>
+    </div>
 
-      <%= render 'complete_notifications_table' if @registered_notifications.present? %>
-
-      <%= paginate @registered_notifications, views_prefix: 'pagination', nav_class: 'opss-pagination-link--no-top-border' %>
-
-    </section>
-
-  </div>
+    <%= render 'complete_notifications_table' if @registered_notifications.present? %>
+    <%= paginate @registered_notifications, views_prefix: 'pagination', nav_class: 'opss-pagination-link--no-top-border' %>
+  </section>
 </div>
-
-

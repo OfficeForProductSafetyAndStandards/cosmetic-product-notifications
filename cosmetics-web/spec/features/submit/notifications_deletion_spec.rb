@@ -13,7 +13,7 @@ RSpec.describe "Notifications delete", type: :feature do
 
   scenario "deleting draft notification" do
     draft_notification
-    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    visit "/responsible_persons/#{responsible_person.id}/draft-notifications"
     click_on draft_notification.product_name
     click_on "Delete this draft"
 

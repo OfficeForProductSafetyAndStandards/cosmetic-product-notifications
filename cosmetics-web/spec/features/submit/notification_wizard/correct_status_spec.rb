@@ -300,7 +300,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range", item_name: name
 
     # Leaves the item wizard without completing it.
-    visit "/responsible_persons/#{responsible_person.id}/notifications"
+    visit "/responsible_persons/#{responsible_person.id}/draft-notifications"
     click_link "Continue"
     expect(page).to have_h1("Product notification draft for: Product no nano two items")
     expect_item_task_completed "Cream two"
