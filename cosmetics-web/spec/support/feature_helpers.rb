@@ -465,7 +465,7 @@ end
 
 def expect_to_be_on__your_cosmetic_products_page
   expect(page.current_path).to end_with("/responsible_persons/#{responsible_person.id}/notifications")
-  expect(page).to have_h1("Cosmetic products")
+  expect(page).to have_h1("Product notifications")
 end
 
 def expect_to_see_message(message)

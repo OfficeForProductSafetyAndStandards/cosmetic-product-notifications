@@ -341,7 +341,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     click_button "I confirm"
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-    expect(page).to have_css("h1", text: "Cosmetic products")
+    expect(page).to have_css("h1", text: "Product notifications")
 
     expect(invited_user.responsible_persons).to include(responsible_person)
     # Updated user name from account security page
@@ -363,7 +363,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     complete_secondary_authentication_sms_with(invited_user.direct_otp)
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-    expect(page).to have_css("h1", text: "Cosmetic products")
+    expect(page).to have_css("h1", text: "Product notifications")
   end
 
   scenario "accepting an expired invitation for an existing user" do
@@ -499,7 +499,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     click_button "I confirm"
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-    expect(page).to have_css("h1", text: "Cosmetic products")
+    expect(page).to have_css("h1", text: "Product notifications")
 
     expect(invited_user.responsible_persons).to include(responsible_person)
     # Updated user name from account security page
@@ -544,7 +544,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     click_button "I confirm"
 
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-    expect(page).to have_css("h1", text: "Cosmetic products")
+    expect(page).to have_css("h1", text: "Product notifications")
 
     expect(invited_user.responsible_persons).to include(responsible_person)
   end

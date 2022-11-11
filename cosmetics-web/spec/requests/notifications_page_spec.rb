@@ -56,12 +56,8 @@ RSpec.describe "Notifications page", :with_stubbed_antivirus, :with_stubbed_noti
           expect(response.status).to be(200)
         end
 
-        it "displays the number of draft notifications" do
-          expect(response.body).to include("Draft notifications (1)")
-        end
-
         it "displays the number of completed notifications" do
-          expect(response.body).to include("Product notifications (1)")
+          expect(response.body).to include("There are currently 1 notified cosmetic products")
         end
       end
 

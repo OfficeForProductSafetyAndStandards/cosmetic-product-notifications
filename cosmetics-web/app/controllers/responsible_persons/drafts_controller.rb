@@ -1,6 +1,10 @@
 class ResponsiblePersons::DraftsController < SubmitApplicationController
-  before_action :set_notification, except: :new
+  before_action :set_notification, except: %i[index new]
   before_action :set_responsible_person
+
+  def index
+    @unfinished_notifications = get_unfinished_notifications(20)
+  end
 
   def show; end
 
@@ -34,5 +38,14 @@ private
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+  end
+
+  def get_unfinished_notifications(page_size)
+    @responsible_person.notifications
+                       .where("state IN (?)", NotificationStateConcern::DISPLAYABLE_INCOMPLETE_STATES)
+                       .where("reference_number IS NOT NULL")
+                       .where("product_name IS NOT NULL")
+                       .order("updated_at DESC")
+                       .page(params[:page]).per(page_size)
   end
 end
