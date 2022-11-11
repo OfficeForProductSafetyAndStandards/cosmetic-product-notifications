@@ -12,7 +12,6 @@ module NotificationCloner
 
         new_notification.source_notification = old_notification
         new_notification.save!
-        new_notification
       end
       job = CopyImageUploadsJob.perform_later(old_notification.id, new_notification.id)
       JobTracker.save_job_id(new_notification.id, job.provider_job_id)
