@@ -1,1 +1,0 @@
-export $(/home/vcap/app/env/get-env-from-vcap.sh) && /tmp/lifecycle/launcher /home/vcap/app 'rails c' ''

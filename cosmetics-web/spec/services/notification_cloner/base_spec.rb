@@ -65,7 +65,6 @@ RSpec.describe NotificationCloner::Base do
       end
 
       it "sets proper state for notification" do
-        # TODO: why not empty?
         expect(new_notification.state).to eq(NotificationStateConcern::PRODUCT_NAME_ADDED.to_s)
       end
 
