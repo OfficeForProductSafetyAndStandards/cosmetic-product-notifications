@@ -13,10 +13,6 @@ jobs:
     # For security reasons they do not have write permissions to deploy or access to secrets.
     # https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
     if: ${{ github.actor != 'dependabot[bot]' }}
-    services:
-      redis:
-        # Docker Hub image
-        image: redis
 
     steps:
     - uses: actions/checkout@v3
