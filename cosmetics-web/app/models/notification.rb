@@ -67,7 +67,7 @@ class Notification < ApplicationRecord
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, allow_nil: true
 
   validate :max_ph_is_greater_than_min_ph
-  # TODO: scope per responsible person
+
   validate :product_name_uniqueness, on: :cloning
 
   validates_with AcceptAndSubmitValidator, on: :accept_and_submit
