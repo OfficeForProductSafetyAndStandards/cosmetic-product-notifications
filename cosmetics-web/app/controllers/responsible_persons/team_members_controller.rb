@@ -62,7 +62,7 @@ private
       u.dont_send_confirmation_instructions!
       u.save(validate: false)
     end
-    bypass_sign_in(user)
+    sign_in(user)
     session[:registered_from_responsible_person_invitation_id] = invitation.id
   end
 
