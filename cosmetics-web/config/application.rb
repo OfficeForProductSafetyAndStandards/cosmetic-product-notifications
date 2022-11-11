@@ -52,7 +52,6 @@ module Cosmetics
     config.whitelisted_time_otp_code = ENV["WHITELISTED_TIME_OTP_CODE"]
     config.vcap_application = ENV["VCAP_APPLICATION"]
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob"
-    config.disable_antivirus_on_development = ((ENV["ANTIVIRUS_ENABLED"] == "false") && Rails.env.development?)
 
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
   end
