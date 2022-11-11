@@ -131,6 +131,7 @@ Rails.application.routes.draw do
       end
 
       resource :draft, controller: "responsible_persons/drafts", only: %i[new]
+      get "draft-notifications", to: "responsible_persons/drafts#index", as: :draft_notifications
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit create] do
         resources :product, controller: "responsible_persons/notifications/product", only: %i[show update new]
         resources :product_kit, controller: "responsible_persons/notifications/product_kit", only: %i[show update new]

@@ -292,6 +292,7 @@ en:
               blank: "Enter a name"
               invalid: "Enter a valid ingredient name"
               taken: "Enter a name which is unique to this %{entity}"
+              too_long: "Ingredient name must be 100 characters or less"
             poisonous:
               inclusion: "Select yes if the ingredient is poisonous"
             range_concentration:

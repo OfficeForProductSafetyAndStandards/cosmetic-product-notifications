@@ -114,7 +114,7 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
   end
 
   def expect_to_be_on_responsible_person_notifications_page(responsible_person)
-    expect(page).to have_h1("Cosmetic products")
+    expect(page).to have_h1("Product notifications")
     expect(page).to have_css(".responsible-person-name", text: responsible_person.name)
     expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
   end
