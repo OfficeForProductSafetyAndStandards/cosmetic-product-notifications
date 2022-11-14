@@ -1,4 +1,12 @@
 class Ingredient < ApplicationRecord
+  CLONABLE_ATTRIBUTES = %i[
+    inci_name
+    cas_number
+    exact_concentration
+    range_concentration
+    poisonous
+  ].freeze
+
   include CasNumberConcern
   include Clonable
 

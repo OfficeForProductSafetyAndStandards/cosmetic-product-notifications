@@ -1,5 +1,3 @@
-require "notification_cloner/attributes"
-
 module NotificationCloner
   # Helps to track notification clone job and acts as wrapper of `Sidekiq::Status` class.
   class JobTracker

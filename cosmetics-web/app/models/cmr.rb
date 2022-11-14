@@ -1,4 +1,10 @@
 class Cmr < ApplicationRecord
+  CLONABLE_ATTRIBUTES = %i[
+    name
+    cas_number
+    ec_number
+  ].freeze
+
   include Clonable
 
   belongs_to :component

@@ -1,28 +1,43 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
-  include NotificationStateConcern
 
   DELETION_PERIOD_DAYS = 7
-  DELETABLE_ATTRIBUTES = %w[product_name
-                            import_country
-                            reference_number
-                            cpnp_reference
-                            shades
-                            industry_reference
-                            cpnp_notification_date
-                            was_notified_before_eu_exit
-                            under_three_years
-                            still_on_the_market
-                            components_are_mixed
-                            ph_min_value
-                            ph_max_value
-                            notification_complete_at
-                            csv_cache].freeze
+  DELETABLE_ATTRIBUTES = %w[
+    product_name
+    import_country
+    reference_number
+    cpnp_reference
+    shades
+    industry_reference
+    cpnp_notification_date
+    was_notified_before_eu_exit
+    under_three_years
+    still_on_the_market
+    components_are_mixed
+    ph_min_value
+    ph_max_value
+    notification_complete_at
+    csv_cache
+  ].freeze
+
+  CLONABLE_ATTRIBUTES = %i[
+    import_country
+    responsible_person_id
+    shades
+    industry_reference
+    under_three_years
+    still_on_the_market
+    components_are_mixed
+    ph_min_value
+    ph_max_value
+    routing_questions_answers
+  ].freeze
 
   include Searchable
   include CountriesHelper
   include RoutingQuestionCacheConcern
   include Clonable
+  include NotificationStateConcern
 
   belongs_to :responsible_person
 

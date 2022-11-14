@@ -44,22 +44,22 @@ RSpec.describe NotificationCloner::Base do
       end
 
       it "clones some notification attributes" do
-        new_attributes = new_notification.attributes.slice(NotificationCloner::Attributes::NOTIFICATION)
-        old_attributes = notification.attributes.slice(NotificationCloner::Attributes::NOTIFICATION)
+        new_attributes = new_notification.attributes.slice(Notification::CLONABLE_ATTRIBUTES)
+        old_attributes = notification.attributes.slice(Notification::CLONABLE_ATTRIBUTES)
 
         expect(new_attributes).to eq(old_attributes)
       end
 
       it "clones some components attributes" do
-        new_attributes = new_notification.components.map { |c| c.attributes.slice(NotificationCloner::Attributes::COMPONENT) }
-        old_attributes = notification.components.map { |c| c.attributes.slice(NotificationCloner::Attributes::COMPONENT) }
+        new_attributes = new_notification.components.map { |c| c.attributes.slice(Component::CLONABLE_ATTRIBUTES) }
+        old_attributes = notification.components.map { |c| c.attributes.slice(Component::CLONABLE_ATTRIBUTES) }
 
         expect(new_attributes).to eq(old_attributes)
       end
 
       it "clones some nano_materials attributes" do
-        new_attributes = new_notification.nano_materials.map { |c| c.attributes.slice(NotificationCloner::Attributes::NANOMATERIAL) }
-        old_attributes = notification.nano_materials.map { |c| c.attributes.slice(NotificationCloner::Attributes::NANOMATERIAL) }
+        new_attributes = new_notification.nano_materials.map { |c| c.attributes.slice(NanoMaterial::CLONABLE_ATTRIBUTES) }
+        old_attributes = notification.nano_materials.map { |c| c.attributes.slice(NanoMaterial::CLONABLE_ATTRIBUTES) }
 
         expect(new_attributes).to eq(old_attributes)
       end
@@ -74,11 +74,11 @@ RSpec.describe NotificationCloner::Base do
 
       it "creates component and nano material association properly" do
         old_attributes = notification.components.map do |c|
-          c.nano_materials.map { |n| n.slice(NotificationCloner::Attributes::NANOMATERIAL) }
+          c.nano_materials.map { |n| n.slice(NanoMaterial::CLONABLE_ATTRIBUTES) }
         end
 
         new_attributes = new_notification.components.map do |c|
-          c.nano_materials.map { |n| n.slice(NotificationCloner::Attributes::NANOMATERIAL) }
+          c.nano_materials.map { |n| n.slice(NanoMaterial::CLONABLE_ATTRIBUTES) }
         end
 
         expect(new_attributes).to eq(old_attributes)
@@ -88,8 +88,5 @@ RSpec.describe NotificationCloner::Base do
         expect(new_notification.reload.source_notification).to eq(notification)
       end
     end
-
-    context "when notification has range ingredients file"
-    context "when notification has exact ingredients file"
   end
 end

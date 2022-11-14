@@ -1,5 +1,3 @@
-require "notification_cloner/attributes"
-
 module NotificationCloner
   class Base
     def self.clone(old_notification, new_notification)
@@ -20,14 +18,14 @@ module NotificationCloner
     end
 
     def self.clone_notification(old_notification, new_notification)
-      new_notification = clone_model(old_notification, NotificationCloner::Attributes::NOTIFICATION, use_model: new_notification)
+      new_notification = clone_model(old_notification, object_to_clone_to: new_notification)
       new_notification.save!
       new_notification
     end
 
     def self.clone_components(new_notification, old_notification)
       old_notification.components.map do |old_component|
-        new_component = clone_model(old_component, NotificationCloner::Attributes::COMPONENT)
+        new_component = clone_model(old_component)
         new_component.notification = new_notification
 
         clone_ingredients(old_component, new_component)
@@ -41,7 +39,7 @@ module NotificationCloner
 
     def self.clone_nano_materials(new_notification, old_notification)
       old_notification.nano_materials.map do |nano|
-        nano_material = clone_model(nano, NotificationCloner::Attributes::NANOMATERIAL)
+        nano_material = clone_model(nano)
         nano_material.notification = new_notification
         nano_material.save!
         nano_material
@@ -50,7 +48,7 @@ module NotificationCloner
 
     def self.clone_ingredients(old_component, new_component)
       old_component.ingredients.each do |old_ingredient|
-        new_ingredient = clone_model(old_ingredient, NotificationCloner::Attributes::INGREDIENT)
+        new_ingredient = clone_model(old_ingredient)
         new_ingredient.component = new_component
         new_ingredient.save!
       end
@@ -58,7 +56,7 @@ module NotificationCloner
 
     def self.clone_cmrs(old_component, new_component)
       old_component.cmrs.each do |old_cmsr|
-        new_cmsr = clone_model(old_cmsr, NotificationCloner::Attributes::CMR)
+        new_cmsr = clone_model(old_cmsr)
         new_cmsr.component = new_component
         new_cmsr.save!
       end
@@ -80,10 +78,10 @@ module NotificationCloner
       end
     end
 
-    def self.clone_model(model, attributes_to_clone, use_model: nil)
-      new_model = use_model || model.class.new
+    def self.clone_model(model, object_to_clone_to: nil)
+      new_model = object_to_clone_to || model.class.new
 
-      attributes_to_clone.each do |attribute|
+      model.class::CLONABLE_ATTRIBUTES.each do |attribute|
         new_model[attribute] = model[attribute]
       end
       new_model.cloned_from = model
