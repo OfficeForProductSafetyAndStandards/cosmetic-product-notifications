@@ -44,7 +44,6 @@ module NotificationCloner
       einecs_number
       elincs_number
       purposes
-      confirm_usage
       nanomaterial_notification_id
     ].freeze
 
