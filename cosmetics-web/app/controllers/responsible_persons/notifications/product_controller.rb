@@ -29,7 +29,7 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
       @notification.set_state_on_product_wizard_completed!
       render "responsible_persons/notifications/task_completed"
     when :add_product_image
-      @job_tracker = NotificationCloner::JobTracker.new(@notification.id)
+      @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?
       render_wizard
     else
       render_wizard
@@ -45,7 +45,7 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     when :single_or_multi_component
       update_single_or_multi_component_step
     when :add_product_image
-      @job_tracker = NotificationCloner::JobTracker.new(@notification.id)
+      @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?
       update_add_product_image_step
     else
       if @notification.update_with_context(notification_params, step)
