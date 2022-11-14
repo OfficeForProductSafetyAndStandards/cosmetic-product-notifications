@@ -14,13 +14,13 @@
       <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @notification.errors.messages[:image_uploads][0], href: "#image_upload"}]) %>
     <% end %>
 
-    <% if @notification.cloned? && @job_tracker.pending? %>
+    <% if @clone_image_job&.pending? %>
       <%= govukNotificationBanner(
         text: 'The process of copying images or files from the original notification has not finished. Please complete this task later.'
       ) %>
     <% end %>
 
-    <% if @notification.cloned? && @job_tracker.failed? %>
+    <% if @clone_image_job&.failed? %>
       <%= govukNotificationBanner(
         text: 'The image copying process failed - please upload the image(s) to the new draft notification'
       ) %>
@@ -60,7 +60,7 @@
       </table>
     <% end %>
 
-    <% unless @job_tracker.pending? %>
+    <% unless @clone_image_job&.pending? %>
       <%= form_with(url: wizard_path, method: :put, multipart: true) do |form| %>
         <%= hidden_field_tag :back_to_edit, params[:back_to_edit] %>
         <% classes = "govuk-form-group" %>
