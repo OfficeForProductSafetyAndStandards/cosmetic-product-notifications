@@ -28,7 +28,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     # First attempts with validation error
     fill_in "Full name", with: ""
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect(page).to have_h1("Edit the assigned contact name")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -36,7 +36,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     expect(page).to have_css("p#contact_person_name-error", text: "Name can not be blank")
 
     fill_in "Full name", with: "Foo Bar www.example.org"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect(page).to have_h1("Edit the assigned contact name")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -45,7 +45,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     # Successful attempt
     fill_in "Full name", with: "Mr Foo Bar"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("The assigned contact name was changed")
@@ -65,7 +65,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     # First attempt with validation error
     fill_in "Email address", with: "mrFooBar"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect(page).to have_h1("Edit the assigned contact email address")
     expected_error = "Enter an email address in the correct format, like name@example.com"
@@ -75,7 +75,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     # Successful attempt
     fill_in "Email address", with: "mrFooBar@example.com"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("The assigned contact email address was changed")
@@ -94,7 +94,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     # First attempt with validation error
     fill_in "Telephone number", with: "000"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect(page).to have_h1("Edit the assigned contact telephone number")
     expected_error = "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
@@ -104,7 +104,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     # Successful attempt
     fill_in "Telephone number", with: "+44(7123456789)"
-    click_button "Continue"
+    click_button "Save and continue"
 
     expect_to_be_on__responsible_person_page
     expect(page).to have_text("The assigned contact telephone number was changed")
