@@ -73,7 +73,7 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
     let(:component) { create(:component, :using_range, notification:, ingredients: [ingredient]) }
 
     it "complains about too long ingredient name" do
-      expect(notification.errors.messages_for(:ingredients)).to eq(["One or more ingredients names are too long. Please revisit ingredients steps."])
+      expect(notification.errors.messages_for(:ingredients)).to eq(["Ingredient names must be 100 characters or less"])
     end
   end
 end

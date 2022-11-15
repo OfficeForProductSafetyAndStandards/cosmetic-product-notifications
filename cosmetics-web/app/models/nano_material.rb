@@ -14,7 +14,6 @@ class NanoMaterial < ApplicationRecord
 
   include Clonable
 
-  PURPOSES = %w[colorant preservative uv_filter other].freeze
   YES = "yes".freeze
   NO = "no".freeze
   NOT_SURE = "not sure".freeze
