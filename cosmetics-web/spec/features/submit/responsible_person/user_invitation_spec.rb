@@ -506,6 +506,62 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(invited_user.name).to eq("Joe Doe")
   end
 
+  scenario "accepting an invitation for a new user after user self-registered post-invitation without completing the user registration" do
+    pending = create(:pending_responsible_person_user,
+                     email_address: "newusertoregister@example.com",
+                     responsible_person:)
+
+    # User self-registers without following the invitation link
+    visit "/"
+    click_on "Create an account"
+    expect(page).to have_current_path("/create-an-account")
+
+    fill_in "Full name", with: "Joe Doe self-registered"
+    fill_in "Email address", with: "newusertoregister@example.com"
+    click_button "Continue"
+    expect_to_be_on_check_your_email_page
+
+    email = delivered_emails.last
+    expect(email.recipient).to eq "newusertoregister@example.com"
+
+    verify_url = email.personalization[:verify_email_url]
+
+    # Follows the registration email verification link
+    visit verify_url
+    expect(page).to have_current_path("/account-security")
+
+    # Signs out without completing the account security for the self-registered account
+    click_link "Sign out"
+
+    # Now they realise they had a RP invitation and accept it following the invitation link
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h1", text: "Setup your account")
+
+    # User name is pre-filled with name provided by the user when self-registered
+    expect(page).to have_field("Full name", with: "Joe Doe self-registered")
+
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    check "Text message"
+    fill_in "Mobile number", with: "07000000000"
+    click_button "Continue"
+
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
+    complete_secondary_authentication_sms_with(invited_user.direct_otp)
+
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
+
+    # User has access to the Responsible person that issued the invitation
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Product notifications")
+
+    expect(invited_user.responsible_persons).to include(responsible_person)
+  end
+
   scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
     pending = create(:pending_responsible_person_user,
                      email_address: "newusertoregister@example.com",
