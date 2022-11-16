@@ -1,0 +1,599 @@
+//PSD master css/scss styles: simply copy this content into your local psd scss file (and update the @import URLs if required).
+//Add the listed @import scss files (below) to your directory.
+//Don't edit your local copy to avoid it unsyncing  with these versions.
+//We can remove linting from these scss files - they won't build if there is a real problem.
+
+@import "./opss-shared";
+@import "./opss-search";
+@import "./opss-pagination";
+
+@include govuk-media-query($from: desktop) {
+
+    /*fix for psd while it is unable to place back links outside and before the main.govuk-main-wrapper element */
+    body>.govuk-width-container>.govuk-main-wrapper>.govuk-back-link {
+        margin-top: - govuk-spacing(8);
+        margin-bottom: - (govuk-spacing(8) + govuk-spacing(1));
+        position: relative;
+        top: - (govuk-spacing(6) + govuk-spacing(1));
+    }
+}
+
+.opss-radios__divider--title .govuk-radios__divider {
+    width: 100%;
+    text-align: left;
+    font-weight: 700;
+
+    @include govuk-media-query($from: tablet) {
+        margin-top: govuk-spacing(6);
+        margin-bottom: govuk-spacing(3);
+    }
+
+    /*@include govuk-media-query($from: desktop) {
+        //margin-left: (govuk-spacing(8) + govuk-spacing(1));
+        //font-size: 24px !important; font-size: 1.5rem !important; line-height: 1.25 !important; margin-top: govuk-spacing(7);
+        //margin-bottom: govuk-spacing(3);
+    }*/
+}
+
+.opss-radios__divider--title {
+    &>.govuk-radios__divider:first-child {
+        margin-top: govuk-spacing(0);
+    }
+}
+
+.opss-numero {
+    @include govuk-media-query($from: desktop) {
+        font-size: 90%;
+        margin-left: 5px;
+    }
+
+    display: inline-block;
+    transform: scale(1.2, 1);
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.opss-borders {
+    border-color: govuk-colour("mid-grey", $legacy: "grey-2");
+    border-style: solid;
+    border-width: 0;
+
+    &.opps-borders--all {
+        @include govuk-media-query($from: tablet) {
+            border-width: 1px;
+        }
+    }
+
+    &.opss-borders--padding {
+        padding: govuk-spacing(6) govuk-spacing(5) govuk-spacing(5) govuk-spacing(6);
+    }
+
+    &.opss-borders--left {
+        @include govuk-media-query($from: tablet) {
+            border-left-width: 1px;
+        }
+    }
+
+    &.opss-borders--padding-l {
+        @include govuk-media-query($from: tablet) {
+            padding-left: govuk-spacing(6);
+        }
+    }
+
+    &.opss-borders--height-100 {
+        height: 100%;
+    }
+}
+
+.opss-panels {
+    margin-top: govuk-spacing(7);
+    margin-bottom: govuk-spacing(2);
+
+    .opss-panels__pair,
+    .opss-panels__single {
+
+        border-width: 2px;
+        border-style: solid;
+        border-color: $govuk-brand-colour; //govuk-colour("mid-grey", $legacy: "grey-2");
+        /*border-radius: 5px;
+        border-image: linear-gradient(0deg, #969696, $govuk-border-colour) 1;
+        box-shadow: 3px 4px 6px 0px #ebebeb; //2px 2px 10px govuk-colour("mid-grey");*/
+
+        padding: govuk-spacing(6) govuk-spacing(5) govuk-spacing(8) govuk-spacing(6);
+        margin-left: govuk-spacing(0);
+        margin-right: govuk-spacing(0);
+        margin-bottom: govuk-spacing(6);
+
+        &>span {
+            text-align: center;
+            width: 100%;
+            margin-bottom: govuk-spacing(4);
+        }
+
+        h2 {
+            color: $govuk-brand-colour;
+            /*text-align: center;*/
+            width: 100%;
+        }
+
+        details div {
+            @include govuk-font($size: 16);
+        }
+
+    }
+
+    .opss-panels__single {
+        /*width: 100%; */
+        padding-bottom: govuk-spacing(2);
+        margin-top: - govuk-spacing(4);
+        margin-bottom: govuk-spacing(2);
+
+        dt,
+        dd {
+            padding-bottom: 0;
+        }
+    }
+}
+
+@include govuk-media-query($from: desktop) {
+    .opss-panels {
+        display: -webkit-flex;
+        /* Safari */
+        display: flex;
+
+        .opss-panels__pair {
+            -webkit-flex: 1 auto;
+            /* Safari */
+            -ms-flex: 1 auto;
+            /* IE10 */
+            flex: 1 auto;
+
+            padding-bottom: govuk-spacing(6);
+
+            &.opss-panels__pair--left {
+                margin-right: govuk-spacing(2);
+                margin-left: govuk-spacing(3);
+            }
+
+            &.opss-panels__pair--right {
+                margin-right: govuk-spacing(3);
+                margin-left: govuk-spacing(2);
+            }
+
+        }
+    }
+}
+
+.opss-grey-record {
+    position: relative;
+    top: -1px;
+
+    &+.opss-grey-record {
+        top: -2px;
+    }
+
+    tr:first-child th {
+        border-top: 1px dashed govuk-colour("mid-grey") !important;
+        background-color: govuk-colour("light-grey") !important;
+        /* #f7f9fa*/
+
+
+        a {
+            padding-right: govuk-spacing(2);
+            color: $govuk-focus-text-colour;
+
+            &:hover {
+                color: govuk-colour("dark-grey");
+            }
+        }
+    }
+
+    tr:last-child td {
+        border-bottom: 1px dashed govuk-colour("mid-grey") !important;
+        background-color: govuk-colour("light-grey") !important;
+
+    }
+
+    tr th,
+    tr+tr td:first-of-type {
+        padding-left: govuk-spacing(2);
+    }
+
+    tr+tr td:last-of-type {
+        padding-right: govuk-spacing(2);
+    }
+}
+
+ul.opss-radio-list {
+    margin-bottom: 0;
+
+    li {
+        padding: govuk-spacing(2) 0;
+        display: inline-block;
+        width: 100%;
+
+        .govuk-radios__item {
+            padding-left: govuk-spacing(7);
+
+            .govuk-radios__hint {
+                padding-left: 2px;
+            }
+        }
+    }
+}
+
+.opss-radio-list--borders {
+    li {
+        border-top: 1px solid govuk-colour("mid-grey", $legacy: "grey-2");
+    }
+}
+
+.opss-radio-list--no-top-border {
+    li:first-child {
+        border-top: none;
+    }
+}
+
+.opss-radio-list__number {
+    display: inline-block;
+    padding-right: govuk-spacing(2);
+}
+
+.opss-block--desktop {
+    @include govuk-media-query($from: desktop) {
+        display: block;
+    }
+}
+
+/*.opss-list-squares {
+    list-style-type: square;
+
+    ol &,
+    ul & {
+        margin-left: govuk-spacing(6);
+        padding-top: govuk-spacing(4);
+        padding-bottom: govuk-spacing(1);
+    }
+}*/
+
+.govuk-character-count__message:after {
+    content: '.';
+}
+
+//span.govuk-error-message + input[class^="govuk-!-margin-top"].govuk-input--error {
+//    margin-top: 0;
+//}
+
+/*ul.govuk-radios.govuk-list--spaced li {
+    @include govuk-clearfix;
+}*/
+
+.opss-tag {
+    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+    text-transform: uppercase;
+    border-width: 2px;
+    border-style: solid;
+    padding: 2px 5px;
+    margin-bottom: govuk-spacing(1);
+
+    @include govuk-media-query($from: tablet) {
+        margin-bottom: 0;
+        /*min-width: 106px; text-align: center; */
+    }
+
+    td & {
+        margin-left: govuk-spacing(1);
+
+        &:last-child {
+            margin-bottom: 0;
+
+            /*&.opss-tag--risk4 {position: relative; right: 33%; }*/
+        }
+
+        @include govuk-media-query($from: desktop) {
+            &:nth-of-type(n+11) {
+                margin-top: govuk-spacing(1);
+            }
+        }
+    }
+
+    &.opss-tag--risk1 {
+        border-color: govuk-colour("red");
+        color: govuk-colour("red");
+    }
+
+    &.opss-tag--risk2 {
+        border-color: govuk-colour("dark-grey");
+        color: govuk-colour("dark-grey");
+    }
+
+    &.opss-tag--risk3 {
+        border-color: govuk-colour("black");
+        background-color: govuk-colour("black");
+        color: govuk-colour("white");
+    }
+
+    &.opss-tag--risk4 {
+        /*border-radius: govuk-spacing(2); border-width: 0.5px; border-color: govuk-colour("red"); padding-left: govuk-spacing(2); padding-right: govuk-spacing(2);*/
+
+        border-width: 0;
+        margin-top: 0.2rem;
+        float: left;
+
+        background-color: govuk-colour("white");
+        color: govuk-colour("red");
+        text-transform: none;
+
+        /* &::before {content: '*** '; vertical-align: middle; }
+        &::after {content: ' ***'; vertical-align: middle; } */
+    }
+
+    &.opss-tag--plain {
+        @include opss-font-size($s: 14px, $l: 1.3);
+        text-transform: none;
+        font-weight: normal;
+        color: $govuk-text-colour;
+        border: 1px solid $govuk-border-colour;
+        /*float: right;*/
+        margin-left: 0;
+        min-width: 76px;
+        text-align: center;
+    }
+
+    &.opss-tag--covid {
+        background-color: govuk-colour("pink");
+        border-color: govuk-colour("pink");
+        color: govuk-colour("white");
+        text-transform: none;
+    }
+
+    &.opss-tag--std {
+        @include opss-font-size($s: 14px, $l: 1.3);
+        text-transform: none;
+        font-weight: normal;
+        color: $govuk-text-colour;
+        border: 1px solid $govuk-border-colour;
+        float: left;
+        margin-left: 0;
+        min-width: 76px;
+        text-align: center;
+    }
+
+    &.opss-tag--lrg {
+        @include opss-font-size($s: 16px, $l: 1.2);
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.opss-cross-through {
+    background:
+        linear-gradient(to top left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) calc(50% - 1px), $govuk-border-colour 50%, rgba(0, 0, 0, 0) calc(50% + 1px), rgba(0, 0, 0, 0) 100%),
+        linear-gradient(to top right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) calc(50% - 1px), $govuk-border-colour 50%, rgba(0, 0, 0, 0) calc(50% + 1px), rgba(0, 0, 0, 0) 100%);
+}
+
+@media screen and (min-width:0\0) and (min-resolution: +72dpi) {
+
+    //ie9+ only
+    .opss-cross-through {
+        background: none !important;
+    }
+}
+
+.opss-form-group {
+    @include govuk-media-query($from: desktop) {
+        &.opss-form-group--sm-labels {
+
+            .govuk-radios--small,
+            .govuk-checkboxes--small {
+                label {
+                    @include opss-font-size($s: 17px, $l: 1.2);
+                    margin-top: 0;
+                    padding-right: 1px;
+                    padding-bottom: govuk-spacing(1);
+                }
+            }
+        }
+    }
+}
+
+.opss-sub-form-group {
+    @include govuk-media-query($from: tablet) {
+        background-color: govuk-colour("light-grey");
+        padding: govuk-spacing(4) govuk-spacing(2) govuk-spacing(1) govuk-spacing(4);
+    }
+
+    label:before {
+        background: govuk-colour("white");
+    }
+}
+
+.opss-dl-select {
+
+    /* non-js select */
+    & dt,
+    & dd {
+        padding: 0;
+        margin: 0;
+    }
+
+    border: 2px solid $govuk-input-border-colour;
+    margin-top: govuk-spacing(6);
+    margin-bottom: govuk-spacing(1);
+    min-width: 165px;
+    overflow-x: clip;
+
+    dt {
+        margin-top: - govuk-spacing(6);
+        padding-bottom: govuk-spacing(1);
+    }
+
+    dd {
+        width: 100% !important;
+        overflow: clip;
+
+        a {
+            padding: 0 0 0 govuk-spacing(2) - 2;
+            line-height: inherit;
+            display: inline-block;
+            text-align: left;
+            cursor: default;
+            width: 100%;
+        }
+
+        a,
+        a:visited,
+        a:active,
+        a:focus {
+            color: $govuk-text-colour;
+            text-decoration: none;
+        }
+
+        a:hover,
+        &.opss-dl-select__active a {
+            color: govuk-colour("white");
+            background-color: $govuk-link-colour;
+            cursor: pointer;
+        }
+
+        a:focus,
+        .opss-dl-select__active a:focus {
+            box-shadow: none;
+            outline: none;
+            font-weight: bold;
+            color: $govuk-text-colour;
+            background-color: $govuk-focus-colour;
+        }
+    }
+}
+
+@include govuk-media-query($from: desktop) {
+    .opss-tabs {
+
+        &.opss-tabs--min-height-s {
+            &>div {
+                min-height: 254px;
+            }
+        }
+
+        &.opss-tabs--min-height-m {
+            &>div {
+                min-height: 730px;
+            }
+        }
+
+        dl>div:last-child {
+            border-bottom: none 0;
+        }
+
+    }
+}
+
+/*
+.opss-list-counter {
+    padding-left: govuk-spacing(0);
+    counter-reset: item;
+
+    li {
+        counter-increment: item;
+        display: inline-block;
+        padding-right: govuk-spacing(4);
+    }
+
+    li:before {
+        margin-right: 10px;
+        content: counter(item)":";
+        display: inline-block;
+        color: $govuk-secondary-text-colour;
+        font-size: 90%;
+    }
+
+}
+*/
+
+.opss-timeline img {
+    max-width: 100%;
+    ;
+}
+
+@include govuk-media-query($from: desktop) {
+    .opss-blank-img {
+        width: 50%;
+    }
+}
+
+.opss-label-wrapper,
+.opss-fieldset__legend,
+div[class*="warning-text"] strong {
+    max-width: none !important;
+}
+
+section[data-info-number] {
+    margin-left: - govuk-spacing(4);
+    margin-right: - govuk-spacing(4);
+}
+
+section.opss-border-all[data-info-number] {
+    margin-bottom: govuk-spacing(8) !important;
+
+    &>ul li:last-child dl {
+        /* remove border bottom and margin from last row when inside a border box */
+        margin-bottom: - govuk-spacing(2);
+
+        div:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+section:not(.opss-border-all)[data-info-number="0"] {
+    margin-bottom: govuk-spacing(6) !important;
+}
+
+input[type="text"]:disabled,
+select:disabled {
+    color: govuk-colour("mid-grey");
+    border-color: govuk-colour("mid-grey");
+
+    color: rgba(118, 118, 118, 0.6);
+    border-color: rgba(118, 118, 118, 0.6);
+
+    background-color: transparent !important;
+    cursor: default;
+}
+
+.opss-accordion--sm-all>div:first-child button {
+    //'Show all sections': right + sm font*/
+    float: right;
+    @include opss-font-size($s: 14px, $l: 1.3);
+}
+
+@include govuk-media-query($from: desktop) {
+    .opss-text-limit-scroll-s {
+        @include opss-font-size($s: 16px, $l: 1.2);
+        display: block;
+        margin-right: - govuk-spacing(4);
+        padding-right: govuk-spacing(2);
+        max-height: 400px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: govuk-spacing(2);
+        }
+
+        &::-webkit-scrollbar-track {
+            background: govuk-colour("light-grey");
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $govuk-border-colour;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: $govuk-secondary-text-colour;
+        }
+    }
+}
