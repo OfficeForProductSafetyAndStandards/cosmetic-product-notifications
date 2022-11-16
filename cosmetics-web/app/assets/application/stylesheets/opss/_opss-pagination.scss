@@ -53,6 +53,9 @@
         span:first-child {
           @include govuk-font($size: 19);
         }
+        /*span:nth-child(3){
+          text-decoration: underline;
+        }*/
       }
 
       &.opss-pagination-link--next {

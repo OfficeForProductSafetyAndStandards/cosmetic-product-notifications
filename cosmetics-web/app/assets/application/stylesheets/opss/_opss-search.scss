@@ -29,3 +29,15 @@ $opss-search-icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAA
         z-index: 1;
     }
 }
+
+.govuk-label--s + .govuk-hint[class*="font-size-16"][class*="display-inline-block"] {
+        line-height: 1.1 !important;
+
+        &:before {
+            content: ' - '
+        }
+}
+.govuk-fieldset__legend--s + .govuk-hint[class*="font-size-16"][class*="display-inline-block"] {
+    position: relative;
+    top: -1px;
+}
