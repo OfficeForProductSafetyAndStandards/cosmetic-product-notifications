@@ -15,3 +15,25 @@
     },
   ]
 ) %>
+<h2 class="govuk-heading-m">Previous Responsible Person Addresses</h2>
+<% responsible_person.address_logs.each do |address| %>
+  <%= govukSummaryList(
+    classes: "govuk-summary-list check-your-answers-table",
+    rows: [
+      {
+        key: { text: "Used from" },
+        value: { text: display_full_month_date(address.start_date) },
+      },
+      {
+        key: { text: "Used to" },
+        value: { text: display_full_month_date(address.end_date) },
+      },
+      {
+        key: { text: "Address" },
+        value: {
+          html: sanitize(address.address_lines.join("<br>"))
+        },
+      },
+    ]
+  ) %>
+<% end %>
