@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/OfficeForProductSafetyAndStandards/govuk-design-system-rails
-  revision: edc63c004141ef5979a1ddd143381d49ad0b3a9e
-  tag: 0.9.3
+  revision: 3e9ac0db15d9d5c9ee5132ef6297db776889996b
+  branch: radio-fieldset-css-fix
   specs:
-    govuk-design-system-rails (0.9.3)
+    govuk-design-system-rails (0.9.6)
 
 GIT
   remote: https://github.com/zilkey/active_hash.git

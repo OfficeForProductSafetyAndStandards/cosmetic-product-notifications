@@ -1,0 +1,91 @@
+<%= form_for(@search_form, url: responsible_person_search_products_path, method: :get, html: { 'novalidate' => true }) do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="govuk-form-group">
+        <label class="govuk-label--s" for="prod-search">Search</label>
+        <div class="govuk-hint govuk-!-font-size-16 govuk-!-display-inline-block govuk-!-margin-top-1" id="search-hint">
+          <span class="govuk-visually-hidden">Search</span> on a product name or the <abbr>UKCP</abbr> cosmetic
+          product number.
+        </div>
+        <div class="govuk-input__wrapper opss-search__wrapper">
+          <%= form.search_field :q, class: "govuk-input govuk-!-width-three-quarters", "aria-describedby" => "search-hint", "spellcheck" => "false" %>
+          <button class="govuk-button govuk-!-margin-bottom-0">
+            <span class="govuk-visually-hidden">Submit search</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset govuk-!-padding-bottom-5 opss-grouping" aria-describedby="notified-date">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm">
+            Notification date
+          </legend>
+          <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" id="notified-date">
+            You can filter the search results to show only notifications notified within a date range.
+          </div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <fieldset class="govuk-fieldset govuk-!-margin-top-3" role="group" aria-describedby="from-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-right-4 opss-float-left">
+                  From
+                </legend>
+                <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" id="from-hint">
+                  For example, 27 9 2020
+                </div>
+                <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_from, id: 'by-date-form-day', extra_classes: "", search_type: "notification" } %>
+              </fieldset>
+            </div>
+
+            <div class="govuk-grid-column-one-half">
+              <fieldset class="govuk-fieldset govuk-!-margin-top-3" role="group" aria-describedby="to-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-right-4">
+                  To
+                </legend>
+                <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1 govuk-visually-hidden" id="to-hint">
+                  For example, 27 8 2022
+                </div>
+                <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day', extra_classes: "", search_type: "notification" } %>
+              </fieldset>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+        <%= govukRadios(
+              form: form,
+              key: :sort_by,
+              idPrefix: "sort-by",
+              hint: { text: "You can sort the search results by most recent or by alphabetical order.", classes: "govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" },
+              fieldset: { classes: "govuk-fieldset opss-grouping", legend: { text: "Sorting order", classes: "govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" } },
+              classes: "govuk-radios--inline govuk-radios--small",
+              items: [
+                {
+                  value: OpenSearchQuery::Notification::SCORE_SORTING,
+                  text: 'Relevance',
+                  label: { classes: 'govuk-label govuk-radios__label' }
+                },
+                {
+                  value: OpenSearchQuery::Notification::DATE_DESCENDING_SORTING,
+                  text: "Newest",
+                  label: { classes: 'govuk-label govuk-radios__label' }
+                },
+                {
+                  value: OpenSearchQuery::Notification::DATE_ASCENDING_SORTING,
+                  text: 'Oldest',
+                  label: { classes: 'govuk-label govuk-radios__label' }
+                },
+              ],
+              ) %>
+    </div>
+  </div>
+
+  <div class="govuk-button-group">
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+      Search
+    </button>
+    <button type="reset" class="govuk-button opss-button-link opss-nojs-hide" id="opss-reset">
+      Reset
+    </button>
+  </div>
+<% end %>

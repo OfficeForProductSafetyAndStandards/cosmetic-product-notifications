@@ -2,7 +2,6 @@
   <a href="#page-content" class="govuk-skip-link opss-skip-link">
     Skip to the main content
   </a>
-
   <ul class="govuk-list opss-left-nav">
     <li class="<%= "opss-left-nav__active" if params[:controller] == "responsible_persons/notifications" %>">
       <a href="<%= responsible_person_notifications_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state" <%= 'aria-current="page"' if params[:controller] == "responsible_persons/notifications" %>>
@@ -12,6 +11,11 @@
     <li class="<%= "opss-left-nav__active" if params[:controller] == "responsible_persons/drafts" %> govuk-!-margin-bottom-6">
       <a href="<%= responsible_person_draft_notifications_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state" <%= 'aria-current="page"' if params[:controller] == "responsible_persons/drafts" %>>
         Draft notifications
+      </a>
+    </li>
+    <li class="<%= "opss-left-nav__active" if params[:controller] == "responsible_persons/search_products" %>">
+      <a href="<%= responsible_person_search_products_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state" <%= 'aria-current="page"' if params[:controller] == "responsible_persons/search_products" %>>
+        Product - search
       </a>
     </li>
   </ul>
