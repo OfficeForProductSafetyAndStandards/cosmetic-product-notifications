@@ -37,7 +37,7 @@
           previous_rp_id = results.first.responsible_person_id
 
           results.each.with_index(1) do |notification, index|
-           if previous_rp_id != notification.responsible_person_id && sort_by_responsible_person?
+           if previous_rp_id != notification.responsible_person_id && group_by_responsible_person?
              current_rp_class_index += 1
              previous_rp_id = notification.responsible_person_id
            end
