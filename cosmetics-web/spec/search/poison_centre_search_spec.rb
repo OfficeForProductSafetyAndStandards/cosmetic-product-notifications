@@ -55,6 +55,6 @@ def keyword_search(keyword)
                                             sort_by: nil,
                                             match_similar: nil,
                                             search_fields: nil,
-                                            rp_id: nil)
+                                            responsible_person_id: nil)
   Notification.full_search(query)
 end

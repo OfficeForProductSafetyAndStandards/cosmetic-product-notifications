@@ -30,7 +30,7 @@ module OpenSearchQuery
                            SEARCH_NOTIFICATION_NAME_FIELD => NOTIFICATION_SEARCHABLE_FIELDS,
                            SEARCH_ALL_FIELDS => ALL_FIELDS }.freeze
 
-    def initialize(keyword:, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:, rp_id:)
+    def initialize(keyword:, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:, responsible_person_id:)
       @keyword   = keyword
       @category  = category
       @from_date = from_date
@@ -38,7 +38,7 @@ module OpenSearchQuery
       @sort_by   = sort_by.presence || default_sorting
       @match_similar = match_similar
       @search_fields = search_fields
-      @rp_id = rp_id
+      @responsible_person_id = responsible_person_id
     end
 
     def build_query
@@ -123,12 +123,12 @@ module OpenSearchQuery
     end
 
     def filter_rp
-      return if @rp_id.nil?
+      return if @responsible_person_id.nil?
 
       {
         bool: {
           filter: [
-            { term: { "responsible_person.id": @rp_id } },
+            { term: { "responsible_person.id": @responsible_person_id } },
           ],
         },
       }
