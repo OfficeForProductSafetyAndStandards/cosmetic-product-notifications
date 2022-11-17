@@ -3,7 +3,6 @@ module OpenSearchQuery
     SCORE_SORTING = "score".freeze
     DATE_ASCENDING_SORTING  = "date_ascending".freeze
     DATE_DESCENDING_SORTING = "date_descending".freeze
-    DEFAULT_SORT = SCORE_SORTING
 
     SEARCH_ALL_FIELDS = "all_fields".freeze
     SEARCH_RESPONSIBLE_PERSON_FIELDS = "responsible_person_fields".freeze
