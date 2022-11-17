@@ -24,8 +24,6 @@ class NanoMaterial < ApplicationRecord
   has_many :component_nano_materials, dependent: :destroy
   has_many :components, through: :component_nano_materials
 
-  delegate :component_name, to: :component
-
   validates :inci_name, presence: true, on: :add_nanomaterial_name
   validate :unique_name_per_product_notification, on: :add_nanomaterial_name
   validate :nanomaterial_notification_association
