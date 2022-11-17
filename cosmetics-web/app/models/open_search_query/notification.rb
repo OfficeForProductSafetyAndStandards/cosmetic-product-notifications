@@ -54,6 +54,8 @@ module OpenSearchQuery
       }
     end
 
+  private
+
     def search_query
       @keyword.blank? ? match_all_query : multi_match_query
     end
@@ -119,8 +121,6 @@ module OpenSearchQuery
         DATE_DESCENDING_SORTING => { notification_complete_at: { order: :desc } },
       }[@sort_by]
     end
-
-  private
 
     def default_sorting
       @keyword.present? ? SCORE_SORTING : DATE_DESCENDING_SORTING

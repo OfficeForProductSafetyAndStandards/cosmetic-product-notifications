@@ -33,6 +33,8 @@ module OpenSearchQuery
       end
     end
 
+  private
+
     def select_query
       {
         ANY_MATCH => any_match_query,
