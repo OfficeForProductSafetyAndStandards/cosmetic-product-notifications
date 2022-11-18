@@ -33,5 +33,9 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
         notification.errors.add :formulation_uploads, "The notification has not listed any ingredients"
       end
     end
+    ingredients = notification.components.map(&:ingredients).flatten
+    if ingredients.any? { |i| i.inci_name.length > ResponsiblePersons::Notifications::IngredientConcentrationForm::NAME_LENGTH_LIMIT }
+      notification.errors.add :ingredients, "Ingredient names must be 100 characters or less"
+    end
   end
 end
