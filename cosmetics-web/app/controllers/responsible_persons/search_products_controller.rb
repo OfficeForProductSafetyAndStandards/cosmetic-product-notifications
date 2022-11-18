@@ -9,13 +9,14 @@ class ResponsiblePersons::SearchProductsController < SubmitApplicationController
 
     if search_params.present? && params["edit"].nil?
       apply_date_filter
-      @search_form.validate
-      @search_response = search_notifications
+      if @search_form.valid?
+        @search_response = search_notifications
 
-      # Notifications are only listed in ElasticSearch index when completed, but if an indexed notification gets deleted,
-      # it won't be removed from the index until the next reindex is run (once per day).
-      # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
-      @notifications = @search_response.records.completed
+        # Notifications are only listed in ElasticSearch index when completed, but if an indexed notification gets deleted,
+        # it won't be removed from the index until the next reindex is run (once per day).
+        # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
+        @notifications = @search_response.records.completed
+      end
     end
   end
 
