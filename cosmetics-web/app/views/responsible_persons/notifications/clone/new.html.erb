@@ -1,0 +1,57 @@
+<% title = "What is the product name?" %>
+
+<% page_title title, errors: @new_notification.errors.any? %>
+<% content_for :after_header do %>
+  <%= link_to "Back", responsible_person_notification_path(@responsible_person, @notification), class: "govuk-back-link" %>
+<% end %>
+
+<%= error_summary_for(@new_notification) %>
+
+<div class="govuk-grid-row opss-switch-cols">
+  <div class="govuk-grid-column-one-third opss-switch-cols__right">
+
+    <h1 class="govuk-heading-s">Create a draft notification using a previous notification as a template</h1>
+
+    <a href="#skip-to-form" class="govuk-skip-link opss-skip-link">
+      Skip to the form
+    </a>
+
+    <p class="govuk-body-s opss-secondary-text">You are now creating a new <span class="govuk-!-font-weight-bold">draft</span>  notification using the '<%= @notification.product_name %>' notification as a template.</p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced govuk-!-font-size-16 opss-secondary-text">
+      <li>
+        The new draft notification will be a copy of the '<%= @notification.product_name %>' notification, ready for you to edit
+      </li>
+      <li>
+        If the '<%= @notification.product_name %>' notification provided ingredient information via a <abbr title="Portable Document Format">PDF</abbr> file, you will need to add this information to the new draft notification
+      </li>
+    </ul>
+
+    <p class="govuk-body-s opss-secondary-text">
+    You will only need to provide a product name to create this new draft notification.
+    </p>
+  </div>
+
+  <section class="govuk-grid-column-two-thirds opss-switch-cols__left" role="region">
+
+    <%= form_with model: @new_notification, url: responsible_person_notification_clone_path(@responsible_person, @notification), method: :post do |form| %>
+
+      <label class="govuk-label govuk-label--l" for="notification_product_name">
+        <%= title %>
+      </label>
+
+      <p class="govuk-body">Provide the product name for the new draft notification: Include the trademark or brand, the product line and the specific name of the product as it appears on the packaging. Include the type of product (for example, 'shower gel') unless it's included in the product name.</p>
+
+      <%= govukInput(form: form,
+                     key: :product_name,
+                     hint: { text: "For example, ‘SkinSoft body fresh with aloe vera, shower gel’." })
+      %>
+
+    <div class="govuk-button-group">
+      <%= govukButton text: "Save" %>
+
+      <a class="govuk-link govuk-link--no-visited-state" href="<%= responsible_person_notification_path(@responsible_person, @notification) %>">Cancel</a>
+    </div>
+    <% end %>
+  </section>
+</div>

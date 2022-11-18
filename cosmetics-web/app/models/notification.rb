@@ -1,27 +1,43 @@
 class Notification < ApplicationRecord
   class DeletionPeriodExpired < ArgumentError; end
-  include NotificationStateConcern
 
   DELETION_PERIOD_DAYS = 7
-  DELETABLE_ATTRIBUTES = %w[product_name
-                            import_country
-                            reference_number
-                            cpnp_reference
-                            shades
-                            industry_reference
-                            cpnp_notification_date
-                            was_notified_before_eu_exit
-                            under_three_years
-                            still_on_the_market
-                            components_are_mixed
-                            ph_min_value
-                            ph_max_value
-                            notification_complete_at
-                            csv_cache].freeze
+  DELETABLE_ATTRIBUTES = %w[
+    product_name
+    import_country
+    reference_number
+    cpnp_reference
+    shades
+    industry_reference
+    cpnp_notification_date
+    was_notified_before_eu_exit
+    under_three_years
+    still_on_the_market
+    components_are_mixed
+    ph_min_value
+    ph_max_value
+    notification_complete_at
+    csv_cache
+  ].freeze
+
+  CLONABLE_ATTRIBUTES = %i[
+    import_country
+    responsible_person_id
+    shades
+    industry_reference
+    under_three_years
+    still_on_the_market
+    components_are_mixed
+    ph_min_value
+    ph_max_value
+    routing_questions_answers
+  ].freeze
 
   include Searchable
   include CountriesHelper
   include RoutingQuestionCacheConcern
+  include Clonable
+  include NotificationStateConcern
 
   belongs_to :responsible_person
 
@@ -30,6 +46,7 @@ class Notification < ApplicationRecord
   has_many :image_uploads, dependent: :destroy
 
   has_one :deleted_notification, dependent: :destroy
+  has_one :source_notification, class_name: "Notification", foreign_key: :source_notification_id
 
   accepts_nested_attributes_for :image_uploads
 
@@ -62,9 +79,11 @@ class Notification < ApplicationRecord
   validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
-  validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 },
-                                          allow_nil: true
+  validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, allow_nil: true
+
   validate :max_ph_is_greater_than_min_ph
+
+  validate :product_name_uniqueness, on: :cloning
 
   validates_with AcceptAndSubmitValidator, on: :accept_and_submit
 
@@ -275,6 +294,10 @@ class Notification < ApplicationRecord
     save!
   end
 
+  def cloned?
+    source_notification.present?
+  end
+
 private
 
   def all_required_attributes_must_be_set
@@ -326,6 +349,14 @@ private
     result = __elasticsearch__.index_document
 
     Rails.logger.info "[NotificationIndex] Notification with id=#{id} indexed with result #{result}"
+  end
+
+  def product_name_uniqueness
+    raise ArgumentError if responsible_person.nil?
+
+    if Notification.where(responsible_person_id:).where("TRIM(LOWER(product_name))=TRIM(LOWER(?))", product_name).count.positive?
+      errors.add(:product_name, :taken)
+    end
   end
 end
 
