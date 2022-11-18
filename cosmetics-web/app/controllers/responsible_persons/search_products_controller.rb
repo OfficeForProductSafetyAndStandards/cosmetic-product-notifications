@@ -5,6 +5,7 @@ class ResponsiblePersons::SearchProductsController < SubmitApplicationController
 
   def show
     @search_form = NotificationSearchForm.new(search_params)
+    @search_form.sort_by = OpenSearchQuery::Notification::SCORE_SORTING
     @search_params = search_params
 
     if search_params.present? && params["edit"].nil?

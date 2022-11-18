@@ -84,8 +84,8 @@
     <button type="submit" class="govuk-button" data-module="govuk-button">
       Search
     </button>
-    <button type="reset" class="govuk-button opss-button-link opss-nojs-hide" data-reset-form="new_notification_search_form">
+    <button type="reset" class="govuk-button opss-button-link opss-nojs-hide" data-reset-form="new_notification_search_form" data-form-defaults="<%= { 'sort-by_score' => OpenSearchQuery::Notification::SCORE_SORTING }.to_json %>">
       Reset
-    </button>
+    </button
   </div>
 <% end %>
