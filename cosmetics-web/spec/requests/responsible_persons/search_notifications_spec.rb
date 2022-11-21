@@ -38,7 +38,7 @@ RSpec.describe "Search notifications page", type: :request do
       let(:search_params) do
         {
           notification_search_form: {
-            q: "Product 1",
+            q: "Cream",
           },
         }
       end
@@ -56,7 +56,7 @@ RSpec.describe "Search notifications page", type: :request do
       end
 
       it "displays the result" do
-        expect(response.body).to have_tag("th", text: "Cream")
+        expect(response.body).to have_tag("span", text: "Cream")
       end
     end
   end
