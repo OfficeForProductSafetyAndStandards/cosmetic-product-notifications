@@ -31,6 +31,7 @@ private
     search_result
   end
 
+  # Any changes in these search params need to be also applied to PoisonCentres::NotificationsController#search_params
   def search_params
     params.fetch(:ingredient_search_form, {}).permit(:q,
                                                      { date_from: %i[day month year] },
