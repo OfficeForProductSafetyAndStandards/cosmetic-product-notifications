@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :nano_material do
-    inci_name { "Nano foo" }
+    sequence(:inci_name) { |n| "Nano #{n}" }
     notification
 
     trait :standard do
@@ -11,6 +11,10 @@ FactoryBot.define do
       inci_name { nil }
       purposes { [NanoMaterialPurposes.other.name] }
       nanomaterial_notification { association :nanomaterial_notification, responsible_person: notification.responsible_person }
+    end
+
+    trait :toxicology_notified do
+      confirm_toxicology_notified { "yes" }
     end
 
     trait :skip_validations do
