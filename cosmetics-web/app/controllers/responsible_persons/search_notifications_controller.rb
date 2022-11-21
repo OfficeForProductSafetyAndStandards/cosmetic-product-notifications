@@ -1,4 +1,4 @@
-class ResponsiblePersons::SearchProductsController < SubmitApplicationController
+class ResponsiblePersons::SearchNotificationsController < SubmitApplicationController
   PER_PAGE = 20
 
   before_action :set_responsible_person

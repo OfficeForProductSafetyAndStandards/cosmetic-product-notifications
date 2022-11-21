@@ -7,7 +7,7 @@
 
   <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
     <div class="opss-text-align-right">
-      <%= form_for(@search_form, url: responsible_person_search_products_path(edit: true), method: :get, html: { 'novalidate' => true }) do |form| %>
+      <%= form_for(@search_form, url: responsible_person_search_notifications_path(edit: true), method: :get, html: { 'novalidate' => true }) do |form| %>
         <%= hidden_field_tag :edit, true %>
         <%= form.hidden_field :q, id: :notification_search_form_q_sort_hidden %>
         <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_from, id: :sort_form, search_type: 'notification' } %>
