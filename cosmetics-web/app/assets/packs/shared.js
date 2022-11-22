@@ -7,6 +7,7 @@ import '../application/javascripts/autocomplete'
 import '../application/javascripts/bulk_file_upload_error_handling'
 import '../application/javascripts/image_size_validation'
 import '../application/javascripts/notification_search'
+import '../application/javascripts/form_reset'
 
 import * as ActiveStorage from '@rails/activestorage'
 

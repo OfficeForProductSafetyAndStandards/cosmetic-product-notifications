@@ -32,7 +32,7 @@
                 <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" id="from-hint">
                   For example, 27 9 2020
                 </div>
-                <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_from, id: 'by-date-form-day', extra_classes: "", search_type: "notification" } %>
+                <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_from, id: 'by-date-form-day', extra_classes: "", search_type: "ingredient" } %>
               </fieldset>
             </div>
 
@@ -44,7 +44,7 @@
                 <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1 govuk-visually-hidden" id="to-hint">
                   For example, 27 8 2022
                 </div>
-                <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day', extra_classes: "", search_type: "notification" } %>
+                <%= render partial: 'poison_centres/notifications_search/date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day', extra_classes: "", search_type: "ingredient" } %>
               </fieldset>
             </div>
           </div>
@@ -81,17 +81,17 @@
             classes: "govuk-radios--inline govuk-radios--small",
             items: [
               {
-                value: OpenSearchQuery::Notification::SCORE_SORTING,
+                value: OpenSearchQuery::Ingredient::SCORE_SORTING,
                 text: 'Relevance',
                 label: { classes: 'govuk-label govuk-radios__label' }
               },
               {
-                value: OpenSearchQuery::Notification::DATE_DESCENDING_SORTING,
+                value: OpenSearchQuery::Ingredient::DATE_DESCENDING_SORTING,
                 text: "Newest",
                 label: { classes: 'govuk-label govuk-radios__label' }
               },
               {
-                value: OpenSearchQuery::Notification::DATE_ASCENDING_SORTING,
+                value: OpenSearchQuery::Ingredient::DATE_ASCENDING_SORTING,
                 text: 'Oldest',
                 label: { classes: 'govuk-label govuk-radios__label' }
               },
@@ -104,7 +104,7 @@
     <button type="submit" class="govuk-button" data-module="govuk-button">
       Search
     </button>
-    <button type="reset" class="govuk-button opss-button-link opss-nojs-hide" data-reset-form="new_ingredient_search_form" data-form-defaults="<%= { '' => '' }.to_json %>">
+    <button type="reset" class="govuk-button opss-button-link opss-nojs-hide" data-reset-form="new_ingredient_search_form" data-form-defaults="<%= { 'sort-by_score' => OpenSearchQuery::Ingredient::SCORE_SORTING, 'exact-or-any-match_any_match' => OpenSearchQuery::Ingredient::ANY_MATCH }.to_json %>">
       Reset
     </button>
   </div>
