@@ -23,7 +23,7 @@
 
 <% if @notifications.present? %>
 
-  <table class="govuk-table govuk-!-margin-top-6 govuk-!-margin-bottom-0 opss-table opss-table--last-col-right opss-table--first-col-normal opss-table--2-row-groups">
+  <table class="govuk-table govuk-!-margin-top-6 govuk-!-margin-bottom-0 opss-table opss-table--last-col-right opss-table--first-col-normal">
     <caption class="govuk-table__caption govuk-visually-hidden">List of notified products</caption>
     <thead class="govuk-table__head">
     <tr class="govuk-table__row">
@@ -34,8 +34,8 @@
     </tr>
     </thead>
 
+    <tbody class="govuk-table__body">
     <% @notifications.each do |notification| %>
-      <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">
           <%= notification.product_name %>
@@ -53,17 +53,8 @@
           <% end %>
         </td>
       </tr>
-      <tr class="govuk-table__row">
-        <th>
-          <span class="govuk-visually-hidden">Matches</span>
-        </th>
-        <td class="govuk-table__cell" colspan="3">
-          <span class="govuk-!-font-size-14">Ingredient match: </span>
-          <span class="govuk-!-font-size-14"><mark>Lorem ipsumzetum</mark></span>
-        </td>
-      </tr>
-      </tbody>
     <% end %>
+    </tbody>
 
 
     <% if @notifications.length > 11 %>

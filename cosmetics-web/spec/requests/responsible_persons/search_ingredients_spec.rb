@@ -6,7 +6,8 @@ RSpec.describe "Search ingredients page", type: :request do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:submit_user) { responsible_person.responsible_person_users.first.user }
 
-  let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream", responsible_person:) }
+  let(:component) { create(:component, :using_exact, with_ingredients: %w[aqua]) }
+  let(:cream) { create(:notification, :registered, components: [component], notification_complete_at: 1.day.ago, product_name: "Cream", responsible_person:) }
 
   before do
     configure_requests_for_submit_domain
@@ -38,7 +39,7 @@ RSpec.describe "Search ingredients page", type: :request do
       let(:search_params) do
         {
           ingredient_search_form: {
-            q: "Cream",
+            q: "aqua",
           },
         }
       end

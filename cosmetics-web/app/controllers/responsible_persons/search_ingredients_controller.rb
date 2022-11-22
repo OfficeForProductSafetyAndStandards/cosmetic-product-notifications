@@ -5,7 +5,7 @@ class ResponsiblePersons::SearchIngredientsController < SubmitApplicationControl
 
   def show
     @search_form = IngredientSearchForm.new(search_params)
-    @search_form.sort_by = OpenSearchQuery::Ingredient::SCORE_SORTING
+    @search_form.sort_by = OpenSearchQuery::Ingredient::SCORE_SORTING if @search_form.sort_by.blank?
     @search_params = search_params
 
     if search_params.present? && params["edit"].nil?
@@ -48,7 +48,8 @@ private
                                             from_date: @search_form.date_from_for_search,
                                             to_date: @search_form.date_to_for_search,
                                             group_by: @search_form.group_by,
-                                            sort_by: @search_form.sort_by)
+                                            sort_by: @search_form.sort_by,
+                                            responsible_person_id: @responsible_person.id)
     Rails.logger.debug query.build_query.to_json
     # Pagination needs t  o be kept together with the full search query to automatically paginate the query with Kaminari values
     # instead of defaulting to OpenSearch returning the first 10 hits.
