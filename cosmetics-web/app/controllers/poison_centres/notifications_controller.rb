@@ -29,6 +29,8 @@ private
       params.fetch(:ingredient_search_form, {}).permit(:q,
                                                        { date_from: %i[day month year] },
                                                        { date_to: %i[day month year] },
+                                                       :group_by,
+                                                       :sort_by,
                                                        :exact_or_any_match)
     end
   end
