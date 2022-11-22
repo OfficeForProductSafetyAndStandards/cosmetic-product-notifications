@@ -135,8 +135,6 @@ module OpenSearchQuery
       }
     end
 
-  private
-
     def default_sorting
       @keyword.present? ? SCORE_SORTING : DATE_DESCENDING_SORTING
     end
