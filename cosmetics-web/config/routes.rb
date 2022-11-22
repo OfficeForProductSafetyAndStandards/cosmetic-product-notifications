@@ -130,6 +130,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resource :ingredients, controller: "responsible_persons/search_ingredients", path: "search-ingredients", as: :search_ingredients, only: %i[show]
+
       resource :draft, controller: "responsible_persons/drafts", only: %i[new]
       get "draft-notifications", to: "responsible_persons/drafts#index", as: :draft_notifications
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit create] do

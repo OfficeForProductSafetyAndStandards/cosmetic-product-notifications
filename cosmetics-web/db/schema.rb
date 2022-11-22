@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "ingredient_range_concentration", ["less_than_01_percent", "greater_than_01_less_than_1_percent", "greater_than_1_less_than_5_percent", "greater_than_5_less_than_10_percent", "greater_than_10_less_than_25_percent", "greater_than_25_less_than_50_percent", "greater_than_50_less_than_75_percent", "greater_than_75_less_than_100_percent"]
@@ -89,9 +88,9 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
     t.float "minimum_ph"
     t.float "maximum_ph"
     t.text "ph"
+    t.jsonb "routing_questions_answers"
     t.string "exposure_condition"
     t.string "exposure_routes", array: true
-    t.jsonb "routing_questions_answers"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 
@@ -222,11 +221,11 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
-    t.datetime "cpnp_notification_date"
     t.string "industry_reference"
+    t.datetime "cpnp_notification_date"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
-    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
@@ -283,7 +282,7 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
     t.bigint "responsible_person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "user_id", default: -> { "public.gen_random_uuid()" }
+    t.uuid "user_id", default: -> { "gen_random_uuid()" }
     t.index ["responsible_person_id"], name: "index_responsible_person_users_on_responsible_person_id"
   end
 
@@ -297,13 +296,6 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "seach_histories", force: :cascade do |t|
-    t.string "query"
-    t.integer "results"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "search_histories", force: :cascade do |t|
@@ -340,7 +332,7 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
     t.index ["user_id"], name: "index_user_attributes_on_user_id"
   end
 
-  create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "mobile_number"
     t.boolean "mobile_number_verified", default: false, null: false
     t.string "name"

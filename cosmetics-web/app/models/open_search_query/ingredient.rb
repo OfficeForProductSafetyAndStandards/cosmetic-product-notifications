@@ -5,6 +5,9 @@ module OpenSearchQuery
 
     SORT_BY_NONE                   = "none".freeze
     SORT_BY_RESPONSIBLE_PERSON_ASC = "responsible_person_asc".freeze
+    SCORE_SORTING = "score".freeze
+    DATE_ASCENDING_SORTING  = "date_ascending".freeze
+    DATE_DESCENDING_SORTING = "date_descending".freeze
 
     FIELDS = %w[searchable_ingredients].freeze
 
@@ -76,6 +79,18 @@ module OpenSearchQuery
             gte: @from_date,
             lte: @to_date,
           },
+        },
+      }
+    end
+
+    def filter_rp
+      return if @responsible_person_id.nil?
+
+      {
+        bool: {
+          filter: [
+            { term: { "responsible_person.id": @responsible_person_id } },
+          ],
         },
       }
     end
