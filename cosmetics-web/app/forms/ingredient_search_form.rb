@@ -1,9 +1,22 @@
 class IngredientSearchForm < Form
+  SORT_WITH_QUERY_OPTIONS = {
+    "Relevance" => OpenSearchQuery::Ingredient::SCORE_SORTING,
+    "Newest" => OpenSearchQuery::Ingredient::DATE_DESCENDING_SORTING,
+    "Oldest" => OpenSearchQuery::Ingredient::DATE_ASCENDING_SORTING,
+  }.freeze
+
+  SORT_WITHOUT_QUERY_OPTIONS = {
+    "Newest" => OpenSearchQuery::Ingredient::DATE_DESCENDING_SORTING,
+    "Oldest" => OpenSearchQuery::Ingredient::DATE_ASCENDING_SORTING,
+  }.freeze
+
   attribute :q
   attribute :exact_or_any_match, default: OpenSearchQuery::Ingredient::ANY_MATCH
   attribute :date_from, :govuk_date
   attribute :date_to, :govuk_date
-  attribute :sort_by, default: OpenSearchQuery::Ingredient::SORT_BY_NONE
+  attribute :group_by, default: OpenSearchQuery::Ingredient::GROUP_BY_NONE
+
+  attribute :sort_by
 
   validates :date_from,
             presence: true,
@@ -44,5 +57,9 @@ class IngredientSearchForm < Form
 
   def date_range_selected?
     date_from.present? || date_to.present?
+  end
+
+  def sorting_options
+    q.present? ? SORT_WITH_QUERY_OPTIONS : SORT_WITHOUT_QUERY_OPTIONS
   end
 end

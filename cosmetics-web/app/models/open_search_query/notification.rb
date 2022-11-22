@@ -3,7 +3,6 @@ module OpenSearchQuery
     SCORE_SORTING = "score".freeze
     DATE_ASCENDING_SORTING  = "date_ascending".freeze
     DATE_DESCENDING_SORTING = "date_descending".freeze
-    DEFAULT_SORT = SCORE_SORTING
 
     SEARCH_ALL_FIELDS = "all_fields".freeze
     SEARCH_RESPONSIBLE_PERSON_FIELDS = "responsible_person_fields".freeze
@@ -53,6 +52,8 @@ module OpenSearchQuery
         ],
       }
     end
+
+  private
 
     def search_query
       @keyword.blank? ? match_all_query : multi_match_query
@@ -119,8 +120,6 @@ module OpenSearchQuery
         DATE_DESCENDING_SORTING => { notification_complete_at: { order: :desc } },
       }[@sort_by]
     end
-
-  private
 
     def default_sorting
       @keyword.present? ? SCORE_SORTING : DATE_DESCENDING_SORTING

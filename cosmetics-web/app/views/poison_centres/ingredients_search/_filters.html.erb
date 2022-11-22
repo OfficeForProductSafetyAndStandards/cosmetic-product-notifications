@@ -22,17 +22,17 @@
     <div class="govuk-form-group opss-form-group opss-form-group--sm-labels">
       <%= govukRadios(
             form: form,
-            key: :sort_by,
+            key: :group_by,
             idPrefix: "change-rp",
             fieldset: { legend: { text: "Group by", classes: "govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-font-weight-regular" } },
             classes: "govuk-radios--small",
             items: [
               {
-                value: OpenSearchQuery::Ingredient::SORT_BY_NONE,
+                value: OpenSearchQuery::Ingredient::GROUP_BY_NONE,
                 text: 'None'
               },
               {
-                value: OpenSearchQuery::Ingredient::SORT_BY_RESPONSIBLE_PERSON_ASC,
+                value: OpenSearchQuery::Ingredient::GROUP_BY_RESPONSIBLE_PERSON_ASC,
                 text: 'Responsible Person'
               },
             ],

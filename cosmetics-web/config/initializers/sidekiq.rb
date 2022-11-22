@@ -70,8 +70,13 @@ Sidekiq.configure_server do |config|
   upload_cosmetic_products_containing_nanomaterials_job
   upload_nanomaterial_notifications_job
   upload_nanomaterials_pdfs_job
+
+  Sidekiq::Status.configure_server_middleware(config)
+  Sidekiq::Status.configure_client_middleware(config)
 end
 
 Sidekiq.configure_client do |config|
   config.redis = Rails.application.config_for(:redis)
+
+  Sidekiq::Status.configure_client_middleware(config)
 end

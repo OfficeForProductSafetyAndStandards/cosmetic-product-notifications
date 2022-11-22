@@ -55,11 +55,11 @@ module PoisonCentresNotificationsHelper
   end
 
   def ingredient_search_option(label, value)
-    selected = params[:sort_by] == value ? "selected=\"selected\"" : ""
+    selected = params[:group_by] == value ? "selected=\"selected\"" : ""
     "<option value=\"#{value}\" #{selected}>#{label}</option>".html_safe
   end
 
-  def sort_by_responsible_person?
-    params[:ingredient_search_form] && params[:ingredient_search_form][:sort_by] == OpenSearchQuery::Ingredient::SORT_BY_RESPONSIBLE_PERSON_ASC
+  def group_by_responsible_person?
+    params[:ingredient_search_form] && params[:ingredient_search_form][:group_by] == OpenSearchQuery::Ingredient::GROUP_BY_RESPONSIBLE_PERSON_ASC
   end
 end
