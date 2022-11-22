@@ -10,7 +10,6 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
     # it won't be removed from the index until the next reindex is run (once per day).
     # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
     @notifications = @search_response.records.completed
-    binding.pry
   end
 
 private

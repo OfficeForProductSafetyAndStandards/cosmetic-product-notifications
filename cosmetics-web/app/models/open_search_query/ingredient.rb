@@ -3,8 +3,9 @@ module OpenSearchQuery
     EXACT_MATCH = "exact_match".freeze
     ANY_MATCH   = "any_match".freeze
 
-    SORT_BY_NONE                   = "none".freeze
-    SORT_BY_RESPONSIBLE_PERSON_ASC = "responsible_person_asc".freeze
+    GROUP_BY_NONE                   = "none".freeze
+    GROUP_BY_RESPONSIBLE_PERSON_ASC = "responsible_person_asc".freeze
+
     SCORE_SORTING = "score".freeze
     DATE_ASCENDING_SORTING  = "date_ascending".freeze
     DATE_DESCENDING_SORTING = "date_descending".freeze
@@ -80,18 +81,6 @@ module OpenSearchQuery
         },
       }
     end
-
-      return if @responsible_person_id.nil?
-
-      {
-        bool: {
-          filter: [
-            { term: { "responsible_person.id": @responsible_person_id } },
-          ],
-        },
-      }
-      
-      
 
     def group_query
       { "responsible_person.id" => { order: "asc" } } if @group_by == GROUP_BY_RESPONSIBLE_PERSON_ASC
