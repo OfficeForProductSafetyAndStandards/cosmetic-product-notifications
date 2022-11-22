@@ -5,8 +5,7 @@ class ResponsiblePersons::SearchIngredientsController < SubmitApplicationControl
 
   def show
     @search_form = IngredientSearchForm.new(search_params)
-
-    #@search_form.sort_by = OpenSearchQuery::Notification::SCORE_SORTING
+    @search_form.sort_by = OpenSearchQuery::Ingredient::SCORE_SORTING
     @search_params = search_params
 
     if search_params.present? && params["edit"].nil?
@@ -22,7 +21,7 @@ class ResponsiblePersons::SearchIngredientsController < SubmitApplicationControl
     end
   end
 
-  private
+private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])

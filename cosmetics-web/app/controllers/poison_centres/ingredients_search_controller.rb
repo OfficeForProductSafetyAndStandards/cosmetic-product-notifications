@@ -10,12 +10,19 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
     # it won't be removed from the index until the next reindex is run (once per day).
     # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
     @notifications = @search_response.records.completed
+    binding.pry
   end
 
 private
 
   def search_notifications
-    query = OpenSearchQuery::Ingredient.new(keyword: @search_form.q, match_type: @search_form.exact_or_any_match, from_date: @search_form.date_from_for_search, to_date: @search_form.date_to_for_search, sort_by: @search_form.sort_by)
+    query = OpenSearchQuery::Ingredient.new(keyword: @search_form.q,
+                                            match_type: @search_form.exact_or_any_match,
+                                            from_date: @search_form.date_from_for_search,
+                                            to_date: @search_form.date_to_for_search,
+                                            group_by: @search_form.group_by,
+                                            sort_by: @search_form.sort_by)
+
     Rails.logger.debug query.build_query.to_json
     # Pagination needs t  o be kept together with the full search query to automatically paginate the query with Kaminari values
     # instead of defaulting to OpenSearch returning the first 10 hits.
