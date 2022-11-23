@@ -1,8 +1,29 @@
 class Component < ApplicationRecord
+  CLONABLE_ATTRIBUTES = %i[
+    shades
+    notification_type
+    frame_formulation
+    sub_sub_category
+    name
+    physical_form
+    special_applicator
+    acute_poisoning_info
+    other_special_applicator
+    contains_poisonous_ingredients
+    minimum_ph
+    maximum_ph
+    ph
+    exposure_condition
+    exposure_routes
+    routing_questions_answers
+    category
+    unit
+  ].freeze
   include AASM
   include NotificationProperties
   include NotificationPropertiesHelper
   include CategoryHelper
+  include Clonable
   include FileUploadConcern
   include RoutingQuestionCacheConcern
 

@@ -77,6 +77,25 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_link("Shower Bubbles")
   end
 
+  scenario "Sorting search results" do
+    expect(page).to have_h1("Search cosmetic products")
+
+    click_link "Ingredients search"
+
+    fill_in "ingredient_search_form_q", with: "tin"
+    click_on "Search"
+
+    links = page.all("table#table-items .govuk-link").map(&:text)
+    expect(links).to eq ["Shower Bubbles", "Cream"]
+
+    select "Newest", from: "Sort by"
+    click_on "Sort"
+
+    links = page.all("table#table-items .govuk-link").map(&:text)
+
+    expect(links).to eq ["Cream", "Shower Bubbles"]
+  end
+
   scenario "Back link" do
     expect(page).to have_h1("Search cosmetic products")
 

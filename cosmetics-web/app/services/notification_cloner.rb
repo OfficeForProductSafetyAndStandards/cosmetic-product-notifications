@@ -1,0 +1,2 @@
+module NotificationCloner
+end

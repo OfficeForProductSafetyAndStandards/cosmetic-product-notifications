@@ -14,6 +14,18 @@
       <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @notification.errors.messages[:image_uploads][0], href: "#image_upload"}]) %>
     <% end %>
 
+    <% if @clone_image_job&.pending? %>
+      <%= govukNotificationBanner(
+        text: 'The process of copying images or files from the original notification has not finished. Please complete this task later.'
+      ) %>
+    <% end %>
+
+    <% if @clone_image_job&.failed? %>
+      <%= govukNotificationBanner(
+        text: 'The image copying process failed - please upload the image(s) to the new draft notification'
+      ) %>
+    <% end %>
+
     <%= render(partial: "instructions", locals: { title: title }) %>
 
     <% if @notification.image_uploads.any? %>
@@ -48,24 +60,28 @@
       </table>
     <% end %>
 
-    <%= form_with(url: wizard_path, method: :put, multipart: true) do |form| %>
-      <%= hidden_field_tag :back_to_edit, params[:back_to_edit] %>
-      <% classes = "govuk-form-group" %>
-      <% classes += " govuk-form-group--error" if @notification.errors.messages[:image_uploads].any? %>
+    <% unless @clone_image_job&.pending? %>
+      <%= form_with(url: wizard_path, method: :put, multipart: true) do |form| %>
+        <%= hidden_field_tag :back_to_edit, params[:back_to_edit] %>
+        <% classes = "govuk-form-group" %>
+        <% classes += " govuk-form-group--error" if @notification.errors.messages[:image_uploads].any? %>
 
-      <div class="<%= classes %>">
-        <% if @notification.errors.messages[:image_uploads].any? %>
-          <span class="govuk-error-message"><%= @notification.errors.messages[:image_uploads][0] %></span>
-        <% end %>
-        <%= form.label :image_upload, "Upload a file no larger than 30 MB", class: "govuk-label govuk-label--s" %>
+        <div class="<%= classes %>">
+          <% if @notification.errors.messages[:image_uploads].any? %>
+            <span class="govuk-error-message"><%= @notification.errors.messages[:image_uploads][0] %></span>
+          <% end %>
+          <%= form.label :image_upload, "Upload a file no larger than 30 MB", class: "govuk-label govuk-label--s" %>
 
-        <%= form.file_field :image_upload, multiple: true, accept: ImageUpload.allowed_types.join(", "), class: "govuk-file-upload" %>
-      </div>
+          <%= form.file_field :image_upload, multiple: true, accept: ImageUpload.allowed_types.join(", "), class: "govuk-file-upload" %>
+        </div>
 
-      <div class="govuk-button-group">
-        <%= govukButton text: "Save and continue", name: 'after_save', value: 'continue' %>
-        <%= govukButton text: "Save and upload another image", name: 'after_save', value: 'upload_another', classes: "govuk-button--secondary" %>
-      </div>
+        <div class="govuk-button-group">
+          <%= govukButton text: "Save and continue", name: 'after_save', value: 'continue' %>
+          <%= govukButton text: "Save and upload another image", name: 'after_save', value: 'upload_another', classes: "govuk-button--secondary" %>
+        </div>
+      <% end %>
+    <% else %>
+      <a href="<%= responsible_person_notification_draft_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">Return to the tasks list page</a>.</p>
     <% end %>
   </div>
 </div>
