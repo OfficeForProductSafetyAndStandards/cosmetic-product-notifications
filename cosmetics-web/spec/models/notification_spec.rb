@@ -116,6 +116,20 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification:) }
     let(:deleted_notification) { DeletedNotification.first }
 
+    describe "#destroy" do
+      it "works as #soft_delete!" do
+        notification.destroy
+        expect(notification.reload.state).to eq described_class::DELETED.to_s
+      end
+    end
+
+    describe "#destroy!" do
+      it "works as #soft_delete!" do
+        notification.destroy!
+        expect(notification.reload.state).to eq described_class::DELETED.to_s
+      end
+    end
+
     describe "#soft_delete!" do
       describe "deleted notification record" do
         let!(:notification_attributes) { notification.attributes }
@@ -134,20 +148,6 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
         it "has notification state" do
           expect(deleted_notification.state).to eq notification_attributes["state"]
-        end
-      end
-
-      describe "#destroy" do
-        it "works as #soft_delete!" do
-          notification.destroy
-          expect(notification.reload.state).to eq "deleted"
-        end
-      end
-
-      describe "#destroy!" do
-        it "works as #soft_delete!" do
-          notification.destroy!
-          expect(notification.reload.state).to eq "deleted"
         end
       end
 
