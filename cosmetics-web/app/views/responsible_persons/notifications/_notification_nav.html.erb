@@ -13,9 +13,16 @@
         Draft notifications
       </a>
     </li>
+
     <li class="<%= "opss-left-nav__active" if params[:controller] == "responsible_persons/search_notifications" %>">
       <a href="<%= responsible_person_search_notifications_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state" <%= 'aria-current="page"' if params[:controller] == "responsible_persons/search_notifications" %>>
         Product - search
+       </a>
+     </li>
+
+    <li class="<%= "opss-left-nav__active" if params[:controller] == "responsible_persons/search_ingredients" %>">
+      <a href="<%= responsible_person_search_ingredients_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state" <%= 'aria-current="page"' if params[:controller] == "responsible_persons/search_ingredients" %>>
+        Ingredient - search
       </a>
     </li>
   </ul>

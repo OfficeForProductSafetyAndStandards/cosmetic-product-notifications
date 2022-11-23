@@ -1,0 +1,72 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body govuk-!-margin-bottom-0">
+      <%= pluralize(@notifications.count, 'notification') %> using the current filters <%= @notifications.count == 1 ? "was found." : "were found." %>
+    </p>
+  </div>
+
+  <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+    <div class="opss-text-align-right">
+      <%= form_for(@search_form, url: responsible_person_search_ingredients_path(edit: true), method: :get, html: { 'novalidate' => true }) do |form| %>
+        <%= hidden_field_tag :edit, true %>
+        <%= form.hidden_field :q, id: :notification_search_form_q_sort_hidden %>
+        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_from, id: :sort_form, search_type: 'notification' } %>
+        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_to, id: :sort_form, search_type: 'notification' } %>
+        <%= form.hidden_field :sort_by, id: 'notification_search_form_sort_by_hidden' %>
+        <button class="govuk-button opss-button-link govuk-!-font-size-14">
+          Edit your search
+        </button>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @notifications.present? %>
+
+  <table class="govuk-table govuk-!-margin-top-6 govuk-!-margin-bottom-0 opss-table opss-table--last-col-right opss-table--first-col-normal">
+    <caption class="govuk-table__caption govuk-visually-hidden">List of notified products</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Product</th>
+      <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+      <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
+      <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
+    </tr>
+    </thead>
+
+    <tbody class="govuk-table__body">
+    <% @notifications.each do |notification| %>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">
+          <%= notification.product_name %>
+        </th>
+        <td class="govuk-table__cell">
+          <%= display_full_month_date notification.notification_complete_at %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= reference_number_for_display(notification) %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= link_to responsible_person_notification_path(@responsible_person, notification, page: params[:page]), class: 'govuk-link govuk-link--no-visited-state' do %>
+            View
+            <span class="govuk-visually-hidden"><%= notification.product_name %></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+
+
+    <% if @notifications.length > 11 %>
+      <tfoot class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Product</th>
+        <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+        <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
+        <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
+      </tr>
+      </tfoot>
+    <% end %>
+  </table>
+  <%= paginate search_response, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
+<% end %>
