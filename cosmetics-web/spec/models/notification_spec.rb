@@ -137,7 +137,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         before { notification.soft_delete! }
 
         it "is created with proper attributes" do
-          Notification::DELETABLE_ATTRIBUTES.each do |attribute|
+          described_class::DELETABLE_ATTRIBUTES.each do |attribute|
             expect(deleted_notification[attribute]).to eq(notification_attributes[attribute]), "'#{attribute}' should be set"
           end
         end
@@ -156,7 +156,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           notification.soft_delete!
           notification.reload
 
-          Notification::DELETABLE_ATTRIBUTES.each do |attribute|
+          described_class::DELETABLE_ATTRIBUTES.each do |attribute|
             expect(notification[attribute]).to eq(nil), "'#{attribute}' attribute should be empty"
           end
         end
