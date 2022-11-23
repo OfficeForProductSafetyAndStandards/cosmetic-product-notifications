@@ -12,14 +12,13 @@ module OpenSearchQuery
 
     FIELDS = %w[searchable_ingredients].freeze
 
-    def initialize(keyword:, match_type:, from_date:, to_date:, group_by: nil, sort_by: nil, responsible_person_id: nil)
+    def initialize(keyword:, match_type:, from_date:, to_date:, group_by: nil, sort_by: nil)
       @keyword    = keyword
       @match_type = match_type
       @from_date  = from_date
       @to_date    = to_date
       @group_by   = group_by
       @sort_by    = sort_by.presence || default_sorting
-      @responsible_person_id = responsible_person_id
     end
 
     def build_query
@@ -47,7 +46,7 @@ module OpenSearchQuery
       {
         multi_match: {
           query: (@keyword || ""),
-          fuzziness: 1,
+          fuzziness: 0,
           operator: "AND",
           fields: FIELDS,
         },
@@ -67,7 +66,6 @@ module OpenSearchQuery
     def filter_query
       [
         filter_dates_query,
-        filter_rp,
       ].compact
     end
 
@@ -94,18 +92,6 @@ module OpenSearchQuery
         DATE_ASCENDING_SORTING => { notification_complete_at: { order: :asc } },
         DATE_DESCENDING_SORTING => { notification_complete_at: { order: :desc } },
       }[@sort_by]
-    end
-
-    def filter_rp
-      return if @responsible_person_id.nil?
-
-      {
-        bool: {
-          filter: [
-            { term: { "responsible_person.id": @responsible_person_id } },
-          ],
-        },
-      }
     end
 
     def default_sorting
