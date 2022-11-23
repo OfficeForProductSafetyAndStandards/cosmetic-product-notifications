@@ -206,6 +206,36 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           expect(notification.deleted_notification).to eq deleted_notification
         end
       end
+
+      describe "document in opensearch index" do
+        let(:elastic_search_double) do
+          instance_double(Elasticsearch::Model::Proxy::InstanceMethodsProxy, delete_document: nil)
+        end
+
+        before do
+          allow(notification).to receive(:__elasticsearch__).and_return(elastic_search_double)
+        end
+
+        it "is removed from submitted notifications" do
+          notification.soft_delete!
+          expect(elastic_search_double).to have_received(:delete_document).once
+        end
+
+        it "is not removed from already deleted notifications" do
+          notification.soft_delete!
+          notification.soft_delete!
+          expect(elastic_search_double).to have_received(:delete_document).once
+        end
+
+        context "when the notification is not submitted" do
+          let(:notification) { create(:draft_notification) }
+
+          it "is not removed" do
+            notification.soft_delete!
+            expect(elastic_search_double).not_to have_received(:delete_document)
+          end
+        end
+      end
     end
 
     describe "#hard_delete!" do
