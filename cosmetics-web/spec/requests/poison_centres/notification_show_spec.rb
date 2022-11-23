@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Notification page", type: :request do
-  let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
-
   let(:component1) { create(:component, :using_exact, with_ingredients: %w[aqua tin sodium]) }
 
   let(:responsible_person) do
@@ -26,18 +24,37 @@ RSpec.describe "Notification page", type: :request do
 
   let(:cream1) { create(:notification, :registered, responsible_person:, components: [component1], notification_complete_at: 1.day.ago, product_name: "Cream 1") }
 
-  before do
-    sign_in_as_poison_centre_user
+  describe "For poision centre user" do
+    before do
+      sign_in_as_poison_centre_user
 
-    responsible_person_address_log
-    cream1
+      responsible_person_address_log
+      cream1
+    end
+
+    it "displays address history" do
+      get poison_centre_notification_path(cream1.reference_number)
+
+      address_lines = ["Foo Court", "123 High Street", "London", "City of London", "SW1A 2AA", "Bar Court", "1232 High Street", "Londonderry", "City of Londonderry", "SW1A 2AB"]
+
+      expect(response.body).not_to match(/#{address_lines.join(".*")}/m)
+    end
   end
 
-  it "displays address history" do
-    get poison_centre_notification_path(cream1.reference_number)
+  describe "For msa user" do
+    before do
+      sign_in_as_msa_user
 
-    address_lines = ["Foo Court", "123 High Street", "London", "City of London", "SW1A 2AA", "Bar Court", "1232 High Street", "Londonderry", "City of Londonderry", "SW1A 2AB"]
+      responsible_person_address_log
+      cream1
+    end
 
-    expect(response.body).to match(/#{address_lines.join(".*")}/m)
+    it "displays address history" do
+      get poison_centre_notification_path(cream1.reference_number)
+
+      address_lines = ["Foo Court", "123 High Street", "London", "City of London", "SW1A 2AA", "Bar Court", "1232 High Street", "Londonderry", "City of Londonderry", "SW1A 2AB"]
+
+      expect(response.body).to match(/#{address_lines.join(".*")}/m)
+    end
   end
 end
