@@ -239,6 +239,14 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
 
     describe "#hard_delete!" do
+      let(:elastic_search_double) do
+        instance_double(Elasticsearch::Model::Proxy::InstanceMethodsProxy, delete_document: nil)
+      end
+
+      before do
+        allow(notification).to receive(:__elasticsearch__).and_return(elastic_search_double)
+      end
+
       it "deletes notification from database" do
         notification
         expect {
@@ -255,6 +263,11 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         expect { image_upload.reload }.to raise_error ActiveRecord::RecordNotFound
       end
 
+      it "deletes the notification from opensearch index" do
+        notification.hard_delete!
+        expect(elastic_search_double).to have_received(:delete_document).once
+      end
+
       context "when the notification was soft deleted" do
         let!(:notification) { create(:notification, :deleted) }
         let(:deleted_notification) { notification.deleted_notification }
@@ -264,6 +277,11 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
             notification.hard_delete!
           }.to change(DeletedNotification, :count).by(-1)
           expect { deleted_notification.reload }.to raise_error ActiveRecord::RecordNotFound
+        end
+
+        it "does not attempt to delete the notification from opensearch index" do
+          notification.hard_delete!
+          expect(elastic_search_double).not_to have_received(:delete_document)
         end
       end
     end

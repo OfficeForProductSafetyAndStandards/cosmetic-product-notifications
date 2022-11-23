@@ -64,6 +64,8 @@ class Notification < ApplicationRecord
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
 
+  after_destroy :delete_document_from_index, unless: :deleted?
+
   def self.duplicate_notification_message
     "Notification duplicated"
   end
