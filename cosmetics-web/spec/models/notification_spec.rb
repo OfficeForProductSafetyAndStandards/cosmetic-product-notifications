@@ -173,6 +173,18 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           expect(notification.reload.state).to eq "deleted"
         end
 
+        it "has a deletion timestamp" do
+          date = Time.zone.local(2022, 11, 23, 10)
+          travel_to date do
+            expect { notification.soft_delete! }.to change(notification, :deleted_at).from(nil).to(date)
+          end
+        end
+
+        it "does not update the deletion timestamp when called multiple times" do
+          notification.soft_delete!
+          expect { notification.soft_delete! }.not_to change(notification, :deleted_at)
+        end
+
         it "has components" do
           components = notification.components
           notification.soft_delete!

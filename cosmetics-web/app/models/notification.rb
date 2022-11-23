@@ -252,7 +252,7 @@ class Notification < ApplicationRecord
   #   - delete!
 
   # Keeps the original "ActiveRecord::Persistence#destroy" behaviour as "#hard_delete!"
-  # This sllows to still hard delete notifications after "#destroy" is overwritten
+  # This allows to still hard delete notifications after "#destroy" is overwritten
   # to do a soft deletion.
   alias_method :hard_delete!, :destroy
 
@@ -268,11 +268,8 @@ class Notification < ApplicationRecord
       DELETABLE_ATTRIBUTES.each do |field|
         self[field] = nil
       end
-
-      self.deleted_at = Time.zone.now
-      self.state = :deleted
-
       save!(validate: false)
+      mark_as_deleted_without_validation!
     end
   end
 
