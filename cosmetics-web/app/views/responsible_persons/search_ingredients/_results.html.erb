@@ -10,9 +10,10 @@
       <%= form_for(@search_form, url: responsible_person_search_ingredients_path(edit: true), method: :get, html: { 'novalidate' => true }) do |form| %>
         <%= hidden_field_tag :edit, true %>
         <%= form.hidden_field :q, id: :notification_search_form_q_sort_hidden %>
-        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_from, id: :sort_form, search_type: 'notification' } %>
-        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_to, id: :sort_form, search_type: 'notification' } %>
-        <%= form.hidden_field :sort_by, id: 'notification_search_form_sort_by_hidden' %>
+        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_from, id: :sort_form, search_type: 'ingredient' } %>
+        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_to, id: :sort_form, search_type: 'ingredient' } %>
+        <%= form.hidden_field :sort_by, id: 'ingredient_search_form_sort_by_hidden' %>
+        <%= form.hidden_field :exact_or_any_match, id: 'ingredient_search_form_exact_or_any_match_hidden' %>
         <button class="govuk-button opss-button-link govuk-!-font-size-14">
           Edit your search
         </button>
