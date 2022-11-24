@@ -129,6 +129,7 @@ Rails.application.routes.draw do
           get :resend # Ideally this would be a PATCH action, but doesn't play well with redirection after 2FA triggered by the link to resend with patch method.
         end
       end
+      resource :products, controller: "responsible_persons/search_notifications", path: "search-notifications", as: :search_notifications, only: %i[show]
 
       resource :draft, controller: "responsible_persons/drafts", only: %i[new]
       get "draft-notifications", to: "responsible_persons/drafts#index", as: :draft_notifications
