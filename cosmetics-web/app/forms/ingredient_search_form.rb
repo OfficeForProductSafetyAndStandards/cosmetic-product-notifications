@@ -10,8 +10,13 @@ class IngredientSearchForm < Form
     "Oldest" => OpenSearchQuery::Ingredient::DATE_ASCENDING_SORTING,
   }.freeze
 
+  FILTER_BY_DATE_RANGE = "by_date_range".freeze
+
   attribute :q
   attribute :exact_or_any_match, default: OpenSearchQuery::Ingredient::ANY_MATCH
+
+  attribute :date_filter
+
   attribute :date_from, :govuk_date
   attribute :date_to, :govuk_date
   attribute :group_by, default: OpenSearchQuery::Ingredient::GROUP_BY_NONE
@@ -56,7 +61,7 @@ class IngredientSearchForm < Form
   end
 
   def date_range_selected?
-    date_from.present? || date_to.present?
+    date_filter == FILTER_BY_DATE_RANGE
   end
 
   def sorting_options

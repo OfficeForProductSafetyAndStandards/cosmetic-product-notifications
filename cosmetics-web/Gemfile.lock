@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/OfficeForProductSafetyAndStandards/govuk-design-system-rails
-  revision: edc63c004141ef5979a1ddd143381d49ad0b3a9e
-  tag: 0.9.3
+  revision: 03acb680418465e1a29cb93477248e71f66bc018
+  tag: 0.9.7
   specs:
-    govuk-design-system-rails (0.9.3)
+    govuk-design-system-rails (0.9.7)
 
 GIT
   remote: https://github.com/zilkey/active_hash.git
@@ -280,6 +280,8 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.5.8)
+    nokogiri (1.13.9-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.1.1)
@@ -542,6 +544,7 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
