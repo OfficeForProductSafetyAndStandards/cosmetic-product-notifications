@@ -1,4 +1,6 @@
-<% content_for :page_title, "Ingredient search" %>
+<% title = "Ingredient search" %>
+<% page_title(title, errors: @search_form.errors.any?) %>
+
 <% content_for :after_header do %>
   <%= render "layouts/navbar" %>
 <% end %>
