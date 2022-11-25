@@ -33,7 +33,7 @@
           <%= form.hidden_field :search_fields, id: 'notification_search_form_search_fields_hidden' %>
           <%= form.hidden_field :match_similar, id: 'notification_search_form_match_similar_hidden' %>
         </div>
-        <div class="govuk-radios govuk-radios--small govuk-radios--conditional opss-radios--tight" data-module="govuk-radios">
+        <div class="govuk-radios govuk-radios--small govuk-radios--conditional opss-radios--tight opss-nojs-hide" data-module="govuk-radios">
 
           <div class="govuk-radios__item">
             <%= form.radio_button :date_filter, @search_form.class::FILTER_BY_DATE_EXACT, 'class' => "govuk-radios__input", 'id' => "by-date", 'aria-describedby' => "by-date-hint", 'aria-controls' => "conditional-date-block-1" %>
