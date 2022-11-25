@@ -1,4 +1,19 @@
 class NanoMaterial < ApplicationRecord
+  CLONABLE_ATTRIBUTES = %i[
+    inci_name
+    inn_name
+    iupac_name
+    xan_name
+    cas_number
+    ec_number
+    einecs_number
+    elincs_number
+    purposes
+    nanomaterial_notification_id
+  ].freeze
+
+  include Clonable
+
   YES = "yes".freeze
   NO = "no".freeze
   NOT_SURE = "not sure".freeze

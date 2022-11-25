@@ -66,4 +66,11 @@ $(function () {
       })
     }, false)
   }
+
+  const ingredientsSortBy = document.getElementById('ingredient_search_form_sort_by')
+  if (ingredientsSortBy !== null) {
+    ingredientsSortBy.addEventListener('change', function () {
+      document.getElementById('new_ingredient_search_form_sort').submit()
+    })
+  }
 })

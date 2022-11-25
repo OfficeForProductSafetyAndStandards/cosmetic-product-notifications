@@ -157,6 +157,12 @@ Rails.application.routes.draw do
           resources :build, controller: "responsible_persons/notifications/nanomaterials/build", only: %i[show update new]
         end
 
+        resource :clone, controller: "responsible_persons/notifications/clone", only: %i[new create] do
+          collection do
+            get :confirm
+          end
+        end
+
         member do
           post :confirm
         end
