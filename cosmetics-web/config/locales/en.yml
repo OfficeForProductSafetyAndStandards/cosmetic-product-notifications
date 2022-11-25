@@ -157,15 +157,6 @@ en:
             phone_number:
               blank: "Telephone number can not be blank"
               invalid: "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
-        exact_formula:
-          attributes:
-            inci_name:
-              blank: "Enter a name"
-            quantity:
-              blank: "Enter the concentration"
-              greater_than: "Enter a concentration greater than 0"
-              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
-              not_a_number: "Enter a number for the concentration"
         ingredient:
           attributes:
             inci_name:
