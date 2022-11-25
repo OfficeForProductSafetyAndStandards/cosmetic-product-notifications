@@ -14,9 +14,10 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
   let(:sort_by)        { nil }
   let(:match_similar)  { nil }
   let(:search_fields)  { nil }
-  let(:fields)         { described_class::ALL_FIELDS }
+  let(:responsible_person_id) { nil }
+  let(:fields) { described_class::ALL_FIELDS }
 
-  let(:query) { described_class.new(keyword: q, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:).build_query }
+  let(:query) { described_class.new(keyword: q, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:, responsible_person_id:).build_query }
 
   context "when search term is provided and category filter is empty" do
     it_behaves_like "correct query" do

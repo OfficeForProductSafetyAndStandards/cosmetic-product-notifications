@@ -5,11 +5,15 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
     @search_form = IngredientSearchForm.new(search_params)
     @search_form.validate
 
+    if search_params.present?
+      apply_date_filter
+    end
+
     @search_response = search_notifications
     # Notifications are only listed in ElasticSearch index when completed, but if an indexed notification gets deleted,
     # it won't be removed from the index until the next reindex is run (once per day).
     # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
-    @notifications = @search_response.records.completed
+    @notifications = @search_response.records.includes(:responsible_person).completed
   end
 
 private
@@ -40,5 +44,12 @@ private
                                                      :sort_by,
                                                      :exact_or_any_match)
   end
+
+  def apply_date_filter
+    if @search_form.date_from.present? || @search_form.date_to.present?
+      @search_form.date_filter = IngredientSearchForm::FILTER_BY_DATE_RANGE
+    end
+  end
+
   helper_method :search_params
 end

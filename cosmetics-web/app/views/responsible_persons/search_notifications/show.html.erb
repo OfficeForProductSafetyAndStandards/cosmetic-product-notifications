@@ -1,0 +1,23 @@
+<% title = "Product search" %>
+<% page_title(title, errors: @search_form.errors.any?) %>
+
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <%= error_summary(@search_form.errors) %>
+
+  <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <%= render 'search_header' if @notifications.nil? %>
+    <%= render 'results_header' if @notifications %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <%= render 'responsible_persons/notifications/notification_nav' %>
+  <section id="page-content" class="govuk-grid-column-three-quarters" role="region" aria-label="Search and results">
+    <%= render 'search_form' if @notifications.nil? %>
+    <%= render 'results', results: @notifications, search_response: @search_response if @notifications %>
+  </section>
+</div>
