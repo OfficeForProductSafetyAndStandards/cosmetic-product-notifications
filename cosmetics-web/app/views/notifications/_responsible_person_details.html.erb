@@ -15,7 +15,7 @@
     },
   ]
 ) %>
-<% if current_user.msa_user? || current_user.opss_science_user? %>
+<% if current_user.msa_user? %>
   <h2 class="govuk-heading-m">Previous Responsible Person addresses</h2>
   <% responsible_person.address_logs.each do |address| %>
     <%= govukSummaryList(
