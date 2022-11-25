@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_25_112037) do
+ActiveRecord::Schema.define(version: 2022_11_23_161737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -130,15 +130,6 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
     t.index ["responsible_person_id"], name: "index_deleted_notifications_on_responsible_person_id"
   end
 
-  create_table "exact_formulas", force: :cascade do |t|
-    t.string "inci_name"
-    t.decimal "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "component_id"
-    t.index ["component_id"], name: "index_exact_formulas_on_component_id"
-  end
-
   create_table "image_uploads", force: :cascade do |t|
     t.string "filename"
     t.datetime "created_at", null: false
@@ -253,15 +244,6 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
     t.index ["inviting_user_id"], name: "index_pending_responsible_person_users_on_inviting_user_id"
     t.index ["responsible_person_id", "email_address"], name: "index_pending_responsible_person_users_on_rp_and_email", unique: true
     t.index ["responsible_person_id"], name: "index_pending_responsible_person_users_on_responsible_person_id"
-  end
-
-  create_table "range_formulas", force: :cascade do |t|
-    t.string "inci_name"
-    t.string "range"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "component_id"
-    t.index ["component_id"], name: "index_range_formulas_on_component_id"
   end
 
   create_table "responsible_person_address_logs", force: :cascade do |t|
@@ -385,7 +367,6 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
   add_foreign_key "cmrs", "components"
   add_foreign_key "components", "notifications"
   add_foreign_key "contact_persons", "responsible_persons"
-  add_foreign_key "exact_formulas", "components"
   add_foreign_key "image_uploads", "notifications"
   add_foreign_key "ingredients", "components"
   add_foreign_key "nano_materials", "nanomaterial_notifications"
@@ -393,7 +374,6 @@ ActiveRecord::Schema.define(version: 2022_10_25_112037) do
   add_foreign_key "notifications", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "responsible_persons"
   add_foreign_key "pending_responsible_person_users", "users", column: "inviting_user_id"
-  add_foreign_key "range_formulas", "components"
   add_foreign_key "responsible_person_address_logs", "responsible_persons"
   add_foreign_key "responsible_person_users", "responsible_persons"
   add_foreign_key "trigger_question_elements", "trigger_questions"
