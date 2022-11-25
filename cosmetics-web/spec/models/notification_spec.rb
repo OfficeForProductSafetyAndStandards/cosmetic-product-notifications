@@ -116,6 +116,20 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification:) }
     let(:deleted_notification) { DeletedNotification.first }
 
+    describe "#destroy" do
+      it "works as #soft_delete!" do
+        notification.destroy
+        expect(notification.reload.state).to eq described_class::DELETED.to_s
+      end
+    end
+
+    describe "#destroy!" do
+      it "works as #soft_delete!" do
+        notification.destroy!
+        expect(notification.reload.state).to eq described_class::DELETED.to_s
+      end
+    end
+
     describe "#soft_delete!" do
       describe "deleted notification record" do
         let!(:notification_attributes) { notification.attributes }
@@ -123,7 +137,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         before { notification.soft_delete! }
 
         it "is created with proper attributes" do
-          Notification::DELETABLE_ATTRIBUTES.each do |attribute|
+          described_class::DELETABLE_ATTRIBUTES.each do |attribute|
             expect(deleted_notification[attribute]).to eq(notification_attributes[attribute]), "'#{attribute}' should be set"
           end
         end
@@ -137,26 +151,12 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         end
       end
 
-      describe "#destroy" do
-        it "works as #soft_delete!" do
-          notification.destroy
-          expect(notification.reload.state).to eq "deleted"
-        end
-      end
-
-      describe "#destroy!" do
-        it "works as #soft_delete!" do
-          notification.destroy!
-          expect(notification.reload.state).to eq "deleted"
-        end
-      end
-
       describe "notification that is soft deleted" do
         it "removes all attributes properly" do
           notification.soft_delete!
           notification.reload
 
-          Notification::DELETABLE_ATTRIBUTES.each do |attribute|
+          described_class::DELETABLE_ATTRIBUTES.each do |attribute|
             expect(notification[attribute]).to eq(nil), "'#{attribute}' attribute should be empty"
           end
         end
@@ -171,6 +171,18 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         it "has deleted state" do
           notification.soft_delete!
           expect(notification.reload.state).to eq "deleted"
+        end
+
+        it "has a deletion timestamp" do
+          date = Time.zone.local(2022, 11, 23, 10)
+          travel_to date do
+            expect { notification.soft_delete! }.to change(notification, :deleted_at).from(nil).to(date)
+          end
+        end
+
+        it "does not update the deletion timestamp when called multiple times" do
+          notification.soft_delete!
+          expect { notification.soft_delete! }.not_to change(notification, :deleted_at)
         end
 
         it "has components" do
@@ -194,9 +206,47 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           expect(notification.deleted_notification).to eq deleted_notification
         end
       end
+
+      describe "document in opensearch index" do
+        let(:elastic_search_double) do
+          instance_double(Elasticsearch::Model::Proxy::InstanceMethodsProxy, delete_document: nil)
+        end
+
+        before do
+          allow(notification).to receive(:__elasticsearch__).and_return(elastic_search_double)
+        end
+
+        it "is removed from submitted notifications" do
+          notification.soft_delete!
+          expect(elastic_search_double).to have_received(:delete_document).once
+        end
+
+        it "is not removed from already deleted notifications" do
+          notification.soft_delete!
+          notification.soft_delete!
+          expect(elastic_search_double).to have_received(:delete_document).once
+        end
+
+        context "when the notification is not submitted" do
+          let(:notification) { create(:draft_notification) }
+
+          it "is not removed" do
+            notification.soft_delete!
+            expect(elastic_search_double).not_to have_received(:delete_document)
+          end
+        end
+      end
     end
 
     describe "#hard_delete!" do
+      let(:elastic_search_double) do
+        instance_double(Elasticsearch::Model::Proxy::InstanceMethodsProxy, delete_document: nil)
+      end
+
+      before do
+        allow(notification).to receive(:__elasticsearch__).and_return(elastic_search_double)
+      end
+
       it "deletes notification from database" do
         notification
         expect {
@@ -213,6 +263,11 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         expect { image_upload.reload }.to raise_error ActiveRecord::RecordNotFound
       end
 
+      it "deletes the notification from opensearch index" do
+        notification.hard_delete!
+        expect(elastic_search_double).to have_received(:delete_document).once
+      end
+
       context "when the notification was soft deleted" do
         let!(:notification) { create(:notification, :deleted) }
         let(:deleted_notification) { notification.deleted_notification }
@@ -222,6 +277,11 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
             notification.hard_delete!
           }.to change(DeletedNotification, :count).by(-1)
           expect { deleted_notification.reload }.to raise_error ActiveRecord::RecordNotFound
+        end
+
+        it "does not attempt to delete the notification from opensearch index" do
+          notification.hard_delete!
+          expect(elastic_search_double).not_to have_received(:delete_document)
         end
       end
     end
