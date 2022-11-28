@@ -49,7 +49,7 @@
                 For example, 14 08 2019.
               </div>
 
-              <%= render partial: 'date_filter_input', locals: { attribute: :date_exact, id: 'by-date', extra_classes: "", search_type: "notification" } %>
+              <%= render partial: 'date_filter_input', locals: { attribute: :date_exact, extra_classes: "", search_type: "notification" } %>
             </div>
           </div>
           <div class="govuk-radios__item">
@@ -69,11 +69,11 @@
                 From<span class="govuk-visually-hidden">:</span>
               </div>
 
-              <%= render partial: 'date_filter_input', locals: { attribute: :date_from, id: 'by-date-form-day', extra_classes: "", search_type: "notification" } %>
+              <%= render partial: 'date_filter_input', locals: { attribute: :date_from, extra_classes: "", search_type: "notification" } %>
               <div class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
                 To<span class="govuk-visually-hidden">:</span>
               </div>
-              <%= render partial: 'date_filter_input', locals: { attribute: :date_to, id: 'by-date-to-day', extra_classes: "", search_type: "notification" } %>
+              <%= render partial: 'date_filter_input', locals: { attribute: :date_to, extra_classes: "", search_type: "notification" } %>
 
             </div>
           </div>
