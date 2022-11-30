@@ -6,10 +6,7 @@ class PoisonCentres::NotificationsSearchController < SearchApplicationController
     @search_form.validate
 
     @search_response = search_notifications
-    # Notifications are only listed in ElasticSearch index when completed, but if an indexed notification gets deleted,
-    # it won't be removed from the index until the next reindex is run (once per day).
-    # During that period, the result record will be a deleted notification with empty values. We don't want to show those.
-    @notifications = @search_response.records.completed
+    @notifications = @search_response.records
   end
 
 private
@@ -23,6 +20,7 @@ private
       sort_by: @search_form.sort_by,
       match_similar: @search_form.match_similar,
       search_fields: @search_form.search_fields,
+      responsible_person_id: nil,
     )
     Rails.logger.debug query.build_query.to_json
     # Pagination needs to be kept together with the full search query to automatically paginate the query with Kaminari values
