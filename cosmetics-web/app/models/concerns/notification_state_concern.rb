@@ -72,12 +72,6 @@ module NotificationStateConcern
           end
         end
       end
-
-      event :mark_as_deleted do
-        # Only call OpenSearch document deletion when deleting indexed(completed) notifications
-        transitions from: DISPLAYABLE_INCOMPLETE_STATES, to: DELETED
-        transitions from: NOTIFICATION_COMPLETE, to: DELETED, after: proc { delete_document_from_index }
-      end
     end
   end
 
