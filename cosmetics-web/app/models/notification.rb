@@ -64,6 +64,8 @@ class Notification < ApplicationRecord
 
   before_save :add_product_name, if: :will_save_change_to_product_name?
 
+  after_destroy :delete_document_from_index, unless: :deleted?
+
   def self.duplicate_notification_message
     "Notification duplicated"
   end
@@ -252,7 +254,7 @@ class Notification < ApplicationRecord
   #   - delete!
 
   # Keeps the original "ActiveRecord::Persistence#destroy" behaviour as "#hard_delete!"
-  # This sllows to still hard delete notifications after "#destroy" is overwritten
+  # This allows to still hard delete notifications after "#destroy" is overwritten
   # to do a soft deletion.
   alias_method :hard_delete!, :destroy
 
@@ -268,11 +270,8 @@ class Notification < ApplicationRecord
       DELETABLE_ATTRIBUTES.each do |field|
         self[field] = nil
       end
-
-      self.deleted_at = Time.zone.now
-      self.state = :deleted
-
       save!(validate: false)
+      mark_as_deleted_without_validation!
     end
   end
 
@@ -349,6 +348,13 @@ private
     result = __elasticsearch__.index_document
 
     Rails.logger.info "[NotificationIndex] Notification with id=#{id} indexed with result #{result}"
+  end
+
+  def delete_document_from_index
+    result = __elasticsearch__.delete_document
+    Rails.logger.info "[NotificationIndex] Notification with id=#{id} deleted from index with result #{result}"
+  rescue Elasticsearch::Transport::Transport::Errors::NotFound
+    Rails.logger.info "[NotificationIndex] Failed to delete notification with id=#{id}. Reason: Not found in index"
   end
 
   def product_name_uniqueness

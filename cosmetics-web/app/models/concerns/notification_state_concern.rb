@@ -44,18 +44,14 @@ module NotificationStateConcern
     aasm whiny_transitions: false, timestamps: true, column: :state do
       state EMPTY, initial: true
       state PRODUCT_NAME_ADDED
-
       state READY_FOR_NANOMATERIALS
-
       # state is entangled with view here, this state is used to indicate
       # that multiitem kit step is not defined
       state DETAILS_COMPLETE # only for multiitem
-
-      # indicate that component related steps can be started
-      state READY_FOR_COMPONENTS
-
+      state READY_FOR_COMPONENTS # indicates that component related steps can be started
       state COMPONENTS_COMPLETE
       state NOTIFICATION_COMPLETE
+      state DELETED
 
       event :add_product_name do
         transitions from: EMPTY, to: PRODUCT_NAME_ADDED
@@ -70,15 +66,18 @@ module NotificationStateConcern
       end
 
       event :submit_notification, after: :cache_notification_for_csv! do
-        transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE,
-                    after: proc { index_document } do
+        transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE, after: proc { index_document } do
           guard do
             valid?(:accept_and_submit)
           end
         end
       end
 
-      state DELETED
+      event :mark_as_deleted do
+        # Only call OpenSearch document deletion when deleting indexed(completed) notifications
+        transitions from: DISPLAYABLE_INCOMPLETE_STATES, to: DELETED
+        transitions from: NOTIFICATION_COMPLETE, to: DELETED, after: proc { delete_document_from_index }
+      end
     end
   end
 

@@ -34,8 +34,6 @@ class Component < ApplicationRecord
 
   belongs_to :notification, touch: true
 
-  has_many :exact_formulas, dependent: :destroy
-  has_many :range_formulas, dependent: :destroy
   has_many :ingredients, dependent: :destroy
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
@@ -237,7 +235,7 @@ class Component < ApplicationRecord
       formulation_file.purge
 
       if old_type != notification_type
-        delete_ingredients
+        ingredients.destroy_all
         reset_state!
       end
       update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
@@ -289,11 +287,5 @@ private
 
   def remove_poisonous_ingredients!
     ingredients.poisonous.destroy_all
-  end
-
-  def delete_ingredients
-    ingredients.destroy_all
-    exact_formulas.destroy_all
-    range_formulas.destroy_all
   end
 end
