@@ -259,19 +259,24 @@ class Notification < ApplicationRecord
   alias_method :hard_delete!, :destroy
 
   # Soft deletion of a notification implies:
-  # - Set notification state as "deleted"
+  # - Sets notification state as "deleted"
   # - Creates an associated "deleted_notification" object containing the notification information.
   # - Removes information from original notification object that has been "deleted".
+  # - Removes document from OpenSearch index if it was previously added.
   def soft_delete!
     return if deleted?
 
+    is_indexed = notification_complete?
     transaction do
       DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self, state:))
       DELETABLE_ATTRIBUTES.each do |field|
         self[field] = nil
       end
+      self.deleted_at = Time.zone.now
+      self.state = DELETED
       save!(validate: false)
-      mark_as_deleted_without_validation!
+
+      delete_document_from_index if is_indexed
     end
   end
 
