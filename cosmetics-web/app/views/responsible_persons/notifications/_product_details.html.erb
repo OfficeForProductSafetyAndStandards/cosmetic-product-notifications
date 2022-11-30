@@ -64,12 +64,6 @@
         <h4 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-2">
           Ingredients the <abbr title="National Poisons Information Service">NPIS</abbr> needs to know about
         </h4>
-        <%= govukSummaryList(
-          classes: "opss-summary-list-mixed",
-          rows: [
-            { key: { text: "Formulation given as" }, value: { text: "Exact concentration" } },
-          ]
-        ) %>
         <%= render(partial: "responsible_persons/notifications/ingredients",
                    locals: { ingredients: component.ingredients.poisonous }) %>
       <% end %>
