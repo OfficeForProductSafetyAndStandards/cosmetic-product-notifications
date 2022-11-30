@@ -68,9 +68,6 @@
           classes: "opss-summary-list-mixed",
           rows: [
             { key: { text: "Formulation given as" }, value: { text: "Exact concentration" } },
-            if component.acute_poisoning_info.present?
-              { key: { text: "Acute poisoning information" }, value: { text: component.acute_poisoning_info.presence } }
-            end || {}
           ]
         ) %>
         <%= render(partial: "responsible_persons/notifications/ingredients",
