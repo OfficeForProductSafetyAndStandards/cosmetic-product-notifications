@@ -163,7 +163,7 @@ module ResponsiblePersons::NotificationsHelper
       if current_user.can_view_product_ingredients? && component.acute_poisoning_info.present?
         {
           key: { text: "Acute poisoning information" },
-          value: { text: component.acute_poisoning_info.presence || "None" },
+          value: { text: component.acute_poisoning_info },
         }
       end,
       if current_user.can_view_product_ingredients? && component.predefined?
