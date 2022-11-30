@@ -160,7 +160,7 @@ module ResponsiblePersons::NotificationsHelper
           value: { text: component_special_applicator_name(component) },
         }
       end,
-      if current_user.can_view_product_ingredients?
+      if current_user.can_view_product_ingredients? && component.acute_poisoning_info.present?
         {
           key: { text: "Acute poisoning information" },
           value: { text: component.acute_poisoning_info.presence || "None" },
@@ -172,7 +172,7 @@ module ResponsiblePersons::NotificationsHelper
           value: { text: component.poisonous_ingredients_answer },
         }
       end,
-      if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
+      if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
         {
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
