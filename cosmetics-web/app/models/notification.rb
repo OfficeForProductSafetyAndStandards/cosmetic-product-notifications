@@ -266,7 +266,7 @@ class Notification < ApplicationRecord
   def soft_delete!
     return if deleted?
 
-    is_indexed = notification_complete?
+    needs_index_deletion = notification_complete?
     transaction do
       DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self, state:))
       DELETABLE_ATTRIBUTES.each do |field|
@@ -276,7 +276,7 @@ class Notification < ApplicationRecord
       self.state = DELETED
       save!(validate: false)
 
-      delete_document_from_index if is_indexed
+      delete_document_from_index if needs_index_deletion
     end
   end
 
