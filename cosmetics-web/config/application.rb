@@ -31,6 +31,7 @@ module Cosmetics
 
     config.eager_load_paths << Rails.root.join("presenters")
     config.eager_load_paths << Rails.root.join("services")
+    config.eager_load_paths << Rails.root.join("lib")
 
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = "cosmetics-mailers"
