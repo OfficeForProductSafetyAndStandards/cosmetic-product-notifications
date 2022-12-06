@@ -15,7 +15,7 @@ RSpec.describe "Search ingredients page", type: :feature do
     configure_requests_for_submit_domain
     cream
     lotion
-    Notification.opensearch.import force: true
+    Notification.import_to_opensearch(force: true)
     sign_in_as_member_of_responsible_person(responsible_person, submit_user)
   end
 

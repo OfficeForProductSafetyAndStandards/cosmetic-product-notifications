@@ -50,7 +50,10 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
+  # This is an ElasticSearch alias, not the actual index name.
+  # Current version of the index name is accessible through Notification.current_index_name.
   index_name [ENV.fetch("OS_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
+
   scope :opensearch, -> { where(state: "notification_complete") }
 
   before_create do
@@ -373,5 +376,5 @@ end
 
 # for auto sync model with Opensearch
 if Rails.env.development? && ENV["DISABLE_LOCAL_AUTOINDEX"].blank?
-  Notification.opensearch.import force: true
+  Notification.import_to_opensearch force: true
 end

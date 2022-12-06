@@ -61,15 +61,72 @@ module Searchable
       ]
     end
 
-    def self.full_search(query)
-      # This line makes sure opensearch index is recreated before we search
-      # It fixes the issue of getting no results the first time product list page is loaded
-      # It's only used in dev because it lowers performance and the issue it fixes should be an edge case in production
-      if Rails.env.development? || Rails.env.test?
-        __elasticsearch__.create_index! unless __elasticsearch__.index_exists?
-        __elasticsearch__.refresh_index!
+    class << self
+      def full_search(query)
+        # This line makes sure opensearch index is recreated before we search
+        # It fixes the issue of getting no results the first time product list page is loaded
+        # It's only used in dev because it lowers performance and the issue it fixes should be an edge case in production
+        if Rails.env.development? || Rails.env.test?
+          current_index = (current_index_name.presence || create_new_index_with_alias!) # Uses existing or creates/alias new index
+          __elasticsearch__.refresh_index! index: current_index
+        end
+        __elasticsearch__.search(query.build_query)
       end
-      __elasticsearch__.search(query.build_query)
+
+      # Wraps the Elasticsearch::Model.import method to ensure that set aliases to new index when forcing a new index to
+      # be created during the import.
+      def import_to_opensearch(force: false)
+        existing_index = current_index_name
+
+        index =
+          if existing_index.present? && force
+            __elasticsearch__.delete_index!(index: existing_index)
+            create_new_index_with_alias!
+          else
+            existing_index.presence || create_new_index_with_alias!
+          end
+
+        import(index:, scope: "opensearch")
+      end
+
+      # Creates a new index version and sets the model alias pointing to it.
+      # Returns the new index version name.
+      def create_new_index_with_alias!
+        create_new_index!.tap do |name|
+          alias_index!(name)
+        end
+      end
+
+      # Creates a new index. Name will be based on the model alias and timestamped.
+      # Returns the new index name.
+      def create_new_index!
+        name = generate_new_index_name
+        __elasticsearch__.create_index!(index: name, force: true)
+        name
+      end
+
+      # Adds the given index to the model alias.
+      # The alias name is the 'index_name' declaration in the model.
+      def alias_index!(index)
+        __elasticsearch__.client.indices.put_alias(index:, name: index_name)
+      end
+
+      def current_index_name
+        indices_client = __elasticsearch__.client.indices
+        # If there is an index associated to the model alias name
+        if indices_client.exists_alias?(name: index_name)
+          indices_client.get_alias(name: index_name).keys.first
+        # If there is an index created using the index alias name.
+        elsif indices_client.exists?(index: index_name)
+          index_name
+        end
+      end
+
+      # Generates a new version of the index name, using the alias name as a base and appending the current datetime.
+      # EG: Alias is called "foobar_index", the new index name will be "foobar_index_20221205164343
+      def generate_new_index_name
+        "#{index_name}_#{Time.zone.now.strftime('%Y%m%d%H%M%S')}"
+      end
     end
   end
 end
