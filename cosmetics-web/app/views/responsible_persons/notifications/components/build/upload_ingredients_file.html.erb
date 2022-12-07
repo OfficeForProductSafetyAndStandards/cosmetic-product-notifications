@@ -33,7 +33,7 @@ Upload a file <span class="govuk-!-font-weight-regular govuk-!-font-size-16"> &n
               <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
             </span>
           <% end %>
-          <% unless @creator.valid? %>
+          <% if @creator && !@creator.valid? %>
             <span id="file-upload-2-error" class="govuk-error-message">
               <span class="govuk-visually-hidden">Problems</span>One or more lines in CSV file are incorrect 
             </span>
