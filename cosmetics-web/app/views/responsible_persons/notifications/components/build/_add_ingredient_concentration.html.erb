@@ -18,6 +18,14 @@
 </div>
 
 <div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <%= link_to("Upload ingredients using CSV file",
+                responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @component, :upload_ingredients_file),
+                class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset") %>
+</div>
+</div>
+
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body-s opss-secondary-text">For every ingredient:</p>
     <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">

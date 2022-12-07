@@ -28,6 +28,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :select_formulation_type,
         :add_ingredient_exact_concentration, # only for exact
         :add_ingredient_range_concentration, # only for range
+        :upload_ingredients_file,
         :select_frame_formulation, # only for frame formulation
         :contains_ingredients_npis_needs_to_know, # only for frame formulation
         :add_ingredient_npis_needs_to_know, # only for frame formulation
@@ -126,6 +127,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_add_ingredient_concentration("exact")
     when :add_ingredient_range_concentration
       update_add_ingredient_concentration("range")
+    when :upload_ingredients_file
+      update_upload_ingredients_file
     when :add_ingredient_npis_needs_to_know
       update_add_ingredient_concentration("exact", force_poisonous: true)
     when :select_frame_formulation
@@ -317,6 +320,28 @@ private
       jump_to_step :contains_ingredients_npis_needs_to_know
     else
       render :select_frame_formulation
+    end
+  end
+
+  def update_upload_ingredients_file
+    ingredients_file = params.dig(:component, :ingredients_file)
+    if ingredients_file.blank? && @component.ingredient_file.present?
+      return jump_to_step(:select_ph_option)
+    end
+
+    if ingredients_file.present?
+      @component.ingredients_file.attach(ingredients_file)
+      @creator = BulkIngredientCreator.new(ingredients_file.open.read, @component)
+      @creator.create
+      if @component.valid? && @creator.valid?
+        jump_to_step :want_to_add_another_ingredient
+      else
+        @component.ingredients_file.purge if @component.ingredients_file.attached?
+        rerender_current_step
+      end
+    else
+      @component.errors.add :ingredients_file, "Upload a list of ingredients"
+      rerender_current_step
     end
   end
 

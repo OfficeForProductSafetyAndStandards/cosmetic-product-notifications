@@ -41,6 +41,7 @@ class Component < ApplicationRecord
   has_many :component_nano_materials
   has_many :nano_materials, through: :component_nano_materials
   has_one_attached :formulation_file
+  has_one_attached :ingredients_file
 
   delegate :responsible_person, to: :notification
 
