@@ -83,7 +83,7 @@ module Searchable
             existing_index.presence || create_new_index_with_alias!
           end
 
-        import(index:, scope: "opensearch")
+        import(index:, scope: "opensearch", refresh: true)
       end
 
       # Creates a new index version and sets the model alias pointing to it.
@@ -123,6 +123,23 @@ module Searchable
       # EG: Alias is called "foobar_index", the new index name will be "foobar_index_20221205164343
       def generate_new_index_name
         "#{index_name}_#{Time.zone.now.strftime('%Y%m%d%H%M%S')}"
+      end
+
+      # Returns the number of documents in the provided/current index.
+      def index_docs_count(index = current_index_name)
+        return if index.blank?
+
+        __elasticsearch__.client.count(index:)["count"]
+      end
+
+      # Model index alias stop pointing to from/current index and starts pointing to the "to:" index without downtime.
+      def swap_index_alias!(to:, from: current_index_name)
+        __elasticsearch__.client.indices.update_aliases body: {
+          actions: [
+            { remove: { index: from, alias: index_name } },
+            { add:    { index: to, alias: index_name } },
+          ],
+        }
       end
     end
   end

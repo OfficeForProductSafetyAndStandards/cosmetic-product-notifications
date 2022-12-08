@@ -1,21 +1,30 @@
 class ReindexOpensearchJob < ApplicationJob
   def perform
     PostgresTransactionLock.try_with_lock("reindex_notifications") do
-      total = 0
       ActiveRecord::Base.descendants.each do |model|
         next unless model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
 
-        model.__elasticsearch__.create_index! unless model.__elasticsearch__.index_exists?
+        current_index = model.current_index_name
+        new_index = model.create_new_index!
+        errors_count = model.import(index: new_index, scope: "opensearch", refresh: true)
 
-        total += 1
-        if model.respond_to?(:opensearch)
-          model.opensearch.import
+        if errors_count.zero?
+          import_count = model.index_docs_count(new_index)
+          Sidekiq.logger.info "[ReindexOpensearchJob] Imported #{import_count} records for #{model} to Opensearch #{new_index} index"
+
+          model.swap_index_alias!(to: new_index)
+          Sidekiq.logger.info "[ReindexOpensearchJob] Swapped Opensearch index for #{model} from #{current_index} to #{new_index}"
+
+          model.__elasticsearch__.delete_index!(index: current_index)
+          Sidekiq.logger.info "[ReindexOpensearchJob] Deleted Opensearch index #{current_index} for #{model}"
         else
-          model.import
+          Sidekiq.logger.info "[ReindexOpensearchJob] Got #{errors_count} errors while importing #{model} records to Opensearch #{new_index} index"
+          Sidekiq.logger.info "[ReindexOpensearchJob] Keeping #{current_index} index"
+
+          model.__elasticsearch__.delete_index!(index: new_index)
+          Sidekiq.logger.info "#{new_index} deleted"
         end
       end
-
-      Sidekiq.logger.info "Imported #{total} records to Opensearch"
     end
   end
 end
