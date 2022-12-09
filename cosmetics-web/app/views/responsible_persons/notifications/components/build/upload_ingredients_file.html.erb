@@ -38,10 +38,12 @@ Upload a file <span class="govuk-!-font-weight-regular govuk-!-font-size-16"> &n
               <span class="govuk-visually-hidden">Problems</span>One or more lines in CSV file are incorrect 
             </span>
             <% @creator.ingredients.each do |ingredient| %>
-              <p>
-              Error in line <code><%= ingredient.line_number %></code>: <code><%= ingredient.line %></code> 
-              </p>
-              <%= error_summary(ingredient.errors) %>
+              <% unless ingredient.valid? %>
+                <p>
+                Error in line <code><%= ingredient.line_number %></code>: <code><%= ingredient.line %></code> 
+                </p>
+                <%= error_summary(ingredient.errors) %>
+              <% end %>
             <% end %>
           <% end %>
           <%= form.file_field :ingredients_file, class: "govuk-file-upload",

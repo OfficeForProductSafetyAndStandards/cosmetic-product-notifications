@@ -60,6 +60,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     select_formulation_type: :select_sub_sub_category,
     add_ingredient_exact_concentration: :select_formulation_type,
     add_ingredient_range_concentration: :select_formulation_type,
+    upload_ingredients_file: :select_formulation_type,
     want_to_add_another_ingredient: :select_formulation_type,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_ingredients_npis_needs_to_know: :select_formulation_type, # only for frame formulation,

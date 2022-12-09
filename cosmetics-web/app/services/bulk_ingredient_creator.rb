@@ -1,6 +1,14 @@
 class BulkIngredientCreator
   # rubocop:disable Style/MissingRespondToMissing
   ParsedEntry = Struct.new(:line, :ingredient, :line_number) do
+    # TODO: weird stuff!
+    def save
+      model = ingredient.save
+      if model
+        self.ingredient = model
+      end
+    end
+
     def method_missing(*args)
       ingredient.send(*args)
     end
@@ -26,8 +34,9 @@ class BulkIngredientCreator
     end
   end
 
+  # TODO: rename to success?
   def valid?
-    @ingredients.all?(&:valid?)
+    @valid ||= @ingredients.all?(&:persisted?)
   end
 
 private
