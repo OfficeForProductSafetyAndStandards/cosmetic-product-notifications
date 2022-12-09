@@ -279,9 +279,9 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.9-arm64-darwin)
+    nokogiri (1.13.10-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.9-x86_64-linux)
+    nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.1.1)
       jwt (>= 1.5, < 3)
@@ -304,7 +304,7 @@ GEM
     pundit (2.1.1)
       activesupport (>= 3.0.0)
     raabro (1.1.6)
-    racc (1.6.0)
+    racc (1.6.1)
     rack (2.2.4)
     rack-protection (2.2.0)
       rack
