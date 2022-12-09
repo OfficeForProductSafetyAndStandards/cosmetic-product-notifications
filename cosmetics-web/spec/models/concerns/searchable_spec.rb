@@ -258,28 +258,51 @@ RSpec.describe Searchable, type: :model do
   end
 
   describe "swap_index_alias!" do
-    let!(:current_index) do
-      travel_to Time.zone.local(2022, 12, 1, 13, 10, 45)
-      dummy_class.create_new_index_with_alias!
-    end
-
     let!(:new_index) do
       travel_to Time.zone.local(2022, 12, 2, 10, 12, 30)
       dummy_class.create_new_index!
     end
 
-    it "removes one index from the model alias and adds the other" do
-      expect { dummy_class.swap_index_alias!(from: current_index, to: new_index) }.to change {
-        dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)
-      }.from({ current_index => { "aliases" => { "dummies" => {} } } })
-       .to({ new_index => { "aliases" => { "dummies" => {} } } })
+    context "when the alias already exists and points to the current index" do
+      let!(:current_index) do
+        travel_to Time.zone.local(2022, 12, 1, 13, 10, 45)
+        dummy_class.create_new_index_with_alias!
+      end
+
+      it "removes one index from the model alias and adds the other" do
+        expect { dummy_class.swap_index_alias!(from: current_index, to: new_index) }.to change {
+          dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)
+        }.from({ current_index => { "aliases" => { "dummies" => {} } } })
+        .to({ new_index => { "aliases" => { "dummies" => {} } } })
+      end
+
+      it "defaults to the current index when not 'from' index is given" do
+        expect { dummy_class.swap_index_alias!(to: new_index) }.to change {
+          dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)
+        }.from({ current_index => { "aliases" => { "dummies" => {} } } })
+        .to({ new_index => { "aliases" => { "dummies" => {} } } })
+      end
     end
 
-    it "defaults to the current index when not 'from' index is given" do
-      expect { dummy_class.swap_index_alias!(to: new_index) }.to change {
-        dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)
-      }.from({ current_index => { "aliases" => { "dummies" => {} } } })
-       .to({ new_index => { "aliases" => { "dummies" => {} } } })
+    context "when there is no existing alias pointing to the current index" do
+      let(:current_index) do
+        travel_to Time.zone.local(2022, 12, 1, 13, 10, 45)
+        dummy_class.create_new_index!
+      end
+
+      it "adds the new index to the model alias" do
+        dummy_class.swap_index_alias!(from: current_index, to: new_index)
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name))
+          .to eq({ new_index => { "aliases" => { "dummies" => {} } } })
+      end
+    end
+
+    context "when there is no other index or alias" do
+      it "adds the new index to the model alias" do
+        dummy_class.swap_index_alias!(from: nil, to: new_index)
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name))
+          .to eq({ new_index => { "aliases" => { "dummies" => {} } } })
+      end
     end
   end
 end

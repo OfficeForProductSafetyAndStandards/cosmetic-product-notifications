@@ -134,12 +134,18 @@ module Searchable
 
       # Model index alias stop pointing to from/current index and starts pointing to the "to:" index without downtime.
       def swap_index_alias!(to:, from: current_index_name)
-        __elasticsearch__.client.indices.update_aliases body: {
-          actions: [
-            { remove: { index: from, alias: index_name } },
-            { add:    { index: to, alias: index_name } },
-          ],
-        }
+        indices_client = __elasticsearch__.client.indices
+
+        if indices_client.exists_alias?(name: index_name)
+          indices_client.update_aliases body: {
+            actions: [
+              { remove: { index: from, alias: index_name } },
+              { add:    { index: to, alias: index_name } },
+            ],
+          }
+        else # If the alias does not exist, create it.
+          alias_index!(to)
+        end
       end
     end
   end
