@@ -14,7 +14,7 @@ end
 def create_opensearch_index_job
   job = Sidekiq::Cron::Job.new(
     name: "Reindex Elasticsearch, every day at 1 am",
-    cron: "1 1 * * *",
+    cron: "1 1 * * sat", # Every Saturday at 1:01 am
     class: "ReindexOpensearchJob",
     queue: "cosmetics",
   )
