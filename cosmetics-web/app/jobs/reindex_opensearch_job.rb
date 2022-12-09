@@ -17,7 +17,10 @@ class ReindexOpensearchJob < ApplicationJob
           model.swap_index_alias!(to: new_index)
           Sidekiq.logger.info "Swapped Opensearch index for #{model} from #{current_index} to #{new_index}"
 
-          model.__elasticsearch__.delete_index!(index: current_index)
+          if current_index.present?
+            model.__elasticsearch__.delete_index!(index: current_index)
+          end
+
           Sidekiq.logger.info "Deleted Opensearch index #{current_index} for #{model}"
         else
           Sidekiq.logger.info "Got #{errors_count} errors while importing #{model} records to Opensearch #{new_index} index"
