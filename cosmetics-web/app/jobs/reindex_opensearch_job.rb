@@ -6,6 +6,8 @@ class ReindexOpensearchJob < ApplicationJob
 
         current_index = model.current_index_name
         new_index = model.create_new_index!
+
+        Sidekiq.logger.info "[ReindexOpensearchJob] Reindexing #{model} to Opensearch #{new_index} index..."
         errors_count = model.import(index: new_index, scope: "opensearch", refresh: true)
 
         if errors_count.zero?
