@@ -57,6 +57,20 @@ RSpec.describe BulkIngredientCreator do
     end
   end
 
+  context "when using invalid CSV" do
+    let(:csv) do
+      <<~CSV
+        Camphor,28,497-19-8,poisonous
+      CSV
+    end
+
+    it "is valid" do
+      creator = described_class.new(csv, component)
+      creator.create
+      expect(creator).not_to be_valid
+    end
+  end
+
   context "when using different files" do
     let(:csv) do
       File.read("spec/fixtures/files/Ingredients_ concentrationrange.csv")

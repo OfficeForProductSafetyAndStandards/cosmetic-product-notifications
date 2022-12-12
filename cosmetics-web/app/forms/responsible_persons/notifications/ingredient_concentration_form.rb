@@ -28,6 +28,9 @@ module ResponsiblePersons::Notifications
     validates :range_concentration,
               presence: true,
               if: -> { range? && poisonous == false }
+    validates :range_concentration,
+              inclusion: { in: Ingredient.range_concentrations.keys },
+              if: -> { range? }
     validates_with CasNumberValidator
 
     def initialize(params = {})

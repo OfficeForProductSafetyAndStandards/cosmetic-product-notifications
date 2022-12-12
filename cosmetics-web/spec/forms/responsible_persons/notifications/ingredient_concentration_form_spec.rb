@@ -282,6 +282,12 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           expect(form).not_to be_valid
           expect(form.errors[:range_concentration]).to eq ["Select a concentration range"]
         end
+
+        it "is invalid with wrong entry" do
+          form.range_concentration = 28
+          expect(form).not_to be_valid
+          expect(form.errors[:range_concentration]).to eq ["Select a valid concentration range"]
+        end
       end
     end
 
