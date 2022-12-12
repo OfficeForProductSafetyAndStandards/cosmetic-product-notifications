@@ -49,10 +49,14 @@ private
     )
     if @component.exact? # || poisonous
       ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::EXACT
-      ingredient.exact_concentration = concentration
+      ingredient.exact_concentration = concentration.to_f
     elsif @component.range?
       ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::RANGE
       ingredient.range_concentration = concentration
+    elsif @component.predefined?
+      ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::EXACT
+      ingredient.exact_concentration = concentration.to_f
+      ingredient.poisonous = true
     end
     ingredient.component = @component
     ingredient
