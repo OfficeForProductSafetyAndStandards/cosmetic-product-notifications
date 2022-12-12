@@ -51,7 +51,7 @@ class Notification < ApplicationRecord
   accepts_nested_attributes_for :image_uploads
 
   # This is an ElasticSearch alias, not the actual index name.
-  # Current version of the index name is accessible through Notification.current_index_name.
+  # Current version of the index name is accessible through Notification.current_index.
   index_name [ENV.fetch("OS_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
 
   scope :opensearch, -> { where(state: "notification_complete") }

@@ -65,8 +65,8 @@ module Searchable
       # It fixes the issue of getting no results the first time product list page is loaded
       # It's only used in dev because it lowers performance and the issue it fixes should be an edge case in production
       if Rails.env.development? || Rails.env.test?
-        current_index = (current_index_name.presence || create_new_index_with_alias!) # Uses existing or creates/alias new index
-        __elasticsearch__.refresh_index! index: current_index
+        index = (current_index.presence || create_aliased_index!)
+        __elasticsearch__.refresh_index! index:
       end
       __elasticsearch__.search(query.build_query)
     end
@@ -74,14 +74,14 @@ module Searchable
     # Wraps the Elasticsearch::Model.import method to ensure that set aliases to new index when forcing a new index to
     # be created during the import.
     def import_to_opensearch(force: false)
-      existing_index = current_index_name
+      existing_index = current_index # Stored in var to avoid further HTTP calls to OpenSearch
 
       index =
         if existing_index.present? && force
           __elasticsearch__.delete_index!(index: existing_index)
-          create_new_index_with_alias!
+          create_aliased_index!
         else
-          existing_index.presence || create_new_index_with_alias!
+          existing_index.presence || create_aliased_index!
         end
 
       import(index:, scope: "opensearch", refresh: true)
@@ -89,15 +89,15 @@ module Searchable
 
     # Creates a new index version and sets the model alias pointing to it.
     # Returns the new index version name.
-    def create_new_index_with_alias!
-      create_new_index!.tap do |name|
+    def create_aliased_index!
+      create_index!.tap do |name|
         alias_index!(name)
       end
     end
 
     # Creates a new index. Name will be based on the model alias and timestamped.
     # Returns the new index name.
-    def create_new_index!
+    def create_index!
       name = generate_new_index_name
       __elasticsearch__.create_index!(index: name, force: true)
       name
@@ -109,7 +109,7 @@ module Searchable
       __elasticsearch__.client.indices.put_alias(index:, name: index_name)
     end
 
-    def current_index_name
+    def current_index
       indices_client = __elasticsearch__.client.indices
       # If there is an index associated to the model alias name
       if indices_client.exists_alias?(name: index_name)
@@ -127,14 +127,14 @@ module Searchable
     end
 
     # Returns the number of documents in the provided/current index.
-    def index_docs_count(index = current_index_name)
+    def index_docs_count(index = current_index)
       return if index.blank?
 
       __elasticsearch__.client.count(index:)["count"]
     end
 
     # Model index alias stop pointing to from/current index and starts pointing to the "to:" index without downtime.
-    def swap_index_alias!(to:, from: current_index_name)
+    def swap_index_alias!(to:, from: current_index)
       indices_client = __elasticsearch__.client.indices
 
       if indices_client.exists_alias?(name: index_name)

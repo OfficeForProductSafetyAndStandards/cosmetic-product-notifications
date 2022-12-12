@@ -4,8 +4,8 @@ class ReindexOpensearchJob < ApplicationJob
       ActiveRecord::Base.descendants.each do |model|
         next unless model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
 
-        current_index = model.current_index_name
-        new_index = model.create_new_index!
+        current_index = model.current_index
+        new_index = model.create_index!
 
         Sidekiq.logger.info "Reindexing #{model} to Opensearch #{new_index} index..."
         errors_count = model.import(index: new_index, scope: "opensearch", refresh: true)

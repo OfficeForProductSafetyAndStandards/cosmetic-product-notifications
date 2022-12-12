@@ -45,7 +45,7 @@ RSpec.describe Searchable, type: :model do
       # rubocop:disable RSpec/ExampleLength
       it "deletes the previous index associated with the model alias" do
         travel_to previous_execution_time do
-          dummy_class.create_new_index_with_alias! # Previous index gets created/aliased
+          dummy_class.create_aliased_index! # Previous index gets created/aliased
         end
         travel_to execution_time do
           expect { import }.to change {
@@ -70,7 +70,7 @@ RSpec.describe Searchable, type: :model do
       context "when there was a previous index" do
         before do
           travel_to previous_execution_time do
-            dummy_class.create_new_index_with_alias!
+            dummy_class.create_aliased_index!
           end
         end
 
@@ -142,7 +142,7 @@ RSpec.describe Searchable, type: :model do
     end
   end
 
-  describe ".current_index_name" do
+  describe ".current_index" do
     let(:alias_name) { dummy_class.index_name }
     let(:stubbed_aliases_list) do
       { "dummies_20221205184133" => { "aliases" => { alias_name => {} } } }
@@ -159,7 +159,7 @@ RSpec.describe Searchable, type: :model do
     end
 
     it "returns the current index associated with the model alias" do
-      expect(dummy_class.current_index_name).to eq "dummies_20221205184133"
+      expect(dummy_class.current_index).to eq "dummies_20221205184133"
     end
 
     context "when there is no existing alias" do
@@ -169,48 +169,48 @@ RSpec.describe Searchable, type: :model do
 
       it "returns the model alias name if there is an index named after it" do
         allow(stubbed_indices_client).to receive(:exists?).with(index: alias_name).and_return(true)
-        expect(dummy_class.current_index_name).to eq alias_name
+        expect(dummy_class.current_index).to eq alias_name
       end
 
       it "returns nil if there is no index named after the model alias name" do
         allow(stubbed_indices_client).to receive(:exists?).with(index: alias_name).and_return(false)
-        expect(dummy_class.current_index_name).to be_nil
+        expect(dummy_class.current_index).to be_nil
       end
     end
   end
 
-  describe ".create_new_index_with_alias!" do
+  describe ".create_aliased_index!" do
     let(:execution_time) { Time.zone.local(2022, 12, 1, 13, 10, 45) }
     let(:expected_index) { "dummies_20221201131045" }
 
     before { travel_to execution_time }
 
     it "creates a new index with a timestamped name" do
-      dummy_class.create_new_index_with_alias!
+      dummy_class.create_aliased_index!
       expect(dummy_class.__elasticsearch__.client.indices.exists?(index: expected_index)).to be true
     end
 
     it "sets the model alias pointing to the index" do
-      dummy_class.create_new_index_with_alias!
+      dummy_class.create_aliased_index!
       expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)).to eq(
         { expected_index => { "aliases" => { "dummies" => {} } } },
       )
     end
   end
 
-  describe ".create_new_index!" do
+  describe ".create_index!" do
     let(:execution_time) { Time.zone.local(2022, 12, 1, 13, 10, 45) }
     let(:expected_index) { "dummies_20221201131045" }
 
     before { travel_to execution_time }
 
     it "creates a new index with a timestamped name" do
-      dummy_class.create_new_index!
+      dummy_class.create_index!
       expect(dummy_class.__elasticsearch__.client.indices.exists?(index: expected_index)).to be true
     end
 
     it "returns the new index name" do
-      expect(dummy_class.create_new_index!).to eq expected_index
+      expect(dummy_class.create_index!).to eq expected_index
     end
   end
 
@@ -244,13 +244,13 @@ RSpec.describe Searchable, type: :model do
 
     context "when no index is provided" do
       it "returns the number of documents in the current index associated with the model" do
-        allow(dummy_class).to receive(:current_index_name).and_return("dummies_20221205184133")
+        allow(dummy_class).to receive(:current_index).and_return("dummies_20221205184133")
         expect(dummy_class.index_docs_count).to eq 61
         expect(client).to have_received(:count).with(index: "dummies_20221205184133")
       end
 
       it "returns nil if there is no index associated with the model" do
-        allow(dummy_class).to receive(:current_index_name).and_return(nil)
+        allow(dummy_class).to receive(:current_index).and_return(nil)
         expect(dummy_class.index_docs_count).to eq nil
         expect(client).not_to have_received(:count)
       end
@@ -260,13 +260,13 @@ RSpec.describe Searchable, type: :model do
   describe "swap_index_alias!" do
     let!(:new_index) do
       travel_to Time.zone.local(2022, 12, 2, 10, 12, 30)
-      dummy_class.create_new_index!
+      dummy_class.create_index!
     end
 
     context "when the alias already exists and points to the current index" do
       let!(:current_index) do
         travel_to Time.zone.local(2022, 12, 1, 13, 10, 45)
-        dummy_class.create_new_index_with_alias!
+        dummy_class.create_aliased_index!
       end
 
       it "removes one index from the model alias and adds the other" do
@@ -287,7 +287,7 @@ RSpec.describe Searchable, type: :model do
     context "when there is no existing alias pointing to the current index" do
       let(:current_index) do
         travel_to Time.zone.local(2022, 12, 1, 13, 10, 45)
-        dummy_class.create_new_index!
+        dummy_class.create_index!
       end
 
       it "adds the new index to the model alias" do

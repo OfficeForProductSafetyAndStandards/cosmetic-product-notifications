@@ -11,7 +11,7 @@ RSpec.describe ReindexOpensearchJob do
 
   # rubocop:disable RSpec/MultipleExpectations
   describe "#perform" do
-    let(:original_index) { Notification.current_index_name }
+    let(:original_index) { Notification.current_index }
 
     before do
       # Sets up original index prior to reindexing
@@ -26,7 +26,7 @@ RSpec.describe ReindexOpensearchJob do
       described_class.perform_now
 
       # Reindexed the notification into a new index
-      expect(Notification.current_index_name).not_to eq(original_index)
+      expect(Notification.current_index).not_to eq(original_index)
       expect(Notification.index_docs_count).to eq 1
 
       # Deleted the original index
@@ -40,7 +40,7 @@ RSpec.describe ReindexOpensearchJob do
         change { Notification.__elasticsearch__.client.indices.get(index: "_all").keys.size },
       )
       # Kept the original index
-      expect(Notification.current_index_name).to eq(original_index)
+      expect(Notification.current_index).to eq(original_index)
       expect(Notification.index_docs_count).to eq 1
     end
   end
