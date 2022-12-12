@@ -178,7 +178,7 @@ RSpec.describe Searchable, type: :model do
   end
 
   describe ".previous_indices" do
-    let(:current_index) { "dummies_20221205184135"}
+    let(:current_index) { "dummies_20221205184135" }
     let(:stubbed_indices) do
       {
         "dummies_20221205184133" => {},
