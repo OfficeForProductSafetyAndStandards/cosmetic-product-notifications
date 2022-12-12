@@ -120,6 +120,10 @@ module Searchable
       end
     end
 
+    def previous_indices
+      __elasticsearch__.client.indices.get(index: "#{index_name}*").keys.excluding(current_index)
+    end
+
     # Generates a new version of the index name, using the alias name as a base and appending the current datetime.
     # EG: Alias is called "foobar_index", the new index name will be "foobar_index_20221205164343
     def generate_new_index_name

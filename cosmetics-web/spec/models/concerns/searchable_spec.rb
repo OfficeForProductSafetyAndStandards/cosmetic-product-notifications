@@ -6,8 +6,7 @@ RSpec.describe Searchable, type: :model do
       include ActiveModel::Model
       include Searchable
 
-      index_name "dummies"
-
+      def self.index_name = "dummies"
       def self.name = "DummyClass"
     end
   end
@@ -155,7 +154,6 @@ RSpec.describe Searchable, type: :model do
 
     before do
       allow(dummy_class).to receive_message_chain(:__elasticsearch__, :client, :indices).and_return(stubbed_indices_client)
-      allow(dummy_class).to receive(:index_name).and_return(alias_name)
     end
 
     it "returns the current index associated with the model alias" do
@@ -175,6 +173,39 @@ RSpec.describe Searchable, type: :model do
       it "returns nil if there is no index named after the model alias name" do
         allow(stubbed_indices_client).to receive(:exists?).with(index: alias_name).and_return(false)
         expect(dummy_class.current_index).to be_nil
+      end
+    end
+  end
+
+  describe ".previous_indices" do
+    let(:current_index) { "dummies_20221205184135"}
+    let(:stubbed_indices) do
+      {
+        "dummies_20221205184133" => {},
+        "dummies_20221205184134" => {},
+        current_index => {},
+      }
+    end
+    let(:stubbed_indices_client) do
+      instance_double(Elasticsearch::API::Indices::IndicesClient, get: stubbed_indices)
+    end
+
+    before do
+      allow(dummy_class).to receive_message_chain(:__elasticsearch__, :client, :indices).and_return(stubbed_indices_client)
+      allow(dummy_class).to receive(:current_index).and_return(current_index)
+    end
+
+    it "returns all the indices named after the alias except the current one" do
+      expect(dummy_class.previous_indices).to eq %w[dummies_20221205184133 dummies_20221205184134]
+    end
+
+    context "when there are no other indices besides the current one" do
+      let(:stubbed_indices) do
+        { current_index => {} }
+      end
+
+      it "returns an empty array" do
+        expect(dummy_class.previous_indices).to eq []
       end
     end
   end

@@ -11,15 +11,15 @@ def create_log_db_metrics_job
   end
 end
 
-def create_opensearch_index_job
+def reindex_opensearch_index_job
   job = Sidekiq::Cron::Job.new(
-    name: "Reindex Elasticsearch, every day at 1 am",
+    name: "Reindex Opensearch, every Saturday at 1 am",
     cron: "1 1 * * sat", # Every Saturday at 1:01 am
     class: "ReindexOpensearchJob",
     queue: "cosmetics",
   )
   unless job.save
-    Rails.logger.error "***** WARNING - Elasticsearch reindexing job was not saved! *****"
+    Rails.logger.error "***** WARNING - Opensearch reindexing job was not saved! *****"
     Rails.logger.error job.errors.join("; ")
   end
 end
@@ -66,7 +66,7 @@ end
 Sidekiq.configure_server do |config|
   config.redis = Rails.application.config_for(:redis)
   create_log_db_metrics_job
-  create_opensearch_index_job
+  reindex_opensearch_index_job
   upload_cosmetic_products_containing_nanomaterials_job
   upload_nanomaterial_notifications_job
   upload_nanomaterials_pdfs_job
