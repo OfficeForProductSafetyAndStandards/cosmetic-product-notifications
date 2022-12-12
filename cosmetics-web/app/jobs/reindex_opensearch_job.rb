@@ -1,3 +1,15 @@
+# Purpose: Reindex all models to Opensearch
+# Locks the transaction to avoid multiple re-indexing processes running at the same time.
+#
+# The reindexing process is as follows:
+# * Creates a new index
+# * Populates the new index
+# * If there are any errors during the importing process into the new index:
+#   * Keeps the previous index.
+#   * Deletes the new index.
+# * If the import process succeeds:
+#   * Hot-swaps the index used by the service by replacing the index pointed at by the model alias.
+#   * Deletes the previous index.
 class ReindexOpensearchJob < ApplicationJob
   def perform
     PostgresTransactionLock.try_with_lock("reindex_notifications") do

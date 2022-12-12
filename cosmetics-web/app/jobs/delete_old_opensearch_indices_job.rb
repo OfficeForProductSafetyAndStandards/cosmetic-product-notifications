@@ -1,3 +1,6 @@
+# Delete old unused Opensearch indices for all models that use the Searchable module.
+# This is to delete dangling indices that got partially created/filled and never got tagged as the current index, as they
+# won't be cleaned up by the ReindexOpensearchJob.
 class DeleteOldOpensearchIndicesJob < ApplicationJob
   def perform
     ActiveRecord::Base.descendants.each do |model|
