@@ -1,3 +1,5 @@
+require "csv"
+
 class BulkIngredientCreator
   # rubocop:disable Style/MissingRespondToMissing
   ParsedEntry = Struct.new(:line, :ingredient, :line_number) do
@@ -24,10 +26,10 @@ class BulkIngredientCreator
   end
 
   def create
-    @csv_data.split("\n").each_with_index do |row, i|
-      name, concentration, cas, poisonous = row.split(",")
+    CSV.parse(@csv_data).each_with_index do |row, i|
+      name, concentration, cas, poisonous = *row
       ingredient = row_to_ingredient(name, concentration, cas, poisonous)
-      @ingredients << ParsedEntry.new(row, ingredient, i + 1)
+      @ingredients << ParsedEntry.new(row.join(","), ingredient, i + 1)
     end
     ActiveRecord::Base.transaction do
       @ingredients.each(&:save)

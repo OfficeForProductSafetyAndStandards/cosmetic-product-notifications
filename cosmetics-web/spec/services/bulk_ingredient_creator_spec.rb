@@ -30,4 +30,17 @@ RSpec.describe BulkIngredientCreator do
       }.to change(Ingredient, :count).by(2)
     end
   end
+
+  context "when using different files" do
+    let(:csv) do
+      File.read("spec/fixtures/files/Ingredients_ concentrationrange.csv")
+    end
+
+    it "creates records" do
+      creator = described_class.new(csv, component)
+      expect {
+        creator.create
+      }.to change(Ingredient, :count).by(2)
+    end
+  end
 end
