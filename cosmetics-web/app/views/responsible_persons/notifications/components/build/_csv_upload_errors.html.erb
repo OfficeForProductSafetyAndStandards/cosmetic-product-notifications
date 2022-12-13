@@ -1,0 +1,21 @@
+<div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+  <h2 class="govuk-error-summary__title" id="error-summary-title">
+    One or more lines in CSV file are incorrect 
+  </h2>
+  <% @creator.ingredients.each do |ingredient| %>
+    <% unless ingredient.valid? %>
+      <p class="govuk-!-margin-0 govuk-!-margin-top-3">
+      Error in line <code><%= ingredient.line_number %></code>: <code><%= ingredient.line %></code>:
+      </p>
+      <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list">
+          <% ingredient.errors.messages.each do |_attribute, text| %>
+            <li>
+              <a href="#"><%= text[0] %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+</div>

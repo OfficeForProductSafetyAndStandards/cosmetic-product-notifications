@@ -34,17 +34,7 @@ Upload a file <span class="govuk-!-font-weight-regular govuk-!-font-size-16"> &n
             </span>
           <% end %>
           <% if @creator && !@creator.valid? %>
-            <span id="file-upload-2-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Problems</span>One or more lines in CSV file are incorrect 
-            </span>
-            <% @creator.ingredients.each do |ingredient| %>
-              <% unless ingredient.valid? %>
-                <p>
-                Error in line <code><%= ingredient.line_number %></code>: <code><%= ingredient.line %></code> 
-                </p>
-                <%= error_summary(ingredient.errors) %>
-              <% end %>
-            <% end %>
+            <%= render 'csv_upload_errors' %>
           <% end %>
           <%= form.file_field :ingredients_file, class: "govuk-file-upload",
                   accept: "csv" %>
