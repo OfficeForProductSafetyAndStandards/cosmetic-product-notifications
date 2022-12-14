@@ -32,8 +32,14 @@ class BulkIngredientCreator
       @ingredients << ParsedEntry.new(row.join(","), ingredient, i + 1)
     end
     ActiveRecord::Base.transaction do
-      @ingredients.each(&:save)
+      @ingredients.each do |ingredient|
+        result = ingredient.save
+        raise ArgumentError unless result
+        result
+      end
     end
+  rescue ArgumentError
+    nil
   end
 
   # TODO: rename to success?
