@@ -352,19 +352,6 @@ private
     end
   end
 
-  def index_document
-    result = __elasticsearch__.index_document
-
-    Rails.logger.info "[NotificationIndex] Notification with id=#{id} indexed with result #{result}"
-  end
-
-  def delete_document_from_index
-    result = __elasticsearch__.delete_document
-    Rails.logger.info "[NotificationIndex] Notification with id=#{id} deleted from index with result #{result}"
-  rescue Elasticsearch::Transport::Transport::Errors::NotFound
-    Rails.logger.info "[NotificationIndex] Failed to delete notification with id=#{id}. Reason: Not found in index"
-  end
-
   def product_name_uniqueness
     raise ArgumentError if responsible_person.nil?
 

@@ -59,6 +59,20 @@ module Searchable
     end
   end
 
+  def index_document
+    result = __elasticsearch__.index_document
+
+    Rails.logger.info "[#{self.class}Index] #{self.class} with id=#{id} indexed with result #{result}"
+  end
+
+  def delete_document_from_index
+    result = __elasticsearch__.delete_document
+
+    Rails.logger.info "[#{self.class}Index] #{self.class} with id=#{id} deleted from index with result #{result}"
+  rescue Elasticsearch::Transport::Transport::Errors::NotFound
+    Rails.logger.info "[#{self.class}Index] Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
+  end
+
   class_methods do
     def full_search(query)
       # This line makes sure opensearch index is recreated before we search
