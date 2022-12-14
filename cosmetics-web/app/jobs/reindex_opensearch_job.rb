@@ -11,8 +11,10 @@
 #   * Hot-swaps the index used by the service by replacing the index pointed at by the model alias.
 #   * Deletes the previous index.
 class ReindexOpensearchJob < ApplicationJob
+  LOCK_NAME = "reindex_notifications".freeze
+
   def perform
-    PostgresTransactionLock.try_with_lock("reindex_notifications") do
+    PostgresDistributedLock.try_with_lock(LOCK_NAME) do
       ActiveRecord::Base.descendants.each do |model|
         next unless model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
 

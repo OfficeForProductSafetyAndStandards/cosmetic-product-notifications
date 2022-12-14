@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PostgresTransactionLock do
+RSpec.describe PostgresDistributedLock do
   describe ".try_with_lock" do
     let(:pg_connection_stub) { instance_double(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) }
 

@@ -1,6 +1,6 @@
 # Obtains exclusive Postgres transaction level advisory lock if available.
 # The lock is automatically released at the end of the current transaction and cannot be released explicitly.
-module PostgresTransactionLock
+module PostgresDistributedLock
   def self.try_with_lock(lock_name)
     lock_id = Zlib.crc32(lock_name.to_s) # Same string will always return same id value
 
