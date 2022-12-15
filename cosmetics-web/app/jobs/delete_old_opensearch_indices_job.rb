@@ -11,7 +11,7 @@ class DeleteOldOpensearchIndicesJob < ApplicationJob
       if old_indices.any?
         to_delete = old_indices.join(",")
         Sidekiq.logger.info "Found #{old_indices.size} old Opensearch indices for #{model}: #{to_delete}"
-        model.__elasticsearch__.delete_index!(index: to_delete)
+        model.delete_indices!(to_delete)
         Sidekiq.logger.info "#{old_indices.size} old Opensearch indices for #{model} got deleted"
       else
         Sidekiq.logger.info "No old Opensearch indices found for #{model} to be deleted"

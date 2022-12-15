@@ -125,6 +125,13 @@ module Searchable
       index
     end
 
+    # Deletes the given index/indices
+    def delete_indices!(indices)
+      __elasticsearch__.delete_index!(index: indices) # "Accepts single index or multiple separated by commas"
+      searchable_log "Deleted Opensearch indices #{indices} for #{name}"
+      true
+    end
+
     # Adds the given index to the model alias.
     # The alias name is the 'index_name' declaration in the model.
     def alias_index!(index)

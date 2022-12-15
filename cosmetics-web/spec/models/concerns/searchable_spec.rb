@@ -82,7 +82,7 @@ RSpec.describe Searchable, type: :model do
         import
         expect(Rails.logger)
           .to have_received(:info)
-          .with("[DummyClassIndex] Deleted Opensearch index #{previous_index_name} for DummyClass")
+          .with("[DummyClassIndex] Deleted Opensearch indices #{previous_index_name} for DummyClass")
       end
     end
 
@@ -320,6 +320,28 @@ RSpec.describe Searchable, type: :model do
     it "returns the new index name" do
       expect(dummy_class.create_index!).to eq expected_index
     end
+  end
+
+  describe ".delete_indices!" do
+    let(:indices) { "dummies_20221205184133,dummies_20222206123007" }
+
+    before do
+      allow(dummy_class.__elasticsearch__).to receive(:delete_index!).and_return({ "acknowledged" => true })
+    end
+
+    it "deletes the given indices" do
+      dummy_class.delete_indices!(indices)
+      expect(dummy_class.__elasticsearch__).to have_received(:delete_index!).with(index: indices)
+    end
+
+    it "logs the index deletion" do
+      dummy_class.delete_indices!(indices)
+      expect(Rails.logger)
+        .to have_received(:info)
+        .with("[DummyClassIndex] Deleted Opensearch indices #{indices} for DummyClass")
+    end
+
+    it { expect(dummy_class.delete_indices!(indices)).to eq true }
   end
 
   describe ".alias_index!" do
