@@ -515,4 +515,8 @@ RSpec.describe Searchable, type: :model do
       it { expect(dummy_class.swap_index_alias!(from: nil, to: new_index)).to eq true }
     end
   end
+
+  describe ".searchable_log_tag" do
+    it { expect(dummy_class.searchable_log_tag).to eq "[DummyClassIndex]" }
+  end
 end

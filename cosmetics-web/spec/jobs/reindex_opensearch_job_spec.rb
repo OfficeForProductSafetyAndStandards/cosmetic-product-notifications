@@ -11,15 +11,20 @@ RSpec.describe ReindexOpensearchJob do
 
   # rubocop:disable RSpec/MultipleExpectations
   describe "#perform" do
-    let(:original_index) { Notification.current_index }
+    let(:execution_time) { Time.zone.local(2022, 12, 1, 13, 10, 45) }
+    let(:new_index) { "#{Notification.index_name}_20221201131045" }
+
+    let(:previous_execution_time) { Time.zone.local(2020, 11, 28, 14, 11, 55) }
+    let(:original_index) { "#{Notification.index_name}_20201128141155" }
 
     before do
-      # Sets up original index prior to reindexing
-      create(:notification, :registered)
-      travel_to 1.day.ago do
+      # Sets up original index with a notification prior to reindexing
+      travel_to previous_execution_time do
+        create(:notification, :registered)
         Notification.import_to_opensearch
       end
-      original_index
+      travel_to execution_time
+      allow(Sidekiq.logger).to receive(:info)
     end
 
     context "when the reindexing is successful" do
@@ -32,6 +37,22 @@ RSpec.describe ReindexOpensearchJob do
 
         # Deleted the original index
         expect(Notification.__elasticsearch__.client.indices.exists?(index: original_index)).to be false
+      end
+
+      it "logs the start of the reindexing" do
+        described_class.perform_now
+
+        expect(Sidekiq.logger)
+          .to have_received(:info)
+          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index")
+      end
+
+      it "logs the success of the reindexing" do
+        described_class.perform_now
+
+        expect(Sidekiq.logger)
+          .to have_received(:info)
+          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index succeeded")
       end
     end
 
@@ -47,6 +68,22 @@ RSpec.describe ReindexOpensearchJob do
         # Kept the original index
         expect(Notification.current_index).to eq(original_index)
         expect(Notification.index_docs_count).to eq 1
+      end
+
+      it "logs the start of the reindexing" do
+        described_class.perform_now
+
+        expect(Sidekiq.logger)
+          .to have_received(:info)
+          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index")
+      end
+
+      it "logs the failure of the reindexing" do
+        described_class.perform_now
+
+        expect(Sidekiq.logger)
+          .to have_received(:info)
+          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index failed with 1 errors while importing")
       end
     end
   end

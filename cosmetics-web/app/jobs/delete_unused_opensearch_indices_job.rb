@@ -10,12 +10,18 @@ class DeleteUnusedOpensearchIndicesJob < ApplicationJob
 
       if unused_indices.any?
         to_delete = unused_indices.join(",")
-        Sidekiq.logger.info "Found #{unused_indices.size} unused Opensearch indices for #{model}: #{to_delete}"
+        logging(model, "Found #{unused_indices.size} unused Opensearch indices for #{model}: #{to_delete}")
         model.delete_indices!(to_delete)
-        Sidekiq.logger.info "#{unused_indices.size} unused Opensearch indices for #{model} got deleted"
+        logging(model, "Deleted #{unused_indices.size} unused Opensearch indices for #{model}")
       else
-        Sidekiq.logger.info "No unused Opensearch indices found for #{model} to be deleted"
+        logging(model, "No unused Opensearch indices were found for #{model} to be deleted")
       end
     end
+  end
+
+private
+
+  def logging(model, msg)
+    Sidekiq.logger.info "#{model.searchable_log_tag} #{msg}"
   end
 end

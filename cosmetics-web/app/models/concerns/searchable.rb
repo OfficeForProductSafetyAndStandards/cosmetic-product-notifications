@@ -178,7 +178,11 @@ module Searchable
     end
 
     def searchable_log(msg)
-      Rails.logger.info "[#{name}Index] #{msg}"
+      Rails.logger.info "#{searchable_log_tag} #{msg}"
+    end
+
+    def searchable_log_tag
+      "[#{name}Index]"
     end
 
   private
