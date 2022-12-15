@@ -22,13 +22,11 @@ class ReindexOpensearchJob < ApplicationJob
         new_index = model.create_index!
 
         Sidekiq.logger.info "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index..."
-        errors_count = model.import(index: new_index, scope: "opensearch", refresh: true)
+        errors_count = model.import_to_opensearch(index: new_index)
 
         if errors_count.zero?
           model.swap_index_alias!(to: new_index)
-          if current_index.present?
-            model.delete_indices!(current_index)
-          end
+          model.delete_indices!(current_index) if current_index.present?
         else
           Sidekiq.logger.info "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index failed with #{errors_count} errors during the import"
           model.delete_indices!(new_index)
