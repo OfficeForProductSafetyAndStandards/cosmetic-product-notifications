@@ -62,15 +62,15 @@ module Searchable
   def index_document
     result = __elasticsearch__.index_document
 
-    Rails.logger.info "[#{self.class}Index] #{self.class} with id=#{id} indexed with result #{result}"
+    self.class.searchable_log "#{self.class} with id=#{id} indexed with result #{result}"
   end
 
   def delete_document_from_index
     result = __elasticsearch__.delete_document
 
-    Rails.logger.info "[#{self.class}Index] #{self.class} with id=#{id} deleted from index with result #{result}"
+    self.class.searchable_log "#{self.class} with id=#{id} deleted from index with result #{result}"
   rescue Elasticsearch::Transport::Transport::Errors::NotFound
-    Rails.logger.info "[#{self.class}Index] Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
+    self.class.searchable_log "Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
   end
 
   class_methods do
@@ -93,34 +93,62 @@ module Searchable
       index =
         if existing_index.present? && force
           __elasticsearch__.delete_index!(index: existing_index)
+          searchable_log "Deleted Opensearch index #{existing_index} for #{name}"
           create_aliased_index!
         else
           existing_index.presence || create_aliased_index!
         end
 
-      import(index:, scope: "opensearch", refresh: true)
+      import(index:, scope: "opensearch", refresh: true).tap do |errors_count|
+        if errors_count.zero?
+          searchable_log "Imported #{index_docs_count(index)} records for #{name} to Opensearch #{index} index"
+        else
+          searchable_log "Got #{errors_count} errors while importing #{name} records to Opensearch #{index} index"
+        end
+      end
     end
 
     # Creates a new index version and sets the model alias pointing to it.
     # Returns the new index version name.
     def create_aliased_index!
-      create_index!.tap do |name|
-        alias_index!(name)
+      create_index!.tap do |index|
+        alias_index!(index)
       end
     end
 
     # Creates a new index. Name will be based on the model alias and timestamped.
     # Returns the new index name.
     def create_index!
-      name = generate_new_index_name
-      __elasticsearch__.create_index!(index: name, force: true)
-      name
+      index = generate_new_index_name
+      __elasticsearch__.create_index!(index:, force: true)
+      searchable_log "Created new Opensearch index #{index} for #{name}"
+      index
     end
 
     # Adds the given index to the model alias.
     # The alias name is the 'index_name' declaration in the model.
     def alias_index!(index)
       __elasticsearch__.client.indices.put_alias(index:, name: index_name)
+      searchable_log "Pointed Opensearch #{name} index alias to index #{index}"
+      true
+    end
+
+    # Model index alias stop pointing to from/current index and starts pointing to the "to:" index without downtime.
+    def swap_index_alias!(to:, from: current_index)
+      indices_client = __elasticsearch__.client.indices
+
+      if indices_client.exists_alias?(name: index_name)
+        indices_client.update_aliases body: {
+          actions: [
+            { remove: { index: from, alias: index_name } },
+            { add:    { index: to, alias: index_name } },
+          ],
+        }
+        searchable_log "Swapped Opensearch #{name} index alias #{index_name} from index #{from} to index #{to}"
+        true
+      else # If the alias does not exist, create it.
+        alias_index!(to)
+      end
     end
 
     def current_index
@@ -151,20 +179,8 @@ module Searchable
       __elasticsearch__.client.count(index:)["count"]
     end
 
-    # Model index alias stop pointing to from/current index and starts pointing to the "to:" index without downtime.
-    def swap_index_alias!(to:, from: current_index)
-      indices_client = __elasticsearch__.client.indices
-
-      if indices_client.exists_alias?(name: index_name)
-        indices_client.update_aliases body: {
-          actions: [
-            { remove: { index: from, alias: index_name } },
-            { add:    { index: to, alias: index_name } },
-          ],
-        }
-      else # If the alias does not exist, create it.
-        alias_index!(to)
-      end
+    def searchable_log(msg)
+      Rails.logger.info "[#{name}Index] #{msg}"
     end
   end
 end

@@ -11,6 +11,10 @@ RSpec.describe Searchable, type: :model do
     end
   end
 
+  before do
+    allow(Rails.logger).to receive(:info)
+  end
+
   after do
     # Ensure no testing indices are left behind
     existing_indices = Elasticsearch::Model.client.indices.get(index: "dummies*").keys.join(",")
@@ -29,48 +33,139 @@ RSpec.describe Searchable, type: :model do
     before do
       # ES '.import' needs an AR class to be called. Hence the stubbing.
       allow(dummy_class).to receive(:import).with(any_args).and_return(0)
+      allow(dummy_class.__elasticsearch__.client).to receive(:count).with(any_args).and_return({ "count" => 25 })
+    end
+
+    RSpec.shared_examples "creating a new index" do
+      it "creates a new index" do
+        travel_to execution_time
+        expect { import }.to change {
+          dummy_class.__elasticsearch__.client.indices.exists?(index: new_index_name)
+        }.from(false).to(true)
+      end
+
+      it "logs the index creation" do
+        travel_to execution_time
+        import
+        expect(Rails.logger)
+          .to have_received(:info)
+          .with("[DummyClassIndex] Created new Opensearch index #{new_index_name} for DummyClass")
+      end
+
+      it "sets the model alias pointing to the index" do
+        travel_to execution_time
+        import
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)).to eq(
+          { new_index_name => { "aliases" => { "dummies" => {} } } },
+        )
+      end
+
+      it "logs the alias creation" do
+        travel_to execution_time
+        import
+        expect(Rails.logger)
+          .to have_received(:info)
+          .with("[DummyClassIndex] Pointed Opensearch DummyClass index alias to index #{new_index_name}")
+      end
+    end
+
+    RSpec.shared_examples "deleting previous index" do
+      it "deletes the previous index associated with the model alias" do
+        travel_to execution_time
+        expect { import }.to change {
+          dummy_class.__elasticsearch__.client.indices.exists?(index: previous_index_name)
+        }.from(true).to(false)
+      end
+
+      it "logs the previous index deletion" do
+        travel_to execution_time
+        import
+        expect(Rails.logger)
+          .to have_received(:info)
+          .with("[DummyClassIndex] Deleted Opensearch index #{previous_index_name} for DummyClass")
+      end
+    end
+
+    RSpec.shared_examples "importing notifications" do
+      it "imports the records to index" do
+        travel_to execution_time
+        import
+        expect(dummy_class).to have_received(:import).with(index:, scope: "opensearch", refresh: true)
+      end
+
+      context "when importing without errors" do
+        it "logs the number of records imported" do
+          travel_to execution_time
+          import
+          expect(Rails.logger)
+            .to have_received(:info)
+            .with("[DummyClassIndex] Imported 25 records for DummyClass to Opensearch #{index} index")
+        end
+
+        it "returns the number of errors found during the import" do
+          travel_to execution_time
+          expect(import).to eq(0)
+        end
+      end
+
+      context "when importing with errors" do
+        before do
+          allow(dummy_class).to receive(:import).with(any_args).and_return(3)
+        end
+
+        it "logs the number of errors encountered during import" do
+          travel_to execution_time
+          import
+          expect(Rails.logger)
+            .to have_received(:info)
+            .with("[DummyClassIndex] Got 3 errors while importing DummyClass records to Opensearch #{index} index")
+        end
+
+        it "returns the number of errors found during the import" do
+          travel_to execution_time
+          expect(import).to eq(3)
+        end
+      end
     end
 
     context "with forced creation" do
       subject(:import) { dummy_class.import_to_opensearch(force: true) }
 
-      it "creates a new index" do
-        travel_to execution_time do
-          import
-          expect(dummy_class.__elasticsearch__.client.indices.exists?(index: new_index_name)).to be true
-        end
+      include_examples "creating a new index"
+      include_examples "importing notifications" do
+        let(:index) { new_index_name }
       end
 
-      # rubocop:disable RSpec/ExampleLength
-      it "deletes the previous index associated with the model alias" do
-        travel_to previous_execution_time do
-          dummy_class.create_aliased_index! # Previous index gets created/aliased
+      context "when there is an existing index associated with the model alias" do
+        before do
+          travel_to previous_execution_time do
+            dummy_class.create_aliased_index! # Previous index gets created/aliased
+          end
         end
-        travel_to execution_time do
-          expect { import }.to change {
-            dummy_class.__elasticsearch__.client.indices.exists?(index: previous_index_name)
-          }.from(true).to(false)
-        end
-      end
-      # rubocop:enable RSpec/ExampleLength
 
-      it "imports the records to the new index" do
-        travel_to execution_time do
-          import
-          expect(dummy_class).to have_received(:import)
-                             .with(index: new_index_name, scope: "opensearch", refresh: true)
-        end
+        include_examples "deleting previous index"
       end
     end
 
     context "without forced creation" do
       subject(:import) { dummy_class.import_to_opensearch(force: false) }
 
+      context "when there was no previous index" do
+        include_examples "creating a new index"
+        include_examples "importing notifications" do
+          let(:index) { new_index_name }
+        end
+      end
+
       context "when there was a previous index" do
         before do
           travel_to previous_execution_time do
             dummy_class.create_aliased_index!
           end
+        end
+
+        include_examples "importing notifications" do
+          let(:index) { previous_index_name }
         end
 
         it "does not create a new index" do
@@ -85,31 +180,6 @@ RSpec.describe Searchable, type: :model do
             expect { import }.not_to change {
               dummy_class.__elasticsearch__.client.indices.exists?(index: previous_index_name)
             }.from(true)
-          end
-        end
-
-        it "imports the records to the current index" do
-          travel_to execution_time do
-            import
-            expect(dummy_class).to have_received(:import)
-                               .with(index: previous_index_name, scope: "opensearch", refresh: true)
-          end
-        end
-      end
-
-      context "when there was no previous index" do
-        it "creates a new index" do
-          travel_to execution_time do
-            import
-            expect(dummy_class.__elasticsearch__.client.indices.exists?(index: new_index_name)).to be true
-          end
-        end
-
-        it "imports the records to the new index" do
-          travel_to execution_time do
-            import
-            expect(dummy_class).to have_received(:import)
-                               .with(index: new_index_name, scope: "opensearch", refresh: true)
           end
         end
       end
@@ -240,23 +310,46 @@ RSpec.describe Searchable, type: :model do
       expect(dummy_class.__elasticsearch__.client.indices.exists?(index: expected_index)).to be true
     end
 
+    it "logs the index creation" do
+      dummy_class.create_index!
+      expect(Rails.logger)
+        .to have_received(:info)
+        .with("[DummyClassIndex] Created new Opensearch index #{expected_index} for DummyClass")
+    end
+
     it "returns the new index name" do
       expect(dummy_class.create_index!).to eq expected_index
     end
   end
 
   describe ".alias_index!" do
-    it "associates the given index index with the model alias" do
-      dummy_class.__elasticsearch__.create_index!(index: "dummies_version")
-      dummy_class.alias_index!("dummies_version")
-      expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)).to eq(
-        { "dummies_version" => { "aliases" => { "dummies" => {} } } },
-      )
+    context "when given an existing index" do
+      before do
+        dummy_class.__elasticsearch__.create_index!(index: "dummies_version")
+      end
+
+      it "associates the given index index with the model alias" do
+        dummy_class.alias_index!("dummies_version")
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)).to eq(
+          { "dummies_version" => { "aliases" => { "dummies" => {} } } },
+        )
+      end
+
+      it "logs the index aliasing" do
+        dummy_class.alias_index!("dummies_version")
+        expect(Rails.logger)
+          .to have_received(:info)
+          .with("[DummyClassIndex] Pointed Opensearch DummyClass index alias to index dummies_version")
+      end
+
+      it { expect(dummy_class.alias_index!("dummies_version")).to eq true }
     end
 
-    it "raises an error if the given index does not exist" do
-      expect { dummy_class.alias_index!("dummies_version") }
-        .to raise_error Elasticsearch::Transport::Transport::Errors::NotFound
+    context "when given a non existing index" do
+      it "raises an error" do
+        expect { dummy_class.alias_index!("dummies_version") }
+          .to raise_error Elasticsearch::Transport::Transport::Errors::NotFound
+      end
     end
   end
 
@@ -313,6 +406,15 @@ RSpec.describe Searchable, type: :model do
         }.from({ current_index => { "aliases" => { "dummies" => {} } } })
         .to({ new_index => { "aliases" => { "dummies" => {} } } })
       end
+
+      it "logs the index alias swapping between indices" do
+        dummy_class.swap_index_alias!(from: current_index, to: new_index)
+        expect(Rails.logger)
+          .to have_received(:info)
+          .with("[DummyClassIndex] Swapped Opensearch DummyClass index alias dummies from index #{current_index} to index #{new_index}")
+      end
+
+      it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to eq true }
     end
 
     context "when there is no existing alias pointing to the current index" do
@@ -326,6 +428,15 @@ RSpec.describe Searchable, type: :model do
         expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name))
           .to eq({ new_index => { "aliases" => { "dummies" => {} } } })
       end
+
+      it "logs the index alias setting" do
+        dummy_class.swap_index_alias!(from: current_index, to: new_index)
+        expect(Rails.logger)
+          .to have_received(:info)
+          .with("[DummyClassIndex] Pointed Opensearch DummyClass index alias to index #{new_index}")
+      end
+
+      it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to eq true }
     end
 
     context "when there is no other index or alias" do
@@ -334,6 +445,8 @@ RSpec.describe Searchable, type: :model do
         expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name))
           .to eq({ new_index => { "aliases" => { "dummies" => {} } } })
       end
+
+      it { expect(dummy_class.swap_index_alias!(from: nil, to: new_index)).to eq true }
     end
   end
 end

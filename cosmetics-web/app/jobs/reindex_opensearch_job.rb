@@ -21,27 +21,19 @@ class ReindexOpensearchJob < ApplicationJob
         current_index = model.current_index
         new_index = model.create_index!
 
-        Sidekiq.logger.info "Reindexing #{model} to Opensearch #{new_index} index..."
+        Sidekiq.logger.info "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index..."
         errors_count = model.import(index: new_index, scope: "opensearch", refresh: true)
 
         if errors_count.zero?
-          import_count = model.index_docs_count(new_index)
-          Sidekiq.logger.info "Imported #{import_count} records for #{model} to Opensearch #{new_index} index"
-
           model.swap_index_alias!(to: new_index)
-          Sidekiq.logger.info "Swapped Opensearch index for #{model} from #{current_index} to #{new_index}"
-
           if current_index.present?
             model.__elasticsearch__.delete_index!(index: current_index)
+            Sidekiq.logger.info "Deleted Opensearch index #{current_index} for #{model}"
           end
-
-          Sidekiq.logger.info "Deleted Opensearch index #{current_index} for #{model}"
         else
-          Sidekiq.logger.info "Got #{errors_count} errors while importing #{model} records to Opensearch #{new_index} index"
-          Sidekiq.logger.info "Keeping #{current_index} index"
-
+          Sidekiq.logger.info "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index failed with #{errors_count} errors during the import"
           model.__elasticsearch__.delete_index!(index: new_index)
-          Sidekiq.logger.info "#{new_index} deleted"
+          Sidekiq.logger.info "Kept previous Opensearch index #{current_index} and deleted the new index #{new_index}"
         end
       end
     end

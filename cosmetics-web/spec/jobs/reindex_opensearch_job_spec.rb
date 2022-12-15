@@ -22,26 +22,32 @@ RSpec.describe ReindexOpensearchJob do
       original_index
     end
 
-    it "reindexes the notifications into a new index and deletes the original index" do
-      described_class.perform_now
+    context "when the reindexing is successful" do
+      it "reindexes the notifications into a new index and deletes the original" do
+        described_class.perform_now
 
-      # Reindexed the notification into a new index
-      expect(Notification.current_index).not_to eq(original_index)
-      expect(Notification.index_docs_count).to eq 1
+        # Reindexed the notification into a new index
+        expect(Notification.current_index).not_to eq(original_index)
+        expect(Notification.index_docs_count).to eq 1
 
-      # Deleted the original index
-      expect(Notification.__elasticsearch__.client.indices.exists?(index: original_index)).to be false
+        # Deleted the original index
+        expect(Notification.__elasticsearch__.client.indices.exists?(index: original_index)).to be false
+      end
     end
 
-    it "keeps the original index if the reindexing fails" do
-      allow(Notification).to receive(:import).and_return(1) # 1 error found during import process
+    context "when the reindexing fails" do
+      before do
+        allow(Notification).to receive(:import).and_return(1) # 1 error found during import process
+      end
 
-      expect { described_class.perform_now }.not_to(
-        change { Notification.__elasticsearch__.client.indices.get(index: "_all").keys.size },
-      )
-      # Kept the original index
-      expect(Notification.current_index).to eq(original_index)
-      expect(Notification.index_docs_count).to eq 1
+      it "keeps the original index" do
+        expect { described_class.perform_now }.not_to(
+          change { Notification.__elasticsearch__.client.indices.get(index: "_all").keys.size },
+        )
+        # Kept the original index
+        expect(Notification.current_index).to eq(original_index)
+        expect(Notification.index_docs_count).to eq 1
+      end
     end
   end
   # rubocop:enable RSpec/MultipleExpectations
