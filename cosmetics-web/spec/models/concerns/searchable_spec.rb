@@ -516,7 +516,7 @@ RSpec.describe Searchable, type: :model do
     end
   end
 
-  describe ".searchable_log_tag" do
-    it { expect(dummy_class.searchable_log_tag).to eq "[DummyClassIndex]" }
+  describe ".opensearch_log_tag" do
+    it { expect(dummy_class.opensearch_log_tag).to eq "[DummyClassIndex]" }
   end
 end

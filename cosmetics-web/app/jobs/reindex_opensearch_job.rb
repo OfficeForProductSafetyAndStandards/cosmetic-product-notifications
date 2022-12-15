@@ -39,6 +39,6 @@ class ReindexOpensearchJob < ApplicationJob
 private
 
   def logging(model, msg)
-    Sidekiq.logger.info "#{model.searchable_log_tag} #{msg}"
+    Sidekiq.logger.info "#{model.opensearch_log_tag} #{msg}"
   end
 end
