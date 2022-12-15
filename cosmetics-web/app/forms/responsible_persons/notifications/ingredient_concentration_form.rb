@@ -31,6 +31,7 @@ module ResponsiblePersons::Notifications
     validates :range_concentration,
               inclusion: { in: Ingredient.range_concentrations.keys },
               if: -> { range? }
+    validate :poisonous_ingredients_for_frame_formpulation
     validates_with CasNumberValidator
 
     def initialize(params = {})
@@ -84,6 +85,12 @@ module ResponsiblePersons::Notifications
 
       if Ingredient.where(component_id: component, inci_name: name).where.not(id: updating_ingredient).any?
         errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
+      end
+    end
+
+    def poisonous_ingredients_for_frame_formpulation
+      if component.predefined? && (type == RANGE || (type == EXACT && poisonous == false))
+        errors.add(:poisonous, :wrong_type_of_ingredient)
       end
     end
   end

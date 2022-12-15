@@ -35,7 +35,6 @@ class BulkIngredientCreator
       @ingredients.each do |ingredient|
         result = ingredient.save
         raise ArgumentError unless result
-        result
       end
     end
   rescue ArgumentError

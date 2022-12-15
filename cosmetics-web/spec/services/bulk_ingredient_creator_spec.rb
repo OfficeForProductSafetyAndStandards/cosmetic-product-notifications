@@ -37,7 +37,7 @@ RSpec.describe BulkIngredientCreator do
           Aqua,greater_than_50_less_than_75_percent,497-19-8,non_poisonous
         CSV
       end
-      
+
       it "is not valid" do
         creator = described_class.new(csv, component)
         creator.create
@@ -70,12 +70,12 @@ RSpec.describe BulkIngredientCreator do
         Aqua,65,497-19-8,non_poisonous
       CSV
     end
-    
+
     context "when one ingredient in csv is invalid" do
       let(:component) do
         create(:exact_component)
       end
-      
+
       let(:csv) do
         <<~CSV
           Sodium,35,497-19-8,poisonous
@@ -86,7 +86,7 @@ RSpec.describe BulkIngredientCreator do
 
       it "does not create any ingredients" do
         creator = described_class.new(csv, component)
-        
+
         expect {
           creator.create
         }.not_to change(Ingredient, :count)
@@ -97,7 +97,7 @@ RSpec.describe BulkIngredientCreator do
       let(:component) do
         create(:exact_component)
       end
-      
+
       it "creates records" do
         creator = described_class.new(csv, component)
         expect {

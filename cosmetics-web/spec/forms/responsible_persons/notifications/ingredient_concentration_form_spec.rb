@@ -354,6 +354,28 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         include_examples "name taken validations"
       end
     end
+
+    context "when component is using frame formulation" do
+      let(:component) { create(:predefined_component, contains_poisonous_ingredients: true) }
+      let(:poisonous) { "false" }
+
+      context "when ingredient is range" do
+        let(:type) { "range" }
+
+        it "is not valid" do
+          expect(form).not_to be_valid
+        end
+      end
+
+      context "when ingredients is exact and non poisonous" do
+        let(:type) { "exact" }
+        let(:poisonous) { "false" }
+
+        it "is not valid" do
+          expect(form).not_to be_valid
+        end
+      end
+    end
   end
 
   describe "#range?" do
