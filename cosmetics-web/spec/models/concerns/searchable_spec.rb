@@ -128,6 +128,23 @@ RSpec.describe Searchable, type: :model do
       end
     end
 
+    RSpec.shared_examples "keeping current index" do
+      it "does not create a new index" do
+        travel_to execution_time do
+          import
+          expect(dummy_class.__elasticsearch__.client.indices.exists?(index: new_index_name)).to be false
+        end
+      end
+
+      it "does not delete the previous index associated with the model alias" do
+        travel_to execution_time do
+          expect { import }.not_to change {
+            dummy_class.__elasticsearch__.client.indices.exists?(index: previous_index_name)
+          }.from(true)
+        end
+      end
+    end
+
     context "with forced creation" do
       subject(:import) { dummy_class.import_to_opensearch(force: true) }
 
@@ -136,14 +153,34 @@ RSpec.describe Searchable, type: :model do
         let(:index) { new_index_name }
       end
 
-      context "when there is an existing index associated with the model alias" do
+      context "when there is a current index" do
         before do
           travel_to previous_execution_time do
             dummy_class.create_aliased_index! # Previous index gets created/aliased
           end
         end
 
-        include_examples "deleting previous index"
+        context "without an index to import to" do
+          include_examples "deleting previous index"
+        end
+
+        context "when given an index to import to" do
+          subject(:import) { dummy_class.import_to_opensearch(index: other_index, force: true) }
+
+          let!(:other_index) { dummy_class.create_index! }
+
+          include_examples "keeping current index"
+          include_examples "importing notifications" do
+            let(:index) { other_index }
+          end
+
+          it "deletes and creates the given index" do
+            travel_to execution_time
+            allow(dummy_class.__elasticsearch__).to receive(:create_index!)
+            import
+            expect(dummy_class.__elasticsearch__).to have_received(:create_index!).with(index: other_index, force: true)
+          end
+        end
       end
     end
 
@@ -157,29 +194,35 @@ RSpec.describe Searchable, type: :model do
         end
       end
 
-      context "when there was a previous index" do
+      context "when there is a current index" do
         before do
           travel_to previous_execution_time do
-            dummy_class.create_aliased_index!
+            dummy_class.create_aliased_index! # current_index gets created/aliased
           end
         end
 
-        include_examples "importing notifications" do
-          let(:index) { previous_index_name }
+        context "without an index to import to" do
+          include_examples "keeping current index"
+          include_examples "importing notifications" do
+            let(:index) { previous_index_name }
+          end
         end
 
-        it "does not create a new index" do
-          travel_to execution_time do
+        context "when given an index to import to" do
+          subject(:import) { dummy_class.import_to_opensearch(index: other_index, force: false) }
+
+          let!(:other_index) { dummy_class.create_index! }
+
+          include_examples "keeping current index"
+          include_examples "importing notifications" do
+            let(:index) { other_index }
+          end
+
+          it "does not delete and create the given index" do
+            travel_to execution_time
+            allow(dummy_class.__elasticsearch__).to receive(:create_index!)
             import
-            expect(dummy_class.__elasticsearch__.client.indices.exists?(index: new_index_name)).to be false
-          end
-        end
-
-        it "does not delete the previous index associated with the model alias" do
-          travel_to execution_time do
-            expect { import }.not_to change {
-              dummy_class.__elasticsearch__.client.indices.exists?(index: previous_index_name)
-            }.from(true)
+            expect(dummy_class.__elasticsearch__).not_to have_received(:create_index!).with(index: other_index, force: true)
           end
         end
       end

@@ -87,17 +87,8 @@ module Searchable
 
     # Wraps the Elasticsearch::Model.import method to ensure that set aliases to new index when forcing a new index to
     # be created during the import.
-    def import_to_opensearch(force: false)
-      existing_index = current_index # Stored in var to avoid further HTTP calls to OpenSearch
-
-      index =
-        if existing_index.present? && force
-          __elasticsearch__.delete_index!(index: existing_index)
-          searchable_log "Deleted Opensearch index #{existing_index} for #{name}"
-          create_aliased_index!
-        else
-          existing_index.presence || create_aliased_index!
-        end
+    def import_to_opensearch(index: nil, force: false)
+      index = set_index_to_import_to(index:, force:)
 
       import(index:, scope: "opensearch", refresh: true).tap do |errors_count|
         if errors_count.zero?
@@ -188,6 +179,24 @@ module Searchable
 
     def searchable_log(msg)
       Rails.logger.info "[#{name}Index] #{msg}"
+    end
+
+  private
+
+    def set_index_to_import_to(index:, force:)
+      if index.present?
+        __elasticsearch__.create_index!(index:, force: true) if force
+        index
+      elsif (existing_aliased_index = current_index) # Stored in var to avoid further HTTP calls to OpenSearch
+        if force
+          delete_indices!(existing_aliased_index)
+          create_aliased_index!
+        else
+          existing_aliased_index
+        end
+      else
+        create_aliased_index!
+      end
     end
   end
 end
