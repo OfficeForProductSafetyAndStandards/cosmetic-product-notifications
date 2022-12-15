@@ -247,35 +247,36 @@ RSpec.describe Searchable, type: :model do
     end
   end
 
-  describe ".previous_indices" do
+  describe ".unused_indices" do
     let(:current_index) { "dummies_20221205184135" }
-    let(:stubbed_indices) do
+    let(:all_indices) do
       {
-        "dummies_20221205184133" => {},
-        "dummies_20221205184134" => {},
+        "dummies_20221002184133" => {},
+        "dummies_20221105184134" => {},
         current_index => {},
+        "dummies_20221215093011" => {}, # Index created later but not aliased as current
       }
     end
-    let(:stubbed_indices_client) do
-      instance_double(Elasticsearch::API::Indices::IndicesClient, get: stubbed_indices)
+    let(:stubbed_client) do
+      instance_double(Elasticsearch::API::Indices::IndicesClient, get: all_indices)
     end
 
     before do
-      allow(dummy_class).to receive_message_chain(:__elasticsearch__, :client, :indices).and_return(stubbed_indices_client)
+      allow(dummy_class).to receive_message_chain(:__elasticsearch__, :client, :indices).and_return(stubbed_client)
       allow(dummy_class).to receive(:current_index).and_return(current_index)
     end
 
     it "returns all the indices named after the alias except the current one" do
-      expect(dummy_class.previous_indices).to eq %w[dummies_20221205184133 dummies_20221205184134]
+      expect(dummy_class.unused_indices).to eq %w[dummies_20221002184133 dummies_20221105184134 dummies_20221215093011]
     end
 
     context "when there are no other indices besides the current one" do
-      let(:stubbed_indices) do
+      let(:all_indices) do
         { current_index => {} }
       end
 
       it "returns an empty array" do
-        expect(dummy_class.previous_indices).to eq []
+        expect(dummy_class.unused_indices).to eq []
       end
     end
   end

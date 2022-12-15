@@ -24,14 +24,14 @@ def reindex_opensearch_index_job
   end
 end
 
-def delete_old_opensearch_indices_job
+def delete_unused_opensearch_indices_job
   job = Sidekiq::Cron::Job.new(
-    name: "Delete old Opensearch indices, every Sunday at 1:10 am",
+    name: "Delete unused Opensearch indices, every Sunday at 1:10 am",
     cron: "10 1 * * sun", # Every Sunday at 1:10 am
-    class: "DeleteOldOpensearchIndicesJob",
+    class: "DeleteUnusedOpensearchIndicesJob",
   )
   unless job.save
-    Rails.logger.error "***** WARNING - Delete old Opensearch indices job was not saved! *****"
+    Rails.logger.error "***** WARNING - Delete unused Opensearch indices job was not saved! *****"
     Rails.logger.error job.errors.join("; ")
   end
 end
@@ -78,7 +78,7 @@ end
 Sidekiq.configure_server do |config|
   config.redis = Rails.application.config_for(:redis)
   create_log_db_metrics_job
-  delete_old_opensearch_indices_job
+  delete_unused_opensearch_indices_job
   reindex_opensearch_index_job
   upload_cosmetic_products_containing_nanomaterials_job
   upload_nanomaterial_notifications_job

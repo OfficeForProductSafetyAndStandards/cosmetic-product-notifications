@@ -169,7 +169,7 @@ module Searchable
       end
     end
 
-    def previous_indices
+    def unused_indices
       __elasticsearch__.client.indices.get(index: "#{index_name}*").keys.excluding(current_index)
     end
 
