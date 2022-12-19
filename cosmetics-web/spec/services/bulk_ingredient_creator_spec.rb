@@ -131,13 +131,17 @@ RSpec.describe BulkIngredientCreator do
   end
 
   context "when using invalid CSV" do
+    let(:component) do
+      create(:ranges_component)
+    end
+
     let(:csv) do
       <<~CSV
         Camphor,28,497-19-8,poisonous
       CSV
     end
 
-    it "is valid" do
+    it "is not valid" do
       creator = described_class.new(csv, component)
       creator.create
       expect(creator).not_to be_valid
