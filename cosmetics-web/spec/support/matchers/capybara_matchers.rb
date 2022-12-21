@@ -33,6 +33,16 @@ module PageMatchers
         "Could not find sibling <td> or <dd> containing ‘#{@value}’ within #{@key_element.find(:xpath, '..').native}"
       end
     end
+
+    def failure_message_when_negated
+      if !@key_element
+        "Should not find <th> or <dt> containing ‘#{@key}’ within #{@page.html}, but present"
+      elsif !@sibling_element
+        "Should not find sibling <td> or <dd> containing ‘#{@value}’ within #{@key_element.find(:xpath, '..').native}, but present"
+      else
+        "Should not find sibling <td> or <dd> containing ‘#{@key}’, but present"
+      end
+    end
   end
 
   def have_summary_item(key:, value:)

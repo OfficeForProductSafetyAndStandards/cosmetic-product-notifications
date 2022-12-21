@@ -431,19 +431,6 @@ describe ResponsiblePersons::NotificationsHelper do
         )
       end
 
-      # rubocop:disable RSpec/ExampleLength
-      it "includes the NPIS ingredients if is predefined and contains poisonous ingredients" do
-        allow(component).to receive_messages(predefined?: true, contains_poisonous_ingredients: true)
-        allow(helper).to receive(:render)
-                     .with("notifications/component_details_poisonous_ingredients", anything)
-                     .and_return("Poisonous ingredients HTML")
-        expect(summary_component_rows).to include(
-          { key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about" },
-            value: { html: "Poisonous ingredients HTML" } },
-        )
-      end
-      # rubocop:enable RSpec/ExampleLength
-
       it "does not include the NPIS ingredients if they're not available" do
         allow(component).to receive_messages(predefined?: true, contains_poisonous_ingredients: false)
         expect(summary_component_rows).not_to include(
