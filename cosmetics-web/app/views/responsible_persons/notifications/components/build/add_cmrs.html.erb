@@ -22,7 +22,7 @@
           <div class="govuk-grid-row multi-field-row">
             <%= govukInput(form: cmr_fields,
                           key: :cas_number,
-                          label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
+                          label: { html: "Chemical Abstracts Service (CAS) number <span class='opss-secondary-text govuk-!-font-size-16'>(optional)</span>".html_safe, classes: "multi-field-item-label" },
                           hint: { text: "For example, 1111-11-1" },
                           formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }) %>
             <%= govukInput(form: cmr_fields,
