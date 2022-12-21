@@ -334,6 +334,7 @@ private
       @component.ingredients_file.attach(ingredients_file)
       @creator = BulkIngredientCreator.new(ingredients_file.open.read, @component)
       @creator.create
+
       if @component.valid? && @creator.valid?
         jump_to_step :want_to_add_another_ingredient
       else
@@ -344,6 +345,10 @@ private
       @component.errors.add :ingredients_file, "Upload a list of ingredients"
       rerender_current_step
     end
+  rescue CSV::MalformedCSVError
+    @component.ingredients_file.purge if @component.ingredients_file.attached?
+    @component.errors.add :ingredients_file, "File is not a valid CSV file. Please try again"
+    rerender_current_step
   end
 
   def update_contains_ingredients_npis_needs_to_know

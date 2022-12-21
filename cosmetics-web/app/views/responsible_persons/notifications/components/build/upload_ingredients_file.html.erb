@@ -29,9 +29,11 @@ Upload a file <span class="govuk-!-font-weight-regular govuk-!-font-size-16"> &n
 
           <%= form.label :ingredients_file, "Upload a file", class: "govuk-label govuk-label--s" %>
           <% if @component.errors.any? %>
-            <span id="file-upload-1-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Upload a list of ingredients
-            </span>
+            <% @component.errors.each do |error| %>
+              <span id="file-upload-1-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> <%= error.full_message %>
+              </span>
+            <% end %>
           <% end %>
           <% if @creator && !@creator.valid? %>
             <%= render 'csv_upload_errors' %>

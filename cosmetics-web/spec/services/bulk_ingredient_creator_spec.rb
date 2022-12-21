@@ -12,8 +12,8 @@ RSpec.describe BulkIngredientCreator do
   context "when using ranges CSV" do
     let(:csv) do
       <<~CSV
-        Sodium,greater_than_50_less_than_75_percent,497-19-8,non_poisonous
-        Aqua,greater_than_50_less_than_75_percent,497-19-8,non_poisonous
+        Sodium,50-75,497-19-8,non_poisonous
+        Aqua,50-75,497-19-8,non_poisonous
       CSV
     end
 
@@ -33,8 +33,8 @@ RSpec.describe BulkIngredientCreator do
     context "when trying to create a poisonous range ingredient" do
       let(:csv) do
         <<~CSV
-          Sodium,greater_than_50_less_than_75_percent,497-19-8,poisonous
-          Aqua,greater_than_50_less_than_75_percent,497-19-8,non_poisonous
+          Sodium,50-75,497-19-8,poisonous
+          Aqua,50-75,497-19-8,non_poisonous
         CSV
       end
 
@@ -48,9 +48,9 @@ RSpec.describe BulkIngredientCreator do
     context "when one ingredient in csv is invalid" do
       let(:csv) do
         <<~CSV
-          Sodium,greater_than_50_less_than_75_percent,497-19-8,non_poisonous
-          Aqua,greater_than_50_less_than_75_percent,497-19-8,non_poisonous
-          Acid,foo_bar_greater_than_50_less_than_75_percent,497-19-8,non_poisonous
+          Sodium,50-75,497-19-8,non_poisonous
+          Aqua,50-75,497-19-8,non_poisonous
+          Acid,500-75,497-19-8,non_poisonous
         CSV
       end
 
@@ -80,7 +80,7 @@ RSpec.describe BulkIngredientCreator do
         <<~CSV
           Sodium,35,497-19-8,poisonous
           Aqua,65,497-19-8,non_poisonous
-          Acid,foo_bar_greater_than_50_less_than_75_percent,497-19-8,non_poisonous
+          Acid,50-75,497-19-8,non_poisonous
         CSV
       end
 
@@ -150,7 +150,7 @@ RSpec.describe BulkIngredientCreator do
 
   context "when using different files" do
     let(:csv) do
-      File.read("spec/fixtures/files/Ingredients_ concentrationrange.csv")
+      File.read("spec/fixtures/files/Ingredients_ concentrationrange (2).csv")
     end
 
     it "creates records" do

@@ -1,6 +1,17 @@
 require "csv"
 
 class BulkIngredientCreator
+  RANGE_CONCENTRATION_MAPPING = {
+    "0-0.1" => "less_than_01_percent",
+    "0.1-1" => "greater_than_01_less_than_1_percent",
+    "1-5" => "greater_than_1_less_than_5_percent",
+    "5-10" => "greater_than_5_less_than_10_percent",
+    "10-25" => "greater_than_10_less_than_25_percent",
+    "25-50" => "greater_than_25_less_than_50_percent",
+    "50-75" => "greater_than_50_less_than_75_percent",
+    "75-100" => "greater_than_75_less_than_100_percent",
+  }.freeze
+
   # rubocop:disable Style/MissingRespondToMissing
   ParsedEntry = Struct.new(:line, :ingredient, :line_number) do
     # TODO: weird stuff!
@@ -57,7 +68,7 @@ private
       ingredient.exact_concentration = concentration.to_f
     elsif @component.range?
       ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::RANGE
-      ingredient.range_concentration = concentration
+      ingredient.range_concentration = RANGE_CONCENTRATION_MAPPING[concentration]
     elsif @component.predefined?
       ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::EXACT
       ingredient.exact_concentration = concentration.to_f
