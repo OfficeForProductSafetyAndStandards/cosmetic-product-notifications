@@ -137,7 +137,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    date (3.3.1)
+    date (3.3.3)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -270,7 +270,7 @@ GEM
     minitest (5.16.3)
     multi_json (1.15.0)
     multipart-post (2.1.1)
-    net-imap (0.3.2)
+    net-imap (0.3.3)
       date
       net-protocol
     net-pop (0.1.2)
