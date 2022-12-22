@@ -7,7 +7,6 @@ class Component < ApplicationRecord
     name
     physical_form
     special_applicator
-    acute_poisoning_info
     other_special_applicator
     contains_poisonous_ingredients
     minimum_ph

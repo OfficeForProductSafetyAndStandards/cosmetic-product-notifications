@@ -15,7 +15,7 @@
         <%= govukInput(form: form,
                        key: :cas_number,
                        id: "cas_number",
-                       label: { text: "What is the CAS number?", classes: "govuk-label--s govuk-!-font-weight-regular" },
+                       label: { html: "What is the CAS number? <span class='opss-secondary-text govuk-!-font-size-16'>(optional)</span>".html_safe, classes: "govuk-label--s govuk-!-font-weight-regular" },
                        classes: "govuk-input--width-10") %>
       </div>
     </div>
