@@ -61,16 +61,9 @@
                    locals: { ingredients: component.ingredients.non_poisonous }) %>
       <% end %>
       <% if component.ingredients.poisonous.any? %>
-        <h4 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-2">
+        <h4 class="govuk-heading-s govuk-!-margin-top-5 govuk-!-margin-bottom-2">
           Ingredients the <abbr title="National Poisons Information Service">NPIS</abbr> needs to know about
         </h4>
-        <%= govukSummaryList(
-          classes: "opss-summary-list-mixed",
-          rows: [
-            { key: { text: "Formulation given as" }, value: { text: "Exact concentration" } },
-            { key: { text: "Acute poisoning information" }, value: { text: component.acute_poisoning_info.presence || "None" } },
-          ]
-        ) %>
         <%= render(partial: "responsible_persons/notifications/ingredients",
                    locals: { ingredients: component.ingredients.poisonous }) %>
       <% end %>
