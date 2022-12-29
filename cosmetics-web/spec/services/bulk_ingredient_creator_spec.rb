@@ -38,10 +38,11 @@ RSpec.describe BulkIngredientCreator do
         CSV
       end
 
-      it "is not valid" do
+      it "doesn't create records" do
         creator = described_class.new(csv, component)
-        creator.create
-        expect(creator).not_to be_valid
+        expect {
+          creator.create
+        }.to change(Ingredient, :count).by(0)
       end
     end
 
@@ -150,14 +151,16 @@ RSpec.describe BulkIngredientCreator do
 
   context "when using different files" do
     let(:csv) do
-      File.read("spec/fixtures/files/Ingredients_ concentrationrange (2).csv")
+      File.read("spec/fixtures/files/concentration_ranges.csv")
     end
 
     it "creates records" do
       creator = described_class.new(csv, component)
       expect {
         creator.create
-      }.to change(Ingredient, :count).by(2)
+      }.to change(Ingredient, :count).by(4)
     end
   end
+
+  # TODO: when range concentration is selected, allow poisonous ingredients to be added with exact concentration
 end

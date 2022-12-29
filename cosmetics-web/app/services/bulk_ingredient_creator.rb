@@ -45,7 +45,10 @@ class BulkIngredientCreator
     ActiveRecord::Base.transaction do
       @ingredients.each do |ingredient|
         result = ingredient.save
-        raise ArgumentError unless result
+
+        if result.nil? || !result.persisted?
+          raise ArgumentError
+        end
       end
     end
   rescue ArgumentError
@@ -59,13 +62,15 @@ class BulkIngredientCreator
 
 private
 
+  # Problem:
+  # When parsing an ingredient, we are getting ArgumentError
   def row_to_ingredient(name, concentration, cas, poisonous)
     ingredient = ResponsiblePersons::Notifications::IngredientConcentrationForm.new(
       name:, cas_number: cas, poisonous: poisonous?(poisonous),
     )
     if @component.exact? # || poisonous
       ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::EXACT
-      ingredient.exact_concentration = concentration.to_f
+      ingredient.exact_concentration = concentration
     elsif @component.range?
       ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::RANGE
       ingredient.range_concentration = RANGE_CONCENTRATION_MAPPING[concentration]
