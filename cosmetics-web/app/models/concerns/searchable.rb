@@ -186,7 +186,7 @@ module Searchable
     end
 
     def opensearch_log_tag
-      "[#{name}Index]"
+      "[Opensearch] [#{name}Index]"
     end
 
   private
