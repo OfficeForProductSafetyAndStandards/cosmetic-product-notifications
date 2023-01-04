@@ -1,9 +1,8 @@
 <% content_for :page_title, "Search cosmetic products" %>
 
 <div class="govuk-grid-row">
-  <%= render 'search_box' %>
-
   <%= error_summary(@search_form.errors) %>
+  <%= render 'search_box' %>
 </div>
 
 <div class="govuk-grid-row opss-full-height">
