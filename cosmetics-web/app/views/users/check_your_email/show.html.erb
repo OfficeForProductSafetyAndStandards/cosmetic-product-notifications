@@ -7,6 +7,12 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <p class="govuk-body">
+      <% if local_assigns[:email] %>
+        <%= I18n.t("users.check_your_email.message_sent.with_email", email: local_assigns[:email]) %>
+      <% else %>
+        <%= I18n.t("users.check_your_email.message_sent.generic") %>
+      <% end %>
+      <br>
       <%= I18n.t("users.check_your_email.follow_link") %>
       <br>
       <%= I18n.t("users.check_your_email.check_spam") %>

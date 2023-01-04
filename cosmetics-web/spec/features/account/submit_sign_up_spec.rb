@@ -28,7 +28,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page("signing_up@example.com")
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
@@ -104,7 +104,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page("signing_up@example.com")
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
@@ -131,7 +131,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page("signing_up@example.com")
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
@@ -191,7 +191,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page("signing_up@example.com")
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
@@ -218,7 +218,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page("signing_up@example.com")
 
     travel_to(3.days.from_now)
     email = delivered_emails.last
@@ -264,7 +264,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
       fill_in "Email address", with: user.email.upcase
       click_button "Continue"
 
-      expect_to_be_on_check_your_email_page
+      expect_to_be_on_check_your_email_page(user.email.upcase)
 
       email = delivered_emails.last
       expect(email.recipient).to eq user.email
@@ -294,7 +294,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         fill_in "Email address", with: user.email
         click_button "Continue"
 
-        expect_to_be_on_check_your_email_page
+        expect_to_be_on_check_your_email_page(user.email)
 
         expect(delivered_emails.count).to eq(2)
         email = delivered_emails.last
@@ -354,7 +354,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
           responsible_person: responsible_person.name,
           invite_sender: invitation.inviting_user.name,
         )
-        expect_to_be_on_check_your_email_page
+        expect_to_be_on_check_your_email_page("inviteduser@example.com")
 
         # Invitation link takes the user to the account completion page
         visit invitation_path
@@ -374,7 +374,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page("signing_up@example.com")
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
@@ -410,7 +410,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
 
-    expect_to_be_on_check_your_email_page
+    expect_to_be_on_check_your_email_page("signing_up@example.com")
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
@@ -456,9 +456,9 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("p#full_name-error", text: "Enter a valid name")
   end
 
-  def expect_to_be_on_check_your_email_page
+  def expect_to_be_on_check_your_email_page(email)
     expect(page).to have_css("h1", text: "Check your email")
-    expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")
+    expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to #{email}.")
   end
 
   def user(email = nil)

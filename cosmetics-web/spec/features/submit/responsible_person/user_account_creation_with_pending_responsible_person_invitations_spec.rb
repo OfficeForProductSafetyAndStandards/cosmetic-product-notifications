@@ -74,7 +74,7 @@ RSpec.describe "Creating an account when having pending responsible person invit
     click_button "Continue"
 
     expect(page).to have_css("h1", text: "Check your email")
-    expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to your email address.")
+    expect(page).to have_css(".govuk-body", text: "A message with a confirmation link has been sent to #{invited_user_email}.")
 
     email = delivered_emails.last
     expect(email.recipient).to eq invited_user_email
