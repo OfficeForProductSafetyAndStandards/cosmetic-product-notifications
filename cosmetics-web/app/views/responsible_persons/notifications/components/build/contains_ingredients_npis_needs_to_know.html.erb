@@ -34,8 +34,8 @@
         <%= govukRadios(
               form: form,
               key: :contains_ingredients_npis_needs_to_know,
-              items: [{ text: "Yes", value: "true" },
-                      { text: "No", value: "false" }],
+              items: [{ text: "Yes", value: "true", checked: @component.contains_poisonous_ingredients },
+                      { text: "No", value: "false", checked: @component.contains_poisonous_ingredients == false }], # Don't pre-select it when nil, only when explicitly false.
             ) %>
 
       </fieldset>
