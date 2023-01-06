@@ -9,15 +9,17 @@
 
       <%= error_summary_for(@contact_person) %>
 
-      <h1 class="govuk-heading-l">Contact person for <%= @responsible_person.name %></h1>
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-2">Contact person for <%= @responsible_person.name %></h1>
 
-      <p>A contact person must provide information when the National Poisons Information Service (NPIS) or market surveillance authorities (for example, Trading Standards officers) ask for it.</p>
+      <p class="govuk-body opss-secondary-text govuk-!-margin-bottom-6">
+        A contact person must provide information when the National Poisons Information Service (<abbr>NPIS</abbr>) or market surveillance authorities - such as Trading Standards officers - request it.
+      </p>
 
       <%= govukInput(form: form, key: :name, label: { text: "Full name" }) %>
 
-      <%= govukInput(form: form, key: :email_address, type: :email, label: { text: "Email address" }) %>
+      <%= govukInput(form: form, key: :email_address, type: :email, label: { text: "Email" }) %>
 
-      <%= govukInput(form: form, key: :phone_number, type: :tel, label: { text: "Telephone number" }, classes: "govuk-input--width-20") %>
+      <%= govukInput(form: form, key: :phone_number, type: :tel, label: { text: "Telephone" }, classes: "govuk-input--width-20") %>
 
       <div class="govuk-form-group">
         <%= govukButton text: "Continue" %>
