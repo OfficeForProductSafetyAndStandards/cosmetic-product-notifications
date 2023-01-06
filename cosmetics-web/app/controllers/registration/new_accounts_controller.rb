@@ -11,7 +11,7 @@ module Registration
 
     def create
       if new_account_form.save
-        render "users/check_your_email/show"
+        render "users/check_your_email/show", locals: { email: new_account_form.email }
       else
         render :new
       end
