@@ -22,6 +22,6 @@ class DeleteUnusedOpensearchIndicesJob < ApplicationJob
 private
 
   def log(model, msg)
-    Sidekiq.logger.info "#{model.opensearch_log_tag} #{msg}"
+    Sidekiq.logger.info "[Opensearch]  #{model.opensearch_log_tag} #{msg}"
   end
 end
