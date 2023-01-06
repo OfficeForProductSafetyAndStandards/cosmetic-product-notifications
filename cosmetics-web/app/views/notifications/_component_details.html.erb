@@ -104,7 +104,7 @@
         value: { text: component_special_applicator_name(component) },
       }
     end,
-    if current_user.can_view_product_ingredients?
+    if current_user.can_view_product_ingredients? && component.acute_poisoning_info.present?
       {
         key: { text: "Acute poisoning information" },
         value: { text: component.acute_poisoning_info },
