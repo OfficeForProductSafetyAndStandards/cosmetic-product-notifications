@@ -44,7 +44,7 @@ RSpec.describe ReindexOpensearchJob do
 
         expect(Sidekiq.logger)
           .to have_received(:info)
-          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index")
+          .with("[Opensearch] [NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index")
       end
 
       it "logs the success of the reindexing" do
@@ -52,7 +52,7 @@ RSpec.describe ReindexOpensearchJob do
 
         expect(Sidekiq.logger)
           .to have_received(:info)
-          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index succeeded")
+          .with("[Opensearch] [NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index succeeded")
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe ReindexOpensearchJob do
 
         expect(Sidekiq.logger)
           .to have_received(:info)
-          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index")
+          .with("[Opensearch] [NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index")
       end
 
       it "logs the failure of the reindexing" do
@@ -83,7 +83,7 @@ RSpec.describe ReindexOpensearchJob do
 
         expect(Sidekiq.logger)
           .to have_received(:info)
-          .with("[NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index failed with 1 errors while importing")
+          .with("[Opensearch] [NotificationIndex] Reindexing Opensearch Notification from #{original_index} index to #{new_index} index failed with 1 errors while importing")
       end
     end
   end

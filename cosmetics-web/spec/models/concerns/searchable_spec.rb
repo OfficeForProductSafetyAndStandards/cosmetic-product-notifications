@@ -49,7 +49,7 @@ RSpec.describe Searchable, type: :model do
         import
         expect(Rails.logger)
           .to have_received(:info)
-          .with("[DummyClassIndex] Created new Opensearch index #{new_index_name} for DummyClass")
+          .with("[Opensearch] [DummyClassIndex] Created new Opensearch index #{new_index_name} for DummyClass")
       end
 
       it "sets the model alias pointing to the index" do
@@ -65,7 +65,7 @@ RSpec.describe Searchable, type: :model do
         import
         expect(Rails.logger)
           .to have_received(:info)
-          .with("[DummyClassIndex] Pointed Opensearch DummyClass index alias to index #{new_index_name}")
+          .with("[Opensearch] [DummyClassIndex] Pointed Opensearch DummyClass index alias to index #{new_index_name}")
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe Searchable, type: :model do
         import
         expect(Rails.logger)
           .to have_received(:info)
-          .with("[DummyClassIndex] Deleted Opensearch indices #{previous_index_name} for DummyClass")
+          .with("[Opensearch] [DummyClassIndex] Deleted Opensearch indices #{previous_index_name} for DummyClass")
       end
     end
 
@@ -99,7 +99,7 @@ RSpec.describe Searchable, type: :model do
           import
           expect(Rails.logger)
             .to have_received(:info)
-            .with("[DummyClassIndex] Imported 25 records for DummyClass to Opensearch #{index} index")
+            .with("[Opensearch] [DummyClassIndex] Imported 25 records for DummyClass to Opensearch #{index} index")
         end
 
         it "returns the number of errors found during the import" do
@@ -118,7 +118,7 @@ RSpec.describe Searchable, type: :model do
           import
           expect(Rails.logger)
             .to have_received(:info)
-            .with("[DummyClassIndex] Got 3 errors while importing DummyClass records to Opensearch #{index} index")
+            .with("[Opensearch] [DummyClassIndex] Got 3 errors while importing DummyClass records to Opensearch #{index} index")
         end
 
         it "returns the number of errors found during the import" do
@@ -358,7 +358,7 @@ RSpec.describe Searchable, type: :model do
       dummy_class.create_index!
       expect(Rails.logger)
         .to have_received(:info)
-        .with("[DummyClassIndex] Created new Opensearch index #{expected_index} for DummyClass")
+        .with("[Opensearch] [DummyClassIndex] Created new Opensearch index #{expected_index} for DummyClass")
     end
 
     it "returns the new index name" do
@@ -382,7 +382,7 @@ RSpec.describe Searchable, type: :model do
       dummy_class.delete_indices!(indices)
       expect(Rails.logger)
         .to have_received(:info)
-        .with("[DummyClassIndex] Deleted Opensearch indices #{indices} for DummyClass")
+        .with("[Opensearch] [DummyClassIndex] Deleted Opensearch indices #{indices} for DummyClass")
     end
 
     it { expect(dummy_class.delete_indices!(indices)).to eq true }
@@ -405,7 +405,7 @@ RSpec.describe Searchable, type: :model do
         dummy_class.alias_index!("dummies_version")
         expect(Rails.logger)
           .to have_received(:info)
-          .with("[DummyClassIndex] Pointed Opensearch DummyClass index alias to index dummies_version")
+          .with("[Opensearch] [DummyClassIndex] Pointed Opensearch DummyClass index alias to index dummies_version")
       end
 
       it { expect(dummy_class.alias_index!("dummies_version")).to eq true }
@@ -477,7 +477,7 @@ RSpec.describe Searchable, type: :model do
         dummy_class.swap_index_alias!(from: current_index, to: new_index)
         expect(Rails.logger)
           .to have_received(:info)
-          .with("[DummyClassIndex] Swapped Opensearch DummyClass index alias dummies from index #{current_index} to index #{new_index}")
+          .with("[Opensearch] [DummyClassIndex] Swapped Opensearch DummyClass index alias dummies from index #{current_index} to index #{new_index}")
       end
 
       it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to eq true }
@@ -499,7 +499,7 @@ RSpec.describe Searchable, type: :model do
         dummy_class.swap_index_alias!(from: current_index, to: new_index)
         expect(Rails.logger)
           .to have_received(:info)
-          .with("[DummyClassIndex] Pointed Opensearch DummyClass index alias to index #{new_index}")
+          .with("[Opensearch] [DummyClassIndex] Pointed Opensearch DummyClass index alias to index #{new_index}")
       end
 
       it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to eq true }
@@ -517,6 +517,6 @@ RSpec.describe Searchable, type: :model do
   end
 
   describe ".opensearch_log_tag" do
-    it { expect(dummy_class.opensearch_log_tag).to eq "[DummyClassIndex]" }
+    it { expect(dummy_class.opensearch_log_tag).to eq "[Opensearch] [DummyClassIndex]" }
   end
 end

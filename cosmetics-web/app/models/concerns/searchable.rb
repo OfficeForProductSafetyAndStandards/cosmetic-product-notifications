@@ -62,19 +62,19 @@ module Searchable
   def index_document
     result = __elasticsearch__.index_document
 
-    self.class.opensearch_log "#{self.class} with id=#{id} indexed with result #{result}"
+    self.class.log "#{self.class} with id=#{id} indexed with result #{result}"
   end
 
   def delete_document_from_index
     result = __elasticsearch__.delete_document
 
-    opensearch_log "#{self.class} with id=#{id} deleted from index with result #{result}"
+    log "#{self.class} with id=#{id} deleted from index with result #{result}"
   rescue Elasticsearch::Transport::Transport::Errors::NotFound
-    opensearch_log "Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
+    log "Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
   end
 
-  def opensearch_log(msg)
-    self.class.opensearch_log(msg)
+  def log(msg)
+    self.class.log(msg)
   end
 
   class_methods do
@@ -96,9 +96,9 @@ module Searchable
 
       import(index:, scope: "opensearch", refresh: true).tap do |errors_count|
         if errors_count.zero?
-          opensearch_log "Imported #{index_docs_count(index)} records for #{name} to Opensearch #{index} index"
+          log "Imported #{index_docs_count(index)} records for #{name} to Opensearch #{index} index"
         else
-          opensearch_log "Got #{errors_count} errors while importing #{name} records to Opensearch #{index} index"
+          log "Got #{errors_count} errors while importing #{name} records to Opensearch #{index} index"
         end
       end
     end
@@ -116,14 +116,14 @@ module Searchable
     def create_index!
       index = generate_new_index_name
       __elasticsearch__.create_index!(index:, force: true)
-      opensearch_log "Created new Opensearch index #{index} for #{name}"
+      log "Created new Opensearch index #{index} for #{name}"
       index
     end
 
     # Deletes the given index/indices
     def delete_indices!(indices)
       __elasticsearch__.delete_index!(index: indices) # "Accepts single index or multiple separated by commas"
-      opensearch_log "Deleted Opensearch indices #{indices} for #{name}"
+      log "Deleted Opensearch indices #{indices} for #{name}"
       true
     end
 
@@ -131,7 +131,7 @@ module Searchable
     # The alias name is the 'index_name' declaration in the model.
     def alias_index!(index)
       __elasticsearch__.client.indices.put_alias(index:, name: index_name)
-      opensearch_log "Pointed Opensearch #{name} index alias to index #{index}"
+      log "Pointed Opensearch #{name} index alias to index #{index}"
       true
     end
 
@@ -146,7 +146,7 @@ module Searchable
             { add:    { index: to, alias: index_name } },
           ],
         }
-        opensearch_log "Swapped Opensearch #{name} index alias #{index_name} from index #{from} to index #{to}"
+        log "Swapped Opensearch #{name} index alias #{index_name} from index #{from} to index #{to}"
         true
       else # If the alias does not exist, create it.
         alias_index!(to)
@@ -181,12 +181,12 @@ module Searchable
       __elasticsearch__.client.count(index:)["count"]
     end
 
-    def opensearch_log(msg)
+    def log(msg)
       Rails.logger.info "#{opensearch_log_tag} #{msg}"
     end
 
     def opensearch_log_tag
-      "[#{name}Index]"
+      "[Opensearch] [#{name}Index]"
     end
 
   private

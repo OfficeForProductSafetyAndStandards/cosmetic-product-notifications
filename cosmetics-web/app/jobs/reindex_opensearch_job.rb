@@ -21,16 +21,16 @@ class ReindexOpensearchJob < ApplicationJob
         current_index = model.current_index
         new_index = model.create_index!
 
-        logging(model, "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index")
+        log(model, "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index")
         errors_count = model.import_to_opensearch(index: new_index)
 
         if errors_count.zero?
           model.swap_index_alias!(to: new_index)
           model.delete_indices!(current_index) if current_index.present?
-          logging(model, "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index succeeded")
+          log(model, "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index succeeded")
         else
           model.delete_indices!(new_index)
-          logging(model, "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index failed with #{errors_count} errors while importing")
+          log(model, "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index failed with #{errors_count} errors while importing")
         end
       end
     end
@@ -38,7 +38,7 @@ class ReindexOpensearchJob < ApplicationJob
 
 private
 
-  def logging(model, msg)
+  def log(model, msg)
     Sidekiq.logger.info "#{model.opensearch_log_tag} #{msg}"
   end
 end
