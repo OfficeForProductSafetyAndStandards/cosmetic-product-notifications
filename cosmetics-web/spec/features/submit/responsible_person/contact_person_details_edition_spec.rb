@@ -68,7 +68,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     click_button "Save and continue"
 
     expect(page).to have_h1("Edit the assigned contact email address")
-    expected_error = "Enter an email address in the correct format, like name@example.com"
+    expected_error = "Enter an email in the correct format, like name@example.com"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_email_address")
     expect(page).to have_css("p#contact_person_email_address-error", text: expected_error)
@@ -97,7 +97,7 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
     click_button "Save and continue"
 
     expect(page).to have_h1("Edit the assigned contact telephone number")
-    expected_error = "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
+    expected_error = "Enter a valid telephone, like 0344 411 1444 or +44 7700 900 982"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link(expected_error, href: "#contact_person_phone_number")
     expect(page).to have_css("p#contact_person_phone_number-error", text: expected_error)
