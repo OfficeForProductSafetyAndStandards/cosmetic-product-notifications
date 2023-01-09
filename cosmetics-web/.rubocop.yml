@@ -80,6 +80,10 @@ RSpec/LetSetup:
     - spec/features/account/change_name_spec.rb
     - spec/features/account/change_password_spec.rb
 
+RSpec/MessageChain:
+  Exclude:
+    - spec/models/concerns/searchable_spec.rb
+
 RSpec/MultipleExpectations:
   Max: 2
   Exclude:
