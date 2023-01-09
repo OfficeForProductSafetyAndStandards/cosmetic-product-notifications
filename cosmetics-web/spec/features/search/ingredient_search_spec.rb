@@ -18,7 +18,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     cream
     shower_bubbles
 
-    Notification.opensearch.import force: true
+    Notification.import_to_opensearch(force: true)
 
     sign_in user
   end
