@@ -415,7 +415,11 @@ en:
     blank: "Password can not be blank"
   users:
     check_your_email:
-      body: A message with a confirmation link has been sent to your email address. Please follow the link to continue.
+      message_sent:
+        with_email: A message with a confirmation link has been sent to %{email}.
+        generic: A message with a confirmation link has been sent to your email address.
+      follow_link: Please follow the link to continue.
+      check_spam: If you cannot find the email, check inside your email spam folder.
   sign_user_in:
     email:
       wrong_email_or_password: "Enter correct email address and password"
