@@ -24,7 +24,7 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     notification.components << component
 
     configure_requests_for_search_domain
-    Notification.opensearch.import force: true
+    Notification.import_to_opensearch(force: true)
     sign_in user
   end
 

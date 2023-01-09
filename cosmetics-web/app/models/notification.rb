@@ -50,7 +50,10 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
+  # This is an ElasticSearch alias, not the actual index name.
+  # Current version of the index name is accessible through Notification.current_index.
   index_name [ENV.fetch("OS_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
+
   scope :opensearch, -> { where(state: "notification_complete") }
 
   before_create do
@@ -349,19 +352,6 @@ private
     end
   end
 
-  def index_document
-    result = __elasticsearch__.index_document
-
-    Rails.logger.info "[NotificationIndex] Notification with id=#{id} indexed with result #{result}"
-  end
-
-  def delete_document_from_index
-    result = __elasticsearch__.delete_document
-    Rails.logger.info "[NotificationIndex] Notification with id=#{id} deleted from index with result #{result}"
-  rescue Elasticsearch::Transport::Transport::Errors::NotFound
-    Rails.logger.info "[NotificationIndex] Failed to delete notification with id=#{id}. Reason: Not found in index"
-  end
-
   def product_name_uniqueness
     raise ArgumentError if responsible_person.nil?
 
@@ -373,5 +363,5 @@ end
 
 # for auto sync model with Opensearch
 if Rails.env.development? && ENV["DISABLE_LOCAL_AUTOINDEX"].blank?
-  Notification.opensearch.import force: true
+  Notification.import_to_opensearch force: true
 end

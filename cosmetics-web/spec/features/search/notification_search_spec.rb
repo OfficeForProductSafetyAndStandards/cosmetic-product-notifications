@@ -20,7 +20,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     shower_bubbles
     bath_bubbles
 
-    Notification.opensearch.import force: true
+    Notification.import_to_opensearch(force: true)
 
     sign_in user
   end
@@ -150,7 +150,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     17.times do |i|
       create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion #{i}")
     end
-    Notification.opensearch.import force: true
+    Notification.import_to_opensearch(force: true)
 
     visit "/notifications"
 
@@ -167,7 +167,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     # With 21 results, we should see the pagination
     create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion 17")
-    Notification.opensearch.import force: true
+    Notification.import_to_opensearch(force: true)
 
     visit "/notifications"
 
