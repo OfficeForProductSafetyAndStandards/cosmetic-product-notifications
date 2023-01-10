@@ -25,7 +25,7 @@ module OneOff
     end
 
     def notifications_to_delete
-      @notifications_to_delete ||= Notification.where(reference_number: references_to_delete)
+      @notifications_to_delete ||= Notification.where(reference_number: references_to_delete).order(:reference_number)
     end
 
     def references_to_delete
