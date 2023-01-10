@@ -10,7 +10,6 @@ $(function () {
 
   const filterForm = document.getElementById('new_notification_search_form_filters')
   if (filterForm !== null) {
-    const groupErrors = filterForm.querySelectorAll('.govuk-form-group--error')
     const radioConditionalElements = filterForm.querySelectorAll('.govuk-radios__conditional')
     const radioInputs = filterForm.querySelectorAll('.govuk-radios__input')
     const checkboxes = filterForm.querySelectorAll('.govuk-checkboxes__input')
@@ -29,6 +28,8 @@ $(function () {
       radioConditionalElements.forEach(function (element) {
         element.classList.add('govuk-radios__conditional--hidden')
       })
+
+      const groupErrors = filterForm.querySelectorAll('.govuk-form-group--error')
       if (groupErrors.length <= 0) { // there are no errors in the form
         radioInputs.forEach(function (element) {
           element.setAttribute('aria-expanded', true)
