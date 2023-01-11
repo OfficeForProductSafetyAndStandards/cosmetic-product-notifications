@@ -152,11 +152,11 @@ en:
         contact_person:
           attributes:
             email_address:
-              wrong_format: *invalid_email
-              blank: *empty_email
+              wrong_format: "Enter an email in the correct format, like name@example.com"
+              blank: "Enter an email"
             phone_number:
-              blank: "Telephone number can not be blank"
-              invalid: "Enter a valid telephone number, like 0344 411 1444 or +44 7700 900 982"
+              blank: "Telephone can not be blank"
+              invalid: "Enter a valid telephone, like 0344 411 1444 or +44 7700 900 982"
         ingredient:
           attributes:
             inci_name:
