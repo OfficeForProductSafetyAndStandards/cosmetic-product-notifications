@@ -46,7 +46,7 @@ RSpec.describe OneOff::NotificationBulkDeleter do
     it "logs the references for the deleted notifications" do
       bulk_deleter.call
       expect(Rails.logger).to have_received(:info)
-        .with(/Deleted notifications: \["11039162", "49508706", "16335561", "58914669", "4970943"\]/)
+        .with(/Deleted notifications: \["4970943", "11039162", "16335561", "49508706", "58914669"\]/)
     end
   end
 end
