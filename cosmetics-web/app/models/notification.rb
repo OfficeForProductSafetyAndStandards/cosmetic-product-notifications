@@ -357,7 +357,7 @@ private
     return unless ph_min_value.present? && ph_max_value.present?
 
     if (ph_max_value - ph_min_value).round(2) > 1.0
-      errors.add(:ph_max_value, "The maximum pH cannot be more than 1 higher than the minimum pH")
+      errors.add(:ph_max_value, "The maximum pH cannot be greater than 1 above the minimum pH")
     end
   end
 
