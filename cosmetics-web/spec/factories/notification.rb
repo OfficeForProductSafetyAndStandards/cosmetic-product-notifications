@@ -25,7 +25,7 @@ FactoryBot.define do
     end
 
     trait :ph_values do
-      ph_min_value { 4 }
+      ph_min_value { 7 }
       ph_max_value { 8 }
     end
 
