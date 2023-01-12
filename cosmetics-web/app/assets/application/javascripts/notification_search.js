@@ -28,10 +28,14 @@ $(function () {
       radioConditionalElements.forEach(function (element) {
         element.classList.add('govuk-radios__conditional--hidden')
       })
-      radioInputs.forEach(function (element) {
-        element.setAttribute('aria-expanded', false)
-        element.removeAttribute('checked')
-      })
+
+      const groupErrors = filterForm.querySelectorAll('.govuk-form-group--error')
+      if (groupErrors.length <= 0) { // there are no errors in the form
+        radioInputs.forEach(function (element) {
+          element.setAttribute('aria-expanded', true)
+          element.removeAttribute('checked')
+        })
+      }
       checkboxes.forEach(function (element) {
         element.removeAttribute('checked')
       })
