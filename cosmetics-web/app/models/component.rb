@@ -281,7 +281,7 @@ private
 
   def difference_between_maximum_and_minimum_ph
     if (maximum_ph - minimum_ph).round(2) > 1.0
-      errors.add(:maximum_ph, "The maximum pH cannot be more than 1 higher than the minimum pH")
+      errors.add(:maximum_ph, "The maximum pH cannot be greater than 1 above the minimum pH")
     end
   end
 

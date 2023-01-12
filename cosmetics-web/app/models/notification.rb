@@ -87,6 +87,7 @@ class Notification < ApplicationRecord
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, allow_nil: true
 
   validate :max_ph_is_greater_than_min_ph
+  validate :difference_between_maximum_and_minimum_ph, on: :ph_range
 
   validate :product_name_uniqueness, on: :cloning
 
@@ -349,6 +350,14 @@ private
   def max_ph_is_greater_than_min_ph
     if ph_min_value.present? && ph_max_value.present? && ph_min_value > ph_max_value
       errors.add :ph_range, "The minimum pH must be lower than the maximum pH"
+    end
+  end
+
+  def difference_between_maximum_and_minimum_ph
+    return unless ph_min_value.present? && ph_max_value.present?
+
+    if (ph_max_value - ph_min_value).round(2) > 1.0
+      errors.add(:ph_max_value, "The maximum pH cannot be greater than 1 above the minimum pH")
     end
   end
 
