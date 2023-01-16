@@ -1,4 +1,6 @@
 class SubmitUser < User
+  include SubmitRolesConcern
+
   ALLOW_INTERNATIONAL_PHONE_NUMBER = true
   TOTP_ISSUER = "Submit Cosmetics".freeze
 
@@ -38,30 +40,6 @@ class SubmitUser < User
     return true if !account_security_completed && persisted?
 
     super
-  end
-
-  def poison_centre_user?
-    false
-  end
-
-  def msa_user?
-    false
-  end
-
-  def opss_science_user?
-    false
-  end
-
-  def can_view_product_ingredients?
-    !msa_user? # Could hardcode "true" but leave it as original for User for clarity
-  end
-
-  def can_view_nanomaterial_notification_files?
-    true
-  end
-
-  def can_view_nanomaterial_review_period_end_date?
-    true
   end
 
   def dont_send_confirmation_instructions!
