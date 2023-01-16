@@ -29,7 +29,6 @@ ga_urls = %w[https://www.googletagmanager.com https://www.google-analytics.com]
 
 Rails.application.config.content_security_policy do |policy|
   policy.base_uri(:self)
-  policy.connect_src(*defaults, "http://localhost:3035", "ws://localhost:3035") if Rails.env.development?
   policy.default_src(*defaults)
   policy.font_src(*defaults, :data)
   policy.img_src(*defaults, :data, *ga_urls)

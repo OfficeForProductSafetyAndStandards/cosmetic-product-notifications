@@ -48,58 +48,57 @@ jobs:
           - spec --exclude-pattern "spec/features/**/*_spec.rb"
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1.2
-    - name: Set up Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.16.x
-    - uses: actions/cache@v3
-      with:
-        path: cosmetics-web/vendor/bundle
-        key: ${{ runner.OS }}-gems
-        restore-keys: |
-          ${{ runner.OS }}-gems
-          ${{ runner.OS }}-gems-
-          ${{ runner.OS }}-
-    - uses: actions/cache@v3
-      with:
-        path: cosmetics-web/node_modules
-        key: ${{ runner.OS }}-node
-        restore-keys: |
-          ${{ runner.OS }}-node
-          ${{ runner.OS }}-node-
-          ${{ runner.OS }}-
-    - name: Install Ruby Gems
-      run: |
-        cd cosmetics-web
-        gem install bundler -v 2.3.20
-        bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-    - name: Install JavaScript dependencies
-      run: |
-        cd cosmetics-web
-        npm install yarn -g
-        yarn install
-        bin/webpack
-    - name: Prepare application database
-      run: |
-        cd cosmetics-web
-        bin/rails db:create db:schema:load
-    - name: Run Tests
-      env:
-        TWO_FACTOR_AUTHENTICATION_ENABLED: false
-        CI: true
-        COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
-      run: |
-        cd cosmetics-web
-        # to display branch properly, coveralls needs GIT_BRANCH env var to be set
-        GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec ${{ matrix.rspec-group }}
-    - name: Dump docker logs
-      uses: jwalton/gh-docker-logs@v1
-      if: always()
-      with:
-        images: 'opensearchproject/opensearch'
-
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.12.x
+      - uses: actions/cache@v3
+        with:
+          path: cosmetics-web/vendor/bundle
+          key: ${{ runner.OS }}-gems
+          restore-keys: |
+            ${{ runner.OS }}-gems
+            ${{ runner.OS }}-gems-
+            ${{ runner.OS }}-
+      - uses: actions/cache@v3
+        with:
+          path: cosmetics-web/node_modules
+          key: ${{ runner.OS }}-node
+          restore-keys: |
+            ${{ runner.OS }}-node
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+      - name: Install Ruby Gems
+        run: |
+          cd cosmetics-web
+          gem install bundler -v 2.3.20
+          bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - name: Install JavaScript dependencies
+        run: |
+          cd cosmetics-web
+          npm install yarn -g
+          yarn install
+          bin/webpack
+      - name: Prepare application database
+        run: |
+          cd cosmetics-web
+          bin/rails db:create db:schema:load
+      - name: Run Tests
+        env:
+          TWO_FACTOR_AUTHENTICATION_ENABLED: false
+          CI: true
+          COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
+        run: |
+          cd cosmetics-web
+          # to display branch properly, coveralls needs GIT_BRANCH env var to be set
+          GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec ${{ matrix.rspec-group }}
+      - name: Dump docker logs
+        uses: jwalton/gh-docker-logs@v1
+        if: always()
+        with:
+          images: "opensearchproject/opensearch"

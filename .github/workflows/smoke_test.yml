@@ -35,72 +35,72 @@ jobs:
         ports: ["9200:9200"]
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1.2
-    - name: Set up Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.16.x
-    - uses: actions/cache@v3
-      with:
-        path: cosmetics-web/vendor/bundle
-        key: ${{ runner.OS }}-gems
-        restore-keys: |
-          ${{ runner.OS }}-gems
-          ${{ runner.OS }}-gems-
-          ${{ runner.OS }}-
-    - uses: actions/cache@v3
-      with:
-        path: cosmetics-web/node_modules
-        key: ${{ runner.OS }}-node
-        restore-keys: |
-          ${{ runner.OS }}-node
-          ${{ runner.OS }}-node-
-          ${{ runner.OS }}-
-    - name: Install Ruby Gems
-      env:
-        RAILS_ENV: test
-      run: |
-        cd cosmetics-web
-        gem install bundler -v 2.3.20
-        bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-    - name: Install JavaScript dependencies
-      env:
-        RAILS_ENV: test
-      run: |
-        cd cosmetics-web
-        npm install yarn -g
-        yarn install
-        bin/webpack
-    - name: Prepare application database
-      env:
-        RAILS_ENV: test
-      run: |
-        cd cosmetics-web
-        bin/rails db:create db:schema:load
-    - name: Run Smoke Tests
-      env:
-        OPENSEARCH_URL: localhost
-        RAILS_ENV: test
-        SMOKE_ENV_URL: ${{secrets.SMOKE_ENV_URL}}
-        SMOKE_SEARCH_USER: ${{secrets.SMOKE_SEARCH_USER}}
-        SMOKE_SEARCH_PASSWORD: ${{secrets.SMOKE_SEARCH_PASSWORD}}
-        SMOKE_RELAY_CODE_URL: ${{secrets.SMOKE_RELAY_CODE_URL}}
-        SMOKE_RELAY_CODE_USER: ${{secrets.SMOKE_RELAY_CODE_USER}}
-        SMOKE_RELAY_CODE_PASS: ${{secrets.SMOKE_RELAY_CODE_PASS}}
-        RUN_SMOKE: "true"
-        SMOKE_PRODUCT_NAME: ${{secrets.SMOKE_PRODUCT_NAME}}
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.12.x
+      - uses: actions/cache@v3
+        with:
+          path: cosmetics-web/vendor/bundle
+          key: ${{ runner.OS }}-gems
+          restore-keys: |
+            ${{ runner.OS }}-gems
+            ${{ runner.OS }}-gems-
+            ${{ runner.OS }}-
+      - uses: actions/cache@v3
+        with:
+          path: cosmetics-web/node_modules
+          key: ${{ runner.OS }}-node
+          restore-keys: |
+            ${{ runner.OS }}-node
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+      - name: Install Ruby Gems
+        env:
+          RAILS_ENV: test
+        run: |
+          cd cosmetics-web
+          gem install bundler -v 2.3.20
+          bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - name: Install JavaScript dependencies
+        env:
+          RAILS_ENV: test
+        run: |
+          cd cosmetics-web
+          npm install yarn -g
+          yarn install
+          bin/webpack
+      - name: Prepare application database
+        env:
+          RAILS_ENV: test
+        run: |
+          cd cosmetics-web
+          bin/rails db:create db:schema:load
+      - name: Run Smoke Tests
+        env:
+          OPENSEARCH_URL: localhost
+          RAILS_ENV: test
+          SMOKE_ENV_URL: ${{secrets.SMOKE_ENV_URL}}
+          SMOKE_SEARCH_USER: ${{secrets.SMOKE_SEARCH_USER}}
+          SMOKE_SEARCH_PASSWORD: ${{secrets.SMOKE_SEARCH_PASSWORD}}
+          SMOKE_RELAY_CODE_URL: ${{secrets.SMOKE_RELAY_CODE_URL}}
+          SMOKE_RELAY_CODE_USER: ${{secrets.SMOKE_RELAY_CODE_USER}}
+          SMOKE_RELAY_CODE_PASS: ${{secrets.SMOKE_RELAY_CODE_PASS}}
+          RUN_SMOKE: "true"
+          SMOKE_PRODUCT_NAME: ${{secrets.SMOKE_PRODUCT_NAME}}
 
-      run: |
-        cd cosmetics-web
-        bundle exec rspec spec/smoke/search_smoke_test_spec.rb
-    - uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        fields: repo,message # selectable (default: repo,message)
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SMOKE_SLACK_WEBHOOK_URL }} # required
-      if: failure() # Pick up events even if the job fails or is canceled.
+        run: |
+          cd cosmetics-web
+          bundle exec rspec spec/smoke/search_smoke_test_spec.rb
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SMOKE_SLACK_WEBHOOK_URL }} # required
+        if: failure() # Pick up events even if the job fails or is canceled.

@@ -1,13 +1,15 @@
 // JS
-import Rails from 'rails-ujs'
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
+
 import * as GOVUKFrontend from 'govuk-frontend'
 
-import '../application/javascripts/location_picker'
-import '../application/javascripts/autocomplete'
-import '../application/javascripts/bulk_file_upload_error_handling'
-import '../application/javascripts/image_size_validation'
-import '../application/javascripts/notification_search'
-import '../application/javascripts/form_reset'
+import './location_picker'
+import './autocomplete'
+import './bulk_file_upload_error_handling'
+import './image_size_validation'
+import './notification_search'
+import './form_reset'
 
 import * as ActiveStorage from '@rails/activestorage'
 

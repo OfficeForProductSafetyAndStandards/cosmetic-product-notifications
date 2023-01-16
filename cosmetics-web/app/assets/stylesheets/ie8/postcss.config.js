@@ -1,4 +1,4 @@
-const baseConfig = require('../../../../../postcss.config')
+const baseConfig = require('../../../../postcss.config')
 
 baseConfig.plugins.push(require('oldie'))
 

@@ -2,7 +2,8 @@
 applications:
 - name: ((app-name))
   buildpacks:
-    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.8.57
+    - https://github.com/cloudfoundry/apt-buildpack.git#v0.2.11
+    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.9.0
   routes:
     - route: ((search-host))
     - route: ((submit-host))

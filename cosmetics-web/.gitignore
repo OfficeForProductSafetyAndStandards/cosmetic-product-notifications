@@ -42,6 +42,10 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Asset bundling
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
 # TypeScript v1 declaration files
 typings/
 
