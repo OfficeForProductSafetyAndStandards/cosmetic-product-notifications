@@ -17,7 +17,7 @@ RSpec.describe "Poison centre search" do
     notification2
     notification3
 
-    Notification.opensearch.import force: true
+    Notification.import_to_opensearch(force: true)
   end
 
   describe "Search by post code" do

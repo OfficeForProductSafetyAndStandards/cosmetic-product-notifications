@@ -14,6 +14,12 @@
 
       <h1 class="govuk-fieldset__heading govuk-label--l"><%= title %></h1>
 
+      <%= govukWarningText(
+        iconFallbackText: "Warning",
+        classes: "govuk-!-margin-top-6 govuk-!-margin-bottom-5",
+        text: "You are required to include ingredients accurately."
+      )%>
+
       <%= govukSelect(form: form,
                       key: :frame_formulation,
                       show_all_values: true,

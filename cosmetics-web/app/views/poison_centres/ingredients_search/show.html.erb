@@ -3,6 +3,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full opss-desktop-min-height--s2">
 
+    <%= error_summary(@search_form.errors) %>
+
     <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
       Ingredients search
     </h1>
@@ -36,8 +38,6 @@
 
       </div>
     </details>
-
-    <%= error_summary(@search_form.errors) %>
   </div>
 </div>
 

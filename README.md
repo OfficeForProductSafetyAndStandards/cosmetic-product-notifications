@@ -7,6 +7,7 @@
 ## Guides
 
 * [Review apps](cosmetics-web/docs/REVIEW_APPS.md)
+* [Opensearch](cosmetics-web/docs/Opensearch.md)
 
 ## Inviting Search Users
 

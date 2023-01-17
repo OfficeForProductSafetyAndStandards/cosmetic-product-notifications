@@ -41,5 +41,5 @@ applications:
       command: bin/yarn install && RAILS_MAX_THREADS=((worker-max-threads)) bin/sidekiq -C config/sidekiq.yml
       health-check-type: process
       instances: 1
-      memory: 500M
+      memory: 2G
       disk-quota: 2G
