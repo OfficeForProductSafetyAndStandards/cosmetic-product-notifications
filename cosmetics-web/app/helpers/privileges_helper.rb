@@ -3,7 +3,7 @@
 # it is easier to have single place with all roles definded.
 #
 # All roles have to correspond with roles defined in `Privileges::AbstractConcern` concern.
-module RolesHelper
+module PrivilegesHelper
   delegate :can_view_product_ingredients?, to: :current_user
 
   delegate :can_view_nanomaterial_notification_files?, to: :current_user

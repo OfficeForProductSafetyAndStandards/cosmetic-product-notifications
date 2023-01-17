@@ -1,4 +1,4 @@
-module Priviliges
+module Privileges
   module SubmitConcern
     include AbstractConcern
 

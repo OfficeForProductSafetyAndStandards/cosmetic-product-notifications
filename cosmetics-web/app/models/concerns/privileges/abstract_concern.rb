@@ -6,7 +6,7 @@
 # It can be noticed that some of the priviliges are applicable only to one domain, and the design
 # forces them to be common for both domains. When its true, it simplifies code a lot and until
 # it will become cumbersome to maintain it is recommend to keep it simple.
-module Priviliges
+module Privileges
   module AbstractConcern
     def can_view_product_ingredients?
       raise ArgumentError, "Implement role in each user type roles concern"
