@@ -65,6 +65,7 @@ module ApplicationHelper
   #   end
   # end
 
+
   def error_class(search_form, attribute, part)
     if (attr = search_form[attribute]).is_a? GovUK::DateFromForm::IncompleteDate
       if attr.error_fields.present?

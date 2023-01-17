@@ -55,6 +55,12 @@ module Cosmetics
 
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
 
+    # vips 8.6+ is the minimum required version to use vips as an variant
+    # processor
+    # Because GOV.UK PaaS is currently tied to Ubuntu 18, there is no apt
+    # package available for this, so we need to use mini_magick for now
+    config.active_storage.variant_processor = :mini_magick
+
     # Avoid sassc-rails errors when compressing CSS.
     # See https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil

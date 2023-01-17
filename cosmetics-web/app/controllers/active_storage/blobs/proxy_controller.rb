@@ -6,15 +6,17 @@
 # Only owners and search users have access to files.
 class ActiveStorage::Blobs::ProxyController < ActiveStorage::BaseController
   include ActiveStorage::SetBlob
-  include ActiveStorage::SetHeaders
+  include ActiveStorage::Streaming
   include ActiveStorageAccessProtectionConcern
 
   before_action :authorize_blob
 
   def show
     http_cache_forever public: true do
-      set_content_headers_from @blob
-      stream @blob
+      response.headers["Accept-Ranges"] = "bytes"
+      response.headers["Content-Length"] = @blob.byte_size.to_s
+
+      send_blob_stream @blob, disposition: params[:disposition]
     end
   end
 end
