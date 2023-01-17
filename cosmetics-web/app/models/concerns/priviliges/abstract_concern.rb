@@ -2,6 +2,10 @@
 #
 # All of the priviliges definition should go here for the clarity and then should be reimplemented
 # with concrete code in Submit or Search Concerns.
+#
+# It can be noticed that some of the priviliges are applicable only to one domain, and the design
+# forces them to be common for both domains. When its true, it simplifies code a lot and until
+# it will become cumbersome to maintain it is recommend to keep it simple.
 module Priviliges
   module AbstractConcern
     def can_view_product_ingredients?
