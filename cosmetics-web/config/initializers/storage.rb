@@ -4,10 +4,10 @@
 Rails.application.config.document_analyzers = Rails.application.config.active_storage.analyzers
 
 if ENV.fetch("ANTIVIRUS_ENABLED", "true") == "true"
-  Rails.application.config.document_analyzers.append AntiVirusAnalyzer
+  #Rails.application.config.document_analyzers.append AntiVirusAnalyzer
 end
 
 # MasterAnalyzer is the only one that we pass to active_storage
-Rails.application.config.active_storage.analyzers = [MasterAnalyzer]
+#Rails.application.config.active_storage.analyzers = [MasterAnalyzer]
 Rails.application.config.active_storage.queues.analysis = :cosmetics_active_storage_analysis
 Rails.application.config.active_storage.queues.purge    = :cosmetics_active_storage_purge
