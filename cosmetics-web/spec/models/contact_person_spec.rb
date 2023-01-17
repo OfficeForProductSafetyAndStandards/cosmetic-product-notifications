@@ -14,20 +14,20 @@ RSpec.describe ContactPerson, type: :model do
     contact_person.phone_number = nil
 
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:phone_number]).to include("Telephone number can not be blank")
+    expect(contact_person.errors[:phone_number]).to include("Telephone can not be blank")
   end
 
   it "fails if an email address is not specified" do
     contact_person.email_address = nil
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:email_address]).to include("Enter an email address")
+    expect(contact_person.errors[:email_address]).to include("Enter an email")
   end
 
   it "fails if the email address format is invalid" do
     contact_person.email_address = "invalid_format"
 
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:email_address]).to include("Enter an email address in the correct format, like name@example.com")
+    expect(contact_person.errors[:email_address]).to include("Enter an email in the correct format, like name@example.com")
   end
 
   describe "name database validations" do

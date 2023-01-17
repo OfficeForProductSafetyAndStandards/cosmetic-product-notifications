@@ -375,7 +375,7 @@ RSpec.describe Component, type: :model do
       predefined_component.maximum_ph = 3.01
 
       expect(predefined_component).not_to be_valid(:ph_range)
-      expect(predefined_component.errors[:maximum_ph]).to include("The maximum pH cannot be more than 1 higher than the minimum pH")
+      expect(predefined_component.errors[:maximum_ph]).to include("The maximum pH cannot be greater than 1 above the minimum pH")
     end
 
     context "when changing the pH answer after giving an explicit range" do

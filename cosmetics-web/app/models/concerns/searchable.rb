@@ -86,7 +86,7 @@ module Searchable
         index = (current_index.presence || create_aliased_index!)
         __elasticsearch__.refresh_index! index:
       end
-      __elasticsearch__.search(query.build_query)
+      __elasticsearch__.search(query.build_query, track_total_hits: "true")
     end
 
     # Wraps the Elasticsearch::Model.import method to ensure that set aliases to new index when forcing a new index to
