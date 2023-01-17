@@ -56,13 +56,13 @@
         key: { text: "Are the components mixed?" },
         value: { text: notification.components_are_mixed ? "Yes" : "No" },
       },
-      if current_user.can_view_product_ingredients? && notification.ph_min_value.present?
+      if can_view_product_ingredients? && notification.ph_min_value.present?
         {
           key: { text: "Minimum pH value" },
           value: { text: notification.ph_min_value },
         }
       end,
-      if current_user.can_view_product_ingredients? && notification.ph_max_value.present?
+      if can_view_product_ingredients? && notification.ph_max_value.present?
         {
           key: { text: "Maximum pH value" },
           value: { text: notification.ph_max_value },

@@ -1,5 +1,5 @@
 class SubmitUser < User
-  include SubmitRolesConcern
+  include Priviliges::SubmitConcern
 
   ALLOW_INTERNATIONAL_PHONE_NUMBER = true
   TOTP_ISSUER = "Submit Cosmetics".freeze

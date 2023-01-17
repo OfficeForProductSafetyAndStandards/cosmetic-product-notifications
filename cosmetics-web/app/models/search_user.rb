@@ -1,5 +1,5 @@
 class SearchUser < User
-  include SearchRolesConcern
+  include Priviliges::SearchConcern
 
   INVITATION_EXPIRATION_DAYS = 14
   ALLOW_INTERNATIONAL_PHONE_NUMBER = false
