@@ -17,7 +17,7 @@ class CreateIngredient < ActiveRecord::Migration[6.1]
         t.citext "inci_name", null: false
         t.string "cas_number"
         t.decimal "exact_concentration"
-        t.enum "range_concentration", as: "ingredient_range_concentration"
+        t.enum "range_concentration", enum_type: "ingredient_range_concentration"
         t.boolean "poisonous", default: false, null: false
 
         t.timestamps
