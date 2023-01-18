@@ -12,10 +12,15 @@ module OpenSearchQuery
 
     FIELDS = %w[searchable_ingredients].freeze
 
+    # Date when manual ingredients introduction for notifications was released to the service.
+    # When searching for ingredients, we want to exclude notifications created before this date that may contain imported
+    # ingredients from CPNP.
+    INGREDIENTS_RELEASE_DATE = "2022-10-03".freeze
+
     def initialize(keyword:, match_type:, from_date:, to_date:, group_by: nil, sort_by: nil, responsible_person_id: nil)
       @keyword    = keyword
       @match_type = match_type
-      @from_date  = from_date
+      @from_date  = start_date(from_date)
       @to_date    = to_date
       @group_by   = group_by
       @sort_by    = sort_by.presence || default_sorting
@@ -72,13 +77,13 @@ module OpenSearchQuery
     end
 
     def filter_dates_query
-      return if @from_date.nil? || @to_date.nil?
+      return if @from_date.blank?
 
       {
         range: {
           notification_complete_at: {
-            gte: @from_date,
-            lte: @to_date,
+            gte: @from_date&.to_s,
+            lte: @to_date&.to_s,
           },
         },
       }
@@ -110,6 +115,16 @@ module OpenSearchQuery
 
     def default_sorting
       @keyword.present? ? SCORE_SORTING : DATE_DESCENDING_SORTING
+    end
+
+    def start_date(date)
+      #  Ensures we will search, at least, from the date when manual ingredients introduction was released.
+      ingredients_release_date = Date.parse(INGREDIENTS_RELEASE_DATE)
+      if date && (date > ingredients_release_date)
+        date
+      else
+        ingredients_release_date
+      end
     end
   end
 end
