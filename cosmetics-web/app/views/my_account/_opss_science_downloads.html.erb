@@ -27,7 +27,7 @@
       actions: {
         items: [
           {
-            href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsContainingNanomaterialsJob.file_name)&.url,
+            href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsInLastThreeMonthsContainingNanomaterialsJob.file_name)&.url,
             html: "<span class='opss-download-link-sm'></span>Download".html_safe,
             visuallyHiddenText: "last 3 months of products with nanomaterials",
             classes: "govuk-link--no-visited-state opss-downloads",
@@ -55,7 +55,7 @@
       actions: {
         items: [
           {
-            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsJob.file_name)&.url,
+            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsInLastThreeMonthsJob.file_name)&.url,
             html: "<span class='opss-download-link-sm'></span>Download".html_safe,
             visuallyHiddenText: "last 3 months of notified nanomaterials",
             classes: "govuk-link--no-visited-state opss-downloads",
@@ -83,7 +83,7 @@
       actions: {
         items: [
           {
-            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsJob.file_name)&.url,
+            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsInLastThreeMonthsJob.file_name)&.url,
             html: "<span class='opss-download-link-sm'></span>Download".html_safe,
             visuallyHiddenText: "last 3 months of notified nanomaterials as <abbr>PDF</abbr>s".html_safe,
             classes: "govuk-link--no-visited-state opss-downloads",

@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe UploadCosmeticProductsContainingNanomaterialsJob do
+RSpec.describe UploadCosmeticProductsInLastThreeMonthsContainingNanomaterialsJob do
   include_examples "Active Storage Upload jobs tests"
 
   # rubocop:disable RSpec/ExampleLength
   # rubocop:disable Style/TrailingCommaInArguments
-  it "generates a CSV containing all the products with nanomaterials" do
+  it "generates a CSV containing all the notified products in the last 3 months containing nanomaterials" do
     rp = create(:responsible_person, :with_a_contact_person, name: "Soaps LTD")
     nano = create(:nano_material, inci_name: "Zinc oxide", purposes: %w[colorant preservative])
     nano2 = create(:nano_material, inci_name: "Oxide zinc", purposes: %w[colorant preservative])
@@ -30,7 +30,6 @@ RSpec.describe UploadCosmeticProductsContainingNanomaterialsJob do
       expect(f.read).to eq(
         <<~CSV
           Responsible Person,Cosmetic product name,Date cosmetic product was notified,UKCP number,INCI name,Nanomaterial purposes
-          Soaps LTD,Creamy Cream,#{4.months.ago.to_date},321654,Oxide zinc,"{colorant,preservative}"
           Soaps LTD,Soapy Soap,#{1.day.ago.to_date},123456,Zinc oxide,"{colorant,preservative}"
         CSV
       )
