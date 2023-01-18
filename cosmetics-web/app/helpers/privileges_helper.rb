@@ -1,6 +1,6 @@
-# Each access method that depends on the user type, should be declared in this helper
+# Each access method that depends on the user type, should be declared in this helper.
 # Despite the fact, that the some of the roles are used only in search part of the service,
-# it is easier to have single place with all roles definded.
+# it is easier to have a single place with all roles defined.
 #
 # All methods have to correspond with methods defined in `Privileges::AbstractConcern` concern.
 module PrivilegesHelper
