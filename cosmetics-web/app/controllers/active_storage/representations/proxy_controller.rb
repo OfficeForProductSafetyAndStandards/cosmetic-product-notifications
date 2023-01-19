@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 # Proxy files through application. This avoids having a redirect and makes files easier to cache.
+#
+# WARNING: All Active Storage controllers are publicly accessible by default. The
+# generated URLs are hard to guess, but permanent by design. If your files
+# require a higher level of protection consider implementing
+# {Authenticated Controllers}[https://guides.rubyonrails.org/active_storage_overview.html#authenticated-controllers].
+
+# Cosmetics note:
 # Overrides Rails Controller to enforce access protection beyond the security-through-obscurity
 # factor of the signed blob and variation reference.
 # Only owners and search users have access to files.
@@ -9,9 +16,12 @@
 # /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)
 class ActiveStorage::Representations::ProxyController < ActiveStorage::Representations::BaseController
   include ActiveStorage::Streaming
+
+  # Cosmetics code starts
   include ActiveStorageAccessProtectionConcern
 
   before_action :authorize_blob
+  # Cosmetics code ends
 
   def show
     http_cache_forever public: true do
