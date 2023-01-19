@@ -520,8 +520,8 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
-    strong_migrations (0.7.9)
-      activerecord (>= 5)
+    strong_migrations (1.4.1)
+      activerecord (>= 5.2)
     sync (0.5.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
@@ -642,7 +642,7 @@ DEPENDENCIES
   solargraph (~> 0.44.2)
   solargraph-rails
   stimulus-rails
-  strong_migrations (~> 0.7.9)
+  strong_migrations (~> 1.4.1)
   web-console
   webdrivers
   webmock (~> 3.8)
