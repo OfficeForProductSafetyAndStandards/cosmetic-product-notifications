@@ -19,7 +19,8 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
   context "when using simple search" do
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } }, filter: [] } },
+        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                           filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
           sort: %w[_score] }
       end
     end
@@ -30,7 +31,8 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
 
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_phrase: { searchable_ingredients: { query: "sodium" } } } } },
+        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                           filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
           sort: [{ "responsible_person.id" => { order: "asc" } }, "_score"] }
       end
     end
@@ -41,7 +43,8 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
 
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_phrase: { searchable_ingredients: { query: "sodium" } } } } },
+        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                           filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
           sort: %w[_score] }
       end
     end
@@ -52,7 +55,8 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
 
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_phrase: { searchable_ingredients: { query: "sodium" } } } } },
+        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                           filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
           sort: [{ notification_complete_at: { order: :asc } }] }
       end
     end
@@ -63,7 +67,8 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
 
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_phrase: { searchable_ingredients: { query: "sodium" } } } } },
+        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                           filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
           sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
@@ -75,7 +80,8 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
 
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_phrase: { searchable_ingredients: { query: "sodium" } } } } },
+        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                           filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
           sort: [{ "responsible_person.id" => { order: "asc" } }, { notification_complete_at: { order: :desc } }] }
       end
     end
@@ -87,8 +93,49 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
 
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_phrase: { searchable_ingredients: { query: "sodium" } } } } },
+        { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                           filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
           sort: [{ "responsible_person.id" => { order: "asc" } }, { notification_complete_at: { order: :asc } }] }
+      end
+    end
+  end
+
+  describe "date filters" do
+    context "without date filters" do
+      it "defaults to filter results from the ingredients release date and onwards" do
+        expect(query).to eq(
+          { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                             filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+            sort: %w[_score] },
+        )
+      end
+    end
+
+    context "with from_date and to_date filters" do
+      let(:to_date) { Date.parse("2023-01-12") }
+
+      context "with a from_date posterior to the ingredients release date" do
+        let(:from_date) { Date.parse("2022-11-10") }
+
+        it "filters results from the given from date and onwards" do
+          expect(query).to eq(
+            { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                               filter: [{ range: { notification_complete_at: { gte: "2022-11-10", lte: "2023-01-12" } } }] } },
+              sort: %w[_score] },
+          )
+        end
+      end
+
+      context "with a from_date prior to the ingredients release date" do
+        let(:from_date) { Date.parse("2021-11-10") }
+
+        it "filters results from the ingredients release date and onwards" do
+          expect(query).to eq(
+            { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
+                               filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: "2023-01-12" } } }] } },
+              sort: %w[_score] },
+          )
+        end
       end
     end
   end
