@@ -49,10 +49,23 @@ def upload_cosmetic_products_containing_nanomaterials_job
   end
 end
 
+def upload_cosmetic_products_in_last_three_months_containing_nanomaterials_job
+  job = Sidekiq::Cron::Job.new(
+    name: "Upload a CSV with all Cosmetic products notified in last three months containing nanomaterials every day at 00:10",
+    cron: "10 0 * * *",
+    class: "UploadCosmeticProductsInLastThreeMonthsContainingNanomaterialsJob",
+    queue: "cosmetics",
+  )
+  unless job.save
+    Rails.logger.error "***** WARNING - Upload Cosmetics Products In Last Three Months Containing Nanomaterials CSV job was not saved! *****"
+    Rails.logger.error job.errors.join("; ")
+  end
+end
+
 def upload_nanomaterial_notifications_job
   job = Sidekiq::Cron::Job.new(
-    name: "Upload a CSV with all Nanomaterial Notifications every day at 00:15",
-    cron: "15 0 * * *",
+    name: "Upload a CSV with all Nanomaterial Notifications every day at 00:20",
+    cron: "20 0 * * *",
     class: "UploadNanomaterialNotificationsJob",
     queue: "cosmetics",
   )
@@ -62,15 +75,41 @@ def upload_nanomaterial_notifications_job
   end
 end
 
+def upload_nanomaterial_notifications_in_last_three_months_job
+  job = Sidekiq::Cron::Job.new(
+    name: "Upload a CSV with all Nanomaterial Notifications in last three months every day at 00:30",
+    cron: "30 0 * * *",
+    class: "UploadNanomaterialNotificationsInLastThreeMonthsJob",
+    queue: "cosmetics",
+  )
+  unless job.save
+    Rails.logger.error "***** WARNING - Upload Nanomaterial Notifications In Last Three Months CSV job was not saved! *****"
+    Rails.logger.error job.errors.join("; ")
+  end
+end
+
 def upload_nanomaterials_pdfs_job
   job = Sidekiq::Cron::Job.new(
-    name: "Upload a ZIP with all Nanomaterials safety data sheets every day at 00:30",
-    cron: "30 0 * * *",
+    name: "Upload a ZIP with all Nanomaterials safety data sheets every day at 00:40",
+    cron: "40 0 * * *",
     class: "UploadNanomaterialsPdfsJob",
     queue: "cosmetics",
   )
   unless job.save
     Rails.logger.error "***** WARNING - Upload Nanomaterials PDFs job was not saved! *****"
+    Rails.logger.error job.errors.join("; ")
+  end
+end
+
+def upload_nanomaterials_pdfs_in_last_three_months_job
+  job = Sidekiq::Cron::Job.new(
+    name: "Upload a ZIP with all Nanomaterials safety data sheets in the last three months every day at 00:50",
+    cron: "50 0 * * *",
+    class: "UploadNanomaterialsPdfsInLastThreeMonthsJob",
+    queue: "cosmetics",
+  )
+  unless job.save
+    Rails.logger.error "***** WARNING - Upload Nanomaterials PDFs in last three months job was not saved! *****"
     Rails.logger.error job.errors.join("; ")
   end
 end
@@ -81,8 +120,11 @@ Sidekiq.configure_server do |config|
   delete_unused_opensearch_indices_job
   reindex_opensearch_index_job
   upload_cosmetic_products_containing_nanomaterials_job
+  upload_cosmetic_products_in_last_three_months_containing_nanomaterials_job
   upload_nanomaterial_notifications_job
+  upload_nanomaterial_notifications_in_last_three_months_job
   upload_nanomaterials_pdfs_job
+  upload_nanomaterials_pdfs_in_last_three_months_job
 
   Sidekiq::Status.configure_server_middleware(config)
   Sidekiq::Status.configure_client_middleware(config)
