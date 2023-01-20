@@ -1,0 +1,107 @@
+name: Generate ERD
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  DATABASE_URL: postgres://postgres@localhost:5432
+  OPENSEARCH_URL: http://localhost:9200
+  REDIS_URL: redis://localhost:6379
+  RAILS_ENV: test
+  ANTIVIRUS_URL: http://localhost:3006/safe
+  ANTIVIRUS_USERNAME: av
+  ANTIVIRUS_PASSWORD: password
+  SEARCH_HOST: search
+  SUBMIT_HOST: submit
+  EMAIL_WHITELIST_ENABLED: false
+  TWO_FACTOR_AUTHENTICATION_ENABLED: false
+  CI: true
+
+jobs:
+  ruby:
+    name: Generate ERD
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13.6
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      opensearch:
+        image: opensearchproject/opensearch:1.2.3
+        env:
+          DISABLE_SECURITY_PLUGIN: true
+        ports: ["9200:9200"]
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      redis:
+        image: redis
+        ports:
+        - 6379:6379
+        options: --entrypoint redis-server
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+
+    - name: Set up Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18.12.x
+
+    - name: Install PostgreSQL client
+      run: sudo apt-get install libpq-dev
+
+    - name: Install Graphviz
+      run: sudo apt-get install graphviz
+
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-with-dev-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+
+    - name: Install RubyGems
+      run: |
+        gem install bundler --no-doc
+        bundle config path vendor/bundle
+        bundle check || bundle install --jobs=4 --retry=3
+
+    - name: Install yarn
+      run: npm install yarn -g
+
+    - name: Get yarn cache
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install Node.js dependencies
+      run: yarn install
+
+    - name: Prepare database
+      run: bin/rails parallel:load_schema
+
+    - name: Generate ERD
+      run: |
+        bundle exec erd
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: ERD
+        path: erd.pdf
