@@ -5,6 +5,10 @@ class PostgresCsvUploadJob < ActiveStorageUploadJob
     raise NotImplementedError, "Subclasses must define `sql_query`."
   end
 
+  def self.file_name
+    self::FILE_NAME # FILE_NAME constant needs to be defined in subclasses.
+  end
+
 private
 
   def generate_local_file

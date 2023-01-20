@@ -8,6 +8,7 @@
 
 * [Review apps](cosmetics-web/docs/REVIEW_APPS.md)
 * [Opensearch](cosmetics-web/docs/Opensearch.md)
+* [User Roles](cosmetics-web/docs/ROLES.md)
 
 ## Inviting Search Users
 

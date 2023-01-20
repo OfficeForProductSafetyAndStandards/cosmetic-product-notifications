@@ -62,13 +62,13 @@ module ResponsiblePersons::NotificationsHelper
         key: { text: "Are the items mixed?" },
         value: { text: notification.components_are_mixed ? "Yes" : "No" },
       },
-      if current_user.can_view_product_ingredients? && notification.ph_min_value.present?
+      if can_view_product_ingredients? && notification.ph_min_value.present?
         {
           key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
           value: { text: notification.ph_min_value },
         }
       end,
-      if current_user.can_view_product_ingredients? && notification.ph_max_value.present?
+      if can_view_product_ingredients? && notification.ph_max_value.present?
         {
           key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
           value: { text: notification.ph_max_value },
@@ -148,31 +148,31 @@ module ResponsiblePersons::NotificationsHelper
         key: { text: "Physical form" },
         value: { text: get_physical_form_name(component.physical_form) },
       },
-      if current_user.can_view_product_ingredients?
+      if can_view_product_ingredients?
         {
           key: { text: "Special applicator" },
           value: { text: component.special_applicator.present? ? "Yes" : "No" },
         }
       end,
-      if current_user.can_view_product_ingredients? && component.special_applicator.present?
+      if can_view_product_ingredients? && component.special_applicator.present?
         {
           key: { text: "Applicator type" },
           value: { text: component_special_applicator_name(component) },
         }
       end,
-      if current_user.can_view_product_ingredients? && component.acute_poisoning_info.present?
+      if can_view_product_ingredients? && component.acute_poisoning_info.present?
         {
           key: { text: "Acute poisoning information" },
           value: { text: component.acute_poisoning_info },
         }
       end,
-      if current_user.can_view_product_ingredients? && component.predefined?
+      if can_view_product_ingredients? && component.predefined?
         {
           key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { text: component.poisonous_ingredients_answer },
         }
       end,
-      if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
+      if can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
         {
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
@@ -197,7 +197,7 @@ module ResponsiblePersons::NotificationsHelper
 private
 
   def component_ph_trigger_questions_rows(component)
-    return [] unless current_user.can_view_product_ingredients? && component.trigger_questions
+    return [] unless can_view_product_ingredients? && component.trigger_questions
 
     trigger_question_rows = component.trigger_questions.map(&method(:trigger_question_row))
     ph_row(component)

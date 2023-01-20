@@ -23,7 +23,7 @@
       </td>
     </tr>
 
-    <% if component.nano_materials.non_standard.any? && current_user.can_view_nanomaterial_review_period_end_date? %>
+    <% if component.nano_materials.non_standard.any? && can_view_nanomaterial_review_period_end_date? %>
       <tr class="govuk-table__row">
         <th class="govuk-table__header govuk-!-width-one-half" scope="row">Nanomaterials review period end date</th>
         <td class="govuk-table__cell">

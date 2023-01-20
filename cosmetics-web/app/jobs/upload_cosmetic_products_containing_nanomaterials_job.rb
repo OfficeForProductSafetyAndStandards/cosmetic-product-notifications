@@ -17,10 +17,6 @@ class UploadCosmeticProductsContainingNanomaterialsJob < PostgresCsvUploadJob
 
   FILE_NAME = "CosmeticsProductsContainingNanomaterials.csv".freeze
 
-  def self.file_name
-    self::FILE_NAME
-  end
-
   def self.sql_query
     self::SQL_QUERY
   end

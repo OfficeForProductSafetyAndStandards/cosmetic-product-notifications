@@ -18,7 +18,7 @@
       value: { html: render("application/none_or_bullet_list",
                             entities_list: nano_materials_details(component.nano_materials)) },
     },
-    if component.nano_materials.non_standard.any? && current_user.can_view_nanomaterial_review_period_end_date?
+    if component.nano_materials.non_standard.any? && can_view_nanomaterial_review_period_end_date?
       {
         key: { text: "Nanomaterials review period end date" },
         value: { text: render("application/none_or_bullet_list",
@@ -51,19 +51,19 @@
       key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
       value: { text: get_category_name(component.sub_sub_category) },
     },
-    if current_user.can_view_product_ingredients?
+    if can_view_product_ingredients?
       {
         key: { text: "Formulation given as" },
         value: { text: get_notification_type_name(component.notification_type) },
       }
     end,
-    if current_user.can_view_product_ingredients?
+    if can_view_product_ingredients?
       {
         key: { text: "Frame formulation" },
         value: { text: get_frame_formulation_name(component.frame_formulation) },
       }
     end,
-    if current_user.can_view_product_ingredients? && !component.predefined?
+    if can_view_product_ingredients? && !component.predefined?
       {
         key: { text: "Formulation" },
         value: { html: render("notifications/component_details_formulation_ingredients",
@@ -92,31 +92,31 @@
       key: { text: "Physical form" },
       value: { text: get_physical_form_name(component.physical_form) },
     },
-    if current_user.can_view_product_ingredients?
+    if can_view_product_ingredients?
       {
         key: { text: "Special applicator" },
         value: { text: component.special_applicator.present? ? "Yes" : "No" },
       }
     end,
-    if current_user.can_view_product_ingredients? && component.special_applicator.present?
+    if can_view_product_ingredients? && component.special_applicator.present?
       {
         key: { text: "Applicator type" },
         value: { text: component_special_applicator_name(component) },
       }
     end,
-    if current_user.can_view_product_ingredients? && component.acute_poisoning_info.present?
+    if can_view_product_ingredients? && component.acute_poisoning_info.present?
       {
         key: { text: "Acute poisoning information" },
         value: { text: component.acute_poisoning_info },
       }
     end,
-    if current_user.can_view_product_ingredients? && component.predefined?
+    if can_view_product_ingredients? && component.predefined?
       {
         key: { text: "Contains ingredients NPIS needs to know about" },
         value: { text: component.poisonous_ingredients_answer },
       }
     end,
-    if current_user.can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
+    if can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
       {
         key: { text: "Ingredients NPIS needs to know about" },
         value: { html: render("notifications/component_details_poisonous_ingredients",
@@ -127,7 +127,7 @@
   ].compact
 ) %>
 
-<% if current_user.can_view_product_ingredients? && component.trigger_questions %>
+<% if can_view_product_ingredients? && component.trigger_questions %>
   <%= render "notifications/ph", component: component %>
   <% component.trigger_questions.each do |question| %>
     <% unless question.question == "please_indicate_the_ph" %>
