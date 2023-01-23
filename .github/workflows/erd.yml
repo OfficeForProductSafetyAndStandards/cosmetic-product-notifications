@@ -67,12 +67,14 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
-    - uses: actions/cache@v1
+    - uses: actions/cache@v3
       with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-with-dev-${{ hashFiles('**/Gemfile.lock') }}
+        path: cosmetics-web/vendor/bundle
+        key: ${{ runner.OS }}-gems
         restore-keys: |
-          ${{ runner.os }}-gems-
+          ${{ runner.OS }}-gems
+          ${{ runner.OS }}-gems-
+          ${{ runner.OS }}-
 
     - name: Install RubyGems
       run: |
@@ -82,7 +84,9 @@ jobs:
         bundle check || bundle install --jobs=4 --retry=3
 
     - name: Install yarn
-      run: npm install yarn -g
+      run: |
+        cd cosmetics-web
+        npm install yarn -g
 
     - name: Get yarn cache
       id: yarn-cache
@@ -96,16 +100,21 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: Install Node.js dependencies
-      run: yarn install
+      run: |
+        cd cosmetics-web
+        yarn install
 
     - name: Prepare database
-      run: bin/rails parallel:load_schema
+      run: |
+        cd cosmetics-web
+        bin/rails parallel:load_schema
 
     - name: Generate ERD
       run: |
+        cd cosmetics-web
         bundle exec erd
 
     - uses: actions/upload-artifact@v1
       with:
         name: ERD
-        path: erd.pdf
+        path: cosmetics-web/erd.pdf
