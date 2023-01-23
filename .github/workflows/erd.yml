@@ -107,7 +107,7 @@ jobs:
     - name: Prepare database
       run: |
         cd cosmetics-web
-        bin/rails parallel:load_schema
+        bin/rails db:create db:schema:load
 
     - name: Generate ERD
       run: |
