@@ -9,7 +9,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
       format.html
       format.csv do
         @notifications = NotificationsDecorator.new(@responsible_person.notifications.completed.order(notification_complete_at: :desc))
-        render csv: @notifications, filename: "all-notifications-#{Time.zone.now.to_s(:db)}"
+        render csv: @notifications, filename: "all-notifications-#{Time.zone.now.to_formatted_s(:db)}"
       end
     end
   end

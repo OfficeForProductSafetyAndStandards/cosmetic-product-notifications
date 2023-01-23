@@ -27,7 +27,7 @@
     <% @notified_in_eu_text = capture do %>
       <% case @nanomaterial_notification.eu_notified
         when true %>
-        On <%= @nanomaterial_notification.notified_to_eu_on.to_s(:long) %>
+        On <%= @nanomaterial_notification.notified_to_eu_on.to_formatted_s(:long) %>
       <% when false %>
         No
       <% end %>

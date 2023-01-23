@@ -1,7 +1,7 @@
 # This migration comes from active_storage (originally 20170806125915)
 class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
   def change
-    enable_extension 'citext' unless extension_enabled?('citext')
+    enable_extension "citext" unless extension_enabled?("citext")
 
     create_table :active_storage_blobs do |t|
       t.string   :key,        null: false
