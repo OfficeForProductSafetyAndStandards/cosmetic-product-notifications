@@ -5,6 +5,7 @@ on:
     branches:
       - master
   workflow_dispatch:
+  pull_request: # For testing
 
 env:
   DATABASE_URL: postgres://postgres@localhost:5432
