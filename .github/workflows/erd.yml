@@ -76,6 +76,7 @@ jobs:
 
     - name: Install RubyGems
       run: |
+        cd cosmetics-web
         gem install bundler --no-doc
         bundle config path vendor/bundle
         bundle check || bundle install --jobs=4 --retry=3
