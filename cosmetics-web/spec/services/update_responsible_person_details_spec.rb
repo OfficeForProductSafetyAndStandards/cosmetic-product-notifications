@@ -76,6 +76,7 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
 
   context "when the provided details are the same as the original ones" do
     let!(:result) do
+      responsible_person.reload
       described_class.call(user:, responsible_person:, details: original_details)
     end
 
