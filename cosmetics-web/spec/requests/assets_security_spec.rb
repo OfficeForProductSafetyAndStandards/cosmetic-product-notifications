@@ -15,7 +15,7 @@ RSpec.describe "Asset security", type: :request do
     context "when using blobs redirect controller" do
       # /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                                 active_storage/blobs/redirect#show
       # /rails/active_storage/blobs/:signed_id/*filename(.:format)                                          active_storage/blobs/redirect#show
-      let(:redirect_url) { rails_blob_path(image_upload.file) }
+      let(:redirect_url) { rails_service_blob_path(signed_id, filename: image_upload.filename) }
 
       it "redirects" do
         get redirect_url
