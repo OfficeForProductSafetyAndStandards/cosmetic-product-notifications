@@ -12,7 +12,8 @@ class ResponsiblePerson < ApplicationRecord
   has_many :address_logs,
            class_name: :ResponsiblePersonAddressLog,
            inverse_of: :responsible_person,
-           dependent: :destroy
+           dependent: :destroy,
+           autosave: false
 
   has_many :nanomaterial_notifications, dependent: :destroy
 
