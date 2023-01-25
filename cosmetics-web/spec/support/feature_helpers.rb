@@ -154,9 +154,9 @@ def expect_back_link_to_responsible_person_page
   expect(page).to have_link("Back", href: "/responsible_persons/#{responsible_person.id}")
 end
 
-def expect_to_be_on__what_is_product_called_page
-  expect(page.current_path).to end_with("/build/add_product_name")
-  expect(page).to have_h1("What is the product name??")
+def expect_to_be_on__what_is_product_name_page
+  expect(page.current_path).to end_with("notifications/new")
+  expect(page).to have_h1("What is the product name?")
 end
 
 def expect_back_link_to_what_is_product_called_page
