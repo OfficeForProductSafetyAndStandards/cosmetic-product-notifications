@@ -60,17 +60,15 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: cosmetics-web/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-v3-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
-            ${{ runner.os }}-gems-
+            ${{ runner.os }}-gems-v3-
       - uses: actions/cache@v3
         with:
           path: cosmetics-web/node_modules
-          key: ${{ runner.OS }}-node
+          key: ${{ runner.OS }}-node-v3
           restore-keys: |
-            ${{ runner.OS }}-node
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
+            ${{ runner.OS }}-node-v3
       - name: Install Ruby Gems
         run: |
           cd cosmetics-web
