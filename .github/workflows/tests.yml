@@ -78,7 +78,7 @@ jobs:
         run: |
           cd cosmetics-web
           gem install bundler --no-doc
-          bundle config path cosmetics-web/vendor/bundle
+          bundle config path vendor/bundle
           bundle check || bundle install --without development --jobs=4 --retry=3
 
       - name: Install JavaScript dependencies
