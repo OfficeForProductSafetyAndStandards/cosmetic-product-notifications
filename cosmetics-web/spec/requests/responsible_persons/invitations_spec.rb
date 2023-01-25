@@ -173,12 +173,12 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
       end
 
       it "redirects to the team members page" do
-        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        delete(responsible_person_invitation_path(responsible_person, invitation), params:)
         expect(response).to redirect_to(responsible_person_team_members_path(responsible_person))
       end
 
       it "adds a confirmation message to the response" do
-        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        delete(responsible_person_invitation_path(responsible_person, invitation), params:)
         follow_redirect!
         expect(response.body).to include("The invitation was cancelled")
       end
@@ -194,12 +194,12 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
       end
 
       it "redirects to the team members page" do
-        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        delete(responsible_person_invitation_path(responsible_person, invitation), params:)
         expect(response).to redirect_to(responsible_person_team_members_path(responsible_person))
       end
 
       it "does not add a confirmation message to the response" do
-        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        delete(responsible_person_invitation_path(responsible_person, invitation), params:)
         expect(response.body).not_to include("The invitation was cancelled")
       end
     end
@@ -214,12 +214,12 @@ RSpec.describe "Responsible Person user invitations", :with_stubbed_notify, type
       end
 
       it "render the cancellation page" do
-        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        delete(responsible_person_invitation_path(responsible_person, invitation), params:)
         expect(response).to render_template(:cancel)
       end
 
       it "includes an error message" do
-        delete responsible_person_invitation_path(responsible_person, invitation), params: params
+        delete(responsible_person_invitation_path(responsible_person, invitation), params:)
         expect(response.body).to include("Select yes if you want to cancel the invitation")
       end
     end
