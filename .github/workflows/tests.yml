@@ -49,10 +49,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.3
+
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
@@ -66,28 +68,35 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: cosmetics-web/node_modules
-          key: ${{ runner.OS }}-node-v3
+          key: ${{ runner.OS }}-node
           restore-keys: |
-            ${{ runner.OS }}-node-v3
+            ${{ runner.OS }}-node
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+
       - name: Install Ruby Gems
         run: |
           cd cosmetics-web
           gem install bundler --no-doc
           bundle config path vendor/bundle
           bundle check || bundle install --without development --jobs=4 --retry=3
+
       - name: Install JavaScript dependencies
         run: |
           cd cosmetics-web
           npm install yarn -g
           yarn install
+
       - name: Prepare application database
         run: |
           cd cosmetics-web
           bin/rails db:create db:schema:load
+
       - name: Prepare assets for tests
         run: |
           cd cosmetics-web
           bin/rails test:prepare
+
       - name: Run Tests
         env:
           TWO_FACTOR_AUTHENTICATION_ENABLED: false
@@ -97,6 +106,7 @@ jobs:
           cd cosmetics-web
           # to display branch properly, coveralls needs GIT_BRANCH env var to be set
           GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec ${{ matrix.rspec-group }}
+
       - name: Dump docker logs
         uses: jwalton/gh-docker-logs@v1
         if: always()
