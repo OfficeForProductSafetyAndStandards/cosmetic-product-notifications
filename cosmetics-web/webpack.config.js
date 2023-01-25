@@ -18,6 +18,9 @@ module.exports = {
   module: {
     rules: [{ test: /\.css$/, use: 'css-loader' }],
   },
+  module: {
+    rules: [{ test: /\.(ico|png|svg)$/, use: 'file-loader' }],
+  },
   plugins: [
     // Include plugins
     new webpack.optimize.LimitChunkCountPlugin({
