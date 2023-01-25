@@ -1,6 +1,12 @@
 <% title = "Select formulation type" %>
-<% question = "How do you want to give the formulation of #{@component_name}?" %>
-<% items = formulations_types_label.map { |type_key, type_text| { text: type_text, value: type_key.to_sym, checked: answer_checked?(type_key.to_sym) } } %>
+<% question = "How will you provide the #{@component_name} formulation?" %>
+<% items = formulations_types_label.map { |type_key, type_object| 
+  { text: type_object[:text], 
+    value: type_key.to_sym, 
+    checked: answer_checked?(type_key.to_sym), 
+    label: { classes: type_object[:classes] }, 
+    wrapper_classes: type_object[:wrapper_classes] } 
+} %>
 
 <% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
@@ -16,7 +22,7 @@
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
       <%= error_summary_for(@component, first_values: {notification_type: items[0][:value]}) %>
       <%= govukRadios(
             form: form,
@@ -24,7 +30,14 @@
             fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
             hint: { html:  warning_html },
             items: items,
-          ) %>
+          ) do %>
+          <p class="govuk-body govuk-!-width-three-quarters opss-secondary-text" id="type-hint">
+            There are three formulation types: Predefined frame formulations, exact concentrations and concentration ranges. You can enter information manually or by uploading a <abbr title="Comma Separated Values">CSV</abbr> file.
+          </p>
+          <p class="govuk-body govuk-!-width-three-quarters govuk-!-margin-bottom-8 opss-secondary-text">
+            Learn how you can <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">use a <abbr>CSV</abbr> file (opens in a new tab)</a>.
+          </p>
+        <% end %>
       <%= govukButton text: "Continue" %>
     </div>
   </div>

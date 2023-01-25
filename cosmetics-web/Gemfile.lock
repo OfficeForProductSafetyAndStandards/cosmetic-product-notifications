@@ -1,17 +1,15 @@
 GIT
-  remote: https://github.com/OfficeForProductSafetyAndStandards/govuk-design-system-rails
-  revision: 03acb680418465e1a29cb93477248e71f66bc018
-  tag: 0.9.7
-  specs:
-    govuk-design-system-rails (0.9.7)
-
-GIT
   remote: https://github.com/zilkey/active_hash.git
   revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
   ref: 1c95f99
   specs:
     active_hash (3.1.0)
       activesupport (>= 5.0.0)
+
+PATH
+  remote: ../../govuk-design-system-rails
+  specs:
+    govuk-design-system-rails (0.9.8)
 
 GEM
   remote: https://rubygems.org/
@@ -625,4 +623,4 @@ RUBY VERSION
    ruby 3.1.2
 
 BUNDLED WITH
-   2.3.20
+   2.3.19

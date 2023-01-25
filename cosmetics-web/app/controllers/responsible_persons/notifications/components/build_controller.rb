@@ -1,3 +1,5 @@
+require "csv"
+
 class ResponsiblePersons::Notifications::Components::BuildController < SubmitApplicationController
   NUMBER_OF_CMRS = 5
 
@@ -88,6 +90,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       end
     when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
       @ingredient_concentration_form = ingredient_concentration_form
+    when :upload_ingredients_file
+      @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(@component)
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
@@ -257,11 +261,14 @@ private
   end
 
   def update_select_formulation_type
+    # here we need to use form to provide correct value
     formulation_type = params.dig(:component, :notification_type)
     model.save_routing_answer(step, formulation_type)
     @component.update_formulation_type(formulation_type)
     return rerender_current_step if @component.errors.present?
 
+    # and here we need to add extra step for CSV
+    # so we will be redirected to correct page
     step = {
       "predefined" => :select_frame_formulation,
       "exact" => :add_ingredient_exact_concentration,
@@ -326,7 +333,8 @@ private
 
   def update_upload_ingredients_file
     ingredients_file = params.dig(:component, :ingredients_file)
-    if ingredients_file.blank? && @component.ingredient_file.present?
+    @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, ingredients_file:)
+    if ingredients_file.blank? && @component.ingredients_file.present?
       return jump_to_step(:select_ph_option)
     end
 
@@ -347,7 +355,7 @@ private
     end
   rescue CSV::MalformedCSVError
     @component.ingredients_file.purge if @component.ingredients_file.attached?
-    @component.errors.add :ingredients_file, "File is not a valid CSV file. Please try again"
+    @component.errors.add :ingredients_file, "The selected file must be a CSV file"
     rerender_current_step
   end
 

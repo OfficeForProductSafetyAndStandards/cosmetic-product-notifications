@@ -1,67 +1,14 @@
 require "rails_helper"
 
-RSpec.describe BulkIngredientCreator do
-  let(:component) do
-    create(:ranges_component)
+RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm do
+  let(:form) do
+    described_class.new(component)
+  end
+  let(:file) do
   end
 
   before do
     component
-  end
-
-  context "when using ranges CSV" do
-    let(:csv) do
-      <<~CSV
-        Sodium,50-75,497-19-8,non_poisonous
-        Aqua,50-75,497-19-8,non_poisonous
-      CSV
-    end
-
-    it "is valid" do
-      creator = described_class.new(csv, component)
-      creator.create
-      expect(creator).to be_valid
-    end
-
-    it "creates records" do
-      creator = described_class.new(csv, component)
-      expect {
-        creator.create
-      }.to change(Ingredient, :count).by(2)
-    end
-
-    context "when trying to create a poisonous range ingredient" do
-      let(:csv) do
-        <<~CSV
-          Sodium,50-75,497-19-8,poisonous
-          Aqua,50-75,497-19-8,non_poisonous
-        CSV
-      end
-
-      it "doesn't create records" do
-        creator = described_class.new(csv, component)
-        expect {
-          creator.create
-        }.to change(Ingredient, :count).by(0)
-      end
-    end
-
-    context "when one ingredient in csv is invalid" do
-      let(:csv) do
-        <<~CSV
-          Sodium,50-75,497-19-8,non_poisonous
-          Aqua,50-75,497-19-8,non_poisonous
-          Acid,500-75,497-19-8,non_poisonous
-        CSV
-      end
-
-      it "does not create any ingredients" do
-        creator = described_class.new(csv, component)
-        expect {
-          creator.create
-        }.not_to change(Ingredient, :count)
-      end
-    end
   end
 
   context "when using exact CSV" do
