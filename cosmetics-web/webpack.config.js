@@ -15,6 +15,9 @@ module.exports = {
     sourceMapFilename: '[file].map',
     path: path.resolve(__dirname, 'app/assets/builds')
   },
+  module: {
+    rules: [{ test: /\.css$/, use: 'css-loader' }],
+  },
   plugins: [
     // Include plugins
     new webpack.optimize.LimitChunkCountPlugin({
