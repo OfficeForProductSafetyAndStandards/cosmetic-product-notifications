@@ -15,7 +15,7 @@ env:
 jobs:
   rspec:
     name: "RSpec"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     # Example for can be found here:
     # https://github.com/actions/example-services/tree/master/.github/workflows
