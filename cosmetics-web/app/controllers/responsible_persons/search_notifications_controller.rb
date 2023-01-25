@@ -5,7 +5,6 @@ class ResponsiblePersons::SearchNotificationsController < SubmitApplicationContr
 
   def show
     @search_form = NotificationSearchForm.new(search_params)
-    @search_form.sort_by = OpenSearchQuery::Notification::SCORE_SORTING
     @search_params = search_params
 
     if search_params.present? && params["edit"].nil?
@@ -51,7 +50,7 @@ private
     # instead of defaulting to OpenSearch returning the first 10 hits.
     search_result = Notification.full_search(query).page(params[:page]).per(PER_PAGE)
 
-    SearchHistory.create(query: @search_form.q, results: search_result.results.total)
+    SearchHistory.create(query: @search_form.q, sort_by: @search_form.sort_by, results: search_result.results.total)
 
     search_result
   end
