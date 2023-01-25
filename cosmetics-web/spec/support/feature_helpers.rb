@@ -155,7 +155,7 @@ def expect_back_link_to_responsible_person_page
 end
 
 def expect_to_be_on__what_is_product_name_page
-  expect(page.current_path).to end_with("notifications/new")
+  expect(page.current_path).to match(/.*notifications\/new|.*add_product_name/)
   expect(page).to have_h1("What is the product name?")
 end
 
