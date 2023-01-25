@@ -15,7 +15,7 @@ env:
 jobs:
   rspec:
     name: "RSpec"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     # Example for can be found here:
     # https://github.com/actions/example-services/tree/master/.github/workflows
@@ -60,11 +60,9 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: cosmetics-web/vendor/bundle
-          key: ${{ runner.OS }}-gems
+          key: ${{ runner.os }}-gems-v2-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
-            ${{ runner.OS }}-gems
-            ${{ runner.OS }}-gems-
-            ${{ runner.OS }}-
+            ${{ runner.os }}-gems-v2-
       - uses: actions/cache@v3
         with:
           path: cosmetics-web/node_modules
