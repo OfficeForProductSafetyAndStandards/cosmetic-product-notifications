@@ -16,10 +16,10 @@ module.exports = {
     path: path.resolve(__dirname, 'app/assets/builds')
   },
   module: {
-    rules: [{ test: /\.css$/, use: 'css-loader' }],
+    rules: [{ test: /\.css$/i, use: ['style-loader', 'css-loader'] }],
   },
   module: {
-    rules: [{ test: /\.(ico|png|svg)$/, use: 'file-loader' }],
+    rules: [{ test: /\.(ico|png|svg)$/i, use: 'file-loader' }],
   },
   plugins: [
     // Include plugins
