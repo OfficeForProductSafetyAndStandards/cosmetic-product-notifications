@@ -85,7 +85,9 @@ jobs:
           cd cosmetics-web
           bin/rails db:create db:schema:load
       - name: Prepare assets for tests
-        run: bin/rails test:prepare    
+        run: |
+          cd cosmetics-web
+          bin/rails test:prepare
       - name: Run Tests
         env:
           TWO_FACTOR_AUTHENTICATION_ENABLED: false
