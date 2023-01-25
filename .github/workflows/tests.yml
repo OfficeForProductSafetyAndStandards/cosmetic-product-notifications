@@ -60,9 +60,9 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: cosmetics-web/vendor/bundle
-          key: ${{ runner.os }}-gems-v2-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
-            ${{ runner.os }}-gems-v2-
+            ${{ runner.os }}-gems-
       - uses: actions/cache@v3
         with:
           path: cosmetics-web/node_modules
