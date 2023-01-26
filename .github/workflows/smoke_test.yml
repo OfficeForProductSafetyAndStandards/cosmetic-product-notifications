@@ -74,7 +74,6 @@ jobs:
         cd cosmetics-web
         npm install yarn -g
         yarn install
-        bin/webpack
     - name: Prepare application database
       env:
         RAILS_ENV: test
