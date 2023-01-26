@@ -152,3 +152,7 @@ $RECYCLE.BIN/
 dump.rdb
 
 cosmetics-web/.tool-versions
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+/node_modules
