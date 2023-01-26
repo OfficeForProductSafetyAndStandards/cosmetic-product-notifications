@@ -39,11 +39,11 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.1.2
+        ruby-version: 3.2.0
     - name: Set up Node
       uses: actions/setup-node@v3
       with:
-        node-version: 16.16.x
+        node-version: 18.13.x
     - uses: actions/cache@v3
       with:
         path: cosmetics-web/vendor/bundle
@@ -81,6 +81,8 @@ jobs:
       run: |
         cd cosmetics-web
         bin/rails db:create db:schema:load
+    - name: Prepare assets for tests
+      run: bin/rails test:prepare
     - name: Run Smoke Tests
       env:
         OPENSEARCH_URL: localhost
