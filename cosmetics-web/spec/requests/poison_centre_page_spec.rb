@@ -4,20 +4,28 @@ RSpec.describe "Poison centre page", type: :request do
   include RSpecHtmlMatchers
 
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:notification) { create(:draft_notification, responsible_person:) }
-  let(:params) do
+  let(:notification_exact) { create(:draft_notification, responsible_person:) }
+  let(:params_exact) do
     {
-      reference_number: notification.reference_number,
+      reference_number: notification_exact.reference_number,
+    }
+  end
+  let(:notification_frame_formulation) { create(:draft_notification, responsible_person:) }
+  let(:params_frame_formulation) do
+    {
+      reference_number: notification_frame_formulation.reference_number,
     }
   end
 
   before do
-    component = create(:exact_component, notification:)
-    create(:cmr, name: "Foo CMR", component:)
-    create(:exact_ingredient, exact_concentration: 4, inci_name: "Foo Ingredient", component:)
+    component_exact = create(:exact_component, notification: notification_exact)
+    create(:cmr, name: "Foo CMR", component: component_exact)
+    create(:exact_ingredient, exact_concentration: 4, inci_name: "Foo Ingredient", component: component_exact)
 
-    nano_material = create(:nano_material, notification:, inci_name: "Foo Nanomaterial")
-    create(:component_nano_material, component:, nano_material:)
+    nano_material = create(:nano_material, notification: notification_exact, inci_name: "Foo Nanomaterial")
+    create(:component_nano_material, component: component_exact, nano_material:)
+
+    create(:predefined_component, :completed, notification: notification_frame_formulation)
   end
 
   after do
@@ -31,83 +39,93 @@ RSpec.describe "Poison centre page", type: :request do
       end
 
       it "displays the cosmetics product name " do
-        get poison_centre_notification_path(params)
-        expect(response.body).to include(notification.product_name)
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to include(notification_exact.product_name)
       end
 
       it "displays the product ingredients" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Ingredients")
         expect(response.body).to have_tag("th", text: /Foo Ingredient/)
       end
 
-      it "displays the product frame formulations" do
-        get poison_centre_notification_path(params)
+      it "does not display the product frame formulations for a product with only exact or range ingredients" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).not_to include("Frame formulations")
+      end
+
+      it "displays the product frame formulations for a product with only frame formulations" do
+        get poison_centre_notification_path(params_frame_formulation)
         expect(response.body).to have_tag("h2", text: "Frame formulations")
       end
 
       it "displays the product CMRs" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("td#cmr-names", text: /Foo CMR/)
       end
 
       it "displays the product Nanomaterials" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("td", text: /Foo Nanomaterial/)
       end
 
       it "displays the Responsible Person" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Contact person")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
 
-    context "with a Market Surveilance Authority user" do
+    context "with a Market Surveillance Authority user" do
       before do
         sign_in_as_msa_user
       end
 
       it "displays the cosmetics product name " do
-        get poison_centre_notification_path(params)
-        expect(response.body).to include(notification.product_name)
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to include(notification_exact.product_name)
       end
 
       it "does not display the product ingredients" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).not_to include("Ingredients")
         expect(response.body).not_to include("Foo Ingredient")
       end
 
-      it "does not display the product frame formulations" do
-        get poison_centre_notification_path(params)
+      it "does not display the product frame formulations for a product with only exact or range ingredients" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).not_to include("Frame formulations")
+      end
+
+      it "does not display the product frame formulations for a product with only frame formulations" do
+        get poison_centre_notification_path(params_frame_formulation)
         expect(response.body).not_to include("Frame formulations")
       end
 
       it "displays the product CMRs" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("dd", text: /Foo CMR/)
       end
 
       it "displays the product Nanomaterials" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("dd", text: /Foo Nanomaterial/)
       end
 
       it "displays the Responsible Person" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Contact person")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
@@ -119,39 +137,44 @@ RSpec.describe "Poison centre page", type: :request do
       end
 
       it "displays the cosmetics product name " do
-        get poison_centre_notification_path(params)
-        expect(response.body).to include(notification.product_name)
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to include(notification_exact.product_name)
       end
 
       it "displays the product ingredients" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Ingredients")
         expect(response.body).to have_tag("th", text: /Foo Ingredient/)
       end
 
-      it "displays the product frame formulations" do
-        get poison_centre_notification_path(params)
+      it "does not display the product frame formulations for a product with only exact or range ingredients" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).not_to include("Frame formulations")
+      end
+
+      it "displays the product frame formulations for a product with only frame formulations" do
+        get poison_centre_notification_path(params_frame_formulation)
         expect(response.body).to have_tag("h2", text: "Frame formulations")
       end
 
       it "displays the product CMRs" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("td#cmr-names", text: /Foo CMR/)
       end
 
       it "displays the product Nanomaterials" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("td", text: /Foo Nanomaterial/)
       end
 
       it "displays the Responsible Person" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Responsible Person")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
       end
 
       it "displays the Contact Person" do
-        get poison_centre_notification_path(params)
+        get poison_centre_notification_path(params_exact)
         expect(response.body).to have_tag("h2", text: "Contact person")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
