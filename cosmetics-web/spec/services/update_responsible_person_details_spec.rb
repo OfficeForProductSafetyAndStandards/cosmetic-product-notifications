@@ -200,6 +200,7 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
     context "with an exception while attempting to archive the previous address" do
       let(:address_log_stub) do
         instance_double(ResponsiblePersonAddressLog,
+                        "responsible_person=": nil,
                         line_1: nil,
                         line_2: nil,
                         city: nil,

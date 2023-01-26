@@ -14,8 +14,11 @@ class UpdateResponsiblePersonDetails
 
     ActiveRecord::Base.transaction do
       responsible_person.update!(details)
+
       if address_changed?
+        previous_address.responsible_person = responsible_person
         previous_address.save!
+
         send_confirmation_email
         send_alert_emails
         context.changed = true
@@ -70,7 +73,6 @@ private
 
   def previous_address
     @previous_address ||= ResponsiblePersonAddressLog.new(
-      responsible_person:,
       line_1: responsible_person.address_line_1,
       line_2: responsible_person.address_line_2,
       city: responsible_person.city,
