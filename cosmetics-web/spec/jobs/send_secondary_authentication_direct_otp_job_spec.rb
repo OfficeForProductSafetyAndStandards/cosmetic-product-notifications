@@ -5,11 +5,11 @@ RSpec.describe SendSecondaryAuthenticationDirectOtpJob do
   let(:code) { 123 }
 
   it "send the otp code" do
-    allow(SendSubmitSMS).to receive(:otp_code)
+    allow(SendSubmitSms).to receive(:otp_code)
 
     described_class.perform_now(user, code)
 
-    expect(SendSubmitSMS)
+    expect(SendSubmitSms)
       .to have_received(:otp_code)
       .with(mobile_number: user.mobile_number, code:)
   end
