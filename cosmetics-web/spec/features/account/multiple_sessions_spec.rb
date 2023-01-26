@@ -46,11 +46,13 @@ RSpec.feature "One user can use only one session", :with_2fa, :with_stubbed_mail
 
       expect(page).to have_current_path(path)
 
-      stolen_cookies = Capybara.current_session.driver.request.cookies
+      stolen_cookies = Capybara.current_session.driver.browser.current_session.cookie_jar.to_hash
 
       Capybara.using_session("Other browser") do
+        visit path
+        expect(page).to have_current_path("/sign-in")
         stolen_cookies.each do |k, v|
-          page.driver.browser.set_cookie("#{k}=#{v}")
+          page.driver.browser.current_session.cookie_jar[k] = v
         end
         visit path
         expect(page).to have_current_path(path)
