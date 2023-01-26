@@ -10,5 +10,4 @@ import './form_reset'
 import './govuk_frontend'
 import './upload_handlers'
 
-
 window.GOVUKFrontend = GOVUKFrontend
