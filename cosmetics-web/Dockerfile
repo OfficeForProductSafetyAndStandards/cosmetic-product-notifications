@@ -30,5 +30,6 @@ WORKDIR /cosmetics-web
 COPY ./cosmetics-web .
 
 RUN yarn install
+RUN gem update --system '3.4.4'
 RUN bin/bundle check || bin/bundle install
 RUN yarn build
