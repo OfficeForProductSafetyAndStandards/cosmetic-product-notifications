@@ -60,9 +60,9 @@ services:
       - TEST_DATABASE_URL=postgres://db/cosmetics_test?user=postgres
       - OPENSEARCH_URL=http://opensearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search-cosmetics
-      - SUBMIT_HOST=submit-cosmetics
-      - COSMETICS_HOST=submit-cosmetics
+      - SEARCH_HOST=search_cosmetics
+      - SUBMIT_HOST=submit_cosmetics
+      - COSMETICS_HOST=submit_cosmetics
       - ANTIVIRUS_ENABLED=false
 
   cosmetics-worker:
@@ -80,8 +80,8 @@ services:
       - OPENSEARCH_URL=http://opensearch:9200
       - REDIS_URL=redis://redis:6379
       - ANTIVIRUS_ENABLED=false
-      - SEARCH_HOST=search-cosmetics
-      - SUBMIT_HOST=submit-cosmetics
+      - SEARCH_HOST=search_cosmetics
+      - SUBMIT_HOST=submit_cosmetics
       - COSMETICS_HOST=submit-cosmetics
     depends_on:
       - db
