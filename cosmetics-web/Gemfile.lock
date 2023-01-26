@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/OfficeForProductSafetyAndStandards/govuk-design-system-rails
-  revision: 03acb680418465e1a29cb93477248e71f66bc018
-  tag: 0.9.7
+  remote: https://github.com/govuk-ruby/govuk-design-system-rails
+  revision: de4ad6e0d4bcc53d0d5017aae6c344521c50b230
+  tag: 0.9.9
   specs:
-    govuk-design-system-rails (0.9.7)
+    govuk-design-system-rails (0.9.9)
 
 GIT
   remote: https://github.com/zilkey/active_hash.git
