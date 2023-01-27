@@ -22,6 +22,23 @@ RSpec.describe SearchUser, type: :model do
     end
   end
 
+  describe "#can_view_ingredients_list?" do
+    it "is false for MSA users" do
+      user.role = :msa
+      expect(user).not_to be_can_view_ingredients_list
+    end
+
+    it "is true for Poison Centre users" do
+      user.role = :poison_centre
+      expect(user).to be_can_view_ingredients_list
+    end
+
+    it "is false for OPSS Science users" do
+      user.role = :opss_science
+      expect(user).not_to be_can_view_ingredients_list
+    end
+  end
+
   describe "#can_view_nanomaterial_notification_files?" do
     it "is false for MSA users" do
       user.role = :msa

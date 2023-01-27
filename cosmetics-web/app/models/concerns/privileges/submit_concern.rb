@@ -6,6 +6,10 @@ module Privileges
       true
     end
 
+    def can_view_ingredients_list?
+      true
+    end
+
     def can_view_nanomaterial_notification_files?
       true
     end
