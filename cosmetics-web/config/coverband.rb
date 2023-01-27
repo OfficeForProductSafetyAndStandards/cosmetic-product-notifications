@@ -19,4 +19,16 @@ Coverband.configure do |config|
 
   # Password to access the web interface
   config.password = ENV["COVERBAND_PASS"]
+
+  # Files ignored in the coverage report
+  config.ignore +=  ["config/application.rb",
+                     "config/boot.rb",
+                     "config/coverband.rb",
+                     "config/environment.rb",
+                     "config/puma.rb",
+                     "config/schedule.rb",
+                     "bin/.*",
+                     "config/environments/.*",
+                     "lib/console.rb",
+                     "lib/tasks/.*"]
 end
