@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/govuk-ruby/govuk-design-system-rails
-  revision: de4ad6e0d4bcc53d0d5017aae6c344521c50b230
-  tag: 0.9.9
-  specs:
-    govuk-design-system-rails (0.9.9)
-
-GIT
   remote: https://github.com/zilkey/active_hash.git
   revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
   ref: 1c95f99
@@ -208,6 +201,7 @@ GEM
       raabro (~> 1.1)
     globalid (1.0.1)
       activesupport (>= 5.0)
+    govuk-design-system-rails (0.10.1)
     govuk_notify_rails (2.1.2)
       notifications-ruby-client (~> 5.1)
       rails (>= 4.1.0)
@@ -575,7 +569,7 @@ DEPENDENCIES
   elasticsearch-rails
   factory_bot_rails
   faker
-  govuk-design-system-rails!
+  govuk-design-system-rails (~> 0.10.1)
   govuk_notify_rails (~> 2.1.0)
   image_processing (~> 1.2)
   interactor
