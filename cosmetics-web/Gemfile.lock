@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/OfficeForProductSafetyAndStandards/coverband.git
+  revision: 1a51d00a5f450d0f74209ccba6cf651f837c7fd0
+  specs:
+    coverband (5.2.6.rc.1)
+      redis (>= 3.0)
+
+GIT
   remote: https://github.com/zilkey/active_hash.git
   revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
   ref: 1c95f99
@@ -561,6 +568,7 @@ DEPENDENCIES
   capybara-screenshot
   cf-app-utils (~> 0.6)
   coveralls_reborn (~> 0.22.0)
+  coverband!
   devise
   devise-security
   dotenv-rails (~> 2.7.5)
