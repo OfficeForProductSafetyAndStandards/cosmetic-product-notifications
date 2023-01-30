@@ -10,7 +10,7 @@ Coverband.configure do |config|
   config.verbose = false
 
   # default false. button at the top of the web interface which clears all data
-  config.web_enable_clear = true
+  config.web_enable_clear = false
 
   # default false. Experimental support for tracking view layer tracking.
   # Does not track line-level usage, only indicates if an entire file
