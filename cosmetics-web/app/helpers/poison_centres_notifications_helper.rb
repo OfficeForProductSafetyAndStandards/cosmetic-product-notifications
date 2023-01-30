@@ -1,6 +1,7 @@
 module PoisonCentresNotificationsHelper
   INGREDIENTS_SEARCH = "ingredients_search".freeze
   NOTIFICATIONS_SEARCH = "notifications_search".freeze
+  INGREDIENTS_LIST = "ingredients_list".freeze
 
   def search_date_filter_group_error_class(*fields)
     error_present = fields.any? do |field|
@@ -31,6 +32,10 @@ module PoisonCentresNotificationsHelper
     params[:back_to] == INGREDIENTS_SEARCH
   end
 
+  def back_to_ingredients_list?
+    params[:back_to] == INGREDIENTS_LIST
+  end
+
   def active_page_class(page)
     if is_current_page(page)
       "class='opss-left-nav__active'".html_safe
@@ -50,12 +55,21 @@ module PoisonCentresNotificationsHelper
     when :ingredients_search
       params[:controller] == "poison_centres/ingredients_search"
     when :ingredients_list
-      params[:controller] == "poison_centres/ingredients"
+      params[:controller] == "poison_centres/ingredients" && params[:action] == "index"
+    when :ingredients_list_responsible_persons
+      params[:controller] == "poison_centres/ingredients" && params[:action] == "responsible_persons"
+    when :ingredients_list_responsible_person_notifications
+      params[:controller] == "poison_centres/ingredients" && params[:action] == "responsible_person_notifications"
     end
   end
 
   def ingredient_search_option(label, value)
     selected = params[:group_by] == value ? "selected=\"selected\"" : ""
+    "<option value=\"#{value}\" #{selected}>#{label}</option>".html_safe
+  end
+
+  def responsible_person_search_option(label, value)
+    selected = params[:sort_by] == value ? "selected=\"selected\"" : ""
     "<option value=\"#{value}\" #{selected}>#{label}</option>".html_safe
   end
 
