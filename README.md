@@ -87,7 +87,7 @@ if there are changes to the Docker config:
 
 Initialise the database:
 
-    docker-compose run cosmetics-web bin/rake db:create db:schema:load
+    DISABLE_LOCAL_AUTOINDEX=true docker-compose run cosmetics-web bin/rake db:create db:schema:load
 
 Restart the website (which may have crashed):
 

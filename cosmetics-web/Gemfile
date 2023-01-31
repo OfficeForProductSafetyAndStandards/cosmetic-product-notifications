@@ -20,7 +20,7 @@ gem "devise-security"
 gem "elasticsearch", "7.17.1"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
-gem "govuk-design-system-rails", git: "https://github.com/govuk-ruby/govuk-design-system-rails", tag: "0.9.9"
+gem "govuk-design-system-rails", "~> 0.10.1"
 gem "govuk_notify_rails", "~> 2.1.0"
 gem "image_processing", "~> 1.2"
 gem "interactor"
@@ -52,6 +52,8 @@ gem "strong_migrations", "~> 0.7.9"
 gem "webpacker", "~> 5.0"
 gem "webrick", "~> 1.7"
 gem "wicked", "~> 1.3.4"
+
+gem "coverband", git: "https://github.com/OfficeForProductSafetyAndStandards/coverband.git"
 
 group :development do
   gem "rails-erd"

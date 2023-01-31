@@ -40,6 +40,10 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
   end
 
+  if ENV["COVERBAND_PASS"]
+    mount Coverband::Reporters::Web.new, at: "/coverage"
+  end
+
   constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
     devise_for :search_users,
                path: "",

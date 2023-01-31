@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/govuk-ruby/govuk-design-system-rails
-  revision: de4ad6e0d4bcc53d0d5017aae6c344521c50b230
-  tag: 0.9.9
+  remote: https://github.com/OfficeForProductSafetyAndStandards/coverband.git
+  revision: 1a51d00a5f450d0f74209ccba6cf651f837c7fd0
   specs:
-    govuk-design-system-rails (0.9.9)
+    coverband (5.2.6.rc.1)
+      redis (>= 3.0)
 
 GIT
   remote: https://github.com/zilkey/active_hash.git
@@ -208,6 +208,7 @@ GEM
       raabro (~> 1.1)
     globalid (1.0.1)
       activesupport (>= 5.0)
+    govuk-design-system-rails (0.10.1)
     govuk_notify_rails (2.1.2)
       notifications-ruby-client (~> 5.1)
       rails (>= 4.1.0)
@@ -440,7 +441,7 @@ GEM
     rubyzip (2.3.2)
     scout_apm (5.3.3)
       parser
-    selenium-webdriver (4.7.1)
+    selenium-webdriver (4.8.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -538,7 +539,7 @@ GEM
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
-    webrick (1.7.0)
+    webrick (1.8.1)
     websocket (1.2.9)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -547,8 +548,7 @@ GEM
       railties (>= 3.0.7)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yard (0.9.28)
-      webrick (~> 1.7.0)
+    yard (0.9.26)
     zeitwerk (2.6.6)
 
 PLATFORMS
@@ -567,6 +567,7 @@ DEPENDENCIES
   capybara-screenshot
   cf-app-utils (~> 0.6)
   coveralls_reborn (~> 0.22.0)
+  coverband!
   devise
   devise-security
   dotenv-rails (~> 2.7.5)
@@ -575,7 +576,7 @@ DEPENDENCIES
   elasticsearch-rails
   factory_bot_rails
   faker
-  govuk-design-system-rails!
+  govuk-design-system-rails (~> 0.10.1)
   govuk_notify_rails (~> 2.1.0)
   image_processing (~> 1.2)
   interactor
