@@ -34,7 +34,7 @@ RSpec.feature "One user can use only one session", :with_2fa, :with_stubbed_mail
       Capybara.using_session("Other browser") do
         sign_in
         expect(page).to have_current_path(path)
-        click_link "Sign out"
+        click_button "Sign out"
       end
 
       visit path
