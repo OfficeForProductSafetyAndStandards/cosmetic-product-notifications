@@ -2,6 +2,8 @@ class PoisonCentres::IngredientsController < SearchApplicationController
   PER_PAGE = 200
 
   def index
+    return redirect_to root_path unless helpers.can_view_ingredients_list?
+
     ingredient_list = case params[:sort_by]
                       when "date"
                         Ingredient.unique_names_by_created_last
