@@ -31,7 +31,7 @@
           <% end %>
           <% if current_user %>
             <li class="govuk-header__navigation-item">
-              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "govuk-header__link" %>
+              <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "govuk-header__link sign-out-link" %>
             </li>
           <% else %>
             <li class="govuk-header__navigation-item">

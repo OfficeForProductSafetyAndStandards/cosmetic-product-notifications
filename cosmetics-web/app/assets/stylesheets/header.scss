@@ -10,10 +10,12 @@ $navbar-link-colour: #ffffff;
 
   &:hover {
     text-decoration: underline;
+    text-decoration-thickness: 3px;
   }
 
   @include remove-default-button-styling;
   @include govuk-link-common;
+  text-decoration: none;
   padding: 0;
 }
 
