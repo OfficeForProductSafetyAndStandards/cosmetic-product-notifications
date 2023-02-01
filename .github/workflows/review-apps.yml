@@ -82,7 +82,7 @@ jobs:
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
 
-    - name: Send new release version to Sentry
+    - name: Send release version to Sentry
       if: success()
       env:
         SENTRY_ORG: beis
