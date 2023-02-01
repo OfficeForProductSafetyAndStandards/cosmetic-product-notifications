@@ -1,15 +1,17 @@
 GIT
+  remote: https://github.com/govuk-ruby/govuk-design-system-rails
+  revision: 900341cf07f9a4670ee239b730dabb87035c7d2a
+  branch: add-option-for-radio-wrapper-class
+  specs:
+    govuk-design-system-rails (0.9.8)
+
+GIT
   remote: https://github.com/zilkey/active_hash.git
   revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
   ref: 1c95f99
   specs:
     active_hash (3.1.0)
       activesupport (>= 5.0.0)
-
-PATH
-  remote: ../../govuk-design-system-rails
-  specs:
-    govuk-design-system-rails (0.9.8)
 
 GEM
   remote: https://rubygems.org/

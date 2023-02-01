@@ -3,11 +3,14 @@ require "csv"
 module ResponsiblePersons::Notifications::Components
   class BulkIngredientUploadForm < Form
     class IngredientCanNotBeSavedError < ArgumentError; end
+    MAX_FILE_SIZE = 15 * 1000
 
     attribute :file
     attribute :component
 
+    validate :file_size_validation
     validate :file_is_csv_file_validation
+    validate :file_is_not_empty_validation
     validate :correct_ingredients_validation
 
     def prepare_ingredients
@@ -48,7 +51,15 @@ module ResponsiblePersons::Notifications::Components
 
   private
 
+    def file_size_validation
+      if file_too_large?
+        errors.add(:file, "The selected file must be smaller than 15KB")
+      end
+    end
+
     def file_is_csv_file_validation
+      return if file_too_large?
+
       parse_csv_file
     rescue CSV::MalformedCSVError, ArgumentError
       errors.add(:file)
@@ -68,6 +79,18 @@ module ResponsiblePersons::Notifications::Components
           errors.add(:file, "The file could not be uploaded because of errors in lines: #{@lines_with_errors.join(',')}")
         end
       end
+    end
+
+    def file_is_not_empty_validation
+      return if file_too_large?
+
+      if @csv_data.blank?
+        errors.add(:file, :empty)
+      end
+    end
+
+    def file_too_large?
+      file&.tempfile&.size.to_i > MAX_FILE_SIZE
     end
 
     def row_to_ingredient(name, concentration, cas, poisonous)

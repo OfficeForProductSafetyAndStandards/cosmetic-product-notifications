@@ -344,7 +344,7 @@ private
 
     if @bulk_ingredients_form.save_ingredients
       @component.ingredients_file.attach(ingredients_file)
-      jump_to_step :want_to_add_another_ingredient
+      jump_to_step :want_to_add_another_ingredient, ingredients_uploaded: true
     else
       rerender_current_step
     end

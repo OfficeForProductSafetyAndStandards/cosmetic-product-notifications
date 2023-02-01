@@ -40,7 +40,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
         it "does not create any ingredients" do
           expect {
-            form.valid?
+            form.save_ingredients
           }.not_to change(Ingredient, :count)
         end
 
@@ -104,10 +104,42 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       context "when ingredient with that name already exists" do
       end
 
+      context "when the file is too large" do
+        let(:file) do
+          f = Tempfile.new
+          120.times { f.write("#{'X' * 110},777-77-77,55,true") }
+          f.rewind
+          Rack::Test::UploadedFile.new(f, "text/csv")
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The selected file must be smaller than 15KB"]
+        end
+      end
+
       context "when ingredient name repeats in file" do
+        let(:csv) do
+          <<~CSV
+            Sodium,thirtyfive,497-19-8,poisonous
+            Aqua,65,497-19-8,non_poisonous
+            Acid,50-75,497-19-8,non_poisonous
+          CSV
+        end
       end
 
       context "when ingredient file is empty" do
+        let(:csv) do
+          <<~CSV
+          CSV
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The selected file is empty"]
+        end
       end
     end
 

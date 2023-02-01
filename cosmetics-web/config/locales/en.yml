@@ -244,6 +244,7 @@ en:
           attributes:
             file:
               invalid: "The selected file must be a CSV file"
+              empty: "The selected file is empty"
         responsible_persons/details_form:
           attributes:
             account_type:

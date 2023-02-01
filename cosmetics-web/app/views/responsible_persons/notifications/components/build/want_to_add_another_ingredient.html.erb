@@ -24,6 +24,16 @@
   </div>
 <% end %>
 
+
+<% if params[:ingredients_uploaded] == "true" %>
+  <%= govukNotificationBanner(type: "success") do %>
+    <h3 class="govuk-notification-banner__heading">
+      The ingredients were added
+    </h3>
+    <p class="govuk-body">The ingredients were successfully added to the product.</p>
+  <% end %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
