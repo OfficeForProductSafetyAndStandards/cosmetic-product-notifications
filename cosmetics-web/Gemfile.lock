@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/govuk-ruby/govuk-design-system-rails
-  revision: 900341cf07f9a4670ee239b730dabb87035c7d2a
+  revision: e161e1f19aabc1e14a74cece07ccc8920fc3f40a
   branch: add-option-for-radio-wrapper-class
   specs:
     govuk-design-system-rails (0.9.8)
