@@ -52,11 +52,11 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2.0
+        ruby-version: 3.1.2
     - name: Set up Node
       uses: actions/setup-node@v3
       with:
-        node-version: 18.13.x
+        node-version: 16.16.x
     - uses: actions/cache@v3
       with:
         path: cosmetics-web/vendor/bundle
@@ -76,21 +76,18 @@ jobs:
     - name: Install Ruby Gems
       run: |
         cd cosmetics-web
-        gem install bundler -v 2.4.4
+        gem install bundler -v 2.3.20
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Install JavaScript dependencies
       run: |
         cd cosmetics-web
         npm install yarn -g
         yarn install
+        bin/webpack
     - name: Prepare application database
       run: |
         cd cosmetics-web
         bin/rails db:create db:schema:load
-    - name: Prepare assets for tests
-      run: |
-        cd cosmetics-web
-        bin/rails test:prepare
     - name: Run Tests
       env:
         TWO_FACTOR_AUTHENTICATION_ENABLED: false

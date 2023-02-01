@@ -1,4 +1,4 @@
-class SendSearchSms
+class SendSearchSMS
   TEMPLATES = {
     otp_code: "5b58f6e0-5df1-4fc4-aa9e-e008c86fcf90",
   }.freeze

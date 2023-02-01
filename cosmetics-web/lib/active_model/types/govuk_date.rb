@@ -1,8 +1,8 @@
 module ActiveModel
   module Types
-    class GovUkDate < ActiveRecord::Type::Value
+    class GovUKDate < ActiveRecord::Type::Value
       def cast(value)
-        GovUk::DateFromForm.new(value).prepare_date
+        GovUK::DateFromForm.new(value).prepare_date
       end
     end
   end

@@ -1,10 +1,6 @@
-// Use the Rails helpers to load images and fonts
-$govuk-font-url-function: "font-url";
-$govuk-image-url-function: "image-url";
 $govuk-global-styles: true;
-
-@import "govuk-frontend/govuk/all";
-@import "accessible-autocomplete/src/autocomplete";
+$govuk-assets-path: '~govuk-frontend/govuk/assets/';
+@import "~govuk-frontend/govuk/all";
 
 @import "remove-default-button-styling";
 @import "autocomplete";
@@ -30,7 +26,7 @@ $govuk-global-styles: true;
 @import "poison_centre_product_page";
 @import "input-prefix-suffix";
 
-@import "helpers/password-manager-hidden";
+@import "application/stylesheets/helpers/password-manager-hidden";
 
 .no-wrap {
   white-space: nowrap;

@@ -65,7 +65,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
         # User is signed in in the landing page for Submit/Search
         expect(page).to have_css("h1", text: expected_text)
-        click_button "Sign out"
+        click_on "Sign out"
 
         # Attempting to use the link after already having setup the new password shows an "invalid link" error page
         visit edit_user_password_url_with_token
@@ -239,7 +239,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         expect(page).to have_field("Full name")
 
         # User abandons the registration process
-        click_button "Sign out"
+        click_link "Sign out"
 
         # After a while, user tries to Sign in in the service believing it has an active account on it
         visit "/sign-in"

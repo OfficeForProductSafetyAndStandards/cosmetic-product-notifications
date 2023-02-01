@@ -18,14 +18,13 @@ require "rails/test_unit/railtie"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-require "sprockets/railtie"
 
 module Cosmetics
   class Application < Rails::Application
     config.time_zone = "Europe/London"
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    # config.load_defaults 5.0
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
@@ -55,10 +54,5 @@ module Cosmetics
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob"
 
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
-
-    # Avoid sassc-rails errors when compressing CSS.
-    # See https://github.com/alphagov/govuk-frontend/issues/1350
-    config.assets.css_compressor = nil
-    config.sass.style = :compressed
   end
 end

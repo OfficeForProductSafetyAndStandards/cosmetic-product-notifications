@@ -1,4 +1,4 @@
-module GovUk
+module GovUK
   class DateFromForm
     IncompleteDate = Struct.new(:year, :month, :day) do
       attr_reader :error_fields
