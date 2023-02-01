@@ -1,0 +1,126 @@
+<% content_for :page_title, "Ingredients list" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full opss-desktop-min-height--s">
+
+	<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+	  Ingredients list -
+	  <span class="govuk-!-font-weight-regular opss-font-size--reduced-s">Notifications</span>
+	</h1>
+
+	<p class="govuk-body opss-secondary-text">
+	  Notifications by <%= @responsible_person.name %> -
+	  <span class="govuk-!-font-weight-bold opss-primary-text">submitted after 2 October 2022</span><a href="#october" class="govuk-link govuk-link--no-visited-state govuk-link--no-underline"><sup class="govuk-!-font-size-14">&ast;</sup></a>
+	  - which include the ingredient <%= params[:ingredient_inci_name] %>.
+	</p>
+  </div>
+</div>
+
+<div class="govuk-grid-row opss-full-height">
+  <section class="govuk-grid-column-one-quarter govuk-!-padding-right-1 opss-full-height__col">
+	<a href="#notifications" class="govuk-skip-link opss-skip-link">
+	  Skip to the main content
+	</a>
+	<nav aria-label="Secondary">
+	  <%= render 'poison_centres/shared/secondary_navigation' %>
+	</nav>
+  </section>
+  <section class="govuk-grid-column-three-quarters" id="notifications">
+	<div class="govuk-grid-row">
+	  <div class="govuk-grid-column-one-third opss-text-align-right">
+		<div class="govuk-form-group opss-text-align-right">
+		  <form id="new_notification_search_form_sort" novalidate="novalidate" action="#" accept-charset="UTF-8" method="get">
+			<input type="hidden" name="ingredient_inci_name" value="<%= params[:ingredient_inci_name] %>">
+			<label class="govuk-label govuk-body-s" for="notification_search_form_sort_by">
+			  Order by
+			</label>
+
+			<select class="govuk-select govuk-!-margin-bottom-1" name="sort_by" id="notification_search_form_sort_by">
+			  <%= responsible_person_search_option("A - Z", "name_asc") %>
+			  <%= responsible_person_search_option("Z - A", "name_desc") %>
+			  <%= responsible_person_search_option("Newly added", "date") %>
+			</select>
+
+			<button class="govuk-button opss-js-enabled-hidden">
+			  Order
+			</button>
+		  </form>
+		</div>
+	  </div>
+	</div>
+	<div class="govuk-grid-row">
+	  <div class="govuk-grid-column-full">
+		<p class="govuk-body-s">
+		  There are currently <%= @notifications.total_count %> active notifications by <%= @responsible_person.name %> (submitted after 2 October 2022) which include the ingredient <%= params[:ingredient_inci_name] %>.
+		</p>
+	  </div>
+	</div>
+	<div class="govuk-grid-row">
+	  <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order" aria-live="polite">
+		<table id="table-items" class="govuk-table govuk-!-margin-top-5 opss-table-items opss-table-items--sm opss-table-items--first-col-33">
+		  <caption class="govuk-visually-hidden">
+			Search results. Each notification is described across 2 rows within its own table body.
+		  </caption>
+		  <thead class="govuk-table__head">
+			<tr class="govuk-table__row">
+			  <th class="govuk-visually-hidden">&nbsp;</th>
+			  <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+			  <th scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
+			  <th scope="col" class="govuk-table__header"><abbr>EU</abbr> reference number</th>
+			</tr>
+		  </thead>
+		  <%
+		  	@notifications.each.with_index(1) do |notification, index|
+		   	  cell_headers = "item-#{index} meta-#{index}"
+		  %>
+	  	  <tbody class="govuk-table__body">
+		    <tr class="govuk-table__row">
+		  	  <th class="govuk-visually-hidden">
+			    Name
+		  	  </th>
+		  	  <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
+			    <%= link_to notification.product_name,
+				  poison_centre_notification_path(reference_number: notification.reference_number, ingredient_inci_name: params[:ingredient_inci_name], back_to: PoisonCentresNotificationsHelper::INGREDIENTS_LIST),
+				  class: "govuk-link govuk-link--no-visited-state" %>
+		  	  </th>
+			</tr>
+			<tr class="govuk-table__row">
+		  	  <th headers="item-<%= index %>" id="meta-<%= index %>" class="govuk-visually-hidden">
+			    Metadata
+		  	  </th>
+		  	  <td headers="uknotified <%= cell_headers %>" class="govuk-table__cell">
+			    <%= notification.notification_complete_at.present? ? display_full_month_date(notification.notification_complete_at) : "&nbsp;".html_safe %>
+		  	  </td>
+		  	  <td headers="ukcosprodnumber <%= cell_headers %>" class="govuk-table__cell">
+			    <%= notification.reference_number_for_display.presence || "&nbsp;".html_safe %>
+		  	  </td>
+		  	  <td headers="eurefnumber <%= cell_headers %>" class="govuk-table__cell">
+			    <%= notification.cpnp_reference %>
+		  	  </td>
+			</tr>
+	  	  </tbody>
+		  <% end %>
+		  <% if @notifications.size > 11 %>
+			<tfoot class="govuk-table__head">
+			  <tr class="govuk-table__row">
+				<th class="govuk-visually-hidden">&nbsp;</th>
+				<th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+				<th scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
+				<th scope="col" class="govuk-table__header"><abbr>EU</abbr> reference number</th>
+			  </tr>
+			</tfoot>
+		  <% end %>
+		</table>
+		<%= paginate @notifications, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
+	  </div>
+	</div>
+	<div class="govuk-grid-row">
+	  <div class="govuk-grid-column-full">
+		<p id="october" class="govuk-body govuk-!-font-size-14 govuk-!-margin-top-9 govuk-!-margin-bottom-0 opss-secondary-text opss-text-align-right">
+		  <sup>&ast;</sup>Notifications submitted before 3 October 2022 are not searchable for ingredients.<br>
+		  The ingredient may also feature in older notifications.
+		</p>
+	  </div>
+	</div>
+  </section>
+</div>

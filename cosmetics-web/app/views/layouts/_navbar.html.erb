@@ -4,7 +4,7 @@
     <li class="<%= "app-navigation--current-page" if params[:controller] == "submit/landing_page" %>">
       <%= link_to "Home", submit_root_path, "data-topnav": "submit/landing_page", class: "govuk-link--no-visited-state" %>
     </li>
-    <li class="<%= "app-navigation--current-page" if params[:controller] == "responsible_persons/notifications" || params[:controller] == "responsible_persons/draft_notifications"  %>">
+    <li class="<%= "app-navigation--current-page" if ["responsible_persons/notifications", "responsible_persons/drafts", "responsible_persons/search_notifications", "responsible_persons/search_ingredients"].include?(params[:controller]) %>">
       <%= link_to "Cosmetic products", responsible_person_notifications_path(@responsible_person), "data-topnav": "responsible_persons/notifications", class: "govuk-link--no-visited-state" %>
     </li>
     <li class="<%= "app-navigation--current-page" if params[:controller] == "nanomaterial_notifications" %>">

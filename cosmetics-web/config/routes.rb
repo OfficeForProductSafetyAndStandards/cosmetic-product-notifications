@@ -61,6 +61,8 @@ Rails.application.routes.draw do
       resource :notifications_search, path: "/notifications", controller: "notifications_search", only: %i[show]
       resource :ingredients_search, path: "/ingredients", controller: "ingredients_search", only: %i[show]
       resources :ingredients, path: "/ingredients-list", controller: "ingredients", only: %i[index]
+      get "ingredients-list/responsible-persons", to: "ingredients#responsible_persons", as: :ingredients_responsible_persons
+      get "ingredients-list/responsible-persons/:responsible_person_id/notifications", to: "ingredients#responsible_person_notifications", as: :ingredients_responsible_person_notifications
     end
     resources :users, only: [:update] do
       member do

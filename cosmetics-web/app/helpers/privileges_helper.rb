@@ -6,6 +6,8 @@
 module PrivilegesHelper
   delegate :can_view_product_ingredients?, to: :current_user
 
+  delegate :can_view_ingredients_list?, to: :current_user
+
   delegate :can_view_nanomaterial_notification_files?, to: :current_user
 
   delegate :can_view_nanomaterial_review_period_end_date?, to: :current_user

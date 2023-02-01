@@ -6,6 +6,10 @@ module Privileges
       !msa_user?
     end
 
+    def can_view_ingredients_list?
+      poison_centre_user?
+    end
+
     def can_view_nanomaterial_notification_files?
       opss_science_user?
     end
