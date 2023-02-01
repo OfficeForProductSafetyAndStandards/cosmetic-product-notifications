@@ -1,0 +1,113 @@
+name: Generate ERD
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  DATABASE_URL: postgres://postgres@localhost:5432
+  OPENSEARCH_URL: http://localhost:9200
+  REDIS_URL: redis://localhost:6379
+  RAILS_ENV: test
+  ANTIVIRUS_URL: http://localhost:3006/safe
+  ANTIVIRUS_USERNAME: av
+  ANTIVIRUS_PASSWORD: password
+  SEARCH_HOST: search
+  SUBMIT_HOST: submit
+  EMAIL_WHITELIST_ENABLED: false
+  TWO_FACTOR_AUTHENTICATION_ENABLED: false
+  CI: true
+
+jobs:
+  ruby:
+    name: Generate ERD
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13.6
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      opensearch:
+        image: opensearchproject/opensearch:1.2.3
+        env:
+          DISABLE_SECURITY_PLUGIN: true
+        ports: ["9200:9200"]
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      redis:
+        image: redis
+        ports:
+        - 6379:6379
+        options: --entrypoint redis-server
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1.2
+
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.16.x
+
+    - name: Install PostgreSQL client
+      run: sudo apt-get install libpq-dev
+
+    - name: Install Graphviz
+      run: sudo apt-get install graphviz
+
+    - uses: actions/cache@v3
+      with:
+        path: cosmetics-web/vendor/bundle
+        key: ${{ runner.OS }}-gems
+        restore-keys: |
+          ${{ runner.OS }}-gems
+          ${{ runner.OS }}-gems-
+          ${{ runner.OS }}-
+
+    - uses: actions/cache@v3
+      with:
+        path: cosmetics-web/node_modules
+        key: ${{ runner.OS }}-node
+        restore-keys: |
+          ${{ runner.OS }}-node
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+
+    - name: Install RubyGems
+      run: |
+        cd cosmetics-web
+        gem install bundler --no-doc
+        bundle config path vendor/bundle
+        bundle check || bundle install --jobs=4 --retry=3
+
+    - name: Install JavaScript dependencies
+      run: |
+        cd cosmetics-web
+        npm install yarn -g
+        yarn install
+
+    - name: Prepare database
+      run: |
+        cd cosmetics-web
+        bin/rails db:create db:schema:load
+
+    - name: Generate ERD
+      run: |
+        cd cosmetics-web
+        bundle exec erd
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: ERD
+        path: cosmetics-web/erd.pdf

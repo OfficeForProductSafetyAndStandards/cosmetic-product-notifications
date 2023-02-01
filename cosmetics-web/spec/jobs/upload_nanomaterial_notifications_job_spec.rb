@@ -10,7 +10,11 @@ RSpec.describe UploadNanomaterialNotificationsJob, :with_stubbed_antivirus do
       rp = create(:responsible_person, :with_a_contact_person, name: "Soaps LTD")
       # Unsubmitted won't be exported into the CSV
       create(:nanomaterial_notification, :not_submitted, responsible_person: rp, name: "Unsubmitted")
-      nano = create(:nanomaterial_notification, :submitted, responsible_person: rp, name: "Zinc oxide")
+      nano = create(:nanomaterial_notification,
+                    responsible_person: rp,
+                    name: "Zinc oxide",
+                    submitted_at: 4.months.ago,
+                    eu_notified: false)
       nano2 = create(:nanomaterial_notification,
                      responsible_person: rp,
                      name: "Zinc Peroxide",
@@ -25,7 +29,7 @@ RSpec.describe UploadNanomaterialNotificationsJob, :with_stubbed_antivirus do
         expect(f.read).to eq(
           <<~CSV
             Responsible Person,Contact person email address,UKN number,Date nanomaterial notification was submitted,Name of the nanomaterial,Was the EU notified about test on CPNP before 1 January 2021?,Date EU notified on
-            Soaps LTD,contact.person@example.com,#{nano.id},2022-03-12,Zinc oxide,false,
+            Soaps LTD,contact.person@example.com,#{nano.id},2021-11-12,Zinc oxide,false,
             Soaps LTD,contact.person@example.com,#{nano2.id},2022-03-12,Zinc Peroxide,true,2021-03-12
           CSV
         )

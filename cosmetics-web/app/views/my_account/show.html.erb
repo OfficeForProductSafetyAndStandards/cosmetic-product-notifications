@@ -7,7 +7,7 @@
 
     <% if submit_domain? %>
       <%= govukSummaryList(
-        classes: "app-summary-list--key-weight-regular",
+        classes: "govuk-!-margin-bottom-9",
         rows: [
           {
             key: { text: "Full name" },
@@ -52,7 +52,7 @@
       ) %>
     <% else %>
       <%= govukSummaryList(
-        classes: "app-summary-list--key-weight-regular",
+        classes: "govuk-!-margin-bottom-9",
         rows: [
           {
             key: { text: "Full name" },
@@ -93,9 +93,9 @@
     <% end %>
 
     <h2 class="govuk-heading-l">Your security preferences</h2>
-    <p class="govuk-body">This is how you get access codes.</p>
+    <p class="govuk-body opss-secondary-text">This is how you get access codes.</p>
       <%= govukSummaryList(
-        classes: "app-summary-list--key-weight-regular",
+        classes: "govuk-!-margin-bottom-9",
         rows: [
           {
             key: { text: "Text message" },

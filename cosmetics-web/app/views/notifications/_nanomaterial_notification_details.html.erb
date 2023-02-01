@@ -1,5 +1,5 @@
 <%= nanomaterial_notification.ukn %> - <%= nanomaterial_notification.name %>
-<% if current_user.can_view_nanomaterial_notification_files? && nanomaterial_notification.passed_antivirus_check? %>
+<% if can_view_nanomaterial_notification_files? && nanomaterial_notification.passed_antivirus_check? %>
     <% file = nanomaterial_notification.file %>
     </br>
     <%= link_to(file.filename,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_23_161737) do
+ActiveRecord::Schema.define(version: 2023_01_25_101611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -293,6 +293,7 @@ ActiveRecord::Schema.define(version: 2022_11_23_161737) do
     t.integer "results"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "sort_by"
   end
 
   create_table "trigger_question_elements", force: :cascade do |t|

@@ -20,9 +20,9 @@
     <% @notification.image_uploads.each do |image| %>
       <% if image.passed_antivirus_check? %>
         <% if image.file.variable? %>
-          <%= link_to image_tag(url_for(image.file.variant(resize: "450x450"))), url_for(image.file) %>
+          <%= link_to image_tag(url_for(image.file.variant(resize: "450x450")), alt: @notification.product_name, title: "Opens in a new tab"), url_for(image.file), target: "_blank" %>
         <% elsif image.file.previewable? %>
-          <%= link_to image_tag(url_for(image.file.preview(resize: "450x450"))), url_for(image.file) %>
+          <%= link_to image_tag(url_for(image.file.preview(resize: "450x450")), alt: @notification.product_name, title: "Opens in a new tab"), url_for(image.file), target: "_blank" %>
         <% else %>
           <h2 class="govuk-heading-l govuk-!-margin-bottom-1">Product image</h2>
           <%= link_to image.filename, url_for(image.file), class: "govuk-body-m" %>

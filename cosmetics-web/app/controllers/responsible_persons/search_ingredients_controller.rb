@@ -51,7 +51,7 @@ private
     # instead of defaulting to OpenSearch returning the first 10 hits.
     search_result = Notification.full_search(query).page(params[:page]).per(PER_PAGE)
 
-    SearchHistory.create(query: @search_form.q, results: search_result.results.total)
+    SearchHistory.create(query: @search_form.q, sort_by: @search_form.sort_by, results: search_result.results.total)
 
     search_result
   end

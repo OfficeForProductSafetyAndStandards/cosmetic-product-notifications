@@ -1,0 +1,11 @@
+attributes:
+  - foreign_keys
+  - primary_keys
+  - timestamps
+  - inheritance
+  - content
+indirect: false
+cluster: true
+prepend_primary: true
+splines: ortho
+notation: uml

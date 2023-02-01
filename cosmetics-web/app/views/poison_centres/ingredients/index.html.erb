@@ -60,8 +60,8 @@
             <% @ingredients.each_with_index do |ingredient, index| %>
               <li>
                 <%= link_to ingredient.inci_name,
-                  poison_centre_ingredients_search_path(ingredient_search_form: { q: ingredient.inci_name }),
-                  class: "govuk-link govuk-link--no-visited-state", target: :blank %>
+                  poison_centre_ingredients_responsible_persons_path(ingredient_inci_name: ingredient.inci_name),
+                  class: "govuk-link govuk-link--no-visited-state" %>
               </li>
             <% end %>
           </ul>
