@@ -1,15 +1,15 @@
 <% title = "Upload ingredients file" %>
-<% page_title title, errors: @component.errors.any? %>
+<% page_title title, errors: @bulk_ingredients_form.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-<%= error_summary_for(@component) %>
+<%= error_summary_for(@bulk_ingredients_form) %>
 
-<%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+<%= form_with model: @bulk_ingredients_form, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-form-group <%= error_group_class(@component)%>">
+      <div class="govuk-form-group <%= error_group_class(@bulk_ingredients_form)%>">
           <h1 class="govuk-label-wrapper">
             <label class="govuk-label govuk-label--l" for="csv-upload">
               Upload the ingredients <abbr>CSV</abbr> file
@@ -19,18 +19,13 @@
             Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
           </div>
 
-          <% if @component.errors.any? %>
-            <% @component.errors.each do |error| %>
-              <span id="file-upload-1-error" class="govuk-error-message">
-                <span class="govuk-visually-hidden">Error:</span> <%= error.full_message %>
-              </span>
-            <% end %>
+          <% if @bulk_ingredients_form.errors %>
+            <p class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> 
+              <%= @bulk_ingredients_form.errors.full_messages.first %>
+            </p>
           <% end %>
-          <% if @creator && !@creator.valid? %>
-            <%= render 'csv_upload_errors' %>
-          <% end %>
-          <%= form.file_field :ingredients_file, class: "govuk-file-upload",
-                  accept: "csv" %>
+          <%= form.file_field :file, class: "govuk-file-upload", accept: "csv" %>
       </div>
     </div>
   </div>

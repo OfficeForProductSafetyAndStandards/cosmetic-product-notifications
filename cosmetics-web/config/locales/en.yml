@@ -240,6 +240,10 @@ en:
               too_common: "Choose a password that is harder to guess"
             secondary_authentication_methods:
               blank: "Select how to get an access code"
+        responsible_persons/notifications/components/bulk_ingredient_upload_form:
+          attributes:
+            file:
+              invalid: "The selected file must be a CSV file"
         responsible_persons/details_form:
           attributes:
             account_type:

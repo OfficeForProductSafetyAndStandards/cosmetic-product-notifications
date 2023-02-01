@@ -91,7 +91,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
       @ingredient_concentration_form = ingredient_concentration_form
     when :upload_ingredients_file
-      @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(@component)
+      @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component)
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :completed
@@ -261,10 +261,16 @@ private
   end
 
   def update_select_formulation_type
+    types_map = {
+      "predefined" => "predefined",
+      "exact" => "exact",
+      "exact_csv" => "exact",
+      "range" => "range",
+    }
     # here we need to use form to provide correct value
     formulation_type = params.dig(:component, :notification_type)
-    model.save_routing_answer(step, formulation_type)
-    @component.update_formulation_type(formulation_type)
+    model.save_routing_answer(step, types_map[formulation_type])
+    @component.update_formulation_type(types_map[formulation_type])
     return rerender_current_step if @component.errors.present?
 
     # and here we need to add extra step for CSV
@@ -273,7 +279,8 @@ private
       "predefined" => :select_frame_formulation,
       "exact" => :add_ingredient_exact_concentration,
       "range" => :add_ingredient_range_concentration,
-    }[@component.notification_type]
+      "exact_csv" => :upload_ingredients_file,
+    }[formulation_type]
 
     if @component.ingredients.any? && !@component.predefined?
       jump_to_step(step, ingredient_number: 0) # Display first existing ingredient for edit
@@ -332,31 +339,15 @@ private
   end
 
   def update_upload_ingredients_file
-    ingredients_file = params.dig(:component, :ingredients_file)
-    @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, ingredients_file:)
-    if ingredients_file.blank? && @component.ingredients_file.present?
-      return jump_to_step(:select_ph_option)
-    end
+    ingredients_file = params.dig(:responsible_persons_notifications_components_bulk_ingredient_upload_form, :file)
+    @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, file: ingredients_file)
 
-    if ingredients_file.present?
+    if @bulk_ingredients_form.save_ingredients
       @component.ingredients_file.attach(ingredients_file)
-      @creator = BulkIngredientCreator.new(ingredients_file.open.read, @component)
-      @creator.create
-
-      if @component.valid? && @creator.valid?
-        jump_to_step :want_to_add_another_ingredient
-      else
-        @component.ingredients_file.purge if @component.ingredients_file.attached?
-        rerender_current_step
-      end
+      jump_to_step :want_to_add_another_ingredient
     else
-      @component.errors.add :ingredients_file, "Upload a list of ingredients"
       rerender_current_step
     end
-  rescue CSV::MalformedCSVError
-    @component.ingredients_file.purge if @component.ingredients_file.attached?
-    @component.errors.add :ingredients_file, "The selected file must be a CSV file"
-    rerender_current_step
   end
 
   def update_contains_ingredients_npis_needs_to_know
