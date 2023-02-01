@@ -7,7 +7,8 @@ bin/bundle check || bin/bundle install
 # Ensure all node packages are installed.
 yarn install
 
-yarn build
+bin/webpack-dev-server --progress &
+yarn upgrade
 
 # Run the passed in command
 exec "$@"

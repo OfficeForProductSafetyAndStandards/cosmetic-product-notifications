@@ -48,7 +48,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect_to_be_signed_in_as_search_user
 
     # Now sign out and use those credentials to sign back in
-    click_button "Sign out"
+    find_link("Sign out", match: :first).click
 
     expect_to_be_on_the_search_homepage
 
@@ -124,7 +124,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     # User decides to not use text authentication and goes back to change complete registration page options
     expect_to_be_on_secondary_authentication_sms_page
     expect_back_link_to_complete_registration_page
-    click_button("Back")
+    click_link("Back")
 
     expect_to_be_on_complete_registration_page
     expect(page).to have_checked_field("Authenticator app for smartphone or tablet")
@@ -143,7 +143,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
     expect_to_be_signed_in_as_search_user
 
     # Now sign out and use those credentials to sign back in
-    click_button "Sign out"
+    find_link("Sign out", match: :first).click
 
     expect_to_be_on_the_search_homepage
 
@@ -208,7 +208,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
 
   def expect_to_be_signed_in_as_search_user
     expect(page).to have_css("h1", text: "Search cosmetic products")
-    expect(page).to have_button "Sign out"
+    expect(page).to have_css("a", text: "Sign out")
   end
 
   def expect_to_be_on_the_search_homepage

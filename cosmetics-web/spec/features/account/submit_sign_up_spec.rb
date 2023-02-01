@@ -152,8 +152,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     # User decides to not use text authentication and goes back to change the account security preferences
     expect_to_be_on_secondary_authentication_sms_page
     expect_user_to_have_received_sms_code(otp_code)
-    expect(page).to have_button("Back")
-    click_button("Back")
+    expect(page).to have_link("Back", href: "/account-security")
+    click_link("Back")
 
     expect(page).to have_current_path("/account-security")
     # Account Security form has the previously values pre-filled
@@ -332,7 +332,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         expect(page).to have_field("Full name")
 
         # User abandons the registration process
-        click_button "Sign out"
+        click_link "Sign out"
 
         # After a while, user tries to Sign Up from scratch
         click_on "Create an account"

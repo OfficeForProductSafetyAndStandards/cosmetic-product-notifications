@@ -155,7 +155,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect_to_be_on_secondary_authentication_sms_page
 
         within(".govuk-header__navigation") do
-          click_button "Sign out"
+          click_link("Sign out")
         end
 
         expect(page).to have_css("h1", text: "Submit cosmetic product notifications")
@@ -197,7 +197,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         complete_secondary_authentication_sms_with(otp_code)
 
         expect(page).to have_css("h1", text: "Responsible Person Declaration")
-        expect(page).to have_button "Sign out"
+        expect(page).to have_link("Sign out", href: destroy_submit_user_session_path)
       end
 
       context "when using wrong credentials over and over again" do
@@ -222,7 +222,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
           fill_in_credentials
 
           expect(page).to have_css("h1", text: "Responsible Person Declaration")
-          expect(page).to have_button("Sign out")
+          expect(page).to have_link("Sign out")
         end
 
         scenario "user tries to use unlock link when logged in as different user" do
@@ -352,7 +352,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect_to_be_on_secondary_authentication_sms_page
 
         within(".govuk-header__navigation") do
-          click_button "Sign out"
+          click_link("Sign out")
         end
 
         expect(page).to have_css("h1", text: "Cosmetic products search")
@@ -394,7 +394,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         complete_secondary_authentication_sms_with(otp_code)
 
         expect(page).to have_css("h1", text: "Search cosmetic products")
-        expect(page).to have_button("Sign out")
+        expect(page).to have_link("Sign out", href: destroy_search_user_session_path)
       end
 
       context "when using wrong credentials over and over again" do
@@ -417,7 +417,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
           fill_in_credentials
 
           expect(page).to have_css("h1", text: "Search cosmetic products")
-          expect(page).to have_button("Sign out")
+          expect(page).to have_link("Sign out")
         end
 
         scenario "user tries to use unlock link when logged in as different user" do

@@ -33,7 +33,6 @@ module Encryptable
 
     def self.decrypt(value)
       salt, data = value.split "$$"
-      raise ActiveSupport::MessageEncryptor::InvalidMessage if salt.nil? || data.nil?
 
       encryptor(salt).decrypt_and_verify(data)
     end

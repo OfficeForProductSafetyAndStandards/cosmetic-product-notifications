@@ -23,7 +23,7 @@ RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :w
         fill_in_credentials
 
         expect(page).to have_css("h1", text: expected_text)
-        expect(page).to have_button("Sign out")
+        expect(page).to have_link("Sign out")
       end
 
       scenario "user tries to use unlock link when logged in as different user" do
