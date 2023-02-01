@@ -17,8 +17,8 @@ module  ResponsiblePersons::Notifications::Nanomaterials
           # Checks if non standard route needs to take place
           :after_standard_nanomaterial_routing,
           # Non-standard only steps
-          :non_standard_nanomaterial_notified, # "Have you Submited a notification since...?"
-          :notify_your_nanomaterial, # FLOW TERMINATION when "Have you Submited..." fails.
+          :non_standard_nanomaterial_notified, # "Have you Submitted a notification since...?"
+          :notify_your_nanomaterial, # FLOW TERMINATION when "Have you Submitted..." fails.
           :when_products_containing_nanomaterial_can_be_placed_on_market,
           :select_notified_nanomaterial,
           :cannot_place_until_review_period_ended,
@@ -134,6 +134,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
 
       attrs = { purposes: @purposes_form.purposes }
       attrs[:inci_name] = nil if @purposes_form.purposes == [NanoMaterialPurposes.other.name]
+      attrs[:nanomaterial_notification_id] = nil if @purposes_form.purposes != [NanoMaterialPurposes.other.name]
 
       if @nano_material.update_with_context(attrs, step)
         render_next_step @nano_material
