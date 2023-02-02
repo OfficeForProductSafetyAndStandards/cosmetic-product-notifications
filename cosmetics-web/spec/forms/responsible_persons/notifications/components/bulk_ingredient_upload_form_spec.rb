@@ -53,7 +53,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
         it "has proper error message" do
           form.valid?
 
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 3"]
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
         end
 
         it "save_ingredients will be falsey" do
@@ -72,8 +72,9 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
         it "has proper error message" do
           form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of errors in lines: 1,3"]
+          messages = ["The file could not be uploaded because of error in line 1: Enter a number for the concentration",
+                      "The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
+          expect(form.errors.full_messages).to eq messages
         end
       end
 
@@ -86,7 +87,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
         it "has proper error message" do
           form.valid?
 
-          expect(form.errors.full_messages).to eq ["The selected file must be a CSV file"]
+          expect(form.errors.full_messages).to eq ["The selected file must be a CSV file", "The selected file is empty"]
         end
       end
 
@@ -96,12 +97,71 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
         it "has proper error message" do
           form.valid?
 
-          expect(form.errors.full_messages).to eq ["The selected file must be a CSV file"]
+          expect(form.errors.full_messages).to eq ["The selected file must be a CSV file", "The selected file is empty"]
         end
       end
 
       # TODO: implement
       context "when ingredient with that name already exists" do
+        let(:csv) do
+          <<~CSV
+            Aqua,65,497-19-8,non_poisonous
+            Acid,50,497-19-8,non_poisonous
+          CSV
+        end
+
+        before do
+          create(:exact_ingredient, inci_name: "Aqua", component:)
+        end
+
+        it "is invalid" do
+          form.valid?
+
+          expect(form).not_to be_valid
+        end
+
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
+
+        it "is falsey" do
+          expect(form.save_ingredients).to be_falsey
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Ingredient name already exists in this component"]
+        end
+      end
+
+      context "when ingredients repeat withing file" do
+        let(:csv) do
+          <<~CSV
+            Aqua,65,497-19-8,non_poisonous
+            Aqua,50,497-19-8,non_poisonous
+          CSV
+        end
+
+        it "is invalid" do
+          form.save_ingredients
+
+          expect(form).not_to be_valid
+        end
+
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
+
+        it "has proper error message" do
+          form.save_ingredients
+
+          expect(form.errors.full_messages).to eq ["The file cound not be uploaded because of errors in line 2: Ingredient name already exists in this component"]
+        end
       end
 
       context "when the file is too large" do
@@ -116,16 +176,6 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
           form.valid?
 
           expect(form.errors.full_messages).to eq ["The selected file must be smaller than 15KB"]
-        end
-      end
-
-      context "when ingredient name repeats in file" do
-        let(:csv) do
-          <<~CSV
-            Sodium,thirtyfive,497-19-8,poisonous
-            Aqua,65,497-19-8,non_poisonous
-            Acid,50-75,497-19-8,non_poisonous
-          CSV
         end
       end
 

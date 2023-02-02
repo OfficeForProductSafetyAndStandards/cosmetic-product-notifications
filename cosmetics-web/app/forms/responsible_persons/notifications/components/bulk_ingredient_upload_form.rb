@@ -13,17 +13,26 @@ module ResponsiblePersons::Notifications::Components
     validate :file_is_not_empty_validation
     validate :correct_ingredients_validation
 
+    # Original valid is reseting error messages.
+    # We have an edge case here where we are adding error messages after
+    # validation - during actuall ingredient creation
+    def valid?
+      return false if errors.present?
+
+      super
+    end
+
     def prepare_ingredients
       return if @ingredients.present?
 
       @ingredients = []
-      @lines_with_errors = []
+      @error_messages = []
 
       @csv_data&.each_with_index do |row, i|
         name, concentration, cas, poisonous = *row
         ingredient = row_to_ingredient(name, concentration, cas, poisonous)
         unless ingredient.valid?
-          @lines_with_errors << i + 1
+          @error_messages << { line: i + 1, message: ingredient.errors.full_messages.first }
         end
         @ingredients << ingredient
       end
@@ -38,15 +47,15 @@ module ResponsiblePersons::Notifications::Components
       # * difference between ingredient form and model validations
       ActiveRecord::Base.transaction do
         @ingredients.each_with_index do |ingredient, i|
-          result = ingredient.save
+          ingredient.save
 
-          if result.nil? || !result.persisted?
-            raise IngredientCanNotBeSavedError, "The file cound not be uploaded because of errors in line #{i + 1}"
+          unless ingredient.persisted?
+            raise IngredientCanNotBeSavedError, "The file cound not be uploaded because of errors in line #{i + 1}: #{ingredient.errors.full_messages.join(', ')}"
           end
         end
       end
-    rescue IngredientCanNotBeSavedError
-      nil
+    rescue IngredientCanNotBeSavedError => e
+      errors.add(:file, e.message)
     end
 
   private
@@ -72,12 +81,8 @@ module ResponsiblePersons::Notifications::Components
     def correct_ingredients_validation
       prepare_ingredients
 
-      if @lines_with_errors.present?
-        if @lines_with_errors.count == 1
-          errors.add(:file, "The file could not be uploaded because of error in line #{@lines_with_errors.first}")
-        else
-          errors.add(:file, "The file could not be uploaded because of errors in lines: #{@lines_with_errors.join(',')}")
-        end
+      @error_messages.each do |message|
+        errors.add(:file, "The file could not be uploaded because of error in line #{message[:line]}: #{message[:message]}")
       end
     end
 
@@ -94,14 +99,12 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def row_to_ingredient(name, concentration, cas, poisonous)
-      ingredient = ResponsiblePersons::Notifications::IngredientConcentrationForm.new(
-        name:, cas_number: cas, poisonous: poisonous?(poisonous),
+      ingredient = Ingredient.new(
+        inci_name: name, cas_number: cas, poisonous: poisonous?(poisonous),
       )
       if component.exact? # || poisonous
-        ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::EXACT
         ingredient.exact_concentration = concentration
       elsif component.predefined?
-        ingredient.type = ResponsiblePersons::Notifications::IngredientConcentrationForm::EXACT
         ingredient.exact_concentration = concentration.to_f
         ingredient.poisonous = true
       end
