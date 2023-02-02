@@ -48,7 +48,6 @@ module ResponsiblePersons::Notifications::Components
       ActiveRecord::Base.transaction do
         @ingredients.each_with_index do |ingredient, i|
           ingredient.save
-
           unless ingredient.persisted?
             raise IngredientCanNotBeSavedError, "The file cound not be uploaded because of errors in line #{i + 1}: #{ingredient.errors.full_messages.join(', ')}"
           end
@@ -56,6 +55,7 @@ module ResponsiblePersons::Notifications::Components
       end
     rescue IngredientCanNotBeSavedError => e
       errors.add(:file, e.message)
+      false
     end
 
   private

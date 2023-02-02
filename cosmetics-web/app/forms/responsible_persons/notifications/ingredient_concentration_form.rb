@@ -89,7 +89,7 @@ module ResponsiblePersons::Notifications
     end
 
     def poisonous_ingredients_for_frame_formpulation
-      if component.predefined? && (type == RANGE || (type == EXACT && poisonous == false))
+      if component&.predefined? && (type == RANGE || (type == EXACT && poisonous == false))
         errors.add(:poisonous, :wrong_type_of_ingredient)
       end
     end

@@ -151,6 +151,10 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
           expect(form).not_to be_valid
         end
 
+        it "is falsey" do
+          expect(form.save_ingredients).to be_falsey
+        end
+
         it "does not create any ingredients" do
           expect {
             form.save_ingredients
