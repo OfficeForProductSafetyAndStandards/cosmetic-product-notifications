@@ -11,8 +11,8 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
   let(:csv) do
     <<~CSV
-      Sodium,35,497-19-8,poisonous
-      Aqua,65,497-19-8,non_poisonous
+      Sodium,35,497-19-8,true
+      Aqua,65,497-19-8,false
     CSV
   end
 
@@ -32,9 +32,9 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       context "when one ingredient in csv is invalid" do
         let(:csv) do
           <<~CSV
-            Sodium,35,497-19-8,poisonous
-            Aqua,65,497-19-8,non_poisonous
-            Acid,50-75,497-19-8,non_poisonous
+            Sodium,35,497-19-8,true
+            Aqua,65,497-19-8,false
+            Acid,50-75,497-19-8,false
           CSV
         end
 
@@ -64,9 +64,9 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       context "when file has more invalid lines" do
         let(:csv) do
           <<~CSV
-            Sodium,thirtyfive,497-19-8,poisonous
-            Aqua,65,497-19-8,non_poisonous
-            Acid,50-75,497-19-8,non_poisonous
+            Sodium,thirtyfive,497-19-8,true
+            Aqua,65,497-19-8,false
+            Acid,50-75,497-19-8,false
           CSV
         end
 
@@ -105,8 +105,8 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       context "when ingredient with that name already exists" do
         let(:csv) do
           <<~CSV
-            Aqua,65,497-19-8,non_poisonous
-            Acid,50,497-19-8,non_poisonous
+            Aqua,65,497-19-8,false
+            Acid,50,497-19-8,false
           CSV
         end
 
@@ -140,8 +140,8 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       context "when ingredients repeat withing file" do
         let(:csv) do
           <<~CSV
-            Aqua,65,497-19-8,non_poisonous
-            Aqua,50,497-19-8,non_poisonous
+            Aqua,65,497-19-8,false
+            Aqua,50,497-19-8,false
           CSV
         end
 

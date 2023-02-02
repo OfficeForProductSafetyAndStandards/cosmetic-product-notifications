@@ -114,9 +114,9 @@ module ResponsiblePersons::Notifications::Components
 
     def poisonous?(entry)
       case entry
-      when "poisonous"
+      when "true"
         true
-      when "non_poisonous"
+      when "false"
         false
       end
     end
