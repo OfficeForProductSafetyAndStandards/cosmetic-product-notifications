@@ -11,6 +11,6 @@ Rails.application.configure do
 
     # To activate performance monitoring, set one of these options.
     # We recommend adjusting the value in production:
-    config.traces_sample_rate = 1.0 # Trace 100% transactions. Lower value before merging into production
+    config.traces_sample_rate = 0.25 # Trace 25% of transactions.
   end
 end
