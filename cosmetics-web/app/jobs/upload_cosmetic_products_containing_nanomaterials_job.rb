@@ -5,7 +5,8 @@ class UploadCosmeticProductsContainingNanomaterialsJob < PostgresCsvUploadJob
            DATE(notification_complete_at) as "Date cosmetic product was notified",
            reference_number as "UKCP number",
            inci_name as "INCI name",
-           purposes as "Nanomaterial purposes"
+           purposes as "Nanomaterial purposes",
+           nanomaterial_notification_id as "UKN number"
     FROM nano_materials
     INNER JOIN notifications
       ON nano_materials.notification_id = notifications.id
