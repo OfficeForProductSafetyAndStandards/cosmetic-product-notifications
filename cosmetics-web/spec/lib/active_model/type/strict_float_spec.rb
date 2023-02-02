@@ -1,7 +1,10 @@
 require "rails_helper"
 
 describe ActiveModel::Type::StrictFloat do
-  class DummyForm < ActiveModel::Form
+  class DummyForm
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+
     attribute :float_attribute, :strict_float
   end
 
