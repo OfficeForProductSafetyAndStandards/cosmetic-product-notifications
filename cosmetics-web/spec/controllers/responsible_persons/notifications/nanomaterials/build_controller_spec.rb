@@ -6,13 +6,21 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
   let(:component) { create(:component, notification:) }
 
   let(:nano_material1) { create(:nano_material, notification:, inci_name: "nanomaterial1") }
-  let(:nano_material2) { create(:nano_material, notification:, inci_name: "nanomaterial2") }
+  let(:nano_material2) { create(:nano_material, :non_standard, notification:) }
 
   let(:params) do
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
       nanomaterial_id: nano_material1,
+    }
+  end
+
+  let(:params_non_standard) do
+    {
+      responsible_person_id: responsible_person.id,
+      notification_reference_number: notification.reference_number,
+      nanomaterial_id: nano_material2,
     }
   end
 
@@ -73,32 +81,58 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
   describe "POST #update" do
     describe "at select_purposes"  do
       let(:select_purposes_params) { params.merge(id: :select_purposes) }
+      let(:select_purposes_params_non_standard) { params_non_standard.merge(id: :select_purposes) }
 
-      it "updates the nanomaterial with the selected purposes" do
-        post(:update, params: select_purposes_params.merge(purposes_form: { "colorant": "0", "preservative": "1", "uv_filter": "1", "purpose_type": "standard" }))
-        expect(nano_material1.reload.purposes).to eq(%w[preservative uv_filter])
+      context "with a standard nanomaterial" do
+        it "updates the nanomaterial with the selected purposes" do
+          post(:update, params: select_purposes_params.merge(purposes_form: { "colorant": "0", "preservative": "1", "uv_filter": "1", "purpose_type": "standard" }))
+          expect(nano_material1.reload.purposes).to eq(%w[preservative uv_filter])
+        end
+
+        it "ignores invalid purpose values" do
+          post(:update, params: select_purposes_params.merge(purposes_form: { "colorant": "1", "invalid_purpose": "1", "purpose_type": "standard" }))
+          expect(nano_material1.reload.purposes).to eq(%w[colorant])
+        end
+
+        it "redirects to the next page when purposes are selected" do
+          post(:update, params: select_purposes_params.merge(purposes_form: { "preservative": "1", "purpose_type": "standard" }))
+          expect(response).to redirect_to(
+            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :after_select_purposes_routing),
+          )
+        end
+
+        it "sets error when no purpose type is selected" do
+          post(:update, params: select_purposes_params)
+          expect(assigns(:purposes_form).errors[:purpose_type]).to include("Select the purpose of this nanomaterial")
+        end
+
+        it "sets error when no purpose is selected for standard purpose type" do
+          post(:update, params: select_purposes_params.merge(purposes_form: { "purpose_type": "standard", "colorant": "0", "preservative": "0", "uv_filter": "0" }))
+          expect(assigns(:purposes_form).errors[:purposes]).to include("Select the purpose")
+        end
+
+        it "correctly switches from a standard to a non-standard nanomaterial" do
+          post(:update, params: select_purposes_params.merge(purposes_form: { "purpose_type": "other" }))
+          expect(nano_material1.reload.purposes).to eq(%w[other])
+          expect(response).to redirect_to(
+            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :after_select_purposes_routing),
+          )
+        end
       end
 
-      it "ignores invalid purpose values" do
-        post(:update, params: select_purposes_params.merge(purposes_form: { "colorant": "1", "invalid_purpose": "1", "purpose_type": "standard" }))
-        expect(nano_material1.reload.purposes).to eq(%w[colorant])
-      end
+      context "with a non-standard nanomaterial" do
+        it "sets error when no purpose type is selected" do
+          post(:update, params: select_purposes_params_non_standard)
+          expect(assigns(:purposes_form).errors[:purpose_type]).to include("Select the purpose of this nanomaterial")
+        end
 
-      it "redirects to the next page when purposes are selected" do
-        post(:update, params: select_purposes_params.merge(purposes_form: { "preservative": "1", "purpose_type": "standard" }))
-        expect(response).to redirect_to(
-          responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :after_select_purposes_routing),
-        )
-      end
-
-      it "sets error when no purpose type is selected" do
-        post(:update, params: select_purposes_params)
-        expect(assigns(:purposes_form).errors[:purpose_type]).to include("Select the purpose of this nanomaterial")
-      end
-
-      it "sets error when no purpose is selected for standard purpose type" do
-        post(:update, params: select_purposes_params.merge(purposes_form: { "purpose_type": "standard", "colorant": "0", "preservative": "0", "uv_filter": "0" }))
-        expect(assigns(:purposes_form).errors[:purposes]).to include("Select the purpose")
+        it "correctly switches from a non-standard to a standard nanomaterial" do
+          post(:update, params: select_purposes_params_non_standard.merge(purposes_form: { "colorant": "0", "preservative": "1", "uv_filter": "1", "purpose_type": "standard" }))
+          expect(nano_material2.reload).to have_attributes(purposes: %w[preservative uv_filter], nanomaterial_notification_id: nil)
+          expect(response).to redirect_to(
+            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material2, :after_select_purposes_routing),
+          )
+        end
       end
     end
 

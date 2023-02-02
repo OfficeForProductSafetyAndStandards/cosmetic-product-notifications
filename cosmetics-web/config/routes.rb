@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
   end
 
-  if ENV["COVERBAND_PASS"]
+  if Rails.env.production? && ENV["COVERBAND_PASS"]
     mount Coverband::Reporters::Web.new, at: "/coverage"
   end
 
