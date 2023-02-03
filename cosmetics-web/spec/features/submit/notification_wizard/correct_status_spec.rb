@@ -297,7 +297,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     answer_item_sub_subcategory_with "Shampoo"
 
     # Change the formulation type from exact to range.
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range", item_name: name
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually", item_name: name
 
     # Leaves the item wizard without completing it.
     visit "/responsible_persons/#{responsible_person.id}/draft-notifications"

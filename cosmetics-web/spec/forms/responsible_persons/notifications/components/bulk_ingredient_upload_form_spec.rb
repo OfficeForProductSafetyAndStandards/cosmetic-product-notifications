@@ -29,6 +29,58 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
   context "when using exact CSV" do
     describe "error messages" do
+      # context "when values for toxicity are incorrect" do
+      #   let(:csv) do
+      #     <<~CSV
+      #       Sodium,35,497-19-8,foo
+      #     CSV
+      #   end
+
+      #   it "does not create any ingredients" do
+      #     expect {
+      #       form.save_ingredients
+      #     }.not_to change(Ingredient, :count)
+      #   end
+
+      #   it "is invalid" do
+      #     form.valid?
+
+      #     expect(form).not_to be_valid
+      #   end
+      #
+      #   it "has proper error message" do
+      #     form.valid?
+
+      #     expect(form.errors.full_messages).to eq [""]
+      #   end
+      # end
+      #
+      # context "when values for toxicity are empty" do
+      #   let(:csv) do
+      #     <<~CSV
+      #       Aqua,65,497-19-8,
+      #     CSV
+      #   end
+
+      #   it "does not create any ingredients" do
+      #     expect {
+      #       form.save_ingredients
+      #     }.not_to change(Ingredient, :count)
+      #   end
+
+      #   it "is invalid" do
+      #     form.valid?
+
+      #     expect(form).not_to be_valid
+      #   end
+      #
+      #   it "has proper error message" do
+      #     form.valid?
+
+      #     expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
+      #   end
+      # end
+
       context "when one ingredient in csv is invalid" do
         let(:csv) do
           <<~CSV

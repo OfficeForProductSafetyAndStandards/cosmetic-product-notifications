@@ -27,7 +27,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_category_with "Hair and scalp products"
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
 
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A", "Ingredient B"])
     expect(page).to have_field("What is the name?", with: "Ingredient A")
@@ -93,7 +93,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_category_with "Hair and scalp products"
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range"
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually"
 
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A", "Ingredient B", "Ingredient C"])
     expect(page).to have_field("What is the name?", with: "Ingredient A")
@@ -231,7 +231,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_sub_subcategory_with "Shampoo"
     # Change component from exact concentration to range
     expect(page).to have_text("Changing the formulation type will remove all ingredients already added")
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
 
     # Starts from scratch without ingredients
     expect(component.ingredients).to eq []
@@ -262,7 +262,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_sub_subcategory_with "Shampoo"
     # Change component from exact concentration to range
     expect(page).to have_text("Changing the formulation type will remove all ingredients already added")
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
 
     # Starts from scratch without ingredients
     expect(component.ingredients).to eq []

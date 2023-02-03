@@ -608,6 +608,7 @@ DEPENDENCIES
   rest-client (~> 2.1.0)
   rotp (~> 6.2.0)
   rqrcode (~> 1.2.0)
+  rspec (~> 3.10.0)
   rspec-collection_matchers (~> 1.2.0)
   rspec-html-matchers (~> 0.9.4)
   rspec-rails (~> 4.0.2)

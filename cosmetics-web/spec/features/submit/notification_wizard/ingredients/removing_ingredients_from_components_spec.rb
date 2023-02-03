@@ -23,7 +23,7 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
     answer_item_category_with "Hair and scalp products"
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
   end
 
   scenario "Removing an ingredient from a component with multiple ingredients" do
@@ -77,7 +77,7 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
     # Sends the user back to the "choose fomulation type" page without any preselection
     expect(page).to have_css("h1", text: "How do you want to give the formulation of the product?")
     expect(page).to have_unchecked_field("Choose a predefined frame formulation")
-    expect(page).to have_unchecked_field("List ingredients and their exact concentration")
-    expect(page).to have_unchecked_field("List ingredients and their concentration range")
+    expect(page).to have_unchecked_field("Enter ingredients and their exact concentration manually")
+    expect(page).to have_unchecked_field("Enter ingredients and their concentration range manually")
   end
 end
