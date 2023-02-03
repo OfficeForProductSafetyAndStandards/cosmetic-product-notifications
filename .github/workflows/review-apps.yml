@@ -81,3 +81,19 @@ jobs:
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
+
+    - name: Send release version to Sentry
+      if: success()
+      env:
+        SENTRY_ORG: beis
+        SENTRY_PROJECT: beis-cosmetics
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      run: |
+        # Install the cli
+        curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.2.0" bash
+        # New version
+        VERSION=`sentry-cli releases propose-version`
+        # Workflow to create releases
+        sentry-cli releases new "$VERSION"
+        sentry-cli releases set-commits "$VERSION" --auto
+        sentry-cli releases finalize "$VERSION"

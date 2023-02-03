@@ -8,5 +8,9 @@ Rails.application.configure do
     config.dsn = ENV["SENTRY_DSN"]
     config.excluded_exceptions += ["Pundit::NotAuthorizedError"]
     config.send_default_pii = false
+
+    # To activate performance monitoring, set one of these options.
+    # We recommend adjusting the value in production:
+    config.traces_sample_rate = 0.25 # Trace 25% of transactions.
   end
 end
