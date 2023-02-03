@@ -531,7 +531,7 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(page).to have_current_path("/account-security")
 
     # Signs out without completing the account security for the self-registered account
-    click_link "Sign out"
+    click_button "Sign out"
 
     # Now they realise they had a RP invitation and accept it following the invitation link
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"

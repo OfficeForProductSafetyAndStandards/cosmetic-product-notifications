@@ -82,7 +82,7 @@ RSpec.describe Encryptable, type: :model do
       it "fails to decrypt when missing salt" do
         encrypted_missing_salt = encryptor.encrypt("foobar").split("$$").last
         expect { encryptor.decrypt(encrypted_missing_salt) }
-          .to raise_error(ActiveSupport::MessageVerifier::InvalidSignature)
+          .to raise_error(ActiveSupport::MessageEncryptor::InvalidMessage)
       end
 
       it "fails to decrypt when salt is different than used to encrypt" do
