@@ -40,7 +40,7 @@ module Encryptable
 
     def self.encryptor(salt)
       key = ActiveSupport::KeyGenerator.new(SECRET, cipher: CIPHER).generate_key(salt, LEN)
-      ActiveSupport::MessageEncryptor.new(key)
+      ActiveSupport::MessageEncryptor.new(key, cipher: "aes-256-cbc")
     end
 
     private_class_method :encryptor
