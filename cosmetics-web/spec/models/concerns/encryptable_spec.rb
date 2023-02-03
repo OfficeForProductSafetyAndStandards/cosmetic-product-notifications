@@ -90,7 +90,7 @@ RSpec.describe Encryptable, type: :model do
         new_salt = SecureRandom.hex(encryptor::LEN)
         encrypted_value = "#{new_salt}$$#{encrypted_missing_salt}"
         expect { encryptor.decrypt(encrypted_value) }
-          .to raise_error(ActiveSupport::MessageEncryptor::InvalidMessage)
+          .to raise_error(ActiveSupport::MessageVerifier::InvalidSignature)
       end
     end
   end
