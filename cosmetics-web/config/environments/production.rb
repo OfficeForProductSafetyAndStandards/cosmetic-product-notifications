@@ -37,6 +37,9 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = false
+
   config.action_controller.default_url_options = {
     host: ENV["COSMETICS_HOST"],
     protocol: "https",

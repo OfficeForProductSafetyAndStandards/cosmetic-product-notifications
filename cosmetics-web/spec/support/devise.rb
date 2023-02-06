@@ -16,7 +16,7 @@ module DeviseLoginHelpers
   def sign_out
     return if page.has_css?("a", text: "Sign in to your account")
 
-    click_on "Sign out", match: :first
+    click_button "Sign out"
   end
 end
 

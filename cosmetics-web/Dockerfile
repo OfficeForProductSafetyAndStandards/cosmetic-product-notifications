@@ -1,10 +1,10 @@
-FROM ruby:3.1.2
+FROM ruby:3.2.0
 
 ENV LANG C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 ENV CHROMIUM_DRIVER_VERSION 2.41
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -30,4 +30,6 @@ WORKDIR /cosmetics-web
 COPY ./cosmetics-web .
 
 RUN yarn install
+RUN gem update --system '3.4.4'
 RUN bin/bundle check || bin/bundle install
+RUN yarn build

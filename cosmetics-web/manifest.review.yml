@@ -2,7 +2,7 @@
 applications:
 - name: ((cosmetics-instance-name))
   buildpacks:
-    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.8.57
+    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.9.1
   path: .
   routes:
     - route: ((search-host))
