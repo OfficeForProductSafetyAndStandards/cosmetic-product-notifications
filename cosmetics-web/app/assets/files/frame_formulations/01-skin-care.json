@@ -3,12 +3,13 @@
   "name": "Skin care",
   "data": [
     {
+      "formulationId": "skin_care_cream_lotion_gel",
       "formulationName": "Skin care cream, lotion, gel",
       "childNumber": 1,
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "30"
         },
         {
@@ -68,6 +69,7 @@
       ]
     },
     {
+      "formulationId": "skin_care_cream_lotion_gel_with_high_level_of_silicones",
       "formulationName": "Skin care cream, lotion, gel - with high level of silicones",
       "childNumber": 2,
       "ingredients": [
@@ -78,7 +80,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "40"
         },
         {
@@ -133,6 +135,7 @@
       ]
     },
     {
+      "formulationId": "skin_care_cream_lotion_gel_with_high_level_of_humectants",
       "formulationName": "Skin care cream, lotion, gel - with high level of humectants",
       "childNumber": 3,
       "ingredients": [
@@ -143,7 +146,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "40"
         },
         {
@@ -203,6 +206,7 @@
       ]
     },
     {
+      "formulationId": "skin_care_cream_lotion_gel_with_high_level_of_bulking_agents",
       "formulationName": "Skin care cream, lotion, gel - with high level of bulking agents",
       "childNumber": 4,
       "ingredients": [
@@ -268,12 +272,13 @@
       ]
     },
     {
+      "formulationId": "skin_care_cream_lotion_gel_with_high_level_of_fatty_compounds",
       "formulationName": "Skin care cream, lotion, gel - with high level of fatty compounds",
       "childNumber": 5,
       "ingredients": [
         {
-           "ingredient": "Oils, waxes and fats",
-           "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredient": "Oils, waxes and fats",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "95"
         },
         {
@@ -338,12 +343,13 @@
       ]
     },
     {
+      "formulationId": "skin_care_cream_lotion_gel_with_high_level_of_uv_filters",
       "formulationName": "Skin care cream, lotion, gel - with high level of UV filters",
       "childNumber": 6,
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -399,6 +405,7 @@
       ]
     },
     {
+      "formulationId": "skin_care_cream_lotion_gel_with_high_level_of_perfume",
       "formulationName": "Skin care cream, lotion, gel – with high level of perfume",
       "childNumber": 7,
       "ingredients": [
@@ -408,7 +415,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -465,12 +472,13 @@
       ]
     },
     {
+      "formulationId": "zinc_oxide_based_cream",
       "formulationName": "Zinc oxide based cream",
       "childNumber": 8,
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -526,6 +534,7 @@
       ]
     },
     {
+      "formulationId": "skin_gel_hydroalcoholic_based",
       "formulationName": "Skin gel (hydro-alchohol based)",
       "childNumber": 9,
       "ingredients": [
@@ -572,6 +581,7 @@
       ]
     },
     {
+      "formulationId": "skin_oil",
       "formulationName": "Skin oil",
       "childNumber": 10,
       "ingredients": [
@@ -629,6 +639,7 @@
       ]
     },
     {
+      "formulationId": "tonic_cosmetic_water",
       "formulationName": "Tonic, cosmetic water",
       "childNumber": 12,
       "ingredients": [
@@ -694,6 +705,7 @@
       ]
     },
     {
+      "formulationId": "chemical_exfoliation_products",
       "formulationName": "Chemical exfoliation products",
       "childNumber": 13,
       "ingredients": [
@@ -751,6 +763,7 @@
       ]
     },
     {
+      "formulationId": "skin_care_silicone_based",
       "formulationName": "Skin care (silicone based)",
       "childNumber": 14,
       "ingredients": [
@@ -772,6 +785,7 @@
       ]
     },
     {
+      "formulationId": "petroleum_jelly",
       "formulationName": "Petroleum jelly",
       "childNumber": 15,
       "ingredients": [
@@ -786,6 +800,7 @@
       ]
     },
     {
+      "formulationId": "talcum_powder_powder_or_pressed",
       "formulationName": "Talcum powder (loose or pressed)",
       "childNumber": 16,
       "ingredients": [
@@ -824,6 +839,7 @@
       ]
     },
     {
+      "formulationId": "lip_care",
       "formulationName": "Lip care (stick, cream, or gel)",
       "childNumber": 17,
       "ingredients": [

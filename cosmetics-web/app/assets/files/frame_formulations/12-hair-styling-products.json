@@ -3,6 +3,7 @@
 	"name": "Hair styling products",
 	"data": [
 		{
+			"formulationId": "hair_styling_cream_paste_gum_pomade_paste_waxe_",
 			"formulationName": "Hair styling cream or paste (gum, pomade, paste, wax)",
 			"childNumber": 1,
 			"ingredients": [
@@ -61,6 +62,7 @@
 			]
 		},
 		{
+			"formulationId": "hair_shine_wax_or_brilliantine",
 			"formulationName": "Hair shine wax or brilliantine",
 			"childNumber": 2,
 			"ingredients": [
@@ -99,6 +101,7 @@
 			]
 		},
 		{
+			"formulationId": "hair_styling_lotion",
 			"formulationName": "Hair styling lotion",
 			"childNumber": 3,
 			"ingredients": [
@@ -118,17 +121,17 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-        			"ingredientExamples":"vegetable, mineral, long chain alcohols",
+        	"ingredientExamples": "vegetable, mineral, long chain alcohols",
 					"volume": 15
 				},
 				{
 					"ingredient": "Silicones (including volatile silicones)",
-                    "ingredientExample":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
-                    "volume": 15
+          "ingredientExample": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
+          "volume": 15
 				},
 				{
 					"ingredient": "Resins",
-					"ingredientExamples":"polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
+					"ingredientExamples": "polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
 					"volume": 10
 				},
 				{
@@ -147,7 +150,7 @@
 				},
 				{
 					"ingredient": "Parfum",
-         			 "volume": 3
+        	"volume": 3
 				},
 				{
 					"ingredient": "Preservatives, antimicrobials",
@@ -158,17 +161,18 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Aqua ",
+					"ingredient": "Aqua",
 					"volume": "to 100"
 				}
 			]
 		},
 		{
+			"formulationId": "setting_lotion_including_coloured_setting_lotions",
 			"formulationName": "Setting lotion (including coloured setting lotions)",
 			"childNumber": 4,
 			"ingredients": [
 				{
-					"ingredient": "Ethanol (alcohol, alcohol denat.) ",
+					"ingredient": "Ethanol (alcohol, alcohol denat.)",
 					"volume": 80
 				},
 				{
@@ -177,12 +181,12 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-					"ingredientExamples":"vegetable, mineral, long chain alcohol",
+					"ingredientExamples": "vegetable, mineral, long chain alcohol",
 					"volume": 10
 				},
 				{
 					"ingredient": "Silicones (including volatile silicones)",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 10
 				},
 				{
@@ -243,6 +247,7 @@
 			]
 		},
 		{
+			"formulationId": "hair_shine_styling_gel",
 			"formulationName": "Hair shine, styling gel",
 			"childNumber": 5,
 			"ingredients": [
@@ -252,12 +257,12 @@
 				},
 				{
 					"ingredient": "Silicones (including volatile silicones)",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 25
 				},
 				{
 					"ingredient": "Resins",
-					"ingredientExamples":"polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
+					"ingredientExamples": "polymers (PVP/VA copolymer, acrylates copolymer), neutralising agent (aminomethyly propanol)",
 					"volume": 25
 				},
 				{
@@ -298,12 +303,13 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Aqua ",
+					"ingredient": "Aqua",
 					"volume": "to 100"
 				}
 			]
 		},
 		{
+			"formulationId": "hair_foam",
 			"formulationName": "Hair foam",
 			"childNumber": 6,
 			"ingredients": [
@@ -318,23 +324,22 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-        			"ingredientExamples":"vegetable, mineral, long chain alcohols",
-        			"volume": 25
-
+        	"ingredientExamples": "vegetable, mineral, long chain alcohols",
+        	"volume": 25
 				},
 				{
 					"ingredient": "Silicones (including volatile silicones)",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 25
 				},
 				{
 					"ingredient": "Film forming agents, polymers, resins and neutralising agent",
-					"ingredientExamples":" polyvinyl acetate, PVP,polyquaternium-4, aminomethyl propanol",
+					"ingredientExamples": "polyvinyl acetate, PVP,polyquaternium-4, aminomethyl propanol",
 					"volume": 20
 				},
 				{
 					"ingredient": "Humectants",
-         			 "ingredientExamples": "glycerin",
+        	"ingredientExamples": "glycerin",
 					"volume": 10
 				},
 				{
@@ -385,6 +390,7 @@
 			]
 		},
 		{
+			"formulationId": "hair_spray_aerosol",
 			"formulationName": "Hair spray - aerosol",
 			"childNumber": 7,
 			"ingredients": [
@@ -399,7 +405,7 @@
 				},
 				{
 					"ingredient": "Solvents",
-					"ingredientExamples":"volatile silicones (cyclopentasiloxane, dimethicone), liquid paraffin, isoparaffin (branched-chain,isoparaffin (C11-C16), isododecane, isohexadecane",
+					"ingredientExamples": "volatile silicones (cyclopentasiloxane, dimethicone), liquid paraffin, isoparaffin (branched-chain,isoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
@@ -409,12 +415,12 @@
 				},
 				{
 					"ingredient": "Resins",
-					"ingredientExamples":"polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer), neutralising agent (aminomethyl propanol), alkoxylated glucose derivatives",
+					"ingredientExamples": "polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer), neutralising agent (aminomethyl propanol), alkoxylated glucose derivatives",
 					"volume": 10
 				},
 				{
 					"ingredient": "Additional ingredients",
-					"ingredientExamples": "uv filters, vitamins",
+					"ingredientExamples": "UV filters, vitamins",
 					"volume": 3
 				},
 				{
@@ -437,6 +443,7 @@
 			]
 		},
 		{
+			"formulationId": "hair_spray_pump_spray",
 			"formulationName": "Hair spray - pump spray",
 			"childNumber": 8,
 			"ingredients": [
@@ -446,17 +453,17 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-          			"ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
 					"volume": 50
 				},
 				{
 					"ingredient": "Silicones (including volatile silicones)",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 50
 				},
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-        		   "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+        	"ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
@@ -466,7 +473,7 @@
 				},
 				{
 					"ingredient": "Resins",
-					"ingredientExamples":"polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer), neutralising agent (aminomethyl propanol)",
+					"ingredientExamples": "polymers (e.g. PVP/VA copolymer, VA/crotonates copolymer, butyl ester of PVM/MA copolymer), neutralising agent (aminomethyl propanol)",
 					"volume": 10
 				},
 				{
@@ -499,7 +506,8 @@
 			]
 		},
 		{
-			"formulationName": "Shine hair spray - aerosol",
+			"formulationId": "hair_shine_spray_aerosol",
+			"formulationName": "Hair shine spray - aerosol",
 			"childNumber": 9,
 			"ingredients": [
 				{
@@ -509,17 +517,17 @@
 				},
 				{
 					"ingredient": "Oils, waxes and fats",
-          			"ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
 					"volume": 50
 				},
 				{
 					"ingredient": "Silicones (including volatile silicones)",
-					"ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
+					"ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes)",
 					"volume": 50
 				},
 				{
 					"ingredient": "Liquid paraffin and isoparaffin",
-         			 "ingredientExamples": "branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
+        	"ingredientExamples": "branched-chainisoparaffin (C11-C16), isododecane, isohexadecane",
 					"volume": 40
 				},
 				{
@@ -547,11 +555,12 @@
 			]
 		},
 		{
+			"formulationId": "permanent_wave_lotion_single_component_based_on_reducing_agents",
 			"formulationName": "Permanent wave lotion-single component based on reducing agents",
 			"childNumber": 10,
 			"ingredients": [
 				{
-					"ingredient": "Reducing agent: ammonium thioglycolate ",
+					"ingredient": "Reducing agent: ammonium thioglycolate",
 					"volume": 13
 				},
 				{
@@ -567,7 +576,7 @@
 					"volume": 8
 				},
 				{
-					"ingredient": "Reducing agent: sodium sulfite ",
+					"ingredient": "Reducing agent: sodium sulfite",
 					"volume": 8
 				},
 				{
@@ -581,7 +590,7 @@
 				},
 				{
 					"ingredient": "Silicones",
-					"ingredientExamples": "amodimethicone, silanes(alcoxysilanes)",
+					"ingredientExamples": "amodimethicone, silanes (alcoxysilanes)",
 					"volume": 5
 				},
 				{
@@ -634,7 +643,8 @@
       "annotations": "pH value: 7 - 9.5"
 		},
 		{
-			"formulationName": "Permanent wave lotion - two-components- based on hydrdogenperoxide and reducing agents part-A",
+			"formulationId": "permanent_wave_lotion_twocomponent_based_on_hydrogen_peroxide_and_reducing_agents_part_a",
+			"formulationName": "Permanent wave lotion - two-components - based on hydrdogen peroxide and reducing agents - part a",
 			"childNumber": 13,
 			"ingredients": [
 				{
@@ -659,16 +669,17 @@
 					"volume": "to 100"
 				}
 			],
-			 "mixingInstruction": {
-        	"header": "To be mixed immediately prior to use with:",
-        	"instructions": ["part B (12.14-2013), the mixing of parts A and B is exothermic"]
-     	 },
+			"mixingInstruction": {
+        "header": "To be mixed immediately prior to use with:",
+        "instructions": ["part B (12.14-2013), the mixing of parts A and B is exothermic"]
+			},
 			"extraInfo": [
 				"pH value: 2.5 - 3.5", "pH value of the ready-to-use mixture (parts A and B): 7 - 9.5"
 			]
 		},
 		{
-			"formulationName": "Permanent wave lotion - two components – based on hydrogen peroxide and reducing agents - part B",
+			"formulationId": "permanent_wave_lotion_twocomponent_based_on_hydrogen_peroxide_and_reducing_agents_part_b",
+			"formulationName": "Permanent wave lotion - two components – based on hydrogen peroxide and reducing agents - part b",
 			"childNumber": 14,
 			"ingredients": [
 				{
@@ -681,7 +692,7 @@
 					"volume": 8
 				},
 				{
-					"ingredient": "Additional ingredients ",
+					"ingredient": "Additional ingredients",
 					"ingredientExamples": "thickeners",
 					"volume": 3
 				},
@@ -696,7 +707,7 @@
 					"volume": 3
 				},
 				{
-					"ingredient": "Hair conditioning agents ",
+					"ingredient": "Hair conditioning agents",
 					"ingredientExamples": "polymers",
 					"volume": 2.5
 				},
@@ -713,28 +724,26 @@
 					"volume": 0.5
 				},
 				{
-					"ingredient": "Chelating agents ",
+					"ingredient": "Chelating agents",
 					"volume": 0.3
 				},
 				{
-					"ingredient": "Aqua ",
+					"ingredient": "Aqua",
 					"volume": "to 100"
 				}
 			],
-
-				"mixingInstruction": {
-       			 "header": "To be mixed immediately prior to use with:",
-        		"instructions": ["part A (12.13-2013)","the mixing of parts A and B is exothermic"]
-     		 },
-
-			"annotation": ["For the reducing agent ammonium thioglycolate, this is the maximum concentration before exothermic reaction with hydrogen peroxide","before exothermic reaction with hydrogen peroxide"],
+			"mixingInstruction": {
+				"header": "To be mixed immediately prior to use with:",
+        "instructions": ["part A (12.13-2013)", "the mixing of parts A and B is exothermic"]
+			},
+			"annotation": ["For the reducing agent ammonium thioglycolate, this is the maximum concentration before exothermic reaction with hydrogen peroxide", "before exothermic reaction with hydrogen peroxide"],
 			"extraInfo": [
 				"pH value: 7 - 9.5, pH value of the ready-to-use mixture (parts A and B): 7 - 9.5"
 			]
-			
 		},
 		{
-			"formulationName": "Permanent wave lotion - two components – based on reducing agents, part A",
+			"formulationId": "permanent_wave_lotion_twocomponent_based_on_reducing_agents_part_a",
+			"formulationName": "Permanent wave lotion - two components – based on reducing agents, part a",
 			"childNumber": 15,
 			"ingredients": [
 				{
@@ -770,16 +779,16 @@
 				}
 			],
 			"mixingInstruction": {
-        	"header": "To be mixed immediately prior to use with",
-       		 "instructions": ["part B (12.16-2013)"]
-     		 },
-
+				"header": "To be mixed immediately prior to use with",
+				"instructions": ["part B (12.16-2013)"]
+			},
 			"extraInfo": [
 				"pH value: 5 - 6.5","pH value of the ready-to-use mixture (parts A and B): 6.5 - 9"
 			]
 		},
 		{
-			"formulationName": "Permanent wave lotion - two component - based on reducing agents, Part B",
+			"formulationId": "permanent_wave_lotion_twocomponent_based_on_reducing_agents_part_b",
+			"formulationName": "Permanent wave lotion - two components - based on reducing agents - part b",
 			"childNumber": 16,
 			"ingredients": [
 				{
@@ -795,7 +804,7 @@
 					"volume": 1
 				},
 				{
-					"ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants ",
+					"ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
 					"ingredientExamples": "betaine derivatives",
 					"volume": 10
 				},
@@ -841,33 +850,32 @@
 					"volume": 0.3
 				},
 				{
-					"ingredient": "Aqua ",
+					"ingredient": "Aqua",
 					"volume": "to 100"
 				}
 			],
 			"mixingInstruction": {
-       		 "header": "To be mixed immediately prior to use with:",
-       		 "instructions": ["part A (12.15-2013)"]
-     		 },
-
+				"header": "To be mixed immediately prior to use with:",
+				"instructions": ["part A (12.15-2013)"]
+			},
 			"extraInfo": [
 				"pH value: 8 - 10.5",
 				"pH value of the ready-to-use mixture (parts A and B): 6.5 - 9"
 			]
 		},
 		{
+			"formulationId": "permanent_wave_neutraliser_hair_straightener_relaxer_neutraliser_liquid_cream",
 			"formulationName": "Permanent wave neutraliser, hair straightner (relaxer) neutraliser - liquid, cream",
 			"childNumber": 17,
 			"ingredients": [
 				{
-					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants, wetting agents ",
+					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants, wetting agents",
 					"ingredientExamples": "cetearyl alcohol",
 					"volume": 8
 				},
 				{
 					"ingredient": "Hydrogen peroxide",
 					"volume" : "2-6"
-					
 				},
 				{
 					"ingredient": "Thickeners",
@@ -876,7 +884,7 @@
 				},
 				{
 					"ingredient": "Hair conditioning agents",
-					"ingredientExamples":"silicones (including volatile silicones), cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes), polyquaternium-6",
+					"ingredientExamples": "silicones (including volatile silicones), cyclopentasiloxane, dimethicone, amodimethicone, silanes(alcoxysilanes), polyquaternium-6",
 					"volume": 2
 				},
 				{
@@ -907,7 +915,7 @@
 				},
 				{
 					"ingredient": "pH adjuster",
-					"ingredientExamples": " citric acid ",
+					"ingredientExamples": "citric acid ",
 					"volume": "up to and not surpassing pH 2.5 - 3.5"
 				},
 				{
@@ -917,12 +925,13 @@
 			]
 		},
 		{
+			"formulationId": "hair_straightener_relaxer_type_1",
 			"formulationName": "Hair straightner (relaxer) - type 1",
 			"childNumber": 18,
 			"ingredients": [
 				{
 					"ingredient": "Oils and waxes",
-					"ingredientExamples":" vegetable, mineral",
+					"ingredientExamples": "vegetable, mineral",
 					"volume": 80
 				},
 				{
@@ -969,11 +978,12 @@
 			]
 		},
 		{
+			"formulationId": "hair_straightener_relaxer_type_3",
 			"formulationName": "Hair straightner (relaxer) - type 3",
 			"childNumber": 21,
 			"ingredients": [
 				{
-					"ingredient": "Emulsifying agents ",
+					"ingredient": "Emulsifying agents",
 					"ingredientExamples": "long chain alcohols, ethoxylated long chain alcohols",
 					"volume": 1
 				},
@@ -1013,7 +1023,7 @@
 				},
 				{
 					"ingredient": "Silicones",
-					"ingredientExamples":"amodimethicone, silanes(alcoxysilanes)",
+					"ingredientExamples": "amodimethicone, silanes(alcoxysilanes)",
 					"volume": 5
 				},
 				{

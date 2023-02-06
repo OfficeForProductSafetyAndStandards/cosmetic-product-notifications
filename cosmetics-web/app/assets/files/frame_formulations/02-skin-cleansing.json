@@ -3,6 +3,7 @@
   "name": "Skin cleansing",
   "data": [
     {
+      "formulationId": "foaming_skin_cleanser",
       "formulationName": "Foaming skin cleanser",
       "childNumber": 1,
       "ingredients": [
@@ -13,7 +14,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "30"
         },
         {
@@ -38,7 +39,7 @@
         },
         {
           "ingredient": "Thickeners",
-          "ingredientExamples":"hydroxyethylcellulose",
+          "ingredientExamples": "hydroxyethylcellulose",
           "volume": "5"
         },
         {
@@ -65,12 +66,13 @@
       ]
     },
     {
-      "formulationName": "Foaming skin cleanser – with high level of oils and/or humectant",
+      "formulationId": "foaming_skin_cleanser_with_high_level_of_oils_andor_humectants",
+      "formulationName": "Foaming skin cleanser – with high level of oils and/or humectants",
       "childNumber": 2,
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "50"
         },
         {
@@ -127,6 +129,7 @@
       ]
     },
     {
+      "formulationId": "makeup_remover_non_foaming_cleanser_including_twophase_products",
       "formulationName": "Make-up remover - non foaming cleanser (including two-phase products)",
       "childNumber": 3,
       "ingredients": [
@@ -183,6 +186,7 @@
       ]
     },
     {
+      "formulationId": "makeup_remover_non_foaming_oil_cleanser",
       "formulationName": "Make-up remover - non foaming oil cleanser",
       "childNumber": 4,
       "ingredients": [
@@ -229,12 +233,13 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable oil, mineral oil",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": "to 100"
         }
       ]
     },
     {
+      "formulationId": "gentle_cleansing_gel",
       "formulationName": "Gentle cleansing gel",
       "childNumber": 5,
       "ingredients": [
@@ -245,7 +250,7 @@
         },
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples" :"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "20"
         },
         {
@@ -297,6 +302,7 @@
       ]
     },
     {
+      "formulationId": "skin_cleansing_cream_lotion_scrub_gel",
       "formulationName": "Skin cleansing cream, lotion, scrub, gel",
       "childNumber": 6,
       "ingredients": [
@@ -368,6 +374,7 @@
       ]
     },
     {
+      "formulationId": "body_scrub_gel_cream",
       "formulationName": "Body scrub (gel, cream)",
       "childNumber": 7,
       "ingredients": [
@@ -378,7 +385,7 @@
         },
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples" :"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "30"
         },
         {
@@ -440,6 +447,7 @@
       ]
     },
     {
+      "formulationId": "soap_toilet",
       "formulationName": "Soap - toilet",
       "childNumber": 8,
       "ingredients": [
@@ -500,6 +508,7 @@
       ]
     },
     {
+      "formulationId": "liquid_soap",
       "formulationName": "Liquid soap",
       "childNumber": 9,
       "notes": "Liquid ‘soaps’ may be soap based, totally synthetic based or a combination of both soap and synthetic.",
@@ -567,12 +576,13 @@
       ]
     },
     {
+      "formulationId": "bath_and_shower_gel_cream_milk_paste",
       "formulationName": "Bath and shower gel, cream, milk, paste",
       "childNumber": 10,
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "30"
         },
         {
@@ -634,12 +644,13 @@
       ]
     },
     {
+      "formulationId": "slightly_foaming_shower_cream_milk",
       "formulationName": "Slightly foaming shower cream, milk",
       "childNumber": 11,
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "60"
         },
         {
@@ -701,6 +712,7 @@
       ]
     },
     {
+      "formulationId": "bath_salts_cubes",
       "formulationName": "Bath salts or cubes",
       "childNumber": 12,
       "ingredients": [
@@ -717,7 +729,7 @@
         {
           "ingredient": "Parfum",
           "volume": "5"
-        }, 
+        },
         {
           "ingredient": "Emollients",
           "ingredientExamples": "glycerin",
@@ -745,6 +757,7 @@
          ]
     },
     {
+      "formulationId": "bath_and_shower_oil_including_bath_beads",
       "formulationName": "Bath and shower oil (including bath beads)",
       "childNumber": 13,
       "ingredients": [
@@ -782,13 +795,14 @@
         },
         {
           "ingredient": "Oils and emollients",
-           "ingredientExamples":"vegetable, mineral, glycerin, PEG, isopropyl myristate",
+          "ingredientExamples": "vegetable, mineral, glycerin, PEG, isopropyl myristate",
           "volume": "to 100"
         }
       ],
-      "annotations": "In case of capsules, or beads : Nature of the capsule, for example caprolactone and cellulose derivatives, agar and plasticisers (such as glycerin, sorbitol)"
+      "annotations": "In case of capsules or beads: Nature of the capsule, for example caprolactone and cellulose derivatives, agar and plasticisers (such as glycerin, sorbitol)"
     },
     {
+      "formulationId": "footbath",
       "formulationName": "Footbath",
       "childNumber": 14,
       "ingredients": [
@@ -840,6 +854,7 @@
       ]
     },
     {
+      "formulationId": "syndet_bar_soap",
       "formulationName": "Syndet bar",
       "childNumber": 15,
       "ingredients": [
@@ -850,7 +865,7 @@
         },
         {
           "ingredient": "Plasticisers, binders, emollients (glycerin, propylene glycol)",
-          "ingredientExamples":"glycerin, propylene glycol",
+          "ingredientExamples": "glycerin, propylene glycol",
           "volume": "50"
         },
         {
@@ -899,6 +914,7 @@
       ]
     },
     {
+      "formulationId": "combo_bar_soap",
       "formulationName": "Combo - bar",
       "childNumber": 16,
       "ingredients": [

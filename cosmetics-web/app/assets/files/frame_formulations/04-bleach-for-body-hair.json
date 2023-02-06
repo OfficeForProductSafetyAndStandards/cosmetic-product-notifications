@@ -3,6 +3,7 @@
   "name": "Bleach for body hair",
   "data": [
     {
+      "formulationId": "bleach_for_body_hair",
       "formulationName": "Bleach for body hair",
       "childNumber": 1,
       "ingredients": [

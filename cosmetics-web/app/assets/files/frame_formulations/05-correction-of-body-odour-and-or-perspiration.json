@@ -1,571 +1,581 @@
 {
   "number": 5,
   "name": "Correction of body odour, perspiration",
-  "data":[
-  {
-    "childNumber": 1,
-    "formulationName": "Antiperspirant aerosol spray — with antiperspirant salt",
-    "ingredients": [
-      {
-        "ingredient": "Propellants",
-        "ingredientExamples": "dimethyl ether, hydrocarbons",
-        "volume": "90"
-      },
-      {
-        "ingredient": "Emollients, humectants",
-        "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Aluminium salts",
-        "ingredientExamples": "aluminum chlorohydrate",
-        "volume": "10"
-      },
-      {
-        "ingredient": "Thickeners",
-        "ingredientExamples": "stearalkonium bentonite",
-        "volume": "10"
-      },
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Bulking agents",
-        "ingredientExamples": "perlite, nylon powder",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "vitamins, plant extracts",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "4"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "0.1"
-      }
-    ]
-  },
-  {
-    "childNumber": 2,
-    "formulationName": "Deodorant aerosol spray — without antiperspirant salt",
-    "ingredients": [
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "95"
-      },
-      {
-        "ingredient": "Propellants",
-        "ingredientExamples": "dimethyl ether, hydrocarbons, compressed gas",
-        "volume": "90"
-      },
-      {
-        "ingredient": "Humectants, emollients",
-        "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Thickeners",
-        "ingredientExamples": "stearalkonium bentonite",
-        "volume": "10"
-      },
-      {
-        "ingredient": "Bulking agents",
-        "ingredientExamples": "perlite, nylon powder",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "4"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "1"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ],
-    "annotations": "This includes aerosol spray compressed gas (for example, air, nitrogen, carbon dioxide)"
-  },
-  {
-    "childNumber": 3,
-    "formulationName": "Antiperspirant roll-on — with antiperspirant salt",
-    "ingredients": [
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "65"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Antiperspirant salts",
-        "ingredientExamples": "aluminium salt or aluminium/zirconium complex",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Thickeners, emollients, emulsifying agents",
-        "ingredientExamples": "starch, glycerin, steareth, PPG ethers",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Bulking agents",
-        "ingredientExamples": "perlite, nylon powder",
-        "volume": "10"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ]
-  },
-  {
-    "childNumber": 4,
-    "formulationName": "Deodorant roll-on — without antiperspirant salt",
-    "ingredients": [
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "65"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Thickeners, emollients, emulsifying agents",
-        "ingredientExamples": "starch, glycerin, steareth, PPG ethers",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Bulking agents",
-        "ingredientExamples": "perlite, nylon powder",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts, EDTA",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "1.5"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ]
-  },
-  {
-    "childNumber": 5,
-    "formulationName": "Antiperspirant stick — with antiperspirant salt",
-    "ingredients": [
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "80"
-      },
-      {
-        "ingredient": "Humectants",
-        "ingredientExamples": "propylene glycol, glycerin",
-        "volume": "80"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "50"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "45"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain soparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "45"
-      },
-      {
-        "ingredient": "Emollients",
-        "ingredientExamples": "Isopropyl myristate, cetyl alcohol, fatty esters",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Antiperspirant salts",
-        "ingredientExamples": "aluminum chlorohydrate, aluminum zirconium tetrachlorohydrate",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Soaps, emulsifying agents",
-        "ingredientExamples": "sodium stearate",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Bulking agents",
-        "ingredientExamples": "stearalkonium bentonite, perlite, nylon powder, talc",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts, EDTA",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "1"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ]
-  },
-  {
-    "childNumber": 6,
-    "formulationName": "Deodorant stick — without antiperspirant salt",
-    "ingredients": [
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "80"
-      },
-      {
-        "ingredient": "Humectants",
-        "ingredientExamples": "propylene glycol, glycerin",
-        "volume": "80"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "50"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "45"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "45"
-      },
-      {
-        "ingredient": "Emollients",
-        "ingredientExamples": "Isopropyl myristate, cetyl alcohol, fatty esters",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Soaps, emulsifying agents",
-        "ingredientExamples": "sodium stearate",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Bulking agents",
-        "ingredientExamples": "stearalkonium bentonite, perlite, nylon powder, talc",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts, EDTA",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "1"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ]
-  },
-  {
-    "childNumber": 7,
-    "formulationName": "Antiperspirant liquid squeeze pack or pump spray",
-    "ingredients": [
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "80"
-      },
-      {
-        "ingredient": "Aluminium salts",
-        "ingredientExamples": "aluminum chlorohydrate",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Emollients, humectants",
-        "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol derivatives",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts, EDTA",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "4"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "1"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ]
-  },
-  {
-    "childNumber": 8,
-    "formulationName": "Deodorant liquid squeeze pack or pump spray",
-    "ingredients": [
-      {
-        "ingredient": "Ethanol (alcohol, alcohol denat.)",
-        "volume": "95"
-      },
-      {
-        "ingredient": "Emollients, humectants",
-        "ingredientExamples": "propylene glycol, glycerin",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "15"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "4"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "1"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ]
-  },
-  {
-    "childNumber": 9,
-    "formulationName": "Antiperspirant cream",
-    "ingredients": [
-      {
-        "ingredient": "Oils and waxes",
-        "ingredientExamples": "vegetable, mineral, isoparaffin",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Silicones including volatile silicones",
-        "ingredientExamples": "dimethicone, cyclopentasiloxane",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Antiperspirant salts",
-        "ingredientExamples": "aluminium or zirconium salts",
-        "volume": "30"
-      },
-      {
-        "ingredient": "Humectants",
-        "ingredientExamples": "Propylene glycol",
-        "volume": "25"
-      },
-      {
-        "ingredient": "Liquid paraffin and isoparaffin",
-        "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Emollients",
-        "ingredientExamples": "long chain alcohols",
-        "volume": "20"
-      },
-      {
-        "ingredient": "Emulsifying agents",
-        "ingredientExamples": "ceteareth-30, PEG stearate",
-        "volume": "10"
-      },
-      {
-        "ingredient": "Additional ingredients",
-        "ingredientExamples": "plant extracts, EDTA",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Deodorants",
-        "ingredientExamples": "zinc ricinoleate",
-        "volume": "5"
-      },
-      {
-        "ingredient": "Parfum",
-        "volume": "3"
-      },
-      {
-        "ingredient": "Preservatives, antimicrobials",
-        "volume": "0.5"
-      },
-      {
-        "ingredient": "Aqua",
-        "volume": "to 100"
-      }
-    ]
-  }
-]}
+  "data": [
+    {
+      "formulationId": "antiperspirant_aerosol_spray_with_antiperspirant_salt",
+      "formulationName": "Antiperspirant aerosol spray — with antiperspirant salt",
+      "childNumber": 1,
+      "ingredients": [
+        {
+          "ingredient": "Propellants",
+          "ingredientExamples": "dimethyl ether, hydrocarbons",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Aluminium salts",
+          "ingredientExamples": "aluminum chlorohydrate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "stearalkonium bentonite",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "perlite, nylon powder",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "vitamins, plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "4"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "0.1"
+        }
+      ]
+    },
+    {
+      "formulationId": "deodorant_aerosol_spray_without_antiperspirant_salt",
+      "formulationName": "Deodorant aerosol spray — without antiperspirant salt",
+      "childNumber": 2,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "95"
+        },
+        {
+          "ingredient": "Propellants",
+          "ingredientExamples": "dimethyl ether, hydrocarbons, compressed gas",
+          "volume": "90"
+        },
+        {
+          "ingredient": "Humectants, emollients",
+          "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Thickeners",
+          "ingredientExamples": "stearalkonium bentonite",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "perlite, nylon powder",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "4"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ],
+      "annotations": "This includes aerosol spray compressed gas (for example, air, nitrogen, carbon dioxide)"
+    },
+    {
+      "formulationId": "antiperspirant_rollon_with_antiperspirant_salt",
+      "formulationName": "Antiperspirant roll-on — with antiperspirant salt",
+      "childNumber": 3,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "65"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Antiperspirant salts",
+          "ingredientExamples": "aluminium salt or aluminium/zirconium complex",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Thickeners, emollients, emulsifying agents",
+          "ingredientExamples": "starch, glycerin, steareth, PPG ethers",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "perlite, nylon powder",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationId": "deodorant_rollon_without_antiperspirant_salt",
+      "formulationName": "Deodorant roll-on — without antiperspirant salt",
+      "childNumber": 4,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "65"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Thickeners, emollients, emulsifying agents",
+          "ingredientExamples": "starch, glycerin, steareth, PPG ethers",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "perlite, nylon powder",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, EDTA",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1.5"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationId": "antiperspirant_stick_with_antiperspirant_salt",
+      "formulationName": "Antiperspirant stick — with antiperspirant salt",
+      "childNumber": 5,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "propylene glycol, glycerin",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "45"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain soparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "45"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExamples": "Isopropyl myristate, cetyl alcohol, fatty esters",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Antiperspirant salts",
+          "ingredientExamples": "aluminum chlorohydrate, aluminum zirconium tetrachlorohydrate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Soaps, emulsifying agents",
+          "ingredientExamples": "sodium stearate",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "stearalkonium bentonite, perlite, nylon powder, talc",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, EDTA",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationId": "deodorant_stick_without_antiperspirant_salt",
+      "formulationName": "Deodorant stick — without antiperspirant salt",
+      "childNumber": 6,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "propylene glycol, glycerin",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "50"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "45"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "45"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExamples": "Isopropyl myristate, cetyl alcohol, fatty esters",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Soaps, emulsifying agents",
+          "ingredientExamples": "sodium stearate",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Bulking agents",
+          "ingredientExamples": "stearalkonium bentonite, perlite, nylon powder, talc",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, EDTA",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationId": "antiperspirant_liquid_squeeze_pack_or_pump_spray",
+      "formulationName": "Antiperspirant liquid squeeze pack or pump spray",
+      "childNumber": 7,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "80"
+        },
+        {
+          "ingredient": "Aluminium salts",
+          "ingredientExamples": "aluminum chlorohydrate",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "isopropyl myristate, glycerin, propylene glycol derivatives",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, EDTA",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "4"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationId": "deodorant_liquid_squeeze_pack_or_pump_spray",
+      "formulationName": "Deodorant liquid squeeze pack or pump spray",
+      "childNumber": 8,
+      "ingredients": [
+        {
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
+          "volume": "95"
+        },
+        {
+          "ingredient": "Emollients, humectants",
+          "ingredientExamples": "propylene glycol, glycerin",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "15"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "4"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "1"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    },
+    {
+      "formulationId": "antiperspirant_cream",
+      "formulationName": "Antiperspirant cream",
+      "childNumber": 9,
+      "ingredients": [
+        {
+          "ingredient": "Oils and waxes",
+          "ingredientExamples": "vegetable, mineral, isoparaffin",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Silicones including volatile silicones",
+          "ingredientExamples": "dimethicone, cyclopentasiloxane",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Antiperspirant salts",
+          "ingredientExamples": "aluminium or zirconium salts",
+          "volume": "30"
+        },
+        {
+          "ingredient": "Humectants",
+          "ingredientExamples": "Propylene glycol",
+          "volume": "25"
+        },
+        {
+          "ingredient": "Liquid paraffin and isoparaffin",
+          "ingredientExamples": "branched-chain isoparaffin (C11-C16), isododecane, isohexadecane",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emollients",
+          "ingredientExamples": "long chain alcohols",
+          "volume": "20"
+        },
+        {
+          "ingredient": "Emulsifying agents",
+          "ingredientExamples": "ceteareth-30, PEG stearate",
+          "volume": "10"
+        },
+        {
+          "ingredient": "Additional ingredients",
+          "ingredientExamples": "plant extracts, EDTA",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Deodorants",
+          "ingredientExamples": "zinc ricinoleate",
+          "volume": "5"
+        },
+        {
+          "ingredient": "Parfum",
+          "volume": "3"
+        },
+        {
+          "ingredient": "Preservatives, antimicrobials",
+          "volume": "0.5"
+        },
+        {
+          "ingredient": "Aqua",
+          "volume": "to 100"
+        }
+      ]
+    }
+  ]
+}
