@@ -83,7 +83,7 @@ def expect_to_be_on_complete_registration_page
 end
 
 def expect_back_link_to_complete_registration_page
-  expect_back_link_to(/\/complete-registration?.+$/)
+  expect(page).to have_button("Back")
 end
 
 def expect_to_be_on_password_changed_page
