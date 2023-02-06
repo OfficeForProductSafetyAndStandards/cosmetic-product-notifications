@@ -9,14 +9,14 @@
     display: inline-block;
     margin: 0 10px 3px 0;
     opacity: 1;
-    animation-name: fadeInOpacity;
+    animation-name: fade-in-opacity;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
     animation-duration: 1s;
   }
 }
 
-@keyframes fadeInOpacity {
+@keyframes fade-in-opacity {
   0% {
     opacity: .2;
   }

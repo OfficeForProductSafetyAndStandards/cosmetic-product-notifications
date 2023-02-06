@@ -1,7 +1,7 @@
-//These are the opss PSD css styles: I recommend simply copy and pasting this entire code into your local opss-psd scss file.
-//And include - copy over - the imported files in the same directory (listed at the top of this file).
-//Don't edit your local copy as pasting this into it next/each time will overwrite your changes.
-//We can remove linting from this scss file - it won't run if there is a real problem
+// These are the opss PSD css styles: I recommend simply copy and pasting this entire code into your local opss-psd scss file.
+// And include - copy over - the imported files in the same directory (listed at the top of this file).
+// Don't edit your local copy as pasting this into it next/each time will overwrite your changes.
+// We can remove linting from this scss file - it won't run if there is a real problem
 
 @import "opss/opss-shared";
 @import "opss/opss-search";
@@ -22,12 +22,6 @@ main.govuk-main-wrapper {
     margin-top: govuk-spacing(6);
     margin-bottom: govuk-spacing(3);
   }
-
-  /* @include govuk-media-query($from: desktop) {
-        //margin-left: (govuk-spacing(8) + govuk-spacing(1));
-        //font-size: 24px !important; font-size: 1.5rem !important; line-height: 1.25 !important; margin-top: govuk-spacing(7);
-        //margin-bottom: govuk-spacing(3);
-    } */
 }
 
 .opss-radios__divider--title {
@@ -88,11 +82,10 @@ main.govuk-main-wrapper {
 
     border-width: 1px;
     border-style: solid;
-    border-color: $govuk-brand-colour; //govuk-colour("mid-grey", $legacy: "grey-2");
+    border-color: $govuk-brand-colour; // govuk-colour("mid-grey", $legacy: "grey-2");
 
-    /* border-radius: 5px; */
     border-image: linear-gradient(0deg, #969696, $govuk-border-colour) 1;
-    box-shadow: 3px 4px 6px 0 #ebebeb; //2px 2px 10px govuk-colour("mid-grey");
+    box-shadow: 3px 4px 6px 0 #ebebeb; // 2px 2px 10px govuk-colour("mid-grey");
 
     padding: govuk-spacing(6) govuk-spacing(5) govuk-spacing(8) govuk-spacing(6);
     margin-left: govuk-spacing(0);
@@ -107,8 +100,6 @@ main.govuk-main-wrapper {
 
     h2 {
       color: $govuk-brand-colour;
-
-      /* text-align: center; */
       width: 100%;
     }
 
@@ -198,14 +189,6 @@ ul.opss-radio-list {
 .govuk-character-count__message:after {
   content: ".";
 }
-
-//span.govuk-error-message + input[class^="govuk-!-margin-top"].govuk-input--error {
-//    margin-top: 0;
-//}
-
-/* ul.govuk-radios.govuk-list--spaced li {
-    @include govuk-clearfix;
-} */
 
 .opss-tag {
   font-size: 12px;
