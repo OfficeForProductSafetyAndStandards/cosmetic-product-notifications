@@ -14,8 +14,8 @@ RSpec.describe Ingredient, type: :model do
       it "is not valid when neither exact or range concentration are set" do
         ingredient = build_stubbed(:ingredient, exact_concentration: nil, range_concentration: nil)
         expect(ingredient).not_to be_valid
-        expect(ingredient.errors[:exact_concentration]).to eq(["Enter the exact or range concentration"])
-        expect(ingredient.errors[:range_concentration]).to eq(["Enter the exact or range concentration"])
+        expect(ingredient.errors[:exact_concentration]).to eq(["Enter the concentration"])
+        expect(ingredient.errors[:range_concentration]).to eq(["Enter the concentration"])
       end
       # rubocop:enable RSpec/MultipleExpectations
     end
@@ -82,7 +82,7 @@ RSpec.describe Ingredient, type: :model do
       it "is not valid without name" do
         ingredient = build_stubbed(:exact_ingredient, inci_name: nil)
         expect(ingredient).not_to be_valid
-        expect(ingredient.errors[:inci_name]).to eq(["Enter a name"])
+        expect(ingredient.errors[:inci_name]).to eq(["Enter an ingredient name"])
       end
 
       it "is invalid when name includes 'http'" do

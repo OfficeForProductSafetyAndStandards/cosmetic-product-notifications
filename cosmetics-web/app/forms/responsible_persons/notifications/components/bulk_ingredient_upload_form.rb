@@ -113,12 +113,10 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def poisonous?(entry)
-      case entry
-      when "true"
-        true
-      when "false"
-        false
-      end
+      { "TRUE" => true,
+        "FALSE" => false,
+        "true" => true,
+        "false" => false }[entry]
     end
   end
 end

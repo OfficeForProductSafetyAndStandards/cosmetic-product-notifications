@@ -29,57 +29,161 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
   context "when using exact CSV" do
     describe "error messages" do
-      # context "when values for toxicity are incorrect" do
-      #   let(:csv) do
-      #     <<~CSV
-      #       Sodium,35,497-19-8,foo
-      #     CSV
-      #   end
+      context "when name is empty" do
+        let(:csv) do
+          <<~CSV
+            ,35,497-19-8,true
+          CSV
+        end
 
-      #   it "does not create any ingredients" do
-      #     expect {
-      #       form.save_ingredients
-      #     }.not_to change(Ingredient, :count)
-      #   end
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
 
-      #   it "is invalid" do
-      #     form.valid?
+        it "is invalid" do
+          form.valid?
 
-      #     expect(form).not_to be_valid
-      #   end
-      #
-      #   it "has proper error message" do
-      #     form.valid?
+          expect(form).not_to be_valid
+        end
 
-      #     expect(form.errors.full_messages).to eq [""]
-      #   end
-      # end
-      #
-      # context "when values for toxicity are empty" do
-      #   let(:csv) do
-      #     <<~CSV
-      #       Aqua,65,497-19-8,
-      #     CSV
-      #   end
+        it "has proper error message" do
+          form.valid?
 
-      #   it "does not create any ingredients" do
-      #     expect {
-      #       form.save_ingredients
-      #     }.not_to change(Ingredient, :count)
-      #   end
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Enter an ingredient name"]
+        end
+      end
 
-      #   it "is invalid" do
-      #     form.valid?
+      context "when concentration number is empty" do
+        let(:csv) do
+          <<~CSV
+            Foo,,497-19-8,true
+          CSV
+        end
 
-      #     expect(form).not_to be_valid
-      #   end
-      #
-      #   it "has proper error message" do
-      #     form.valid?
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
 
-      #     expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
-      #   end
-      # end
+        it "is invalid" do
+          form.valid?
+
+          expect(form).not_to be_valid
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Enter the concentration"]
+        end
+      end
+
+      context "when values for concentration are incorrect" do
+        let(:csv) do
+          <<~CSV
+            Sodium,abc,497-19-8,foo
+          CSV
+        end
+
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
+
+        it "is invalid" do
+          form.valid?
+
+          expect(form).not_to be_valid
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Enter a number for the concentration"]
+        end
+      end
+
+      context "when values for toxicity are incorrect" do
+        let(:csv) do
+          <<~CSV
+            Sodium,32,497-19-8,foo
+          CSV
+        end
+
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
+
+        it "is invalid" do
+          form.valid?
+
+          expect(form).not_to be_valid
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"]
+        end
+      end
+
+      context "when name is too long" do
+        let(:csv) do
+          <<~CSV
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,32,497-19-8,true
+          CSV
+        end
+
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
+
+        it "is invalid" do
+          form.valid?
+
+          expect(form).not_to be_valid
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Inci name is too long (maximum is 100 characters)"]
+        end
+      end
+
+      context "when values for toxicity are empty" do
+        let(:csv) do
+          <<~CSV
+            Aqua,65,497-19-8,
+          CSV
+        end
+
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
+
+        it "is invalid" do
+          form.valid?
+
+          expect(form).not_to be_valid
+        end
+
+        it "has proper error message" do
+          form.valid?
+
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"]
+        end
+      end
 
       context "when one ingredient in csv is invalid" do
         let(:csv) do
@@ -153,7 +257,6 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
         end
       end
 
-      # TODO: implement
       context "when ingredient with that name already exists" do
         let(:csv) do
           <<~CSV
@@ -252,6 +355,20 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when using CSV for adding ingredients" do
       let(:component) do
         create(:exact_component)
+      end
+
+      context "when using upper case for toxicity" do
+        let(:csv) do
+          <<~CSV
+            Foo,12,497-19-8,TRUE
+          CSV
+        end
+
+        it "is valid" do
+          form.valid?
+
+          expect(form).to be_valid
+        end
       end
 
       it "creates records" do
