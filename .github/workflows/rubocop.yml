@@ -55,3 +55,4 @@ jobs:
       run: |
         cd cosmetics-web
         yarn standard
+        yarn stylelint '**/*.(s)?css'
