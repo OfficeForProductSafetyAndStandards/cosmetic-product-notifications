@@ -1,0 +1,1 @@
+class MarkedAsUnusedError < StandardError; end
