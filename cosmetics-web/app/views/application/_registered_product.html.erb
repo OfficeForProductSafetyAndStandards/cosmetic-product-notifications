@@ -1,3 +1,4 @@
+<% raise MarkedAsUnusedError %>
 <% if local_assigns[:responsible_person].present? %>
   <% notification_path = responsible_person_notification_path(responsible_person, notification) %>
 <% else %>
