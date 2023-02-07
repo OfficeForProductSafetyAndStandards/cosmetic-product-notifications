@@ -3,6 +3,7 @@
   "name": "Nail conditioner",
   "data": [
     {
+      "formulationId": "nail_conditioner_oil_based",
       "formulationName": "Nail conditioner (oil based)",
       "childNumber": 1,
       "ingredients": [
@@ -24,7 +25,7 @@
         },
         {
           "ingredient": "Vegetable oils",
-          "ingredientExamples":"sesame oil",
+          "ingredientExamples": "sesame oil",
           "volume": "to 100"
         }
       ]

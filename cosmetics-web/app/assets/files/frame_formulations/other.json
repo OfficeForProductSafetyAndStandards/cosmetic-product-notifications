@@ -1,0 +1,288 @@
+{
+  "data": [
+    {
+      "formulationId": "other_face_care_products_other_than_face_mask",
+      "formulationName": "Other face care products other than face mask"
+    },
+		{
+      "formulationId": "other_face_mask_products",
+      "formulationName": "Other face mask products"
+    },
+		{
+      "formulationId": "other_eye_contour_products",
+      "formulationName": "Other eye contour products"
+    },
+		{
+      "formulationId": "other_lip_care_products",
+      "formulationName": "Other lip care products"
+    },
+		{
+      "formulationId": "other_hand_care_products",
+      "formulationName": "Other hand care products"
+    },
+		{
+      "formulationId": "other_foot_care_products",
+      "formulationName": "Other foot care products"
+    },
+		{
+      "formulationId": "other_body_care_products",
+      "formulationName": "Other body care products"
+    },
+		{
+      "formulationId": "other_chemical_exfoliation_products",
+      "formulationName": "Other chemical exfoliation products"
+    },
+		{
+      "formulationId": "other_mechanical_exfoliation_products",
+      "formulationName": "Other mechanical exfoliation products"
+    },
+		{
+      "formulationId": "other_skin_lightening_products",
+      "formulationName": "Other skin lightening products"
+    },
+		{
+      "formulationId": "other_skin_care_products",
+      "formulationName": "Other skin care products"
+    },
+		{
+      "formulationId": "other_soap_products",
+      "formulationName": "Other soap products"
+    },
+		{
+      "formulationId": "other_bath_shower_products",
+      "formulationName": "Other bath/shower products"
+    },
+		{
+      "formulationId": "other_makeup_remover_products",
+      "formulationName": "Other make-up remover products"
+    },
+		{
+      "formulationId": "other_external_intimate_hygiene_products",
+      "formulationName": "Other external intimate hygiene products"
+    },
+		{
+      "formulationId": "other_skin_cleansing_products",
+      "formulationName": "Other skin cleansing products"
+    },
+		{
+      "formulationId": "other_chemical_depilatory_products",
+      "formulationName": "Other chemical depilatory products"
+    },
+		{
+      "formulationId": "other_physical_epilation_products",
+      "formulationName": "Other physical epilation products"
+    },
+		{
+      "formulationId": "other_body_hair_removal_products",
+      "formulationName": "Other body hair removal products"
+    },
+		{
+      "formulationId": "other_bleach_for_body_hair_products",
+      "formulationName": "Other bleach for body hair products"
+    },
+		{
+      "formulationId": "other_products_with_antiperspirant_activity",
+      "formulationName": "Other products with antiperspirant activity"
+    },
+		{
+      "formulationId": "other_products_without_antiperspirant_activity",
+      "formulationName": "Other products without antiperspirant activity"
+    },
+		{
+      "formulationId": "other_shaving_and_pre_after_shaving_products",
+      "formulationName": "Other shaving and pre-/after-shaving products"
+    },
+		{
+      "formulationId": "other_pre_after_shaving_products",
+      "formulationName": "Other pre-/after-shaving products"
+    },
+		{
+      "formulationId": "other_foundation_products",
+      "formulationName": "Other foundation products"
+    },
+		{
+      "formulationId": "other_concealer_products",
+      "formulationName": "Other concealer products"
+    },
+		{
+      "formulationId": "other_face_makeup_products",
+      "formulationName": "Other face make-up products"
+    },
+		{
+      "formulationId": "other_mascara_products",
+      "formulationName": "Other mascara products"
+    },
+		{
+      "formulationId": "other_eye_shadow_products",
+      "formulationName": "Other eye shadow products"
+    },
+		{
+      "formulationId": "other_eye_pencil_products",
+      "formulationName": "Other eye pencil products"
+    },
+		{
+      "formulationId": "other_eye_liner_products",
+      "formulationName": "Other eye liner products"
+    },
+		{
+      "formulationId": "other_eye_makeup_products",
+      "formulationName": "Other eye make-up products"
+    },
+		{
+      "formulationId": "other_lip_stick_products",
+      "formulationName": "Other lip stick products"
+    },
+		{
+      "formulationId": "other_lipstick_sealer_products",
+      "formulationName": "Other lipstick sealer products"
+    },
+		{
+      "formulationId": "other_lip_makeup_products",
+      "formulationName": "Other lip make-up products"
+    },
+		{
+      "formulationId": "other_body_or_face_paint_products",
+      "formulationName": "Other body or face paint products"
+    },
+		{
+      "formulationId": "other_makeup_products",
+      "formulationName": "Other make-up products"
+    },
+		{
+      "formulationId": "other_hydroalcoholic_perfumes",
+      "formulationName": "Other hydroalcoholic perfumes"
+    },
+		{
+      "formulationId": "other_non_hydroalcoholic_perfumes",
+      "formulationName": "Other non-hydroalcoholic perfumes"
+    },
+		{
+      "formulationId": "other_before_and_after_sun_products",
+      "formulationName": "Other before and after sun products"
+    },
+		{
+      "formulationId": "other_sun_protection_products",
+      "formulationName": "Other sun protection products"
+    },
+		{
+      "formulationId": "other_selftanning_products",
+      "formulationName": "Other self-tanning products"
+    },
+		{
+      "formulationId": "other_sun_and_selftanning_products",
+      "formulationName": "Other sun and self-tanning products"
+    },
+		{
+      "formulationId": "other_skin_products",
+      "formulationName": "Other skin products"
+    },
+		{
+      "formulationId": "other_shampoo_products",
+      "formulationName": "Other shampoo products"
+    },
+		{
+      "formulationId": "other_hair_conditioner_products",
+      "formulationName": "Other hair conditioner products"
+    },
+		{
+      "formulationId": "other_scalp_and_hair_roots_care_products",
+      "formulationName": "Other scalp and hair roots care products"
+    },
+		{
+      "formulationId": "other_antidandruff_products",
+      "formulationName": "Other antidandruff products"
+    },
+		{
+      "formulationId": "other_antihairloss_products",
+      "formulationName": "Other antihairloss products"
+    },
+		{
+      "formulationId": "other_hair_and_scalp_care_and_cleansing_products",
+      "formulationName": "Other hair and scalp care and cleansing products"
+    },
+		{
+      "formulationId": "other_oxidative_hair_colour_products",
+      "formulationName": "Other oxidative hair colour products"
+    },
+		{
+      "formulationId": "other_nonoxidative_hair_colour_products",
+      "formulationName": "Other non-oxidative hair colour products"
+    },
+		{
+      "formulationId": "other_hair_bleaching_and_dye_remover_products",
+      "formulationName": "Other hair bleaching and dye remover products"
+    },
+		{
+      "formulationId": "other_hair_colouring_products",
+      "formulationName": "Other hair colouring products"
+    },
+		{
+      "formulationId": "other_products_for_temporary_hair_styling",
+      "formulationName": "Other products for temporary hair styling"
+    },
+		{
+      "formulationId": "other_permanent_wave_products",
+      "formulationName": "Other permanent wave products"
+    },
+		{
+      "formulationId": "other_hair_relaxer_straightener_products",
+      "formulationName": "Other hair relaxer/straightener products"
+    },
+		{
+      "formulationId": "other_hair_styling_products",
+      "formulationName": "Other hair styling products"
+    },
+		{
+      "formulationId": "other_hair_sun_protection_products",
+      "formulationName": "Other hair sun protection products"
+    },
+		{
+      "formulationId": "other_hair_and_scalp_products",
+      "formulationName": "Other hair and scalp products"
+    },
+		{
+      "formulationId": "other_nail_varnish_nail_makeup",
+      "formulationName": "Other nail varnish/nail make-up"
+    },
+		{
+      "formulationId": "other_nail_varnish_and_remover_products",
+      "formulationName": "Other nail varnish and remover products"
+    },
+		{
+      "formulationId": "other_nail_care_products",
+      "formulationName": "Other nail care products"
+    },
+		{
+      "formulationId": "other_nail_care_nail_hardener_products",
+      "formulationName": "Other nail care/nail hardener products"
+    },
+		{
+      "formulationId": "other_nail_and_cuticle_products",
+      "formulationName": "Other nail and cuticle products"
+    },
+		{
+      "formulationId": "other_toothpaste_products",
+      "formulationName": "Other toothpaste products"
+    },
+		{
+      "formulationId": "other_tooth_care_products",
+      "formulationName": "Other tooth care products"
+    },
+		{
+      "formulationId": "other_mouth_wash_products",
+      "formulationName": "Other mouth wash products"
+    },
+		{
+      "formulationId": "other_breath_spray_products",
+      "formulationName": "Other breath spray products"
+    },
+		{
+      "formulationId": "other_mouth_wash_breath_spray_products",
+      "formulationName": "Other mouth wash/breath spray products"
+    },
+		{
+      "formulationId": "other_oral_hygiene_products",
+      "formulationName": "Other oral hygiene products"
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 	"name": "Mouthwash",
 	"data": [
 		{
+			"formulationId": "mouthwash",
 			"formulationName": "Mouthwash",
 			"childNumber": 1,
 			"ingredients": [
@@ -27,7 +28,7 @@
 				},
 				{
 					"ingredient": "Flavour (mostly essential oils)",
-					"ingredientExamples":"mint",
+					"ingredientExamples": "mint",
 					"volume": 3
 				},
 				{
@@ -62,10 +63,11 @@
 					"volume": "to 100"
 				}
 			],
-			"annotation": 
+			"annotation":
 				"For fluoride compounds the actual weight present will depend on the molecular weight of the fluorine donor. For example 0.15% fluorine = 1.14% monofluorophosphate (MFP) or 0.333% sodium fluoride (NaF)"
 		},
 		{
+			"formulationId": "mouthwash_concentrate",
 			"formulationName": "Mouthwash (concentrate)",
 			"childNumber": 2,
 			"ingredients": [
@@ -85,7 +87,7 @@
 				},
 				{
 					"ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
-          			"ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
+          "ingredientExamples": "ethoxylated long chain alcohols, PEG-60, hydrogenated castor oil, sodium lauryl sulphate, polysorbate",
 					"volume": 6
 				},
 				{
@@ -112,12 +114,13 @@
 					"volume": 0.2
 				},
 				{
-					"ingredient": "Aqua ",
+					"ingredient": "Aqua",
 					"volume": "to 100"
 				}
 			]
 		},
 		{
+			"formulationId": "breath_spray_pump_spray",
 			"formulationName": "Breath spray (pump spray)",
 			"childNumber": 3,
 			"ingredients": [
@@ -131,8 +134,8 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Flavour (mostly essential oils) ",
-					"ingredientExamples":"mint",
+					"ingredient": "Flavour (mostly essential oils)",
+					"ingredientExamples": "mint",
 					"volume": 2
 				},
 				{
@@ -150,7 +153,7 @@
 					"volume": 0.2
 				},
 				{
-					"ingredient": "Aqua ",
+					"ingredient": "Aqua",
 					"volume": "to 100"
 				}
 			]

@@ -3,12 +3,13 @@
   "name": "Sun products and self tanning products",
   "data": [
     {
-      "childNumber": 1,
+      "formulationId": "sunscreen_cream_lotion",
       "formulationName": "Sunscreen cream, lotion",
+      "childNumber": 1,
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "70"
         },
         {
@@ -73,11 +74,12 @@
       ]
     },
     {
-      "childNumber": 2,
+      "formulationId": "sunscreen_oil",
       "formulationName": "Sunscreen oil",
+      "childNumber": 2,
       "ingredients": [
         {
-          "ingredient": "Ethanol(alcohol, alcohol denat.)",
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
           "volume": "70"
         },
         {
@@ -124,12 +126,13 @@
       ]
     },
     {
-      "childNumber": 3,
+      "formulationId": "sunscreen_stick",
       "formulationName": "Sunscreen stick",
+      "childNumber": 3,
       "ingredients": [
         {
           "ingredient": "Waxes, fats",
-          "ingredientExamples":"theobroma cacao seed butter, polyethylene",
+          "ingredientExamples": "theobroma cacao seed butter, polyethylene",
           "volume": "60"
         },
         {
@@ -172,8 +175,9 @@
       ]
     },
     {
-      "childNumber": 4,
+      "formulationId": "sunscreen_hydrogel",
       "formulationName": "Sunscreen hydrogel",
+      "childNumber": 4,
       "ingredients": [
         {
           "ingredient": "Ethanol (alcohol, alcohol denat.)",
@@ -227,8 +231,9 @@
       ]
     },
     {
-      "childNumber": 5,
+      "formulationId": "sunscreen_gel_oil_based",
       "formulationName": "Sunscreen gel (oil based)",
+      "childNumber": 5,
       "ingredients": [
         {
           "ingredient": "Silicones(including volatile silicones)",
@@ -278,12 +283,13 @@
       ]
     },
     {
-      "childNumber": 6,
+      "formulationId": "self_tan_lotion_cream",
       "formulationName": "Self tan - lotion, cream",
+      "childNumber": 6,
       "ingredients": [
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "50"
         },
         {
@@ -347,8 +353,9 @@
       ]
     },
     {
-      "childNumber": 7,
+      "formulationId": "self_tan_lotion_gel",
       "formulationName": "Self tan – lotion, gel",
+      "childNumber": 7,
       "ingredients": [
         {
           "ingredient": "Ethanols (alcohol, alcohol denat.)",

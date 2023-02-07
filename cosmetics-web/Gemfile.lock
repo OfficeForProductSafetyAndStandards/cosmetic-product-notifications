@@ -578,6 +578,7 @@ DEPENDENCIES
   faker
   govuk-design-system-rails (~> 0.10.1)
   govuk_notify_rails (~> 2.1.0)
+  hashie (~> 5.0.0)
   image_processing (~> 1.2)
   interactor
   jbuilder (~> 2.9)

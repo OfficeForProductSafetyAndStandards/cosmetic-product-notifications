@@ -1,5 +1,6 @@
 <% title = "Choose frame formulation" %>
 <% question = "Frame formulation name" %>
+<% frame_formulations = FrameFormulations::CATEGORIES[@component.root_category.to_s][@component.sub_category.to_s][@component.sub_sub_category.to_s] %>
 
 <% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
@@ -25,8 +26,8 @@
                       show_all_values: true,
                       is_autocomplete: true,
                       label: { text: question, classes: "govuk-label--m", isPageHeading: true },
-                      items: Component.frame_formulations.keys.map { |formulation_key| \
-                        { text: get_frame_formulation_name(formulation_key.to_sym), value: formulation_key } \
+                      items: frame_formulations.map { |formulation_key| \
+                        { text: get_frame_formulation_name(formulation_key), value: formulation_key } \
                       }) %>
       <%= govukButton text: "Continue" %>
 
