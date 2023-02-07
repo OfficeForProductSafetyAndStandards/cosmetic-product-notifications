@@ -144,7 +144,7 @@ def answer_item_sub_subcategory_with(answer)
 end
 
 def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
-  within_fieldset("How will you provide the #{item_name || 'the product'} formulation?") do
+  within_fieldset("How will you provide #{item_name || 'the product'} formulation?") do
     page.choose(answer)
   end
   click_button "Continue"

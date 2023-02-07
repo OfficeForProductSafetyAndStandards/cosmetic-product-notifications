@@ -157,6 +157,35 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
           expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Inci name is too long (maximum is 100 characters)"]
         end
+
+        context "when external file is used" do
+          let(:file) do
+            f = File.open("spec/fixtures/files/Exact_ingredients_long_name.csv")
+            Rack::Test::UploadedFile.new(f, "text/csv")
+          end
+
+          it "is invalid" do
+            form.valid?
+
+            expect(form).not_to be_valid
+          end
+
+          it "does have proper message after saving attempt" do
+            form.save_ingredients
+
+            expect(form.errors.full_messages).to eq ["File has incorrect characters. Please check and try again"]
+          end
+
+          it "does return proper value" do
+            expect(form.save_ingredients).to be false
+          end
+
+          it "has proper error message" do
+            form.valid?
+
+            expect(form.errors.full_messages).to eq ["File has incorrect characters. Please check and try again"]
+          end
+        end
       end
 
       context "when values for toxicity are empty" do
@@ -319,7 +348,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
         it "has proper error message" do
           form.save_ingredients
 
-          expect(form.errors.full_messages).to eq ["The file cound not be uploaded because of errors in line 2: Ingredient name already exists in this component"]
+          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 2: Ingredient name already exists in this CSV file"]
         end
       end
 

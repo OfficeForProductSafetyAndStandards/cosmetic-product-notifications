@@ -20,26 +20,13 @@ module ResponsiblePersons::Notifications::Components
       return false if errors.present?
 
       super
-    end
-
-    def prepare_ingredients
-      return if @ingredients.present?
-
-      @ingredients = []
-      @error_messages = []
-
-      @csv_data&.each_with_index do |row, i|
-        name, concentration, cas, poisonous = *row
-        ingredient = row_to_ingredient(name, concentration, cas, poisonous)
-        unless ingredient.valid?
-          @error_messages << { line: i + 1, message: ingredient.errors.full_messages.first }
-        end
-        @ingredients << ingredient
-      end
+    rescue ActiveRecord::StatementInvalid
+      errors.add(:file, "File has incorrect characters. Please check and try again")
+      false
     end
 
     def save_ingredients
-      return unless valid?
+      return false unless valid?
 
       # Despite validations above, there might be rare case when ingredient can not be saved, eg:
       # * there will be duplicated ingredient in the file
@@ -53,6 +40,9 @@ module ResponsiblePersons::Notifications::Components
           end
         end
       end
+    rescue ActiveRecord::StatementInvalid
+      errors.add(:file, "File has incorrect characters. Please check and try again")
+      false
     rescue IngredientCanNotBeSavedError => e
       errors.add(:file, e.message)
       false
@@ -86,6 +76,24 @@ module ResponsiblePersons::Notifications::Components
       end
     end
 
+    def prepare_ingredients
+      return if @ingredients.present?
+
+      @ingredients = []
+      @error_messages = []
+
+      return if duplicated_ingredients_in_file?
+
+      @csv_data&.each_with_index do |row, i|
+        name, concentration, cas, poisonous = *row
+        ingredient = row_to_ingredient(name, concentration, cas, poisonous)
+        unless ingredient.valid?
+          @error_messages << { line: i + 1, message: ingredient.errors.full_messages.first }
+        end
+        @ingredients << ingredient
+      end
+    end
+
     def file_is_not_empty_validation
       return if file_too_large?
 
@@ -110,6 +118,21 @@ module ResponsiblePersons::Notifications::Components
       end
       ingredient.component = component
       ingredient
+    end
+
+    def duplicated_ingredients_in_file?
+      names = []
+      @csv_data&.each_with_index do |row, i|
+        name = row[0]
+        if names.include? name
+          errors.add(:file, "The file could not be uploaded because of error in line #{i + 1}: Ingredient name already exists in this CSV file")
+          return true
+        end
+        if name.present?
+          names << name
+        end
+      end
+      false
     end
 
     def poisonous?(entry)

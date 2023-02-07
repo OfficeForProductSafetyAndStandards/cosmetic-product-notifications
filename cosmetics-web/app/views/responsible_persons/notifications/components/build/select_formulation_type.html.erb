@@ -1,5 +1,5 @@
 <% title = "Select formulation type" %>
-<% question = "How will you provide the #{@component_name} formulation?" %>
+<% question = "How will you provide #{@component_name} formulation?" %>
 <% items = formulations_types_label.map { |type_key, type_object| 
   { text: type_object[:text], 
     value: type_key.to_sym, 

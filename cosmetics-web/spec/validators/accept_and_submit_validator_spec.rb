@@ -69,8 +69,15 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
       "X" * (ResponsiblePersons::Notifications::IngredientConcentrationForm::NAME_LENGTH_LIMIT * 2)
     end
 
-    let(:ingredient) { create(:range_ingredient, inci_name: name) }
+    let(:ingredient) { create(:range_ingredient) }
     let(:component) { create(:component, :using_range, notification:, ingredients: [ingredient]) }
+
+    before do
+      ingredient.inci_name = name
+      ingredient.save(validate: false)
+
+      notification.valid?(:accept_and_submit)
+    end
 
     it "complains about too long ingredient name" do
       expect(notification.errors.messages_for(:ingredients)).to eq(["Ingredient names must be 100 characters or less"])
