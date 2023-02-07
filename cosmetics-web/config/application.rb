@@ -60,5 +60,8 @@ module Cosmetics
     # See https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil
     config.sass.style = :compressed
+
+    # Avoid file attachment errors with blank params
+    config.active_storage.multiple_file_field_include_hidden = false
   end
 end

@@ -33,12 +33,6 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
-  # Avoid file attachment errors with rails 7 and rack-test.
-  # References:
-  # - https://stackoverflow.com/questions/71366018/rails-system-test-w-capybara-racktest-raises-activesupportmessageverifierin
-  # - https://github.com/rack/rack-test/pull/278
-  config.active_storage.multiple_file_field_include_hidden = false
-
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 
