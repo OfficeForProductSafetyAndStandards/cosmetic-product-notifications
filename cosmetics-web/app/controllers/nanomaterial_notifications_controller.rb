@@ -20,7 +20,7 @@ class NanomaterialNotificationsController < SubmitApplicationController
       end
       format.csv do
         @notifications = NanomaterialNotificationsDecorator.new(@nanomaterial_notifications)
-        render csv: @notifications, filename: "all-nanomaterial-notifications-#{Time.zone.now.to_s(:db)}"
+        render csv: @notifications, filename: "all-nanomaterial-notifications-#{Time.zone.now.to_fs(:db)}"
       end
     end
   end
