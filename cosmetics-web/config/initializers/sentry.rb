@@ -9,9 +9,11 @@ Rails.application.configure do
     config.excluded_exceptions += ["Pundit::NotAuthorizedError"]
     config.send_default_pii = false
 
-    # To activate performance monitoring
-    # We recommend adjusting the value in production:
-    # Originally we set 0.25, tracing 25% of transactions. This reached our Sentry 100k transactions quota in a few hours.
-    config.traces_sample_rate = 0.0025 # 0.25% of transactions
+    if ENV["SENTRY_PERFORMANCE_MONITORING_ENABLED"] == "true"
+      # To activate performance monitoring
+      # We recommend adjusting the value in production:
+      # Originally we set 0.25, tracing 25% of transactions. This reached our Sentry 100k transactions quota in a few hours.
+      config.traces_sample_rate = 0.0025 # 0.25% of transactions
+    end
   end
 end
