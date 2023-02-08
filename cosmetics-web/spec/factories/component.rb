@@ -90,6 +90,10 @@ FactoryBot.define do
       frame_formulation { "skin_care_cream_lotion_gel_with_high_level_of_perfume" }
     end
 
+    trait :with_category do
+      sub_sub_category { "shampoo" }
+    end
+
     trait :with_range_ingredients do
       notification_type { "range" }
       after(:create) do |component|

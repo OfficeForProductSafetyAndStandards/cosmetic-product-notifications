@@ -1,8 +1,7 @@
-
 // Apply GOVUK typography:
 // https://github.com/alphagov/accessible-autocomplete/issues/285
 .autocomplete__wrapper * {
-  @include govuk-typography-common();
+  @include govuk-typography-common;
 }
 
 // Override source to fix a bug:

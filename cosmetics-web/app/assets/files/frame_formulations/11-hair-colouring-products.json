@@ -3,6 +3,7 @@
   "name": "Hair colouring products",
   "data": [
     {
+      "formulationId": "hair_colorant_temporary_shampoo",
       "formulationName": "Hair colourant (temporary) - shampoo",
       "childNumber": 1,
       "ingredients": [
@@ -66,6 +67,7 @@
       ]
     },
     {
+      "formulationId": "hair_colorant_temporary_foam_lotion",
       "formulationName": "Hair colourant (temporary) - foam, lotion",
       "childNumber": 2,
       "ingredients": [
@@ -119,6 +121,7 @@
       ]
     },
     {
+      "formulationId": "hair_colorant_temporary_or_semipermanent_liquid_cream_foam",
       "formulationName": "Hair colourant (temporary or semi-permanent) - liquid, cream, foam",
       "childNumber": 3,
       "ingredients": [
@@ -128,7 +131,7 @@
         },
         {
           "ingredient": "Oils, waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohol",
+          "ingredientExamples": "vegetable, mineral, long chain alcohol",
           "volume": 20
         },
         {
@@ -138,12 +141,12 @@
         },
         {
           "ingredient": "Silicones (including volatile silicones)",
-          "ingredientExamples":"cyclopentasiloxane, dimethicone, amodimethicone",
+          "ingredientExamples": "cyclopentasiloxane, dimethicone, amodimethicone",
           "volume": 10
         },
         {
           "ingredient": "Anionic surfactants, non-ionic surfactants, amphoteric surfactants",
-          "ingredientExamples":"ether of oleyl alcohol",
+          "ingredientExamples": "ether of oleyl alcohol",
           "volume": 10
         },
         {
@@ -182,7 +185,7 @@
           "volume": 2
         },
         {
-          "ingredient": "Parfum ",
+          "ingredient": "Parfum",
           "volume": 1
         },
         {
@@ -201,6 +204,7 @@
       ]
     },
     {
+      "formulationId": "hair_colorant_permanent_oxidative_type_type_1_two_components_colorant_part",
       "formulationName": "Hair colourant (permanent, oxidative type) - type 1: two components, colourant part",
       "childNumber": 4,
       "ingredients": [
@@ -300,7 +304,6 @@
         "header": "To be mixed immediately prior to use with:",
         "instructions": ["oxidative part (11.8-2013 or 11.9-2013)"]
       },
-
       "extraInfo": [
         " ",
         "pH value: 8 - 11.6",
@@ -308,6 +311,7 @@
       ]
     },
     {
+      "formulationId": "hair_colorant_permanent_oxidative_type_type_2_two_components_colorant_part_with_high_level_of_oils",
       "formulationName": "Hair colourant (permanent, oxidative type) - type 2: two components, colourant part with high level of oils",
       "childNumber": 5,
       "ingredients": [
@@ -422,6 +426,7 @@
       ]
     },
     {
+      "formulationId": "hair_colorant_permanent_oxidative_type_type_3_three_components_colorant_part_a",
       "formulationName": "Hair colourant (permanent, oxidative type) - type 3: multi components, colourant part - part a",
       "childNumber": 6,
       "ingredients": [
@@ -502,6 +507,7 @@
       ]
     },
     {
+      "formulationId": "hair_colorant_permanent_oxidative_type_type_3_three_components_colorant_part_b",
       "formulationName": "Hair colourant (permanent, oxidative type) - type 3: multi components, colourant part - part b",
       "childNumber": 7,
       "ingredients": [
@@ -554,6 +560,7 @@
       ]
     },
     {
+      "formulationId": "hair_colorant_permanent_oxidative_type_type_1_two_or_three_components_oxidative_part",
       "formulationName": "Hair colourant (permanent, oxidative type) - type 1: two or more components, oxidative part",
       "childNumber": 8,
       "ingredients": [
@@ -602,12 +609,12 @@
         "header": "To be mixed immediately prior to use with:",
         "instructions": ["colourant part (11.4-2013 or 11.5-2013 or 11.6-2013 + 11.7-2013)"]
       },
-
       "extraInfo": [
         "pH value of the mixture with colourant part: 8 - 11.6"
       ]
     },
     {
+      "formulationId": "hair_colorant_permanent_oxidative_type_type_2_two_or_three_components_oxidative_part_with_high_level_of_oils",
       "formulationName": "Hair colourant (permanent, oxidative type) - type 2: two or more components, oxidative part with high level of oils",
       "childNumber": 9,
       "ingredients": [
@@ -670,6 +677,7 @@
       "annotations": "pH value of the mixture with colourant part: 8 - 11.6"
     },
     {
+      "formulationId": "dye_remover_reducing_type_part_a",
       "formulationName": "Dye remover (reducing type) - part a",
       "childNumber": 10,
       "ingredients": [
@@ -683,15 +691,15 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use :",
+        "header": "To be mixed immediately prior to use:",
         "instructions": ["with part B (11.11-2013)"]
       },
-
       "extraInfo": [
         "pH value: 1.5 - 2"
       ]
     },
     {
+      "formulationId": "dye_remover_reducing_type_part_b",
       "formulationName": "Dye remover (reducing type) - part b",
       "childNumber": 11,
       "ingredients": [
@@ -709,12 +717,12 @@
         "header": "To be mixed immediately prior to use with:",
         "instructions": ["part A (11.10-2013)"]
       },
-
       "extraInfo": [
         "pH value: 10 - 11"
       ]
     },
     {
+      "formulationId": "dye_remover_oxidative_type_part_a",
       "formulationName": "Dye remover (oxidative type) - part a",
       "childNumber": 12,
       "ingredients": [
@@ -762,6 +770,7 @@
       ]
     },
     {
+      "formulationId": "dye_remover_oxidative_type_part_b",
       "formulationName": "Dye remover (oxidative type) - part b",
       "childNumber": 13,
       "ingredients": [
@@ -816,11 +825,12 @@
       ]
     },
     {
+      "formulationId": "skin_dyeremoving_cleanser_reducing_type",
       "formulationName": "Skin dye-removing cleanser (reducing type)",
       "childNumber": 14,
       "ingredients": [
         {
-          "ingredient": "Ethanol (alcohol, alcohol denat.) ",
+          "ingredient": "Ethanol (alcohol, alcohol denat.)",
           "volume": 30
         },
         {
@@ -859,6 +869,7 @@
       ]
     },
     {
+      "formulationId": "hair_bleach_powder",
       "formulationName": "Hair bleach - powder",
       "childNumber": 15,
       "ingredients": [
@@ -901,13 +912,13 @@
         "header": "To be mixed immediately prior to use with:",
         "instructions": ["aqua for use alone","or with oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)","or with oxidative and alkaline parts (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part)", ""]
       },
-
       "extraInfo": [
         "pH value at 1% powder in water: 10 - 12",
         "pH value of the different mixtures: 9.5 - 11.5"
       ]
     },
     {
+      "formulationId": "hair_bleach_paste",
       "formulationName": "Hair bleach - paste",
       "childNumber": 16,
       "ingredients": [
@@ -947,23 +958,24 @@
         }
       ],
       "mixingInstruction": {
-        "header": "To be mixed immediately prior to use with: ",
+        "header": "To be mixed immediately prior to use with:",
         "instructions": ["oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)", "or with oxidative and alkaline parts Hair bleach - oxidative part - type 1", "or Hair bleach - oxidative part - type 2 and Hair bleach - alkaline part" ]
       },
       "extraInfo": [
         "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
+      "formulationId": "hair_bleach_oxidative_part_type_1",
       "formulationName": "Hair bleach - oxidative part - type 1",
       "childNumber": 17,
       "ingredients": [
         {
           "ingredient": "Emulsifying agents, anionic surfactants, amphoteric surfactants, non-ionic surfactants",
-          "ingredientExamples":"ethoxylated, long chain alcohols",
+          "ingredientExamples": "ethoxylated, long chain alcohols",
           "volume": 15
         },
         {
-          "ingredient": "Hydrogen peroxide ",
+          "ingredient": "Hydrogen peroxide",
           "volume": 12
         },
         {
@@ -1012,6 +1024,7 @@
         "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
+      "formulationId": "hair_bleach_oxidative_part_type_2",
       "formulationName": "Hair bleach - oxidative part - type 2",
       "childNumber": 18,
       "ingredients": [
@@ -1063,7 +1076,7 @@
           "volume": "up to and not surpassing pH 2-3"
         },
         {
-          "ingredient": "Aqua ",
+          "ingredient": "Aqua",
           "volume": "to 100"
         }
       ],
@@ -1075,9 +1088,9 @@
         "pH value of the different mixtures: 9.5 - 11.5"]
     },
     {
+      "formulationId": "hair_bleach_alkaline_part",
       "formulationName": "Hair bleach - alkaline part",
       "childNumber": 19,
-
       "ingredients": [
         {
           "ingredient": "Soaps",
@@ -1104,7 +1117,6 @@
           "ingredientExamples": "betaine derivatives",
           "volume": 20
         },
-
         {
           "ingredient": "Solvents",
           "ingredientExamples": "propylene glycol, glycerin",
@@ -1150,13 +1162,12 @@
           "volume": 1
         },
         {
-          "ingredient": "Aqua ",
+          "ingredient": "Aqua",
           "volume":  "to 100"
         }
       ],
-      "mixingInstruction" :
-      {
-        "header":"To be mixed immediately prior to use with:",
+      "mixingInstruction": {
+        "header": "To be mixed immediately prior to use with:",
         "instructions": ["hair bleach powder (11.15-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
          "hair bleach paste (11.16-2013) + oxidative part (Hair bleach - oxidative part - type 1 or Hair bleach - oxidative part - type 2)",
          "oxidative part (Hair bleach - oxidative part - type 1 OR Hair bleach - oxidative part - type 2)"]
@@ -1166,6 +1177,7 @@
       ]
     },
     {
+      "formulationId": "hair_colour_restorer",
       "formulationName": "Hair colour restorer",
       "childNumber": 20,
       "ingredients": [
@@ -1194,11 +1206,11 @@
           "volume": 3
         },
         {
-          "ingredient": "Parfum ",
+          "ingredient": "Parfum",
           "volume": 1
         },
         {
-          "ingredient": "Aqua ",
+          "ingredient": "Aqua",
           "volume": "to 100"
         }
       ]

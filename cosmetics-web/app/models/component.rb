@@ -64,7 +64,7 @@ class Component < ApplicationRecord
 
   # Currently two components with no name are immediately created for
   # a notification when the user indicates that it is a kit/multi-component,
-  # so the uniquness validation has to allow non-unique null values.
+  # so the uniqueness validation has to allow non-unique null values.
   validates :name, uniqueness: { scope: :notification_id, allow_nil: true, case_sensitive: false },
                    unless: -> { notification.via_zip_file? },
                    presence: { if: -> { notification.reload.components.where.not(id:).count.positive? }, on: :add_component_name }
@@ -74,6 +74,8 @@ class Component < ApplicationRecord
   validates :other_special_applicator, presence: true, on: :select_special_applicator_type, if: :other_special_applicator?
 
   validates :frame_formulation, presence: true, on: :select_frame_formulation
+  validate :frame_formulation_must_match_categories, on: :select_frame_formulation
+
   validates :cmrs, presence: true, on: :add_cmrs
   validates :notification_type, presence: true, on: :select_formulation_type
 
@@ -282,6 +284,12 @@ private
   def difference_between_maximum_and_minimum_ph
     if (maximum_ph - minimum_ph).round(2) > 1.0
       errors.add(:maximum_ph, "The maximum pH cannot be greater than 1 above the minimum pH")
+    end
+  end
+
+  def frame_formulation_must_match_categories
+    if FrameFormulations::CATEGORIES[root_category.to_s][sub_category.to_s][sub_sub_category.to_s].exclude?(frame_formulation)
+      errors.add(:frame_formulation, "The chosen frame formulation must match the category of the product")
     end
   end
 

@@ -170,7 +170,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
 
     expect_to_be_on__frame_formulation_select_page
-    answer_select_formulation_with "Skin Care Cream, Lotion, Gel"
+    answer_select_formulation_with "Shampoo plus conditioner"
     answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
 
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, forced_poisonous: true, already_added: ["Ingredient A", "Ingredient B"])

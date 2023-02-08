@@ -3,8 +3,9 @@
   "name": "Perfumes",
   "data": [
     {
-      "childNumber": 1,
+      "formulationId": "perfume_eau_de_cologne_eau_de_toilette_eau_de_parfum_extrait_de_parfum_parfum",
       "formulationName": "Perfume (eau de cologne, eau de toilette, eau de parfum, extrait de parfum, parfum)",
+      "childNumber": 1,
       "ingredients": [
         {
           "ingredient": "Ethanol (alcohol, alcohol denat.)",
@@ -53,8 +54,9 @@
       ]
     },
     {
-      "childNumber": 2,
+      "formulationId": "perfumed_powder_loose_or_pressed",
       "formulationName": "Perfumed powder (loose or pressed)",
+      "childNumber": 2,
       "ingredients": [
         {
           "ingredient": "Mineral bulking agents",
@@ -92,12 +94,13 @@
       ]
     },
     {
-      "childNumber": 3,
+      "formulationId": "solid_perfume_paste_waxe_",
       "formulationName": "Solid perfume (paste, wax)",
+      "childNumber": 3,
       "ingredients": [
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable, mineral,long chain alcohols",
+          "ingredientExamples": "vegetable, mineral,long chain alcohols",
           "volume": "90"
         },
         {
@@ -146,8 +149,9 @@
       ]
     },
     {
-      "childNumber": 4,
+      "formulationId": "perfumed_skin_oil",
       "formulationName": "Perfumed skin oil",
+      "childNumber": 4,
       "ingredients": [
         {
           "ingredient": "Ethanol (alcohol, alcohol denat.)",
