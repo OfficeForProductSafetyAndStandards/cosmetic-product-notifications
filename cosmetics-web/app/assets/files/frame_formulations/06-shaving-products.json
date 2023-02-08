@@ -3,8 +3,9 @@
   "name": "Shaving products",
   "data": [
     {
-      "childNumber": 1,
+      "formulationId": "shaving_cream",
       "formulationName": "Shaving cream",
+      "childNumber": 1,
       "ingredients": [
         {
           "ingredient": "Soaps",
@@ -70,8 +71,9 @@
       ]
     },
     {
-      "childNumber": 2,
+      "formulationId": "brushless_shaving_cream",
       "formulationName": "Brushless shaving cream",
+      "childNumber": 2,
       "ingredients": [
         {
           "ingredient": "Fatty acids",
@@ -79,7 +81,7 @@
         },
         {
           "ingredient": "Oils",
-          "ingredientExamples":"vegetable oil, mineral oil",
+          "ingredientExamples": "vegetable oil, mineral oil",
           "volume": "20"
         },
         {
@@ -112,8 +114,9 @@
       ]
     },
     {
-      "childNumber": 3,
+      "formulationId": "shave_gel",
       "formulationName": "Shave gel",
+      "childNumber": 3,
       "ingredients": [
         {
           "ingredient": "Humectants",
@@ -164,8 +167,9 @@
       ]
     },
     {
-      "childNumber": 4,
+      "formulationId": "shaving_gel_post_foaming",
       "formulationName": "Shaving gel (post foaming)",
+      "childNumber": 4,
       "ingredients": [
         {
           "ingredient": "Soaps",
@@ -225,8 +229,9 @@
       ]
     },
     {
-      "childNumber": 5,
+      "formulationId": "shaving_foam_aerosol",
       "formulationName": "Shaving foam aerosol",
+      "childNumber": 5,
       "ingredients": [
         {
           "ingredient": "Soaps",
@@ -288,8 +293,9 @@
       ]
     },
     {
-      "childNumber": 6,
+      "formulationId": "shaving_soapstick",
       "formulationName": "Shaving soap or stick",
+      "childNumber": 6,
       "ingredients": [
         {
           "ingredient": "Mixed sodium and potassium stearates and laurates",
@@ -335,8 +341,9 @@
       ]
     },
     {
-      "childNumber": 7,
+      "formulationId": "aftershave_balm",
       "formulationName": "Aftershave balm",
+      "childNumber": 7,
       "ingredients": [
         {
           "ingredient": "Ethanol (alcohol, alcohol denat.)",
@@ -344,7 +351,7 @@
         },
         {
           "ingredient": "Oils and fats",
-          "ingredientExamples":"vegetable, mineral",
+          "ingredientExamples": "vegetable, mineral",
           "volume": "20"
         },
         {
@@ -395,8 +402,9 @@
       ]
     },
     {
-      "childNumber": 8,
+      "formulationId": "aftershave_lotion",
       "formulationName": "Aftershave lotion",
+      "childNumber": 8,
       "ingredients": [
         {
           "ingredient": "Ethanol (alcohol, alcohol denat.)",

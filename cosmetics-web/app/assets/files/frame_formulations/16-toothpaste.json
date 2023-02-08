@@ -3,11 +3,12 @@
 	"name": "Toothpaste",
 	"data": [
 		{
+			"formulationId": "toothpaste",
 			"formulationName": "Toothpaste",
 			"childNumber": 1,
 			"ingredients": [
 				{
-					"ingredient": "Sorbitol ",
+					"ingredient": "Sorbitol",
 					"volume": 70
 				},
 				{
@@ -28,11 +29,11 @@
 					"volume": 30
 				},
 				{
-					"ingredient": "Sodium pyrophosphate, potassium pyrophosphate ",
+					"ingredient": "Sodium pyrophosphate, potassium pyrophosphate",
 					"volume": 15
 				},
 				{
-					"ingredient": "PEG, PPG ",
+					"ingredient": "PEG, PPG",
 					"volume": 10
 				},
 				{

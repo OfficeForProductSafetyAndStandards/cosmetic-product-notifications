@@ -1,15 +1,14 @@
-//This has been adapted from code from the Home Office Digital System
-//https://home-office-digital-patterns.herokuapp.com/components/pagination
+// This has been adapted from code from the Home Office Digital System
+// https://home-office-digital-patterns.herokuapp.com/components/pagination
 
 .pagination {
-
   * {
-    padding: 15px 5px 10px 5px;
+    padding: 15px 5px 10px;
     margin-right: 15px;
   }
 
   .current {
-    color:  $govuk-focus-text-colour;
+    color: $govuk-focus-text-colour;
     font-style: normal;
     font-weight: 700;
     pointer-events: none;
@@ -17,7 +16,7 @@
 
     &:hover,
     &:focus {
-      color:  $govuk-focus-text-colour;
+      color: $govuk-focus-text-colour;
       background: none;
     }
   }

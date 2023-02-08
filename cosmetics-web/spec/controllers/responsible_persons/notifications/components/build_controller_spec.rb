@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:component) { create(:component, notification:, notification_type: component_type) }
+  let(:component) { create(:component, :with_category, notification:, notification_type: component_type) }
   let(:notification) do
     create(:notification,
            responsible_person:,
@@ -240,10 +240,18 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
     end
 
     context "when selecting a frame formulation" do
-      it "saves and redirects to the 'ingredients the NPIS needs to know about' question if you select an answer" do
-        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "skin_care_cream_lotion_gel" }))
+      it "saves and redirects to the 'ingredients the NPIS needs to know about' question if you select a correct answer" do
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "shampoo_plus_conditioner" }))
 
         expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :contains_ingredients_npis_needs_to_know))
+      end
+
+      it "re-renders the question with an error" do
+        post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "toothpaste" }))
+
+        expect(response.status).to be(200)
+        expect(assigns(:component).errors[:frame_formulation])
+          .to include("The chosen frame formulation must match the category of the product")
       end
 
       it "re-renders the question with an error if you don’t select a formulation" do

@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "formulationId": "external_intimate_care_products",
+      "formulationName": "External intimate care products"
+    },
+    {
+      "formulationId": "nail_varnish_remover",
+      "formulationName": "Nail varnish remover"
+    },
+    {
+      "formulationId": "nail_varnish_thinner",
+      "formulationName": "Nail varnish thinner"
+    },
+    {
+      "formulationId": "nail_bleach",
+      "formulationName": "Nail bleach"
+    },
+    {
+      "formulationId": "nail_hardener",
+      "formulationName": "Nail hardener"
+    },
+    {
+      "formulationId": "nail_glue_remover",
+      "formulationName": "Nail glue remover"
+    },
+    {
+      "formulationId": "cuticle_remover_softener",
+      "formulationName": "Cuticle remover/softener"
+    },
+    {
+      "formulationId": "nail_sculpting_products",
+      "formulationName": "Nail sculpting products"
+    },
+    {
+      "formulationId": "tooth_cleasing_powder_salt",
+      "formulationName": "Tooth cleansing powder, salt"
+    },
+    {
+      "formulationId": "tooth_whiteners",
+      "formulationName": "Tooth whiteners"
+    }
+  ]
+}

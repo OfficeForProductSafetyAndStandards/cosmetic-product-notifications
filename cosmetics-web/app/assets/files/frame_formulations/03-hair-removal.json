@@ -3,6 +3,7 @@
   "name": "Hair removal",
   "data": [
     {
+      "formulationId": "chemical_depilatory_cream_gel",
       "formulationName": "Chemical depilatory - cream, gel",
       "childNumber": 1,
       "ingredients": [
@@ -13,7 +14,7 @@
         },
         {
           "ingredient": "Oils,waxes and fats",
-          "ingredientExamples":"vegetable, mineral, long chain alcohols",
+          "ingredientExamples": "vegetable, mineral, long chain alcohols",
           "volume": "15"
         },
         {
@@ -51,13 +52,13 @@
         }
       ],
       "annotations": ["* less than 5% calculated as thioglycolic acid","The pH may be between pH 11-12.7"]
-
     },
     {
-      "formulationName": "physical depilatory wax – resin based",
+      "formulationId": "physical_depilation_product_wax_resin_based",
+      "formulationName": "Physical depilatory wax – resin based",
       "childNumber": 2,
       "ingredients": [
-       
+
         {
           "ingredient": "Emollients, humectants",
           "ingredientExamples": "paraffinum liquidum, glycerin",
@@ -97,6 +98,7 @@
       ]
     },
     {
+      "formulationId": "physical_depilation_product_wax_sugar_based",
       "formulationName": "Physical depilatory wax – sugar based",
       "childNumber": 3,
       "ingredients": [
