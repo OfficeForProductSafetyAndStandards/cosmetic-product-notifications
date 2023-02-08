@@ -267,14 +267,11 @@ private
       "exact_csv" => "exact",
       "range" => "range",
     }
-    # here we need to use form to provide correct value
     formulation_type = params.dig(:component, :notification_type)
     model.save_routing_answer(step, types_map[formulation_type])
     @component.update_formulation_type(types_map[formulation_type])
     return rerender_current_step if @component.errors.present?
 
-    # and here we need to add extra step for CSV
-    # so we will be redirected to correct page
     step = {
       "predefined" => :select_frame_formulation,
       "exact" => :add_ingredient_exact_concentration,

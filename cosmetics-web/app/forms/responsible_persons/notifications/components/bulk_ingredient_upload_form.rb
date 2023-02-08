@@ -32,6 +32,7 @@ module ResponsiblePersons::Notifications::Components
       # * there will be duplicated ingredient in the file
       # * between validation and creation ingredient will be created (very rare edge case)
       # * difference between ingredient form and model validations
+      # * internal ActiveRecord issue
       ActiveRecord::Base.transaction do
         @ingredients.each_with_index do |ingredient, i|
           ingredient.save
@@ -110,7 +111,7 @@ module ResponsiblePersons::Notifications::Components
       ingredient = Ingredient.new(
         inci_name: name, cas_number: cas, poisonous: poisonous?(poisonous),
       )
-      if component.exact? # || poisonous
+      if component.exact?
         ingredient.exact_concentration = concentration
       elsif component.predefined?
         ingredient.exact_concentration = concentration.to_f
