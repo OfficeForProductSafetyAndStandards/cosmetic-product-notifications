@@ -506,7 +506,7 @@ end
 def expect_form_to_have_errors(errors)
   expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
   errors.each do |attribute, error|
-    expect(page).to have_link(error[:message], href: "##{attribute}")
+    expect(page).to have_link(error[:message], href: "##{error[:href] || attribute}")
     expect(page).to have_css("p##{error[:id]}-error", text: error[:message])
   end
 end

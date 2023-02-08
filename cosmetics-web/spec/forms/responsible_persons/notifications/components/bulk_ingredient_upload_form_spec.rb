@@ -28,407 +28,291 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
   end
 
   context "when using exact CSV" do
-    describe "error messages" do
-      context "when name is empty" do
-        let(:csv) do
-          <<~CSV
-            ,35,497-19-8,true
-          CSV
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Enter an ingredient name"]
-        end
-      end
-
-      context "when concentration number is empty" do
-        let(:csv) do
-          <<~CSV
-            Foo,,497-19-8,true
-          CSV
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Enter the concentration"]
-        end
-      end
-
-      context "when values for concentration are incorrect" do
-        let(:csv) do
-          <<~CSV
-            Sodium,abc,497-19-8,foo
-          CSV
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Enter a number for the concentration"]
-        end
-      end
-
-      context "when values for toxicity are incorrect" do
-        let(:csv) do
-          <<~CSV
-            Sodium,32,497-19-8,foo
-          CSV
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"]
-        end
-      end
-
-      context "when name is too long" do
-        let(:csv) do
-          <<~CSV
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,32,497-19-8,true
-          CSV
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Inci name is too long (maximum is 100 characters)"]
-        end
-
-        context "when external file is used" do
-          let(:file) do
-            f = File.open("spec/fixtures/files/Exact_ingredients_long_name.csv")
-            Rack::Test::UploadedFile.new(f, "text/csv")
-          end
-
-          it "is invalid" do
-            form.valid?
-
-            expect(form).not_to be_valid
-          end
-
-          it "does have proper message after saving attempt" do
-            form.save_ingredients
-
-            expect(form.errors.full_messages).to eq ["File has incorrect characters. Please check and try again"]
-          end
-
-          it "does return proper value" do
-            expect(form.save_ingredients).to be false
-          end
-
-          it "has proper error message" do
-            form.valid?
-
-            expect(form.errors.full_messages).to eq ["File has incorrect characters. Please check and try again"]
-          end
-        end
-      end
-
-      context "when values for toxicity are empty" do
-        let(:csv) do
-          <<~CSV
-            Aqua,65,497-19-8,
-          CSV
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"]
-        end
-      end
-
-      context "when one ingredient in csv is invalid" do
-        let(:csv) do
-          <<~CSV
-            Sodium,35,497-19-8,true
-            Aqua,65,497-19-8,false
-            Acid,50-75,497-19-8,false
-          CSV
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
-        end
-
-        it "save_ingredients will be falsey" do
-          expect(form.save_ingredients).to be_falsey
-        end
-      end
-
-      context "when file has more invalid lines" do
-        let(:csv) do
-          <<~CSV
-            Sodium,thirtyfive,497-19-8,true
-            Aqua,65,497-19-8,false
-            Acid,50-75,497-19-8,false
-          CSV
-        end
-
-        it "has proper error message" do
-          form.valid?
-          messages = ["The file could not be uploaded because of error in line 1: Enter a number for the concentration",
-                      "The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
-          expect(form.errors.full_messages).to eq messages
-        end
-      end
-
-      context "when file is not a proper file" do
-        let(:file) do
-          f = File.open("spec/fixtures/files/ingredients.xlsx")
-          Rack::Test::UploadedFile.new(f, "text/csv")
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The selected file must be a CSV file", "The selected file is empty"]
-        end
-      end
-
-      context "when file is nil" do
-        let(:file) { nil }
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The selected file must be a CSV file", "The selected file is empty"]
-        end
-      end
-
-      context "when ingredient with that name already exists" do
-        let(:csv) do
-          <<~CSV
-            Aqua,65,497-19-8,false
-            Acid,50,497-19-8,false
-          CSV
-        end
-
-        before do
-          create(:exact_ingredient, inci_name: "Aqua", component:)
-        end
-
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "is falsey" do
-          expect(form.save_ingredients).to be_falsey
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 1: Ingredient name already exists in this component"]
-        end
-      end
-
-      context "when ingredients repeat withing file" do
-        let(:csv) do
-          <<~CSV
-            Aqua,65,497-19-8,false
-            Aqua,50,497-19-8,false
-          CSV
-        end
-
-        it "is invalid" do
-          form.save_ingredients
-
-          expect(form).not_to be_valid
-        end
-
-        it "is falsey" do
-          expect(form.save_ingredients).to be_falsey
-        end
-
-        it "does not create any ingredients" do
-          expect {
-            form.save_ingredients
-          }.not_to change(Ingredient, :count)
-        end
-
-        it "has proper error message" do
-          form.save_ingredients
-
-          expect(form.errors.full_messages).to eq ["The file could not be uploaded because of error in line 2: Ingredient name already exists in this CSV file"]
-        end
-      end
-
-      context "when the file is too large" do
-        let(:file) do
-          f = Tempfile.new
-          120.times { f.write("#{'X' * 110},777-77-77,55,true") }
-          f.rewind
-          Rack::Test::UploadedFile.new(f, "text/csv")
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The selected file must be smaller than 15KB"]
-        end
-      end
-
-      context "when ingredient file is empty" do
-        let(:csv) do
-          <<~CSV
-          CSV
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq ["The selected file is empty"]
-        end
-      end
-    end
-
-    context "when using CSV for adding ingredients" do
-      let(:component) do
-        create(:exact_component)
-      end
-
-      context "when using upper case for toxicity" do
-        let(:csv) do
-          <<~CSV
-            Foo,12,497-19-8,TRUE
-          CSV
-        end
-
-        it "is valid" do
-          form.valid?
-
-          expect(form).to be_valid
-        end
-      end
-
-      it "creates records" do
+    shared_examples "validation" do
+      it "does not create any ingredients" do
         expect {
           form.save_ingredients
-        }.to change(Ingredient, :count).by(2)
+        }.not_to change(Ingredient, :count)
       end
 
-      it "creates poisonous/non poisoning ingredients accordingly" do
+      it "does have proper message after saving attempt" do
         form.save_ingredients
-        expect(Ingredient.pluck(:poisonous)).to eq [true, false]
+
+        expect(form.errors.full_messages).to eq error_messages
       end
 
-      it "is truthy" do
-        expect(form.save_ingredients).to be_truthy
+      it "does return proper value" do
+        expect(form.save_ingredients).to be false
+      end
+
+      it "is invalid" do
+        form.valid?
+
+        expect(form).not_to be_valid
+      end
+
+      it "has proper error message" do
+        form.valid?
+
+        expect(form.errors.full_messages).to eq error_messages
       end
     end
 
-    context "when using CSV for poisonous ingredients in frame formulation" do
-      let(:component) { create(:predefined_component, contains_poisonous_ingredients: true) }
+    context "when name is empty" do
+      let(:csv) do
+        <<~CSV
+          ,35,497-19-8,true
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Enter an ingredient name"] }
+      end
+    end
+
+    context "when concentration number is empty" do
+      let(:csv) do
+        <<~CSV
+          Foo,,497-19-8,true
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Enter the concentration"] }
+      end
+    end
+
+    context "when values for concentration are incorrect" do
+      let(:csv) do
+        <<~CSV
+          Sodium,abc,497-19-8,foo
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Enter a number for the concentration"] }
+      end
+    end
+
+    context "when values for toxicity are incorrect" do
+      let(:csv) do
+        <<~CSV
+          Sodium,32,497-19-8,foo
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"] }
+      end
+    end
+
+    context "when name is too long" do
+      let(:csv) do
+        <<~CSV
+          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,32,497-19-8,true
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Inci name is too long (maximum is 100 characters)"] }
+      end
+    end
+
+    context "when file with invalid characters is used" do
+      let(:file) do
+        f = File.open("spec/fixtures/files/Exact_ingredients_long_name.csv")
+        Rack::Test::UploadedFile.new(f, "text/csv")
+      end
+
+      let(:error_messages) { ["File has incorrect characters. Please check and try again"] }
+
+      it "does have proper message after saving attempt" do
+        form.save_ingredients
+
+        expect(form.errors.full_messages).to eq error_messages
+      end
+
+      it "does return proper value" do
+        expect(form.save_ingredients).to be false
+      end
+
+      it "is invalid" do
+        form.valid?
+
+        expect(form).not_to be_valid
+      end
+
+      it "has proper error message" do
+        form.valid?
+
+        expect(form.errors.full_messages).to eq error_messages
+      end
+    end
+
+    context "when values for toxicity are empty" do
+      let(:csv) do
+        <<~CSV
+          Aqua,65,497-19-8,
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"] }
+      end
+    end
+
+    context "when one ingredient in csv is invalid" do
+      let(:csv) do
+        <<~CSV
+          Sodium,35,497-19-8,true
+          Aqua,65,497-19-8,false
+          Acid,50-75,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 3: Enter a number for the concentration"] }
+      end
+    end
+
+    context "when file has more invalid lines" do
+      let(:csv) do
+        <<~CSV
+          Sodium,thirtyfive,497-19-8,true
+          Aqua,65,497-19-8,false
+          Acid,50-75,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) do
+          ["The file could not be uploaded because of error in line 1: Enter a number for the concentration",
+           "The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
+        end
+      end
+    end
+
+    context "when file is not a proper file" do
+      let(:file) do
+        f = File.open("spec/fixtures/files/ingredients.xlsx")
+        Rack::Test::UploadedFile.new(f, "text/csv")
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file must be a CSV file", "The selected file is empty"] }
+      end
+    end
+
+    context "when file is nil" do
+      let(:file) { nil }
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file must be a CSV file", "The selected file is empty"] }
+      end
+    end
+
+    context "when ingredient with that name already exists" do
+      let(:csv) do
+        <<~CSV
+          Aqua,65,497-19-8,false
+          Acid,50,497-19-8,false
+        CSV
+      end
+
+      before do
+        create(:exact_ingredient, inci_name: "Aqua", component:)
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Ingredient name already exists in this component"] }
+      end
+    end
+
+    context "when ingredients repeat withing file" do
+      let(:csv) do
+        <<~CSV
+          Aqua,65,497-19-8,false
+          Aqua,50,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 2: Ingredient name already exists in this CSV file"] }
+      end
+    end
+
+    context "when the file is too large" do
+      let(:file) do
+        f = Tempfile.new
+        120.times { f.write("#{'X' * 110},777-77-77,55,true") }
+        f.rewind
+        Rack::Test::UploadedFile.new(f, "text/csv")
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file must be smaller than 15KB"] }
+      end
+    end
+
+    context "when ingredient file is empty" do
+      let(:csv) do
+        <<~CSV
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file is empty"] }
+      end
+    end
+  end
+
+  context "when using CSV for adding ingredients" do
+    let(:component) do
+      create(:exact_component)
+    end
+
+    context "when using upper case for toxicity" do
+      let(:csv) do
+        <<~CSV
+          Foo,12,497-19-8,TRUE
+        CSV
+      end
 
       it "is valid" do
-        form.save_ingredients
+        form.valid?
+
         expect(form).to be_valid
       end
+    end
 
-      it "creates records" do
-        expect {
-          form.save_ingredients
-        }.to change(Ingredient, :count).by(2)
-      end
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(2)
+    end
+
+    it "creates poisonous/non poisoning ingredients accordingly" do
+      form.save_ingredients
+      expect(Ingredient.pluck(:poisonous)).to eq [true, false]
+    end
+
+    it "is truthy" do
+      expect(form.save_ingredients).to be_truthy
+    end
+  end
+
+  context "when using CSV for poisonous ingredients in frame formulation" do
+    let(:component) { create(:predefined_component, contains_poisonous_ingredients: true) }
+
+    it "is valid" do
+      form.save_ingredients
+      expect(form).to be_valid
+    end
+
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(2)
     end
   end
 end

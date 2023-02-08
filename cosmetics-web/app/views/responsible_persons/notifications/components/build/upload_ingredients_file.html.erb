@@ -20,7 +20,7 @@
           </div>
 
           <% if @bulk_ingredients_form.errors %>
-            <p class="govuk-error-message">
+            <p class="govuk-error-message" id="file-error">
               <span class="govuk-visually-hidden">Error:</span> 
               <%= @bulk_ingredients_form.errors.full_messages.first %>
             </p>

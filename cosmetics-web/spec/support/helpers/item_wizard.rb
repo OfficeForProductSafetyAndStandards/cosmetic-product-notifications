@@ -242,6 +242,10 @@ def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: []
   end
 end
 
+def expect_to_be_on_add_csv_ingredients_page
+  expect(page).to have_css("h1", text: "Upload the ingredients CSV file")
+end
+
 def expect_to_be_on_ingredient_removed_confirmation_page
   expect(page).to have_css("h1", text: "The ingredient was removed")
 end
