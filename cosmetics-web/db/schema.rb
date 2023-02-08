@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_25_101611) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  # These are custom enum types that must be created before they can be used in the schema definition
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "ingredient_range_concentration", ["less_than_01_percent", "greater_than_01_less_than_1_percent", "greater_than_1_less_than_5_percent", "greater_than_5_less_than_10_percent", "greater_than_10_less_than_25_percent", "greater_than_25_less_than_50_percent", "greater_than_50_less_than_75_percent", "greater_than_75_less_than_100_percent"]
   create_enum "user_roles", ["poison_centre", "market_surveilance_authority", "opss_science"]
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "name"
     t.string "cas_number"
     t.string "ec_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "component_id"
     t.index ["component_id"], name: "index_cmrs_on_component_id"
   end
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
   create_table "component_nano_materials", force: :cascade do |t|
     t.integer "component_id"
     t.integer "nano_material_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["component_id"], name: "index_component_nano_materials_on_component_id"
     t.index ["nano_material_id"], name: "index_component_nano_materials_on_nano_material_id"
   end
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
   create_table "components", force: :cascade do |t|
     t.string "state"
     t.string "shades", array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "notification_id", null: false
     t.string "notification_type"
     t.string "frame_formulation"
@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "name"
     t.citext "email_address"
     t.string "phone_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "responsible_person_id"
     t.index ["responsible_person_id"], name: "index_contact_persons_on_responsible_person_id"
   end
@@ -107,8 +107,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
   create_table "deleted_notifications", force: :cascade do |t|
     t.string "product_name"
     t.string "state"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "import_country"
     t.bigint "responsible_person_id"
     t.bigint "notification_id"
@@ -116,14 +116,14 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "cpnp_reference"
     t.string "shades"
     t.string "industry_reference"
-    t.datetime "cpnp_notification_date"
+    t.datetime "cpnp_notification_date", precision: nil
     t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
-    t.datetime "notification_complete_at"
+    t.datetime "notification_complete_at", precision: nil
     t.text "csv_cache"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_deleted_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_deleted_notifications_on_reference_number", unique: true
@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
 
   create_table "image_uploads", force: :cascade do |t|
     t.string "filename"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "notification_id"
     t.index ["notification_id"], name: "index_image_uploads_on_notification_id"
   end
@@ -142,10 +142,10 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.citext "inci_name", null: false
     t.string "cas_number"
     t.decimal "exact_concentration"
-    t.enum "range_concentration", as: "ingredient_range_concentration"
+    t.enum "range_concentration", enum_type: "ingredient_range_concentration"
     t.boolean "poisonous", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "component_id"
     t.index ["component_id"], name: "index_ingredients_on_component_id"
     t.index ["created_at"], name: "index_ingredients_on_created_at"
@@ -156,8 +156,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
   end
 
   create_table "nano_materials", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "notification_id"
     t.string "inci_name"
     t.string "inn_name"
@@ -179,13 +179,13 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
 
   create_table "nanomaterial_notifications", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "responsible_person_id"
     t.text "user_id", null: false
     t.boolean "eu_notified"
     t.date "notified_to_eu_on"
-    t.datetime "submitted_at"
+    t.datetime "submitted_at", precision: nil
     t.index ["responsible_person_id"], name: "index_nanomaterial_notifications_on_responsible_person_id"
   end
 
@@ -193,11 +193,11 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.uuid "submit_user_id"
     t.string "notification_product_name"
     t.integer "responsible_person_id"
-    t.datetime "notification_created_at"
-    t.datetime "notification_updated_at"
+    t.datetime "notification_created_at", precision: nil
+    t.datetime "notification_updated_at", precision: nil
     t.string "cpnp_reference"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "reference_number"
     t.index ["responsible_person_id"], name: "index_notification_delete_logs_on_responsible_person_id"
   end
@@ -205,24 +205,24 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
   create_table "notifications", force: :cascade do |t|
     t.string "product_name"
     t.string "state"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "import_country"
     t.bigint "responsible_person_id"
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
     t.string "industry_reference"
-    t.datetime "cpnp_notification_date"
+    t.datetime "cpnp_notification_date", precision: nil
     t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
-    t.datetime "notification_complete_at"
+    t.datetime "notification_complete_at", precision: nil
     t.text "csv_cache"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.jsonb "routing_questions_answers"
     t.string "previous_state"
     t.integer "source_notification_id"
@@ -233,11 +233,11 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
 
   create_table "pending_responsible_person_users", force: :cascade do |t|
     t.citext "email_address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "responsible_person_id"
     t.string "invitation_token"
-    t.datetime "invitation_token_expires_at"
+    t.datetime "invitation_token_expires_at", precision: nil
     t.uuid "inviting_user_id"
     t.string "name"
     t.index ["invitation_token"], name: "index_pending_responsible_person_users_on_invitation_token"
@@ -252,18 +252,18 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "city", null: false
     t.string "county"
     t.string "postal_code", null: false
-    t.datetime "start_date", null: false
-    t.datetime "end_date", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_date", precision: nil, null: false
+    t.datetime "end_date", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "responsible_person_id", null: false
     t.index ["responsible_person_id"], name: "index_responsible_person_address_logs_on_rp_id"
   end
 
   create_table "responsible_person_users", force: :cascade do |t|
     t.bigint "responsible_person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.uuid "user_id", default: -> { "gen_random_uuid()" }
     t.index ["responsible_person_id"], name: "index_responsible_person_users_on_responsible_person_id"
   end
@@ -276,15 +276,15 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "city"
     t.string "county"
     t.string "postal_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "search_histories", force: :cascade do |t|
     t.string "query"
     t.integer "results"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "sort_by"
   end
 
@@ -293,25 +293,25 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.string "answer"
     t.integer "element_order"
     t.string "element"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "trigger_question_id"
     t.index ["trigger_question_id"], name: "index_trigger_question_elements_on_trigger_question_id"
   end
 
   create_table "trigger_questions", force: :cascade do |t|
     t.string "question"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "component_id"
     t.boolean "applicable"
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
   end
 
   create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
-    t.datetime "declaration_accepted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "declaration_accepted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_user_attributes_on_user_id"
   end
 
@@ -324,33 +324,33 @@ ActiveRecord::Schema.define(version: 2023_01_25_101611) do
     t.citext "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.citext "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
-    t.datetime "locked_at"
+    t.datetime "locked_at", precision: nil
     t.string "direct_otp"
-    t.datetime "direct_otp_sent_at"
+    t.datetime "direct_otp_sent_at", precision: nil
     t.integer "second_factor_attempts_count", default: 0
-    t.datetime "second_factor_attempts_locked_at"
+    t.datetime "second_factor_attempts_locked_at", precision: nil
     t.string "secondary_authentication_operation"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "invitation_token"
-    t.datetime "invited_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.enum "role", as: "user_roles"
+    t.datetime "invited_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.enum "role", enum_type: "user_roles"
     t.citext "new_email"
     t.string "new_email_confirmation_token"
-    t.datetime "new_email_confirmation_token_expires_at"
+    t.datetime "new_email_confirmation_token_expires_at", precision: nil
     t.boolean "account_security_completed", default: false
     t.string "unique_session_id"
     t.text "encrypted_totp_secret_key"

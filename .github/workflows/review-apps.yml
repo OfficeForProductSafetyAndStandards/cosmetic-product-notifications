@@ -56,7 +56,7 @@ jobs:
         cf api api.london.cloud.service.gov.uk
         cf auth
         cf target -o 'beis-opss' -s $SPACE
-        export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
+        export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema\[.*\].define' | grep -o '[0-9_]\+' | tail -1`
         export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
         export DB_NAME=cosmetics-db-$DB_VERSION
         export REDIS_NAME=cosmetics-review-redis-$PR_NUMBER
