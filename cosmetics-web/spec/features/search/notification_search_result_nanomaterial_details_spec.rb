@@ -28,7 +28,7 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     sign_in user
   end
 
-  context "with a opss science user" do
+  context "with an opss science user" do
     let(:user) { create(:opss_science_user, :with_sms_secondary_authentication) }
 
     scenario "user can see the nanomaterial details with review period section and link to nanomaterial pdf file" do
@@ -45,8 +45,40 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     end
   end
 
-  context "with a market surveillance authority user" do
-    let(:user) { create(:msa_user, :with_sms_secondary_authentication) }
+  context "with an opss general user" do
+    let(:user) { create(:opss_general_user, :with_sms_secondary_authentication) }
+
+    scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
+      expect(page).to have_h1("Search cosmetic products")
+      click_link("Cream")
+
+      expect(page).to have_h1("Cream")
+      expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
+      expect(page).to have_summary_item(
+        key: "Nanomaterials review period end date",
+        value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
+      )
+    end
+  end
+
+  context "with an opss enforcement user" do
+    let(:user) { create(:opss_enforcement_user, :with_sms_secondary_authentication) }
+
+    scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
+      expect(page).to have_h1("Search cosmetic products")
+      click_link("Cream")
+
+      expect(page).to have_h1("Cream")
+      expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
+      expect(page).to have_summary_item(
+        key: "Nanomaterials review period end date",
+        value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
+      )
+    end
+  end
+
+  context "with a trading standards user" do
+    let(:user) { create(:trading_standards_user, :with_sms_secondary_authentication) }
 
     scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
       expect(page).to have_h1("Search cosmetic products")

@@ -29,11 +29,23 @@ module Privileges
       false
     end
 
-    def msa_user?
+    def opss_user?
+      false
+    end
+
+    def opss_general_user?
+      false
+    end
+
+    def opss_enforcement_user?
       false
     end
 
     def opss_science_user?
+      false
+    end
+
+    def trading_standards_user?
       false
     end
   end

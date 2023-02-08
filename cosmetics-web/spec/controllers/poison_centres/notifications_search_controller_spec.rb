@@ -59,9 +59,35 @@ RSpec.describe PoisonCentres::NotificationsSearchController, type: :controller d
     end
   end
 
-  describe "When signed in as an MSA user" do
+  describe "When signed in as an OPSS General user" do
     before do
-      sign_in_as_msa_user
+      sign_in_as_opss_general_user
+    end
+
+    describe "GET #show" do
+      it "renders the show template" do
+        get :show
+        expect(response).to render_template("notifications_search/show")
+      end
+    end
+  end
+
+  describe "When signed in as an OPSS Enforcement user" do
+    before do
+      sign_in_as_opss_enforcement_user
+    end
+
+    describe "GET #show" do
+      it "renders the show template" do
+        get :show
+        expect(response).to render_template("notifications_search/show")
+      end
+    end
+  end
+
+  describe "When signed in as a Trading Standards user" do
+    before do
+      sign_in_as_trading_standards_user
     end
 
     describe "GET #show" do
