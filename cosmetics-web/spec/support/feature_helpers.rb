@@ -141,10 +141,6 @@ def expect_back_link_to_notifications_page
   expect_back_link_to("/responsible_persons/#{responsible_person.id}/notifications")
 end
 
-def expect_back_link_to_incomplete_notifications_page
-  expect_back_link_to("/responsible_persons/#{responsible_person.id}/notifications#incomplete")
-end
-
 def expect_to_be_on__responsible_person_page
   expect(page.current_path).to eql("/responsible_persons/#{responsible_person.id}")
   expect(page).to have_h1("Responsible Person")
