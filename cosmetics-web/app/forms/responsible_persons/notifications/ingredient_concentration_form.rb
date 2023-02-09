@@ -1,6 +1,5 @@
 module ResponsiblePersons::Notifications
   class IngredientConcentrationForm < Form
-    NAME_LENGTH_LIMIT = 100
     EXACT = "exact".freeze
     RANGE = "range".freeze
 
@@ -19,7 +18,7 @@ module ResponsiblePersons::Notifications
     validates :component, presence: true
     validates :type, inclusion: { in: [EXACT, RANGE] }
     validates :poisonous, inclusion: { in: [true, false] }, if: :range?
-    validates :name, presence: true, length: { maximum: NAME_LENGTH_LIMIT }, ingredient_name_format: { message: :invalid }
+    validates :name, presence: true, length: { maximum: Ingredient::NAME_LENGTH_LIMIT }, ingredient_name_format: { message: :invalid }
     validate :unique_name
     validates :exact_concentration,
               presence: true,

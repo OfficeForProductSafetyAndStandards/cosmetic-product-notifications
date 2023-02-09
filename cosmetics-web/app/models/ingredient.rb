@@ -6,6 +6,7 @@ class Ingredient < ApplicationRecord
     range_concentration
     poisonous
   ].freeze
+  NAME_LENGTH_LIMIT = 100
 
   include CasNumberConcern
   include Clonable
@@ -44,7 +45,7 @@ class Ingredient < ApplicationRecord
 
   validates :inci_name, presence: true, ingredient_name_format: { message: :invalid }
   validates :inci_name, uniqueness: { scope: :component_id }, if: :validate_inci_name_uniqueness?
-  validates :inci_name, length: { maximum: ResponsiblePersons::Notifications::IngredientConcentrationForm::NAME_LENGTH_LIMIT }
+  validates :inci_name, length: { maximum: NAME_LENGTH_LIMIT }, on: :create
 
   # Exact and range concentration invalidate each other.
   validates :range_concentration, absence: true, if: -> { exact_concentration.present? }
