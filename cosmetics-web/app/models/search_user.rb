@@ -17,8 +17,11 @@ class SearchUser < User
 
   enum role: {
     poison_centre: "poison_centre",
-    msa: "market_surveilance_authority",
+    msa: "market_surveilance_authority", # Remove once all MSA users have been migrated
+    opss_general: "opss_general",
+    opss_enforcement: "opss_enforcement",
     opss_science: "opss_science",
+    trading_standards: "trading_standards",
   }
 
   validates :mobile_number,

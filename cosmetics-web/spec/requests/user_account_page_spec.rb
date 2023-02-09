@@ -107,11 +107,11 @@ RSpec.describe "User account page", type: :request do
     include_examples "can't download nanomaterials"
   end
 
-  context "with a Search market surveilance authority user" do
-    let(:user) { create(:msa_user) }
+  context "with a Search OPSS General user" do
+    let(:user) { create(:opss_general_user) }
 
     before do
-      sign_in_as_msa_user(user:)
+      sign_in_as_opss_general_user(user:)
       get "/my_account"
     end
 
@@ -120,7 +120,20 @@ RSpec.describe "User account page", type: :request do
     include_examples "can't download nanomaterials"
   end
 
-  context "with a Search OPSS science user" do
+  context "with a Search OPSS Enforcement user" do
+    let(:user) { create(:opss_enforcement_user) }
+
+    before do
+      sign_in_as_opss_enforcement_user(user:)
+      get "/my_account"
+    end
+
+    include_examples "can change name and security"
+    include_examples "can't change email"
+    include_examples "can't download nanomaterials"
+  end
+
+  context "with a Search OPSS Science user" do
     let(:user) { create(:opss_science_user) }
 
     before do
@@ -158,5 +171,18 @@ RSpec.describe "User account page", type: :request do
         with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Download notified nanomaterials as PDFs"))
       end
     end
+  end
+
+  context "with a Search Trading Standards user" do
+    let(:user) { create(:trading_standards_user) }
+
+    before do
+      sign_in_as_trading_standards_user(user:)
+      get "/my_account"
+    end
+
+    include_examples "can change name and security"
+    include_examples "can't change email"
+    include_examples "can't download nanomaterials"
   end
 end

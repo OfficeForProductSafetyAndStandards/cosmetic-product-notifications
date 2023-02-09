@@ -2,7 +2,10 @@
   title = "You cannot submit notifications with this account"
   role_wording = case user_role
                  when "poison_centre" then "the National Poisons Information Service"
-                 when "msa" then "a market surveillance authority"
+                 when "msa" then "a market surveillance authority" # Remove once all MSA users have been migrated
+                 when "opss_general" then "OPSS"
+                 when "opss_enforcement" then "OPSS enforcement"
+                 when "trading_standards" then "Trading Standards"
                  end
 
 %>
@@ -18,6 +21,3 @@
     <p>To search product notifications, you need to sign in to the <%= link_to "cosmetic product information service", search_domain_url, class: "govuk-link govuk-link--no-visited-state" %>.</p>
   </div>
 </div>
-
-
-
