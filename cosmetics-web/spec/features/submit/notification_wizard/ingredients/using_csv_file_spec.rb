@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type: :feature do
+RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:user) { responsible_person.responsible_person_users.first.user }
 
@@ -23,7 +23,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     answer_item_sub_subcategory_with "Shampoo"
   end
 
-  scenario "Adding exact concentration ingredients to a product" do
+  scenario "Adding exact concentration ingredients to a product using a CSV file" do
     answer_how_do_you_want_to_give_formulation_with "Provide ingredients and their exact concentration using a CSV file"
     expect_to_be_on_add_csv_ingredients_page
 

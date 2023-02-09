@@ -15,7 +15,7 @@ module ResponsiblePersons::Notifications::Components
 
     # Original valid is reseting error messages.
     # We have an edge case here where we are adding error messages after
-    # validation - during actuall ingredient creation
+    # validation - during actual ingredient creation
     def valid?
       return false if errors.present?
 
