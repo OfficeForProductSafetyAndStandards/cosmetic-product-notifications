@@ -15,7 +15,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
@@ -213,11 +212,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
-    t.string "industry_reference"
     t.datetime "cpnp_notification_date", precision: nil
-    t.boolean "was_notified_before_eu_exit", default: false
+    t.string "industry_reference"
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
@@ -265,7 +264,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
     t.bigint "responsible_person_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.uuid "user_id", default: -> { "gen_random_uuid()" }
+    t.uuid "user_id", default: -> { "public.gen_random_uuid()" }
     t.index ["responsible_person_id"], name: "index_responsible_person_users_on_responsible_person_id"
   end
 
@@ -287,6 +286,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sort_by"
+  end
+
+  create_table "test_stuffs", force: :cascade do |t|
+    t.string "foo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "trigger_question_elements", force: :cascade do |t|
