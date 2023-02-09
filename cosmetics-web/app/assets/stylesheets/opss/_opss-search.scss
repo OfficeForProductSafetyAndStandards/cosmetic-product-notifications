@@ -1,31 +1,32 @@
-$opss-search-icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAAD4pkrrAAAAM1BMVEX///////////////////////////////////////////////////////////8AAAD///8VtYL2AAAAEHRSTlMgsFDgkKAwcGCAwEDw0BAAV51l0wAAAYhJREFUeF7t192OhCAMBeBRlJ9S8Lz/027A7DTjkrSZhL3iXBmjflKbBl/Xf2VJn1nSkpa0pCUtaUn+KGgpZ54qZYLE7fOkA5/Z6hypEnroSIm4U6VOkTrEod5udDc1QTqe9UqNIquUczbauUHnhx0bFS1STdwrsFtrdz70AIANUi1AIWLg0CEPgOuIj7pU4HIDExBMDR6GJd1UKbzfMbYjJQXA4CIHQJWKrJv0RQGg8VLhNQmQJsKmSuOvGQBkVSIpN8ggpYGUTZL05/61FC2Sk0tOpC+/U7JI6T20MvAy9B6PT+u9VxnUqcwol5ZzOHheAIoqXZ7BZ0pFBpoy9tzQD4rUVUILH2yg3KAndhlR2iz3IaW9Xt5A7X8Ht+euq9LznqhQGx6l2huEapSEUstXS6Mo/z7oRE+pVknO2yi4I+SYOiuUXbJvWSRCmSV7IkPCqRahrJLd2nCntE2SUFP25bnldoWaIUnGlEhzKJorCcV+piSUQHMkoegJrb/PJS1pSUta0pJ+AIynqm4LtSuyAAAAAElFTkSuQmCC';
-
+$opss-search-icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAABGCAMAAAD4pkrrAAAAM1BMVEX///////////////////////////////////////////////////////////8AAAD///8VtYL2AAAAEHRSTlMgsFDgkKAwcGCAwEDw0BAAV51l0wAAAYhJREFUeF7t192OhCAMBeBRlJ9S8Lz/027A7DTjkrSZhL3iXBmjflKbBl/Xf2VJn1nSkpa0pCUtaUn+KGgpZ54qZYLE7fOkA5/Z6hypEnroSIm4U6VOkTrEod5udDc1QTqe9UqNIquUczbauUHnhx0bFS1STdwrsFtrdz70AIANUi1AIWLg0CEPgOuIj7pU4HIDExBMDR6GJd1UKbzfMbYjJQXA4CIHQJWKrJv0RQGg8VLhNQmQJsKmSuOvGQBkVSIpN8ggpYGUTZL05/61FC2Sk0tOpC+/U7JI6T20MvAy9B6PT+u9VxnUqcwol5ZzOHheAIoqXZ7BZ0pFBpoy9tzQD4rUVUILH2yg3KAndhlR2iz3IaW9Xt5A7X8Ht+euq9LznqhQGx6l2huEapSEUstXS6Mo/z7oRE+pVknO2yi4I+SYOiuUXbJvWSRCmSV7IkPCqRahrJLd2nCntE2SUFP25bnldoWaIUnGlEhzKJorCcV+piSUQHMkoegJrb/PJS1pSUta0pJ+AIynqm4LtSuyAAAAAElFTkSuQmCC";
 
 .opss-search__wrapper {
-    .govuk-button {
-        border: 2px solid govuk-colour("black");
-        box-shadow: 0 0 0;
-        border-left: 0;
-        width: 40px;
-        height: 40px;
-        background-image: url($opss-search-icon);
-        background-repeat: no-repeat;
-        background-position: 2px 50%;
-        background-color: govuk-colour("blue");
+  .govuk-button {
+    border: 2px solid govuk-colour("black");
+    box-shadow: 0 0 0;
+    border-left: 0;
+    width: 40px;
+    height: 40px;
+    background-image: url($opss-search-icon);
+    background-repeat: no-repeat;
+    background-position: 2px 50%;
+    background-color: govuk-colour("blue");
 
-        &:hover {
-            background-color: govuk-colour("dark-blue");
-        }
-        &:focus:not(:hover),
-        &:active{
-            outline: 3px solid govuk-colour("yellow");
-            outline-offset: 0;
-            box-shadow: inset 0 0 0 3px govuk-colour("black");
-            background-color: govuk-colour("dark-blue");
-            top: 0;
-        }
+    &:hover {
+      background-color: govuk-colour("dark-blue");
     }
-    input[type=search]{
-        z-index: 1;
+
+    &:focus:not(:hover),
+    &:active {
+      outline: 3px solid govuk-colour("yellow");
+      outline-offset: 0;
+      box-shadow: inset 0 0 0 3px govuk-colour("black");
+      background-color: govuk-colour("dark-blue");
+      top: 0;
     }
+  }
+
+  input[type="search"] {
+    z-index: 1;
+  }
 }

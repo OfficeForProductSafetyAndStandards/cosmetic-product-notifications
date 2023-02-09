@@ -3,6 +3,7 @@
   "name": "Nail varnish",
   "data": [
     {
+      "formulationId": "nail_varnish",
       "formulationName": "Nail varnish",
       "childNumber": 1,
       "ingredients": [
@@ -47,6 +48,7 @@
       ]
     },
     {
+      "formulationId": "nail_white_pencil",
       "formulationName": "Nail white pencil",
       "childNumber": 2,
       "ingredients": [

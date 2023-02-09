@@ -8,22 +8,18 @@
   padding: govuk-spacing(2);
 }
 
-
 .hmcts-banner__icon {
-  fill: currentColor;
+  fill: currentcolor;
   float: left;
   margin-right: govuk-spacing(2);
 }
-
 
 .hmcts-banner__message {
   @include govuk-font($size: 19);
   color: govuk-colour("black");
   display: block;
   overflow: hidden;
-}
 
-.hmcts-banner__message {
   h2 {
     margin-bottom: govuk-spacing(2);
   }
@@ -37,7 +33,6 @@
   }
 }
 
-
 .hmcts-banner__assistive {
   @include govuk-visually-hidden;
 }
@@ -49,7 +44,6 @@
   border-color: govuk-colour("green");
   color: govuk-colour("green");
 }
-
 
 .hmcts-banner--warning {
   border-color: govuk-colour("red");

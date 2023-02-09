@@ -4,7 +4,7 @@ RSpec.describe Component, type: :model do
   let(:contains_poisonous_ingredients) { false }
 
   let(:notification) { create(:notification) }
-  let(:predefined_component) { create(:component, contains_poisonous_ingredients:) }
+  let(:predefined_component) { create(:component, :with_category, contains_poisonous_ingredients:) }
   let(:ranges_component) { create(:ranges_component) }
   let(:exact_component) { create(:exact_component) }
   let(:text_file) { fixture_file_upload("/testText.txt", "application/text") }
@@ -137,6 +137,15 @@ RSpec.describe Component, type: :model do
       predefined_component.save
 
       expect(predefined_component.other_special_applicator).to be_nil
+    end
+  end
+
+  describe "frame formulation" do
+    it "adds error if chosen frame formulation does not match chosen categories" do
+      predefined_component.frame_formulation = "toothpaste"
+      predefined_component.save(context: :select_frame_formulation)
+
+      expect(predefined_component.errors[:frame_formulation]).to include("The chosen frame formulation must match the category of the product")
     end
   end
 
