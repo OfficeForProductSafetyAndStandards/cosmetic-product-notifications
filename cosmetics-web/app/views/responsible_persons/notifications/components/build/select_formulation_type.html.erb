@@ -1,16 +1,25 @@
 <% title = "Select formulation type" %>
 <% question = "How do you want to give the formulation of #{@component_name}?" %>
-<% items = formulations_types_label.map { |type_key, type_text| { text: type_text, value: type_key.to_sym, checked: answer_checked?(type_key.to_sym) } } %>
+<%
+  frame_formulations = FrameFormulations::CATEGORIES.dig(@component.root_category.to_s, @component.sub_category.to_s, @component.sub_sub_category.to_s)
+  items = formulations_types_label
+    .reject { |type_key, _| type_key == :predefined && frame_formulations.nil? }
+    .map { |type_key, type_text| { text: type_text, value: type_key.to_sym, checked: answer_checked?(type_key.to_sym) } }
+%>
 
 <% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-<% warning_html = if @component.notification_type.present?
+<%
+  warning_text = ""
+  warning_text += "There are no frame formulations for the chosen category. List ingredients either by exact concentration or concentration range. " if frame_formulations.nil?
+  warning_text += "Changing the formulation type will remove all ingredients already added." if @component.notification_type.present?
+  warning_html = if warning_text.present?
     govukWarningText(iconFallbackText: "Warning",
                      classes: "govuk-!-width-three-quarters govuk-!-margin-top-3 opss-warning-text--m",
-                     text: "Changing the formulation type will remove all ingredients already added")
+                     text: warning_text)
   end
 %>
 

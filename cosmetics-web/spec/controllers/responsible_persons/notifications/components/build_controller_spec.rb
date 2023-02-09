@@ -77,6 +77,35 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       expect(assigns(:component).cmrs).to all(have_attributes(name: be_nil))
     end
 
+    describe "select formulation type" do
+      before { get(:show, params: params.merge(id: :select_formulation_type)) }
+
+      render_views
+
+      context "when the chosen category has available frame formulations" do
+        # rubocop:disable RSpec/MultipleExpectations
+        it "allows the user to choose between frame formulations, exact or range" do
+          expect(response.body).to include("Choose a predefined frame formulation")
+          expect(response.body).to include("List ingredients and their exact concentration")
+          expect(response.body).to include("List ingredients and their concentration range")
+        end
+        # rubocop:enable RSpec/MultipleExpectations
+      end
+
+      context "when the chosen category does not have any available frame formulations" do
+        let(:component) { create(:component, :with_other_category, notification:, notification_type: component_type) }
+
+        # rubocop:disable RSpec/MultipleExpectations
+        it "allows the user to choose between exact or range only" do
+          expect(response.body).to include("There are no frame formulations for the chosen category. List ingredients either by exact concentration or concentration range.")
+          expect(response.body).not_to include("Choose a predefined frame formulation")
+          expect(response.body).to include("List ingredients and their exact concentration")
+          expect(response.body).to include("List ingredients and their concentration range")
+        end
+        # rubocop:enable RSpec/MultipleExpectations
+      end
+    end
+
     describe "add component predefined frame formulation poisonous ingredient" do
       let(:component_type) { "predefined" }
 
