@@ -218,7 +218,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
     t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
-    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
@@ -280,13 +279,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
     t.string "postal_code"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-  end
-
-  create_table "seach_histories", force: :cascade do |t|
-    t.string "query"
-    t.integer "results"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "search_histories", force: :cascade do |t|
