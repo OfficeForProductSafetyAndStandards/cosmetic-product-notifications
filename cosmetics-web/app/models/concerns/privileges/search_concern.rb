@@ -18,6 +18,10 @@ module Privileges
       opss_user? || trading_standards_user?
     end
 
+    def can_view_responsible_person_address_history?
+      trading_standards_user?
+    end
+
     def poison_centre_user?
       poison_centre?
     end
