@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe OneOff::SearchUserBulkInviter, :with_stubbed_mailer do
-  subject(:bulk_inviter) { described_class.new(file, :msa) }
+  subject(:bulk_inviter) { described_class.new(file, :opss_general) }
 
   let(:file) { "spec/fixtures/bulk_inviter/users.csv" }
 

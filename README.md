@@ -5,15 +5,17 @@
 
 ## Guides
 
+* [Glossary](cosmetics-web/docs/glossary.md)
 * [Review apps](cosmetics-web/docs/REVIEW_APPS.md)
 * [Opensearch](cosmetics-web/docs/Opensearch.md)
+* [Frame formulations](cosmetics-web/docs/frame_formulations.md)
 * [User Roles](cosmetics-web/docs/ROLES.md)
 
 ## Inviting search users
 
 1. SSH and run rails console: `app/bin/tll bin/rails c`.
 2. Run `InviteSearchUser.call name: 'Joe Doe', email: 'email@example.org', role: :poison_centre`.
-3. Role could be `poison_centre`, `msa` or `opss_science`.
+3. Role can be `poison_centre`, `opss_general`, `opss_enforcement`, `opss_science` or `trading_standards`.
 
 ## Entity Relationship Diagram
 
