@@ -11,16 +11,16 @@ RSpec.describe Search::DashboardController, type: :controller do
     end
 
     describe "GET #show" do
-      it "redirects to the Poison Centre/MSA notifications index page" do
+      it "redirects to the correct notifications index page" do
         get :show
         expect(response).to redirect_to(poison_centre_notifications_search_path)
       end
     end
   end
 
-  describe "When signed in as a MSA user" do
+  describe "When signed in as an OPSS General user" do
     before do
-      sign_in_as_msa_user
+      sign_in_as_opss_general_user
     end
 
     after do
@@ -28,7 +28,41 @@ RSpec.describe Search::DashboardController, type: :controller do
     end
 
     describe "GET #show" do
-      it "redirects to the Poison Centre/MSA notifications index page" do
+      it "redirects to the correct notifications index page" do
+        get :show
+        expect(response).to redirect_to(poison_centre_notifications_search_path)
+      end
+    end
+  end
+
+  describe "When signed in as an OPSS Enforcement user" do
+    before do
+      sign_in_as_opss_enforcement_user
+    end
+
+    after do
+      sign_out(:search_user)
+    end
+
+    describe "GET #show" do
+      it "redirects to the correct notifications index page" do
+        get :show
+        expect(response).to redirect_to(poison_centre_notifications_search_path)
+      end
+    end
+  end
+
+  describe "When signed in as a Trading Standards user" do
+    before do
+      sign_in_as_trading_standards_user
+    end
+
+    after do
+      sign_out(:search_user)
+    end
+
+    describe "GET #show" do
+      it "redirects to the correct notifications index page" do
         get :show
         expect(response).to redirect_to(poison_centre_notifications_search_path)
       end

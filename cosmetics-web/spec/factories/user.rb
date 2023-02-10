@@ -92,12 +92,20 @@ FactoryBot.define do
         role { :poison_centre }
       end
 
-      factory :msa_user do
-        role { :msa }
+      factory :opss_general_user do
+        role { :opss_general }
+      end
+
+      factory :opss_enforcement_user do
+        role { :opss_enforcement }
       end
 
       factory :opss_science_user do
         role { :opss_science }
+      end
+
+      factory :trading_standards_user do
+        role { :trading_standards }
       end
 
       after :create do |user, options|

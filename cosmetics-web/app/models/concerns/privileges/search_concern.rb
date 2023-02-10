@@ -3,7 +3,7 @@ module Privileges
     include AbstractConcern
 
     def can_view_product_ingredients?
-      !msa_user?
+      poison_centre_user? || opss_enforcement_user? || opss_science_user?
     end
 
     def can_view_ingredients_list?
@@ -15,19 +15,35 @@ module Privileges
     end
 
     def can_view_nanomaterial_review_period_end_date?
-      msa_user? || opss_science_user?
+      opss_user? || trading_standards_user?
+    end
+
+    def can_view_responsible_person_address_history?
+      trading_standards_user?
     end
 
     def poison_centre_user?
       poison_centre?
     end
 
-    def msa_user?
-      msa?
+    def opss_user?
+      opss_general? || opss_enforcement? || opss_science?
+    end
+
+    def opss_general_user?
+      opss_general?
+    end
+
+    def opss_enforcement_user?
+      opss_enforcement?
     end
 
     def opss_science_user?
       opss_science?
+    end
+
+    def trading_standards_user?
+      trading_standards?
     end
   end
 end

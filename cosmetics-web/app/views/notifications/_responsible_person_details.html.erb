@@ -13,5 +13,15 @@
         html: sanitize(responsible_person.address_lines.join("<br>"))
       },
     },
-  ]
+  ] +
+    (can_view_responsible_person_address_history? ? responsible_person.address_logs.newest_first.map do |address|
+      {
+        key: {
+          text: "Previous address (#{display_date(address.start_date)} &mdash; #{display_date(address.end_date)})".html_safe
+        },
+        value: {
+          html: sanitize(address.address_lines.join("<br>"))
+        },
+      }
+    end : [])
 ) %>
