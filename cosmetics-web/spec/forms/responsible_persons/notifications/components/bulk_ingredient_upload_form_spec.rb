@@ -29,32 +29,36 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
   context "when using exact CSV" do
     shared_examples "validation" do
-      it "does not create any ingredients" do
-        expect {
+      describe "#save_ingredients" do
+        it "does not create any ingredients" do
+          expect {
+            form.save_ingredients
+          }.not_to change(Ingredient, :count)
+        end
+
+        it "does have proper message after saving attempt" do
           form.save_ingredients
-        }.not_to change(Ingredient, :count)
+
+          expect(form.errors.full_messages).to eq error_messages
+        end
+
+        it "does return proper value" do
+          expect(form.save_ingredients).to be false
+        end
       end
 
-      it "does have proper message after saving attempt" do
-        form.save_ingredients
+      describe "#valid?" do
+        it "is invalid" do
+          form.valid?
 
-        expect(form.errors.full_messages).to eq error_messages
-      end
+          expect(form).not_to be_valid
+        end
 
-      it "does return proper value" do
-        expect(form.save_ingredients).to be false
-      end
+        it "has proper error message" do
+          form.valid?
 
-      it "is invalid" do
-        form.valid?
-
-        expect(form).not_to be_valid
-      end
-
-      it "has proper error message" do
-        form.valid?
-
-        expect(form.errors.full_messages).to eq error_messages
+          expect(form.errors.full_messages).to eq error_messages
+        end
       end
     end
 
