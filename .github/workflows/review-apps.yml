@@ -81,14 +81,3 @@ jobs:
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
-
-    - uses: actions/checkout@v2
-    - name: Create Sentry release
-      if: success()
-      uses: getsentry/action-release@v1
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        SENTRY_ORG: beis
-        SENTRY_PROJECT: beis-cosmetics
-      with:
-        environment: cosmetics-pr-${{ github.event.number }}
