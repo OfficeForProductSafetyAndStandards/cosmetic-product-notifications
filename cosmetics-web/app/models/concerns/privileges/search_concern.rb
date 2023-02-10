@@ -27,11 +27,11 @@ module Privileges
     end
 
     def opss_user?
-      opss_general? || opss_enforcement? || opss_science? || msa? # Remove once all MSA users have been migrated
+      opss_general? || opss_enforcement? || opss_science?
     end
 
     def opss_general_user?
-      opss_general? || msa? # Remove once all MSA users have been migrated
+      opss_general?
     end
 
     def opss_enforcement_user?
