@@ -1,5 +1,9 @@
 class ResponsiblePersonAddressLog < ApplicationRecord
+  ADDRESS_FIELDS = %i[line_1 line_2 city county postal_code].freeze
+
   belongs_to :responsible_person, inverse_of: :address_logs
+
+  scope :newest_first, -> { order(end_date: :desc) }
 
   validates :line_1, presence: true
   validates :city, presence: true
@@ -13,6 +17,10 @@ class ResponsiblePersonAddressLog < ApplicationRecord
 
   def to_s
     [line_1, line_2, city, county, postal_code].select(&:present?).join(", ")
+  end
+
+  def address_lines
+    ADDRESS_FIELDS.map { |field| public_send(field) }.select(&:present?)
   end
 
 private
