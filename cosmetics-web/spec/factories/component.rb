@@ -94,6 +94,10 @@ FactoryBot.define do
       sub_sub_category { "shampoo" }
     end
 
+    trait :with_other_category do
+      sub_sub_category { "other_skin_care_products_child" }
+    end
+
     trait :with_range_ingredients do
       notification_type { "range" }
       after(:create) do |component|
