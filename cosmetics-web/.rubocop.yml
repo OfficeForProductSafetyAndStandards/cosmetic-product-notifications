@@ -123,12 +123,3 @@ RSpec/FilePath:
 Naming/MethodParameterName:
   Exclude:
     - spec/support/**/*
-      
-RSpec/LeakyConstantDeclaration:
-  Exclude:
-    - spec/lib/active_model/type/strict_float_spec.rb
-      
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - spec/lib/active_model/type/strict_float_spec.rb
-  

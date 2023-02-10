@@ -66,7 +66,7 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
 
   describe "Ingredient name is too long" do
     let(:name) do
-      "X" * (ResponsiblePersons::Notifications::IngredientConcentrationForm::NAME_LENGTH_LIMIT * 2)
+      "X" * (Ingredient::NAME_LENGTH_LIMIT * 2)
     end
 
     let(:ingredient) { create(:range_ingredient) }

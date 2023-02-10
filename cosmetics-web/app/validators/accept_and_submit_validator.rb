@@ -34,7 +34,7 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
       end
     end
     ingredients = notification.reload.components.map(&:ingredients).flatten
-    if ingredients.any? { |i| i.inci_name.length > ResponsiblePersons::Notifications::IngredientConcentrationForm::NAME_LENGTH_LIMIT }
+    if ingredients.any? { |i| i.inci_name.length > Ingredient::NAME_LENGTH_LIMIT }
       notification.errors.add :ingredients, "Ingredient names must be 100 characters or less"
     end
   end

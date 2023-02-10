@@ -288,12 +288,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_113757) do
     t.string "sort_by"
   end
 
-  create_table "test_stuffs", force: :cascade do |t|
-    t.string "foo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "trigger_question_elements", force: :cascade do |t|
     t.integer "answer_order"
     t.string "answer"
