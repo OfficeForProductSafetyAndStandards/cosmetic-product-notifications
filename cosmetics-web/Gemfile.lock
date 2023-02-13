@@ -6,13 +6,6 @@ GIT
       redis (>= 3.0)
 
 GIT
-  remote: https://github.com/govuk-ruby/govuk-design-system-rails
-  revision: e161e1f19aabc1e14a74cece07ccc8920fc3f40a
-  branch: add-option-for-radio-wrapper-class
-  specs:
-    govuk-design-system-rails (0.9.8)
-
-GIT
   remote: https://github.com/zilkey/active_hash.git
   revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
   ref: 1c95f99
@@ -221,6 +214,7 @@ GEM
       raabro (~> 1.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    govuk-design-system-rails (0.10.1)
     govuk_notify_rails (2.1.2)
       notifications-ruby-client (~> 5.1)
       rails (>= 4.1.0)
@@ -586,7 +580,7 @@ DEPENDENCIES
   elasticsearch-rails
   factory_bot_rails
   faker
-  govuk-design-system-rails!
+  govuk-design-system-rails (~> 0.10.1)
   govuk_notify_rails (~> 2.1.0)
   hashie (~> 5.0.0)
   image_processing (~> 1.2)
@@ -614,7 +608,6 @@ DEPENDENCIES
   rest-client (~> 2.1.0)
   rotp (~> 6.2.0)
   rqrcode (~> 1.2.0)
-  rspec (~> 3.10.0)
   rspec-collection_matchers (~> 1.2.0)
   rspec-html-matchers (~> 0.9.4)
   rspec-rails (~> 4.0.2)
