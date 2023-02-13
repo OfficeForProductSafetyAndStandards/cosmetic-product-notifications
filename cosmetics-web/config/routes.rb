@@ -52,7 +52,6 @@ Rails.application.routes.draw do
     devise_scope :search_user do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
-      post "sign-out-before-confirming-email", to: "users/confirmations#sign_out_before_confirming_email"
     end
     root "search/landing_page#index", as: :search_root
 
@@ -97,7 +96,7 @@ Rails.application.routes.draw do
 
     root "submit/landing_page#index", as: :submit_root
 
-    resources :responsible_persons do
+    resources :responsible_persons, only: %i[show edit update] do
       collection do
         resources :account, controller: "responsible_persons/account_wizard", only: %i[show update]
         get "select", to: "responsible_persons#select"
@@ -146,14 +145,12 @@ Rails.application.routes.draw do
         resources :product_kit, controller: "responsible_persons/notifications/product_kit", only: %i[show update new]
         resource :draft, controller: "responsible_persons/drafts", only: %i[show] do
           collection do
-            post :add_component
             get :review
             get :declaration
             post :accept
           end
           resource :delete_item, controller: "responsible_persons/delete_items", only: %i[show destroy]
           resource :delete_product_image, controller: "responsible_persons/delete_product_image", only: %i[destroy]
-          resource :delete_formulation_file, controller: "responsible_persons/delete_formulation_file", only: %i[destroy]
           resource :delete_nano_material, controller: "responsible_persons/delete_nano_materials", only: %i[show destroy]
         end
 
@@ -170,10 +167,6 @@ Rails.application.routes.draw do
           collection do
             get :confirm
           end
-        end
-
-        member do
-          post :confirm
         end
       end
 

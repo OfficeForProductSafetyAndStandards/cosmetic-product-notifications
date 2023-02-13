@@ -39,7 +39,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
     end
 
     it "does not change the user role when the inviter is called for a different role" do
-      user.update_column(:role, inviter.role == "msa" ? "poison_centre" : "msa")
+      user.update_column(:role, inviter.role == "opss_general" ? "poison_centre" : "opss_general")
       expect {
         inviter.call
         user.reload
@@ -72,7 +72,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
   end
 
   it "fails when no user name is provided" do
-    expect { described_class.new(email: "user@example.com", role: "msa").call }
+    expect { described_class.new(email: "user@example.com", role: "opss_general").call }
       .to raise_error(Interactor::Failure)
   end
 
@@ -87,7 +87,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
   end
 
   context "when an user is provided" do
-    subject(:inviter) { described_class.new(name: "John Doe", role: "msa", user:) }
+    subject(:inviter) { described_class.new(name: "John Doe", role: "opss_general", user:) }
 
     let(:user) do
       create(:search_user, :registration_incomplete, email: "existentuser@example.com")
@@ -98,7 +98,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
 
   context "when an email is provided" do
     subject(:inviter) do
-      described_class.new(name: "John Doe", role: "msa", email: "inviteduser@example.com")
+      described_class.new(name: "John Doe", role: "opss_general", email: "inviteduser@example.com")
     end
 
     context "when the provided email belongs to an existing user" do

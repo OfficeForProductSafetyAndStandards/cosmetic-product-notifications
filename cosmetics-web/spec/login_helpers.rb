@@ -8,12 +8,22 @@ module LoginHelpers
     sign_in(user)
   end
 
-  def sign_in_as_msa_user(user: create(:msa_user))
+  def sign_in_as_opss_general_user(user: create(:opss_general_user))
+    configure_requests_for_search_domain
+    sign_in(user)
+  end
+
+  def sign_in_as_opss_enforcement_user(user: create(:opss_enforcement_user))
     configure_requests_for_search_domain
     sign_in(user)
   end
 
   def sign_in_as_opss_science_user(user: create(:opss_science_user))
+    configure_requests_for_search_domain
+    sign_in(user)
+  end
+
+  def sign_in_as_trading_standards_user(user: create(:trading_standards_user))
     configure_requests_for_search_domain
     sign_in(user)
   end

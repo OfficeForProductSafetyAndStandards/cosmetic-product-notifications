@@ -131,11 +131,11 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
     end
 
-    context "when signed in as a market surveilance authority user" do
-      let(:user) { create(:msa_user) }
+    context "when signed in as an OPSS General user" do
+      let(:user) { create(:opss_general_user) }
 
       before do
-        sign_in_as_msa_user(user:)
+        sign_in_as_opss_general_user(user:)
         get "/"
       end
 
@@ -148,7 +148,24 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
     end
 
-    context "when signed in as a OPSS Science user" do
+    context "when signed in as an OPSS Enforcement user" do
+      let(:user) { create(:opss_enforcement_user) }
+
+      before do
+        sign_in_as_opss_enforcement_user(user:)
+        get "/"
+      end
+
+      after do
+        sign_out(:search_user)
+      end
+
+      it "redirects to the notifications page" do
+        expect(response).to redirect_to("/notifications")
+      end
+    end
+
+    context "when signed in as an OPSS Science user" do
       let(:user) { create(:opss_science_user) }
 
       before do
@@ -163,6 +180,23 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       it "redirects to the notifications page" do
         expect(response).to redirect_to("/notifications")
       end
+    end
+  end
+
+  context "when signed in as a Trading Standards user" do
+    let(:user) { create(:trading_standards_user) }
+
+    before do
+      sign_in_as_trading_standards_user(user:)
+      get "/"
+    end
+
+    after do
+      sign_out(:search_user)
+    end
+
+    it "redirects to the notifications page" do
+      expect(response).to redirect_to("/notifications")
     end
   end
 

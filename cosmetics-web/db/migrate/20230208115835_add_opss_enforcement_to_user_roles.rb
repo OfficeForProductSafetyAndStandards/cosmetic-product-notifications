@@ -1,0 +1,9 @@
+class AddOpssEnforcementToUserRoles < ActiveRecord::Migration[6.1]
+  def change
+    safety_assured do
+      ActiveRecord::Base.connection.execute <<-SQL
+        ALTER TYPE user_roles ADD VALUE 'opss_enforcement'
+      SQL
+    end
+  end
+end

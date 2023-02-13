@@ -202,9 +202,51 @@ RSpec.describe "Ingredient list", type: :request do
     end
   end
 
-  context "when signed in as an MSA user" do
+  context "when signed in as an OPSS General user" do
     before do
-      sign_in_as_msa_user
+      sign_in_as_opss_general_user
+    end
+
+    describe "GET #index" do
+      context "when visiting the page" do
+        before do
+          get poison_centre_ingredients_path
+        end
+
+        it "redirects to the root page" do
+          expect(response).to redirect_to("/")
+        end
+      end
+    end
+
+    describe "GET #responsible_persons" do
+      context "when visiting the page" do
+        before do
+          get poison_centre_ingredients_responsible_persons_path(ingredient_inci_name: "Aqua")
+        end
+
+        it "redirects to the root page" do
+          expect(response).to redirect_to("/")
+        end
+      end
+    end
+
+    describe "GET #responsible_person_notifications" do
+      context "when visiting the page" do
+        before do
+          get poison_centre_ingredients_responsible_person_notifications_path(responsible_person_id: ingredient2.component.responsible_person.id, ingredient_inci_name: "Aqua")
+        end
+
+        it "redirects to the root page" do
+          expect(response).to redirect_to("/")
+        end
+      end
+    end
+  end
+
+  context "when signed in as an OPSS Enforcement user" do
+    before do
+      sign_in_as_opss_enforcement_user
     end
 
     describe "GET #index" do
@@ -247,6 +289,48 @@ RSpec.describe "Ingredient list", type: :request do
   context "when signed in as an OPSS Science user" do
     before do
       sign_in_as_opss_science_user
+    end
+
+    describe "GET #index" do
+      context "when visiting the page" do
+        before do
+          get poison_centre_ingredients_path
+        end
+
+        it "redirects to the root page" do
+          expect(response).to redirect_to("/")
+        end
+      end
+    end
+
+    describe "GET #responsible_persons" do
+      context "when visiting the page" do
+        before do
+          get poison_centre_ingredients_responsible_persons_path(ingredient_inci_name: "Aqua")
+        end
+
+        it "redirects to the root page" do
+          expect(response).to redirect_to("/")
+        end
+      end
+    end
+
+    describe "GET #responsible_person_notifications" do
+      context "when visiting the page" do
+        before do
+          get poison_centre_ingredients_responsible_person_notifications_path(responsible_person_id: ingredient2.component.responsible_person.id, ingredient_inci_name: "Aqua")
+        end
+
+        it "redirects to the root page" do
+          expect(response).to redirect_to("/")
+        end
+      end
+    end
+  end
+
+  context "when signed in as a Trading Standards user" do
+    before do
+      sign_in_as_trading_standards_user
     end
 
     describe "GET #index" do
