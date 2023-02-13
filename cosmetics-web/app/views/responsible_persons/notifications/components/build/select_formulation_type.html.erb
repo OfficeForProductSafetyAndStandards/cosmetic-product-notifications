@@ -9,7 +9,7 @@
         id: "component_notification_type_#{type_key}",
         text: type_object[:text],
         value: type_key.to_sym,
-        checked: answer_checked?(type_key.to_sym),
+        checked: answer_checked?(type_key.to_s),
         label: { classes: type_object[:classes] },
         wrapper_classes: type_object[:wrapper_classes]
       }
