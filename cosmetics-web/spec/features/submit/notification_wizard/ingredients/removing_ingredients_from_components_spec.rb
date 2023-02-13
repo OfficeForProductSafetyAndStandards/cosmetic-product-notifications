@@ -76,8 +76,8 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
 
     # Sends the user back to the "choose fomulation type" page without any preselection
     expect(page).to have_css("h1", text: "How will you provide the product formulation?")
-    expect(page).to have_unchecked_field("Choose a predefined frame formulation")
-    expect(page).to have_unchecked_field("Enter ingredients and their exact concentration manually")
+    expect(page).to have_checked_field("Enter ingredients and their exact concentration manually")
+    expect(page).to have_unchecked_field("Provide ingredients and their exact concentration using a CSV file")
     expect(page).to have_unchecked_field("Enter ingredients and their concentration range manually")
   end
 end
