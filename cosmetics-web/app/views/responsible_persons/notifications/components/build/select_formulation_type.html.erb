@@ -4,7 +4,16 @@
   frame_formulations = FrameFormulations::CATEGORIES.dig(@component.root_category.to_s, @component.sub_category.to_s, @component.sub_sub_category.to_s)
   items = formulations_types_label
     .reject { |type_key, _| type_key == :predefined && frame_formulations.nil? }
-    .map { |type_key, type_text| { text: type_text, value: type_key.to_sym, checked: answer_checked?(type_key.to_sym) } }
+    .map { |type_key, type_object|
+      {
+        id: "component_notification_type_#{type_key}",
+        text: type_object[:text],
+        value: type_key.to_sym,
+        checked: answer_checked?(type_key.to_sym),
+        label: { classes: type_object[:classes] },
+        wrapper_classes: type_object[:wrapper_classes]
+      }
+    }
 %>
 
 <% page_title title, errors: @component.errors.any? %>
@@ -24,18 +33,6 @@
 %>
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
-  <% 
-    items = formulations_types_label.map { |type_key, type_object| 
-      { 
-        id: "component_notification_type_#{type_key}",
-        text: type_object[:text], 
-        value: type_key.to_sym, 
-        checked: answer_checked?(type_key.to_sym), 
-        label: { classes: type_object[:classes] }, 
-        wrapper_classes: type_object[:wrapper_classes] 
-      } 
-    } 
-  %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= error_summary_for(@component, first_values: {notification_type: items[0][:value]}) %>
@@ -43,9 +40,9 @@
           <fieldset class="govuk-fieldset" aria-describedby="component_notification_type-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
               <h1 class="govuk-fieldset__heading">
-                How will you provide the product formulation?
+                <%= question %>
               </h1>
-            </legend>  
+            </legend>
             <p class="govuk-body govuk-!-width-three-quarters opss-secondary-text" id="type-hint">
             There are three formulation types: Predefined frame formulations, exact concentrations and concentration ranges. You can enter information manually or by uploading a <abbr title="Comma Separated Values">CSV</abbr> file.
             </p>
@@ -53,13 +50,7 @@
             Learn how you can <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">use a <abbr>CSV</abbr> file (opens in a new tab)</a>.
             </p>
             <div class="govuk-hint" id="component_notification_type-hint">
-              <div class="govuk-warning-text govuk-!-width-three-quarters govuk-!-margin-top-3 opss-warning-text--m">
-                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong class="govuk-warning-text__text">
-                  <span class="govuk-warning-text__assistive">Warning</span>
-                  Changing the formulation type will remove all ingredients already added
-                </strong>
-              </div>
+              <%= warning_html %>
             </div>
 
 
@@ -102,7 +93,7 @@
           </fieldset>
         </div>
       </div>
-      
+
     <%= govukButton text: "Continue" %>
     </div>
   </div>
