@@ -27,6 +27,9 @@ unless SimpleCov.running
   SimpleCov.start "rails"
 end
 
+require "faker"
+Faker::Config.locale = "en-GB"
+
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
 # Prevent database truncation if the environment is production

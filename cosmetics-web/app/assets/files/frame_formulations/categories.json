@@ -128,10 +128,6 @@
         "makeup_remover_non_foaming_oil_cleanser",
         "other_makeup_remover_products"
       ],
-      "external_intimate_hygiene_products": [
-        "gentle_cleansing_gel",
-        "other_external_intimate_hygiene_products"
-      ],
       "other_skin_cleansing_products": [
         "skin_gel_hydroalcoholic_based",
         "skin_cleansing_cream_lotion_scrub_gel",
@@ -312,11 +308,6 @@
       "other_sun_and_selftanning_products": [
         "other_sun_and_selftanning_products"
       ]
-    },
-    "other_skin_products": {
-      "other_skin_products": [
-        "other_skin_products"
-      ]
     }
   },
   "hair_and_scalp_products": {
@@ -441,9 +432,6 @@
         "hair_shine_wax_or_brilliantine",
         "hair_shine_spray_aerosol",
         "other_hair_sun_protection_products"
-      ],
-      "other_hair_and_scalp_products": [
-        "other_hair_and_scalp_products"
       ]
     }
   },
@@ -453,9 +441,6 @@
         "nail_varnish",
         "nail_white_pencil",
         "other_nail_varnish_nail_makeup"
-      ],
-      "nail_varnish_remover": [
-        "nail_varnish_remover"
       ],
       "nail_varnish_thinner": [
         "nail_varnish_thinner"
@@ -472,27 +457,8 @@
         "nail_conditioner_oil_based",
         "other_nail_care_products"
       ],
-      "nail_hardener": [
-        "nail_hardener"
-      ],
       "other_nail_care_nail_hardener_products": [
         "other_nail_care_nail_hardener_products"
-      ]
-    },
-    "nail_glue_remover_products": {
-      "nail_glue_remover": [
-        "nail_glue_remover"
-      ]
-    },
-    "other_nail_and_cuticle_products": {
-      "cuticle_remover_softener": [
-        "cuticle_remover_softener"
-      ],
-      "nail_sculpting_products": [
-        "nail_sculpting_products"
-      ],
-      "other_nail_and_cuticle_products": [
-        "other_nail_and_cuticle_products"
       ]
     }
   },
@@ -501,12 +467,6 @@
       "toothpaste": [
         "toothpaste",
         "other_toothpaste_products"
-      ],
-      "tooth_cleasing_powder_salt": [
-        "tooth_cleasing_powder_salt"
-      ],
-      "other_tooth_care_products": [
-        "other_tooth_care_products"
       ]
     },
     "mouth_wash_breath_spray": {
@@ -521,16 +481,6 @@
       ],
       "other_mouth_wash_breath_spray_products": [
         "other_mouth_wash_breath_spray_products"
-      ]
-    },
-    "tooth_whiteners": {
-      "tooth_whiteners": [
-        "tooth_whiteners"
-      ]
-    },
-    "other_oral_hygiene_products": {
-      "other_oral_hygiene_products": [
-        "other_oral_hygiene_products"
       ]
     }
   }
