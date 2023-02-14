@@ -32,7 +32,7 @@ class User < ApplicationRecord
   before_save :ensure_mobile_number_verification, if: :will_save_change_to_mobile_number?
 
   def send_new_email_confirmation_email
-    NotifyMailer.get_mailer(self).new_email_verification_email(self).deliver_later
+    mailer.new_email_verification_email(self).deliver_later
   end
 
   def mobile_number_verified?
@@ -89,6 +89,9 @@ class User < ApplicationRecord
     email.casecmp(email_address).zero? || (new_email.present? && new_email.casecmp(email_address).zero?)
   end
 
+  def mailer
+    NotifyMailer.get_mailer(self)
+  end
 private
 
   def secondary_authentication_set?
