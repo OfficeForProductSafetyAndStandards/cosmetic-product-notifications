@@ -31,31 +31,11 @@ class SearchUser < User
     SearchNotifyMailer.invitation_email(self).deliver_later
   end
 
-  def send_reset_password_instructions_notification(token)
-    SearchNotifyMailer.reset_password_instructions(self, token).deliver_later
-  end
-
-  # Don't reset password attempts yet, it will happen on next successful login
-  def unlock_access!
-    self.locked_at = nil
-    self.unlock_token = nil
-    save(validate: false)
-  end
-
-  def password_required?
-    return false if skip_password_validation
-
-    super
-  end
-
   def invitation_expired?
     invited_at <= INVITATION_EXPIRATION_DAYS.days.ago
   end
 
-private
-
   # Devise::Models::Lockable
-
   def send_unlock_instructions
     raw, enc = Devise.token_generator.generate(self.class, :unlock_token)
     self.unlock_token = enc
@@ -67,6 +47,28 @@ private
       reset_password_token:,
     ).deliver_later
     raw
+  end
+
+  # Devise::Models::Lockable
+  # Don't reset password attempts yet, it will happen on next successful login
+  def unlock_access!
+    self.locked_at = nil
+    self.unlock_token = nil
+    save(validate: false)
+  end
+
+private
+
+  # Devise::Models::Validatable
+  def password_required?
+    return false if skip_password_validation
+
+    super
+  end
+
+  # Devise::Models::Recoverable
+  def send_reset_password_instructions_notification(token)
+    SearchNotifyMailer.reset_password_instructions(self, token).deliver_later
   end
 
   def get_user_attributes

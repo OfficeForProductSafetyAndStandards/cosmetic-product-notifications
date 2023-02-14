@@ -21,11 +21,6 @@ class SubmitUser < User
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
 
-  def self.confirm_by_token(token)
-    user = super(token)
-    user.persisted? ? user : nil
-  end
-
   def self.find_user_by_confirmation_token!(confirmation_token)
     new_user = SubmitUser.find_by!(confirmation_token:)
 
@@ -36,12 +31,6 @@ class SubmitUser < User
     new_user
   end
 
-  def active_for_authentication?
-    return true if !account_security_completed && persisted?
-
-    super
-  end
-
   def dont_send_confirmation_instructions!
     @dont_send_confirmation_instructions = true
   end
@@ -50,6 +39,9 @@ class SubmitUser < User
     resend_confirmation_instructions
   end
 
+  def regenerate_confirmation_token_if_expired; end
+
+  # Devise::Models::Confirmable
   def send_confirmation_instructions
     return if @dont_send_confirmation_instructions
 
@@ -60,23 +52,14 @@ class SubmitUser < User
     SubmitNotifyMailer.send_account_confirmation_email(self).deliver_later
   end
 
-  def send_reset_password_instructions_notification(token)
-    SubmitNotifyMailer.reset_password_instructions(self, token).deliver_later
+  # Devise::Models::Confirmable
+  def active_for_authentication?
+    return true if !account_security_completed && persisted?
+
+    super
   end
-
-  # Don't reset password attempts yet, it will happen on next successful login
-  def unlock_access!
-    self.locked_at = nil
-    self.unlock_token = nil
-    save(validate: false)
-  end
-
-  def regenerate_confirmation_token_if_expired; end
-
-private
 
   # Devise::Models::Lockable
-
   def send_unlock_instructions
     raw, enc = Devise.token_generator.generate(self.class, :unlock_token)
     self.unlock_token = enc
@@ -88,6 +71,27 @@ private
       reset_password_token:,
     ).deliver_later
     raw
+  end
+
+  # Devise::Models::Lockable
+  # Don't reset password attempts yet, it will happen on next successful login
+  def unlock_access!
+    self.locked_at = nil
+    self.unlock_token = nil
+    save(validate: false)
+  end
+
+  # Devise::Models::Confirmable
+  def self.confirm_by_token(token)
+    user = super(token)
+    user.persisted? ? user : nil
+  end
+
+private
+
+  # Devise::Models::Recoverable
+  def send_reset_password_instructions_notification(token)
+    SubmitNotifyMailer.reset_password_instructions(self, token).deliver_later
   end
 
   def get_user_attributes
