@@ -5,11 +5,6 @@ class SearchUser < User
   ALLOW_INTERNATIONAL_PHONE_NUMBER = false
   TOTP_ISSUER = "Search Cosmetics".freeze
 
-  # Include default devise modules. Others available are:
-  devise :database_authenticatable,
-         :recoverable, :rememberable, :validatable,
-         :lockable, :trackable, :session_limitable
-
   belongs_to :organisation
 
   has_one :user_attributes, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
@@ -35,40 +30,13 @@ class SearchUser < User
     invited_at <= INVITATION_EXPIRATION_DAYS.days.ago
   end
 
-  # Devise::Models::Lockable
-  def send_unlock_instructions
-    raw, enc = Devise.token_generator.generate(self.class, :unlock_token)
-    self.unlock_token = enc
-    save(validate: false)
-    reset_password_token = set_reset_password_token
-    SearchNotifyMailer.account_locked(
-      self,
-      unlock_token: raw,
-      reset_password_token:,
-    ).deliver_later
-    raw
-  end
-
-  # Devise::Models::Lockable
-  # Don't reset password attempts yet, it will happen on next successful login
-  def unlock_access!
-    self.locked_at = nil
-    self.unlock_token = nil
-    save(validate: false)
-  end
-
 private
 
-  # Devise::Models::Validatable
+  # Overwrites Devise::Models::Validatable#password_required?
   def password_required?
     return false if skip_password_validation
 
     super
-  end
-
-  # Devise::Models::Recoverable
-  def send_reset_password_instructions_notification(token)
-    SearchNotifyMailer.reset_password_instructions(self, token).deliver_later
   end
 
   def get_user_attributes

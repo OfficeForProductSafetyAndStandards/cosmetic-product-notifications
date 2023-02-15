@@ -6,6 +6,14 @@ class User < ApplicationRecord
   include Encryptable
   include NewEmailConcern
 
+  devise :database_authenticatable,
+         :recoverable,
+         :rememberable,
+         :validatable,
+         :lockable,
+         :trackable,
+         :session_limitable
+
   attribute :old_password, :string
   attribute :invite, :boolean
 
@@ -92,7 +100,31 @@ class User < ApplicationRecord
   def mailer
     NotifyMailer.get_mailer(self)
   end
+
+  # Overwrites Devise::Models::Lockable#send_unlock_instructions
+  def send_unlock_instructions
+    raw, enc = Devise.token_generator.generate(self.class, :unlock_token)
+    self.unlock_token = enc
+    save(validate: false)
+    reset_password_token = set_reset_password_token
+    mailer.account_locked(self, unlock_token: raw, reset_password_token:).deliver_later
+    raw
+  end
+
+  # Overwrites Devise::Models::Lockable#unlock_access!
+  # Don't reset password attempts yet, it will happen on next successful login
+  def unlock_access!
+    self.locked_at = nil
+    self.unlock_token = nil
+    save(validate: false)
+  end
+
 private
+
+  # Overwrites Devise::Models::Recoverable#send_reset_password_instructions_notification
+  def send_reset_password_instructions_notification(token)
+    mailer.reset_password_instructions(self, token).deliver_later
+  end
 
   def secondary_authentication_set?
     !mobile_number_pending_verification? && (sms_authentication_set? || app_authentication_set?)
