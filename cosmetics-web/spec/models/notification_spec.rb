@@ -565,4 +565,12 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
     end
   end
+
+  describe "#editable?" do
+    it "is true for EDITABLE_STATES" do
+      Notification::EDITABLE_STATES.each do |state|
+        expect(build(:notification, state:)).to be_editable
+      end
+    end
+  end
 end

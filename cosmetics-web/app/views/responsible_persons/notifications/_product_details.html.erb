@@ -7,7 +7,7 @@
   <h2 class="govuk-visually-hidden">The product</h2>
 
   <%= govukSummaryList(classes: "opss-summary-list-mixed",
-                        rows: notification_summary_product_rows(notification, allow_edits: allow_edits)) %>
+                        rows: notification_summary_product_rows(notification)) %>
 </section>
 
 <% notification.components.order(:id).each_with_index do |component, i| %>
@@ -25,8 +25,7 @@
       classes: "opss-summary-list-mixed",
       rows: notification_summary_component_rows(
         component,
-        include_shades: notification.is_multicomponent?,
-        allow_edits: allow_edits
+        include_shades: notification.is_multicomponent?
       )
     ) %>
 
@@ -50,8 +49,7 @@
             {
               key: { text: "Formulation" },
               value: { html: render("notifications/component_details_formulation_ingredients",
-                                    component: component,
-                                    allow_edits: allow_edits) },
+                                    component: component) },
             }
           end,
         ].compact
