@@ -110,7 +110,6 @@ describe ResponsiblePersons::NotificationsHelper do
       helper.notification_summary_product_rows(notification)
     end
 
-    let(:editable) { false }
     let(:notification) do
       build_stubbed(:notification,
                     :registered,
@@ -244,7 +243,6 @@ describe ResponsiblePersons::NotificationsHelper do
     end
 
     let(:include_shades) { false }
-    let(:editable) { false }
     let(:component) do
       build_stubbed(:component,
                     exposure_routes: %w[Route],
