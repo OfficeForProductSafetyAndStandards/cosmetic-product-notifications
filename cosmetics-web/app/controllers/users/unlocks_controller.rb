@@ -18,14 +18,7 @@ module Users
       user_signed_in? && user_with_unlock_token == current_user && is_fully_authenticated?
     end
 
-    def user_with_unlock_token
-      @user_with_unlock_token ||= begin
-        unlock_token = Devise.token_generator.digest(self, :unlock_token, params[:unlock_token])
-
-        User.find_by!(unlock_token:)
-      end
-    end
-
+    # Overriden methods to customize the behaviour of SecondaryAuthenticationConcern
     def user_id_for_secondary_authentication
       user_with_unlock_token.id
     rescue ActiveRecord::RecordNotFound
@@ -35,6 +28,14 @@ module Users
 
     def current_operation
       SecondaryAuthentication::Operations::UNLOCK
+    end
+
+    def user_with_unlock_token
+      @user_with_unlock_token ||= begin
+        unlock_token = Devise.token_generator.digest(self, :unlock_token, params[:unlock_token])
+
+        User.find_by!(unlock_token:)
+      end
     end
   end
 end
