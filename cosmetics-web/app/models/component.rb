@@ -187,6 +187,7 @@ class Component < ApplicationRecord
   end
 
   def is_valid_multicomponent?
+    UnusedCodeAlerting.alert
     name.present?
   end
 
@@ -245,6 +246,7 @@ class Component < ApplicationRecord
   end
 
   def frame_formulation?
+    UnusedCodeAlerting.alert
     predefined?
   end
 

@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_params_key
+    UnusedCodeAlerting.alert
     submit_domain? ? :submit_user : :search_user
   end
 
@@ -109,6 +110,7 @@ private
   helper_method :user_session_path
 
   def user_registration_path
+    UnusedCodeAlerting.alert
     submit_domain? ? submit_user_registration_path : search_user_registration_path
   end
   helper_method :user_registration_path

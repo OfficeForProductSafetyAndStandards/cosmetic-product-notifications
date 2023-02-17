@@ -40,6 +40,7 @@ private
   end
 
   def get_user_attributes
+    UnusedCodeAlerting.alert
     UserAttributes.find_or_create_by(user_id: id)
   end
 end

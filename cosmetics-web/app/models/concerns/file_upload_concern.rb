@@ -41,6 +41,7 @@ module FileUploadConcern
   end
 
   def attachment
+    UnusedCodeAlerting.alert
     if send(attachment_name).attached?
       send(attachment_name)
     else

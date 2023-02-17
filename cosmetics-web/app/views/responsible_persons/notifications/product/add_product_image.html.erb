@@ -2,6 +2,7 @@
 <% page_title title, errors: @notification.errors.messages.include?(:image_uploads) %>
 <% content_for :after_header do %>
   <% if params[:back_to_edit] %>
+    <% UnusedCodeAlerting.alert # back_to_edit does not seem to be set anywhere. %>
     <%= govukBackLink text: "Back", href: edit_responsible_person_notification_path(@notification.responsible_person, @notification) %>
   <% else %>
     <%= govukBackLink text: "Back", href: previous_wizard_path %>

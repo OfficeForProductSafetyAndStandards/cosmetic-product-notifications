@@ -8,6 +8,7 @@ module NotificationPropertiesHelper
   end
 
   def get_trigger_rules_question_name(trigger_rules_question)
+    UnusedCodeAlerting.alert
     TRIGGER_RULES_QUESTION_NAME[trigger_rules_question&.to_sym]
   end
 
@@ -16,6 +17,7 @@ module NotificationPropertiesHelper
   end
 
   def get_trigger_rules_question_element_name(trigger_rules_question_element)
+    UnusedCodeAlerting.alert
     TRIGGER_RULES_QUESTION_ELEMENT_NAME[trigger_rules_question_element&.to_sym]
   end
 
