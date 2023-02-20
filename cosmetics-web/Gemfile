@@ -13,6 +13,7 @@ gem "activerecord-pg_enum"
 gem "after_commit_everywhere"
 gem "aws-sdk-s3", "~> 1.60.1"
 gem "cf-app-utils", "~> 0.6"
+gem "cssbundling-rails"
 gem "devise"
 gem "devise-security"
 # ES gems won't work with OpenSearch once ES and OS codebases start diverging:
