@@ -6,9 +6,7 @@ gem "kaminari" # Must be loaded before ElasticSearch gems
 
 # Needed a feature added into AASM master branch but still not tagged with a new version.
 gem "aasm", "5.2.0"
-# Needed to point active_hash to master version since the latest release is not compatible with Ruby 3 new keyword arg syntax.
-# TODO: Switch back to semantic versioning when a version > 3.1.0 is released.
-gem "active_hash", github: "zilkey/active_hash", ref: "1c95f99"
+gem "active_hash", "~> 3.1.1"
 gem "activerecord-pg_enum"
 gem "after_commit_everywhere"
 gem "aws-sdk-s3", "~> 1.60.1"
@@ -90,7 +88,7 @@ group :development, :test do
   gem "simplecov", "~> 0.21.2"
   gem "simplecov-console", "~> 0.6.0"
   gem "simplecov-lcov", "~> 0.7.0"
-  gem "solargraph", "~> 0.44.2"
+  gem "solargraph"
   gem "solargraph-rails"
   gem "webmock", "~> 3.8"
 end

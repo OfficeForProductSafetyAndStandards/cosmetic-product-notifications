@@ -5,14 +5,6 @@ GIT
     coverband (5.2.6.rc.1)
       redis (>= 3.0)
 
-GIT
-  remote: https://github.com/zilkey/active_hash.git
-  revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
-  ref: 1c95f99
-  specs:
-    active_hash (3.1.0)
-      activesupport (>= 5.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -63,6 +55,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_hash (3.1.1)
+      activesupport (>= 5.0.0)
     activejob (7.0.4.2)
       activesupport (= 7.0.4.2)
       globalid (>= 0.3.6)
@@ -520,7 +514,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    strong_migrations (1.4.2)
+    strong_migrations (1.4.3)
       activerecord (>= 5.2)
     sync (0.5.0)
     term-ansicolor (1.7.1)
@@ -564,7 +558,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (= 5.2.0)
-  active_hash!
+  active_hash (~> 3.1.1)
   activerecord-pg_enum
   after_commit_everywhere
   aws-sdk-s3 (~> 1.60.1)
@@ -632,7 +626,7 @@ DEPENDENCIES
   simplecov (~> 0.21.2)
   simplecov-console (~> 0.6.0)
   simplecov-lcov (~> 0.7.0)
-  solargraph (~> 0.44.2)
+  solargraph
   solargraph-rails
   sprockets (~> 4.2.0)
   sprockets-rails
