@@ -8,6 +8,13 @@ class TriggerQuestion < ApplicationRecord
 
   validates :applicable, inclusion: { in: [true, false] }, on: :update
 
+  # TODO: remove this after executing the rake task cleaning up dangling trigger questions
+  after_find do |trigger_question|
+    if trigger_question.component_id.nil? && Rails.env.production?
+      Sentry.capture_message "Dangling TriggerQuestion has been loaded from DB. ID: #{trigger_question.id}"
+    end
+  end
+
   def ph_question?
     question == PH_QUESTION
   end
