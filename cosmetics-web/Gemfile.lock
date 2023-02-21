@@ -623,7 +623,7 @@ DEPENDENCIES
   simplecov (~> 0.21.2)
   simplecov-console (~> 0.6.0)
   simplecov-lcov (~> 0.7.0)
-  solargraph (~> 0.44.2)
+  solargraph
   solargraph-rails
   sprockets (~> 4.2.0)
   sprockets-rails
