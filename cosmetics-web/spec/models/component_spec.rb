@@ -601,4 +601,34 @@ RSpec.describe Component, type: :model do
       expect(component.missing_ingredients?).to eq(false)
     end
   end
+
+  describe "#delete_ingredient!" do
+    let(:component) { create(:exact_component, :completed, :with_exact_ingredients) }
+
+    it "returns false when the ingredient does not belong to the component" do
+      ingredient = create(:range_ingredient)
+      expect(component.delete_ingredient!(ingredient)).to eq(false)
+    end
+
+    it "deletes the given ingredient from the component" do
+      ingredient = component.ingredients.first
+      expect { component.delete_ingredient!(ingredient) }
+        .to change { component.ingredients.count }.from(1).to(0)
+    end
+
+    it "resets the notification type and state of the component that only had one ingredient" do
+      ingredient = component.ingredients.first
+      expect { component.delete_ingredient!(ingredient) }
+        .to change(component, :notification_type).from("exact").to(nil)
+        .and change(component, :state).from("component_complete").to("empty")
+    end
+
+    it "doesn't modify the notification type or state of the component that had more than one ingredient" do
+      create(:exact_ingredient, component:)
+      ingredient = component.ingredients.first
+      expect { component.delete_ingredient!(ingredient) }
+        .to not_change(component, :notification_type)
+        .and not_change(component, :state)
+    end
+  end
 end
