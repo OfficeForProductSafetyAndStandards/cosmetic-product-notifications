@@ -46,7 +46,7 @@
 
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
-    <%= render("responsible_persons/notifications/product_details", notification: @notification, allow_edits: true) %>
+    <%= render("responsible_persons/notifications/product_details", notification: @notification) %>
 
     <section class="govuk-!-margin-top-7">
       <% if @notification.valid?(:accept_and_submit) %>
