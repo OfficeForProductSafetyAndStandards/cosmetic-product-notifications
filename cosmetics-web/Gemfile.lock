@@ -5,14 +5,6 @@ GIT
     coverband (5.2.6.rc.1)
       redis (>= 3.0)
 
-GIT
-  remote: https://github.com/zilkey/active_hash.git
-  revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
-  ref: 1c95f99
-  specs:
-    active_hash (3.1.0)
-      activesupport (>= 5.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -63,6 +55,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_hash (3.1.1)
+      activesupport (>= 5.0.0)
     activejob (7.0.4.2)
       activesupport (= 7.0.4.2)
       globalid (>= 0.3.6)
@@ -111,8 +105,8 @@ GEM
     aws-sigv4 (1.5.0)
       aws-eventstream (~> 1, >= 1.0.2)
     backport (1.2.0)
-    bcrypt (3.1.16)
-    benchmark (0.2.0)
+    bcrypt (3.1.18)
+    benchmark (0.2.1)
     brakeman (4.7.2)
     builder (3.2.4)
     byebug (11.1.3)
@@ -144,8 +138,10 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    cssbundling-rails (1.1.2)
+      railties (>= 6.0.0)
     date (3.3.3)
-    devise (4.8.1)
+    devise (4.9.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -175,7 +171,7 @@ GEM
     elasticsearch-transport (7.17.1)
       faraday (~> 1)
       multi_json
-    erubi (1.11.0)
+    erubi (1.12.0)
     et-orbi (1.2.2)
       tzinfo
     factory_bot (6.2.0)
@@ -236,7 +232,7 @@ GEM
     jmespath (1.6.1)
     jsbundling-rails (1.1.1)
       railties (>= 6.0.0)
-    json (2.6.2)
+    json (2.6.3)
     jwt (2.2.1)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -294,11 +290,11 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.14.0-arm64-darwin)
+    nokogiri (1.14.2-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.14.0-x86_64-darwin)
+    nokogiri (1.14.2-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.14.0-x86_64-linux)
+    nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.1.1)
       jwt (>= 1.5, < 3)
@@ -306,7 +302,7 @@ GEM
     okcomputer (1.18.4)
     orm_adapter (0.5.0)
     parallel (1.22.1)
-    parser (3.1.3.0)
+    parser (3.2.1.0)
       ast (~> 2.4.1)
     pg (1.4.5)
     pry (0.14.2)
@@ -321,7 +317,7 @@ GEM
     pundit (2.1.1)
       activesupport (>= 3.0.0)
     raabro (1.1.6)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (2.2.6.2)
     rack-protection (2.2.0)
       rack
@@ -353,7 +349,7 @@ GEM
       activesupport (>= 4.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.4.4)
+    rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
     railties (7.0.4.2)
       actionpack (= 7.0.4.2)
@@ -368,12 +364,12 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redis (4.5.1)
-    regexp_parser (2.6.1)
+    regexp_parser (2.7.0)
     request_store (1.5.1)
       rack (>= 1.4)
-    responders (3.0.1)
-      actionpack (>= 5.0)
-      railties (>= 5.0)
+    responders (3.1.0)
+      actionpack (>= 5.2)
+      railties (>= 5.2)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -459,7 +455,7 @@ GEM
       tilt
     scout_apm (5.3.3)
       parser
-    selenium-webdriver (4.8.0)
+    selenium-webdriver (4.8.1)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -493,7 +489,7 @@ GEM
     simplecov-html (0.12.3)
     simplecov-lcov (0.7.0)
     simplecov_json_formatter (0.1.3)
-    solargraph (0.44.3)
+    solargraph (0.48.0)
       backport (~> 1.2)
       benchmark
       bundler (>= 1.17.2)
@@ -518,7 +514,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    strong_migrations (1.4.2)
+    strong_migrations (1.4.3)
       activerecord (>= 5.2)
     sync (0.5.0)
     term-ansicolor (1.7.1)
@@ -526,11 +522,11 @@ GEM
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thor (1.2.1)
-    tilt (2.0.11)
+    tilt (2.1.0)
     timeout (0.3.1)
     tins (1.29.1)
       sync
-    tzinfo (2.0.5)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
       unf_ext
@@ -552,7 +548,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.26)
-    zeitwerk (2.6.6)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   arm64-darwin-21
@@ -562,7 +558,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (= 5.2.0)
-  active_hash!
+  active_hash (~> 3.1.1)
   activerecord-pg_enum
   after_commit_everywhere
   aws-sdk-s3 (~> 1.60.1)
@@ -572,6 +568,7 @@ DEPENDENCIES
   cf-app-utils (~> 0.6)
   coveralls_reborn (~> 0.22.0)
   coverband!
+  cssbundling-rails
   devise
   devise-security
   dotenv-rails (~> 2.7.5)
@@ -629,7 +626,7 @@ DEPENDENCIES
   simplecov (~> 0.21.2)
   simplecov-console (~> 0.6.0)
   simplecov-lcov (~> 0.7.0)
-  solargraph (~> 0.44.2)
+  solargraph
   solargraph-rails
   sprockets (~> 4.2.0)
   sprockets-rails
