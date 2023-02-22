@@ -262,7 +262,7 @@ RSpec.describe Component, type: :model do
     end
   end
 
-  describe "adding PH ranges" do
+  describe "adding pH ranges" do
     context "with integers within strings" do
       before do
         predefined_component.minimum_ph = " 2 "
@@ -301,21 +301,21 @@ RSpec.describe Component, type: :model do
       end
     end
 
-    it "adds an error if only minimum PH is present" do
+    it "adds an error if only minimum pH is present" do
       predefined_component.minimum_ph = 2.1
 
       expect(predefined_component).not_to be_valid
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a maximum pH")
     end
 
-    it "adds an error if only maximum PH is present" do
+    it "adds an error if only maximum pH is present" do
       predefined_component.maximum_ph = 11.2
 
       expect(predefined_component).not_to be_valid
       expect(predefined_component.errors[:minimum_ph]).to include("Enter a minimum pH")
     end
 
-    it "adds an error if maximum PH is below minimum PH" do
+    it "adds an error if maximum pH is below minimum pH" do
       predefined_component.minimum_ph = 3.2
       predefined_component.maximum_ph = 3.1
 
@@ -323,28 +323,28 @@ RSpec.describe Component, type: :model do
       expect(predefined_component.errors[:maximum_ph]).to include("The maximum pH must be the same or higher than the minimum pH")
     end
 
-    it "adds an error if minimum PH is below 0" do
+    it "adds an error if minimum pH is below 0" do
       predefined_component.minimum_ph = -0.1
 
       expect(predefined_component).not_to be_valid
       expect(predefined_component.errors[:minimum_ph]).to include("Enter a value of 0 or higher for minimum pH")
     end
 
-    it "adds an error if minimum PH is above 14" do
+    it "adds an error if minimum pH is above 14" do
       predefined_component.minimum_ph = 14.01
 
       expect(predefined_component).not_to be_valid
       expect(predefined_component.errors[:minimum_ph]).to include("Enter a value of 14 or lower for minimum pH")
     end
 
-    it "adds an error if maximum PH is below 0  " do
+    it "adds an error if maximum pH is below 0" do
       predefined_component.maximum_ph = -0.1
 
       expect(predefined_component).not_to be_valid
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a value of 0 or higher for maximum pH")
     end
 
-    it "adds an error if maximum PH is above 14" do
+    it "adds an error if maximum pH is above 14" do
       predefined_component.maximum_ph = 14.01
 
       expect(predefined_component).not_to be_valid
@@ -379,12 +379,30 @@ RSpec.describe Component, type: :model do
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a maximum pH")
     end
 
-    it "adds an error if difference between minimum and maximum pH is more than 1" do
+    it "adds an error if the difference between minimum and maximum pH is more than 1" do
       predefined_component.minimum_ph = 2.0
       predefined_component.maximum_ph = 3.01
 
       expect(predefined_component).not_to be_valid(:ph_range)
       expect(predefined_component.errors[:maximum_ph]).to include("The maximum pH cannot be greater than 1 above the minimum pH")
+    end
+
+    it "adds an error if the minimum pH is 3 or more and it should be less than 3" do
+      predefined_component.ph = "lower_than_3"
+      predefined_component.minimum_ph = 3.0
+      predefined_component.maximum_ph = 4.0
+
+      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component.errors[:minimum_ph]).to include("Enter a value lower than 3 for minimum pH")
+    end
+
+    it "adds an error if the maximum pH is 10 or less and it should be more than 10" do
+      predefined_component.ph = "above_10"
+      predefined_component.minimum_ph = 9.0
+      predefined_component.maximum_ph = 10.0
+
+      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component.errors[:maximum_ph]).to include("Enter a value higher than 10 for maximum pH")
     end
 
     context "when changing the pH answer after giving an explicit range" do

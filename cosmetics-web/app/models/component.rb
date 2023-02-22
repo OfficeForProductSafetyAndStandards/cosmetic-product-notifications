@@ -83,21 +83,16 @@ class Component < ApplicationRecord
 
   validates :maximum_ph, presence: { message: "Enter a maximum pH" }, if: -> { minimum_ph.present? }
   validates :minimum_ph, presence: { message: "Enter a minimum pH" }, if: -> { maximum_ph.present? }
-
   validates :maximum_ph, presence: { message: "Enter a maximum pH" }, on: :ph_range
   validates :minimum_ph, presence: { message: "Enter a minimum pH" }, on: :ph_range
-
   validate :maximum_ph_must_be_equal_or_above_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
-
   validate :difference_between_maximum_and_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
-
   validates :minimum_ph, numericality: { message: "Enter a value of 0 or higher for minimum pH", greater_than_or_equal_to: 0 }, if: -> { minimum_ph.present? }
-
   validates :minimum_ph, numericality: { message: "Enter a value of 14 or lower for minimum pH", less_than_or_equal_to: 14 }, if: -> { minimum_ph.present? }
-
   validates :maximum_ph, numericality: { message: "Enter a value of 0 or higher for maximum pH", greater_than_or_equal_to: 0 }, if: -> { maximum_ph.present? }
-
   validates :maximum_ph, numericality: { message: "Enter a value of 14 or lower for maximum pH", less_than_or_equal_to: 14 }, if: -> { maximum_ph.present? }
+  validates :minimum_ph, numericality: { message: "Enter a value lower than 3 for minimum pH", less_than: 3 }, if: -> { minimum_ph.present? && ph_lower_than_3? }
+  validates :maximum_ph, numericality: { message: "Enter a value higher than 10 for maximum pH", greater_than: 10 }, if: -> { maximum_ph.present? && ph_above_10? }
 
   validates :exposure_condition, presence: {
     on: :add_exposure_condition,
@@ -199,10 +194,12 @@ class Component < ApplicationRecord
   end
 
   def ph=(value)
+    old_value = ph
+
     super(value)
 
-    # Remove min and max pH if no longer required
-    if ph_range_not_required?
+    # Remove existing min and max pH if answer is changed
+    if value != old_value
       self.minimum_ph = nil
       self.maximum_ph = nil
     end
