@@ -13,6 +13,11 @@ RSpec.describe "deleted_notifications.rake" do
       create(:notification, :deleted, deleted_at: nil, updated_at: deletion_time, created_at: creation_time)
     end
 
+    after do
+      # Rake tasks only run on the first invocation per suite. This re-enables the task for the next test.
+      task.reenable
+    end
+
     it "sets the deletion timestampt to the last time the notification got updated" do
       expect { task.invoke }.to change { deleted_notification.reload.deleted_at }.from(nil).to(deletion_time)
     end
