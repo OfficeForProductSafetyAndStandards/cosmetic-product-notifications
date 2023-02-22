@@ -29,9 +29,13 @@
     "webpack-remove-empty-scripts": "^1.0.1"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
   },
   "stylelint": {
-    "extends": ["stylelint-config-gds/scss", "./css-rules"]
+    "extends": [
+      "stylelint-config-gds/scss",
+      "./css-rules"
+    ]
   }
 }

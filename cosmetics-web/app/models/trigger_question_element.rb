@@ -1,8 +1,7 @@
 class TriggerQuestionElement < ApplicationRecord
   ELEMENTS_GIVEN_AS_CONCENTRATION = %w[incivalue value propanol ethanol concentration].freeze
 
-  # TODO: make this non-optional after refactoring CpnpParser
-  belongs_to :trigger_question, optional: true
+  belongs_to :trigger_question
 
   validates :answer, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, if: -> { question_is_applicable? && ph? }
   validates :answer, presence: true, if: -> { question_is_applicable? && answer_is_single_value? }
@@ -20,6 +19,13 @@ class TriggerQuestionElement < ApplicationRecord
     minrangevalue: "minrangevalue",
     maxrangevalue: "maxrangevalue",
   }
+
+  # TODO: remove this after executing the rake task cleaning up orphaned trigger question elements
+  after_find do |trigger_question_element|
+    if trigger_question_element.trigger_question_id.nil? && Rails.env.production?
+      Sentry.capture_message "Orphaned TriggerQuestionElement has been loaded from DB. ID: #{trigger_question_element.id}"
+    end
+  end
 
   def value_given_as_concentration?
     ELEMENTS_GIVEN_AS_CONCENTRATION.include? element

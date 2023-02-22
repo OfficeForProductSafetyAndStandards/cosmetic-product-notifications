@@ -1,8 +1,5 @@
 # Be sure to restart your server when you modify this file.
 
-# Version of your assets, change this if you want to expire all your assets.
-Rails.application.config.assets.version = "1.0"
-
 # Because these paths are searched in order, we want the assets to come first
 # Add the GOVUK Frontend images path
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets/images")
