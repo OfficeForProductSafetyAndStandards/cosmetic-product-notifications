@@ -8,7 +8,7 @@ module OpenSearchQuery
     SEARCH_RESPONSIBLE_PERSON_FIELDS = "responsible_person_fields".freeze
     SEARCH_NOTIFICATION_NAME_FIELD = "notification_name_field".freeze
 
-    NOTIFICATION_SEARCHABLE_FIELDS = %w[product_name reference_number].freeze
+    NOTIFICATION_SEARCHABLE_FIELDS = %w[product_name reference_number industry_reference].freeze
     RESPONSIBLE_PERSON_SEARCHABLE_FIELDS = %w[responsible_person.name
                                               responsible_person.address_line_1
                                               responsible_person.address_line_2
@@ -18,6 +18,7 @@ module OpenSearchQuery
     ALL_FIELDS = %w[product_name
                     reference_number
                     reference_number_for_display
+                    industry_reference
                     responsible_person.name
                     responsible_person.address_line_1
                     responsible_person.address_line_2
