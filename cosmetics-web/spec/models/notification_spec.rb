@@ -616,7 +616,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         expect(build(:notification, state:)).to be_editable
       end
     end
-    
+
     it "is false for complete/deleted states" do
       [Notification::NOTIFICATION_COMPLETE, Notification::DELETED].each do |state|
         expect(build(:notification, state:)).not_to be_editable
