@@ -3,8 +3,8 @@ Rails.application.load_tasks
 
 # rubocop:disable RSpec/DescribeClass
 RSpec.describe "trigger_questions.rake" do
-  describe "delete_dangling" do
-    subject(:task) { Rake::Task["trigger_questions:delete_dangling"] }
+  describe "delete_orphaned" do
+    subject(:task) { Rake::Task["trigger_questions:delete_orphaned"] }
 
     let!(:component) { create(:component) }
     let!(:trigger_question) { create(:trigger_question, component:) }
@@ -31,10 +31,10 @@ RSpec.describe "trigger_questions.rake" do
       expect(TriggerQuestionElement.last).to eq(trigger_question_element)
     end
 
-    it "informs the user of the number of dangling trigger questions and trigger question elements that were deleted" do
+    it "informs the user of the number of orphaned trigger questions and trigger question elements that were deleted" do
       task.invoke
       expect($stdout).to have_received(:puts)
-                     .with("Deleting 1 dangling trigger questions and 1 dangling trigger question elements")
+                     .with("Deleting 1 orphaned trigger questions and 1 orphaned trigger question elements")
     end
   end
 end
