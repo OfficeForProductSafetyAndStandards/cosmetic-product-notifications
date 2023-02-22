@@ -107,6 +107,8 @@ private
   def update_add_product_image_step
     if params[:image_upload].present?
       params[:image_upload].each { |img| @notification.add_image(img) }
+      return rerender_current_step if @notification.errors.present?
+
       @notification.save
       if params[:back_to_edit] == "true"
         UnusedCodeAlerting.alert # back_to_edit does not seem to be set anywhere.
