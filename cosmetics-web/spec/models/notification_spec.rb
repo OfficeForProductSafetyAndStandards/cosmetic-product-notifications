@@ -565,4 +565,26 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
     end
   end
+
+  describe "#ingredients" do
+    # create notification
+    let(:notification) { create(:notification) }
+
+    let(:component1) { create(:exact_component, notification:) }
+    let(:component2) { create(:exact_component, notification:) }
+
+    let(:ingredient1) { create(:exact_ingredient, inci_name: "Aqua", component: component1) }
+    let(:ingredient2) { create(:exact_ingredient, inci_name: "Sodium", component: component2) }
+    let(:ingredient3) { create(:exact_ingredient, inci_name: "Acid", component: component2) }
+
+    before do
+      ingredient1
+      ingredient2
+      ingredient3
+    end
+
+    it "returns product ingredients from all components" do
+      expect(notification.ingredients).to contain_exactly(ingredient1, ingredient2, ingredient3)
+    end
+  end
 end

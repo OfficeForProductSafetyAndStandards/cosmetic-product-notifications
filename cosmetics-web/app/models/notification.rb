@@ -306,6 +306,10 @@ class Notification < ApplicationRecord
     source_notification.present?
   end
 
+  def ingredients
+    components.map(&:ingredients).flatten
+  end
+
 private
 
   def all_required_attributes_must_be_set
