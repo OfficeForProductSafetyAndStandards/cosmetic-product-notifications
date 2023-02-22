@@ -9,7 +9,7 @@ class ResponsiblePersons::Notifications::Components::DeleteIngredientsController
     when "no"
       redirect_to edit_ingredient_path
     when "yes"
-      delete_ingredient!
+      @component.delete_ingredient!(@ingredient)
       render :success, locals: { post_deletion_path: }
     else
       @ingredient.errors.add(:confirmation, "Select yes if you want to remove this ingredient")
@@ -18,13 +18,6 @@ class ResponsiblePersons::Notifications::Components::DeleteIngredientsController
   end
 
 private
-
-  def delete_ingredient!
-    # TODO: Move this logic to the Component model once the ingredient model is unified.
-    @ingredient.destroy
-    @component.reload
-    @component.update(notification_type: nil, state: :empty) if @component.ingredients.none?
-  end
 
   def post_deletion_path
     # If no ingredients left, go to pre-adding ingredients component building wizard question.
