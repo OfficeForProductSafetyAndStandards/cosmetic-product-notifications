@@ -178,6 +178,16 @@ class Component < ApplicationRecord
     end
   end
 
+  def delete_ingredient!(ingredient)
+    return false unless ingredient.in?(ingredients)
+
+    ingredient.destroy!
+    if ingredients.reload.none?
+      update(notification_type: nil)
+      reset_state!
+    end
+  end
+
   def self.get_parent_category(category)
     PARENT_OF_CATEGORY[category&.to_sym]
   end
