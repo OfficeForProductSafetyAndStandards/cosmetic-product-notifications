@@ -14,15 +14,16 @@ describe ResponsiblePersons::NotificationsHelper do
 
   describe "#notification_summary_label_image_link" do
     subject(:label_image_link) do
-      helper.notification_summary_label_image_link(image, notification.responsible_person, notification, allow_edits:)
+      helper.notification_summary_label_image_link(image, notification.responsible_person, notification)
     end
 
     let(:notification) { build_stubbed(:notification) }
     let(:image) { build_stubbed(:image_upload, filename: "Label image") }
-    let(:allow_edits) { false }
+    let(:editable) { false }
 
     before do
       allow(helper).to receive(:url_for).and_return("/url/for/image")
+      allow(notification).to receive(:editable?).and_return(editable)
     end
 
     it "returns a link to the image if has pased the antivirus check" do
@@ -38,7 +39,7 @@ describe ResponsiblePersons::NotificationsHelper do
     end
 
     context "when edits are allowed" do
-      let(:allow_edits) { true }
+      let(:editable) { true }
 
       it "returns a processing message with a refresh link if image is waiting for antivirus check" do
         allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: true)
@@ -106,10 +107,9 @@ describe ResponsiblePersons::NotificationsHelper do
 
   describe "#notification_summary_product_rows" do
     subject(:summary_product_rows) do
-      helper.notification_summary_product_rows(notification, allow_edits:)
+      helper.notification_summary_product_rows(notification)
     end
 
-    let(:allow_edits) { false }
     let(:notification) do
       build_stubbed(:notification,
                     :registered,
@@ -239,11 +239,10 @@ describe ResponsiblePersons::NotificationsHelper do
 
   describe "#notification_summary_component_rows" do
     subject(:summary_component_rows) do
-      helper.notification_summary_component_rows(component, include_shades:, allow_edits:)
+      helper.notification_summary_component_rows(component, include_shades:)
     end
 
     let(:include_shades) { false }
-    let(:allow_edits) { false }
     let(:component) do
       build_stubbed(:component,
                     exposure_routes: %w[Route],

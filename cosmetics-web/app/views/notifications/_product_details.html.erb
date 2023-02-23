@@ -30,10 +30,10 @@
       {
         key: { text: "Label image" },
         value: {
-          html: render("notifications/product_details_label_images", notification: notification, allow_edits: allow_edits)
+          html: render("notifications/product_details_label_images", notification: notification)
         },
         actions: {
-          items: if notification.image_uploads.present? && allow_edits
+          items: if notification.image_uploads.present? && notification.editable?
                    [
                      {
                         href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
@@ -71,7 +71,7 @@
     ].compact
   ) %>
   <% if notification.components.count == 1 %>
-    <%= render "notifications/component_details", component: notification.components.first, allow_edits: allow_edits %>
+    <%= render "notifications/component_details", component: notification.components.first %>
   <% else %>
     <% notification.components.each_with_index do |component, i| %>
       <% name = component.name.presence || "Component #{i + 1}" %>
@@ -86,7 +86,7 @@
             },
           ].compact
         ) %>
-        <%= render "notifications/component_details", component: component, allow_edits: allow_edits %>
+        <%= render "notifications/component_details", component: component %>
       </div>
     <% end %>
   <% end %>
