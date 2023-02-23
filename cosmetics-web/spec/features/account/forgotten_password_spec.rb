@@ -230,7 +230,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         create(:pending_responsible_person_user, email_address: "inviteduser@example.com", responsible_person:)
       end
 
-      scenario "resends the responsible person invitation email and shows the confirmation page" do
+      scenario "resends the confirmation email and shows the confirmation page" do
         # Invited user visits the link from the RP invitation email
         invitation_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
         visit invitation_path
@@ -241,6 +241,9 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         # User abandons the registration process
         click_button "Sign out"
 
+        # User got created in DB
+        invited_user = SubmitUser.find_by(email: invitation.email_address)
+
         # After a while, user tries to Sign in in the service believing it has an active account on it
         visit "/sign-in"
 
@@ -248,31 +251,26 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
         click_link "Forgot your password?"
 
         expect(page).to have_css("h1", text: "Reset your password")
-        fill_in "Email address", with: "inviteduser@example.com"
+        fill_in "Email address", with: invited_user.email
 
         perform_enqueued_jobs do
           click_on "Send email"
         end
 
-        # Instead of receiving a reset password email, user receives the invitation email again
         expect(delivered_emails.size).to eq 1
         email = delivered_emails.first
 
-        expect(email.recipient).to eq "inviteduser@example.com"
-        expect(email.reference).to eq "Invite user to join Responsible Person"
-        expect(email.template).to eq mailer::TEMPLATES[:responsible_person_invitation_for_existing_user]
+        expect(email.recipient).to eq invited_user.email
+        expect(email.reference).to eq "Send confirmation code"
+        expect(email.template).to eq mailer::TEMPLATES[:verify_new_account]
         expect(email.personalization).to eq(
-          invitation_url: "http://#{ENV.fetch('SUBMIT_HOST')}#{invitation_path}",
-          responsible_person: responsible_person.name,
-          invite_sender: invitation.inviting_user.name,
+          verify_email_url: "http://#{ENV.fetch('SUBMIT_HOST')}/confirm-new-account?confirmation_token=#{invited_user.confirmation_token}",
+          name: invited_user.name,
         )
         expect_to_be_on_check_your_email_page
 
-        # Invitation link takes the user to the account completion page
-        visit invitation_path
-        expect(page).to have_current_path("/account-security")
+        visit "/confirm-new-account?confirmation_token=#{invited_user.confirmation_token}"
         expect(page).to have_css("h1", text: "Setup your account")
-        expect(page).to have_field("Full name")
       end
     end
   end

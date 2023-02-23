@@ -323,7 +323,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         create(:pending_responsible_person_user, email_address: "inviteduser@example.com", responsible_person:)
       end
 
-      scenario "resends the responsible person invitation email" do
+      scenario "resends account reconfirmation to unconfirmed email with pending invitation" do
         # Invited user visits the link from the RP invitation email
         invitation_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
         visit invitation_path
@@ -334,33 +334,40 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         # User abandons the registration process
         click_button "Sign out"
 
+        # User got created in DB
+        invited_user = SubmitUser.find_by(email: invitation.email_address)
+
         # After a while, user tries to Sign Up from scratch
         click_on "Create an account"
         expect(page).to have_current_path("/create-an-account")
 
-        fill_in "Full name", with: "Joe Doe"
-        fill_in "Email address", with: "inviteduser@example.com"
+        fill_in "Full name", with: "Jhon Doe"
+        fill_in "Email address", with: invited_user.email
         click_button "Continue"
 
-        # Instead of receiving a confirmation email, user receives the invitation email again
         expect(delivered_emails.size).to eq 1
         email = delivered_emails.first
 
-        expect(email.recipient).to eq "inviteduser@example.com"
-        expect(email.reference).to eq "Invite user to join Responsible Person"
-        expect(email.template).to eq SubmitNotifyMailer::TEMPLATES[:responsible_person_invitation_for_existing_user]
-        expect(email.personalization).to eq(
-          invitation_url: "http://#{ENV.fetch('SUBMIT_HOST')}#{invitation_path}",
-          responsible_person: responsible_person.name,
-          invite_sender: invitation.inviting_user.name,
-        )
-        expect_to_be_on_check_your_email_page("inviteduser@example.com")
+        expect(email.recipient).to eq invited_user.email
+        expect(email.reference).to eq "Send confirmation code"
+        expect(email.template).to eq SubmitNotifyMailer::TEMPLATES[:verify_new_account]
+        # Uses the original user name
+        expect(email.personalization[:name]).to eq(invited_user.name)
 
-        # Invitation link takes the user to the account completion page
-        visit invitation_path
-        expect(page).to have_current_path("/account-security")
-        expect(page).to have_css("h1", text: "Setup your account")
-        expect(page).to have_field("Full name")
+        verify_url = email.personalization[:verify_email_url]
+        visit verify_url
+
+        fill_in "Create your password", with: "userpassword", match: :prefer_exact
+        check "Text message"
+        fill_in "Mobile number", with: "07000000000"
+        click_button "Continue"
+
+        otp_code = otp_code(invited_user.email)
+        expect_user_to_have_received_sms_code(otp_code, invited_user.reload)
+        expect_to_be_on_secondary_authentication_sms_page
+        complete_secondary_authentication_sms_with(otp_code)
+
+        expect_to_be_on__pending_invitations_page
       end
     end
   end

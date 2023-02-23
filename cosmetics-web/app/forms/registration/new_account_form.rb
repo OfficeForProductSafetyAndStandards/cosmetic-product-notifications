@@ -25,15 +25,6 @@ module Registration
     def send_link(user)
       if user.confirmed?
         SubmitNotifyMailer.send_account_already_exists(user).deliver_later
-      # TODO: Remove this branch based on pending invitations once invitations
-      # contain user name (pending feature).
-      # Once that happens logic can default to resending the account setup link
-      # as done with user who registered without an invitation.
-      elsif (invitation = PendingResponsiblePersonUser.where(email_address: user.email).last)
-        invitation.refresh_token_expiration!
-        SubmitNotifyMailer.send_responsible_person_invite_email(
-          invitation.responsible_person, invitation, invitation.inviting_user.name
-        ).deliver_later
       else
         user.resend_confirmation_instructions
       end

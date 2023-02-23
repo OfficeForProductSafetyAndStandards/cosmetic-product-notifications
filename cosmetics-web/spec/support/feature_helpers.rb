@@ -499,6 +499,11 @@ def expect_to_be_on__responsible_person_declaration_page
   expect(page).to have_h1("Responsible Person Declaration")
 end
 
+def expect_to_be_on__pending_invitations_page
+  expect(page.current_path).to eq("/responsible_persons/account/pending_invitations")
+  expect(page).to have_h1("Who do you want to submit cosmetic product notifications for?")
+end
+
 def expect_form_to_have_errors(errors)
   expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
   errors.each do |attribute, error|
