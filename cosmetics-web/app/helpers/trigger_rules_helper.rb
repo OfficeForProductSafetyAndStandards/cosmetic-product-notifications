@@ -1,5 +1,6 @@
 module TriggerRulesHelper
   def get_formulation_data(question, element)
+    UnusedCodeAlerting.alert
     if element.element_order == 1
       inciname_incivalue_pair = get_inciname_incivalue_pair(question, element)
       if inciname_incivalue_pair.count > 1
@@ -10,6 +11,7 @@ module TriggerRulesHelper
   end
 
   def get_inciname_incivalue_pair(question, element)
+    UnusedCodeAlerting.alert
     question_id = element.trigger_question_id
     answer_order = element.answer_order
     inciname_incivalue_pair = []
@@ -43,6 +45,7 @@ module TriggerRulesHelper
   end
 
   def previous_wizard_path
+    UnusedCodeAlerting.alert
     case step
     when :ph
       wizard_path(:select_ph_range)

@@ -111,6 +111,7 @@ private
 
       @notification.save
       if params[:back_to_edit] == "true"
+        UnusedCodeAlerting.alert # back_to_edit does not seem to be set anywhere.
         redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
       elsif params[:after_save] == "upload_another"
         rerender_current_step
@@ -119,6 +120,7 @@ private
       end
     elsif @notification.image_uploads.present?
       if params[:back_to_edit] == "true"
+        UnusedCodeAlerting.alert # back_to_edit does not seem to be set anywhere.
         redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
       elsif params[:after_save] == "upload_another"
         rerender_current_step

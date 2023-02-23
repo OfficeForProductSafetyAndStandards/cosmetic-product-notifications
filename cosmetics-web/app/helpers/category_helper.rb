@@ -119,6 +119,7 @@ module CategoryHelper
   end
 
   def get_full_category_name(sub_sub_category)
+    UnusedCodeAlerting.alert
     sub_category = Component.get_parent_category(sub_sub_category.to_sym)
     "#{get_category_name(sub_category)} - #{get_category_name(sub_sub_category)}"
   end

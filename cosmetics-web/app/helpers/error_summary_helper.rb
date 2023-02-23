@@ -28,6 +28,7 @@ module ErrorSummaryHelper
   end
 
   def error_group_class(model)
+    UnusedCodeAlerting.alert
     "govuk-form-group--error" if model.errors.any?
   end
 end
