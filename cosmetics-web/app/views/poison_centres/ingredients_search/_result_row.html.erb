@@ -27,7 +27,7 @@
       <%= notification.responsible_person.name %>
     </td>
   </tr>
-  <% matches = notifiction.matched_ingredients_for_query(@search_form.q) %>
+  <% matches = notification.matched_ingredients_for_query(@search_form.q) %>
   <% if matches.present? %>
     <tr class="govuk-table__row">
       <th headers="item-01" id="ingredients-01" class="govuk-visually-hidden">
