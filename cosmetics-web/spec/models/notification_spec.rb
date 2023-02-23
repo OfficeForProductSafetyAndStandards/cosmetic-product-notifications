@@ -644,4 +644,20 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
     end
   end
+
+  describe "#matched_ingredients_for_query" do
+    let(:query) { "aqua sodium acrylate" }
+    let(:ingredient_names) { ["Aqua", "Foo bar", "Sodium Acetone"] }
+    let(:ingredients) { ingredient_names.map { |name| OpenStruct.new(inci_name: name) } }
+    let(:notification) { build(:notification) }
+
+    before do
+      allow(notification).to receive(:ingredients).and_return(ingredients)
+    end
+
+    it "returns matched ingredients" do
+      result = notification.matched_ingredients_for_query(query)
+      expect(result).to eq ["Aqua", "Sodium Acetone"]
+    end
+  end
 end
