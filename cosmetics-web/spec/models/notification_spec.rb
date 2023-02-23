@@ -611,7 +611,6 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
   end
 
   describe "#ingredients" do
-    # create notification
     let(:notification) { create(:notification) }
 
     let(:component1) { create(:exact_component, notification:) }

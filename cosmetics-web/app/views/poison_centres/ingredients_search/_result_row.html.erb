@@ -1,6 +1,6 @@
 <%
     cell_headers = "item-#{index} meta-#{index}"
-  %>
+%>
 
 <tbody class="govuk-table__body <%= additional_classes %>">
   <tr class="govuk-table__row">
@@ -11,7 +11,7 @@
       <%= link_to notification.product_name,
         poison_centre_notification_path(notification, form => search_params, :back_to => back_to, page: params[:page]),
         class: "govuk-link govuk-link--no-visited-state" %>
-  </th>
+    </th>
   </tr>
   <tr class="govuk-table__row">
     <th headers="item-<%= index %>" id="meta-<%= index %>" class="govuk-visually-hidden">
