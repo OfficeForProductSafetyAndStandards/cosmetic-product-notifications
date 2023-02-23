@@ -26,7 +26,7 @@ module Registration
       if user.confirmed?
         SubmitNotifyMailer.send_account_already_exists(user).deliver_later
       else
-        user.resend_confirmation_instructions
+        user.resend_account_setup_link
       end
     end
   end

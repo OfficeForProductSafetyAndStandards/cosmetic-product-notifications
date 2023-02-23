@@ -18,7 +18,7 @@ class SubmitUser < User
     new_user = SubmitUser.find_by!(confirmation_token:)
 
     if new_user.send(:confirmation_period_expired?)
-      new_user.resend_confirmation_instructions
+      new_user.resend_account_setup_link
       raise ActiveRecord::RecordInvalid
     end
     new_user
@@ -29,7 +29,7 @@ class SubmitUser < User
   end
 
   def resend_account_setup_link
-    resend_confirmation_instructions
+    resend_confirmation_instructions # Defined at Devise::Models::Confirmable#resend_confirmation_instructions
   end
 
   def regenerate_confirmation_token_if_expired; end
