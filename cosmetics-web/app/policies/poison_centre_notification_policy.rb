@@ -1,7 +1,7 @@
 class PoisonCentreNotificationPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all if user.poison_centre_user? || user.msa_user?
+      scope.all if user.poison_centre_user? || user.opss_user? || user.trading_standards_user?
     end
   end
 
@@ -10,6 +10,6 @@ class PoisonCentreNotificationPolicy < ApplicationPolicy
   end
 
   def show?
-    user.poison_centre_user? || user.msa_user? || user.opss_science_user?
+    user.poison_centre_user? || user.opss_user? || user.trading_standards_user?
   end
 end

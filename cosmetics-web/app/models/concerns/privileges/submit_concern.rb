@@ -17,5 +17,9 @@ module Privileges
     def can_view_nanomaterial_review_period_end_date?
       true
     end
+
+    def can_view_responsible_person_address_history?
+      true
+    end
   end
 end

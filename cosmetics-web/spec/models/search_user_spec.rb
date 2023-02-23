@@ -6,8 +6,18 @@ RSpec.describe SearchUser, type: :model do
   include_examples "common user tests"
 
   describe "#can_view_product_ingredients?" do
-    it "is false for MSA users" do
-      user.role = :msa
+    it "is false for OPSS General users" do
+      user.role = :opss_general
+      expect(user).not_to be_can_view_product_ingredients
+    end
+
+    it "is true for OPSS Enforcement users" do
+      user.role = :opss_enforcement
+      expect(user).to be_can_view_product_ingredients
+    end
+
+    it "is false for Trading Standards users" do
+      user.role = :trading_standards
       expect(user).not_to be_can_view_product_ingredients
     end
 
@@ -23,8 +33,18 @@ RSpec.describe SearchUser, type: :model do
   end
 
   describe "#can_view_ingredients_list?" do
-    it "is false for MSA users" do
-      user.role = :msa
+    it "is false for OPSS General users" do
+      user.role = :opss_general
+      expect(user).not_to be_can_view_ingredients_list
+    end
+
+    it "is false for OPSS Enforcement users" do
+      user.role = :opss_enforcement
+      expect(user).not_to be_can_view_ingredients_list
+    end
+
+    it "is false for Trading Standards users" do
+      user.role = :trading_standards
       expect(user).not_to be_can_view_ingredients_list
     end
 
@@ -40,8 +60,18 @@ RSpec.describe SearchUser, type: :model do
   end
 
   describe "#can_view_nanomaterial_notification_files?" do
-    it "is false for MSA users" do
-      user.role = :msa
+    it "is false for OPSS General users" do
+      user.role = :opss_general
+      expect(user).not_to be_can_view_nanomaterial_notification_files
+    end
+
+    it "is false for OPSS Enforcement users" do
+      user.role = :opss_enforcement
+      expect(user).not_to be_can_view_nanomaterial_notification_files
+    end
+
+    it "is false for Trading Standards users" do
+      user.role = :trading_standards
       expect(user).not_to be_can_view_nanomaterial_notification_files
     end
 
@@ -57,8 +87,18 @@ RSpec.describe SearchUser, type: :model do
   end
 
   describe "#can_view_nanomaterial_review_period_end_date?" do
-    it "is true for MSA users" do
-      user.role = :msa
+    it "is true for OPSS General users" do
+      user.role = :opss_general
+      expect(user).to be_can_view_nanomaterial_review_period_end_date
+    end
+
+    it "is true for OPSS Enforcement users" do
+      user.role = :opss_enforcement
+      expect(user).to be_can_view_nanomaterial_review_period_end_date
+    end
+
+    it "is true for Trading Standards users" do
+      user.role = :trading_standards
       expect(user).to be_can_view_nanomaterial_review_period_end_date
     end
 
@@ -70,6 +110,33 @@ RSpec.describe SearchUser, type: :model do
     it "is true for OPSS Science users" do
       user.role = :opss_science
       expect(user).to be_can_view_nanomaterial_review_period_end_date
+    end
+  end
+
+  describe "#can_view_responsible_person_address_history?" do
+    it "is false for OPSS General users" do
+      user.role = :opss_general
+      expect(user).not_to be_can_view_responsible_person_address_history
+    end
+
+    it "is false for OPSS Enforcement users" do
+      user.role = :opss_enforcement
+      expect(user).not_to be_can_view_responsible_person_address_history
+    end
+
+    it "is true for Trading Standards users" do
+      user.role = :trading_standards
+      expect(user).to be_can_view_responsible_person_address_history
+    end
+
+    it "is false for Poison Centre users" do
+      user.role = :poison_centre
+      expect(user).not_to be_can_view_responsible_person_address_history
+    end
+
+    it "is false for OPSS Science users" do
+      user.role = :opss_science
+      expect(user).not_to be_can_view_responsible_person_address_history
     end
   end
 end

@@ -51,20 +51,6 @@ module ApplicationHelper
     address_array.join("<span class=\"govuk-visually-hidden\">,</span><br />").html_safe
   end
 
-  # def error_id(search_form, attribute, part)
-  #   if (attr = search_form[attribute]).is_a?(GovUk::DateFromForm::IncompleteDate)
-  #     if attr.error_fields.present? && attr.error_fields.keys.first == part
-  #       attribute
-  #     elsif attr.error_fields.blank? && search_form.errors[attribute].present? && part == :day
-  #       attribute
-  #     end
-  #   elsif attr.is_a? Date
-  #     if search_form.errors[attribute].present? && part == :day
-  #       attribute
-  #     end
-  #   end
-  # end
-
   def error_class(search_form, attribute, part)
     if (attr = search_form[attribute]).is_a? GovUk::DateFromForm::IncompleteDate
       if attr.error_fields.present?
@@ -78,5 +64,9 @@ module ApplicationHelper
     else
       search_form.errors[attribute].present? ? "govuk-input--error".html_safe : ""
     end
+  end
+
+  def marked_as_unused_view
+    Sentry.capture_message "View marked as unused was rendered"
   end
 end

@@ -60,6 +60,7 @@ module Users
     end
 
     def passed_secondary_authentication?
+      UnusedCodeAlerting.alert
       return true unless Rails.configuration.secondary_authentication_enabled
 
       user_signed_in? && is_fully_authenticated?

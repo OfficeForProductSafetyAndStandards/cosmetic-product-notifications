@@ -46,9 +46,9 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
   end
 
-  describe "When signed in as an MSA user" do
+  describe "When signed in as an OPSS General user" do
     before do
-      sign_in_as_msa_user
+      sign_in_as_opss_general_user
     end
 
     describe "GET #show" do
@@ -92,7 +92,163 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
           expect(response.body).not_to match(/Minimum pH value/)
         end
 
-        it "does not render Maximum pH" do
+        it "does not render maximum pH" do
+          expect(response.body).not_to match(/Maximum pH value/)
+        end
+
+        it "does not render still on the market" do
+          expect(response.body).not_to match(/Still on the market/)
+        end
+
+        it "renders nanomaterials" do
+          expect(response.body).to match(/Nanomaterials/)
+        end
+
+        it "renders physical form" do
+          expect(response.body).to match(/Physical form/)
+        end
+      end
+
+      describe "Notification with CMRS substances" do
+        let(:cmr) { create(:cmr) }
+        let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
+        let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person:) }
+
+        render_views
+
+        it "renders CMR substances" do
+          expect(response.body).to match(/Contains CMR substances/)
+        end
+      end
+    end
+  end
+
+  describe "When signed in as an OPSS Enforcement user" do
+    before do
+      sign_in_as_opss_enforcement_user
+    end
+
+    describe "GET #show" do
+      let(:notification) { rp_1_notifications.first }
+
+      before { get :show, params: { reference_number: notification.reference_number } }
+
+      it "renders the show template" do
+        expect(response).to render_template("notifications/show_msa")
+      end
+
+      describe "displayed information" do
+        let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions) }
+        let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person:) }
+
+        render_views
+
+        it "renders contact person overview" do
+          expect(response.body).to match(/Contact person/)
+        end
+
+        it "renders component formulations" do
+          expect(response.body).to match(/Formulation given as/)
+          expect(response.body).to match(/Frame formulation/)
+        end
+
+        it "does not render acute poisoning info" do
+          expect(response.body).not_to match(/Acute poisoning information/)
+        end
+
+        it "does not render poisonous ingredients" do
+          expect(response.body).not_to match(/Contains poisonous ingredients/)
+        end
+
+        it "does not render trigger questions" do
+          expect(response.body).not_to match(/<tr class="govuk-table__row trigger-question">/)
+        end
+
+        it "renders minimum pH" do
+          expect(response.body).to match(/Minimum pH value/)
+        end
+
+        it "renders maximum pH" do
+          expect(response.body).to match(/Maximum pH value/)
+        end
+
+        it "does not render still on the market" do
+          expect(response.body).not_to match(/Still on the market/)
+        end
+
+        it "renders nanomaterials" do
+          expect(response.body).to match(/Nanomaterials/)
+        end
+
+        it "renders physical form" do
+          expect(response.body).to match(/Physical form/)
+        end
+      end
+
+      describe "Notification with CMRS substances" do
+        let(:cmr) { create(:cmr) }
+        let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
+        let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person:) }
+
+        render_views
+
+        it "renders CMR substances" do
+          expect(response.body).to match(/Contains CMR substances/)
+        end
+      end
+    end
+  end
+
+  describe "When signed in as an Trading Standards user" do
+    before do
+      sign_in_as_trading_standards_user
+    end
+
+    describe "GET #show" do
+      let(:notification) { rp_1_notifications.first }
+
+      before { get :show, params: { reference_number: notification.reference_number } }
+
+      it "renders the show template" do
+        expect(response).to render_template("notifications/show_msa")
+      end
+
+      describe "displayed information" do
+        let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions) }
+        let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+        let(:notification) { create(:notification, :registered, :ph_values, components: [component], responsible_person:) }
+
+        render_views
+
+        it "renders contact person overview" do
+          expect(response.body).to match(/Contact person/)
+        end
+
+        it "does not render component formulations" do
+          expect(response.body).not_to match(/Formulation given as/)
+          expect(response.body).not_to match(/Frame formulation/)
+        end
+
+        it "does not render acute poisoning info" do
+          expect(response.body).not_to match(/Acute poisoning information/)
+        end
+
+        it "does not render poisonous ingredients" do
+          expect(response.body).not_to match(/Contains poisonous ingredients/)
+        end
+
+        it "does not render trigger questions" do
+          expect(response.body).not_to match(/<tr class="govuk-table__row trigger-question">/)
+        end
+
+        it "does not render minimum pH" do
+          expect(response.body).not_to match(/Minimum pH value/)
+        end
+
+        it "does not render maximum pH" do
           expect(response.body).not_to match(/Maximum pH value/)
         end
 

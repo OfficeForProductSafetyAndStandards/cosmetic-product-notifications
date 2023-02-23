@@ -25,15 +25,31 @@ module Privileges
       raise ArgumentError, "Implement role in each user type roles concern"
     end
 
+    def can_view_responsible_person_address_history?
+      raise ArgumentError, "Implement role in each user type roles concern"
+    end
+
     def poison_centre_user?
       false
     end
 
-    def msa_user?
+    def opss_user?
+      false
+    end
+
+    def opss_general_user?
+      false
+    end
+
+    def opss_enforcement_user?
       false
     end
 
     def opss_science_user?
+      false
+    end
+
+    def trading_standards_user?
       false
     end
   end

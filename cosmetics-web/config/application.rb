@@ -8,7 +8,7 @@ require "active_record/railtie"
 require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
-require "action_mailbox/engine"
+# require "action_mailbox/engine"
 require "action_text/engine"
 require "action_view/railtie"
 # require "action_cable/engine"
@@ -63,5 +63,8 @@ module Cosmetics
 
     # Avoid file attachment errors with blank params
     config.active_storage.multiple_file_field_include_hidden = false
+
+    # Use SHA1 for key generator to avoid errors when decrypting secrets generated prior to Rails 7 (new default is SHA256)
+    config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
   end
 end

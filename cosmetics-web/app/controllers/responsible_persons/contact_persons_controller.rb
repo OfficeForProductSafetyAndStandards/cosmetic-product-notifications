@@ -75,9 +75,9 @@ private
 
   def create_successful_message
     if current_user.responsible_persons.count > 1
-      "The new Responsible Person has been added to your list of Responsible Persons and can be selected as the Responsible Person."
+      "The new Responsible Person has been added to your list of Responsible Persons and can be selected as the Responsible Person"
     else
-      "Success: The Responsible Person was created."
+      "The Responsible Person was created"
     end
   end
 end

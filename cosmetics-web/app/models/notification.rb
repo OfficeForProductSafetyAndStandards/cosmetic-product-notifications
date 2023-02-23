@@ -33,6 +33,8 @@ class Notification < ApplicationRecord
     routing_questions_answers
   ].freeze
 
+  MAXIMUM_IMAGE_UPLOADS = 10
+
   include Searchable
   include CountriesHelper
   include RoutingQuestionCacheConcern
@@ -153,9 +155,16 @@ class Notification < ApplicationRecord
   end
 
   def add_image(image)
-    image_uploads.build.tap do |upload|
-      upload.file.attach(image)
-      upload.filename = image.original_filename
+    # We need to use `length` here rather than `count` since we're potentially adding multiple
+    # image uploads before saving the notification, and `count` will only tell us what's already
+    # in the database.
+    if image_uploads.length < MAXIMUM_IMAGE_UPLOADS
+      image_uploads.build.tap do |upload|
+        upload.file.attach(image)
+        upload.filename = image.original_filename
+      end
+    else
+      errors.add(:image_uploads, :too_long, message: "You can only upload up to #{MAXIMUM_IMAGE_UPLOADS} images")
     end
   end
 
@@ -172,10 +181,12 @@ class Notification < ApplicationRecord
   end
 
   def formulation_required?
+    UnusedCodeAlerting.alert
     components.any?(&:formulation_required?)
   end
 
   def formulation_present?
+    UnusedCodeAlerting.alert
     components.none?(&:formulation_required?)
   end
 
@@ -188,14 +199,17 @@ class Notification < ApplicationRecord
   end
 
   def single_component?
+    UnusedCodeAlerting.alert
     !multi_component?
   end
 
   def get_valid_multicomponents
+    UnusedCodeAlerting.alert
     components.select(&:is_valid_multicomponent?)
   end
 
   def get_invalid_multicomponents
+    UnusedCodeAlerting.alert
     components - get_valid_multicomponents
   end
 
@@ -304,6 +318,10 @@ class Notification < ApplicationRecord
 
   def cloned?
     source_notification.present?
+  end
+
+  def editable?
+    EDITABLE_STATES.include? state.to_sym
   end
 
 private

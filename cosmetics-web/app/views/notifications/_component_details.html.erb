@@ -57,7 +57,7 @@
         value: { text: get_notification_type_name(component.notification_type) },
       }
     end,
-    if can_view_product_ingredients?
+    if can_view_product_ingredients? && component.predefined?
       {
         key: { text: "Frame formulation" },
         value: { text: get_frame_formulation_name(component.frame_formulation) },
@@ -67,10 +67,9 @@
       {
         key: { text: "Formulation" },
         value: { html: render("notifications/component_details_formulation_ingredients",
-                 component: component,
-                 allow_edits: allow_edits) },
+                 component: component) },
         actions: {
-          items: if component.formulation_file.attached? && allow_edits
+          items: if component.formulation_file.attached? && component.notification.editable?
                    [
                      {
                        href: edit_responsible_person_notification_component_formulation_path(
@@ -120,8 +119,7 @@
       {
         key: { text: "Ingredients NPIS needs to know about" },
         value: { html: render("notifications/component_details_poisonous_ingredients",
-                 component: component,
-                 allow_edits: allow_edits) },
+                 component: component) },
       }
     end,
   ].compact
