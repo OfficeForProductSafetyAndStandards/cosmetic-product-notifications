@@ -319,6 +319,10 @@ class Notification < ApplicationRecord
     components.map(&:ingredients).flatten
   end
 
+  def editable?
+    EDITABLE_STATES.include? state.to_sym
+  end
+
 private
 
   def all_required_attributes_must_be_set
