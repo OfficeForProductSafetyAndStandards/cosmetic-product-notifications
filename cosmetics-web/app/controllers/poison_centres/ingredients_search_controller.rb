@@ -10,7 +10,7 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
     end
 
     @search_response = search_notifications
-    @notifications = @search_response.records.includes(:responsible_person)
+    @notifications = @search_response.records.includes(:responsible_person, components: :ingredients)
   end
 
 private

@@ -101,6 +101,7 @@ class Notification < ApplicationRecord
     mapping do
       indexes :product_name, type: "text"
       indexes :reference_number, type: "text"
+      indexes :industry_reference, type: "text"
       indexes :reference_number_for_display, type: "text"
       indexes :searchable_ingredients, type: "text"
       indexes :created_at, type: "date"
@@ -126,7 +127,7 @@ class Notification < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name notification_complete_at reference_number],
+      only: %i[product_name notification_complete_at reference_number industry_reference],
       methods: %i[reference_number_for_display searchable_ingredients],
       include: {
         responsible_person: {
@@ -320,8 +321,33 @@ class Notification < ApplicationRecord
     source_notification.present?
   end
 
+  def ingredients
+    components.map(&:ingredients).flatten
+  end
+
   def editable?
     EDITABLE_STATES.include? state.to_sym
+  end
+
+  def matched_ingredients_for_query(query)
+    matched = []
+
+    query_ingredients = query.split(" ")
+
+    ingredient_names = ingredients.map(&:inci_name)
+    ingredient_names.each do |notification_ingredient|
+      query_ingredients.each do |query_ingredient|
+        matched << notification_ingredient if notification_ingredient.downcase.include? query_ingredient.downcase
+        matched << notification_ingredient if query_ingredient.downcase.include? notification_ingredient.downcase
+      end
+    end
+
+    # We know that elastic search matched this search, so we need to log miss so we can improve
+    if matched.nil?
+      Rails.logger.info("[IngredientSearch] #{query} can not be find in #{notification.id}")
+    end
+
+    matched.uniq
   end
 
 private
