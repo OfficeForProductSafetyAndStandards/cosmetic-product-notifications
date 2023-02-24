@@ -30,7 +30,11 @@ module Users
 
     def create
       user = user_class.find_by(email: params[user_param_key][:email])
-      return resend_account_setup_link_for(user) if user && !user.has_completed_registration?
+      if user && !user.has_completed_registration?
+        user.reset_account_setup!
+        user.resend_account_setup_link
+        return redirect_to check_your_email_path
+      end
 
       super do |resource|
         suppress_email_not_found_error
@@ -57,14 +61,6 @@ module Users
 
     def wrong_user?
       user_signed_in? && user_with_reset_token && current_user != user_with_reset_token
-    end
-
-    def resend_account_setup_link_for(user)
-      user.confirmed_at = nil
-      user.account_security_completed = false
-      user.save(validate: false)
-      user.resend_account_setup_link
-      redirect_to check_your_email_path
     end
 
     def reset_token_invalid?

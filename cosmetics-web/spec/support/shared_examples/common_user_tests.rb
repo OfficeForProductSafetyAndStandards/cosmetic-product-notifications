@@ -448,4 +448,18 @@ RSpec.shared_examples "common user tests" do
       expect(user.uses_email_address?("userNEW@example.com")).to eq true
     end
   end
+
+  describe "#reset_account_setup!" do
+    let(:confirmation_timestamp) { Time.zone.now }
+    let(:user_factory) { user.class.to_s.underscore.to_sym }
+    let(:set_user) { create(user_factory, confirmed_at: confirmation_timestamp, account_security_completed: true) }
+
+    it "removes user's confirmation timestamp" do
+      expect { set_user.reset_account_setup! }.to change(set_user, :confirmed_at).from(confirmation_timestamp).to(nil)
+    end
+
+    it "removes user's account security completed flag" do
+      expect { set_user.reset_account_setup! }.to change(set_user, :account_security_completed).from(true).to(false)
+    end
+  end
 end

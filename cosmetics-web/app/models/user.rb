@@ -91,6 +91,12 @@ class User < ApplicationRecord
            account_security_completed: false)
   end
 
+  def reset_account_setup!
+    self.confirmed_at = nil
+    self.account_security_completed = false
+    save(validate: false)
+  end
+
   def uses_email_address?(email_address)
     return false if email_address.blank?
 
