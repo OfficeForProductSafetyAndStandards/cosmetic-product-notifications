@@ -7,11 +7,13 @@ RSpec.describe "Search notifications page", type: :feature do
 
   let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream", responsible_person:) }
   let(:lotion) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Lotion", responsible_person:) }
+  let(:paste) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Paste", industry_reference: "blend40", responsible_person:) }
 
   before do
     configure_requests_for_submit_domain
     cream
     lotion
+    paste
     Notification.import_to_opensearch(force: true)
     sign_in_as_member_of_responsible_person(responsible_person, submit_user)
   end
@@ -26,6 +28,19 @@ RSpec.describe "Search notifications page", type: :feature do
     expect(page).to have_h1("Product – search results")
     expect(page).to have_text("Cream")
     expect(page).not_to have_text("Lotion")
+  end
+
+  scenario "searching for a notification by internal reference" do
+    visit responsible_person_search_notifications_path(responsible_person.id)
+    expect(page).to have_h1("Product – search")
+
+    fill_in "notification_search_form[q]", with: "blend40"
+    click_button "Search"
+
+    expect(page).to have_h1("Product – search results")
+    expect(page).not_to have_text("Cream")
+    expect(page).not_to have_text("Lotion")
+    expect(page).to have_text("Paste")
   end
 
   scenario "Editing your search" do
