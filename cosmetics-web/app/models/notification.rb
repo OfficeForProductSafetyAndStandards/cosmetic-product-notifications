@@ -182,10 +182,12 @@ class Notification < ApplicationRecord
   end
 
   def formulation_required?
+    UnusedCodeAlerting.alert
     components.any?(&:formulation_required?)
   end
 
   def formulation_present?
+    UnusedCodeAlerting.alert
     components.none?(&:formulation_required?)
   end
 
@@ -198,14 +200,17 @@ class Notification < ApplicationRecord
   end
 
   def single_component?
+    UnusedCodeAlerting.alert
     !multi_component?
   end
 
   def get_valid_multicomponents
+    UnusedCodeAlerting.alert
     components.select(&:is_valid_multicomponent?)
   end
 
   def get_invalid_multicomponents
+    UnusedCodeAlerting.alert
     components - get_valid_multicomponents
   end
 

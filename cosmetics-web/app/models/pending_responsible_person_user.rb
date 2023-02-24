@@ -15,6 +15,7 @@ class PendingResponsiblePersonUser < ApplicationRecord
   before_create :remove_duplicate
 
   def self.key_validity_duration
+    UnusedCodeAlerting.alert
     1.day
   end
 

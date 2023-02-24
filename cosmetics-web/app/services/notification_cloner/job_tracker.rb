@@ -19,6 +19,7 @@ module NotificationCloner
     end
 
     def success?
+      UnusedCodeAlerting.alert
       @sidekiq_status == :complete
     end
 

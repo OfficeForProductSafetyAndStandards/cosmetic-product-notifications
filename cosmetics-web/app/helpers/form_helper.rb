@@ -43,6 +43,7 @@ module FormHelper
   end
 
   def password_confirmation_input(user, options = {})
+    UnusedCodeAlerting.alert
     options.reverse_merge!(
       id: "password_confirmation",
       name: "#{resource_form_name(user)}[password_confirmation]",

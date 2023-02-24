@@ -156,6 +156,7 @@ private
   end
 
   def eu_notification_params
+    UnusedCodeAlerting.alert
     params.permit(:eu_notified, :notified_to_eu_on)
   end
 
