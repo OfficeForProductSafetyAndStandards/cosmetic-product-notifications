@@ -13,6 +13,7 @@ module WizardConcern
   end
 
   def notification
+    UnusedCodeAlerting.alert
     if params[:notification_reference_number]
       Notification.find_by reference_number: params[:notification_reference_number]
     elsif params[:notification_id]
