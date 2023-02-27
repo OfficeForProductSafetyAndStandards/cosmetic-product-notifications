@@ -343,8 +343,8 @@ class Notification < ApplicationRecord
     end
 
     # We know that elastic search matched this search, so we need to log miss so we can improve
-    if matched.nil?
-      Rails.logger.info("[IngredientSearch] #{query} can not be find in #{notification.id}")
+    if matched.blank?
+      Rails.logger.info("[IngredientSearch] #{query} can not be find in #{id}")
     end
 
     matched.uniq

@@ -662,5 +662,21 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       result = notification.matched_ingredients_for_query(query)
       expect(result).to eq ["Aqua", "Sodium Acetone"]
     end
+
+    context "when result is missing" do
+      let(:query) { "test" }
+
+      before do
+        allow(Rails.logger).to receive(:info)
+      end
+
+      it "logs the search miss" do
+        notification.matched_ingredients_for_query(query)
+
+        expect(Rails.logger)
+          .to have_received(:info)
+          .with("[IngredientSearch] #{query} can not be find in #{notification.id}")
+      end
+    end
   end
 end
