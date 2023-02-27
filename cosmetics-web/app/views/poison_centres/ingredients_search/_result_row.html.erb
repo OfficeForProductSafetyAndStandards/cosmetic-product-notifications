@@ -27,7 +27,6 @@
       <%= notification.responsible_person.name %>
     </td>
   </tr>
-  <% matches = notification.matched_ingredients_for_query(@search_form.q) %>
   <% if matches.present? %>
     <tr class="govuk-table__row">
       <th headers="item-01" id="ingredients-01" class="govuk-visually-hidden">
@@ -35,8 +34,10 @@
       </th>
       <td headers="item-01 ingredients-01" colspan="3" class="govuk-table__cell">
         <span class="govuk-!-font-size-14">Ingredient matches: </span>
-        <% matches.each do |matched_ingredient| %>
-          <span class="govuk-!-font-size-14"><mark><%= matched_ingredient %></mark>. </span>
+        <% matches.each do |matched_ingredients| %>
+          <span class="govuk-!-font-size-14">
+             <%= matched_ingredients.html_safe %>.
+          </span>
         <% end %>
       </td>
     </tr>

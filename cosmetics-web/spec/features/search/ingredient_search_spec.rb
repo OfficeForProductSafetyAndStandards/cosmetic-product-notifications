@@ -35,7 +35,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     click_on "Search"
 
     expect(page).to have_link("Cream")
-    expect(page).to have_text("Ingredient matches: sodium")
+    expect(page).to have_text("Ingredient matches: aqua,tin,sodium")
     expect(page).not_to have_link("Shower Bubbles")
   end
 

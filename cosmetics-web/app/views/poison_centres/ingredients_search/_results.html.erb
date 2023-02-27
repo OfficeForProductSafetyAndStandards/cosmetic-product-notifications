@@ -49,6 +49,7 @@
                notification: notification,
                index: index,
                form: :ingredient_search_form,
+               matches: search_response[index - 1].try(:highlight).try(:searchable_ingredients),
                back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH,
                additional_classes: rp_classes[current_rp_class_index % 2])
            )
