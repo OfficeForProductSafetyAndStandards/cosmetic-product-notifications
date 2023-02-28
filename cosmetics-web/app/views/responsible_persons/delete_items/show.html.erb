@@ -28,17 +28,8 @@
       <% end %>
     <% else %>
       <h1 class="govuk-heading-m govuk-!-margin-bottom-0">You cannot remove an item</h1>
-      <p class="govuk-body opss-secondary-text govuk-!-margin-bottom-7">A multi-item kit product must include 2 or more items.</p>
       <p class="govuk-body">
-        This draft product notification has defined the product as being a multi-item kit and currently includes 2 items.
-        A product containing only 1 item (or component) is a single item product and is not a multi-item kit product.
-      </p>
-      <p class="govuk-body">
-        To remove an item you must first add a new item.
-        <span class="govuk-!-font-weight-bold">If the product is not a multi-item kit product</span>, you will need to
-        <%= link_to("delete this draft",
-                    delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification),
-                    class: "govuk-link govuk-link--no-visited-state") %>.
+        A multi-item kit must contain, at least, 2 items. If this product is not a multi-item kit you will need to create a new product notification.
       </p>
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
       <p class="govuk-body">
