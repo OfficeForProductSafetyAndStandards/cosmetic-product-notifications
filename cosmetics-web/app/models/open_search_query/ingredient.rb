@@ -35,12 +35,8 @@ module OpenSearchQuery
             filter: filter_query,
           },
         },
-        highlight: {
-          order: "score",
-          fields: {
-            searchable_ingredients: { pre_tags: ["<mark>"], post_tags: ["</mark>"], boundary_chars: "," },
-          },
-        },
+        # Setting number of fragments to 0 so the entire field contents are highlighted and returned
+        highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
         sort: [group_query, sort_query].compact, # "group by" is used as "order first by"
       }
     end
