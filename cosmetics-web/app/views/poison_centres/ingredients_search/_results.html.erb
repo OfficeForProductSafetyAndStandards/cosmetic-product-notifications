@@ -35,24 +35,34 @@
             </tr>
           </thead>
           <%
-          rp_classes = ["opss-table-grouped-by--1", "opss-table-grouped-by--2"]
-          current_rp_class_index = 0
-          previous_rp_id = results.first.responsible_person_id
+            rp_classes = ["opss-table-grouped-by--1", "opss-table-grouped-by--2"]
+            current_rp_class_index = 0
+            previous_rp_id = results.first.responsible_person_id
 
-          results.each.with_index(1) do |notification, index|
-           if previous_rp_id != notification.responsible_person_id && group_by_responsible_person?
-             current_rp_class_index += 1
-             previous_rp_id = notification.responsible_person_id
-           end
-           concat(
-             render("poison_centres/ingredients_search/result_row",
-               notification: notification,
-               index: index,
-               form: :ingredient_search_form,
-               back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH,
-               additional_classes: rp_classes[current_rp_class_index % 2])
-           )
-          end
+            results.each.with_index(1) do |notification, index|
+              if previous_rp_id != notification.responsible_person_id && group_by_responsible_person?
+                current_rp_class_index += 1
+                previous_rp_id = notification.responsible_person_id
+              end
+
+              # Selects the ingredients with highlighted matches from Elasticsearch response and strips the ingredient
+              # substring highlighting tags.
+              matches = search_response[index - 1].try(:highlight)
+                                                  .try(:searchable_ingredients)
+                                                  &.first
+                                                  &.split(",") # Ingredients are stored separated by commas in the index.
+                                                  &.filter_map { |ing| ing.remove("<em>", "</em>") if ing.include?("<em>") }
+
+              concat(
+                render("poison_centres/ingredients_search/result_row",
+                  notification: notification,
+                  index: index,
+                  form: :ingredient_search_form,
+                  matches: matches,
+                  back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH,
+                  additional_classes: rp_classes[current_rp_class_index % 2])
+              )
+            end
           %>
           <% if results.size > 11 %>
             <tfoot class="govuk-table__head">
