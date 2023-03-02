@@ -1,6 +1,5 @@
 class ResponsiblePersons::Notifications::ProductController < SubmitApplicationController
   include Wicked::Wizard
-  include CountriesHelper
   include WizardConcern
 
   steps :add_product_name,

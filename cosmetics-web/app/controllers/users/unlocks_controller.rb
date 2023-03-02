@@ -11,13 +11,6 @@ module Users
 
   private
 
-    def passed_secondary_authentication?
-      UnusedCodeAlerting.alert
-      return true unless Rails.configuration.secondary_authentication_enabled
-
-      user_signed_in? && user_with_unlock_token == current_user && is_fully_authenticated?
-    end
-
     # Overriden methods to customize the behaviour of SecondaryAuthenticationConcern
     def user_id_for_secondary_authentication
       user_with_unlock_token.id
