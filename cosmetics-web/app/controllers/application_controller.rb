@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include CookiesConcern
 
   protect_from_forgery with: :exception
+  before_action :prepare_logger_data
   before_action :authorize_user!
   before_action :authenticate_user!
   before_action :ensure_secondary_authentication
@@ -43,6 +44,11 @@ protected
   end
 
 private
+
+  def prepare_logger_data
+    RequestStore.store[:logger_request_id] = request.request_id
+    cookies[:journey_uuid] ||= request.request_id
+  end
 
   def user_class
     if params.key?("search_user")
