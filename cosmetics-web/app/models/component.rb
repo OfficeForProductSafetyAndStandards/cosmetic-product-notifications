@@ -191,11 +191,6 @@ class Component < ApplicationRecord
     PARENT_OF_CATEGORY
   end
 
-  def is_valid_multicomponent?
-    UnusedCodeAlerting.alert
-    name.present?
-  end
-
   def maximum_ph=(value)
     super(reject_non_decimal_strings(value))
   end
@@ -250,11 +245,6 @@ class Component < ApplicationRecord
       end
       update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?
     end
-  end
-
-  def frame_formulation?
-    UnusedCodeAlerting.alert
-    predefined?
   end
 
 private

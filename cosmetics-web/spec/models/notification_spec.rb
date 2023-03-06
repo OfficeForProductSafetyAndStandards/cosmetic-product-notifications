@@ -1,16 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
-  before do
-    notification = described_class.create
-
-    # UnusedCodeAlerting
-    # Delete this stub if country_from_code is unused.
-    allow(notification)
-      .to receive(:country_from_code)
-      .with("country:NZ").and_return("New Zealand")
-  end
-
   describe "updating product_name" do
     it "transitions state from empty to product_name_added" do
       notification = create(:notification)

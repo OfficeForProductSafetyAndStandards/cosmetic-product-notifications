@@ -112,9 +112,6 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_contains_cmrs
     when :add_cmrs
       update_add_cmrs
-    when :select_category
-      UnusedCodeAlerting.alert # Remove this 'when' case, as the step does not exist anymore (now is :select_root_category)
-      update_select_category_step
     when :select_root_category
       update_select_category_step
     when :select_sub_category
@@ -160,12 +157,6 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
   end
 
 private
-
-  # TODO: add this in all flows
-  def finish_wizard_path
-    UnusedCodeAlerting.alert
-    responsible_person_notification_draft_path(@notification.responsible_person, @notification)
-  end
 
   def update_number_of_shades
     answer = params.dig(:component, :number_of_shades)
