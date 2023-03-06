@@ -21,6 +21,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
       let(:expected_es_query) do
         { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                            filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+          highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
           sort: %w[_score] }
       end
     end
@@ -33,6 +34,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
       let(:expected_es_query) do
         { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                            filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+          highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
           sort: [{ "responsible_person.id" => { order: "asc" } }, "_score"] }
       end
     end
@@ -45,6 +47,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
       let(:expected_es_query) do
         { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                            filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+          highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
           sort: %w[_score] }
       end
     end
@@ -57,6 +60,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
       let(:expected_es_query) do
         { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                            filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+          highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
           sort: [{ notification_complete_at: { order: :asc } }] }
       end
     end
@@ -69,6 +73,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
       let(:expected_es_query) do
         { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                            filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+          highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
           sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
@@ -82,6 +87,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
       let(:expected_es_query) do
         { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                            filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+          highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
           sort: [{ "responsible_person.id" => { order: "asc" } }, { notification_complete_at: { order: :desc } }] }
       end
     end
@@ -95,6 +101,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
       let(:expected_es_query) do
         { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                            filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+          highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
           sort: [{ "responsible_person.id" => { order: "asc" } }, { notification_complete_at: { order: :asc } }] }
       end
     end
@@ -106,6 +113,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
         expect(query).to eq(
           { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                              filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: nil } } }] } },
+            highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
             sort: %w[_score] },
         )
       end
@@ -121,6 +129,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
           expect(query).to eq(
             { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                                filter: [{ range: { notification_complete_at: { gte: "2022-11-10", lte: "2023-01-12" } } }] } },
+              highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
               sort: %w[_score] },
           )
         end
@@ -133,6 +142,7 @@ RSpec.describe OpenSearchQuery::Ingredient, type: :model do
           expect(query).to eq(
             { query: { bool: { must: { match_phrase: { searchable_ingredients: { query: "sodium" } } },
                                filter: [{ range: { notification_complete_at: { gte: "2022-10-03", lte: "2023-01-12" } } }] } },
+              highlight: { fields: { searchable_ingredients: { number_of_fragments: 0 } } },
               sort: %w[_score] },
           )
         end

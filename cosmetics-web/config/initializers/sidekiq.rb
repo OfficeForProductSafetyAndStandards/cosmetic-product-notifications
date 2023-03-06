@@ -162,8 +162,6 @@ Sidekiq.configure_client do |config|
   end
 end
 
-logger = ActiveSupport::Logger.new($stdout)
-
 formatter = proc do |_, datetime, _, msg|
   extra_data = %i[worker_class_name job_id app_request_id].map { |k| Thread.current[k] }.select(&:present?)
   extra_data = extra_data.map { |data| "[#{data}]" }.join(" ")
@@ -171,5 +169,4 @@ formatter = proc do |_, datetime, _, msg|
   "[Sidekiq] [ActiveJob] #{extra_data}[#{datetime.utc.iso8601}] #{msg}\n"
 end
 
-logger.formatter = formatter
-Sidekiq::Logging.logger = logger
+Sidekiq::Logging.logger.formatter = formatter
