@@ -24,11 +24,4 @@ RSpec.describe DateHelper, type: :helper do
       expect(helper.display_date(date)).to be_nil
     end
   end
-
-  describe "#display_time" do
-    it "returns nil when passed nil" do
-      date = nil
-      expect(helper.display_time(date)).to be_nil
-    end
-  end
 end

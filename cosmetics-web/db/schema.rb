@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_08_115847) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_02_131742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -306,13 +306,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_115847) do
     t.bigint "component_id"
     t.boolean "applicable"
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
-  end
-
-  create_table "user_attributes", primary_key: "user_id", id: :uuid, default: nil, force: :cascade do |t|
-    t.datetime "declaration_accepted_at", precision: nil
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["user_id"], name: "index_user_attributes_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

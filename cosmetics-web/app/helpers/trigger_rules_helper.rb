@@ -1,27 +1,4 @@
 module TriggerRulesHelper
-  def get_formulation_data(question, element)
-    UnusedCodeAlerting.alert
-    if element.element_order == 1
-      inciname_incivalue_pair = get_inciname_incivalue_pair(question, element)
-      if inciname_incivalue_pair.count > 1
-        formulation_data = inciname_incivalue_pair
-      end
-    end
-    formulation_data
-  end
-
-  def get_inciname_incivalue_pair(question, element)
-    UnusedCodeAlerting.alert
-    question_id = element.trigger_question_id
-    answer_order = element.answer_order
-    inciname_incivalue_pair = []
-    question.trigger_question_elements.where(
-      trigger_question_id: question_id, answer_order:,
-    ).each do |question_element|
-      inciname_incivalue_pair << question_element.answer
-    end
-  end
-
   def format_trigger_question_elements(trigger_question_elements)
     trigger_question_elements.group_by(&:answer_order).filter_map do |_answer_order, elements|
       if elements.first.answer.present? && elements.last.answer.present?
@@ -41,24 +18,6 @@ module TriggerRulesHelper
       "No"
     else
       answer
-    end
-  end
-
-  def previous_wizard_path
-    UnusedCodeAlerting.alert
-    case step
-    when :ph
-      wizard_path(:select_ph_range)
-    when :select_ph_range
-
-      previous_step =
-        if @component.predefined? && !@component.contains_poisonous_ingredients?
-          :contains_ingredients_npis_needs_to_know
-        else
-          :select_formulation_type
-        end
-
-      responsible_person_notification_component_build_path(@component.notification.responsible_person, @component.notification, @component, previous_step)
     end
   end
 end

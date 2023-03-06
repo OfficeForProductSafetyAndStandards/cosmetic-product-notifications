@@ -44,22 +44,6 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 
 private
 
-  # Returns the path for the page the user must have been on prior to
-  # the 'Check your answers' page. This varies depending on the route
-  # through the various sets of questions.
-  def previous_path_before_check_your_answers(notification)
-    UnusedCodeAlerting.alert
-    if notification.is_multicomponent?
-      # Last page is the List of components
-      responsible_person_notification_build_path(notification.responsible_person, notification, :add_new_component)
-    else
-      component = notification.components.first
-      # Last question was either pH question or exact pH range for the component
-      page = component.minimum_ph ? :ph : :select_ph_range
-      responsible_person_notification_component_trigger_question_path(notification.responsible_person, notification, component, page)
-    end
-  end
-
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
     authorize @responsible_person, :show?

@@ -59,13 +59,6 @@ module Users
       user_signed_in? && user_with_reset_token && current_user != user_with_reset_token
     end
 
-    def passed_secondary_authentication?
-      UnusedCodeAlerting.alert
-      return true unless Rails.configuration.secondary_authentication_enabled
-
-      user_signed_in? && is_fully_authenticated?
-    end
-
     def resend_account_setup_link_for(user)
       user.confirmed_at = nil
       user.account_security_completed = false

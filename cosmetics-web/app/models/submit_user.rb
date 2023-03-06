@@ -6,13 +6,9 @@ class SubmitUser < User
 
   devise :registerable, :confirmable
 
-  belongs_to :organisation
-
   has_many :responsible_person_users, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   has_many :responsible_persons, through: :responsible_person_users
   has_many :pending_responsible_person_users, dependent: :destroy, foreign_key: :inviting_user_id, inverse_of: :inviting_user
-
-  has_one :user_attributes, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
 
   validates :mobile_number,
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
@@ -60,12 +56,5 @@ class SubmitUser < User
   def self.confirm_by_token(token)
     user = super(token)
     user.persisted? ? user : nil
-  end
-
-private
-
-  def get_user_attributes
-    UnusedCodeAlerting.alert
-    UserAttributes.find_or_create_by(user_id: id)
   end
 end

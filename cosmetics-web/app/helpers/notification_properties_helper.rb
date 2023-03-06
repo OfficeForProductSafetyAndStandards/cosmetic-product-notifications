@@ -7,18 +7,8 @@ module NotificationPropertiesHelper
     (FrameFormulations::ALL_PLUS_OTHER_AND_VIEW_ONLY.deep_locate ->(key, value, _object) { key == "formulationId" && value == frame_formulation }).first&.dig("formulationName")
   end
 
-  def get_trigger_rules_question_name(trigger_rules_question)
-    UnusedCodeAlerting.alert
-    TRIGGER_RULES_QUESTION_NAME[trigger_rules_question&.to_sym]
-  end
-
   def get_trigger_rules_short_question_name(trigger_rules_question)
     TRIGGER_RULES_SHORT_QUESTION_NAME[trigger_rules_question&.to_sym]
-  end
-
-  def get_trigger_rules_question_element_name(trigger_rules_question_element)
-    UnusedCodeAlerting.alert
-    TRIGGER_RULES_QUESTION_ELEMENT_NAME[trigger_rules_question_element&.to_sym]
   end
 
   def get_unit_name(unit)

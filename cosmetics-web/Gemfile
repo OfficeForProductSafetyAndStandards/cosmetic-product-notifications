@@ -6,7 +6,6 @@ gem "kaminari" # Must be loaded before ElasticSearch gems
 
 # Needed a feature added into AASM master branch but still not tagged with a new version.
 gem "aasm", "5.2.0"
-gem "active_hash", "~> 3.1.1"
 gem "activerecord-pg_enum"
 gem "after_commit_everywhere"
 gem "aws-sdk-s3", "~> 1.60.1"

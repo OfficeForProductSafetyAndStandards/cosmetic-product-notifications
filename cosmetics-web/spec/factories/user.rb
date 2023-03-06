@@ -108,10 +108,6 @@ FactoryBot.define do
         role { :trading_standards }
       end
 
-      after :create do |user, options|
-        create(:user_attributes, user:, declaration_accepted: !options.first_login)
-      end
-
       trait :registration_incomplete do
         without_secondary_authentication
         password { nil }

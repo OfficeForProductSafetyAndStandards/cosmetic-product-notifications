@@ -155,11 +155,6 @@ private
     end
   end
 
-  def eu_notification_params
-    UnusedCodeAlerting.alert
-    params.permit(:eu_notified, :notified_to_eu_on)
-  end
-
   def redirect_to_confirmation_page_if_submitted
     if @nanomaterial_notification.submitted?
       redirect_to(confirmation_nanomaterial_path(@nanomaterial_notification)) && return

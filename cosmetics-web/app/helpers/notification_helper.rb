@@ -1,9 +1,4 @@
 module NotificationHelper
-  def component_nano_materials_names(component)
-    UnusedCodeAlerting.alert
-    component.nano_materials.map(&:display_name)
-  end
-
   def nano_materials_details(nano_materials)
     nano_materials.map do |nano|
       if (notification = nano.nanomaterial_notification)
