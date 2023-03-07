@@ -1,7 +1,7 @@
-import $ from 'jquery'
+'use strict'
 
-$(document).ready(() => {
-  const input = document.getElementById('image_upload')
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.querySelector('#image_upload')
   if (input) {
     input.addEventListener('change', handleFiles, false)
   }
