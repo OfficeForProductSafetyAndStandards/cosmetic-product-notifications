@@ -42,19 +42,6 @@ module FormHelper
     govukInput(options)
   end
 
-  def password_confirmation_input(user, options = {})
-    options.reverse_merge!(
-      id: "password_confirmation",
-      name: "#{resource_form_name(user)}[password_confirmation]",
-      type: "password",
-      classes: "app-!-max-width-two-thirds",
-      label: { text: "Password confirmation" },
-      errorMessage: format_errors_for(user, user.errors.full_messages_for(:password_confirmation)),
-    )
-
-    govukInput(options)
-  end
-
 private
 
   def format_errors_for(user, errors_for_field)

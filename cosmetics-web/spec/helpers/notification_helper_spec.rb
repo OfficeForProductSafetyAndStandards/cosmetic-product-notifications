@@ -12,16 +12,6 @@ describe NotificationHelper do
 
   let(:helper) { helper_class.new }
 
-  describe "#component_nano_materials_names" do
-    it "returns the component nano materials names" do
-      nano_material1 = build(:nano_material, inci_name: "Nano material 1")
-      nano_material2 = build(:nano_material, inci_name: "Nano material 2")
-      component = build(:component, nano_materials: [nano_material1, nano_material2])
-
-      expect(helper.component_nano_materials_names(component)).to eq(["Nano material 1", "Nano material 2"])
-    end
-  end
-
   describe "#nano_materials_details" do
     context "with standard nanomaterials" do
       it "returns the component nano materials names" do

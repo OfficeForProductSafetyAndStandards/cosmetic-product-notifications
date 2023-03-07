@@ -1,6 +1,5 @@
 class ResponsiblePersons::Notifications::ProductKitController < SubmitApplicationController
   include Wicked::Wizard
-  include CountriesHelper
   include WizardConcern
 
   steps :is_mixed,

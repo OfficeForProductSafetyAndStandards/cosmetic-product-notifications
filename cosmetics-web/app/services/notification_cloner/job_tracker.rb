@@ -18,10 +18,6 @@ module NotificationCloner
       @sidekiq_status = Sidekiq::Status.status(job_id)
     end
 
-    def success?
-      @sidekiq_status == :complete
-    end
-
     def pending?
       %i[queued working].include? @sidekiq_status
     end

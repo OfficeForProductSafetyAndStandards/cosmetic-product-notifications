@@ -26,7 +26,7 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
-  def notification_summary_product_rows(notification, allow_edits: false)
+  def notification_summary_product_rows(notification)
     [
       {
         key: { text: "Product name" },
@@ -55,8 +55,7 @@ module ResponsiblePersons::NotificationsHelper
       {
         key: { text: "Label image" },
         value: { html: render("notifications/product_details_label_images",
-                              notification:,
-                              allow_edits:) },
+                              notification:) },
       },
       {
         key: { text: "Are the items mixed?" },
@@ -77,7 +76,7 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
-  def notification_summary_component_rows(component, include_shades: true, allow_edits: false)
+  def notification_summary_component_rows(component, include_shades: true)
     cmrs = component.cmrs
     nano_materials = component.nano_materials
 
@@ -176,18 +175,17 @@ module ResponsiblePersons::NotificationsHelper
         {
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
-                                component:,
-                                allow_edits:) },
+                                component:) },
         }
       end,
     ].concat(component_ph_trigger_questions_rows(component))
      .compact
   end
 
-  def notification_summary_label_image_link(image, responsible_person, notification, allow_edits: false)
+  def notification_summary_label_image_link(image, responsible_person, notification)
     if image.passed_antivirus_check?
       link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noopener")
-    elsif image.file_exists? && allow_edits
+    elsif image.file_exists? && notification.editable?
       "Processing image #{image.file.filename}..." \
       "<br>" \
       "#{link_to('Refresh', edit_responsible_person_notification_path(responsible_person, notification), class: 'govuk-link govuk-link--no-visited-state')}".html_safe

@@ -12,17 +12,6 @@ module WizardConcern
     end
   end
 
-  def notification
-    if params[:notification_reference_number]
-      Notification.find_by reference_number: params[:notification_reference_number]
-    elsif params[:notification_id]
-      Notification.find(params[:notification_id])
-    elsif params[:component_id]
-      component = Component.find(params[:component_id])
-      component.notification
-    end
-  end
-
   def yes_no_param(param)
     params.dig(model.model_name.param_key, param)
   end

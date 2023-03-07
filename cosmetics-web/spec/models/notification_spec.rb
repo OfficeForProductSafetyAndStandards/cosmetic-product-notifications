@@ -1,13 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
-  before do
-    notification = described_class.create
-    allow(notification)
-      .to receive(:country_from_code)
-      .with("country:NZ").and_return("New Zealand")
-  end
-
   describe "updating product_name" do
     it "transitions state from empty to product_name_added" do
       notification = create(:notification)
@@ -299,6 +292,50 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
+  describe "#add_image" do
+    context "when fewer than 10 images are attached" do
+      let(:image_uploads) { create_list(:image_upload, 8, :uploaded_and_virus_scanned) }
+      let(:notification) { create(:notification, image_uploads:) }
+      let(:attachment1) { fixture_file_upload("/testImage.png", "image/png") }
+      let(:attachment2) { fixture_file_upload("/testImage.png", "image/png") }
+      let(:attachment3) { fixture_file_upload("/testImage.png", "image/png") }
+
+      it "allows another image to be attached" do
+        notification.add_image(attachment1)
+        expect { notification.save }.to(change { notification.image_uploads.count }.by(1))
+      end
+
+      it "allows two more images to be attached" do
+        notification.add_image(attachment1)
+        notification.add_image(attachment2)
+        expect { notification.save }.to(change { notification.image_uploads.count }.by(2))
+      end
+
+      it "allows two more images to be attached but rejects the third" do
+        notification.add_image(attachment1)
+        notification.add_image(attachment2)
+        notification.add_image(attachment3)
+        expect { notification.save }.to(change { notification.image_uploads.count }.by(2))
+      end
+    end
+
+    context "when 10 images are attached" do
+      let(:image_uploads) { create_list(:image_upload, 10, :uploaded_and_virus_scanned) }
+      let(:notification) { create(:notification, image_uploads:) }
+      let(:attachment) { fixture_file_upload("/testImage.png", "image/png") }
+
+      it "does not allow another image to be attached" do
+        notification.add_image(attachment)
+        expect { notification.save }.to(change { notification.image_uploads.count }.by(0))
+      end
+
+      it "sets an error message" do
+        notification.add_image(attachment)
+        expect(notification.errors[:image_uploads]).to eq(["You can only upload up to 10 images"])
+      end
+    end
+  end
+
   describe "#make_ready_for_nanomaterials!" do
     subject(:make_ready) { notification.make_ready_for_nanomaterials!(count) }
 
@@ -562,6 +599,20 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
       it "raises ArgumentError" do
         expect { new_notification.valid?(:cloning) }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
+  describe "#editable?" do
+    it "is true for EDITABLE_STATES" do
+      Notification::EDITABLE_STATES.each do |state|
+        expect(build(:notification, state:)).to be_editable
+      end
+    end
+
+    it "is false for complete/deleted states" do
+      [Notification::NOTIFICATION_COMPLETE, Notification::DELETED].each do |state|
+        expect(build(:notification, state:)).not_to be_editable
       end
     end
   end

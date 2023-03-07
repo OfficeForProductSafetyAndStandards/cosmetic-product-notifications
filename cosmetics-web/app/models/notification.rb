@@ -33,8 +33,9 @@ class Notification < ApplicationRecord
     routing_questions_answers
   ].freeze
 
+  MAXIMUM_IMAGE_UPLOADS = 10
+
   include Searchable
-  include CountriesHelper
   include RoutingQuestionCacheConcern
   include Clonable
   include NotificationStateConcern
@@ -99,6 +100,7 @@ class Notification < ApplicationRecord
     mapping do
       indexes :product_name, type: "text"
       indexes :reference_number, type: "text"
+      indexes :industry_reference, type: "text"
       indexes :reference_number_for_display, type: "text"
       indexes :searchable_ingredients, type: "text"
       indexes :created_at, type: "date"
@@ -124,7 +126,7 @@ class Notification < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name notification_complete_at reference_number],
+      only: %i[product_name notification_complete_at reference_number industry_reference],
       methods: %i[reference_number_for_display searchable_ingredients],
       include: {
         responsible_person: {
@@ -153,9 +155,16 @@ class Notification < ApplicationRecord
   end
 
   def add_image(image)
-    image_uploads.build.tap do |upload|
-      upload.file.attach(image)
-      upload.filename = image.original_filename
+    # We need to use `length` here rather than `count` since we're potentially adding multiple
+    # image uploads before saving the notification, and `count` will only tell us what's already
+    # in the database.
+    if image_uploads.length < MAXIMUM_IMAGE_UPLOADS
+      image_uploads.build.tap do |upload|
+        upload.file.attach(image)
+        upload.filename = image.original_filename
+      end
+    else
+      errors.add(:image_uploads, :too_long, message: "You can only upload up to #{MAXIMUM_IMAGE_UPLOADS} images")
     end
   end
 
@@ -171,32 +180,12 @@ class Notification < ApplicationRecord
     ids.map { |id| nano_materials.find(id) }
   end
 
-  def formulation_required?
-    components.any?(&:formulation_required?)
-  end
-
-  def formulation_present?
-    components.none?(&:formulation_required?)
-  end
-
   def is_multicomponent?
     components.length > 1
   end
 
   def multi_component?
     is_multicomponent?
-  end
-
-  def single_component?
-    !multi_component?
-  end
-
-  def get_valid_multicomponents
-    components.select(&:is_valid_multicomponent?)
-  end
-
-  def get_invalid_multicomponents
-    components - get_valid_multicomponents
   end
 
   # Returns true if the notification was notified via uploading
@@ -304,6 +293,10 @@ class Notification < ApplicationRecord
 
   def cloned?
     source_notification.present?
+  end
+
+  def editable?
+    EDITABLE_STATES.include? state.to_sym
   end
 
 private

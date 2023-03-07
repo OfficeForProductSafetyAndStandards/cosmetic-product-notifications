@@ -14,10 +14,6 @@ class PendingResponsiblePersonUser < ApplicationRecord
   before_create :generate_token
   before_create :remove_duplicate
 
-  def self.key_validity_duration
-    1.day
-  end
-
   def expired?
     invitation_token_expires_at && invitation_token_expires_at < Time.zone.now
   end

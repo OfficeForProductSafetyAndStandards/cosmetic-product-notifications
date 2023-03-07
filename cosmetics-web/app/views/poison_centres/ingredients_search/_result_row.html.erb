@@ -1,5 +1,5 @@
 <%
-  cell_headers = "item-#{index} meta-#{index}"
+    cell_headers = "item-#{index} meta-#{index}"
 %>
 
 <tbody class="govuk-table__body <%= additional_classes %>">
@@ -9,8 +9,8 @@
     </th>
     <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
       <%= link_to notification.product_name,
-                  poison_centre_notification_path(notification, form => search_params, :back_to => back_to, page: params[:page]),
-                  class: "govuk-link govuk-link--no-visited-state" %>
+        poison_centre_notification_path(notification, form => search_params, :back_to => back_to, page: params[:page]),
+        class: "govuk-link govuk-link--no-visited-state" %>
     </th>
   </tr>
   <tr class="govuk-table__row">
@@ -27,4 +27,17 @@
       <%= notification.responsible_person.name %>
     </td>
   </tr>
+  <% if matches.present? %>
+    <tr class="govuk-table__row">
+      <th headers="item-01" id="ingredients-01" class="govuk-visually-hidden">
+        Matches
+      </th>
+      <td headers="item-01 ingredients-01" colspan="3" class="govuk-table__cell">
+        <span class="govuk-!-font-size-14">Ingredient matches: </span>
+        <% matches.each do |matched_ingredient| %>
+          <span class="govuk-!-font-size-14"><mark><%= matched_ingredient %></mark>. </span>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
 </tbody>

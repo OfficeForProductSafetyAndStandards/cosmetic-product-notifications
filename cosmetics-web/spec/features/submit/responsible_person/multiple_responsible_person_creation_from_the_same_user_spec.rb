@@ -16,7 +16,7 @@ RSpec.describe "Creating multiple responsible persons from the same user", type:
     fill_in_rp_business_details(name: "Second RP")
     fill_in_rp_contact_details
 
-    expect(page).to have_text("The new Responsible Person has been added to your list of Responsible Persons and can be selected as the Responsible Person.")
+    expect(page).to have_text("The new Responsible Person has been added to your list of Responsible Persons and can be selected as the Responsible Person")
     expect(page).to have_text("First RP")
   end
 

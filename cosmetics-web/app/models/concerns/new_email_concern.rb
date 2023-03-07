@@ -27,7 +27,7 @@ module NewEmailConcern
 
       old_email = user.email
       user.confirm_new_email!
-      NotifyMailer.get_mailer(user).update_email_address_notification_email(user, old_email).deliver_later
+      user.mailer.update_email_address_notification_email(user, old_email).deliver_later
     rescue ActiveRecord::RecordNotFound
       raise ArgumentError
     end

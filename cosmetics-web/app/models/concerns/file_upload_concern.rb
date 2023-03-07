@@ -40,14 +40,6 @@ module FileUploadConcern
     raise "max_file_size must be specified in #{self.class}" unless self.class.max_file_size
   end
 
-  def attachment
-    if send(attachment_name).attached?
-      send(attachment_name)
-    else
-      {}
-    end
-  end
-
   included do
     validate :attached_file_is_correct_type?
     validate :attached_file_is_within_allowed_size?
