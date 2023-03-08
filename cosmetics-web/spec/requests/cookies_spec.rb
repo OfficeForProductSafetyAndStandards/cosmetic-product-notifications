@@ -31,7 +31,7 @@ describe "user declarations", type: :request do
         v.nil?
       end
 
-      # response is returning 3 cookies that should be deleted
+      # response is returning 4 cookies that should be deleted
       expect(cookies_to_delete.to_hash.keys).to eq(%w[_ga_NSLSMEMX9S _gat_gtag_UA_126364208_2 _gid journey_uuid])
     end
   end
