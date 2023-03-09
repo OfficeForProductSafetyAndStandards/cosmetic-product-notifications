@@ -3,7 +3,7 @@ require "cookie_domain_cleaner"
 module CookiesConcern
   extend ActiveSupport::Concern
 
-  NON_ESSENTIAL_COOKIES = [/_ga.*/, /_gid/, /_ga_.*/].freeze
+  NON_ESSENTIAL_COOKIES = [/_ga.*/, /_gid/, /_ga_.*/, /journey_uuid/].freeze
 
   included do
     before_action :set_cookie_form
