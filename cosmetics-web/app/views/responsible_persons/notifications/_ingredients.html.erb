@@ -7,15 +7,15 @@
           <dd><abbr>CAS</abbr>: <%= ingredient.cas_number %> </dd>
         <% end %>
         <% if ingredient.exact_concentration.present? %>
-          <dd><%= ingredient.exact_concentration %>% <abbr>w/w</abbr></dd>
+          <dd><% if ingredient.used_for_multiple_shades? %>Maximum concentration: <% end %><%= ingredient.exact_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
         <% elsif ingredient.range_concentration.present? %>
           <% range = ingredient_concentration_range(ingredient.range_concentration) %>
           <% if range.upto.present? %>
             <% if range.above.present? %>
-               <dd>Above <%= range.above %>% <abbr>w/w</abbr></dd>
-               <dd>Up to <%= range.upto %>% <abbr>w/w</abbr></dd>
+               <dd>Above <%= range.above %>%&nbsp;<abbr>w/w</abbr></dd>
+               <dd>Up to <%= range.upto %>%&nbsp;<abbr>w/w</abbr></dd>
             <% else %>
-               <dd>Up to and including <%= range.upto %>% <abbr>w/w</abbr></dd>
+               <dd>Up to and including <%= range.upto %>%&nbsp;<abbr>w/w</abbr></dd>
             <% end %>
           <% end %>
         <% end %>

@@ -309,7 +309,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.1.6)
     racc (1.6.2)
-    rack (2.2.6.2)
+    rack (2.2.6.3)
     rack-protection (2.2.0)
       rack
     rack-test (2.0.2)
