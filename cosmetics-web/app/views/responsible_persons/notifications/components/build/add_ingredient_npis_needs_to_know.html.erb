@@ -10,7 +10,7 @@
            component: @component,
            model: @ingredient_concentration_form,
            poisonous: true do |form| %>
-  <%= render "ingredient_exact_concentration_fields", model: @ingredient_concentration_form, form: form %>
+  <%= render "ingredient_exact_concentration_fields", component: @component, model: @ingredient_concentration_form, form: form %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= govukCheckboxes(form: form,

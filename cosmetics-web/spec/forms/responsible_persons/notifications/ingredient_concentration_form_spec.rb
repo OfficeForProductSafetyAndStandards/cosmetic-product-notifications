@@ -5,8 +5,10 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
     described_class.new(component:,
                         type:,
                         name:,
+                        used_for_multiple_shades:,
                         cas_number:,
                         exact_concentration:,
+                        maximum_concentration:,
                         range_concentration:,
                         poisonous:,
                         updating_ingredient:,
@@ -15,8 +17,10 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
   let(:component) { create(:exact_component) }
   let(:name) { "Ingredient Name" }
+  let(:used_for_multiple_shades) { nil }
   let(:cas_number) { "111-11-1" }
   let(:exact_concentration) { "4.2" }
+  let(:maximum_concentration) { nil }
   let(:range_concentration) { "greater_than_10_less_than_25_percent" }
   let(:poisonous) { "true" }
   let(:type) { "exact" }
@@ -38,7 +42,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
 
-      context "with a non poisonous ingredient" do
+      context "with a non-poisonous ingredient" do
         let(:poisonous) { "false" }
 
         it { expect(form.type).to eq("range") }
@@ -62,7 +66,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
 
-      context "with a non poisonous ingredient" do
+      context "with a non-poisonous ingredient" do
         let(:poisonous) { "false" }
 
         it { expect(form.type).to eq("exact") }
@@ -90,7 +94,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
 
-      context "with a non poisonous ingredient" do
+      context "with a non-poisonous ingredient" do
         let(:poisonous) { "false" }
 
         it { expect(form.type).to eq(nil) }
@@ -108,7 +112,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
 
   describe "validation" do
     it "is invalid without a component" do
-      form.component = ""
+      form.component = nil
       expect(form).not_to be_valid
       expect(form.errors[:component]).to eq ["Provide a component to associate the ingredient to"]
     end
@@ -236,6 +240,111 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           form.exact_concentration = "100.1"
           expect(form).not_to be_valid
           expect(form.errors[:exact_concentration]).to eq ["Enter a concentration less than or equal to 100"]
+        end
+      end
+
+      context "with an 'exact' type and multiple shades" do
+        let(:type) { "exact" }
+        let(:component) { create(:exact_component, :with_multiple_shades) }
+
+        context "when the ingredient is used for multiple shades" do
+          let(:used_for_multiple_shades) { true }
+
+          it "is valid with 0.1 as concentration" do
+            form.maximum_concentration = "0.1"
+            expect(form).to be_valid
+          end
+
+          it "is valid with 100 as concentration" do
+            form.maximum_concentration = "100"
+            expect(form).to be_valid
+          end
+
+          it "is invalid without a maximum concentration" do
+            form.maximum_concentration = ""
+            expect(form).not_to be_valid
+            expect(form.errors[:maximum_concentration]).to eq ["Enter the concentration"]
+          end
+
+          it "is not valid when the concentration is not a number" do
+            form.maximum_concentration = "not a number"
+            expect(form).not_to be_valid
+            expect(form.errors[:maximum_concentration]).to eq ["Enter a number for the concentration"]
+          end
+
+          it "is not valid when the concentration contains extra characters mixed with a number" do
+            form.maximum_concentration = "58:0887"
+            expect(form).not_to be_valid
+            expect(form.errors[:maximum_concentration]).to eq ["Enter a number for the concentration"]
+          end
+
+          it "is not valid when the concentration is 0" do
+            form.maximum_concentration = "0.0"
+            expect(form).not_to be_valid
+            expect(form.errors[:maximum_concentration]).to eq ["Enter a concentration greater than 0"]
+          end
+
+          it "is not valid when the concentration is a negative number" do
+            form.maximum_concentration = "-3.5"
+            expect(form).not_to be_valid
+            expect(form.errors[:maximum_concentration]).to eq ["Enter a concentration greater than 0"]
+          end
+
+          it "is not valid when the concentration is greater than 100" do
+            form.maximum_concentration = "100.1"
+            expect(form).not_to be_valid
+            expect(form.errors[:maximum_concentration]).to eq ["Enter a concentration less than or equal to 100"]
+          end
+        end
+
+        context "when the ingredient is not used for multiple shades" do
+          let(:used_for_multiple_shades) { false }
+
+          it "is valid with 0.1 as concentration" do
+            form.exact_concentration = "0.1"
+            expect(form).to be_valid
+          end
+
+          it "is valid with 100 as concentration" do
+            form.exact_concentration = "100"
+            expect(form).to be_valid
+          end
+
+          it "is invalid without an exact concentration" do
+            form.exact_concentration = ""
+            expect(form).not_to be_valid
+            expect(form.errors[:exact_concentration]).to eq ["Enter the concentration"]
+          end
+
+          it "is not valid when the concentration is not a number" do
+            form.exact_concentration = "not a number"
+            expect(form).not_to be_valid
+            expect(form.errors[:exact_concentration]).to eq ["Enter a number for the concentration"]
+          end
+
+          it "is not valid when the concentration contains extra characters mixed with a number" do
+            form.exact_concentration = "58:0887"
+            expect(form).not_to be_valid
+            expect(form.errors[:exact_concentration]).to eq ["Enter a number for the concentration"]
+          end
+
+          it "is not valid when the concentration is 0" do
+            form.exact_concentration = "0.0"
+            expect(form).not_to be_valid
+            expect(form.errors[:exact_concentration]).to eq ["Enter a concentration greater than 0"]
+          end
+
+          it "is not valid when the concentration is a negative number" do
+            form.exact_concentration = "-3.5"
+            expect(form).not_to be_valid
+            expect(form.errors[:exact_concentration]).to eq ["Enter a concentration greater than 0"]
+          end
+
+          it "is not valid when the concentration is greater than 100" do
+            form.exact_concentration = "100.1"
+            expect(form).not_to be_valid
+            expect(form.errors[:exact_concentration]).to eq ["Enter a concentration less than or equal to 100"]
+          end
         end
       end
 

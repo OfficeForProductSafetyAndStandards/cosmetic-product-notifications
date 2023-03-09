@@ -456,7 +456,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when exact formulation type is set again" do
-      let(:component) { create(:component, :with_exact_ingredients) }
+      let(:component) { create(:component, :with_exact_ingredient) }
 
       it "leaves the existing ingredients" do
         expect { component.update_formulation_type("exact") }
@@ -484,7 +484,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when changing from exact to range" do
-      let(:component) { create(:component, :with_exact_ingredients) }
+      let(:component) { create(:component, :with_exact_ingredient) }
 
       it "removes the ingredients formulas" do
         expect { component.update_formulation_type("range") }
@@ -581,7 +581,7 @@ RSpec.describe Component, type: :model do
     end
 
     it "returns false for an exact component with ingredients" do
-      component = create(:component, :with_exact_ingredients)
+      component = create(:component, :with_exact_ingredient)
       expect(component.missing_ingredients?).to eq(false)
     end
 
@@ -603,7 +603,7 @@ RSpec.describe Component, type: :model do
   end
 
   describe "#delete_ingredient!" do
-    let(:component) { create(:exact_component, :completed, :with_exact_ingredients) }
+    let(:component) { create(:exact_component, :completed, :with_exact_ingredient) }
 
     it "returns false when the ingredient does not belong to the component" do
       ingredient = create(:range_ingredient)
