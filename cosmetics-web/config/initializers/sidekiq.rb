@@ -114,6 +114,24 @@ def upload_nanomaterials_pdfs_in_last_three_months_job
   end
 end
 
+class SidekiqAppLogDataMiddleware
+  def call(_, job, _, _)
+    job["app_request_id"] = RequestStore.store[:logger_request_id]
+    yield
+  end
+end
+
+class SidekiqWorkerLogDataMiddleware
+  def call(_worker, job, _)
+    Thread.current[:app_request_id] = job["app_request_id"]
+
+    args = job["args"].first
+    Thread.current[:worker_class_name] = args["job_class"]
+    Thread.current[:job_id] = args["job_id"]
+    yield
+  end
+end
+
 Sidekiq.configure_server do |config|
   config.redis = Rails.application.config_for(:redis)
   create_log_db_metrics_job
@@ -128,10 +146,27 @@ Sidekiq.configure_server do |config|
 
   Sidekiq::Status.configure_server_middleware(config)
   Sidekiq::Status.configure_client_middleware(config)
+
+  config.server_middleware do |chain|
+    chain.add SidekiqWorkerLogDataMiddleware
+  end
 end
 
 Sidekiq.configure_client do |config|
   config.redis = Rails.application.config_for(:redis)
 
   Sidekiq::Status.configure_client_middleware(config)
+
+  config.client_middleware do |chain|
+    chain.add SidekiqAppLogDataMiddleware
+  end
 end
+
+formatter = proc do |_, datetime, _, msg|
+  extra_data = %i[worker_class_name job_id app_request_id].map { |k| Thread.current[k] }.select(&:present?)
+  extra_data = extra_data.map { |data| "[#{data}]" }.join(" ")
+
+  "[Sidekiq] [ActiveJob] #{extra_data}[#{datetime.utc.iso8601}] #{msg}\n"
+end
+
+Sidekiq::Logging.logger.formatter = formatter
