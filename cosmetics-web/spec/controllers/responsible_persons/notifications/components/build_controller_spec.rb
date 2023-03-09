@@ -2,12 +2,13 @@ require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:component) { create(:component, :with_category, notification:, notification_type: component_type) }
+  let(:component) { create(:component, :with_category, shades:, notification:, notification_type: component_type) }
   let(:notification) do
     create(:notification,
            responsible_person:,
            state: NotificationStateConcern::READY_FOR_COMPONENTS)
   end
+  let(:shades) { [] }
   let(:component_type) { nil }
 
   let(:params) do
@@ -140,10 +141,25 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       # rubocop:disable RSpec/MultipleExpectations
       it "shows the page for adding ingredients with exact concentration" do
         expect(response.body).to match(/<title>Add the ingredients .+<\/title>/)
+        expect(response.body).not_to include("Is it used for different shades?")
         expect(response.body).to include("What is the exact concentration?")
         expect(response.body).not_to include("What is the concentration range?")
       end
       # rubocop:enable RSpec/MultipleExpectations
+
+      context "when the component has multiple shades" do
+        let(:shades) { %w[Black White] }
+
+        # rubocop:disable RSpec/MultipleExpectations
+        it "shows the page for adding ingredients with exact concentration" do
+          expect(response.body).to match(/<title>Add the ingredients .+<\/title>/)
+          expect(response.body).to include("Is it used for different shades?")
+          expect(response.body).to include("What is the maximum concentration?")
+          expect(response.body).to include("What is the exact concentration?")
+          expect(response.body).not_to include("What is the concentration range?")
+        end
+        # rubocop:enable RSpec/MultipleExpectations
+      end
 
       it "links to the select formulation type page" do
         expect(response.body).to have_back_link_to(
