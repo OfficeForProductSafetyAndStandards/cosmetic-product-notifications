@@ -11,6 +11,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
   let(:csv) do
     <<~CSV
+      Name,Concentration,CAS, Is poisonous?
       Sodium,35,497-19-8,true
       Aqua,65,497-19-8,false
     CSV
@@ -65,6 +66,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when name is empty" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           ,35,497-19-8,true
         CSV
       end
@@ -74,9 +76,23 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
     end
 
+    context "when header is missing" do
+      let(:csv) do
+        <<~CSV
+          Sodium,35,497-19-8,true
+          Aqua,65,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Header is missing"] }
+      end
+    end
+
     context "when concentration number is empty" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Foo,,497-19-8,true
         CSV
       end
@@ -89,6 +105,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when values for concentration are incorrect" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Sodium,abc,497-19-8,foo
         CSV
       end
@@ -101,6 +118,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when values for toxicity are incorrect" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Sodium,32,497-19-8,foo
         CSV
       end
@@ -113,6 +131,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when name is too long" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,32,497-19-8,true
         CSV
       end
@@ -156,6 +175,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when values for toxicity are empty" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Aqua,65,497-19-8,
         CSV
       end
@@ -168,6 +188,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when one ingredient in csv is invalid" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Sodium,35,497-19-8,true
           Aqua,65,497-19-8,false
           Acid,50-75,497-19-8,false
@@ -182,6 +203,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when file has more invalid lines" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Sodium,thirtyfive,497-19-8,true
           Aqua,65,497-19-8,false
           Acid,50-75,497-19-8,false
@@ -218,6 +240,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when ingredient with that name already exists" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Aqua,65,497-19-8,false
           Acid,50,497-19-8,false
         CSV
@@ -235,6 +258,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when ingredients repeat withing file" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Aqua,65,497-19-8,false
           Aqua,50,497-19-8,false
         CSV
@@ -259,13 +283,27 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     end
 
     context "when ingredient file is empty" do
-      let(:csv) do
-        <<~CSV
-        CSV
+      context "when only header is present" do
+        let(:csv) do
+          <<~CSV
+            Name,Concentration,CAS, Is poisonous?
+          CSV
+        end
+
+        include_examples "validation" do
+          let(:error_messages) { ["The selected file is empty"] }
+        end
       end
 
-      include_examples "validation" do
-        let(:error_messages) { ["The selected file is empty"] }
+      context "when file doesn't have even header" do
+        let(:csv) do
+          <<~CSV
+          CSV
+        end
+
+        include_examples "validation" do
+          let(:error_messages) { ["The selected file is empty"] }
+        end
       end
     end
   end
@@ -278,6 +316,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when using upper case for toxicity" do
       let(:csv) do
         <<~CSV
+          Name,Concentration,CAS, Is poisonous?
           Foo,12,497-19-8,TRUE
         CSV
       end
@@ -317,6 +356,67 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       expect {
         form.save_ingredients
       }.to change(Ingredient, :count).by(2)
+    end
+  end
+
+  context "when header is not very meaningful" do
+    let(:csv) do
+      <<~CSV
+        Foo
+        Sodium,35,497-19-8,true
+        Aqua,65,497-19-8,false
+      CSV
+    end
+
+    let(:component) { create(:predefined_component, contains_poisonous_ingredients: true) }
+
+    it "is valid" do
+      form.save_ingredients
+      expect(form).to be_valid
+    end
+
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(2)
+    end
+  end
+
+  context "when ingredients are already present in product" do
+    let(:csv) do
+      <<~CSV
+        Foo
+        Sodium,35,497-19-8,true
+        Aqua,65,497-19-8,false
+      CSV
+    end
+
+    let(:component) { create(:predefined_component, contains_poisonous_ingredients: true) }
+    let(:ingredient) { create(:exact_ingredient, inci_name: "Existing ingredient") }
+
+    let(:component2) { create(:predefined_component, contains_poisonous_ingredients: true) }
+    let(:ingredient2) { create(:exact_ingredient, inci_name: "Existing ingredient") }
+
+    before do
+      ingredient
+      ingredient2
+    end
+
+    it "is valid" do
+      form.save_ingredients
+      expect(form).to be_valid
+    end
+
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(2)
+    end
+
+    it "removes proper ingredient" do
+      form.save_ingredients
+
+      expect(component.reload.ingredients.pluck(:inci_name)).to eq(%w[Sodium Aqua])
     end
   end
 end

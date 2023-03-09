@@ -9,7 +9,7 @@
 <%= form_with model: @bulk_ingredients_form, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-form-group <%= error_group_class(@bulk_ingredients_form)%>">
+      <div class="govuk-form-group <%= "govuk-form-group--error" if @bulk_ingredients_form.errors.any? %>">
           <h1 class="govuk-label-wrapper">
             <label class="govuk-label govuk-label--l" for="csv-upload">
               Upload the ingredients <abbr>CSV</abbr> file
@@ -21,7 +21,7 @@
 
           <% if @bulk_ingredients_form.errors %>
             <p class="govuk-error-message" id="file-error">
-              <span class="govuk-visually-hidden">Error:</span> 
+              <span class="govuk-visually-hidden">Error:</span>
               <%= @bulk_ingredients_form.errors.full_messages.first %>
             </p>
           <% end %>

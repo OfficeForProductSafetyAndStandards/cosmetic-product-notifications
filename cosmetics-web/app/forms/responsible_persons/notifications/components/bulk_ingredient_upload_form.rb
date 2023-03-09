@@ -12,6 +12,7 @@ module ResponsiblePersons::Notifications::Components
     validate :file_is_csv_file_validation
     validate :file_is_not_empty_validation
     validate :correct_ingredients_validation
+    validate :header_missing_validation
 
     # Original valid is reseting error messages.
     # We have an edge case here where we are adding error messages after
@@ -34,6 +35,8 @@ module ResponsiblePersons::Notifications::Components
       # * difference between ingredient form and model validations
       # * internal ActiveRecord issue
       ActiveRecord::Base.transaction do
+        component.ingredients.delete_all
+
         @ingredients.each_with_index do |ingredient, i|
           ingredient.save
           unless ingredient.persisted?
@@ -66,7 +69,7 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def parse_csv_file
-      @csv_data ||= CSV.parse(file&.tempfile)
+      @csv_data ||= CSV.parse(file&.tempfile, headers: %i[inci_name concentration cas_number poisonous])
     end
 
     def correct_ingredients_validation
@@ -74,6 +77,14 @@ module ResponsiblePersons::Notifications::Components
 
       @error_messages.each do |message|
         errors.add(:file, "The file could not be uploaded because of error in line #{message[:line]}: #{message[:message]}")
+      end
+    end
+
+    def header_missing_validation
+      return if csv_header.blank?
+
+      if row_to_ingredient(**csv_header.to_h).valid?
+        errors.add(:file, "The file could not be uploaded because of error in line 1: Header is missing")
       end
     end
 
@@ -85,9 +96,8 @@ module ResponsiblePersons::Notifications::Components
 
       return if duplicated_ingredients_in_file?
 
-      @csv_data&.each_with_index do |row, i|
-        name, concentration, cas, poisonous = *row
-        ingredient = row_to_ingredient(name, concentration, cas, poisonous)
+      ingredients_from_csv&.each_with_index do |row, i|
+        ingredient = row_to_ingredient(**row.to_h)
         unless ingredient.valid?
           @error_messages << { line: i + 1, message: ingredient.errors.full_messages.first }
         end
@@ -98,7 +108,7 @@ module ResponsiblePersons::Notifications::Components
     def file_is_not_empty_validation
       return if file_too_large?
 
-      if @csv_data.blank?
+      if ingredients_from_csv.blank?
         errors.add(:file, :empty)
       end
     end
@@ -107,9 +117,9 @@ module ResponsiblePersons::Notifications::Components
       file&.tempfile&.size.to_i > MAX_FILE_SIZE
     end
 
-    def row_to_ingredient(name, concentration, cas, poisonous)
+    def row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:)
       ingredient = Ingredient.new(
-        inci_name: name, cas_number: cas, poisonous: poisonous?(poisonous),
+        inci_name:, cas_number:, poisonous: poisonous?(poisonous),
       )
       if component.exact?
         ingredient.exact_concentration = concentration
@@ -123,7 +133,7 @@ module ResponsiblePersons::Notifications::Components
 
     def duplicated_ingredients_in_file?
       names = []
-      @csv_data&.each_with_index do |row, i|
+      ingredients_from_csv&.each_with_index do |row, i|
         name = row[0]
         if names.include? name
           errors.add(:file, "The file could not be uploaded because of error in line #{i + 1}: Ingredient name already exists in this CSV file")
@@ -134,6 +144,18 @@ module ResponsiblePersons::Notifications::Components
         end
       end
       false
+    end
+
+    def csv_header
+      return [] if @csv_data.nil?
+
+      @csv_data[0]
+    end
+
+    def ingredients_from_csv
+      return [] if @csv_data.nil?
+
+      @csv_data[1..]
     end
 
     def poisonous?(entry)
