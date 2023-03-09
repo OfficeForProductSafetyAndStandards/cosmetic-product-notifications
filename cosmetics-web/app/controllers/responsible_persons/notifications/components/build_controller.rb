@@ -366,11 +366,21 @@ private
 
     { name: ingredient.inci_name,
       cas_number: ingredient.cas_number,
-      exact_concentration: ingredient.exact_concentration,
+      used_for_multiple_shades: ingredient.used_for_multiple_shades,
+      exact_concentration: ingredient_form_value_exact_concentration(ingredient),
+      maximum_concentration: ingredient_form_value_maximum_concentration(ingredient),
       range_concentration: ingredient.range_concentration,
       poisonous: ingredient.poisonous,
       updating_ingredient: ingredient,
       ingredient_number: }
+  end
+
+  def ingredient_form_value_exact_concentration(ingredient)
+    ingredient.exact_concentration unless ingredient.used_for_multiple_shades
+  end
+
+  def ingredient_form_value_maximum_concentration(ingredient)
+    ingredient.exact_concentration if ingredient.used_for_multiple_shades
   end
 
   def component_params
@@ -399,7 +409,9 @@ private
     params.fetch(:ingredient_concentration_form, {})
       .permit(
         :name,
+        :used_for_multiple_shades,
         :exact_concentration,
+        :maximum_concentration,
         :range_concentration,
         :cas_number,
         :poisonous,
