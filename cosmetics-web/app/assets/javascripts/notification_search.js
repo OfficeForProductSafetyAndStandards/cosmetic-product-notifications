@@ -1,14 +1,14 @@
-import $ from 'jquery'
+'use strict'
 
-$(function () {
-  const sortBy = document.getElementById('notification_search_form_sort_by')
+document.addEventListener('DOMContentLoaded', () => {
+  const sortBy = document.querySelector('#notification_search_form_sort_by')
   if (sortBy !== null) {
-    sortBy.addEventListener('change', function () {
-      document.getElementById('new_notification_search_form_sort').submit()
+    sortBy.addEventListener('change', () => {
+      document.querySelector('#new_notification_search_form_sort').submit()
     })
   }
 
-  const filterForm = document.getElementById('new_notification_search_form_filters')
+  const filterForm = document.querySelector('#new_notification_search_form_filters')
   if (filterForm !== null) {
     const radioConditionalElements = filterForm.querySelectorAll('.govuk-radios__conditional')
     const radioInputs = filterForm.querySelectorAll('.govuk-radios__input')
@@ -17,64 +17,64 @@ $(function () {
     const prodSelect = document.getElementById('notification_search_form_category')
     const defaultInputs = filterForm.querySelectorAll('.govuk-radios input#search-by_all_fields')
 
-    document.getElementById('opss-reset').addEventListener('click', function () { // click the filter's form reset link/button
+    document.querySelector('#opss-reset').addEventListener('click', () => { // click the filter's form reset link/button
       if (prodSelect !== null) {
-        prodSelect.querySelectorAll('option').forEach(function (s) { // all options
-          s.removeAttribute('selected')
+        prodSelect.querySelectorAll('option').forEach((s) => { // all options
+          s.selected = false
         })
-        prodSelect.querySelector('option').setAttribute('selected', 'selected') // the first option
+        prodSelect.querySelector('option').selected = true // the first option
       }
 
-      radioConditionalElements.forEach(function (element) {
+      radioConditionalElements.forEach((element) => {
         element.classList.add('govuk-radios__conditional--hidden')
       })
 
       const groupErrors = filterForm.querySelectorAll('.govuk-form-group--error')
       if (groupErrors.length <= 0) { // there are no errors in the form
-        radioInputs.forEach(function (element) {
-          element.setAttribute('aria-expanded', true)
-          element.removeAttribute('checked')
+        radioInputs.forEach((element) => {
+          element.ariaExpanded = true
+          element.checked = false
         })
       }
-      checkboxes.forEach(function (element) {
-        element.removeAttribute('checked')
+      checkboxes.forEach((element) => {
+        element.checked = false
       })
-      defaultInputs.forEach(function (element) {
-        element.setAttribute('checked', true)
+      defaultInputs.forEach((element) => {
+        element.checked = true
       })
-      dateInputs.forEach(function (element) {
-        element.setAttribute('value', '')
+      dateInputs.forEach((element) => {
+        element.value = ''
       })
     }, false)
   }
 
-  const ingredientsFilterForm = document.getElementById('ingredients_search_form_filters')
+  const ingredientsFilterForm = document.querySelector('#ingredients_search_form_filters')
   if (ingredientsFilterForm !== null) {
     const radioInputs = ingredientsFilterForm.querySelectorAll('.govuk-radios__input')
     const dateInputs = ingredientsFilterForm.querySelectorAll('.govuk-date-input__input')
 
-    document.getElementById('opss-reset').addEventListener('click', function () { // click the filter's form reset link/button
-      radioInputs.forEach(function (element) {
-        element.setAttribute('aria-expanded', false)
-        element.removeAttribute('checked')
+    document.querySelector('#opss-reset').addEventListener('click', () => { // click the filter's form reset link/button
+      radioInputs.forEach((element) => {
+        element.ariaExpanded = false
+        element.checked = false
       })
       const fieldsets = ingredientsFilterForm.querySelectorAll('fieldset')
-      fieldsets.forEach(function (fieldset) {
+      fieldsets.forEach((fieldset) => {
         const radios = fieldset.querySelectorAll('.govuk-radios__input')
         if (radios.length > 0) {
-          radios[0].setAttribute('checked', 'checked')
+          radios[0].checked = true
         }
       })
-      dateInputs.forEach(function (element) {
-        element.setAttribute('value', '')
+      dateInputs.forEach((element) => {
+        element.value = ''
       })
     }, false)
   }
 
-  const ingredientsSortBy = document.getElementById('ingredient_search_form_sort_by')
+  const ingredientsSortBy = document.querySelector('#ingredient_search_form_sort_by')
   if (ingredientsSortBy !== null) {
     ingredientsSortBy.addEventListener('change', function () {
-      document.getElementById('new_ingredient_search_form_sort').submit()
+      document.querySelector('#new_ingredient_search_form_sort').submit()
     })
   }
 })

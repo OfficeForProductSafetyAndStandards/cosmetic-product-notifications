@@ -1,13 +1,9 @@
-/*
-  Reset a form and remove any errors
-*/
+'use strict'
 
 function resetOpssForm (form, defaultData) {
-  const targetForm = document.getElementById(form)
+  const targetForm = document.querySelector(`#${form}`)
   // this is needed to clear any form elements the have setAttribute called, i.e. submitted data
   Array.from(targetForm.elements).forEach(element => {
-    element.classList.remove('govuk-input--error')
-
     if (element.type === 'text') {
       element.setAttribute('value', '')
     } else if (element.type === 'search') {
@@ -18,10 +14,6 @@ function resetOpssForm (form, defaultData) {
       element.setAttribute('aria-expanded', false)
       element.removeAttribute('checked')
     }
-  })
-
-  Array.from(document.querySelectorAll('.govuk-error-summary, .govuk-error-message')).forEach(element => {
-    element.remove()
   })
 
   targetForm.reset()
@@ -47,7 +39,7 @@ function resetOpssForm (form, defaultData) {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const resetButton = document.querySelectorAll('[data-reset-form]')
 
   resetButton.forEach(button => {
