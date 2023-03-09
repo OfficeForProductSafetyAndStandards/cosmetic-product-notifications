@@ -274,7 +274,14 @@ en:
           attributes:
             component:
               blank: "Provide a component to associate the ingredient to"
+            used_for_multiple_shades:
+              inclusion: "Select yes if the ingredient is used for different shades"
             exact_concentration:
+              blank: "Enter the concentration"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
+              not_a_number: "Enter a number for the concentration"
+            maximum_concentration:
               blank: "Enter the concentration"
               greater_than: "Enter a concentration greater than 0"
               less_than_or_equal_to: "Enter a concentration less than or equal to 100"

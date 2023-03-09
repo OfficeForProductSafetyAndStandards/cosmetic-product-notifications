@@ -8,10 +8,9 @@
         <% if value_name.start_with?("range")%>
           <%= display_concentration_range(entity[value_name]) %>
         <% else %>
-          <%= display_concentration(entity[value_name]) %>
+          <%= display_concentration(entity[value_name], used_for_multiple_shades: entity["used_for_multiple_shades"]) %>
         <% end %>
       </td>
     </tr>
   <% end %>
 <% end %>
-
