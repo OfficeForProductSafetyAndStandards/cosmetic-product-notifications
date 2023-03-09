@@ -1,18 +1,47 @@
-<% concentration_error = model.errors[:exact_concentration]&.first %>
-<div class="govuk-form-group <%= "govuk-form-group--error" if concentration_error %>">
-  <%= govukLabel(for: :exact_concentration, text: "What is the exact concentration?", classes: "govuk-label--s govuk-!-font-weight-regular")%>
-  <% if concentration_error %>
-    <%= govukErrorMessage(id: "exact_concentration-error", text: concentration_error) %>
-  <% end %>
-  <div class="govuk-input__wrapper">
-    <%= form.text_field(:exact_concentration,
-                        id: "exact_concentration",
-                        class: "govuk-input govuk-input--width-5 #{'govuk-input--error' if concentration_error}",
-                        maxlength: 12,
-                        size: nil,
-                        "aria-describedby" => ("exact_concentration-error" if concentration_error)) %>
-    <div class="govuk-input__suffix" aria-hidden="true">
-      <span title="Percentage weight by weight">&percnt; w/w</span>
+<div class="govuk-form-group">
+  <% exact_concentration_field_html = capture do %>
+    <div class="govuk-input__wrapper">
+      <%= govukInput(form: form,
+           key: :exact_concentration,
+           id: "exact_concentration",
+           label: { text: "What is the exact concentration?" },
+           suffix: { text: "% w/w", attributes: { title: "Percentage weight by weight" } },
+           classes: "govuk-input--width-5",
+           attributes: { maxlength: 12 }) %>
     </div>
-  </div>
+  <% end %>
+  <% maximum_concentration_field_html = capture do %>
+    <div class="govuk-input__wrapper">
+      <%= govukInput(form: form,
+           key: :maximum_concentration,
+           id: "maximum_concentration",
+           label: { text: "What is the maximum concentration?" },
+           hint: { text: "Enter the maximum concentration used in the shades." },
+           suffix: { text: "% w/w", attributes: { title: "Percentage weight by weight" } },
+           classes: "govuk-input--width-5",
+           attributes: { maxlength: 12 }) %>
+    </div>
+  <% end %>
+  <% if show_maximum_concentration %>
+    <%= govukRadios(
+      form: form,
+      key: :used_for_multiple_shades,
+      id: "used_for_multiple_shades",
+      fieldset: { legend: { text: "Is it used for different shades?", classes: "govuk-label--s" } },
+      items: [
+        { text: "Yes",
+          value: "true",
+          id: "used_for_multiple_shades_true",
+          conditional: { html: maximum_concentration_field_html },
+          checked: params.dig(:ingredient_concentration_form, :used_for_multiple_shades) == "true" || model.attributes["used_for_multiple_shades"] == "true" },
+        { text: "No",
+          value: "false",
+          id: "used_for_multiple_shades_false",
+          conditional: { html: exact_concentration_field_html },
+          checked: params.dig(:ingredient_concentration_form, :used_for_multiple_shades) == "false" || model.attributes["used_for_multiple_shades"] == "false" },
+      ],
+    ) %>
+  <% else %>
+    <%= exact_concentration_field_html %>
+  <% end %>
 </div>

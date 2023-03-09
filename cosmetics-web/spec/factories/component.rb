@@ -63,6 +63,19 @@ FactoryBot.define do
           }
         end
       end
+
+      trait :with_multiple_shades do
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "multiple-shades-same-notification",
+            "select_formulation_type" => "exact",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+        shades { %w[Black White] }
+      end
     end
 
     trait :with_poisonous_ingredients do
@@ -105,10 +118,17 @@ FactoryBot.define do
       end
     end
 
-    trait :with_exact_ingredients do
+    trait :with_exact_ingredient do
       notification_type { "exact" }
       after(:create) do |component|
         create(:exact_ingredient, component:)
+      end
+    end
+
+    trait :with_exact_ingredients do
+      notification_type { "exact" }
+      after(:create) do |component|
+        create_list(:exact_ingredient, 2, component:)
       end
     end
 

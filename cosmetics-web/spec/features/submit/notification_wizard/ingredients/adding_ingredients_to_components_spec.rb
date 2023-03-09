@@ -93,7 +93,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     })
 
     # Successfully adding the first ingredient by its concentration range
-    page.choose("Above 5% w/w up to 10% w/w")
+    page.choose("greater_than_5_less_than_10_percent")
     click_on "Save and continue"
 
     answer_add_another_ingredient_with "Yes"
