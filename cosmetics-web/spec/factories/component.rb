@@ -43,6 +43,19 @@ FactoryBot.define do
           }
         end
       end
+
+      trait :with_multiple_shades do
+        routing_questions_answers do
+          {
+            "contains_cmrs" => "no",
+            "number_of_shades" => "multiple-shades-same-notification",
+            "select_formulation_type" => "range",
+            "contains_special_applicator" => "no",
+            "contains_poisonous_ingredients" => "true",
+          }
+        end
+        shades { %w[Black White] }
+      end
     end
 
     factory :exact_component do

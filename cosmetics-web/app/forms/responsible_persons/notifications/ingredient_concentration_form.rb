@@ -23,7 +23,7 @@ module ResponsiblePersons::Notifications
     validates :poisonous, inclusion: { in: [true, false] }, if: :range?
     validates :name, presence: true, length: { maximum: NAME_LENGTH_LIMIT }, ingredient_name_format: { message: :invalid }
     validate :unique_name
-    validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { component.multi_shade? }
+    validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { exact? && component&.multi_shade? }
     validates :exact_concentration,
               presence: true,
               numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },

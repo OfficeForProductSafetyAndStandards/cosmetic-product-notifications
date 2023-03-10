@@ -457,6 +457,66 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         include_examples "name taken validations"
       end
     end
+
+    describe "used for multiple shades validation" do
+      context "with an 'range' type" do
+        let(:component) { build_stubbed(:ranges_component, :with_multiple_shades) }
+        let(:range_concentration) { "greater_than_10_less_than_25_percent" }
+
+        before do
+          form.type = "range"
+        end
+
+        it "is valid when it is used for multiple shades" do
+          form.used_for_multiple_shades = true
+          expect(form).to be_valid
+        end
+
+        it "is valid when it is not used for multiple shades" do
+          form.used_for_multiple_shades = false
+          expect(form).to be_valid
+        end
+
+        it "is valid when not specifying if it is used for multiple shades" do
+          form.used_for_multiple_shades = nil
+          expect(form).to be_valid
+        end
+      end
+
+      context "with an 'exact' type" do
+        let(:component) { build_stubbed(:exact_component, :with_multiple_shades) }
+        let(:maximum_concentration) { "4.2" }
+
+        before do
+          form.type = "exact"
+        end
+
+        it "is valid when it is used for multiple shades" do
+          form.used_for_multiple_shades = true
+          expect(form).to be_valid
+        end
+
+        it "is valid when it is not used for multiple shades" do
+          form.used_for_multiple_shades = false
+          expect(form).to be_valid
+        end
+
+        it "is not valid when not specifying if the ingredient is used for multiple shades" do
+          form.used_for_multiple_shades = nil
+          expect(form).not_to be_valid
+          expect(form.errors[:used_for_multiple_shades]).to eq(["Select yes if the ingredient is used for different shades"])
+        end
+
+        context "when the component is not multi-shade" do
+          let(:component) { build_stubbed(:exact_component) }
+
+          it "is valid when not specifying if the ingredient is used for multiple shades" do
+            form.used_for_multiple_shades = nil
+            expect(form).to be_valid
+          end
+        end
+      end
+    end
   end
 
   describe "#range?" do

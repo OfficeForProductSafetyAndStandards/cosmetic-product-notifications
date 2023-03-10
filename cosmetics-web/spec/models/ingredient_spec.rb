@@ -146,6 +146,56 @@ RSpec.describe Ingredient, type: :model do
         expect(ingredient).to be_valid
       end
     end
+
+    describe "used for multiple shades validation" do
+      context "with a range ingredient" do
+        let(:component) { build_stubbed(:ranges_component, :with_multiple_shades) }
+
+        it "is valid when the ingredient is used for multiple shades" do
+          ingredient = build_stubbed(:range_ingredient, component:, used_for_multiple_shades: true)
+          expect(ingredient).to be_valid
+        end
+
+        it "is valid when the ingredient is not used for multiple shades" do
+          ingredient = build_stubbed(:range_ingredient, component:, used_for_multiple_shades: false)
+          expect(ingredient).to be_valid
+        end
+
+        it "is valid when not specifying if the ingredient is used for multiple shades" do
+          ingredient = build_stubbed(:range_ingredient, component:, used_for_multiple_shades: nil)
+          expect(ingredient).to be_valid
+        end
+      end
+
+      context "with an exact ingredient" do
+        let(:component) { build_stubbed(:exact_component, :with_multiple_shades) }
+
+        it "is valid when the ingredient is used for multiple shades" do
+          ingredient = build_stubbed(:exact_ingredient, component:, used_for_multiple_shades: true)
+          expect(ingredient).to be_valid
+        end
+
+        it "is valid when the ingredient is not used for multiple shades" do
+          ingredient = build_stubbed(:exact_ingredient, component:, used_for_multiple_shades: false)
+          expect(ingredient).to be_valid
+        end
+
+        it "is not valid when not specifying if the ingredient is used for multiple shades" do
+          ingredient = build_stubbed(:exact_ingredient, component:, used_for_multiple_shades: nil)
+          expect(ingredient).not_to be_valid
+          expect(ingredient.errors[:used_for_multiple_shades]).to eq(["Used for multiple shades is not included in the list"])
+        end
+
+        context "when the component is not multi-shade" do
+          let(:component) { build_stubbed(:exact_component) }
+
+          it "is valid when not specifying if the ingredient is used for multiple shades" do
+            ingredient = build_stubbed(:exact_ingredient, component:, used_for_multiple_shades: nil)
+            expect(ingredient).to be_valid
+          end
+        end
+      end
+    end
   end
 
   describe ".unique_names_by_created_last" do
