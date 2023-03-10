@@ -23,11 +23,11 @@ module ResponsiblePersons::Notifications
     validates :poisonous, inclusion: { in: [true, false] }, if: :range?
     validates :name, presence: true, length: { maximum: NAME_LENGTH_LIMIT }, ingredient_name_format: { message: :invalid }
     validate :unique_name
-    validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: :multi_shade?
+    validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { component.multi_shade? }
     validates :exact_concentration,
               presence: true,
               numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
-              if: -> { exact? && (!multi_shade? || used_for_single_shade?) }
+              if: -> { exact? && ((component && !component.multi_shade?) || used_for_single_shade?) }
     validates :maximum_concentration,
               presence: true,
               numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
@@ -52,7 +52,7 @@ module ResponsiblePersons::Notifications
         self.range_concentration = nil
       end
 
-      unless multi_shade?
+      unless component&.multi_shade?
         self.used_for_multiple_shades = nil
       end
     end
@@ -102,10 +102,6 @@ module ResponsiblePersons::Notifications
       if Ingredient.where(component_id: component, inci_name: name).where.not(id: updating_ingredient).any?
         errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
       end
-    end
-
-    def multi_shade?
-      component&.shades&.compact&.uniq&.any?
     end
   end
 end
