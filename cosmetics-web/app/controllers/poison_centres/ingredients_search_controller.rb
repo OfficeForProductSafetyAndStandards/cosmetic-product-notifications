@@ -3,7 +3,6 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
 
   def show
     @search_form = IngredientSearchForm.new(search_params)
-    @search_form.sort_by = OpenSearchQuery::Ingredient::SCORE_SORTING if @search_form.sort_by.blank?
     @search_params = search_params
 
     if search_params.present? && params["edit"].nil?
