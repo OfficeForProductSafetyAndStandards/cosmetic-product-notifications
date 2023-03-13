@@ -631,4 +631,36 @@ RSpec.describe Component, type: :model do
         .and not_change(component, :state)
     end
   end
+
+  describe "#multi_shade?" do
+    it "returns false for a component without shades" do
+      component = build_stubbed(:component, shades: nil)
+      expect(component.multi_shade?).to eq(false)
+    end
+
+    it "returns false for a component with an empty array of shades" do
+      component = build_stubbed(:component, shades: [])
+      expect(component.multi_shade?).to eq(false)
+    end
+
+    it "returns false for a component with an array with blank shades" do
+      component = build_stubbed(:component, shades: [" ", ""])
+      expect(component.multi_shade?).to eq(false)
+    end
+
+    it "returns true for a component with one shade" do
+      component = build_stubbed(:component, shades: %w[blue])
+      expect(component.multi_shade?).to eq(true)
+    end
+
+    it "returns true for a component with multiple shades" do
+      component = build_stubbed(:component, shades: %w[blue yellow])
+      expect(component.multi_shade?).to eq(true)
+    end
+
+    it "returns true for a component with multiple shades and blank shades" do
+      component = build_stubbed(:component, shades: %w[blue yellow ""])
+      expect(component.multi_shade?).to eq(true)
+    end
+  end
 end
