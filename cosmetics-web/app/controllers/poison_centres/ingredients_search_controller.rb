@@ -3,34 +3,19 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
 
   def show
     @search_form = IngredientSearchForm.new(search_params)
-    @search_form.validate
+    @search_form.sort_by = OpenSearchQuery::Ingredient::SCORE_SORTING if @search_form.sort_by.blank?
+    @search_params = search_params
 
-    if search_params.present?
+    if search_params.present? && params["edit"].nil?
       apply_date_filter
+      if @search_form.valid?
+        @search_response = search_notifications
+        @notifications = @search_response.records
+      end
     end
-
-    @search_response = search_notifications
-    @notifications = @search_response.records.includes(:responsible_person, components: :ingredients)
   end
 
 private
-
-  def search_notifications
-    query = OpenSearchQuery::Ingredient.new(keyword: @search_form.q,
-                                            match_type: @search_form.exact_or_any_match,
-                                            from_date: @search_form.date_from_for_search,
-                                            to_date: @search_form.date_to_for_search,
-                                            group_by: @search_form.group_by,
-                                            sort_by: @search_form.sort_by)
-    Rails.logger.debug query.build_query.to_json
-    # Pagination needs t  o be kept together with the full search query to automatically paginate the query with Kaminari values
-    # instead of defaulting to OpenSearch returning the first 10 hits.
-    search_result = Notification.full_search(query).page(params[:page]).per(PER_PAGE)
-
-    SearchHistory.create(query: @search_form.q, sort_by: @search_form.sort_by, results: search_result.results.total)
-
-    search_result
-  end
 
   # Any changes in these search params need to be also applied to PoisonCentres::NotificationsController#search_params
   def search_params
@@ -48,5 +33,20 @@ private
     end
   end
 
-  helper_method :search_params
+  def search_notifications
+    query = OpenSearchQuery::Ingredient.new(keyword: @search_form.q,
+                                            match_type: @search_form.exact_or_any_match,
+                                            from_date: @search_form.date_from_for_search,
+                                            to_date: @search_form.date_to_for_search,
+                                            group_by: @search_form.group_by,
+                                            sort_by: @search_form.sort_by)
+    Rails.logger.debug query.build_query.to_json
+    # Pagination needs t  o be kept together with the full search query to automatically paginate the query with Kaminari values
+    # instead of defaulting to OpenSearch returning the first 10 hits.
+    search_result = Notification.full_search(query).page(params[:page]).per(PER_PAGE)
+
+    SearchHistory.create(query: @search_form.q, sort_by: @search_form.sort_by, results: search_result.results.total)
+
+    search_result
+  end
 end

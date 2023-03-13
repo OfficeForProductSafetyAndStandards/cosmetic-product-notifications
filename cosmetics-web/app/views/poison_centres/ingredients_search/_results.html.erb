@@ -1,88 +1,73 @@
-<section class="govuk-grid-column-three-quarters" id="search-results-section">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= render 'search_box' %>
-    </div>
-
-    <div class="govuk-grid-column-one-third">
-      <div class="govuk-form-group opss-text-align-right">
-        <%= render  partial: "sort_form" %>
-      </div>
-    </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body govuk-!-margin-bottom-0">
+      <%= pluralize(@notifications.count, 'notification') %> using the current filters <%= @notifications.count == 1 ? "was found." : "were found." %>
+    </p>
   </div>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <p class="govuk-body-s">
-        <%= pluralize(search_response.results.total, 'notification') %> <%= display_keywords %> <%= display_filters_informations %> (notified after 2 October 2022) <%= search_response.results.total == 1 ? "was found." : "were found." %>
-      </p>
+  <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+    <div class="opss-text-align-right">
+      <%= form_for(@search_form, url: poison_centre_ingredients_search_path(edit: true), method: :get, html: { 'novalidate' => true }) do |form| %>
+        <%= hidden_field_tag :edit, true %>
+        <%= form.hidden_field :q, id: :notification_search_form_q_sort_hidden %>
+        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_from, id: :sort_form, search_type: 'ingredient' } %>
+        <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_to, id: :sort_form, search_type: 'ingredient' } %>
+        <%= form.hidden_field :sort_by, id: 'ingredient_search_form_sort_by_hidden' %>
+        <%= form.hidden_field :exact_or_any_match, id: 'ingredient_search_form_exact_or_any_match_hidden' %>
+        <button class="govuk-button opss-button-link govuk-!-font-size-14">
+          Edit your search
+        </button>
+      <% end %>
     </div>
   </div>
+</div>
 
-  <% if results.present? %>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order" aria-live="polite">
-        <table id="table-items" class="govuk-table govuk-!-margin-top-5 opss-table-items opss-table-items--sm opss-table-items--first-col-33">
-          <caption class="govuk-visually-hidden">
-            Search results. Each notification is described across 2 rows within its own table body.
-          </caption>
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-visually-hidden">&nbsp;</th>
-              <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
-              <th scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
-              <th scope="col" class="govuk-table__header">Responsible Person</th>
-            </tr>
-          </thead>
-          <%
-            rp_classes = ["opss-table-grouped-by--1", "opss-table-grouped-by--2"]
-            current_rp_class_index = 0
-            previous_rp_id = results.first.responsible_person_id
+<% if @notifications.present? %>
 
-            results.each.with_index(1) do |notification, index|
-              if previous_rp_id != notification.responsible_person_id && group_by_responsible_person?
-                current_rp_class_index += 1
-                previous_rp_id = notification.responsible_person_id
-              end
+  <table id="table-items" class="govuk-table govuk-!-margin-top-6 govuk-!-margin-bottom-0 opss-table opss-table--last-col-right opss-table--first-col-normal">
+    <caption class="govuk-table__caption govuk-visually-hidden">List of notified products</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Product</th>
+      <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+      <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
+      <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
+    </tr>
+    </thead>
 
-              # Selects the ingredients with highlighted matches from Elasticsearch response and strips the ingredient
-              # substring highlighting tags.
-              matches = search_response[index - 1].try(:highlight)
-                                                  .try(:searchable_ingredients)
-                                                  &.first
-                                                  &.split(",") # Ingredients are stored separated by commas in the index.
-                                                  &.filter_map { |ing| ing.remove("<em>", "</em>") if ing.include?("<em>") }
-
-              concat(
-                render("poison_centres/ingredients_search/result_row",
-                  notification: notification,
-                  index: index,
-                  form: :ingredient_search_form,
-                  matches: matches,
-                  back_to: PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH,
-                  additional_classes: rp_classes[current_rp_class_index % 2])
-              )
-            end
-          %>
-          <% if results.size > 11 %>
-            <tfoot class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-visually-hidden">&nbsp;</th>
-                <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
-                <th scope="col" class="govuk-table__header"><abbr>UK</abbr> cosmetic product number</th>
-                <th scope="col" class="govuk-table__header">Responsible Person</th>
-              </tr>
-            </tfoot>
+    <tbody class="govuk-table__body">
+    <% @notifications.each do |notification| %>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">
+          <%= notification.product_name %>
+        </th>
+        <td class="govuk-table__cell">
+          <%= display_full_month_date notification.notification_complete_at %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= reference_number_for_display(notification) %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= link_to poison_centre_notification_path(notification, :back_to => PoisonCentresNotificationsHelper::INGREDIENTS_SEARCH, page: params[:page]), class: 'govuk-link govuk-link--no-visited-state' do %>
+            View
+            <span class="govuk-visually-hidden"><%= notification.product_name %></span>
           <% end %>
-        </table>
-        <%= paginate search_response, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
-      </div>
-    </div>
-  <% else %>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full" role="region" aria-label="search-results-list" id="results-order" aria-live="polite">
-        <p class="govuk-body govuk-visually-hidden">No results</p>
-      </div>
-    </div>
-  <% end %>
-</section>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+
+
+    <% if @notifications.length > 11 %>
+      <tfoot class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Product</th>
+        <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
+        <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
+        <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
+      </tr>
+      </tfoot>
+    <% end %>
+  </table>
+  <%= paginate search_response, views_prefix: "pagination", nav_class: "opss-pagination-link--no-top-border" %>
+<% end %>
