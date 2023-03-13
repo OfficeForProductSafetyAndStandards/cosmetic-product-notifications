@@ -23,7 +23,7 @@ module ResponsiblePersons::Notifications
     validates :poisonous, inclusion: { in: [true, false] }, if: :range?
     validates :name, presence: true, length: { maximum: NAME_LENGTH_LIMIT }, ingredient_name_format: { message: :invalid }
     validate :unique_name
-    validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { exact? && component&.multi_shade? }
+    validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { used_for_multiple_shades_required? }
     validates :exact_concentration,
               presence: true,
               numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
@@ -102,6 +102,11 @@ module ResponsiblePersons::Notifications
       if Ingredient.where(component_id: component, inci_name: name).where.not(id: updating_ingredient).any?
         errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
       end
+    end
+
+    # TODO: Fix form so poisonous range ingredients require used_for_multiple_shades field too.
+    def used_for_multiple_shades_required?
+      exact? && component && component.multi_shade? && !component.range?
     end
   end
 end
