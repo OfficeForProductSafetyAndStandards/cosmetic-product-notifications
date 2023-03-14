@@ -46,7 +46,7 @@ class Ingredient < ApplicationRecord
   validates :inci_name, presence: true, ingredient_name_format: { message: :invalid }
   validates :inci_name, uniqueness: { scope: :component_id }, if: :validate_inci_name_uniqueness?
 
-  validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { component&.multi_shade? && exact_concentration.present? }
+  validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { used_for_multiple_shades_required? }
 
   # Exact and range concentration invalidate each other.
   validates :range_concentration, absence: true, if: -> { exact_concentration.present? }
@@ -96,5 +96,10 @@ private
         component.notification_type != "exact"
       errors.add(:exact_concentration, :non_poisonous_wrong_component_type)
     end
+  end
+
+  # TODO: Fix form so poisonous range ingredients require used_for_multiple_shades field too.
+  def used_for_multiple_shades_required?
+    exact_concentration.present? && component && component.multi_shade? && !component.range?
   end
 end
