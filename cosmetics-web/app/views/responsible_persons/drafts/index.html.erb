@@ -15,9 +15,7 @@
         </p>
       </div>
       <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
-        <a href="<%= new_responsible_person_draft_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
-          Add a cosmetic product
-        </a>
+        <%= govukButton(text: "Create a new product notification", href: new_responsible_person_draft_path(@responsible_person)) %>
       </div>
     </div>
   </div>

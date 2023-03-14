@@ -1,12 +1,12 @@
 <table class="govuk-table govuk-!-margin-top-6 govuk-!-margin-bottom-0 opss-table opss-table--last-two-cols-right opss-table--first-col-normal">
-  <caption class="govuk-table__caption govuk-visually-hidden">List of notified products</caption>
+  <caption class="govuk-table__caption govuk-visually-hidden">List of archived products</caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header">Product</th>
       <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
       <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
       <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
-      <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Archive</span></th>
+      <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Unarchive</span></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -20,7 +20,7 @@
           </a>
         </td>
         <td class="govuk-table__cell">
-          <a href="<%= responsible_person_notification_archive_path(@responsible_person, notification, page: params[:page]) %>" class="govuk-link govuk-link--no-visited-state">Archive<span class="govuk-visually-hidden"> <%= notification.product_name %></span>
+          <a href="<%= responsible_person_notification_unarchive_path(@responsible_person, notification, page: params[:page]) %>" class="govuk-link govuk-link--no-visited-state">Unarchive<span class="govuk-visually-hidden"> <%= notification.product_name %></span>
           </a>
         </td>
       </tr>
@@ -33,7 +33,7 @@
         <th scope="col" class="govuk-table__header"><abbr>UK</abbr> notified</th>
         <th scope="col" class="govuk-table__header"><abbr>UKCP</abbr> number</th>
         <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">View</span></th>
-        <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Archive</span></th>
+        <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Unarchive</span></th>
       </tr>
     </tfoot>
   <% end %>

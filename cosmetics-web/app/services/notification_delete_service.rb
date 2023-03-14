@@ -10,7 +10,7 @@ class NotificationDeleteService
     end
 
     ActiveRecord::Base.transaction do
-      create_notification_delete_log! if @notification.notification_complete?
+      create_notification_delete_log! if @notification.notification_complete? || @notification.archived?
       @notification.soft_delete!
     end
   end
