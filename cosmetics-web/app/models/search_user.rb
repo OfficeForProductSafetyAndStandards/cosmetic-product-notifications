@@ -5,9 +5,6 @@ class SearchUser < User
   ALLOW_INTERNATIONAL_PHONE_NUMBER = false
   TOTP_ISSUER = "Search Cosmetics".freeze
 
-  belongs_to :organisation
-
-  has_one :user_attributes, dependent: :destroy, foreign_key: :user_id, inverse_of: :user
   attribute :skip_password_validation, :boolean, default: false
 
   enum role: {
@@ -37,10 +34,5 @@ private
     return false if skip_password_validation
 
     super
-  end
-
-  def get_user_attributes
-    UnusedCodeAlerting.alert
-    UserAttributes.find_or_create_by(user_id: id)
   end
 end

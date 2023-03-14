@@ -36,7 +36,6 @@ class Notification < ApplicationRecord
   MAXIMUM_IMAGE_UPLOADS = 10
 
   include Searchable
-  include CountriesHelper
   include RoutingQuestionCacheConcern
   include Clonable
   include NotificationStateConcern
@@ -181,37 +180,12 @@ class Notification < ApplicationRecord
     ids.map { |id| nano_materials.find(id) }
   end
 
-  def formulation_required?
-    UnusedCodeAlerting.alert
-    components.any?(&:formulation_required?)
-  end
-
-  def formulation_present?
-    UnusedCodeAlerting.alert
-    components.none?(&:formulation_required?)
-  end
-
   def is_multicomponent?
     components.length > 1
   end
 
   def multi_component?
     is_multicomponent?
-  end
-
-  def single_component?
-    UnusedCodeAlerting.alert
-    !multi_component?
-  end
-
-  def get_valid_multicomponents
-    UnusedCodeAlerting.alert
-    components.select(&:is_valid_multicomponent?)
-  end
-
-  def get_invalid_multicomponents
-    UnusedCodeAlerting.alert
-    components - get_valid_multicomponents
   end
 
   # Returns true if the notification was notified via uploading
@@ -321,33 +295,8 @@ class Notification < ApplicationRecord
     source_notification.present?
   end
 
-  def ingredients
-    components.map(&:ingredients).flatten
-  end
-
   def editable?
     EDITABLE_STATES.include? state.to_sym
-  end
-
-  def matched_ingredients_for_query(query)
-    matched = []
-
-    query_ingredients = query.split(" ")
-
-    ingredient_names = ingredients.map(&:inci_name)
-    ingredient_names.each do |notification_ingredient|
-      query_ingredients.each do |query_ingredient|
-        matched << notification_ingredient if notification_ingredient.downcase.include? query_ingredient.downcase
-        matched << notification_ingredient if query_ingredient.downcase.include? notification_ingredient.downcase
-      end
-    end
-
-    # We know that elastic search matched this search, so we need to log miss so we can improve
-    if matched.nil?
-      Rails.logger.info("[IngredientSearch] #{query} can not be find in #{notification.id}")
-    end
-
-    matched.uniq
   end
 
 private

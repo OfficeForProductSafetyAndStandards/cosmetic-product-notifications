@@ -99,7 +99,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect(page).to have_field("What is the name?", with: "Ingredient A")
     expect(page).to have_field("What is the CAS number?")
     expect(page).to have_checked_field("No")
-    expect(page).to have_checked_field("Above 75% w/w up to 100% w/w")
+    expect(page).to have_checked_field("greater_than_75_less_than_100_percent")
     expect(page).not_to have_link("Skip", exact: true)
     click_on "Save and continue"
 
@@ -107,11 +107,11 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect(page).to have_field("What is the name?", with: "Ingredient B")
     expect(page).to have_field("What is the CAS number?")
     expect(page).to have_checked_field("No")
-    expect(page).to have_checked_field("Above 10% w/w up to 25% w/w")
+    expect(page).to have_checked_field("greater_than_10_less_than_25_percent")
     expect(page).not_to have_link("Skip", exact: true)
 
     fill_in "What is the name?", with: "Ingredient B modified"
-    page.choose("Above 5% w/w up to 10% w/w")
+    page.choose("greater_than_5_less_than_10_percent")
     click_on "Save and continue"
 
     expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["Ingredient A", "Ingredient B modified", "Ingredient C"])
@@ -124,7 +124,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     fill_in "What is the name?", with: "Ingredient C non poisonous"
     fill_in "What is the CAS number?", with: "123456-78-9"
     page.choose("No")
-    page.choose("Above 25% w/w up to 50% w/w")
+    page.choose("greater_than_25_less_than_50_percent")
 
     click_on "Save and continue"
     answer_add_another_ingredient_with("No", success_banner: false)

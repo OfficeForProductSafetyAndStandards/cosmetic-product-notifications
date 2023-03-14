@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include CookiesConcern
 
   protect_from_forgery with: :exception
+  before_action :prepare_logger_data
   before_action :authorize_user!
   before_action :authenticate_user!
   before_action :ensure_secondary_authentication
@@ -26,11 +27,6 @@ class ApplicationController < ActionController::Base
     redirect_to "/404"
   end
 
-  def user_params_key
-    UnusedCodeAlerting.alert
-    submit_domain? ? :submit_user : :search_user
-  end
-
   # Used by Devise
   def self.default_url_options
     Rails.configuration.action_controller.default_url_options
@@ -43,6 +39,11 @@ protected
   end
 
 private
+
+  def prepare_logger_data
+    RequestStore.store[:logger_request_id] = request.request_id
+    cookies[:journey_uuid] ||= request.request_id
+  end
 
   def user_class
     if params.key?("search_user")
@@ -108,12 +109,6 @@ private
     submit_domain? ? submit_user_session_path : search_user_session_path
   end
   helper_method :user_session_path
-
-  def user_registration_path
-    UnusedCodeAlerting.alert
-    submit_domain? ? submit_user_registration_path : search_user_registration_path
-  end
-  helper_method :user_registration_path
 
   def user_password_path
     submit_domain? ? submit_user_password_path : search_user_password_path

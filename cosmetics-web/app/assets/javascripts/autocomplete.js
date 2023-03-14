@@ -1,8 +1,9 @@
-import $ from 'jquery'
+'use strict'
+
 import accessibleAutocomplete from 'accessible-autocomplete'
 
 function simpleAccessibleAutocomplete (id, autocompleteOptions) {
-  const element = document.getElementById(id)
+  const element = document.querySelector(`#${id}`)
 
   const options = autocompleteOptions || {}
   if (element) {
@@ -16,19 +17,19 @@ function simpleAccessibleAutocomplete (id, autocompleteOptions) {
     // In the case that the user deletes the entry from the field, we want this to be reflected in
     // the underlying select. This is a work-around to
     // https://github.com/alphagov/accessible-autocomplete/issues/205
-    const $enhancedElement = $(element).parent().find('input')
-    $enhancedElement.on('keyup', () => {
-      if ($enhancedElement.val() !== $(element).find('option:selected').text()) {
-        $(element).val('')
+    const $enhancedElement = element.parentElement.querySelector('input')
+    $enhancedElement.addEventListener('keyup', () => {
+      if ($enhancedElement.value !== element.querySelector('option:checked').text) {
+        element.value = ''
       }
     })
 
     // If we display a down arrow we want clicking on it to cause the same effect as clicking on
     // input field, showing all values. This is a work-around to
     // https://github.com/alphagov/accessible-autocomplete/issues/202
-    const $downArrow = $(element).parent().find('svg')
+    const $downArrow = element.parentElement.querySelector('svg')
     if ($downArrow) {
-      $downArrow.on('click', () => {
+      $downArrow.addEventListener('click', () => {
         $enhancedElement.focus()
         $enhancedElement.click()
       })
@@ -37,32 +38,41 @@ function simpleAccessibleAutocomplete (id, autocompleteOptions) {
     // This adds ability to remove currently selected input by pressing on an X next to it
     // This is a work-around to
     // https://github.com/alphagov/accessible-autocomplete/issues/240
-    const removeButton = document.getElementById(`clear-${id}`)
+    const removeButton = document.querySelector(`#clear-${id}`)
     if (removeButton) {
       const removeValue = () => {
-        $enhancedElement.val('')
-        $enhancedElement.click().focus().blur()
-        $(element).parent().find('select').val('')
+        // Clear autocomplete and hidden select
+        $enhancedElement.value = ''
+        element.parentElement.querySelector('select option:checked').selected = false
+
+        // Needed to collapse menu
+        $enhancedElement.click()
+        $enhancedElement.focus()
+        $enhancedElement.blur()
+
+        // Return focus to the button
+        removeButton.focus()
       }
+
       removeButton.addEventListener('keypress', (e) => {
         // Trigger on enter or space click only
         if (e.keyCode === 13 || e.keyCode === 32) {
           removeValue()
         }
       })
+
       removeButton.addEventListener('click', () => {
         removeValue()
       })
 
-      // Without js remove button won't work, so it is not displayed, this makes it visible
+      // Without JS, remove button won't work, so it is not displayed, this makes it visible
       removeButton.style.display = 'inline-block'
     }
   }
 }
 
-function callAutocompleteWhenReady (id, options) {
-  $(document).ready(() => {
+window.callAutocompleteWhenReady = (id, options) => {
+  document.addEventListener('DOMContentLoaded', () => {
     simpleAccessibleAutocomplete(id, options)
   })
 }
-window.callAutocompleteWhenReady = callAutocompleteWhenReady

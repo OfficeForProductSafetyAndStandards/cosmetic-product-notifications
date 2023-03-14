@@ -1,13 +1,14 @@
 module ConcentrationHelper
-  def display_concentration(concentration)
+  def display_concentration(concentration, used_for_multiple_shades: false)
+    prefix = "Maximum concentration: " if used_for_multiple_shades
     if concentration.to_s.split(".").last.size > 2
-      "#{concentration}% w/w"
+      "#{prefix}#{concentration}%&nbsp;w/w".html_safe
     else
-      "#{number_with_precision(concentration, precision: 2)}% w/w"
+      "#{prefix}#{number_with_precision(concentration, precision: 2)}%&nbsp;w/w".html_safe
     end
   end
 
   def display_concentration_range(range)
-    "#{get_unit_name(range)}% w/w"
+    "#{get_unit_name(range)}%&nbsp;w/w".html_safe
   end
 end

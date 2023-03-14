@@ -20,13 +20,6 @@ class TriggerQuestionElement < ApplicationRecord
     maxrangevalue: "maxrangevalue",
   }
 
-  # TODO: remove this after executing the rake task cleaning up orphaned trigger question elements
-  after_find do |trigger_question_element|
-    if trigger_question_element.trigger_question_id.nil? && Rails.env.production?
-      Sentry.capture_message "Orphaned TriggerQuestionElement has been loaded from DB. ID: #{trigger_question_element.id}"
-    end
-  end
-
   def value_given_as_concentration?
     ELEMENTS_GIVEN_AS_CONCENTRATION.include? element
   end

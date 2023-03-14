@@ -28,7 +28,7 @@ def complete_product_wizard(name: "Product", items_count: 1, nano_materials_coun
       answer_is_product_multi_item_kit_with "No, this is a single product"
     end
   else
-    expect(page).to have_text("You will be able to add and remove items directly from the tasks list page once the multi-item kit task is completed.")
+    expect(page).to have_text("A multi-item kit must contain, at least, 2 items. If this product is not a multi-item kit you will need to create a new product notification.")
     click_on "Continue"
   end
 

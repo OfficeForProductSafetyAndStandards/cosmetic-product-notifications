@@ -24,7 +24,6 @@ applications:
     - antivirus-auth-env
     - cosmetics-aws-env
     - cosmetics-auth-env
-    - cosmetics-coverband-env
     - cosmetics-health-env
     - cosmetics-rails-env
     - cosmetics-review-apps-sentry-env

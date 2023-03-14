@@ -1,16 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
-  before do
-    notification = described_class.create
-
-    # UnusedCodeAlerting
-    # Delete this stub if country_from_code is unused.
-    allow(notification)
-      .to receive(:country_from_code)
-      .with("country:NZ").and_return("New Zealand")
-  end
-
   describe "updating product_name" do
     it "transitions state from empty to product_name_added" do
       notification = create(:notification)
@@ -613,27 +603,6 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "#ingredients" do
-    let(:notification) { create(:notification) }
-
-    let(:component1) { create(:exact_component, notification:) }
-    let(:component2) { create(:exact_component, notification:) }
-
-    let(:ingredient1) { create(:exact_ingredient, inci_name: "Aqua", component: component1) }
-    let(:ingredient2) { create(:exact_ingredient, inci_name: "Sodium", component: component2) }
-    let(:ingredient3) { create(:exact_ingredient, inci_name: "Acid", component: component2) }
-
-    before do
-      ingredient1
-      ingredient2
-      ingredient3
-    end
-
-    it "returns product ingredients from all components" do
-      expect(notification.ingredients).to contain_exactly(ingredient1, ingredient2, ingredient3)
-    end
-  end
-
   describe "#editable?" do
     it "is true for EDITABLE_STATES" do
       Notification::EDITABLE_STATES.each do |state|
@@ -645,22 +614,6 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       [Notification::NOTIFICATION_COMPLETE, Notification::DELETED].each do |state|
         expect(build(:notification, state:)).not_to be_editable
       end
-    end
-  end
-
-  describe "#matched_ingredients_for_query" do
-    let(:query) { "aqua sodium acrylate" }
-    let(:ingredient_names) { ["Aqua", "Foo bar", "Sodium Acetone"] }
-    let(:ingredients) { ingredient_names.map { |name| OpenStruct.new(inci_name: name) } }
-    let(:notification) { build(:notification) }
-
-    before do
-      allow(notification).to receive(:ingredients).and_return(ingredients)
-    end
-
-    it "returns matched ingredients" do
-      result = notification.matched_ingredients_for_query(query)
-      expect(result).to eq ["Aqua", "Sodium Acetone"]
     end
   end
 end

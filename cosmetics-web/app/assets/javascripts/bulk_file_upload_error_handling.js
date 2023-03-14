@@ -1,18 +1,18 @@
-import $ from 'jquery'
+'use strict'
 
-$(document).ready(() => {
-  if (document.getElementById('file-upload-form')) {
-    const fileUploadForm = document.getElementById('file-upload-form')
-    const fileInput = document.getElementById('uploaded_files')
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.querySelector('#file-upload-form')) {
+    const fileUploadForm = document.querySelector('#file-upload-form')
+    const fileInput = document.querySelector('#uploaded_files')
     const { maxNumberOfFiles } = fileUploadForm.dataset
-    const errorSummary = document.getElementsByClassName('error-summary-js')[0]
-    const fileUploadFormGroup = document.getElementById('file-upload-form-group')
-    const fileUploadErrorMessage = document.getElementById('file-upload-error-message')
+    const errorSummary = document.querySelector('.error-summary-js')
+    const fileUploadFormGroup = document.querySelector('#file-upload-form-group')
+    const fileUploadErrorMessage = document.querySelector('#file-upload-error-message')
 
     const tooManyFilesMessage = `You can only select up to ${maxNumberOfFiles} files at the same time`
     const noFilesSelectedMessage = 'Select a file'
 
-    const errorSummaryText = errorSummary.getElementsByClassName('govuk-error-summary__list')[0].getElementsByTagName('A')[0]
+    const errorSummaryText = errorSummary.querySelector('.govuk-error-summary__list a')
 
     fileUploadForm.addEventListener('submit', (event) => {
       if (fileInput.files.length === 0) {

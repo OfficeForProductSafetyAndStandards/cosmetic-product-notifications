@@ -65,8 +65,4 @@ module ApplicationHelper
       search_form.errors[attribute].present? ? "govuk-input--error".html_safe : ""
     end
   end
-
-  def marked_as_unused_view
-    Sentry.capture_message "View marked as unused was rendered"
-  end
 end

@@ -456,7 +456,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when exact formulation type is set again" do
-      let(:component) { create(:component, :with_exact_ingredients) }
+      let(:component) { create(:component, :with_exact_ingredient) }
 
       it "leaves the existing ingredients" do
         expect { component.update_formulation_type("exact") }
@@ -484,7 +484,7 @@ RSpec.describe Component, type: :model do
     end
 
     context "when changing from exact to range" do
-      let(:component) { create(:component, :with_exact_ingredients) }
+      let(:component) { create(:component, :with_exact_ingredient) }
 
       it "removes the ingredients formulas" do
         expect { component.update_formulation_type("range") }
@@ -581,7 +581,7 @@ RSpec.describe Component, type: :model do
     end
 
     it "returns false for an exact component with ingredients" do
-      component = create(:component, :with_exact_ingredients)
+      component = create(:component, :with_exact_ingredient)
       expect(component.missing_ingredients?).to eq(false)
     end
 
@@ -603,7 +603,7 @@ RSpec.describe Component, type: :model do
   end
 
   describe "#delete_ingredient!" do
-    let(:component) { create(:exact_component, :completed, :with_exact_ingredients) }
+    let(:component) { create(:exact_component, :completed, :with_exact_ingredient) }
 
     it "returns false when the ingredient does not belong to the component" do
       ingredient = create(:range_ingredient)
@@ -629,6 +629,38 @@ RSpec.describe Component, type: :model do
       expect { component.delete_ingredient!(ingredient) }
         .to not_change(component, :notification_type)
         .and not_change(component, :state)
+    end
+  end
+
+  describe "#multi_shade?" do
+    it "returns false for a component without shades" do
+      component = build_stubbed(:component, shades: nil)
+      expect(component.multi_shade?).to eq(false)
+    end
+
+    it "returns false for a component with an empty array of shades" do
+      component = build_stubbed(:component, shades: [])
+      expect(component.multi_shade?).to eq(false)
+    end
+
+    it "returns false for a component with an array with blank shades" do
+      component = build_stubbed(:component, shades: [" ", ""])
+      expect(component.multi_shade?).to eq(false)
+    end
+
+    it "returns true for a component with one shade" do
+      component = build_stubbed(:component, shades: %w[blue])
+      expect(component.multi_shade?).to eq(true)
+    end
+
+    it "returns true for a component with multiple shades" do
+      component = build_stubbed(:component, shades: %w[blue yellow])
+      expect(component.multi_shade?).to eq(true)
+    end
+
+    it "returns true for a component with multiple shades and blank shades" do
+      component = build_stubbed(:component, shades: %w[blue yellow ""])
+      expect(component.multi_shade?).to eq(true)
     end
   end
 end
