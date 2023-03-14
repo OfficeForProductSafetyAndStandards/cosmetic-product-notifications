@@ -39,8 +39,7 @@ private
                                             to_date: @search_form.date_to_for_search,
                                             group_by: @search_form.group_by,
                                             sort_by: @search_form.sort_by)
-    Rails.logger.debug query.build_query.to_json
-    # Pagination needs t  o be kept together with the full search query to automatically paginate the query with Kaminari values
+    # Pagination needs to be kept together with the full search query to automatically paginate the query with Kaminari values
     # instead of defaulting to OpenSearch returning the first 10 hits.
     search_result = Notification.full_search(query).page(params[:page]).per(PER_PAGE)
 
