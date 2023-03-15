@@ -1,6 +1,6 @@
 <% content_for :page_title, safe_join(["Product details: ", @notification.product_name]) %>
 <% content_for :after_header do %>
-  <%= link_to "Back", responsible_person_notifications_path(@responsible_person, page: params[:page]), class: "govuk-back-link" %>
+  <%= link_to "Back", @back_link, class: "govuk-back-link" %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -10,20 +10,14 @@
         <h1 class="govuk-heading-l">
           <span class="govuk-caption-l">Notified product: </span>
           <%= @notification.product_name %>
+          <% if @notification.archived? %>
+            <%= govukTag(text: "Archived", classes: "govuk-tag--grey") %>
+          <% end %>
         </h1>
       </div>
       <div class="govuk-grid-column-one-third">
         <div class="opss-text-align-right govuk-!-margin-bottom-8">
-          <a class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-underline-offset" href="<%= new_responsible_person_notification_clone_path(@responsible_person, @notification) %>">
-            Create a draft notification using<br class="opss-br-desktop"> this notification as a template
-          </a>
-        </div>
-        <div class="opss-text-align-right govuk-!-margin-bottom-8">
-        <% if @notification.can_be_deleted? %>
-          <%= link_to "Delete this notification",
-              delete_responsible_person_delete_notification_path(@responsible_person, @notification),
-              class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset" %>
-        <% end %>
+          <%= govukButton(text: "Copy this notification", href: new_responsible_person_notification_clone_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
         </div>
       </div>
     </div>
@@ -46,4 +40,21 @@
   </article>
 
   <%= render("aside_responsible_person_details", responsible_person: @responsible_person) %>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-top-4">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <% if @notification.archived? %>
+          <%= govukButton(text: "Unarchive this notification", href: responsible_person_notification_unarchive_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
+        <% else %>
+          <%= govukButton(text: "Archive this notification", href: responsible_person_notification_archive_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
+        <% end %>
+        <% if @notification.can_be_deleted? %>
+          <%= govukButton(text: "Delete this notification", href: delete_responsible_person_delete_notification_path(@responsible_person, @notification), classes: "govuk-button--warning") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
