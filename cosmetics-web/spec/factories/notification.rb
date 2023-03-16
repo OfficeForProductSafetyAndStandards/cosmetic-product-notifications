@@ -14,6 +14,7 @@ FactoryBot.define do
     end
 
     factory :registered_notification, traits: [:registered]
+    factory :archived_notification, traits: %i[registered archived]
 
     trait :registered do
       state { NotificationStateConcern::NOTIFICATION_COMPLETE }

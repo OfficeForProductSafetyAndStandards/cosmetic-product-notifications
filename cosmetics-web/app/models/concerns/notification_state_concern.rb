@@ -44,7 +44,11 @@ module NotificationStateConcern
   included do
     include AASM
 
-    aasm whiny_transitions: false, timestamps: true, column: :state do
+    # Automatic timestamping (timestamps: false) is disabled as we need to keep the original timestamp when the
+    # notification was marked as completed, even when moving away from the completed state and back again.
+    # (e.g. when archiving and then unarchiving)
+    # Automatic timestamping would override the initial completion timestamp.
+    aasm whiny_transitions: false, timestamps: false, column: :state do
       state EMPTY, initial: true
       state PRODUCT_NAME_ADDED
       state READY_FOR_NANOMATERIALS
@@ -69,10 +73,16 @@ module NotificationStateConcern
         transitions from: COMPONENTS_COMPLETE, to: READY_FOR_COMPONENTS, unless: :all_components_completed?
       end
 
-      event :submit_notification, after: :cache_notification_for_csv! do
-        transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE, after: proc { index_document } do
+      event :submit_notification do
+        transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE do
           guard do
             valid?(:accept_and_submit)
+          end
+
+          success do
+            update(notification_complete_at: Time.zone.now)
+            index_document
+            cache_notification_for_csv!
           end
         end
       end
