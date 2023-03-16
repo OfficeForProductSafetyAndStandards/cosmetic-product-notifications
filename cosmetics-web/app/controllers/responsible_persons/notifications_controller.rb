@@ -14,7 +14,10 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   end
 
   def archived
-    @registered_notifications = get_registered_archived_notifications(20)
+    # TODO: Remove following redirection guard once we re-enable archiving
+    return redirect_to responsible_person_notifications_path(@responsible_person)
+
+    @registered_notifications = get_registered_archived_notifications(20) # rubocop:disable Lint/UnreachableCode
     respond_to do |format|
       format.html
       format.csv do
@@ -64,7 +67,10 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     @notification = Notification.completed.find_by!(reference_number: params[:notification_reference_number])
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
 
-    @notification.archive!
+    # TODO: Remove following redirection guard once we re-enable archiving
+    return redirect_to responsible_person_notifications_path(@notification.responsible_person)
+
+    @notification.archive! # rubocop:disable Lint/UnreachableCode
 
     flash[:success_banner] = {
       heading: "#{@notification.product_name} (#{@notification.reference_number_for_display}) has been archived.",
@@ -78,7 +84,10 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     @notification = Notification.archived.find_by!(reference_number: params[:notification_reference_number])
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
 
-    @notification.unarchive!
+    # TODO: Remove following redirection guard once we re-enable archiving
+    return redirect_to responsible_person_notifications_path(@notification.responsible_person)
+
+    @notification.unarchive! # rubocop:disable Lint/UnreachableCode
 
     flash[:success_banner] = {
       heading: "#{@notification.product_name} (#{@notification.reference_number_for_display}) has been unarchived.",
