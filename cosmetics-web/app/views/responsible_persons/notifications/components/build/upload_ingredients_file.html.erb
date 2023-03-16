@@ -6,26 +6,71 @@
 
 <%= error_summary_for(@bulk_ingredients_form) %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-form-group <%= "govuk-form-group--error" if @bulk_ingredients_form.errors.any? %>">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="csv-upload">
+            Upload the ingredients <abbr>CSV</abbr> file
+          </label>
+        </h1>
+        <div id="csv-hint" class="govuk-hint govuk-!-margin-bottom-8">
+          Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
+        </div>
+
+        <% if @ingredients_imported %>
+          <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-4">
+            <h1 class="govuk-panel__title">Upload successful</h1>
+            <div class="govuk-panel__body">
+              <strong><%= @component.ingredients_file.filename %></strong>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @component.ingredients_file.present? %>
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-warning-text__assistive">Warning</span>
+              In order to change the ingredients, edit and re-upload the existing file or upload a new file
+            </strong>
+          </div>
+
+          <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-heading-m">
+              File uploaded
+            </caption>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <%= @component.ingredients_file.filename %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= form_with url: responsible_person_notification_component_delete_ingredients_file_path(@notification.responsible_person, @notification, @component), method: :delete do %>
+                    <button type="submit" class="govuk-button opss-button-link">
+                      Remove
+                    </button>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
 <%= form_with model: @bulk_ingredients_form, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-form-group <%= "govuk-form-group--error" if @bulk_ingredients_form.errors.any? %>">
-          <h1 class="govuk-label-wrapper">
-            <label class="govuk-label govuk-label--l" for="csv-upload">
-              Upload the ingredients <abbr>CSV</abbr> file
-            </label>
-          </h1>
-          <div id="csv-hint" class="govuk-hint govuk-!-margin-bottom-8">
-            Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
-          </div>
-
-          <% if @bulk_ingredients_form.errors %>
-            <p class="govuk-error-message" id="file-error">
-              <span class="govuk-visually-hidden">Error:</span>
-              <%= @bulk_ingredients_form.errors.full_messages.first %>
-            </p>
-          <% end %>
-          <%= form.file_field :file, class: "govuk-file-upload", accept: "csv" %>
+        <% if @bulk_ingredients_form.errors %>
+          <p class="govuk-error-message" id="file-error">
+          <span class="govuk-visually-hidden">Error:</span>
+          <%= @bulk_ingredients_form.errors.full_messages.first %>
+          </p>
+        <% end %>
+        <%= form.file_field :file, class: "govuk-file-upload", accept: "csv" %>
       </div>
     </div>
   </div>

@@ -72,7 +72,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Enter an ingredient name"] }
+        let(:error_messages) { ["The file has error in row: 2"] }
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Header is missing"] }
+        let(:error_messages) { ["The supplied header row must be included in the file"] }
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Enter the concentration"] }
+        let(:error_messages) { ["The file has error in row: 2"] }
       end
     end
 
@@ -111,7 +111,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Enter a number for the concentration"] }
+        let(:error_messages) { ["The file has error in row: 2"] }
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"] }
+        let(:error_messages) { ["The file has error in row: 2"] }
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Inci name is too long (maximum is 100 characters)"] }
+        let(:error_messages) { ["The file has error in row: 2"] }
       end
     end
 
@@ -181,7 +181,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Specify if ingredient is poisonous"] }
+        let(:error_messages) { ["The file has error in row: 2"] }
       end
     end
 
@@ -196,7 +196,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 3: Enter a number for the concentration"] }
+        let(:error_messages) { ["The file has error in row: 4"] }
       end
     end
 
@@ -212,8 +212,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
       include_examples "validation" do
         let(:error_messages) do
-          ["The file could not be uploaded because of error in line 1: Enter a number for the concentration",
-           "The file could not be uploaded because of error in line 3: Enter a number for the concentration"]
+          ["The file has error in rows: 2,4"]
         end
       end
     end
@@ -251,7 +250,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 1: Ingredient name already exists in this component"] }
+        let(:error_messages) { ["The file has error in row: 2"] }
       end
     end
 
@@ -265,7 +264,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file could not be uploaded because of error in line 2: Ingredient name already exists in this CSV file"] }
+        let(:error_messages) { ["The file has error in row: 3"] }
       end
     end
 

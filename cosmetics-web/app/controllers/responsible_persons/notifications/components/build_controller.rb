@@ -329,15 +329,23 @@ private
   end
 
   def update_upload_ingredients_file
+    # if the params are empty and ingredients file already exist, we can proceed to next step
+    #   jump_to_step :want_to_add_another_ingredient, ingredients_uploaded: true
+    # otherwise, the old logic kick in
     ingredients_file = params.dig(:responsible_persons_notifications_components_bulk_ingredient_upload_form, :file)
     @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, file: ingredients_file)
 
+    if ingredients_file.nil? && @component.ingredients_file.present?
+      return jump_to_step :select_ph_option
+    end
+
     if @bulk_ingredients_form.save_ingredients
       @component.ingredients_file.attach(ingredients_file)
-      jump_to_step :want_to_add_another_ingredient, ingredients_uploaded: true
-    else
-      rerender_current_step
+      # we actually want to rerender current step with parameter saying that all went well
+      @ingredients_imported = true
     end
+
+    rerender_current_step
   end
 
   def update_contains_ingredients_npis_needs_to_know

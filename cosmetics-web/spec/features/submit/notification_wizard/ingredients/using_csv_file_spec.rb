@@ -41,9 +41,9 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     page.attach_file "spec/fixtures/files/Exact_ingredients.csv"
     click_on "Continue"
 
-    expect_success_banner_with_text "The ingredients were successfully added to the product."
-
-    answer_add_another_ingredient_with "No", success_banner: false
+    # TODO: Change success banner
+    # expect_success_banner_with_text "The ingredients were successfully added to the product."
+    click_on "Continue"
 
     expect_to_be_on__what_is_ph_range_of_product_page
 

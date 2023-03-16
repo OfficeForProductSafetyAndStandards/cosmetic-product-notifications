@@ -112,6 +112,11 @@ FactoryBot.define do
       end
     end
 
+    trait :with_ingredients_file do
+      notification_type { "exact" }
+      ingredients_file { Rack::Test::UploadedFile.new("spec/fixtures/files/Exact_ingredients.csv", "application/pdf") }
+    end
+
     trait :with_formulation_file do
       formulation_file { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf") }
     end

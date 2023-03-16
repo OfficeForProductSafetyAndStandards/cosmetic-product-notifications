@@ -11,13 +11,14 @@ module ResponsiblePersons::Notifications::Components
     validate :file_size_validation
     validate :file_is_csv_file_validation
     validate :file_is_not_empty_validation
-    validate :correct_ingredients_validation
     validate :header_missing_validation
+    validate :correct_ingredients_validation
 
     # Original valid is reseting error messages.
     # We have an edge case here where we are adding error messages after
     # validation - during actual ingredient creation
     def valid?
+      component.ingredients.delete_all
       return false if errors.present?
 
       super
@@ -35,12 +36,10 @@ module ResponsiblePersons::Notifications::Components
       # * difference between ingredient form and model validations
       # * internal ActiveRecord issue
       ActiveRecord::Base.transaction do
-        component.ingredients.delete_all
-
         @ingredients.each_with_index do |ingredient, i|
           ingredient.save
           unless ingredient.persisted?
-            raise IngredientCanNotBeSavedError, "The file cound not be uploaded because of errors in line #{i + 1}: #{ingredient.errors.full_messages.join(', ')}"
+            raise IngredientCanNotBeSavedError, "The file has error in row #{i + 1}: #{ingredient.errors.full_messages.join(', ')}"
           end
         end
       end
@@ -75,8 +74,10 @@ module ResponsiblePersons::Notifications::Components
     def correct_ingredients_validation
       prepare_ingredients
 
-      @error_messages.each do |message|
-        errors.add(:file, "The file could not be uploaded because of error in line #{message[:line]}: #{message[:message]}")
+      if @error_rows.count == 1
+        errors.add(:file, "The file has error in row: #{@error_rows.first}")
+      elsif @error_rows.count > 1
+        errors.add(:file, "The file has error in rows: #{@error_rows.join(',')}")
       end
     end
 
@@ -84,7 +85,7 @@ module ResponsiblePersons::Notifications::Components
       return if csv_header.blank?
 
       if row_to_ingredient(**csv_header.to_h).valid?
-        errors.add(:file, "The file could not be uploaded because of error in line 1: Header is missing")
+        errors.add(:file, "The supplied header row must be included in the file")
       end
     end
 
@@ -92,14 +93,14 @@ module ResponsiblePersons::Notifications::Components
       return if @ingredients.present?
 
       @ingredients = []
-      @error_messages = []
+      @error_rows = []
 
       return if duplicated_ingredients_in_file?
 
       ingredients_from_csv&.each_with_index do |row, i|
         ingredient = row_to_ingredient(**row.to_h)
         unless ingredient.valid?
-          @error_messages << { line: i + 1, message: ingredient.errors.full_messages.first }
+          @error_rows << i + 2
         end
         @ingredients << ingredient
       end
@@ -136,7 +137,8 @@ module ResponsiblePersons::Notifications::Components
       ingredients_from_csv&.each_with_index do |row, i|
         name = row[0]
         if names.include? name
-          errors.add(:file, "The file could not be uploaded because of error in line #{i + 1}: Ingredient name already exists in this CSV file")
+          # errors.add(:file, "The file has error in row #{i + 1}")
+          @error_rows << i + 2
           return true
         end
         if name.present?
