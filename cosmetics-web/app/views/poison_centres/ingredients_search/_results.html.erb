@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body govuk-!-margin-bottom-0">
-      <%= pluralize(@notifications.count, 'notification') %> using the current filters <%= @notifications.count == 1 ? "was found." : "were found." %>
+      <%= pluralize(@total_count, 'notification') %> using the current filters <%= @total_count == 1 ? "was found." : "were found." %>
     </p>
   </div>
 
@@ -13,6 +13,7 @@
         <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_from, id: :sort_form, search_type: 'ingredient' } %>
         <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_to, id: :sort_form, search_type: 'ingredient' } %>
         <%= form.hidden_field :sort_by, id: 'ingredient_search_form_sort_by_hidden' %>
+        <%= form.hidden_field :group_by, id: 'ingredient_search_form_group_by_hidden' %>
         <%= form.hidden_field :exact_or_any_match, id: 'ingredient_search_form_exact_or_any_match_hidden' %>
         <button class="govuk-button opss-button-link govuk-!-font-size-14">
           Edit your search

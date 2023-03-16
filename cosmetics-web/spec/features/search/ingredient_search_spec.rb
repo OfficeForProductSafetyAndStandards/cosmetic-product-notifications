@@ -12,7 +12,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
   let(:cream) { create(:notification, :registered, components: [component1], notification_complete_at: 1.day.ago, product_name: "Cream") }
   let(:shower_bubbles) { create(:notification, :registered, responsible_person:, components: [component2], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
-  let(:shower_bubbles2) { create(:notification, :registered, responsible_person2:, components: [component2], notification_complete_at: 5.days.ago, product_name: "Shower Bubbles 2") }
 
   before do
     configure_requests_for_search_domain
@@ -117,6 +116,28 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     links = page.all("table#table-items .govuk-link").map(&:text)
     expect(links).to eq ["View Cream", "View Shower Bubbles"]
+  end
+
+  scenario "show the total number of results" do
+    21.times do |i|
+      component = create(:component, :using_exact, with_ingredients: %w[stuff])
+      create(:notification, :registered, responsible_person:, components: [component], notification_complete_at: 5.days.ago, product_name: "Shower Bubbles #{i}")
+    end
+    Notification.import_to_opensearch(force: true)
+
+    click_link "Ingredients search"
+    expect(page).to have_h1("Ingredients search")
+    fill_in "ingredient_search_form_q", with: "stuff"
+    click_on "Search"
+    expect(page).to have_text("21 notifications using the current filters were found.")
+    expect(page).to have_link("View Shower Bubbles 0")
+    expect(page).not_to have_link("View Shower Bubbles 20")
+
+    click_link("Next page")
+    expect(page).to have_text("21 notifications using the current filters were found.")
+    expect(page).to have_h1("Ingredient – search results")
+    expect(page).not_to have_link("View Shower Bubbles 0")
+    expect(page).to have_link("View Shower Bubbles 20")
   end
 
   scenario "Back link" do

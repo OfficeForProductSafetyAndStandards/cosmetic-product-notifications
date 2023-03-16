@@ -10,6 +10,7 @@ class PoisonCentres::NotificationsSearchController < SearchApplicationController
       if @search_form.valid?
         @search_response = search_notifications
         @notifications = @search_response.records
+        @total_count = @search_response.results.total
       end
     end
   end

@@ -159,6 +159,47 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     end
   end
 
+  scenario "show the total number of results" do
+    20.times do |i|
+      create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion #{i}")
+    end
+    Notification.import_to_opensearch(force: true)
+    visit "/notifications"
+    expect(page).to have_h1("Cosmetic products search")
+
+    click_on "Search"
+    expect(page).to have_text("23 notifications using the current filters were found.")
+    expect(page).to have_link("View Sun Lotion 0")
+    expect(page).not_to have_link("View Sun Lotion 19")
+
+    click_link("Next page")
+    expect(page).to have_text("23 notifications using the current filters were found.")
+    expect(page).to have_h1("Cosmetic products search - results")
+    expect(page).not_to have_link("View Sun Lotion 0")
+    expect(page).to have_link("View Sun Lotion 19")
+  end
+
+  scenario "Editing the search" do
+    visit "/notifications"
+    expect(page).to have_h1("Cosmetic products search")
+
+    choose "Notification name"
+    choose "Skin products"
+    choose "Newest"
+    check "Include similar words"
+    click_on "Search"
+
+    # expect(page).to have_text("1 notification using the current filters was found.")
+
+    click_button("Edit your search")
+    expect(page).to have_h1("Cosmetic products search")
+
+    expect(page).to have_checked_field("Notification name")
+    expect(page).to have_checked_field("Skin products")
+    expect(page).to have_checked_field("Newest")
+    expect(page).to have_checked_field("Include similar words")
+  end
+
   scenario "Does not display pagination until has more than 20 results" do
     17.times do |i|
       create(:notification, :registered, :with_component, notification_complete_at: 5.days.ago, product_name: "Sun Lotion #{i}")
