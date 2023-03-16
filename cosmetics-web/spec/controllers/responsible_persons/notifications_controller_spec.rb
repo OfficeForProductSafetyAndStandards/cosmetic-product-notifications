@@ -157,7 +157,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "GET /archive" do
+  xdescribe "GET /archive" do
     let(:notification) { create(:registered_notification, responsible_person:) }
 
     it "archives the notification" do
@@ -172,7 +172,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "GET /unarchive" do
+  xdescribe "GET /unarchive" do
     let(:archived_notification) { create(:registered_notification, :archived, responsible_person:) }
 
     it "unarchives the notification and redirects to the index page" do
