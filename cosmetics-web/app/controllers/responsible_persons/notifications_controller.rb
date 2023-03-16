@@ -14,7 +14,10 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   end
 
   def archived
-    @registered_notifications = get_registered_archived_notifications(20)
+    # TODO: Remove following redirection guard once we re-enable archiving
+    return redirect_to responsible_person_notifications_path(@responsible_person)
+
+    @registered_notifications = get_registered_archived_notifications(20) # rubocop:disable Lint/UnreachableCode
     respond_to do |format|
       format.html
       format.csv do

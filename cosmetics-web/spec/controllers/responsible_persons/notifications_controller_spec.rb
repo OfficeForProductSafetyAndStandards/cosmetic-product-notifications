@@ -39,7 +39,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "GET /archived-notifications" do
+  xdescribe "GET /archived-notifications" do
     it "assigns the correct Responsible Person" do
       get :archived, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:responsible_person)).to eq(responsible_person)
