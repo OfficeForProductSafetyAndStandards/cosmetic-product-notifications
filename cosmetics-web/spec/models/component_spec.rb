@@ -663,4 +663,26 @@ RSpec.describe Component, type: :model do
       expect(component.multi_shade?).to eq(true)
     end
   end
+
+  describe "#range?" do
+    it "is false for component without notification type" do
+      component = build_stubbed(:component, notification_type: nil)
+      expect(component.range?).to eq(false)
+    end
+
+    it "is false for component with exact notification type" do
+      component = build_stubbed(:component, notification_type: "exact")
+      expect(component.range?).to eq(false)
+    end
+
+    it "is false for component with predefined notification type" do
+      component = build_stubbed(:component, notification_type: "predefined")
+      expect(component.range?).to eq(false)
+    end
+
+    it "is true for component with range notification type" do
+      component = build_stubbed(:component, notification_type: "range")
+      expect(component.range?).to eq(true)
+    end
+  end
 end

@@ -52,31 +52,31 @@
         </fieldset>
       </div>
 
-        <%= govukRadios(
-              form: form,
-              key: :sort_by,
-              idPrefix: "sort-by",
-              hint: { text: "You can sort the ordering of how the notifications will be displayed.", classes: "govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" },
-              fieldset: { classes: "govuk-fieldset opss-grouping", legend: { text: "Sorting order", classes: "govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" } },
-              classes: "govuk-radios--inline govuk-radios--small",
-              items: [
-                {
-                  value: OpenSearchQuery::Notification::SCORE_SORTING,
-                  text: 'Relevance',
-                  label: { classes: 'govuk-label govuk-radios__label' }
-                },
-                {
-                  value: OpenSearchQuery::Notification::DATE_DESCENDING_SORTING,
-                  text: "Newest",
-                  label: { classes: 'govuk-label govuk-radios__label' }
-                },
-                {
-                  value: OpenSearchQuery::Notification::DATE_ASCENDING_SORTING,
-                  text: 'Oldest',
-                  label: { classes: 'govuk-label govuk-radios__label' }
-                },
-              ],
-              ) %>
+      <%= govukRadios(
+            form: form,
+            key: :sort_by,
+            idPrefix: "sort-by",
+            hint: { text: "You can sort the ordering of how the notifications will be displayed.", classes: "govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" },
+            fieldset: { classes: "govuk-fieldset opss-grouping", legend: { text: "Sorting order", classes: "govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" } },
+            classes: "govuk-radios--inline govuk-radios--small",
+            items: [
+              {
+                value: OpenSearchQuery::Notification::SCORE_SORTING,
+                text: 'Relevance',
+                label: { classes: 'govuk-label govuk-radios__label' }
+              },
+              {
+                value: OpenSearchQuery::Notification::DATE_DESCENDING_SORTING,
+                text: "Newest",
+                label: { classes: 'govuk-label govuk-radios__label' }
+              },
+              {
+                value: OpenSearchQuery::Notification::DATE_ASCENDING_SORTING,
+                text: 'Oldest',
+                label: { classes: 'govuk-label govuk-radios__label' }
+              },
+            ],
+            ) %>
     </div>
   </div>
 

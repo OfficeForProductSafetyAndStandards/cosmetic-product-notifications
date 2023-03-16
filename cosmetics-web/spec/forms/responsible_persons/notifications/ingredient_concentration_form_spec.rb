@@ -458,8 +458,50 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
       end
     end
 
-    describe "used for multiple shades validation" do
-      context "with an 'range' type" do
+    describe "used for multiple shades selection validation" do
+      RSpec.shared_examples "valid with a value" do
+        context "when used for multiple shades" do
+          before do
+            form.used_for_multiple_shades = true
+          end
+
+          it { expect(form).to be_valid }
+        end
+
+        context "when not used for multiple shades" do
+          before do
+            form.used_for_multiple_shades = false
+          end
+
+          it { expect(form).to be_valid }
+        end
+      end
+
+      RSpec.shared_examples "valid without a value" do
+        context "when not specifying if used for multiple shades" do
+          before do
+            form.used_for_multiple_shades = nil
+          end
+
+          it { expect(form).to be_valid }
+        end
+      end
+
+      RSpec.shared_examples "invalid without a value" do
+        context "when not specifying if the ingredient is used for multiple shades" do
+          before do
+            form.used_for_multiple_shades = nil
+          end
+
+          it "is not valid" do
+            expect(form).not_to be_valid
+            expect(form.errors[:used_for_multiple_shades])
+              .to eq(["Select yes if the ingredient is used for different shades"])
+          end
+        end
+      end
+
+      context "with a range type" do
         let(:component) { build_stubbed(:ranges_component, :with_multiple_shades) }
         let(:range_concentration) { "greater_than_10_less_than_25_percent" }
 
@@ -467,23 +509,11 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           form.type = "range"
         end
 
-        it "is valid when it is used for multiple shades" do
-          form.used_for_multiple_shades = true
-          expect(form).to be_valid
-        end
-
-        it "is valid when it is not used for multiple shades" do
-          form.used_for_multiple_shades = false
-          expect(form).to be_valid
-        end
-
-        it "is valid when not specifying if it is used for multiple shades" do
-          form.used_for_multiple_shades = nil
-          expect(form).to be_valid
-        end
+        include_examples "valid with a value"
+        include_examples "valid without a value"
       end
 
-      context "with an 'exact' type" do
+      context "with an exact type" do
         let(:component) { build_stubbed(:exact_component, :with_multiple_shades) }
         let(:maximum_concentration) { "4.2" }
 
@@ -491,29 +521,46 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           form.type = "exact"
         end
 
-        it "is valid when it is used for multiple shades" do
-          form.used_for_multiple_shades = true
-          expect(form).to be_valid
+        context "with a multi-shade exact component" do
+          let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "exact") }
+
+          include_examples "valid with a value"
+          include_examples "invalid without a value"
         end
 
-        it "is valid when it is not used for multiple shades" do
-          form.used_for_multiple_shades = false
-          expect(form).to be_valid
+        context "with a multi-shade range component" do
+          let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "range") }
+
+          include_examples "valid with a value"
+          include_examples "valid without a value"
         end
 
-        it "is not valid when not specifying if the ingredient is used for multiple shades" do
-          form.used_for_multiple_shades = nil
-          expect(form).not_to be_valid
-          expect(form.errors[:used_for_multiple_shades]).to eq(["Select yes if the ingredient is used for different shades"])
+        context "with a multi-shade predefined component" do
+          let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "predefined") }
+
+          include_examples "valid with a value"
+          include_examples "invalid without a value"
         end
 
-        context "when the component is not multi-shade" do
+        context "with a non multi-shade exact component" do
           let(:component) { build_stubbed(:exact_component) }
 
-          it "is valid when not specifying if the ingredient is used for multiple shades" do
-            form.used_for_multiple_shades = nil
-            expect(form).to be_valid
-          end
+          include_examples "valid with a value"
+          include_examples "valid without a value"
+        end
+
+        context "with a non multi-shade range component" do
+          let(:component) { build_stubbed(:ranges_component) }
+
+          include_examples "valid with a value"
+          include_examples "valid without a value"
+        end
+
+        context "with a non multi-shade predefined component" do
+          let(:component) { build_stubbed(:predefined_component) }
+
+          include_examples "valid with a value"
+          include_examples "valid without a value"
         end
       end
     end
