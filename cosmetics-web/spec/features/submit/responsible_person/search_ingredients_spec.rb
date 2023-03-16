@@ -54,7 +54,6 @@ RSpec.describe "Search ingredients page", type: :feature do
     expect(page).to have_link("View Shower Bubbles 20")
   end
 
-
   scenario "Editing your search" do
     visit responsible_person_search_ingredients_path(responsible_person.id)
 
