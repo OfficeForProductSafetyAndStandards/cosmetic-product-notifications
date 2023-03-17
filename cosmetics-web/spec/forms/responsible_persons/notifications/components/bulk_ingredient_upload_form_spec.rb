@@ -236,24 +236,6 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
     end
 
-    context "when ingredient with that name already exists" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Aqua,65,497-19-8,false
-          Acid,50,497-19-8,false
-        CSV
-      end
-
-      before do
-        create(:exact_ingredient, inci_name: "Aqua", component:)
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
-      end
-    end
-
     context "when ingredients repeat withing file" do
       let(:csv) do
         <<~CSV

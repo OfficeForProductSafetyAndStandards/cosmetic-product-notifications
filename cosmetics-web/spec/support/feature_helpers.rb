@@ -120,6 +120,10 @@ def expect_success_banner_with_text(text)
   expect(page).to have_css("div.govuk-notification-banner--success", text:)
 end
 
+def expect_confirmation_banner_with_text(text)
+  expect(page).to have_css("div.govuk-panel--confirmation", text:)
+end
+
 def otp_code(email = nil)
   user_with_code = User.find_by(email:) || user
   user_with_code.reload.direct_otp

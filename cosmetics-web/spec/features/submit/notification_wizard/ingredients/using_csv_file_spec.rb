@@ -8,7 +8,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications"
-    click_on "Add a cosmetic product"
+    click_on "Create a new product notification"
     complete_product_wizard(name: "FooProduct")
     expect_progress(1, 3)
     expect_product_details_task_not_started
@@ -36,13 +36,12 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     page.attach_file "spec/fixtures/files/Exact_ingredients_duplicate_row.csv"
     click_on "Continue"
 
-    expect_form_to_have_errors(file: { message: "The file could not be uploaded because of error in line 4: Ingredient name already exists in this CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The file has error in row: 5", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
     page.attach_file "spec/fixtures/files/Exact_ingredients.csv"
     click_on "Continue"
 
-    # TODO: Change success banner
-    # expect_success_banner_with_text "The ingredients were successfully added to the product."
+    expect_confirmation_banner_with_text "Upload successful"
     click_on "Continue"
 
     expect_to_be_on__what_is_ph_range_of_product_page
