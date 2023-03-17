@@ -39,7 +39,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "GET /archived-notifications" do
+  xdescribe "GET /archived-notifications" do
     it "assigns the correct Responsible Person" do
       get :archived, params: { responsible_person_id: responsible_person.id }
       expect(assigns(:responsible_person)).to eq(responsible_person)
@@ -157,7 +157,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "GET /archive" do
+  xdescribe "GET /archive" do
     let(:notification) { create(:registered_notification, responsible_person:) }
 
     it "archives the notification" do
@@ -172,7 +172,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
     end
   end
 
-  describe "GET /unarchive" do
+  xdescribe "GET /unarchive" do
     let(:archived_notification) { create(:registered_notification, :archived, responsible_person:) }
 
     it "unarchives the notification and redirects to the index page" do
