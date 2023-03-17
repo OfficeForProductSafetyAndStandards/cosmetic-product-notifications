@@ -20,5 +20,13 @@ module ResponsiblePersons::Notifications::Product
     def multi_component?
       single_or_multi_component == MULTI
     end
+
+    def components_count
+      if multi_component?
+        super
+      else
+        1
+      end
+    end
   end
 end
