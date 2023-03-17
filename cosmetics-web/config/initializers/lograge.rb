@@ -6,7 +6,12 @@ Rails.application.configure do
   config.lograge.custom_payload do |controller|
     extra_payload = {}
     extra_payload[:user_id] = begin
-      controller.current_user&.id
+      controller.send(:current_user)&.id
+    rescue StandardError
+      nil
+    end
+    extra_payload[:journey_id] = begin
+      controller.request.cookies[:journey_id]
     rescue StandardError
       nil
     end

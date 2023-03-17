@@ -9,6 +9,7 @@ module NotificationStateConcern
   COMPONENTS_COMPLETE = :components_complete
   NOTIFICATION_COMPLETE = :notification_complete
   DELETED = :deleted
+  ARCHIVED = :archived
 
   EDITABLE_STATES = [EMPTY, PRODUCT_NAME_ADDED, READY_FOR_COMPONENTS, READY_FOR_NANOMATERIALS, DETAILS_COMPLETE, COMPONENTS_COMPLETE].freeze
 
@@ -54,6 +55,7 @@ module NotificationStateConcern
       state COMPONENTS_COMPLETE
       state NOTIFICATION_COMPLETE
       state DELETED
+      state ARCHIVED
 
       event :add_product_name do
         transitions from: EMPTY, to: PRODUCT_NAME_ADDED
@@ -73,6 +75,14 @@ module NotificationStateConcern
             valid?(:accept_and_submit)
           end
         end
+      end
+
+      event :archive do
+        transitions from: NOTIFICATION_COMPLETE, to: ARCHIVED, after: proc { update_document }
+      end
+
+      event :unarchive do
+        transitions from: ARCHIVED, to: NOTIFICATION_COMPLETE, after: proc { update_document }
       end
     end
   end

@@ -248,6 +248,14 @@ class Component < ApplicationRecord
     end
   end
 
+  def multi_shade?
+    !!shades&.compact&.reject(&:blank?)&.any? # Double negated to return a boolean instead of nil
+  end
+
+  def range?
+    notification_type == "range"
+  end
+
 private
 
   # This takes any value and returns nil if the value

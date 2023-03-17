@@ -160,6 +160,96 @@ RSpec.describe Ingredient, type: :model do
         expect(ingredient).to be_valid
       end
     end
+
+    describe "used for multiple shades validation" do
+      RSpec.shared_examples "valid with a value" do
+        context "when the ingredient is used for multiple shades" do
+          let(:used_for_multiple_shades) { true }
+
+          it { expect(ingredient).to be_valid }
+        end
+
+        context "when the ingredient is not used for multiple shades" do
+          let(:used_for_multiple_shades) { false }
+
+          it { expect(ingredient).to be_valid }
+        end
+      end
+
+      RSpec.shared_examples "valid without a value" do
+        context "when not specifying if the ingredient is used for multiple shades" do
+          let(:used_for_multiple_shades) { nil }
+
+          it { expect(ingredient).to be_valid }
+        end
+      end
+
+      RSpec.shared_examples "invalid without a value" do
+        context "when not specifying if the ingredient is used for multiple shades" do
+          let(:used_for_multiple_shades) { nil }
+
+          it "is not valid" do
+            expect(ingredient).not_to be_valid
+            expect(ingredient.errors[:used_for_multiple_shades])
+              .to eq(["Used for multiple shades is not included in the list"])
+          end
+        end
+      end
+
+      context "with a range ingredient" do
+        let(:component) { build_stubbed(:ranges_component, :with_multiple_shades) }
+        let(:ingredient) { build_stubbed(:range_ingredient, component:, used_for_multiple_shades:) }
+
+        include_examples "valid with a value"
+        include_examples "valid without a value"
+      end
+
+      context "with an exact ingredient" do
+        let(:ingredient) { build_stubbed(:exact_ingredient, :poisonous, component:, used_for_multiple_shades:) }
+
+        context "with a multi-shade exact component" do
+          let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "exact") }
+
+          include_examples "valid with a value"
+          include_examples "invalid without a value"
+        end
+
+        context "with a multi-shade range component" do
+          let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "range") }
+
+          include_examples "valid with a value"
+          include_examples "valid without a value"
+        end
+
+        context "with a multi-shade predefined component" do
+          let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "predefined") }
+
+          include_examples "valid with a value"
+          include_examples "invalid without a value"
+        end
+
+        context "with a non multi-shade exact component" do
+          let(:component) { build_stubbed(:exact_component) }
+
+          include_examples "valid with a value"
+          include_examples "valid without a value"
+        end
+
+        context "with a non multi-shade range component" do
+          let(:component) { build_stubbed(:ranges_component) }
+
+          include_examples "valid with a value"
+          include_examples "valid without a value"
+        end
+
+        context "with a non multi-shade predefined component" do
+          let(:component) { build_stubbed(:predefined_component) }
+
+          include_examples "valid with a value"
+          include_examples "valid without a value"
+        end
+      end
+    end
   end
 
   describe ".unique_names_by_created_last" do

@@ -354,15 +354,10 @@ acorn-jsx@^5.3.1:
   resolved "https://registry.npmjs.org/acorn-jsx/-/acorn-jsx-5.3.2.tgz"
   integrity sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==
 
-acorn@^8.5.0, acorn@^8.7.1:
+acorn@^8.5.0, acorn@^8.7.0, acorn@^8.7.1:
   version "8.8.2"
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.8.2.tgz"
   integrity sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==
-
-acorn@^8.7.0:
-  version "8.7.0"
-  resolved "https://registry.npmjs.org/acorn/-/acorn-8.7.0.tgz"
-  integrity sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==
 
 adjust-sourcemap-loader@^4.0.0:
   version "4.0.0"
@@ -1450,12 +1445,7 @@ govuk-frontend@4.3.1:
   resolved "https://registry.npmjs.org/govuk-frontend/-/govuk-frontend-4.3.1.tgz"
   integrity sha512-uD0KVFds7drOwLEvfp4zRBOXuHCxkWLYDQcYvlbG+2baZ9po2TGZz8WjfzhfueYjo9+Uwk+bM0NQT6g4cg/Q+A==
 
-graceful-fs@^4.1.15, graceful-fs@^4.1.2:
-  version "4.2.9"
-  resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.9.tgz"
-  integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
-
-graceful-fs@^4.2.4, graceful-fs@^4.2.9:
+graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.2.4, graceful-fs@^4.2.9:
   version "4.2.10"
   resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.10.tgz"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
@@ -1785,10 +1775,10 @@ jest-worker@^27.4.5:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jquery@3.6.3, jquery@>=1.11:
-  version "3.6.3"
-  resolved "https://registry.npmjs.org/jquery/-/jquery-3.6.3.tgz"
-  integrity sha512-bZ5Sy3YzKo9Fyc8wH2iIQK4JImJ6R0GWI9kL1/k7Z91ZBNgkRXE6U0JfHIizZbort8ZunhSI3jw9I6253ahKfg==
+jquery@>=1.11:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.4.tgz#ba065c188142100be4833699852bf7c24dc0252f"
+  integrity sha512-v28EW9DWDFpzcD9O5iyJXg3R3+q+mET5JhnjJzQUZMHOv67bpSIHq81GEYpPNZHG+XXHsfSme3nxp/hndKEcsQ==
 
 js-base64@^2.1.9:
   version "2.6.4"
@@ -2032,10 +2022,10 @@ min-indent@^1.0.0:
   resolved "https://registry.npmjs.org/min-indent/-/min-indent-1.0.1.tgz"
   integrity sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
 
-mini-css-extract-plugin@^2.7.2:
-  version "2.7.2"
-  resolved "https://registry.npmjs.org/mini-css-extract-plugin/-/mini-css-extract-plugin-2.7.2.tgz"
-  integrity sha512-EdlUizq13o0Pd+uCp+WO/JpkLvHRVGt97RqfeGhXqAcorYo1ypJSpkV+WDT0vY/kmh/p7wRdJNJtuyK540PXDw==
+mini-css-extract-plugin@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-2.7.3.tgz#794aa4d598bf178a66b2a35fe287c3df3eac394e"
+  integrity sha512-CD9cXeKeXLcnMw8FZdtfrRrLaM7gwCl4nKuKn2YkY2Bw5wdlB8zU2cCzw+w2zS9RFvbrufTBkMCJACNPwqQA0w==
   dependencies:
     schema-utils "^4.0.0"
 
@@ -2751,10 +2741,10 @@ sass-loader@^13.2.0:
     klona "^2.0.4"
     neo-async "^2.6.2"
 
-sass@^1.58.3:
-  version "1.58.3"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.58.3.tgz#2348cc052061ba4f00243a208b09c40e031f270d"
-  integrity sha512-Q7RaEtYf6BflYrQ+buPudKR26/lH+10EmO9bBqbmPh/KeLqv8bjpTNqxe71ocONqXq+jYiCbpPUmQMS+JJPk4A==
+sass@^1.59.3:
+  version "1.59.3"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.59.3.tgz#a1ddf855d75c70c26b4555df4403e1bbf8e4403f"
+  integrity sha512-QCq98N3hX1jfTCoUAsF3eyGuXLsY7BCnCEg9qAact94Yc21npG2/mVOqoDvE0fCbWDqiM4WlcJQla0gWG2YlxQ==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
@@ -3356,10 +3346,10 @@ webpack-sources@^3.2.3:
   resolved "https://registry.npmjs.org/webpack-sources/-/webpack-sources-3.2.3.tgz"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
 
-webpack@^5.75.0:
-  version "5.75.0"
-  resolved "https://registry.npmjs.org/webpack/-/webpack-5.75.0.tgz"
-  integrity sha512-piaIaoVJlqMsPtX/+3KTTO6jfvrSYgauFVdt8cr9LTHKmcq/AMd4mhzsiP7ZF/PGRNPGA8336jldh9l2Kt2ogQ==
+webpack@^5.76.1:
+  version "5.76.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.76.1.tgz#7773de017e988bccb0f13c7d75ec245f377d295c"
+  integrity sha512-4+YIK4Abzv8172/SGqObnUjaIHjLEuUasz9EwQj/9xmPPkYJy2Mh03Q/lJfSD3YLzbxy5FeTq5Uw0323Oh6SJQ==
   dependencies:
     "@types/eslint-scope" "^3.7.3"
     "@types/estree" "^0.0.51"

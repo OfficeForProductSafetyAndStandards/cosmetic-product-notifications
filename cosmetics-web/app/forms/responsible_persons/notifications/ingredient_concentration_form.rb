@@ -6,7 +6,9 @@ module ResponsiblePersons::Notifications
     include StripWhitespace
 
     attribute :name, :string
+    attribute :used_for_multiple_shades, :boolean
     attribute :exact_concentration
+    attribute :maximum_concentration
     attribute :range_concentration, :string
     attribute :cas_number, :string
     attribute :poisonous, :boolean
@@ -20,10 +22,15 @@ module ResponsiblePersons::Notifications
     validates :poisonous, inclusion: { in: [true, false] }, if: :range?
     validates :name, presence: true, length: { maximum: Ingredient::NAME_LENGTH_LIMIT }, ingredient_name_format: { message: :invalid }
     validate :unique_name
+    validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { used_for_multiple_shades_required? }
     validates :exact_concentration,
               presence: true,
               numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
-              if: :exact?
+              if: -> { exact? && ((component && !component.multi_shade?) || used_for_single_shade?) }
+    validates :maximum_concentration,
+              presence: true,
+              numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
+              if: -> { exact? && used_for_multiple_shades? }
     validates :range_concentration,
               presence: true,
               if: -> { range? && poisonous == false }
@@ -43,6 +50,10 @@ module ResponsiblePersons::Notifications
         self.type = EXACT
         self.range_concentration = nil
       end
+
+      unless component&.multi_shade?
+        self.used_for_multiple_shades = nil
+      end
     end
 
     def range?
@@ -51,6 +62,14 @@ module ResponsiblePersons::Notifications
 
     def exact?
       type == EXACT
+    end
+
+    def used_for_single_shade?
+      used_for_multiple_shades == false
+    end
+
+    def used_for_multiple_shades?
+      used_for_multiple_shades == true
     end
 
     def save
@@ -68,7 +87,8 @@ module ResponsiblePersons::Notifications
     def ingredient_attributes
       {
         inci_name: name,
-        exact_concentration:,
+        used_for_multiple_shades:,
+        exact_concentration: exact? && used_for_multiple_shades? ? maximum_concentration : exact_concentration,
         range_concentration:,
         cas_number:,
         poisonous: poisonous.presence || false,
@@ -81,6 +101,11 @@ module ResponsiblePersons::Notifications
       if Ingredient.where(component_id: component, inci_name: name).where.not(id: updating_ingredient).any?
         errors.add(:name, :taken, entity: component.notification.is_multicomponent? ? "item" : "product")
       end
+    end
+
+    # TODO: Fix form so poisonous range ingredients require used_for_multiple_shades field too.
+    def used_for_multiple_shades_required?
+      exact? && component && component.multi_shade? && !component.range?
     end
   end
 end

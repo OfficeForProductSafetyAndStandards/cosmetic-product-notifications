@@ -16,7 +16,7 @@ module IngredientHelper
 
   def format_exact_ingredients(exact_ingredients)
     exact_ingredients.map do |ingredient|
-      { inci_name: ingredient.inci_name, exact_concentration: display_concentration(ingredient.exact_concentration) }
+      { inci_name: ingredient.inci_name, exact_concentration: display_concentration(ingredient.exact_concentration, used_for_multiple_shades: ingredient.used_for_multiple_shades?) }
     end
   end
 

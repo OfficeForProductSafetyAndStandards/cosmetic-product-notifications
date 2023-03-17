@@ -8,136 +8,275 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications"
-    click_on "Add a cosmetic product"
+    click_on "Create a new product notification"
     complete_product_wizard(name: "FooProduct")
     expect_progress(1, 3)
     expect_product_details_task_not_started
 
     click_link "Product details"
-    answer_is_item_available_in_shades_with "No"
-    answer_what_is_physical_form_of_item_with "Liquid"
-    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
-    answer_does_item_contain_cmrs_with "No"
-    answer_item_category_with "Hair and scalp products"
-    answer_item_subcategory_with "Hair and scalp care and cleansing products"
-    answer_item_sub_subcategory_with "Shampoo"
   end
 
-  scenario "Adding exact concentration ingredients to a product" do
-    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
-    expect_to_be_on_add_ingredients_page
+  context "when the item is not available in multiple shades" do
+    before do
+      answer_is_item_available_in_shades_with "No"
+      answer_what_is_physical_form_of_item_with "Liquid"
+      answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+      answer_does_item_contain_cmrs_with "No"
+      answer_item_category_with "Hair and scalp products"
+      answer_item_subcategory_with "Hair and scalp care and cleansing products"
+      answer_item_sub_subcategory_with "Shampoo"
+    end
 
-    # First attempt with validation errors
-    click_on "Save and continue"
+    scenario "Adding exact concentration ingredients to a product" do
+      answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
+      expect_to_be_on_add_ingredients_page
 
-    expect_to_be_on_add_ingredients_page
-    expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
-                               exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
+      # First attempt with validation errors
+      click_on "Save and continue"
 
-    # Successfully adds the first ingredient
-    fill_in "name", with: "FooBar ingredient"
-    fill_in "exact_concentration", with: "10.1"
-    fill_in "cas_number", with: "123456-78-9"
-    click_on "Save and continue"
+      expect_to_be_on_add_ingredients_page
+      expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
+                                 exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
 
-    answer_add_another_ingredient_with "Yes"
+      # Successfully adds the first ingredient
+      fill_in "name", with: "FooBar ingredient"
+      fill_in "exact_concentration", with: "10.1"
+      fill_in "cas_number", with: "123456-78-9"
+      click_on "Save and continue"
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+      answer_add_another_ingredient_with "Yes"
 
-    # Attempts to add the same ingredient again
-    fill_in "name", with: "foobar ingredient"
-    fill_in "exact_concentration", with: "2.0"
-    click_on "Save and continue"
+      expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
-    expect_form_to_have_errors(name: { message: "Enter a name which is unique to this product", id: "name" })
+      # Attempts to add the same ingredient again
+      fill_in "name", with: "foobar ingredient"
+      fill_in "exact_concentration", with: "2.0"
+      click_on "Save and continue"
 
-    # Adds a new poisonous ingredient
-    fill_in "name", with: "newfoo poisonous"
-    check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
-    fill_in "exact_concentration", with: "7.0"
-    click_on "Save and continue"
+      expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+      expect_form_to_have_errors(name: { message: "Enter a name which is unique to this product", id: "name" })
 
-    answer_add_another_ingredient_with "Yes"
+      # Adds a new poisonous ingredient
+      fill_in "name", with: "newfoo poisonous"
+      check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
+      fill_in "exact_concentration", with: "7.0"
+      click_on "Save and continue"
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["FooBar ingredient", "newfoo poisonous"])
+      answer_add_another_ingredient_with "Yes"
 
-    # Skips adding the ingredient
-    click_link "Skip"
-    expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["FooBar ingredient", "newfoo poisonous"])
+
+      # Skips adding the ingredient
+      click_link "Skip"
+      expect_to_be_on__what_is_ph_range_of_product_page
+    end
+
+    scenario "Adding range concentration ingredients to a product" do
+      answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually"
+
+      expect_to_be_on_add_ingredients_page
+
+      # First attempt failing due not indicating if ingredient is poisonous
+      fill_in "name", with: "FooBar ingredient"
+      click_on "Save and continue"
+
+      expect_to_be_on_add_ingredients_page
+      expect_form_to_have_errors(poisonous_true: {
+        message: "Select yes if the ingredient is poisonous",
+        id: "ingredient_concentration_form_poisonous",
+      })
+
+      # Second attempt failing due to not selecting a concentration range for a non poisonous ingredient
+      page.choose "No"
+      click_on "Save and continue"
+
+      expect_to_be_on_add_ingredients_page
+      expect_form_to_have_errors(greater_than_75_less_than_100_percent: {
+        message: "Select a concentration range",
+        id: "ingredient_concentration_form_range_concentration",
+      })
+
+      # Successfully adding the first ingredient by its concentration range
+      page.choose("greater_than_5_less_than_10_percent")
+      click_on "Save and continue"
+
+      answer_add_another_ingredient_with "Yes"
+      expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+
+      # Attempt to add a poisonous ingredient with wrong value for concentration
+      fill_in "name", with: "New ingredient"
+      page.choose "Yes"
+      fill_in "exact_concentration", with: "Not Valid"
+      click_on "Save and continue"
+
+      expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+      expect_form_to_have_errors(exact_concentration: { message: "Enter a number for the concentration", id: "exact_concentration" })
+
+      # Adds the second ingredient after entering a valid exact concentration
+      fill_in "exact_concentration", with: "5.2"
+      click_on "Save and continue"
+
+      answer_add_another_ingredient_with("No")
+      expect_to_be_on__what_is_ph_range_of_product_page
+    end
+
+    scenario "Adding poisonous ingredients for a product with predefined formulation" do
+      answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
+
+      expect_to_be_on__frame_formulation_select_page
+      answer_select_formulation_with "Shampoo plus conditioner"
+
+      answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
+      expect_to_be_on_add_ingredients_page(forced_poisonous: true)
+
+      # First attempt with validation errors
+      click_on "Save and continue"
+      expect(page).to have_css("h1", text: "Add an ingredient the NPIS needs to know about")
+      expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
+                                 exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
+
+      # Successfully adds the first ingredient
+      fill_in "name", with: "FooBar ingredient"
+      fill_in "exact_concentration", with: "10.1"
+      fill_in "cas_number", with: "123456-78-9"
+      click_on "Save and continue"
+
+      answer_add_another_ingredient_with "No"
+      expect_to_be_on__what_is_ph_range_of_product_page
+    end
   end
 
-  scenario "Adding range concentration ingredients to a product" do
-    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually"
+  context "when the item is available in multiple shades" do
+    before do
+      answer_is_item_available_in_shades_with "Yes"
+      all("input#component_shades").first.fill_in with: "Blue"
+      all("input#component_shades").last.fill_in with: "Red"
+      click_button "Continue"
 
-    expect_to_be_on_add_ingredients_page
+      answer_what_is_physical_form_of_item_with "Liquid"
+      answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+      answer_does_item_contain_cmrs_with "No"
+      answer_item_category_with "Hair and scalp products"
+      answer_item_subcategory_with "Hair and scalp care and cleansing products"
+      answer_item_sub_subcategory_with "Shampoo"
+    end
 
-    # First attempt failing due not indicating if ingredient is poisonous
-    fill_in "name", with: "FooBar ingredient"
-    click_on "Save and continue"
+    scenario "Adding exact concentration ingredients to a product" do
+      answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+      expect_to_be_on_add_ingredients_page
 
-    expect_to_be_on_add_ingredients_page
-    expect_form_to_have_errors(poisonous_true: {
-      message: "Select yes if the ingredient is poisonous",
-      id: "ingredient_concentration_form_poisonous",
-    })
+      # First attempt without answering if the ingredient is used for multiple shades
+      fill_in "name", with: "non-poisonous multi"
+      click_on "Save and continue"
 
-    # Second attempt failing due to not selecting a concentration range for a non poisonous ingredient
-    page.choose "No"
-    click_on "Save and continue"
+      expect_to_be_on_add_ingredients_page
+      expect_form_to_have_errors(used_for_multiple_shades_true: {
+        message: "Select yes if the ingredient is used for different shades",
+        id: "ingredient_concentration_form_used_for_multiple_shades",
+      })
 
-    expect_to_be_on_add_ingredients_page
-    expect_form_to_have_errors(greater_than_75_less_than_100_percent: {
-      message: "Select a concentration range",
-      id: "ingredient_concentration_form_range_concentration",
-    })
+      # Selecting the ingredient is used for multiple shades but not filling the max concentration field
+      choose "Yes"
+      click_on "Save and continue"
+      expect_form_to_have_errors(maximum_concentration: { message: "Enter the concentration", id: "maximum_concentration" })
 
-    # Successfully adding the first ingredient by its concentration range
-    page.choose("Above 5% w/w up to 10% w/w")
-    click_on "Save and continue"
+      # Adds a non poisonous ingredient used for multiple shades
+      fill_in "maximum_concentration", with: "10.1"
+      fill_in "cas_number", with: "123456-78-9"
+      click_on "Save and continue"
 
-    answer_add_another_ingredient_with "Yes"
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+      answer_add_another_ingredient_with "Yes"
+      expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["non-poisonous multi"])
 
-    # Attempt to add a poisonous ingredient with wrong value for concentration
-    fill_in "name", with: "New ingredient"
-    page.choose "Yes"
-    fill_in "exact_concentration", with: "Not Valid"
-    click_on "Save and continue"
+      # Adds a poisonous ingredient used for multiple shades
+      fill_in "name", with: "poisonous multi"
+      check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
+      choose "Yes"
+      fill_in "maximum_concentration", with: "7.0"
+      click_on "Save and continue"
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
-    expect_form_to_have_errors(exact_concentration: { message: "Enter a number for the concentration", id: "exact_concentration" })
+      answer_add_another_ingredient_with "Yes"
+      expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["non-poisonous multi", "poisonous multi"])
 
-    # Adds the second ingredient after entering a valid exact concentration
-    fill_in "exact_concentration", with: "5.2"
-    click_on "Save and continue"
+      # Adds a non poisonous ingredient not used for multiple shades
+      fill_in "name", with: "non-poisonous no-multi"
+      choose "No"
+      fill_in "exact_concentration", with: "2.3"
+      click_on "Save and continue"
 
-    answer_add_another_ingredient_with("No")
-    expect_to_be_on__what_is_ph_range_of_product_page
-  end
+      answer_add_another_ingredient_with "Yes"
+      expect_to_be_on_add_ingredients_page(
+        ingredient_number: 4, already_added: ["non-poisonous multi", "poisonous multi", "non-poisonous no-multi"],
+      )
 
-  scenario "Adding poisonous ingredients for a product with predefined formulation" do
-    answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
+      # Adds a poisonous ingredient not used for multiple shades
+      fill_in "name", with: "poisonous no-multi"
+      check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
+      choose "No"
+      fill_in "exact_concentration", with: "3.1"
+      click_on "Save and continue"
 
-    expect_to_be_on__frame_formulation_select_page
-    answer_select_formulation_with "Shampoo plus conditioner"
+      answer_add_another_ingredient_with "Yes"
+      expect_to_be_on_add_ingredients_page(
+        ingredient_number: 5,
+        already_added: ["non-poisonous multi", "poisonous multi", "non-poisonous no-multi", "poisonous no-multi"],
+      )
+      # Skips adding the ingredient
+      click_link "Skip"
+      expect_to_be_on__what_is_ph_range_of_product_page
+    end
 
-    answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
-    expect_to_be_on_add_ingredients_page(forced_poisonous: true)
+    scenario "Adding range concentration ingredients to a product" do
+      answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range"
 
-    # First attempt with validation errors
-    click_on "Save and continue"
-    expect(page).to have_css("h1", text: "Add an ingredient the NPIS needs to know about")
-    expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
-                               exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
+      expect_to_be_on_add_ingredients_page
 
-    # Successfully adds the first ingredient
-    fill_in "name", with: "FooBar ingredient"
-    fill_in "exact_concentration", with: "10.1"
-    fill_in "cas_number", with: "123456-78-9"
-    click_on "Save and continue"
+      # Adding a non-poisonous ingredient
+      fill_in "name", with: "non-poisonous"
+      page.choose "No"
+      page.choose("greater_than_5_less_than_10_percent")
+      click_on "Save and continue"
 
-    answer_add_another_ingredient_with "No"
-    expect_to_be_on__what_is_ph_range_of_product_page
+      answer_add_another_ingredient_with "Yes"
+      expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: %w[non-poisonous])
+
+      # Adding a poisonous ingredient
+      fill_in "name", with: "poisonous"
+      page.choose "Yes"
+      fill_in "exact_concentration", with: "5.2"
+      click_on "Save and continue"
+
+      answer_add_another_ingredient_with("No")
+      expect_to_be_on__what_is_ph_range_of_product_page
+    end
+
+    scenario "Adding poisonous ingredients for a product with predefined formulation" do
+      answer_how_do_you_want_to_give_formulation_with "Choose a predefined frame formulation"
+
+      expect_to_be_on__frame_formulation_select_page
+      answer_select_formulation_with "Shampoo plus conditioner"
+
+      answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
+      expect_to_be_on_add_ingredients_page(forced_poisonous: true)
+
+      # Adds a poisonous ingredient used for multiple shades
+      fill_in "name", with: "poisonous multi"
+      choose "Yes"
+      fill_in "maximum_concentration", with: "7.0"
+      click_on "Save and continue"
+
+      answer_add_another_ingredient_with "Yes"
+      expect_to_be_on_add_ingredients_page(forced_poisonous: true, ingredient_number: 2, already_added: ["poisonous multi"])
+
+      # Adds a poisonous ingredient not used for multiple shades
+      fill_in "name", with: "poisonous no-multi"
+      choose "No"
+      fill_in "exact_concentration", with: "10.1"
+      fill_in "cas_number", with: "123456-78-9"
+      click_on "Save and continue"
+
+      answer_add_another_ingredient_with "No"
+      expect_to_be_on__what_is_ph_range_of_product_page
+    end
   end
 end

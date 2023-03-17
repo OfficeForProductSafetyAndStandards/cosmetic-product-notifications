@@ -15,7 +15,7 @@ module ResponsiblePersons::Notifications
 
     def delete
       return false unless valid?
-      raise ActiveRecord::RecordNotFound if notification.notification_complete? || notification.deleted?
+      raise ActiveRecord::RecordNotFound if notification.notification_complete? || notification.archived? || notification.deleted?
 
       notification.nano_materials.find(nano_material_ids).each(&:destroy)
       notification.reload.try_to_complete_nanomaterials!
