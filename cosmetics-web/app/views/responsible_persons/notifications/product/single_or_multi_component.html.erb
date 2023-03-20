@@ -39,9 +39,11 @@
           <%= govukInput(form: form,
                          key: :components_count,
                          id: "components_count",
+                         inputmode: "numeric",
+                         pattern: "[0-9]*",
                          classes: "govuk-input--width-3",
                          label: { text: "How many items does it contain?" },
-                         value: @notification.components_count > 0 ? @notification.components_count : '') %>
+                         value: [2, @notification.components_count].max) %>
         <% end %>
         <%= govukRadios(
               form: form,
