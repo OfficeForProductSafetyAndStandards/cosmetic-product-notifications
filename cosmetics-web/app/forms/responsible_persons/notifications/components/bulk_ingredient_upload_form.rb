@@ -18,7 +18,6 @@ module ResponsiblePersons::Notifications::Components
     # We have an edge case here where we are adding error messages after
     # validation - during actual ingredient creation
     def valid?
-      component.ingredients.delete_all
       return false if errors.present?
 
       super
@@ -28,14 +27,16 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def save_ingredients
-      return false unless valid?
-
       # Despite validations above, there might be rare case when ingredient can not be saved, eg:
       # * there will be duplicated ingredient in the file
       # * between validation and creation ingredient will be created (very rare edge case)
       # * difference between ingredient form and model validations
       # * internal ActiveRecord issue
       ActiveRecord::Base.transaction do
+        component.ingredients.delete_all
+
+        return false unless valid?
+
         @ingredients.each_with_index do |ingredient, i|
           ingredient.save
           unless ingredient.persisted?

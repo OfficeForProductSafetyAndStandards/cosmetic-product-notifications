@@ -329,10 +329,8 @@ private
   end
 
   def update_upload_ingredients_file
-    # if the params are empty and ingredients file already exist, we can proceed to next step
-    #   jump_to_step :want_to_add_another_ingredient, ingredients_uploaded: true
-    # otherwise, the old logic kick in
     ingredients_file = params.dig(:responsible_persons_notifications_components_bulk_ingredient_upload_form, :file)
+
     @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, file: ingredients_file)
 
     if ingredients_file.nil? && @component.ingredients_file.present?
