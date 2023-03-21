@@ -44,7 +44,7 @@ class NanomaterialNotification < ApplicationRecord
       date = nil
     end
 
-    self[:notified_to_eu_on] = date
+    self[:notified_to_eu_on] = eu_notified? ? date : nil
   end
 
   def submit!
