@@ -208,6 +208,7 @@ Rails.application.routes.draw do
     get :terms_and_conditions, path: "terms-and-conditions"
     get :privacy_notice, path: "privacy-notice"
     get :cookies_policy, path: "cookies"
+    get :csv, path: "csv"
   end
 
   resource :cookie_form, only: [:create]
