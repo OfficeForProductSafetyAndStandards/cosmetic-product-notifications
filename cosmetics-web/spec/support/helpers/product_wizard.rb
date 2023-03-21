@@ -17,7 +17,7 @@ def complete_product_wizard(name: "Product", items_count: 1, nano_materials_coun
       answer_does_product_contains_nanomaterials_with "No"
     end
   else
-    expect(page).to have_text("You can add and remove nanomaterials directly from the tasks list page.")
+    expect(page).to have_text("You can add and remove nanomaterials directly from the task list page.")
     click_on "Continue"
   end
 
@@ -36,7 +36,7 @@ def complete_product_wizard(name: "Product", items_count: 1, nano_materials_coun
 
   expect_task_has_been_completed_page
 
-  return_to_tasks_list_page
+  return_to_task_list_page
 
   expect_product_task_completed
 end

@@ -7,7 +7,7 @@ def complete_multi_item_kit_wizard
 
   expect_task_has_been_completed_page
 
-  return_to_tasks_list_page
+  return_to_task_list_page
 
   expect_multi_item_kit_task_completed
 end

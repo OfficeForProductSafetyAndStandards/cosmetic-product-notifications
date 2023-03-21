@@ -17,7 +17,7 @@ def complete_nano_material_wizard(name, nano_material_number: nil, purposes: %w[
 
   expect_task_has_been_completed_page
 
-  return_to_tasks_list_page
+  return_to_task_list_page
   expect_nano_material_task_completed name
 end
 
