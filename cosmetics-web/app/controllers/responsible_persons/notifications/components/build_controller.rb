@@ -4,6 +4,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
   include Wicked::Wizard
   include WizardConcern
   include CategoryHelper
+  include ComponentBuildHelper
 
   before_action :set_component
   before_action :set_category, if: -> { step.to_s =~ /select_(root|sub|sub_sub)_category/ }
@@ -308,7 +309,7 @@ private
         jump_to_step(:add_ingredient_npis_needs_to_know)
       end
     when "no"
-      jump_to_step(:select_ph_option)
+      jump_to_step(next_step_if_ph_required(@component))
     else
       @component.errors.add(:add_another_ingredient, "Select yes if you want to add an ingredient")
       rerender_current_step
@@ -337,7 +338,7 @@ private
     if @component.contains_poisonous_ingredients?
       jump_to(:add_ingredient_npis_needs_to_know, ingredient_number: 0) if @component.ingredients.any?
     else
-      jump_to(:select_ph_option)
+      jump_to(next_step_if_ph_required(@component))
     end
     render_next_step @component
   end

@@ -334,6 +334,15 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
           it "redirects to the select pH range page" do
             expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :select_ph_option))
           end
+
+          context "when the PH is not required" do
+            let(:component) { create(:component, :with_category, :ph_not_required, shades:, notification:, notification_type: component_type) }
+
+            it "redirects to the completed page" do
+              component.update(physical_form: :loose_powder)
+              expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :completed))
+            end
+          end
         end
       end
 

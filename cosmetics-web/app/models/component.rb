@@ -215,6 +215,10 @@ class Component < ApplicationRecord
     ph_between_3_and_10? || ph_not_applicable?
   end
 
+  def ph_required?
+    !(solid_or_pressed_powder? || loose_powder?)
+  end
+
   def component_name
     notification.is_multicomponent? ? name : "product"
   end
