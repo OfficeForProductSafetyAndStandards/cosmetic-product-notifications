@@ -13,8 +13,6 @@ class NanomaterialNotification < ApplicationRecord
   validates :notified_to_eu_on, presence: true, on: :eu_notification, if: :eu_notified?
   validate :eu_notification_date_must_be_pre_brexit, on: :eu_notification, if: :eu_notified?
 
-  validate :eu_notification_date_is_nil, on: :eu_notification, if: :eu_not_notified?
-
   validate :eu_notification_date_is_real
 
   validate :pdf_file_attached, on: :upload_file
@@ -122,12 +120,6 @@ private
       end
 
       errors.add(:notified_to_eu_on, error_message)
-    end
-  end
-
-  def eu_notification_date_is_nil
-    unless notified_to_eu_on.nil?
-      errors.add(:notified_to_eu_on, I18n.t(:date_specified_but_eu_not_notified, scope: %i[activerecord errors models nanomaterial_notification attributes notified_to_eu_on]))
     end
   end
 
