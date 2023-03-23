@@ -27,6 +27,9 @@ RSpec.describe NanomaterialNotification, type: :model do
     end
 
     describe "EU notification" do
+      let(:pre_brexit_date) { Date.parse("2020-01-20") }
+      let(:post_brexit_date) { Date.parse("2021-04-02") }
+
       context "when not specified" do
         let(:nanomaterial_notification) do
           described_class.new(eu_notified: nil)
@@ -57,7 +60,7 @@ RSpec.describe NanomaterialNotification, type: :model do
 
       context "when the EU was notified and a pre-Brexit date is set" do
         let(:nanomaterial_notification) do
-          described_class.new(responsible_person:, eu_notified: true, notified_to_eu_on: Date.parse("2020-01-20"))
+          described_class.new(responsible_person:, eu_notified: true, notified_to_eu_on: pre_brexit_date)
         end
 
         it "is valid" do
@@ -67,7 +70,7 @@ RSpec.describe NanomaterialNotification, type: :model do
 
       context "when the EU was notified and a post-Brexit date is set" do
         let(:nanomaterial_notification) do
-          described_class.new(eu_notified: true, notified_to_eu_on: Date.parse("2021-04-02"))
+          described_class.new(eu_notified: true, notified_to_eu_on: post_brexit_date)
         end
 
         before do
@@ -91,15 +94,15 @@ RSpec.describe NanomaterialNotification, type: :model do
 
       context "when the EU was not notified but a date has been set" do
         let(:nanomaterial_notification) do
-          described_class.new(eu_notified: false, notified_to_eu_on: Date.parse("2020-04-02"))
+          described_class.new(eu_notified: false, notified_to_eu_on: pre_brexit_date)
         end
 
         before do
           nanomaterial_notification.valid?(:eu_notification)
         end
 
-        it "adds an error" do
-          expect(nanomaterial_notification.errors[:notified_to_eu_on]).to include("Remove date or change answer to Yes")
+        it "assigns a null date" do
+          expect(nanomaterial_notification.notified_to_eu_on).to be_nil
         end
       end
 
@@ -190,7 +193,7 @@ RSpec.describe NanomaterialNotification, type: :model do
   end
 
   describe "#notified_to_eu_on=" do
-    let(:nanomaterial_notification) { described_class.new }
+    let(:nanomaterial_notification) { described_class.new(eu_notified: true) }
 
     context "when setting with a date object" do
       before do
