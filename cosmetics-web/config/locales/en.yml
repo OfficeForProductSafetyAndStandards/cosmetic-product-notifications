@@ -64,6 +64,8 @@ en:
               missing: "Select if %{component_name} is intended to be rinsed off or left on"
             exposure_routes:
               blank: "Select how the user is likely to be exposed to the nanomaterials"
+            notification_type:
+              blank: "Formulation type cannot be blank"
         nano_material:
           attributes:
             purposes:
