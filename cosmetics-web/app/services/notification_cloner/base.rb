@@ -27,7 +27,7 @@ module NotificationCloner
       old_notification.components.map do |old_component|
         new_component = clone_model(old_component)
         new_component.notification = new_notification
-        new_component.routing_questions_answers["contains_cmrs"] = nil
+        new_component.routing_questions_answers["contains_cmrs"] = nil if new_component.routing_questions_answers
 
         clone_ingredients(old_component, new_component)
 
