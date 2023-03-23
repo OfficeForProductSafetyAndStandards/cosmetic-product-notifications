@@ -23,7 +23,7 @@
     "standard": "17.0.0",
     "stylelint": "^14.16.1",
     "stylelint-config-gds": "^0.2.0",
-    "webpack": "^5.76.1",
+    "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1",
     "webpack-remove-empty-scripts": "^1.0.1"
   },
