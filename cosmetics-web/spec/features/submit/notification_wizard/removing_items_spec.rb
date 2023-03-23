@@ -178,7 +178,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect(page).to have_css("h1", text: "You cannot remove an item")
 
-    click_on "tasks list page"
+    click_on "task list page"
 
     expect_item_task_not_started "Item #1"
     expect_item_task_not_started "Item #2"

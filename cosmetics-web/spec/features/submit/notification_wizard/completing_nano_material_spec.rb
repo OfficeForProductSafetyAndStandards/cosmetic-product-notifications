@@ -71,8 +71,17 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_button "Continue"
     expect_task_has_been_completed_page
 
-    return_to_tasks_list_page
+    return_to_task_list_page
     expect_task_completed "Nano material one"
+
+    # Check continue button on task completed page
+    click_link "Nano material one"
+    click_button "Continue"
+    click_button "Save and continue"
+    click_button "Continue"
+    click_button "Continue"
+    click_link "Continue"
+    expect_select_nanomaterials_page
   end
 
   scenario "Completing a non-standard nanomaterial for a product notification" do
@@ -139,7 +148,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_task_has_been_completed_page
 
-    return_to_tasks_list_page
+    return_to_task_list_page
     expect_task_completed nanomaterial_notification.name
   end
 end

@@ -26,7 +26,7 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     case step
     when :completed
       @notification.set_state_on_product_wizard_completed!
-      render "responsible_persons/notifications/task_completed"
+      render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
     when :add_product_image
       @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?
       render_wizard
@@ -60,6 +60,16 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
   end
 
 private
+
+  def continue_path
+    if @notification.nano_materials.present?
+      new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, @notification.nano_materials.first)
+    elsif @notification.multi_component?
+      new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification)
+    else
+      new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+    end
+  end
 
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)

@@ -20,7 +20,7 @@ class ResponsiblePersons::Notifications::ProductKitController < SubmitApplicatio
     case step
     when :completed
       @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS) if @notification.details_complete?
-      render "responsible_persons/notifications/task_completed"
+      render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
     else
       render_wizard
     end
@@ -48,6 +48,10 @@ class ResponsiblePersons::Notifications::ProductKitController < SubmitApplicatio
   end
 
 private
+
+  def continue_path
+    new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+  end
 
   def update_is_mixed
     if @notification.update_with_context(notification_params, step)

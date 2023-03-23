@@ -119,7 +119,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect(page).to have_css("li", text: "Nano two is not included in any items")
 
-    click_link "Return to the tasks list page"
+    click_link "Return to the task list page"
 
     complete_product_details(nanos: ["Nano two"])
 
