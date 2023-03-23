@@ -32,8 +32,4 @@ module ComponentBuildHelper
       id: "greater_than_#{above}_less_than_#{up_to}_percent",
     }
   end
-
-  def next_step_if_ph_required(component)
-    component.ph_required? ? :select_ph_option : :completed
-  end
 end

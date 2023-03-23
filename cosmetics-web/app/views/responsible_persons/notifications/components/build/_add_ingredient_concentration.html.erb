@@ -47,7 +47,7 @@
       <div class="govuk-button-group">
         <%= govukButton text: "Save and continue" %>
         <% if component.ingredients.any? && model.ingredient_number.blank? %>
-          <%= link_to("Skip", wizard_path(next_step_if_ph_required(component)), class: "govuk-link govuk-link--no-visited-state") %>
+          <%= link_to("Skip", wizard_path(:select_ph_option), class: "govuk-link govuk-link--no-visited-state") %>
         <% end %>
       </div>
     <% end %>
