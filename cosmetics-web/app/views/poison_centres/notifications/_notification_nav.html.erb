@@ -1,0 +1,46 @@
+<nav class="govuk-grid-column-one-quarter govuk-!-padding-right-0" aria-label="Secondary">
+  <a href="#page-content" class="govuk-skip-link opss-skip-link">
+    Skip to the main content
+  </a>
+  <ul class="govuk-list opss-left-nav">
+    <li class="<%= "opss-left-nav__active" if params[:controller] == "poison_centres/notifications_search" %>">
+      <a href="<%= poison_centre_notifications_search_path %>" class="govuk-link govuk-link--no-visited-state" <%= 'aria-current="page"' if params[:controller] == "poison_centres/notifications_search" %>>
+        Cosmetic products search
+      </a>
+    </li>
+    <li class="<%= "opss-left-nav__active" if params[:controller] == "poison_centres/ingredients_search" %>">
+      <a href="<%= poison_centre_ingredients_search_path %>" class="govuk-link govuk-link--no-visited-state" <%= 'aria-current="page"' if params[:controller] == "poison_centres/ingredients_search" %>>
+        Ingredients search
+      </a>
+    </li>
+    <% if can_view_ingredients_list? %>
+      <li <%= active_page_class(:ingredients_list) || active_page_class(:ingredients_list_responsible_persons) || active_page_class(:ingredients_list_responsible_person_notifications) %>>
+        <a href="<%= poison_centre_ingredients_path %>" class="govuk-link govuk-link--no-visited-state" <%= aria_active(:ingredients_list) %>>
+          Ingredients list
+        </a>
+        <% if active_page_class(:ingredients_list_responsible_persons) || active_page_class(:ingredients_list_responsible_person_notifications) %>
+          <ul class="govuk-list">
+            <li>
+              <a href="<%= poison_centre_ingredients_responsible_persons_path(ingredient_inci_name: params[:ingredient_inci_name]) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold opss-link--no-hover" <%= aria_active(:ingredients_list_responsible_persons) %>>
+                Responsible Persons
+              </a>
+              <br>
+              <%= params[:ingredient_inci_name] %>
+              <% if active_page_class(:ingredients_list_responsible_person_notifications) %>
+                <ul class="govuk-list">
+                  <li>
+                    <a href="<%= poison_centre_ingredients_responsible_person_notifications_path(responsible_person_id: params[:responsible_person_id], ingredient_inci_name: params[:ingredient_inci_name]) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold opss-link--no-hover" <%= aria_active(:ingredients_list_responsible_person_notifications) %>>
+                      Notifications
+                    </a>
+                    <br>
+                    <%= @responsible_person.name %>
+                  </li>
+                </ul>
+              <% end %>
+            </li>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</nav>

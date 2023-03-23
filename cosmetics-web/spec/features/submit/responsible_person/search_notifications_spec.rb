@@ -52,4 +52,25 @@ RSpec.describe "Search notifications page", type: :feature do
 
     expect(page).to have_field("notification_search_form[q]", with: "Cream")
   end
+
+  scenario "show the total number of results" do
+    20.times do |i|
+      create(:notification, :registered, :with_component, responsible_person:, notification_complete_at: 5.days.ago, product_name: "Sun Lotion #{i}")
+    end
+    Notification.import_to_opensearch(force: true)
+    responsible_person_search_notifications_path(responsible_person.id)
+
+    click_on "Product - search"
+    expect(page).to have_h1("Product – search")
+    click_on "Search"
+    expect(page).to have_text("23 notifications using the current filters were found.")
+    expect(page).to have_link("View Sun Lotion 0")
+    expect(page).not_to have_link("View Sun Lotion 19")
+
+    click_link("Next page")
+    expect(page).to have_text("23 notifications using the current filters were found.")
+    expect(page).to have_h1("Product – search results")
+    expect(page).not_to have_link("View Sun Lotion 0")
+    expect(page).to have_link("View Sun Lotion 19")
+  end
 end

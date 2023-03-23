@@ -32,8 +32,9 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     let(:user) { create(:opss_science_user, :with_sms_secondary_authentication) }
 
     scenario "user can see the nanomaterial details with review period section and link to nanomaterial pdf file" do
-      expect(page).to have_h1("Search cosmetic products")
-      click_link("Cream")
+      expect(page).to have_h1("Cosmetic products search")
+      click_on "Search"
+      click_link("View Cream")
 
       expect(page).to have_h1("Cream")
       expect(page).to have_css("th", text: "Nanomaterials", exact_text: true)
@@ -49,8 +50,9 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     let(:user) { create(:opss_general_user, :with_sms_secondary_authentication) }
 
     scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
-      expect(page).to have_h1("Search cosmetic products")
-      click_link("Cream")
+      expect(page).to have_h1("Cosmetic products search")
+      click_on "Search"
+      click_link("View Cream")
 
       expect(page).to have_h1("Cream")
       expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
@@ -65,8 +67,9 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     let(:user) { create(:opss_enforcement_user, :with_sms_secondary_authentication) }
 
     scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
-      expect(page).to have_h1("Search cosmetic products")
-      click_link("Cream")
+      expect(page).to have_h1("Cosmetic products search")
+      click_on "Search"
+      click_link("View Cream")
 
       expect(page).to have_h1("Cream")
       expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
@@ -81,8 +84,9 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     let(:user) { create(:trading_standards_user, :with_sms_secondary_authentication) }
 
     scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
-      expect(page).to have_h1("Search cosmetic products")
-      click_link("Cream")
+      expect(page).to have_h1("Cosmetic products search")
+      click_on "Search"
+      click_link("View Cream")
 
       expect(page).to have_h1("Cream")
       expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
@@ -97,8 +101,9 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
     scenario "user can see the nanomaterial details but without review period section or link to nanomaterial pdf file" do
-      expect(page).to have_h1("Search cosmetic products")
-      click_link("Cream")
+      expect(page).to have_h1("Cosmetic products search")
+      click_on "Search"
+      click_link("View Cream")
 
       expect(page).to have_h1("Cream")
       expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
