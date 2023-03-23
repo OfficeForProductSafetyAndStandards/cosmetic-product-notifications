@@ -24,7 +24,7 @@ RSpec.feature "Ingredients list", :with_stubbed_mailer, :with_stubbed_notify, :w
   end
 
   scenario "Searching for notifications with specific ingredients" do
-    expect(page).to have_h1("Search cosmetic products")
+    expect(page).to have_h1("Cosmetic products search")
 
     click_link "Ingredients list"
 

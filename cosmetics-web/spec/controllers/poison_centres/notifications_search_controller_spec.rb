@@ -28,7 +28,7 @@ RSpec.describe PoisonCentres::NotificationsSearchController, type: :controller d
         rp_2_notifications
         draft_notification
         Notification.import_to_opensearch(force: true)
-        get :show
+        get :show, params: { notification_search_form: { q: "" } }
       end
 
       it "gets all submitted notifications" do

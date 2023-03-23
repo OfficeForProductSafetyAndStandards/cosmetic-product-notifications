@@ -1,47 +1,23 @@
-<% content_for :page_title, "Ingredients search" %>
+<% title = "Ingredient search" %>
+<% page_title(title, errors: @search_form.errors.any?) %>
+
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" if @responsible_person.present? %>
+<% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full opss-desktop-min-height--s2">
+  <%= error_summary(@search_form.errors) %>
 
-    <%= error_summary(@search_form.errors) %>
-
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-      Ingredients search
-    </h1>
-
-    <p class="govuk-body opss-secondary-text">
-      Search cosmetic product notifications for notifications which include a specific ingredient.
-      <br class="opss-br-desktop">
-      <span class="govuk-!-font-weight-bold opss-primary-text">
-        Only products notified after 2 October 2022 are searchable for ingredients.
-      </span>
-    </p>
-
-    <details class="govuk-details govuk-!-width-two-thirds opss-details--sm" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Help with the ingredients search
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <p class="govuk-body-s govuk-!-margin-bottom-4">
-        <span id="search-hint">For best results, search for an individual ingredient.</span> This will search cosmetic product notifications for products which use it.
-        </p>
-
-        <p class="govuk-body-s govuk-!-margin-bottom-4">
-        The "match type" filter option allows you to search for <span class="govuk-!-font-weight-bold">exact name matches</span> or for ingredient names which feature one or more words of the name you are searching for and returns more general search results.
-        </p>
-
-        <p class="govuk-body-s govuk-!-margin-bottom-1">
-        You can use the filter options to focus the search results. You can also choose to display the results grouped together by notifications which share the same Responsible Person.
-        </p>
-
-      </div>
-    </details>
+  <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <%= render 'search_header' if @notifications.nil? %>
+    <%= render 'results_header' if @notifications %>
   </div>
 </div>
 
-<div class="govuk-grid-row opss-full-height">
-  <%= render "filters" %>
-  <%= render "results", results: @notifications, search_response: @search_response %>
+<div class="govuk-grid-row">
+  <%= render 'poison_centres/notifications/notification_nav' %>
+  <section id="page-content" class="govuk-grid-column-three-quarters" role="region" aria-label="Search and results">
+    <%= render 'search_form' if @notifications.nil? %>
+    <%= render 'results', results: @notifications, search_response: @search_response if @notifications %>
+  </section>
 </div>
