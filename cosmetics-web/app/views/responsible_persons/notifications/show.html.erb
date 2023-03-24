@@ -48,7 +48,7 @@
       <div class="govuk-grid-column-two-thirds">
         <% if @notification.archived? %>
           <%= govukButton(text: "Unarchive this notification", href: responsible_person_notification_unarchive_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
-        <% elsif false # TODO: Enable back to 'else' when re-introducing archiving %>
+        <% else %>
           <%= govukButton(text: "Archive this notification", href: responsible_person_notification_archive_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
         <% end %>
         <% if @notification.can_be_deleted? %>
