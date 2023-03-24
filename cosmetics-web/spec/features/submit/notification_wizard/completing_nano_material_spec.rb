@@ -11,7 +11,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Completing a standard nanomaterial for a product notification" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product one nano one item", items_count: 1, nano_materials_count: 1)
     expect_progress(1, 4)
@@ -91,7 +91,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
                                        responsible_person:)
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product one nano one item", items_count: 1, nano_materials_count: 1)
     expect_progress(1, 4)

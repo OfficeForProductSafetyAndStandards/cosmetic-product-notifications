@@ -11,7 +11,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Removing one out of three" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano two items", items_count: 3)
 
@@ -84,7 +84,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Removing one out of three - correct status change on delete" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano two items", items_count: 3)
 
@@ -163,7 +163,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "When only 2 items left it should not be able to delete them" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano two items", items_count: 2)
 
