@@ -33,6 +33,14 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     user_member_of_associated_responsible_person? && record.can_be_deleted?
   end
 
+  def archive?
+    user_member_of_associated_responsible_person?
+  end
+
+  def unarchive?
+    user_member_of_associated_responsible_person?
+  end
+
 private
 
   def pundit_user

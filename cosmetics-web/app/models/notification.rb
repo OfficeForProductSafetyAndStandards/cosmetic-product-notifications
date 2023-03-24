@@ -54,7 +54,9 @@ class Notification < ApplicationRecord
   # Current version of the index name is accessible through Notification.current_index.
   index_name [ENV.fetch("OS_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
 
-  scope :opensearch, -> { where(state: "notification_complete") }
+  scope :opensearch, -> { where(state: :notification_complete) }
+  scope :completed, -> { where(state: :notification_complete) }
+  scope :archived, -> { where(state: :archived) }
 
   before_create do
     new_reference_number = nil
@@ -71,10 +73,6 @@ class Notification < ApplicationRecord
 
   def self.duplicate_notification_message
     "Notification duplicated"
-  end
-
-  def self.completed
-    where(state: :notification_complete)
   end
 
   validate :all_required_attributes_must_be_set
@@ -104,6 +102,7 @@ class Notification < ApplicationRecord
       indexes :searchable_ingredients, type: "text"
       indexes :created_at, type: "date"
       indexes :notification_complete_at, type: "date", format: "strict_date_optional_time"
+      indexes :state, type: "text"
 
       indexes :responsible_person do
         indexes :name, type: "text"
@@ -125,7 +124,7 @@ class Notification < ApplicationRecord
 
   def as_indexed_json(*)
     as_json(
-      only: %i[product_name notification_complete_at reference_number industry_reference],
+      only: %i[product_name notification_complete_at reference_number industry_reference state],
       methods: %i[reference_number_for_display searchable_ingredients],
       include: {
         responsible_person: {
@@ -282,7 +281,7 @@ class Notification < ApplicationRecord
   alias_method :delete, :delete!
 
   def can_be_deleted?
-    !notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago
+    !archived? && (!notification_complete? || notification_complete_at > Notification::DELETION_PERIOD_DAYS.days.ago)
   end
 
   def cache_notification_for_csv!
@@ -335,6 +334,8 @@ private
     when "deleted"
       mandatory_attributes("components_complete")
     when "notification_complete"
+      mandatory_attributes("draft_complete")
+    when "archived"
       mandatory_attributes("draft_complete")
     end
   end
