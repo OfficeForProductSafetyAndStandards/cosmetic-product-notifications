@@ -1,4 +1,11 @@
 class Component < ApplicationRecord
+  COMPONENT_TYPES_MAP = {
+    "exact" => "exact",
+    "exact_csv" => "exact",
+    "predefined" => "predefined",
+    "range" => "range",
+  }.freeze
+
   CLONABLE_ATTRIBUTES = %i[
     shades
     notification_type
@@ -231,8 +238,12 @@ class Component < ApplicationRecord
   end
 
   def update_formulation_type(type)
-    old_type = notification_type
-    self.notification_type = type
+    old_type = notification_type_given_as
+    if old_type.nil?
+      old_type = notification_type
+    end
+    self.notification_type = COMPONENT_TYPES_MAP[type]
+    self.notification_type_given_as = type
     transaction do
       return unless save(context: :select_formulation_type)
 
@@ -240,8 +251,9 @@ class Component < ApplicationRecord
       # Now ingredients need to be added manually or use a predefined formulation.
       formulation_file.purge
 
-      if old_type != notification_type
+      if old_type != notification_type_given_as
         ingredients.destroy_all
+        ingredients_file.purge
         reset_state!
       end
       update!(frame_formulation: nil, contains_poisonous_ingredients: nil) unless predefined?

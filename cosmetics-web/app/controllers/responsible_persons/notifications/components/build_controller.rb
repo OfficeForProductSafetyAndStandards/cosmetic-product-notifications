@@ -254,15 +254,9 @@ private
   end
 
   def update_select_formulation_type
-    types_map = {
-      "predefined" => "predefined",
-      "exact" => "exact",
-      "exact_csv" => "exact",
-      "range" => "range",
-    }
     formulation_type = params.dig(:component, :notification_type)
-    model.save_routing_answer(step, types_map[formulation_type])
-    @component.update_formulation_type(types_map[formulation_type])
+    model.save_routing_answer(step, formulation_type)
+    @component.update_formulation_type(formulation_type)
     return rerender_current_step if @component.errors.present?
 
     step = {
