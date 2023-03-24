@@ -35,7 +35,7 @@ private
   def set_notification
     @notification = Notification.find_by reference_number: params[:notification_reference_number]
 
-    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete? || @notification&.archived?
+    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
