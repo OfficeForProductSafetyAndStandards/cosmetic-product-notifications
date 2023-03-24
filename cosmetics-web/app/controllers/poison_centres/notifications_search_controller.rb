@@ -3,13 +3,38 @@ class PoisonCentres::NotificationsSearchController < SearchApplicationController
 
   def show
     @search_form = NotificationSearchForm.new(search_params)
-    @search_form.validate
+    @search_params = search_params
 
-    @search_response = search_notifications
-    @notifications = @search_response.records
+    if search_params.present? && params["edit"].nil?
+      apply_date_filter
+      if @search_form.valid?
+        @search_response = search_notifications
+        @notifications = @search_response.records
+        @total_count = @search_response.results.total
+      end
+    end
   end
 
 private
+
+  # Any changes in these search params need to be also applied to PoisonCentres::NotificationsController#search_params
+  def search_params
+    params.fetch(:notification_search_form, {}).permit(
+      :q,
+      :search_fields,
+      :match_similar,
+      { date_from: %i[day month year] },
+      { date_to: %i[day month year] },
+      :category,
+      :sort_by,
+    )
+  end
+
+  def apply_date_filter
+    if @search_form.date_from.present? || @search_form.date_to.present?
+      @search_form.date_filter = NotificationSearchForm::FILTER_BY_DATE_RANGE
+    end
+  end
 
   def search_notifications
     query = OpenSearchQuery::Notification.new(
@@ -31,18 +56,4 @@ private
 
     search_result
   end
-
-  # Any changes in these search params need to be also applied to PoisonCentres::NotificationsController#search_params
-  def search_params
-    params.fetch(:notification_search_form, {}).permit(:q,
-                                                       :category,
-                                                       { date_from: %i[day month year] },
-                                                       { date_to: %i[day month year] },
-                                                       { date_exact: %i[day month year] },
-                                                       :date_filter,
-                                                       :sort_by,
-                                                       :search_fields,
-                                                       :match_similar)
-  end
-  helper_method :search_params
 end

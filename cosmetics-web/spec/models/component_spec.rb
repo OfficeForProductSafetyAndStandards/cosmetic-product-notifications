@@ -222,6 +222,28 @@ RSpec.describe Component, type: :model do
     end
   end
 
+  describe "#ph_required?" do
+    subject { predefined_component.ph_required? }
+
+    context "when the physical form is a powder" do
+      %i[solid_or_pressed_powder loose_powder].each do |physical_form|
+        before { predefined_component.physical_form = physical_form }
+
+        it { is_expected.to be_falsey }
+      end
+    end
+
+    context "when the physical form is a liquid" do
+      before { predefined_component.physical_form = :liquid }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when the physical form has not been set" do
+      it { is_expected.to be_truthy }
+    end
+  end
+
   describe "#ph_range_not_required?" do
     subject { predefined_component.ph_range_not_required? }
 

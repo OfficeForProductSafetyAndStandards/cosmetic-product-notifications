@@ -154,6 +154,10 @@ FactoryBot.define do
       formulation_file { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf") }
     end
 
+    trait :ph_not_required do
+      physical_form { "loose_powder" }
+    end
+
     transient do
       with_nano_materials { [] }
     end

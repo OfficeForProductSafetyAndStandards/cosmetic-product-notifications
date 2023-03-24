@@ -284,7 +284,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         complete_secondary_authentication_app
 
         expect(page).to have_current_path("/notifications")
-        expect(page).to have_css("h1", text: "Search cosmetic products")
+        expect(page).to have_css("h1", text: "Cosmetic products search")
       end
 
       scenario "user signs in selecting sms authentication" do
@@ -297,7 +297,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
         expect(page).to have_current_path("/notifications")
 
-        expect(page).to have_css("h1", text: "Search cosmetic products")
+        expect(page).to have_css("h1", text: "Cosmetic products search")
       end
     end
 
@@ -312,7 +312,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         complete_secondary_authentication_app
 
         expect(page).to have_current_path("/notifications")
-        expect(page).to have_css("h1", text: "Search cosmetic products")
+        expect(page).to have_css("h1", text: "Cosmetic products search")
       end
 
       scenario "user attempts to sign in with wrong two factor authentication code" do
@@ -342,7 +342,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
         expect(page).to have_current_path("/notifications")
 
-        expect(page).to have_css("h1", text: "Search cosmetic products")
+        expect(page).to have_css("h1", text: "Cosmetic products search")
       end
 
       scenario "user signs out when required to fill two factor authentication code" do
@@ -393,7 +393,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect_to_be_on_secondary_authentication_sms_page
         complete_secondary_authentication_sms_with(otp_code)
 
-        expect(page).to have_css("h1", text: "Search cosmetic products")
+        expect(page).to have_css("h1", text: "Cosmetic products search")
         expect(page).to have_button("Sign out")
       end
 
@@ -416,7 +416,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
           fill_in_credentials
 
-          expect(page).to have_css("h1", text: "Search cosmetic products")
+          expect(page).to have_css("h1", text: "Cosmetic products search")
           expect(page).to have_button("Sign out")
         end
 
@@ -428,7 +428,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
           fill_in_credentials
           complete_secondary_authentication_sms_with(otp_code)
 
-          expect(page).to have_css("h1", text: "Search cosmetic products")
+          expect(page).to have_css("h1", text: "Cosmetic products search")
 
           visit unlock_path
           expect_to_be_on_secondary_authentication_sms_page

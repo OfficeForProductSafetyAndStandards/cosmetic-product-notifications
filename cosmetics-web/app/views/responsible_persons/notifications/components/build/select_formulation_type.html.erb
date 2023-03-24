@@ -23,19 +23,20 @@
 
 <%
   warning_text = ""
-  warning_text += "There are no frame formulations for the chosen category. List ingredients either by exact concentration or concentration range. " if frame_formulations.nil?
-  warning_text += "Changing the formulation type will remove all ingredients already added." if @component.notification_type.present?
+  warning_text += "There are currently no frame formulations for this chosen product category - choose from one of the following options, below." if frame_formulations.nil?
+  warning_text += "<br><br>" if frame_formulations.nil? && @component.notification_type.present?
+  warning_text += "Changing this selection will remove all previously added ingredients." if @component.notification_type.present?
   warning_html = if warning_text.present?
     govukWarningText(iconFallbackText: "Warning",
                      classes: "govuk-!-width-three-quarters govuk-!-margin-top-3 opss-warning-text--m",
-                     text: warning_text)
+                     html: warning_text.html_safe)
   end
 %>
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <%= error_summary_for(@component, first_values: {notification_type: items[0][:value]}) %>
+      <%= error_summary_for(@component, first_values: { notification_type: items[0][:value] }) %>
         <div class="govuk-form-group <%= @component.errors.present? ? "govuk-form-group--error" : "" %>">
           <fieldset class="govuk-fieldset" aria-describedby="component_notification_type-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -95,6 +96,5 @@
       </div>
 
     <%= govukButton text: "Continue" %>
-    </div>
   </div>
 <% end %>

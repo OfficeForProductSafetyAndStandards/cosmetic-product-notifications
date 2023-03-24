@@ -49,25 +49,29 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_on "Copy this notification"
 
     fill_in "What is the product name?", with: "Product no nano no items copy"
-    click_button "ave"
+    click_button "Save"
 
     expect(page).to have_css("h3", text: "You have created the draft notification")
-    click_on "tasks list page"
+    click_on "task list page"
 
     click_on "Create the product"
-    5.times { click_button "Continue" }
+    2.times { click_button "Continue" }
+    choose "No" # children under 3
+    3.times { click_button "Continue" }
     click_button "Save and continue" # images page
     expect_task_has_been_completed_page
-    click_on "tasks list page"
+    click_on "task list page"
     expect_progress(1, 3)
     click_on "Product details"
-    8.times { click_button "Continue" }
+    3.times { click_button "Continue" }
+    choose "No" # contains CMRs
+    5.times { click_button "Continue" }
     click_button "Save and continue" # ingredient page
     choose "No"
     2.times { click_button "Continue" }
 
     expect_task_has_been_completed_page
-    click_on "tasks list page"
+    click_on "task list page"
 
     expect_progress(2, 3)
     click_link "Accept and submit"

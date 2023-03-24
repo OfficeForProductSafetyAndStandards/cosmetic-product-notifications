@@ -27,10 +27,9 @@ module NotificationCloner
       old_notification.components.map do |old_component|
         new_component = clone_model(old_component)
         new_component.notification = new_notification
+        new_component.routing_questions_answers["contains_cmrs"] = nil if new_component.routing_questions_answers
 
         clone_ingredients(old_component, new_component)
-
-        clone_cmrs(old_component, new_component)
 
         new_component.save!
         new_component
@@ -51,14 +50,6 @@ module NotificationCloner
         new_ingredient = clone_model(old_ingredient)
         new_ingredient.component = new_component
         new_ingredient.save!
-      end
-    end
-
-    def self.clone_cmrs(old_component, new_component)
-      old_component.cmrs.each do |old_cmsr|
-        new_cmsr = clone_model(old_cmsr)
-        new_cmsr.component = new_component
-        new_cmsr.save!
       end
     end
 

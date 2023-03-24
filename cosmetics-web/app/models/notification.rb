@@ -25,7 +25,6 @@ class Notification < ApplicationRecord
     responsible_person_id
     shades
     industry_reference
-    under_three_years
     still_on_the_market
     components_are_mixed
     ph_min_value

@@ -4,8 +4,20 @@ def expect_task_has_been_completed_page
   expect(page).to have_css("h3", text: "The task has been completed")
 end
 
-def return_to_tasks_list_page
-  click_on "tasks list page"
+def expect_select_nanomaterials_page
+  expect(page).to have_css("h1", text: "Select which nanomaterials are included in the item")
+end
+
+def expect_item_name_page
+  expect(page).to have_css("h1", text: "What is the item name?")
+end
+
+def expect_accept_and_submit_page
+  expect(page).to have_css("h1", text: "Accept and submit")
+end
+
+def return_to_task_list_page
+  click_on "Go to the task list page"
 end
 
 def expect_accept_and_submit_not_started
