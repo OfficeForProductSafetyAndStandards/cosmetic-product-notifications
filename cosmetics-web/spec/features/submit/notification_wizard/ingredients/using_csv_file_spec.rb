@@ -49,7 +49,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
     expect_task_has_been_completed_page
 
-    return_to_tasks_list_page
+    return_to_task_list_page
 
     click_link "Accept and submit"
 
