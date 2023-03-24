@@ -11,7 +11,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when updating nano after multi-item kit completed" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product with nano and two items", items_count: 2, nano_materials_count: 2)
 

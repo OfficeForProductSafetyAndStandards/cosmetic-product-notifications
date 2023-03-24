@@ -83,7 +83,7 @@ module WizardConcern
   def set_notification
     @notification ||= Notification.find_by reference_number: params[:notification_reference_number]
 
-    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete? || @notification&.archived?
+    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
@@ -92,7 +92,7 @@ module WizardConcern
     @component = Component.find(params[:component_id])
     @notification = @component.notification
 
-    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete? || @notification&.archived?
+    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete?
 
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
     @component_name = @notification.is_multicomponent? ? @component.name : "the product"
