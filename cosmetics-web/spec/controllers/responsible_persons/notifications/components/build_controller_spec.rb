@@ -62,6 +62,15 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       }.to raise_error(Pundit::NotAuthorizedError)
     end
 
+    context "with a request for the select_ph_option step" do
+      let(:component) { create(:component, :with_category, :ph_not_required, shades:, notification:, notification_type: component_type) }
+
+      it "renders the :completed step if the component does not require PH" do
+        get(:show, params: params.merge(id: :select_ph_option))
+        expect(response).to redirect_to(responsible_person_notification_component_build_path(responsible_person, notification, component, :completed))
+      end
+    end
+
     context "when the notification is already submitted" do
       subject(:request) { get(:show, params: params.merge(id: :number_of_shades)) }
 
