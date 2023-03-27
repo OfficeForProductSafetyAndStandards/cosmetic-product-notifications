@@ -1,0 +1,100 @@
+<%
+  all_component_ingredients = all_component_ingredients(notification)
+  all_component_frame_formulations = all_component_frame_formulations(notification)
+  all_component_cmrs = all_component_cmrs(notification)
+  all_component_nanomaterials = all_component_nanomaterials(notification)
+%>
+<section id="product-table" class="govuk-!-margin-top-7">
+  <h2 class="govuk-visually-hidden">The product</h2>
+  <%= govukSummaryList(
+    classes: "opss-summary-list-mixed",
+    rows: [
+      {
+        key: { text: "Label" },
+        value: { html: render("notifications/product_details_label_images", notification:) },
+      },
+      if all_component_ingredients.present?
+        {
+          key: { text: "Ingredient list" },
+          value: { html: all_component_ingredients.join("<br>").html_safe },
+        }
+      end,
+      if all_component_frame_formulations.present?
+        {
+          key: { text: "Frame formulations" },
+          value: { html: all_component_frame_formulations.join("<br>").html_safe },
+        }
+      end,
+      if all_component_cmrs.present?
+        {
+          key: { text: "CMRs" },
+          value: { html: all_component_cmrs.join("<br>").html_safe },
+        }
+      end,
+      if all_component_nanomaterials.present?
+        {
+          key: { text: "Nanomaterials" },
+          value: { html: all_component_nanomaterials.join("<br>").html_safe },
+        }
+      end,
+    ].compact
+  ) %>
+</section>
+
+<% notification.components.order(:id).each_with_index do |component, i| %>
+  <%
+    item_count = "Item #{i + 1}"
+    component_title = if notification.is_multicomponent?
+                        component.name.present? ? "#{item_count}: #{component.name}" : item_count
+                      else
+                        "Details"
+                      end
+    component_ingredients = component_ingredients(component)
+    component_frame_formulation = component_frame_formulation(component)
+    component_cmrs = component_cmrs(component)
+    component_nanomaterials = component_nanomaterials(component)
+  %>
+  <section id="<%= component.name&.parameterize.presence || item_count.parameterize %>" class="govuk-!-margin-top-9 opss-grouping">
+    <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
+      <%= govukSummaryList(
+        classes: "opss-summary-list-mixed",
+        rows: [
+          if component_ingredients.present?
+            {
+              key: { text: "Ingredient list" },
+              value: { html: component_ingredients.join("<br>").html_safe },
+            }
+          end,
+          if component_frame_formulation.present?
+            {
+              key: { text: "Frame formulation" },
+              value: { html: component_frame_formulation },
+            }
+          end,
+          if component_cmrs.present?
+            {
+              key: { text: "CMRs" },
+              value: { html: component_cmrs.join("<br>").html_safe },
+            }
+          end,
+          if component_nanomaterials.present?
+            {
+              key: { text: "Nanomaterials" },
+              value: { html: component_nanomaterials.join("<br>").html_safe },
+            }
+          end,
+          if component.nano_materials.non_standard.any? && can_view_nanomaterial_review_period_end_date?
+            {
+              key: { text: "Nanomaterials review period end date" },
+              value: { html: render("none_or_bullet_list", entities_list: nano_materials_with_review_period_end_date(component.nano_materials.non_standard), list_item_classes: "") },
+            }
+          end,
+        ].compact
+      ) %>
+      <% if component.trigger_questions %>
+        <% component.trigger_questions.each do |question| %>
+          <%= render "notifications/trigger_question_details", trigger_question: question, display_not_applicable: false %>
+        <% end %>
+      <% end %>
+  </section>
+<% end %>

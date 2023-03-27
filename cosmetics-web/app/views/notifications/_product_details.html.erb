@@ -1,11 +1,11 @@
-<div id="product-table">
-  <h2 class="govuk-heading-m">Product</h2>
+<section id="product-table" class="govuk-!-margin-top-7">
+  <h2 class="govuk-visually-hidden">The product</h2>
   <%= govukSummaryList(
-    classes: "govuk-summary-list check-your-answers-table",
+    classes: "opss-summary-list-mixed",
     rows: [
       {
-        key: { text: "Name" },
-        value: { text: notification.product_name },
+        key: { text: "Label" },
+        value: { html: render("notifications/product_details_label_images", notification:) },
       },
       if notification.industry_reference.present?
         {
@@ -26,25 +26,6 @@
       {
         key: { text: "Shades" },
         value: { html: display_shades(notification) },
-      },
-      {
-        key: { text: "Label image" },
-        value: {
-          html: render("notifications/product_details_label_images", notification: notification)
-        },
-        actions: {
-          items: if notification.image_uploads.present? && notification.editable?
-                   [
-                     {
-                        href: edit_responsible_person_notification_product_images_path(notification.responsible_person, notification),
-                        text: "Change",
-                        visuallyHiddenText: "label image"
-                     }
-                   ]
-                 else
-                   []
-                 end
-        }
       },
       if notification.cpnp_notification_date.present?
         {
@@ -70,24 +51,28 @@
       end,
     ].compact
   ) %>
-  <% if notification.components.count == 1 %>
-    <%= render "notifications/component_details", component: notification.components.first %>
-  <% else %>
-    <% notification.components.each_with_index do |component, i| %>
-      <% name = component.name.presence || "Component #{i + 1}" %>
-      <div id="<%= name.parameterize %>">
-        <h3 class="govuk-heading-m"><%= name %></h3>
-        <%= govukSummaryList(
-          classes: "govuk-summary-list govuk-!-margin-bottom-0 check-your-answers-table",
-          rows: [
-            {
-              key: { text: "Shades" },
-              value: { html: render("none_or_bullet_list", entities_list: component.shades) },
-            },
-          ].compact
-        ) %>
-        <%= render "notifications/component_details", component: component %>
-      </div>
-    <% end %>
-  <% end %>
-</div>
+</section>
+
+<% notification.components.order(:id).each_with_index do |component, i| %>
+  <%
+    item_count = "Item #{i + 1}"
+    component_title = if notification.is_multicomponent?
+                        component.name.present? ? "#{item_count}: #{component.name}" : item_count
+                      else
+                        "Details"
+                      end
+  %>
+  <section id="<%= component.name&.parameterize.presence || item_count.parameterize %>" class="govuk-!-margin-top-9 opss-grouping">
+    <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
+      <%= govukSummaryList(
+        classes: "opss-summary-list-mixed",
+        rows: [
+          {
+            key: { text: "Shades" },
+            value: { html: render("none_or_bullet_list", entities_list: component.shades, list_item_classes: "", list_classes: "") },
+          },
+        ].compact
+      ) %>
+      <%= render "notifications/component_details", component: component %>
+  </section>
+<% end %>
