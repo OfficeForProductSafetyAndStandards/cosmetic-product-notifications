@@ -1,0 +1,166 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      How to create an ingredient <abbr>CSV</abbr> file
+    </h1>
+
+    <p class="govuk-body govuk-!-margin-bottom-7 opss-secondary-text">
+    When creating a new product notification you can add the ingredient information using a <abbr title="Comma Separated Values">CSV</abbr> file.
+    </p>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds" id="page-content">
+
+    <p class="govuk-body">
+    During the process of creating a product notification, you can choose to enter the ingredient information manually - using the forms provided - or by uploading the ingredients using a <abbr>CSV</abbr>
+    file.
+    </p>
+
+    <p class="govuk-body">
+      Once the <abbr>CSV</abbr> file has been successfully uploaded and confirmed you will need to edit an existing ingredient <abbr>CSV</abbr> file with the updated ingredient information and re-upload or create a new <abbr>CSV</abbr> file with updated ingredient information and upload the file.
+    </p>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">
+      Adding the ingredients
+    </h2>
+
+    <p class="govuk-body-s opss-secondary-text">Add each ingredient individually. For every ingredient:</p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
+      <li>If it is shown as an ingredient on the product label it must be added to the notification as an
+        ingredient</li>
+      <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
+      <li>Confirm if the ingredient is listed in the National Poisons Information Service (<abbr>NPIS</abbr>) tables and if it is an ingredient the <abbr>NPIS</abbr> needs to know about</li>
+    </ul>
+
+    <a href="#skip-to-form" class="govuk-skip-link opss-skip-link">Skip poisonous ingredients tables.</a>
+
+    <%= render 'responsible_persons/notifications/components/build/ingredients_npis_needs_to_know' %>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+
+    <p class="govuk-body">
+    You can create a <abbr>CSV</abbr> file by using spreadsheet software or a simple text file editor.
+    The <abbr>CSV</abbr> file you create must follow one of these formats:
+    </p>
+
+
+    <section class="govuk-!-margin-top-7 opss-grouping">
+
+      <h3 class="govuk-heading-s opss-grouping__heading-s">
+        Template 1: exact concentrations
+      </h3>
+
+      <p class="govuk-body-s">
+      For ingredients with <span class="govuk-!-font-weight-bold">exact</span> concentrations follow Template
+      1.
+      </p>
+
+      <p class="govuk-body-s">
+      There are four fields for each ingredient (in this order):
+      </p>
+
+      <ol class="govuk-list govuk-list--number govuk-!-font-size-16">
+        <li>Ingredient name</li>
+        <li>Exact concentration (<span title="Percentage weight by weight">% w/w</span>)</li>
+        <li><abbr>CAS</abbr> number</li>
+        <li>Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?
+        </li>
+      </ol>
+
+      <p class="govuk-body-s govuk-!-font-weight-bold">Requirements:</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
+        <li>Each ingredient is listed on its own (data) row</li>
+        <li>Each ingredient has 4 delimited (comma separated) fields</li>
+        <li>The file name extention is .<abbr>csv</abbr></li>
+        <li>An ingredient name is always required and there must be no duplication of ingredient names
+        </li>
+        <li>An exact concentration (<span title="Percentage weight by weight">% w/w</span>) value is always
+          required
+        </li>
+        <li>A CAS number value is optional, but must always be numbers and dashes only and without spaces. (Provide only one CAS number per ingredient)
+        </li>
+        <li>The fourth value is always set to true or false<span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <kbd>true</kbd> if the
+          <abbr>NPIS</abbr> <em>does</em> need to
+          know about it)
+        </li>
+        <li>Application of header row to upload of csv and header row should be retained</li>
+        <li>Incorporation of header row will be mandatory</li>
+        <!--li>No values can contain commas</li-->
+      </ul>
+
+      <p class="govuk-body-s govuk-!-font-weight-bold">For example:</p>
+
+      <code>
+        Ingredient name 1,35,497-19-8,false<br>
+        Ingredient name 2,55,7732-18-5,false<br>
+        Ingredient name 3,10, ,true<br>
+      </code>
+
+      <p class="govuk-body-s govuk-!-margin-top-5">Download an example <abbr>CSV</abbr> file to your machine or
+      device:&nbsp; <a href="/examples/template-1-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Template 1</a>
+      </p>
+</section>
+
+    <section class="govuk-!-margin-top-7 opss-grouping">
+
+      <h3 class="govuk-heading-s opss-grouping__heading-s">
+        Template 2: exact concentrations with shades
+      </h3>
+
+      <p class="govuk-body-s">
+      For ingredients with <span class="govuk-!-font-weight-bold">exact</span> concentrations and ingredients
+      which use <span class="govuk-!-font-weight-bold">shades</span> follow Template 2.
+      </p>
+
+      <p class="govuk-body-s">
+      Template 2 functionality will eventually be available later in 2023.
+      </p>
+
+    </section>
+
+    <section class="govuk-!-margin-top-7 opss-grouping">
+
+      <h3 class="govuk-heading-s opss-grouping__heading-s">
+        Template 3: concentration ranges
+      </h3>
+
+      <p class="govuk-body-s">
+      For ingredients with concentration <span class="govuk-!-font-weight-bold">ranges</span> follow
+      Template 3.
+      </p>
+
+      <p class="govuk-body-s">
+      Template 3 functionality will eventually be available later in 2023.
+      </p>
+
+    </section>
+
+    <section class="govuk-!-margin-top-7 opss-grouping">
+
+      <h3 class="govuk-heading-s opss-grouping__heading-s">
+        Template 4: concentration ranges with shades
+      </h3>
+
+      <p class="govuk-body-s">
+      For ingredients with concentration <span class="govuk-!-font-weight-bold">ranges</span> and ingredients
+      which use <span class="govuk-!-font-weight-bold">shades</span> follow Template 4.
+      </p>
+
+      <p class="govuk-body-s">
+      Template 4 functionality will eventually be available later in 2023.
+      </p>
+
+    </section>
+
+  </div>
+</div>

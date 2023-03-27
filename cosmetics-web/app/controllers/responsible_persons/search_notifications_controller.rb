@@ -12,6 +12,7 @@ class ResponsiblePersons::SearchNotificationsController < SubmitApplicationContr
       if @search_form.valid?
         @search_response = search_notifications
         @notifications = @search_response.records
+        @results_total = @search_response.results.total
       end
     end
   end

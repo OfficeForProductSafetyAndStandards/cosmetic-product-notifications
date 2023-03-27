@@ -88,9 +88,11 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       @ingredient_concentration_form = ingredient_concentration_form
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
+    when :select_ph_option
+      return jump_to_step(:completed) unless @component.ph_required?
     when :completed
       @component.complete!
-      return render "responsible_persons/notifications/task_completed"
+      return render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
     end
 
     render_wizard
@@ -157,6 +159,17 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
   end
 
 private
+
+  def continue_path
+    components = @notification.components.order(:created_at)
+    next_component_index = components.find_index { |c| c.id == params[:component_id].to_i }.next
+
+    if components[next_component_index]
+      new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, components[next_component_index])
+    else
+      review_responsible_person_notification_draft_path(@notification.responsible_person, @notification)
+    end
+  end
 
   def update_number_of_shades
     answer = params.dig(:component, :number_of_shades)

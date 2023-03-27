@@ -1247,18 +1247,6 @@ dd dl.opss-nested-definition-list {
   }
 }
 
-.opss-table--last-two-cols-right {
-  thead tr .govuk-table__header:nth-last-child(-n+2),
-  tbody tr .govuk-table__cell:nth-last-child(-n+2),
-  tfoot tr .govuk-table__header:nth-last-child(-n+2) {
-    text-align: right;
-  }
-
-  tbody tr td:nth-last-child(-n+2) a {
-    white-space: nowrap;
-  }
-}
-
 .opss-table--first-col-normal {
   tbody tr th:first-child {
     font-weight: normal;

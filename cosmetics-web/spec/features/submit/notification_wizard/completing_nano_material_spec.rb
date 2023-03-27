@@ -11,7 +11,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Completing a standard nanomaterial for a product notification" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product one nano one item", items_count: 1, nano_materials_count: 1)
     expect_progress(1, 4)
@@ -71,8 +71,17 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_button "Continue"
     expect_task_has_been_completed_page
 
-    return_to_tasks_list_page
+    return_to_task_list_page
     expect_task_completed "Nano material one"
+
+    # Check continue button on task completed page
+    click_link "Nano material one"
+    click_button "Continue"
+    click_button "Save and continue"
+    click_button "Continue"
+    click_button "Continue"
+    click_link "Continue"
+    expect_select_nanomaterials_page
   end
 
   scenario "Completing a non-standard nanomaterial for a product notification" do
@@ -82,7 +91,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
                                        responsible_person:)
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product one nano one item", items_count: 1, nano_materials_count: 1)
     expect_progress(1, 4)
@@ -139,7 +148,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_task_has_been_completed_page
 
-    return_to_tasks_list_page
+    return_to_task_list_page
     expect_task_completed nanomaterial_notification.name
   end
 end

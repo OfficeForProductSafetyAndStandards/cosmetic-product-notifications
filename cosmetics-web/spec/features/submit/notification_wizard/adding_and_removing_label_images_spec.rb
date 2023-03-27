@@ -12,7 +12,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     before do
       visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-      click_on "Create a new product notification"
+      click_on "Add a cosmetic product"
       click_on "Create the product"
       answer_product_name_with "Product"
       answer_do_you_want_to_give_an_internal_reference_with "No"

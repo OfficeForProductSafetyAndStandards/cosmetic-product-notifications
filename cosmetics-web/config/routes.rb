@@ -136,7 +136,6 @@ Rails.application.routes.draw do
 
       resource :draft, controller: "responsible_persons/drafts", only: %i[new]
       get "draft-notifications", to: "responsible_persons/drafts#index", as: :draft_notifications
-      get "archived-notifications", to: "responsible_persons/notifications#archived", as: :archived_notifications
       resources :notifications, param: :reference_number, controller: "responsible_persons/notifications", only: %i[index show new edit create] do
         resources :product, controller: "responsible_persons/notifications/product", only: %i[show update new]
         resources :product_kit, controller: "responsible_persons/notifications/product_kit", only: %i[show update new]
@@ -165,10 +164,6 @@ Rails.application.routes.draw do
             get :confirm
           end
         end
-
-        # The following actions should be `PATCH` once we no longer have bare links to them
-        get :archive
-        get :unarchive
       end
 
       resources :delete_notification, param: :reference_number, controller: "responsible_persons/delete_notification", only: [] do
@@ -208,6 +203,7 @@ Rails.application.routes.draw do
     get :terms_and_conditions, path: "terms-and-conditions"
     get :privacy_notice, path: "privacy-notice"
     get :cookies_policy, path: "cookies"
+    get :csv, path: "csv"
   end
 
   resource :cookie_form, only: [:create]

@@ -67,7 +67,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
     let(:user_id)                    { submit_user.id }
     let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp) }
-    let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
+    let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp, eu_notified: true, notified_to_eu_on: 3.days.ago.to_date) }
     let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id:, responsible_person: rp) }
 
     before do

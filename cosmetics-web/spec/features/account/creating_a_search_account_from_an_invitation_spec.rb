@@ -207,7 +207,7 @@ RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mail
   # end
 
   def expect_to_be_signed_in_as_search_user
-    expect(page).to have_css("h1", text: "Search cosmetic products")
+    expect(page).to have_css("h1", text: "Cosmetic products search")
     expect(page).to have_button "Sign out"
   end
 

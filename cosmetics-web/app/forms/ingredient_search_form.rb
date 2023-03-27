@@ -21,7 +21,7 @@ class IngredientSearchForm < Form
   attribute :date_to, :govuk_date
   attribute :group_by, default: OpenSearchQuery::Ingredient::GROUP_BY_NONE
 
-  attribute :sort_by
+  attribute :sort_by, default: OpenSearchQuery::Ingredient::SCORE_SORTING
 
   validates :date_from,
             presence: true,

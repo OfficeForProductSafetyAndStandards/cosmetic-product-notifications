@@ -287,7 +287,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     let(:user) { create(:poison_centre_user) }
     let!(:reset_token)                      { stubbed_devise_generated_token }
     let(:edit_user_password_url_with_token) { "http://#{ENV.fetch('SEARCH_HOST')}/password/edit?reset_password_token=#{reset_token.first}" }
-    let(:expected_text) { "Search cosmetic products" }
+    let(:expected_text) { "Cosmetic products search" }
 
     include_examples "password reset"
 

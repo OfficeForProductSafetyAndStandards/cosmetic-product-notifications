@@ -71,7 +71,7 @@ module  ResponsiblePersons::Notifications::Nanomaterials
         set_nanomaterial_notifications
       when :completed
         @notification.reload.try_to_complete_nanomaterials!
-        return render "responsible_persons/notifications/task_completed"
+        return render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
       end
 
       render_wizard
@@ -126,6 +126,19 @@ module  ResponsiblePersons::Notifications::Nanomaterials
                           .fetch(:purposes_form, {})
 
       { purposes: form_params.select { |_, v| v == "1" }.keys, purpose_type: form_params[:purpose_type] }
+    end
+
+    def continue_path
+      nanomaterials = @notification.nano_materials.order(:created_at)
+      next_nanomaterial_index = nanomaterials.find_index { |nm| nm.id == params[:nanomaterial_id].to_i }.next
+
+      if nanomaterials[next_nanomaterial_index]
+        new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nanomaterials[next_nanomaterial_index])
+      elsif @notification.multi_component?
+        new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification)
+      else
+        new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+      end
     end
 
     def update_select_purposes_step
