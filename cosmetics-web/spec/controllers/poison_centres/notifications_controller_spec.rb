@@ -68,7 +68,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         render_views
 
         it "renders contact person overview" do
-          expect(response.body).to match(/Contact person/)
+          expect(response.body).to match(/Assigned contact/)
         end
 
         it "does not render component formulations" do
@@ -146,7 +146,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         render_views
 
         it "renders contact person overview" do
-          expect(response.body).to match(/Contact person/)
+          expect(response.body).to match(/Assigned contact/)
         end
 
         it "renders component formulations" do
@@ -224,7 +224,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         render_views
 
         it "renders contact person overview" do
-          expect(response.body).to match(/Contact person/)
+          expect(response.body).to match(/Assigned contact/)
         end
 
         it "does not render component formulations" do

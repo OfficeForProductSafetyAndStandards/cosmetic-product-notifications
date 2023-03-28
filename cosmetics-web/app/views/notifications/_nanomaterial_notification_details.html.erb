@@ -1,7 +1,7 @@
 <%= nanomaterial_notification.ukn %> - <%= nanomaterial_notification.name %>
 <% if can_view_nanomaterial_notification_files? && nanomaterial_notification.passed_antivirus_check? %>
     <% file = nanomaterial_notification.file %>
-    </br>
+    <br>
     <%= link_to(file.filename,
                 url_for(file),
                 class: "govuk-link govuk-link--no-visited-state",
