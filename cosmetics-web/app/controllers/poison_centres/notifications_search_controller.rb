@@ -29,6 +29,7 @@ private
       :sort_by,
     )
   end
+  helper_method :search_params
 
   def apply_date_filter
     if @search_form.date_from.present? || @search_form.date_to.present?

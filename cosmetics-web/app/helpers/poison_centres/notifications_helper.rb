@@ -1,8 +1,4 @@
 module PoisonCentres::NotificationsHelper
-  INGREDIENTS_SEARCH = "ingredients_search".freeze
-  NOTIFICATIONS_SEARCH = "notifications_search".freeze
-  INGREDIENTS_LIST = "ingredients_list".freeze
-
   def search_date_filter_group_error_class(*fields)
     error_present = fields.any? do |field|
       @search_form.errors[field].present?
@@ -26,14 +22,6 @@ module PoisonCentres::NotificationsHelper
 
   def display_filters_informations
     "<span class=\"opss-filter-txt\">using the current filters,</span>".html_safe if @search_form.valid? && @search_form.filters_present?
-  end
-
-  def back_to_ingredients?
-    params[:back_to] == INGREDIENTS_SEARCH
-  end
-
-  def back_to_ingredients_list?
-    params[:back_to] == INGREDIENTS_LIST
   end
 
   def active_page_class(page)
