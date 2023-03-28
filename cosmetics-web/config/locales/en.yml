@@ -317,7 +317,7 @@ en:
         responsible_persons/notifications/product/contains_nanomaterials_form:
           attributes:
             contains_nanomaterials:
-              inclusion: "Select yes if the product is a multi-item kit, no if its single item"
+              inclusion: "Select yes if the product contains nanomaterials"
             nanomaterials_count:
               not_a_number: "Enter a number for how many nanomaterials"
               not_an_integer: "Enter a number for how many nanomaterials"
