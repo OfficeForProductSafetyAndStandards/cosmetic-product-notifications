@@ -23,7 +23,7 @@ private
 
   def redis
     @redis ||= if ENV["VCAP_SERVICES"]
-                 uri = CF::App::Credentials.find_by_service_name("beis-opss-text-relay-redis")["uri"]
+                 uri = CF::App::Credentials.find_by_service_name("opss-smoke-test-text-relay-redis")["uri"]
                  Redis.new(url: uri)
                else
                  Redis.new(host:, port:, db: 15)
@@ -31,10 +31,10 @@ private
   end
 
   def host
-    ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("beis-opss-text-relay-redis")["host"] || ENV.fetch("REDIS_HOST", "localhost")
+    ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("opss-smoke-test-text-relay-redis")["host"] || ENV.fetch("REDIS_HOST", "localhost")
   end
 
   def port
-    ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("beis-opss-text-relay-redis")["port"] || ENV.fetch("REDIS_PORT", "6379")
+    ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("opss-smoke-test-text-relay-redis")["port"] || ENV.fetch("REDIS_PORT", "6379")
   end
 end
