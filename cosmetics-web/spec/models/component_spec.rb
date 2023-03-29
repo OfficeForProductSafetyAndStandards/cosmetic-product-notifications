@@ -575,6 +575,32 @@ RSpec.describe Component, type: :model do
       end
     end
 
+    context "when changing from exact_csv to exact" do
+      let(:component) { create(:component, :using_exact, :with_exact_ingredients, :with_ingredients_file, notification_type_given_as: "exact_csv") }
+
+      it "removes ingredients file" do
+        component.update_formulation_type("exact")
+
+        expect(component.ingredients_file.blob).to be_nil
+      end
+
+      it "removes the ingredients" do
+        expect {
+          component.update_formulation_type("exact")
+        }.to change { component.ingredients.count }.from(2).to(0)
+      end
+
+      context "when notification_type_given_as is nil" do
+        let(:component) { create(:component, :using_exact, :with_exact_ingredients, :with_ingredients_file) }
+
+        it "doesn't remove the ingredients if the type doesn't change" do
+          expect {
+            component.update_formulation_type("exact")
+          }.not_to(change { component.ingredients.count })
+        end
+      end
+    end
+
     describe "validation" do
       let(:component) { create(:component) }
 

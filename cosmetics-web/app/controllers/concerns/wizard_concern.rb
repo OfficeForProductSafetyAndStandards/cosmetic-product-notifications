@@ -68,8 +68,12 @@ module WizardConcern
     render_next_step model
   end
 
-  def rerender_current_step
-    render step
+  def rerender_current_step(parameters = nil)
+    if params
+      render step, params: parameters
+    else
+      render step
+    end
   end
 
   def next_step_path

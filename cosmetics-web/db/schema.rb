@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_09_111036) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_23_110110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -91,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_09_111036) do
     t.jsonb "routing_questions_answers"
     t.string "exposure_condition"
     t.string "exposure_routes", array: true
+    t.string "notification_type_given_as"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
 

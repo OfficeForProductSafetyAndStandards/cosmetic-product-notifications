@@ -2,6 +2,20 @@ require "rails_helper"
 
 RSpec.describe Ingredient, type: :model do
   describe "validations" do
+    describe "name length validation" do
+      it "is not valid when name is too long" do
+        ingredient = build(:range_ingredient, inci_name: "A" * 2 * Ingredient::NAME_LENGTH_LIMIT)
+        expect(ingredient).not_to be_valid
+        expect(ingredient.errors[:inci_name]).to eq(["Inci name is too long (maximum is 100 characters)"])
+      end
+
+      it "is valid when name is too long on update" do
+        ingredient = build(:range_ingredient, inci_name: "A" * 2 * Ingredient::NAME_LENGTH_LIMIT)
+        ingredient.save(validate: false)
+        expect(ingredient).to be_valid
+      end
+    end
+
     describe "range or exact concentration validation" do
       # rubocop:disable RSpec/MultipleExpectations
       it "is not valid when both exact and range concentrations are set" do
@@ -14,8 +28,8 @@ RSpec.describe Ingredient, type: :model do
       it "is not valid when neither exact or range concentration are set" do
         ingredient = build_stubbed(:ingredient, exact_concentration: nil, range_concentration: nil)
         expect(ingredient).not_to be_valid
-        expect(ingredient.errors[:exact_concentration]).to eq(["Enter the exact or range concentration"])
-        expect(ingredient.errors[:range_concentration]).to eq(["Enter the exact or range concentration"])
+        expect(ingredient.errors[:exact_concentration]).to eq(["Enter the concentration"])
+        expect(ingredient.errors[:range_concentration]).to eq(["Enter the concentration"])
       end
       # rubocop:enable RSpec/MultipleExpectations
     end
@@ -82,7 +96,7 @@ RSpec.describe Ingredient, type: :model do
       it "is not valid without name" do
         ingredient = build_stubbed(:exact_ingredient, inci_name: nil)
         expect(ingredient).not_to be_valid
-        expect(ingredient.errors[:inci_name]).to eq(["Enter a name"])
+        expect(ingredient.errors[:inci_name]).to eq(["Enter an ingredient name"])
       end
 
       it "is invalid when name includes 'http'" do
