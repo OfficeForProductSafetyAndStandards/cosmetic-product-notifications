@@ -37,12 +37,13 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
       click_link("View Cream")
 
       expect(page).to have_h1("Cream")
-      expect(page).to have_css("th", text: "Nanomaterials", exact_text: true)
-      expect(page).to have_css("td", text: "#{nanomaterial_notification.ukn} - Zinc oxide testPdf.pdf (PDF, 11.6 KB)", exact_text: true)
-      expect(page).to have_summary_item(
-        key: "Nanomaterials review period end date",
-        value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
-      )
+      within(:css, "#item-1") do
+        expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide testPdf.pdf (PDF, 11.6 KB)")
+        expect(page).to have_summary_item(
+          key: "Nanomaterials review period end date",
+          value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
+        )
+      end
     end
   end
 
@@ -106,8 +107,13 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
       click_link("View Cream")
 
       expect(page).to have_h1("Cream")
-      expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
-      expect(page).not_to have_css("th", text: "Nanomaterials review period end date", exact_text: false)
+      within(:css, "#item-1") do
+        expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
+        expect(page).not_to have_summary_item(
+          key: "Nanomaterials review period end date",
+          value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
+        )
+      end
     end
   end
 end
