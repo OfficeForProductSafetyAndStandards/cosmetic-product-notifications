@@ -1,4 +1,4 @@
-module PoisonCentresNotificationsHelper
+module PoisonCentres::NotificationsHelper
   INGREDIENTS_SEARCH = "ingredients_search".freeze
   NOTIFICATIONS_SEARCH = "notifications_search".freeze
   INGREDIENTS_LIST = "ingredients_list".freeze

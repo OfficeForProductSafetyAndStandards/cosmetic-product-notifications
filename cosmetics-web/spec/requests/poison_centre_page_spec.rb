@@ -18,6 +18,7 @@ RSpec.describe "Poison centre page", type: :request do
   end
 
   before do
+    notification_exact.components.first.update(notification_type: "exact")
     component_exact = create(:exact_component, notification: notification_exact)
     create(:cmr, name: "Foo CMR", component: component_exact)
     create(:exact_ingredient, exact_concentration: 4, inci_name: "Foo Ingredient", component: component_exact)
@@ -45,28 +46,36 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the product ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("h2", text: "Ingredients")
-        expect(response.body).to have_tag("th", text: /Foo Ingredient/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dt", text: /Ingredient list/)
+          with_tag("dd", text: /Foo Ingredient/)
+        end
       end
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).not_to include("Frame formulation")
       end
 
       it "displays the product frame formulations for a product with only frame formulations" do
         get poison_centre_notification_path(params_frame_formulation)
-        expect(response.body).to have_tag("h2", text: "Frame formulations")
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dt", text: /Frame formulation/)
+        end
       end
 
       it "displays the product CMRs" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("td#cmr-names", text: /Foo CMR/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo CMR/)
+        end
       end
 
       it "displays the product Nanomaterials" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("td", text: /Foo Nanomaterial/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo Nanomaterial/)
+        end
       end
 
       it "displays the Responsible Person" do
@@ -88,7 +97,7 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("h2", text: "Contact person")
+        expect(response.body).to have_tag("h2", text: "Assigned contact")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
@@ -111,22 +120,26 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).not_to include("Frame formulation")
       end
 
       it "does not display the product frame formulations for a product with only frame formulations" do
         get poison_centre_notification_path(params_frame_formulation)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).not_to include("Frame formulation")
       end
 
       it "displays the product CMRs" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("dd", text: /Foo CMR/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo CMR/)
+        end
       end
 
       it "displays the product Nanomaterials" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("dd", text: /Foo Nanomaterial/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo Nanomaterial/)
+        end
       end
 
       it "displays the Responsible Person" do
@@ -148,7 +161,7 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("h2", text: "Contact person")
+        expect(response.body).to have_tag("h2", text: "Assigned contact")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
@@ -170,12 +183,14 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).not_to include("Frame formulation")
       end
 
-      it "does not display the product frame formulations for a product with only frame formulations" do
+      it "displays the product frame formulations for a product with only frame formulations" do
         get poison_centre_notification_path(params_frame_formulation)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dt", text: /Frame formulation/)
+        end
       end
 
       it "displays the product CMRs" do
@@ -207,7 +222,7 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("h2", text: "Contact person")
+        expect(response.body).to have_tag("h2", text: "Assigned contact")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
@@ -224,28 +239,36 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the product ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("h2", text: "Ingredients")
-        expect(response.body).to have_tag("th", text: /Foo Ingredient/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dt", text: /Ingredient list/)
+          with_tag("dd", text: /Foo Ingredient/)
+        end
       end
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).not_to include("Frame formulation")
       end
 
       it "displays the product frame formulations for a product with only frame formulations" do
         get poison_centre_notification_path(params_frame_formulation)
-        expect(response.body).to have_tag("h2", text: "Frame formulations")
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dt", text: /Frame formulation/)
+        end
       end
 
       it "displays the product CMRs" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("td#cmr-names", text: /Foo CMR/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo CMR/)
+        end
       end
 
       it "displays the product Nanomaterials" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("td", text: /Foo Nanomaterial/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo Nanomaterial/)
+        end
       end
 
       it "displays the Responsible Person" do
@@ -267,7 +290,7 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("h2", text: "Contact person")
+        expect(response.body).to have_tag("h2", text: "Assigned contact")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end
@@ -290,22 +313,26 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).not_to include("Frame formulation")
       end
 
       it "does not display the product frame formulations for a product with only frame formulations" do
         get poison_centre_notification_path(params_frame_formulation)
-        expect(response.body).not_to include("Frame formulations")
+        expect(response.body).not_to include("Frame formulation")
       end
 
       it "displays the product CMRs" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("dd", text: /Foo CMR/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo CMR/)
+        end
       end
 
       it "displays the product Nanomaterials" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("dd", text: /Foo Nanomaterial/)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dd", text: /Foo Nanomaterial/)
+        end
       end
 
       it "displays the Responsible Person" do
@@ -326,7 +353,7 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the Contact Person" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("h2", text: "Contact person")
+        expect(response.body).to have_tag("h2", text: "Assigned contact")
         expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
       end
     end

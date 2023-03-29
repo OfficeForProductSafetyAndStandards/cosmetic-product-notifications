@@ -11,7 +11,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when updating nano after multi-item kit completed" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product with nano and two items", items_count: 2, nano_materials_count: 2)
 
@@ -93,7 +93,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when updating nano after single item product completed" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano no items", nano_materials_count: 1)
 
@@ -131,7 +131,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when adding first nano after single item product completed" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano no items")
 
@@ -167,7 +167,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when adding extra item after single item product completed" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano no items")
 
@@ -215,7 +215,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when adding extra item after two items product completed" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano two items", items_count: 2)
 
@@ -265,7 +265,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when changing formulation type in a completed component" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano two items", items_count: 2)
 
@@ -297,7 +297,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     answer_item_sub_subcategory_with "Shampoo"
 
     # Change the formulation type from exact to range.
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range", item_name: name
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually", item_name: name
 
     # Leaves the item wizard without completing it.
     visit "/responsible_persons/#{responsible_person.id}/draft-notifications"
@@ -313,7 +313,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when adding items after adding nanos" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Some product")
 
@@ -389,7 +389,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Checking correct status - when adding items after interrupted nano wizard" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product with nano and two items", items_count: 2, nano_materials_count: 2)
 

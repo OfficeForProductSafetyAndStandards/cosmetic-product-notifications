@@ -80,7 +80,7 @@
 		  	  </th>
 		  	  <th id="item-<%= index %>" colspan="3" scope="colgroup" class="govuk-table__header">
 			    <%= link_to notification.product_name,
-				  poison_centre_notification_path(reference_number: notification.reference_number, ingredient_inci_name: params[:ingredient_inci_name], back_to: PoisonCentresNotificationsHelper::INGREDIENTS_LIST),
+				  poison_centre_notification_path(reference_number: notification.reference_number, ingredient_inci_name: params[:ingredient_inci_name], back_to: PoisonCentres::NotificationsHelper::INGREDIENTS_LIST),
 				  class: "govuk-link govuk-link--no-visited-state" %>
 		  	  </th>
 			</tr>

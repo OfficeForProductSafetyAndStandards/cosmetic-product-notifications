@@ -22,7 +22,7 @@ jobs:
       env:
         CF_CLI_VERSION: v7
       run: |
-        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+        curl -A "" -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
         sudo cp /tmp/cf7 /usr/local/bin/cf
     - name: Retrieve list of active pull requests
       id: retrieve-pull-requests

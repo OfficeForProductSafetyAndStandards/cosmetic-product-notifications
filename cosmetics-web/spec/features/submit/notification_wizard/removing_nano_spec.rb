@@ -12,7 +12,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     scenario "when removing before completing product details" do
       visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-      click_on "Create a new product notification"
+      click_on "Add a cosmetic product"
 
       complete_product_wizard(name: "Product for nano removal test", nano_materials_count: 2)
 
@@ -42,7 +42,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Adding and removing nano status" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Create a new product notification"
+    click_on "Add a cosmetic product"
 
     complete_product_wizard(name: "Product no nano two items", items_count: 2)
 
