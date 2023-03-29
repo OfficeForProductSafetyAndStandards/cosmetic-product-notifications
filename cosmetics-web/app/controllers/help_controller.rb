@@ -8,4 +8,6 @@ class HelpController < PubliclyAccessibleController
   def accessibility_statement; end
 
   def cookies_policy; end
+
+  def csv; end
 end

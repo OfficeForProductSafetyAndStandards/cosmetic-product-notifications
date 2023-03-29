@@ -53,6 +53,10 @@ ExampleLength:
     - 'spec/services/notification_delete_service_spec.rb'
     - 'spec/services/notification_cloner/**/*'
 
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'app/forms/responsible_persons/notifications/components/bulk_ingredient_upload_form.rb'
+      
 Metrics/BlockLength:
   Exclude:
     - 'Gemfile'

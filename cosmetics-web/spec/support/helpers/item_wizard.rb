@@ -43,10 +43,10 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
 
   case formulation_type
   when :exact
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration", item_name: label_name
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually", item_name: label_name
     fill_ingredients_exact_concentrations(single_item:)
   when :range
-    answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range", item_name: label_name
+    answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually", item_name: label_name
     fill_ingredients_range_concentrations(single_item:)
   end
 
@@ -144,7 +144,7 @@ def answer_item_sub_subcategory_with(answer)
 end
 
 def answer_how_do_you_want_to_give_formulation_with(answer, item_name: nil)
-  within_fieldset("How do you want to give the formulation of #{item_name || 'the product'}?") do
+  within_fieldset("How will you provide #{item_name || 'the product'} formulation?") do
     page.choose(answer)
   end
   click_button "Continue"
@@ -240,6 +240,10 @@ def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: []
       expect(page).to have_css("ol.govuk-list--number li", text: ingredient)
     end
   end
+end
+
+def expect_to_be_on_add_csv_ingredients_page
+  expect(page).to have_css("h1", text: "Upload the ingredients CSV file")
 end
 
 def expect_to_be_on_ingredient_removed_confirmation_page
