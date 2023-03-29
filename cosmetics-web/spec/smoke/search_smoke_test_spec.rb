@@ -30,11 +30,10 @@ RSpec.feature "Search smoke test" do
       expect(session).to have_xpath("//input[contains(@id,'q')]")
 
       session.fill_in("notification_search_form_q", with: product_name)
-      puts session.save_page
       session.click_on("Search")
       expect(session).to have_content(product_name)
 
-      session.find("a", text: product_name).click
+      session.find("a", text: "View").first.click
 
       # Poison Centre or OPSS user role view
       expect(session).to have_css("h2", text: "Product details")
