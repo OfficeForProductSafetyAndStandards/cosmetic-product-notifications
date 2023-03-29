@@ -161,22 +161,24 @@ en:
         ingredient:
           attributes:
             inci_name:
-              blank: "Enter a name"
+              blank: "Enter an ingredient name"
               invalid: "Enter a valid ingredient name"
               taken: "Ingredient name already exists in this component"
             exact_concentration:
-              blank: "Enter the exact or range concentration"
+              blank: "Enter the concentration"
               present: "Cannot have both exact and range concentrations"
               greater_than: "Enter a concentration greater than 0"
               less_than_or_equal_to: "Enter a concentration less than or equal to 100"
               not_a_number: "Enter a number for the concentration"
               non_poisonous_wrong_component_type: "non poisonous exact ingredients must belong to a exact component"
             range_concentration:
-              blank: "Enter the exact or range concentration"
+              blank: "Enter the concentration"
               present: "Cannot have both exact and range concentrations"
               non_range_component: "ingredient with range concentration must belong to a range component"
             poisonous:
               with_range_concentration: "ingredients with range concentration cannot be poisonous"
+              inclusion: "Specify if ingredient is poisonous"
+              blank: "Specify if ingredient is poisonous"
   activemodel:
     attributes:
       registration/account_security_form:
@@ -241,6 +243,11 @@ en:
               too_common: "Choose a password that is harder to guess"
             secondary_authentication_methods:
               blank: "Select how to get an access code"
+        responsible_persons/notifications/components/bulk_ingredient_upload_form:
+          attributes:
+            file:
+              invalid: "The selected file must be a CSV file"
+              empty: "The selected file is empty"
         responsible_persons/details_form:
           attributes:
             account_type:

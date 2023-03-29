@@ -120,6 +120,10 @@ def expect_success_banner_with_text(text)
   expect(page).to have_css("div.govuk-notification-banner--success", text:)
 end
 
+def expect_confirmation_banner_with_text(text)
+  expect(page).to have_css("div.govuk-panel--confirmation", text:)
+end
+
 def otp_code(email = nil)
   user_with_code = User.find_by(email:) || user
   user_with_code.reload.direct_otp
@@ -502,7 +506,7 @@ end
 def expect_form_to_have_errors(errors)
   expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
   errors.each do |attribute, error|
-    expect(page).to have_link(error[:message], href: "##{attribute}")
+    expect(page).to have_link(error[:message], href: "##{error[:href] || attribute}")
     expect(page).to have_css("p##{error[:id]}-error", text: error[:message])
   end
 end

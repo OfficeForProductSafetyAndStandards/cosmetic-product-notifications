@@ -96,8 +96,9 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
         # rubocop:disable RSpec/MultipleExpectations
         it "allows the user to choose between frame formulations, exact or range" do
           expect(response.body).to include("Choose a predefined frame formulation")
-          expect(response.body).to include("List ingredients and their exact concentration")
-          expect(response.body).to include("List ingredients and their concentration range")
+          expect(response.body).to include("Enter ingredients and their exact concentration manually")
+          expect(response.body).to include("Provide ingredients and their exact concentration using a CSV file")
+          expect(response.body).to include("Enter ingredients and their concentration range manually")
         end
         # rubocop:enable RSpec/MultipleExpectations
       end
@@ -109,8 +110,9 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
         it "allows the user to choose between exact or range only" do
           expect(response.body).to include("There are currently no frame formulations for this chosen product category - choose from one of the following options, below.")
           expect(response.body).not_to include("Choose a predefined frame formulation")
-          expect(response.body).to include("List ingredients and their exact concentration")
-          expect(response.body).to include("List ingredients and their concentration range")
+          expect(response.body).to include("Enter ingredients and their exact concentration manually")
+          expect(response.body).to include("Provide ingredients and their exact concentration using a CSV file")
+          expect(response.body).to include("Enter ingredients and their concentration range manually")
         end
         # rubocop:enable RSpec/MultipleExpectations
       end

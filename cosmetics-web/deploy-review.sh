@@ -27,6 +27,7 @@ then
 fi
 
 DB_GUID=$(cf service cosmetics-database-template --guid)
+# `create-service` is no op if the db is there (soft create)
 cf create-service postgres small-13 $DB_NAME -c "{\"restore_from_point_in_time_of\": \"$DB_GUID\" }"
 
 if [ -z "$REDIS_NAME" ]
