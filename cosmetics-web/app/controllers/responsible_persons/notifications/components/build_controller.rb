@@ -1,3 +1,5 @@
+require "csv"
+
 class ResponsiblePersons::Notifications::Components::BuildController < SubmitApplicationController
   NUMBER_OF_CMRS = 5
 
@@ -28,6 +30,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :select_formulation_type,
         :add_ingredient_exact_concentration, # only for exact
         :add_ingredient_range_concentration, # only for range
+        :upload_ingredients_file,
         :select_frame_formulation, # only for frame formulation
         :contains_ingredients_npis_needs_to_know, # only for frame formulation
         :add_ingredient_npis_needs_to_know, # only for frame formulation
@@ -59,6 +62,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     select_formulation_type: :select_sub_sub_category,
     add_ingredient_exact_concentration: :select_formulation_type,
     add_ingredient_range_concentration: :select_formulation_type,
+    upload_ingredients_file: :select_formulation_type,
     want_to_add_another_ingredient: :select_formulation_type,
     select_frame_formulation: :select_formulation_type, # only for frame formulation,
     contains_ingredients_npis_needs_to_know: :select_formulation_type, # only for frame formulation,
@@ -86,6 +90,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       end
     when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
       @ingredient_concentration_form = ingredient_concentration_form
+    when :upload_ingredients_file
+      @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component)
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :select_ph_option
@@ -126,6 +132,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_add_ingredient_concentration("exact")
     when :add_ingredient_range_concentration
       update_add_ingredient_concentration("range")
+    when :upload_ingredients_file
+      update_upload_ingredients_file
     when :add_ingredient_npis_needs_to_know
       update_add_ingredient_concentration("exact", force_poisonous: true)
     when :select_frame_formulation
@@ -268,7 +276,8 @@ private
       "predefined" => :select_frame_formulation,
       "exact" => :add_ingredient_exact_concentration,
       "range" => :add_ingredient_range_concentration,
-    }[@component.notification_type]
+      "exact_csv" => :upload_ingredients_file,
+    }[formulation_type]
 
     if @component.ingredients.any? && !@component.predefined?
       jump_to_step(step, ingredient_number: 0) # Display first existing ingredient for edit
@@ -324,6 +333,24 @@ private
     else
       render :select_frame_formulation
     end
+  end
+
+  def update_upload_ingredients_file
+    ingredients_file = params.dig(:responsible_persons_notifications_components_bulk_ingredient_upload_form, :file)
+
+    @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, file: ingredients_file)
+
+    if ingredients_file.nil? && @component.ingredients_file.present?
+      return jump_to_step :select_ph_option
+    end
+
+    if @bulk_ingredients_form.save_ingredients
+      @component.ingredients_file.attach(ingredients_file)
+      # we actually want to rerender current step with parameter saying that all went well
+      @ingredients_imported = true
+    end
+
+    rerender_current_step
   end
 
   def update_contains_ingredients_npis_needs_to_know

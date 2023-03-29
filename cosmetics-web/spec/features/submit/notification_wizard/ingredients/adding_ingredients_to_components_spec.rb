@@ -28,7 +28,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     end
 
     scenario "Adding exact concentration ingredients to a product" do
-      answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+      answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
       expect_to_be_on_add_ingredients_page
 
       # First attempt with validation errors
@@ -72,7 +72,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     end
 
     scenario "Adding range concentration ingredients to a product" do
-      answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range"
+      answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually"
 
       expect_to_be_on_add_ingredients_page
 
@@ -162,7 +162,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     end
 
     scenario "Adding exact concentration ingredients to a product" do
-      answer_how_do_you_want_to_give_formulation_with "List ingredients and their exact concentration"
+      answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
       expect_to_be_on_add_ingredients_page
 
       # First attempt without answering if the ingredient is used for multiple shades
@@ -227,7 +227,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     end
 
     scenario "Adding range concentration ingredients to a product" do
-      answer_how_do_you_want_to_give_formulation_with "List ingredients and their concentration range"
+      answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually"
 
       expect_to_be_on_add_ingredients_page
 

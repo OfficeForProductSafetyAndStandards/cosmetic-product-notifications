@@ -7,5 +7,12 @@ module NotificationTypes
       exact: "exact",
       range: "range",
     }
+
+    enum notification_type_given_as: {
+      predefined: "predefined",
+      exact: "exact",
+      exact_csv: "exact_csv",
+      range: "range",
+    }, _prefix: :notification_type_given_as
   end
 end

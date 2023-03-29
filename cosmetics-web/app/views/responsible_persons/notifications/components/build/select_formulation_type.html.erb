@@ -1,10 +1,19 @@
 <% title = "Select formulation type" %>
-<% question = "How do you want to give the formulation of #{@component_name}?" %>
+<% question = "How will you provide #{@component_name} formulation?" %>
 <%
   frame_formulations = FrameFormulations::CATEGORIES.dig(@component.root_category.to_s, @component.sub_category.to_s, @component.sub_sub_category.to_s)
   items = formulations_types_label
     .reject { |type_key, _| type_key == :predefined && frame_formulations.nil? }
-    .map { |type_key, type_text| { text: type_text, value: type_key.to_sym, checked: answer_checked?(type_key.to_sym) } }
+    .map { |type_key, type_object|
+      {
+        id: "component_notification_type_#{type_key}",
+        text: type_object[:text],
+        value: type_key.to_sym,
+        checked: answer_checked?(type_key.to_s),
+        label: { classes: type_object[:classes] },
+        wrapper_classes: type_object[:wrapper_classes]
+      }
+    }
 %>
 
 <% page_title title, errors: @component.errors.any? %>
@@ -26,16 +35,66 @@
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
       <%= error_summary_for(@component, first_values: { notification_type: items[0][:value] }) %>
-      <%= govukRadios(
-            form: form,
-            key: :notification_type,
-            fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
-            hint: { html:  warning_html },
-            items: items,
-          ) %>
-      <%= govukButton text: "Continue" %>
-    </div>
+        <div class="govuk-form-group <%= @component.errors.present? ? "govuk-form-group--error" : "" %>">
+          <fieldset class="govuk-fieldset" aria-describedby="component_notification_type-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <h1 class="govuk-fieldset__heading">
+                <%= question %>
+              </h1>
+            </legend>
+            <p class="govuk-body govuk-!-width-three-quarters opss-secondary-text" id="type-hint">
+            There are three formulation types: Predefined frame formulations, exact concentrations and concentration ranges. You can enter information manually or by uploading a <abbr title="Comma Separated Values">CSV</abbr> file.
+            </p>
+            <p class="govuk-body govuk-!-width-three-quarters govuk-!-margin-bottom-8 opss-secondary-text">
+            Learn how you can <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">use a <abbr>CSV</abbr> file (opens in a new tab)</a>.
+            </p>
+            <div class="govuk-hint" id="component_notification_type-hint">
+              <%= warning_html %>
+            </div>
+
+
+            <% if @component.errors.present?  %>
+              <p class="govuk-error-message" id="component_notification_type-error">
+                <span class="govuk-visually-hidden">Error:</span>
+                Notification type can not be blank
+              </p>
+            <% end %>
+            <div class="govuk-radios" data-module="govuk-radios">
+              <% items.each do |item| %>
+                 <div class="govuk-radios__item <%= item[:wrapper_classes]%>">
+                   <%
+                     input_attributes = {
+                      id: item[:id],
+                      name: "component[notification_type]",
+                      type: "radio",
+                      value: item[:value],
+                      class: "govuk-radios__input",
+                    }
+                    input_attributes.merge!({checked: "checked"}) if item[:checked]
+                   %>
+                   <%= tag.input(**input_attributes) %>
+                   <%=
+                     label_classes = class_names(
+                       'govuk-radios__label',
+                       { item[:label].try(:[], :classes) =>  item[:label] }
+                     )
+                     govukLabel({
+                       html: item[:html],
+                       text: item[:text],
+                       classes: label_classes,
+                       attributes: item[:label].try(:[], :attributes),
+                       for: item[:id]
+                     })
+                   %>
+                 </div>
+              <% end %>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+    <%= govukButton text: "Continue" %>
   </div>
 <% end %>

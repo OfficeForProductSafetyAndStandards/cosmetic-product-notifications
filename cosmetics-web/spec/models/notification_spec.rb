@@ -38,7 +38,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned) }
 
     context "when no information is missing" do
-      let(:notification) { build(:draft_notification, image_uploads: [image_upload], components: [component]) }
+      let(:notification) { create(:draft_notification, image_uploads: [image_upload], components: [component]) }
 
       it "can submit a notification" do
         expect(notification).to be_may_submit_notification
@@ -47,7 +47,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
     context "when information is missing" do
       let(:with_stubbed_antivirus_result) { false }
-      let(:notification) { build(:draft_notification, image_uploads: [image_upload], components: [component]) }
+      let(:notification) { create(:draft_notification, image_uploads: [image_upload], components: [component]) }
 
       before do
         image_upload.reload
