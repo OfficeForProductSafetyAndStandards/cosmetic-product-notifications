@@ -6,7 +6,7 @@
 }
 
 @function calculaterem($s) {
-  $remsize: $s / 16px;
+  $remsize: calc($s / 16);
   @return #{$remsize}rem;
 }
 
@@ -1234,7 +1234,7 @@ dd dl.opss-nested-definition-list {
     thead tr th:first-child,
     tbody tr th:first-child {
       width: auto;
-      max-width: $govuk-page-width / 2;
+      max-width: calc($govuk-page-width / 2);
     }
   }
 }
