@@ -1,0 +1,69 @@
+<aside class="govuk-grid-column-one-quarter opss-desktop-padding-left-0">
+  <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+    <h2 class="govuk-heading-s">Responsible Person</h2>
+    <% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
+    <%= govukSummaryList(
+      classes: "govuk-summary-list--no-border opss-summary-list-vertical",
+      rows: [
+        {
+          key: { text: "Name", classes: key_value_classes },
+          value: { text: responsible_person.name, classes: key_value_classes },
+        },
+        {
+          key: { text: "Address", classes: key_value_classes },
+          value: {
+            html: sanitize(responsible_person.address_lines.join("<span class='govuk-visually-hidden'>, </span><br>")),
+            classes: key_value_classes,
+          },
+        },
+      ]
+    ) %>
+  </div>
+
+  <% if can_view_responsible_person_address_history? && responsible_person.address_logs.present? %>
+    <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+      <h2 class="govuk-heading-s">Address history</h2>
+      <% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
+      <%= govukSummaryList(
+        classes: "govuk-summary-list--no-border opss-summary-list-vertical",
+        rows: responsible_person.address_logs.newest_first.map do |address|
+          {
+            key: {
+              html: "#{display_date(address.start_date)} &mdash; #{display_date(address.end_date)}".html_safe,
+              classes: key_value_classes,
+            },
+            value: {
+              html: sanitize(address.address_lines.join("<span class='govuk-visually-hidden'>, </span><br>")),
+              classes: key_value_classes,
+            },
+          }
+        end
+      ) %>
+    </div>
+  <% end %>
+
+  <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+    <h2 class="govuk-heading-s">Assigned contact</h2>
+    <%
+      contact_person = responsible_person.contact_persons.first
+      key_value_classes = "govuk-!-font-size-16"
+    %>
+    <%= govukSummaryList(
+      classes: "govuk-summary-list--no-border opss-summary-list-vertical",
+      rows: [
+        {
+          key: { text: "Name", classes: key_value_classes },
+          value: { text: contact_person.name, classes: key_value_classes },
+        },
+        {
+          key: { text: "Email", classes: key_value_classes },
+          value: { text: contact_person.email_address, classes: key_value_classes },
+        },
+        {
+          key: { text: "Telephone", classes: key_value_classes },
+          value: { text: contact_person.phone_number, classes: key_value_classes },
+        },
+      ]
+    ) %>
+  </div>
+</aside>
