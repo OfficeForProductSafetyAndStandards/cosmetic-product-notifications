@@ -26,6 +26,7 @@ private
                                                      :sort_by,
                                                      :exact_or_any_match)
   end
+  helper_method :search_params
 
   def apply_date_filter
     if @search_form.date_from.present? || @search_form.date_to.present?

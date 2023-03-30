@@ -75,4 +75,21 @@ private
     params.fetch(:notification, {})
       .permit(:product_name)
   end
+
+  def search_params
+    if params[:notification_search_form]
+      params.fetch(:notification_search_form, {}).permit(:q,
+                                                         { date_from: %i[day month year] },
+                                                         { date_to: %i[day month year] },
+                                                         :sort_by)
+    elsif params[:ingredient_search_form]
+      params.fetch(:ingredient_search_form, {}).permit(:q,
+                                                       { date_from: %i[day month year] },
+                                                       { date_to: %i[day month year] },
+                                                       :group_by,
+                                                       :sort_by,
+                                                       :exact_or_any_match)
+    end
+  end
+  helper_method :search_params
 end

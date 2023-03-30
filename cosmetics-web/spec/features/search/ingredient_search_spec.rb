@@ -152,6 +152,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     click_link "Back"
 
-    expect(page).to have_h1("Ingredients search")
+    expect(page).to have_h1("Ingredient – search results")
   end
 end
