@@ -33,7 +33,7 @@ RSpec.feature "Search smoke test" do
       session.click_on("Search")
       expect(session).to have_content(product_name)
 
-      session.find("a", text: "View").first.click
+      session.find("a", text: product_name).click
 
       # Poison Centre or OPSS user role view
       expect(session).to have_css("h2", text: "Product details")
