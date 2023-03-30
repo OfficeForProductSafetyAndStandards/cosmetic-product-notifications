@@ -6,9 +6,12 @@ GEM
     method_source (1.0.0)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
+    nio4r (2.5.8)
     pry (0.14.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    puma (6.1.1)
+      nio4r (~> 2.0)
     rack (2.2.6.4)
     rack-protection (2.2.3)
       rack
@@ -27,6 +30,7 @@ PLATFORMS
 DEPENDENCIES
   cf-app-utils (~> 0.6)
   pry
+  puma
   redis
   sinatra
 

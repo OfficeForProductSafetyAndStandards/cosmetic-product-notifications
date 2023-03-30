@@ -54,8 +54,8 @@ jobs:
     - name: Run JavaScript linter
       run: |
         cd cosmetics-web
-        yarn standard
+        yarn lint:js
     - name: Run SCSS linter
       run: |
         cd cosmetics-web
-        yarn stylelint '**/*.(s)?css'
+        yarn lint:css
