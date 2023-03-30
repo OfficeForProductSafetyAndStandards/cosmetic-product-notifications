@@ -58,6 +58,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       expect(page).to have_h1("Upload an image of the product label")
       page.attach_file ["spec/fixtures/files/testImage.png"]
       click_button "Save and upload another image"
+      expect(page).to have_notification_banner("[testImage.png] was uploaded.")
       expect_product_label_images(["testImage.png"])
 
       click_button "Save and upload another image"

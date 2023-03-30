@@ -3,6 +3,10 @@ module PageMatchers
     have_selector("h1", text:, exact_text: true)
   end
 
+  def have_notification_banner(text)
+    have_selector(".govuk-notification-banner--success", text:)
+  end
+
   # Matcher for items within the [Summary list](https://design-system.service.gov.uk/components/summary-list/) component.
   #
   # Works with both:
