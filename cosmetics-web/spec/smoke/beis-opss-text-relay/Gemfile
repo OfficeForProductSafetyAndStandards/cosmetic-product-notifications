@@ -2,5 +2,6 @@ source "https://rubygems.org"
 
 gem "cf-app-utils", "~> 0.6"
 gem "pry"
+gem "puma"
 gem "redis"
 gem "sinatra"
