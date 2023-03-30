@@ -253,7 +253,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     click_link "Back"
 
-    expect(page).to have_h1("Cosmetic products search")
+    expect(page).to have_h1("Cosmetic products search - results")
   end
 
   context "when using advanced search" do

@@ -46,7 +46,7 @@
             <%= reference_number_for_display(notification) %>
           </td>
           <td class="govuk-table__cell">
-            <%= link_to responsible_person_notification_path(@responsible_person, notification, page: params[:page]), class: 'govuk-link govuk-link--no-visited-state' do %>
+            <%= link_to responsible_person_notification_path(@responsible_person, notification, back_to: "notifications_search", page: params[:page], notification_search_form: search_params), class: 'govuk-link govuk-link--no-visited-state' do %>
               View
               <span class="govuk-visually-hidden"><%= notification.product_name %></span>
             <% end %>

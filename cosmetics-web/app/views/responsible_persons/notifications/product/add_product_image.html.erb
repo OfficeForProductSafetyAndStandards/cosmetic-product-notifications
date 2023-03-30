@@ -12,6 +12,25 @@
   <div class="govuk-grid-column-two-thirds">
     <% if @notification.errors.messages.include?(:image_uploads) %>
       <%= govukErrorSummary(titleText: "There is a problem", errorList: [{text: @notification.errors.messages[:image_uploads][0], href: "#image_upload"}]) %>
+
+    <% elsif params[:image_upload] %>
+      <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Success
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <h3 class="govuk-notification-banner__heading">
+            Image upload success
+          </h3>
+          <% params[:image_upload].each do |image_upload| %>
+            <p class="govuk-body">
+              [<%= image_upload.original_filename %>] was uploaded.
+            </p>
+          <% end %>
+        </div>
+      </div>
     <% end %>
 
     <% if @clone_image_job&.pending? %>

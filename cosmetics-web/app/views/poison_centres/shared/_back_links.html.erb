@@ -1,6 +1,6 @@
-<% if back_to_ingredients? %>
+<% if params[:back_to] == "ingredients_search" %>
   <%= govukBackLink text: "Back", href: poison_centre_ingredients_search_path(ingredient_search_form: search_params, page: params[:page]) %>
-<% elsif back_to_ingredients_list? %>
+<% elsif params[:back_to] == "ingredients_list" %>
   <%= govukBackLink text: "Back", href: poison_centre_ingredients_responsible_person_notifications_path(responsible_person_id: @notification.responsible_person.id, ingredient_inci_name: params[:ingredient_inci_name], page: params[:page]) %>
 <% else %>
   <%= govukBackLink text: "Back", href: poison_centre_notifications_search_path(notification_search_form: search_params, page: params[:page]) %>

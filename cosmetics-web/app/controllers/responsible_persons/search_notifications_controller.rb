@@ -23,11 +23,13 @@ private
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
 
+  # Any changes in these search params need to be also applied to ResponsiblePersons::NotificationsController#search_params
   def search_params
     params.fetch(:notification_search_form, {}).permit(:q, :sort_by,
                                                        { date_from: %i[day month year] },
                                                        { date_to: %i[day month year] })
   end
+  helper_method :search_params
 
   def apply_date_filter
     if @search_form.date_from.present? || @search_form.date_to.present?
