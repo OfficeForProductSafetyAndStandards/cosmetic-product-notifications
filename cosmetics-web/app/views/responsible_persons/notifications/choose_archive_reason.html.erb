@@ -1,0 +1,22 @@
+<% archive_reasons = Notification.archive_reasons.map { |key, value| { text: get_archive_reason_name(key), value: value } } %>
+
+<% page_title safe_join(["Choose a reason for archiving ", @notification.product_name]), errors: @notification.errors.any? %>
+<% content_for :after_header do %>
+  <%= render 'responsible_persons/shared/back_links' %>
+<% end %>
+
+<%= form_with model: @notification, url: responsible_person_notification_archive_path(@notification.responsible_person, @notification), method: :patch do |form| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= error_summary_for(@notification) %>
+      <%= govukRadios(
+            form: form,
+            key: :archive_reason,
+            hint: { text: "Select from one of the options below to provide a reason for archiving this product notification." },
+            fieldset: { legend: { text: "Reason for archiving", classes: "govuk-fieldset__legend--l", isPageHeading: true } },
+            items: archive_reasons,
+          ) %>
+      <%= govukButton text: "Continue" %>
+    </div>
+  </div>
+<% end %>

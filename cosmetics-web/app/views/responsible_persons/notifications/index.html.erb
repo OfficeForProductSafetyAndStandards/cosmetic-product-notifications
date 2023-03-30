@@ -3,6 +3,24 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
+<% if flash[:success_banner] %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full opss-desktop-min-height--xs">
+        <% notification_html = capture do %>
+        <h3 class="govuk-notification-banner__heading">
+          <%= flash[:success_banner]["heading"] %>
+        </h3>
+        <% if flash[:success_banner]["body"] %><p class="govuk-body"><%= flash[:success_banner]["body"].html_safe %></p><% end %>
+        <% end %>
+        <%= govukNotificationBanner(html: notification_html, type: "success") %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
     <div class="govuk-grid-row">
@@ -15,9 +33,7 @@
         </p>
       </div>
       <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
-        <a href="<%= new_responsible_person_draft_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset">
-          Add a cosmetic product
-        </a>
+        <%= govukButton(text: "Create a new product notification", href: new_responsible_person_draft_path(@responsible_person)) %>
       </div>
     </div>
   </div>
@@ -46,9 +62,7 @@
       <div class="govuk-grid-column-one-third">
         <div class="opss-text-align-right">
           <% if @registered_notifications.present? %>
-            <a href="<%= responsible_person_notifications_path(@responsible_person, format: :csv) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-14 opss-text-underline-offset" download="">
-              <span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file
-            </a>
+            <%= govukButton(html: '<span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file'.html_safe, href: responsible_person_notifications_path(@responsible_person, format: :csv), classes: "govuk-button--secondary") %>
           <% end %>
         </div>
       </div>

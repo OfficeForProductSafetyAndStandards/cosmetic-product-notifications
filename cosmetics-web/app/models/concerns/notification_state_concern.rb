@@ -9,6 +9,7 @@ module NotificationStateConcern
   COMPONENTS_COMPLETE = :components_complete
   NOTIFICATION_COMPLETE = :notification_complete
   DELETED = :deleted
+  ARCHIVED = :archived
 
   EDITABLE_STATES = [EMPTY, PRODUCT_NAME_ADDED, READY_FOR_COMPONENTS, READY_FOR_NANOMATERIALS, DETAILS_COMPLETE, COMPONENTS_COMPLETE].freeze
 
@@ -43,7 +44,11 @@ module NotificationStateConcern
   included do
     include AASM
 
-    aasm whiny_transitions: false, timestamps: true, column: :state do
+    # Automatic timestamping (timestamps: false) is disabled as we need to keep the original timestamp when the
+    # notification was marked as completed, even when moving away from the completed state and back again.
+    # (e.g. when archiving and then unarchiving).
+    # Automatic timestamping would override the initial completion timestamp.
+    aasm whiny_transitions: false, timestamps: false, column: :state do
       state EMPTY, initial: true
       state PRODUCT_NAME_ADDED
       state READY_FOR_NANOMATERIALS
@@ -54,6 +59,7 @@ module NotificationStateConcern
       state COMPONENTS_COMPLETE
       state NOTIFICATION_COMPLETE
       state DELETED
+      state ARCHIVED
 
       event :add_product_name do
         transitions from: EMPTY, to: PRODUCT_NAME_ADDED
@@ -67,11 +73,43 @@ module NotificationStateConcern
         transitions from: COMPONENTS_COMPLETE, to: READY_FOR_COMPONENTS, unless: :all_components_completed?
       end
 
-      event :submit_notification, after: :cache_notification_for_csv! do
-        transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE, after: proc { index_document } do
+      event :submit_notification do
+        transitions from: COMPONENTS_COMPLETE, to: NOTIFICATION_COMPLETE do
           guard do
             valid?(:accept_and_submit)
           end
+
+          success do
+            update(notification_complete_at: Time.zone.now)
+            index_document
+            cache_notification_for_csv!
+          end
+        end
+      end
+
+      event :archive do
+        transitions from: NOTIFICATION_COMPLETE, to: ARCHIVED do
+          guard do
+            valid?(:archive)
+          end
+        end
+
+        after do
+          paper_trail.save_with_version
+          update_document
+        end
+      end
+
+      event :unarchive do
+        transitions from: ARCHIVED, to: NOTIFICATION_COMPLETE
+
+        before do
+          assign_attributes(archive_reason: nil)
+        end
+
+        after do
+          paper_trail.save_with_version
+          update_document
         end
       end
     end

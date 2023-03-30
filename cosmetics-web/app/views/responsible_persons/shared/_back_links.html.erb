@@ -2,6 +2,10 @@
   <%= govukBackLink text: "Back", href: responsible_person_search_notifications_path(notification_search_form: search_params, page: params[:page]) %>
 <% elsif params[:back_to] == "ingredients_search" %>
   <%= govukBackLink text: "Back", href: responsible_person_search_ingredients_path(ingredient_search_form: search_params, page: params[:page]) %>
+<% elsif params[:back_to] == "notification" %>
+  <%= govukBackLink text: "Back", href: responsible_person_notification_path(@responsible_person, @notification) %>
+<% elsif @notification.archived? %>
+  <%= govukBackLink text: "Back", href: responsible_person_archived_notifications_path(@responsible_person, page: params[:page]) %>
 <% else %>
   <%= govukBackLink text: "Back", href: responsible_person_notifications_path(@responsible_person, page: params[:page]) %>
 <% end %>

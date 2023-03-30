@@ -25,6 +25,8 @@ class NotificationSearchForm < Form
   attribute :date_to, :govuk_date
   attribute :date_exact, :govuk_date
 
+  attribute :status, default: OpenSearchQuery::Notification::NOTIFIED_STATUS
+
   attribute :sort_by, default: OpenSearchQuery::Notification::SCORE_SORTING
 
   attribute :search_fields, default: OpenSearchQuery::Notification::SEARCH_ALL_FIELDS

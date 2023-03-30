@@ -52,6 +52,7 @@ def keyword_search(keyword)
                                             category: nil,
                                             from_date: nil,
                                             to_date: nil,
+                                            status: nil,
                                             sort_by: nil,
                                             match_similar: nil,
                                             search_fields: nil,

@@ -14,6 +14,7 @@ FactoryBot.define do
     end
 
     factory :registered_notification, traits: [:registered]
+    factory :archived_notification, traits: %i[registered archived]
 
     trait :registered do
       state { NotificationStateConcern::NOTIFICATION_COMPLETE }
@@ -22,6 +23,11 @@ FactoryBot.define do
 
     trait :draft_complete do
       state { NotificationStateConcern::COMPONENTS_COMPLETE }
+    end
+
+    trait :archived do
+      state { NotificationStateConcern::ARCHIVED }
+      archive_reason { "significant_change_to_the_formulation" }
     end
 
     trait :ph_values do

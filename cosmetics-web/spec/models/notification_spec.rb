@@ -89,7 +89,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "notification submision" do
+  describe "notification submission" do
     let(:notification) { create(:notification, :draft_complete, :with_components) }
     let(:image_upload) { create(:image_upload, :uploaded_and_virus_scanned, notification:) }
 
@@ -613,6 +613,51 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     it "is false for complete/deleted states" do
       [Notification::NOTIFICATION_COMPLETE, Notification::DELETED].each do |state|
         expect(build(:notification, state:)).not_to be_editable
+      end
+    end
+  end
+
+  describe "versioning" do
+    context "when transitioning state from draft to complete" do
+      let(:notification) { create(:draft_notification) }
+
+      it "does not create a new version" do
+        expect(notification.versions.count).to eq(0)
+        notification.submit_notification!
+        expect(notification.versions.count).to eq(0)
+      end
+    end
+
+    context "when transitioning state from complete to archived" do
+      let(:notification) { create(:registered_notification) }
+
+      before do
+        notification
+        described_class.import_to_opensearch(force: true)
+      end
+
+      it "creates a new version" do
+        expect(notification.versions.count).to eq(0)
+        notification.assign_attributes(archive_reason: "significant_change_to_the_formulation")
+        notification.archive
+        expect(notification.versions.count).to eq(1)
+      end
+    end
+
+    context "when transitioning state from archived to complete" do
+      let(:notification) { create(:registered_notification) }
+
+      before do
+        notification
+        described_class.import_to_opensearch(force: true)
+      end
+
+      it "creates a new version" do
+        notification.assign_attributes(archive_reason: "significant_change_to_the_formulation")
+        notification.archive
+        expect(notification.versions.count).to eq(1)
+        notification.unarchive
+        expect(notification.versions.count).to eq(2)
       end
     end
   end

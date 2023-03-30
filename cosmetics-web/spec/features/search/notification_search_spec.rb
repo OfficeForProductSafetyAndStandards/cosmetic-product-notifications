@@ -12,6 +12,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
   let(:cream) { create(:notification, :registered, :with_component, notification_complete_at: 1.day.ago, product_name: "Cream", responsible_person:) }
   let(:shower_bubbles) { create(:notification, :registered, :with_component, notification_complete_at: 2.days.ago, product_name: "Shower Bubbles", responsible_person: other_responsible_person) }
   let(:bath_bubbles) { create(:notification, :registered, :with_component, notification_complete_at: 3.days.ago, product_name: "Bath Bubbles", category: :face_care_products_other_than_face_mask) }
+  let(:powder) { create(:archived_notification, :with_component, notification_complete_at: 1.day.ago, product_name: "Bath Bubbles Powder", responsible_person:) }
 
   before do
     configure_requests_for_search_domain
@@ -19,6 +20,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     cream
     shower_bubbles
     bath_bubbles
+    powder
 
     Notification.import_to_opensearch(force: true)
 
@@ -40,6 +42,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).not_to have_link("Cream")
     expect(page).to have_link("Shower Bubbles")
     expect(page).to have_link("Bath Bubbles")
+    expect(page).not_to have_link("Bath Bubbles Powder")
 
     click_on "Edit your search"
     choose "Skin products"
@@ -50,6 +53,19 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).not_to have_link("Cream")
     expect(page).not_to have_link("Shower Bubbles")
     expect(page).to have_link("Bath Bubbles")
+    expect(page).not_to have_link("Bath Bubbles Powder")
+  end
+
+  scenario "Searching for archived notifications" do
+    expect(page).to have_h1("Cosmetic products search")
+    fill_in "notification_search_form_q", with: "Bubbles"
+    choose "Archived"
+    click_on "Search"
+
+    expect(page).not_to have_link("Cream")
+    expect(page).not_to have_link("Shower Bubbles")
+    expect(page).not_to have_link("Bath Bubbles", exact: true)
+    expect(page).to have_link("Bath Bubbles Powder")
   end
 
   scenario "Sorting search results" do
@@ -76,6 +92,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_link("View Cream")
     expect(page).to have_link("View Shower Bubbles")
     expect(page).to have_link("View Bath Bubbles")
+    expect(page).not_to have_link("View Bath Bubbles Powder")
 
     click_on "Edit your search"
     fill_in "date_from_day",   with: bath_bubbles.notification_complete_at.day
@@ -93,6 +110,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).not_to have_link("Cream")
     expect(page).not_to have_link("Shower Bubbles")
     expect(page).to have_link("Bath Bubbles")
+    expect(page).not_to have_link("Bath Bubbles Powder")
   end
 
   describe "Reference number search" do
@@ -103,6 +121,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       expect(page).to have_link("View Cream")
       expect(page).to have_link("View Shower Bubbles")
       expect(page).to have_link("View Bath Bubbles")
+      expect(page).not_to have_link("View Bath Bubbles Powder")
 
       click_on "Edit your search"
       fill_in "notification_search_form_q", with: cream.reference_number
@@ -114,6 +133,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       expect(page).to have_link("View Cream")
       expect(page).not_to have_link("View Shower Bubbles")
       expect(page).not_to have_link("View Bath Bubbles")
+      expect(page).not_to have_link("View Bath Bubbles Powder")
     end
 
     scenario "Searching by partial number" do
@@ -123,6 +143,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       expect(page).to have_link("View Cream")
       expect(page).to have_link("View Shower Bubbles")
       expect(page).to have_link("View Bath Bubbles")
+      expect(page).not_to have_link("View Bath Bubbles Powder")
 
       click_on "Edit your search"
       fill_in "notification_search_form_q", with: cream.reference_number.to_s[0..5]
@@ -134,6 +155,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
       expect(page).not_to have_link("View Cream")
       expect(page).not_to have_link("View Shower Bubbles")
       expect(page).not_to have_link("View Bath Bubbles")
+      expect(page).not_to have_link("View Bath Bubbles Powder")
     end
 
     context "when reference number is small" do
@@ -146,6 +168,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
         expect(page).to have_link("View Cream")
         expect(page).to have_link("View Shower Bubbles")
         expect(page).to have_link("View Bath Bubbles")
+        expect(page).not_to have_link("View Bath Bubbles Powder")
 
         click_on "Edit your search"
         fill_in "notification_search_form_q", with: cream.reference_number_for_display

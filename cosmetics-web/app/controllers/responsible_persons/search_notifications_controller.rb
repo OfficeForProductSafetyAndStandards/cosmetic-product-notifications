@@ -25,7 +25,7 @@ private
 
   # Any changes in these search params need to be also applied to ResponsiblePersons::NotificationsController#search_params
   def search_params
-    params.fetch(:notification_search_form, {}).permit(:q, :sort_by,
+    params.fetch(:notification_search_form, {}).permit(:q, :status, :sort_by,
                                                        { date_from: %i[day month year] },
                                                        { date_to: %i[day month year] })
   end
@@ -43,6 +43,7 @@ private
       category: @search_form.category,
       from_date: @search_form.date_from_for_search,
       to_date: @search_form.date_to_for_search,
+      status: @search_form.status,
       sort_by: @search_form.sort_by,
       match_similar: @search_form.match_similar,
       search_fields: @search_form.search_fields,

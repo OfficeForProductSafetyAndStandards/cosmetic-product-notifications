@@ -1,0 +1,46 @@
+<% content_for :page_title, "Cosmetic products" %>
+<% content_for :after_header do %>
+  <%= render "layouts/navbar" %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds opss-desktop-min-height--xs">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-2" aria-describedby="cosmetic-products-hint">
+          Archived notifications
+        </h1>
+        <p id="cosmetic-products-hint" class="govuk-body opss-secondary-text govuk-!-margin-bottom-1">
+          These are your archived notified cosmetic products.<br>
+          These products are no longer being actively sold on the <abbr>GB</abbr> market.
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+        <%= govukButton(text: "Create a new product notification", href: new_responsible_person_draft_path(@responsible_person)) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <%= render 'responsible_persons/notifications/notification_nav' %>
+  <section id="page-content" class="govuk-grid-column-three-quarters" role="region" aria-label="Archived products">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body govuk-!-margin-bottom-0">
+          There are currently <%= (count = @registered_notifications.total_count) > 0 ? count : 'no' %> archived cosmetic products.
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <div class="opss-text-align-right">
+          <% if @registered_notifications.present? %>
+            <%= govukButton(html: '<span class="opss-download-link-sm"></span>Download a <abbr title="Comma-Separated Values">CSV</abbr> file'.html_safe, href: responsible_person_archived_notifications_path(@responsible_person, format: :csv), classes: "govuk-button--secondary") %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%= render 'archived_notifications_table' if @registered_notifications.present? %>
+    <%= paginate @registered_notifications, views_prefix: 'pagination', nav_class: 'opss-pagination-link--no-top-border' %>
+  </section>
+</div>

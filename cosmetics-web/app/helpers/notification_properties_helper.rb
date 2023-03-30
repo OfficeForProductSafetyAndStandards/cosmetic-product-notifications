@@ -35,6 +35,10 @@ module NotificationPropertiesHelper
     SPECIAL_APPLICATOR[special_applicator&.to_sym]
   end
 
+  def get_archive_reason_name(archive_reason)
+    ARCHIVE_REASON[archive_reason&.to_sym]
+  end
+
   NOTIFICATION_TYPE = {
     predefined: "Frame formulation",
     exact: "Exact concentration",
@@ -151,5 +155,15 @@ module NotificationPropertiesHelper
     pressurised_spray_container: "Pressurised spray",
     pressurised_container_non_spray_product: "Pressurised non-spray",
     other_special_applicator: "Other",
+  }.freeze
+
+  ARCHIVE_REASON = {
+    product_no_longer_available_on_the_market: "Product no longer available on the market",
+    product_no_longer_manufactured: "Product no longer manufactured",
+    change_of_responsible_person: "Change of Responsible Person",
+    change_of_manufacturer: "Change of manufacturer",
+    significant_change_to_the_formulation: "Significant change to the formulation",
+    product_notified_but_did_not_get_placed_on_the_market: "Product notified but did not get placed on the market",
+    error_in_the_notification: "Error in the notification",
   }.freeze
 end
