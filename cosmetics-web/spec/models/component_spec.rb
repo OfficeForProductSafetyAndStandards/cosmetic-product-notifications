@@ -222,6 +222,56 @@ RSpec.describe Component, type: :model do
     end
   end
 
+  describe "virtual pH attributes" do
+    context "when ph_lower_than_3" do
+      before { predefined_component.ph = :lower_than_3 }
+
+      it "sets and gets the #lower_than_3_minimum_ph" do
+        predefined_component.lower_than_3_minimum_ph = 1
+        expect(predefined_component.lower_than_3_minimum_ph).to eq(1)
+      end
+
+      it "sets and gets the #lower_than_3_maximum_ph" do
+        predefined_component.lower_than_3_maximum_ph = 1
+        expect(predefined_component.lower_than_3_maximum_ph).to eq(1)
+      end
+
+      it "does *not* set and get the #above_10_minimum_ph" do
+        predefined_component.above_10_minimum_ph = 1
+        expect(predefined_component.above_10_minimum_ph).to be_nil
+      end
+
+      it "does *not* set and get the #above_10_maximum_ph" do
+        predefined_component.above_10_maximum_ph = 1
+        expect(predefined_component.above_10_maximum_ph).to be_nil
+      end
+    end
+
+    context "when ph_above_10" do
+      before { predefined_component.ph = :above_10 }
+
+      it "does *not* set and gets the #lower_than_3_minimum_ph" do
+        predefined_component.lower_than_3_minimum_ph = 1
+        expect(predefined_component.lower_than_3_minimum_ph).to be_nil
+      end
+
+      it "does *not* set and get the #lower_than_3_maximum_ph" do
+        predefined_component.lower_than_3_maximum_ph = 1
+        expect(predefined_component.lower_than_3_maximum_ph).to be_nil
+      end
+
+      it "sets and gets the #above_10_minimum_ph" do
+        predefined_component.above_10_minimum_ph = 1
+        expect(predefined_component.above_10_minimum_ph).to eq(1)
+      end
+
+      it "sets and gets the #above_10_maximum_ph" do
+        predefined_component.above_10_maximum_ph = 1
+        expect(predefined_component.above_10_maximum_ph).to eq(1)
+      end
+    end
+  end
+
   describe "#ph_required?" do
     subject { predefined_component.ph_required? }
 
@@ -373,31 +423,31 @@ RSpec.describe Component, type: :model do
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a value of 14 or lower for maximum pH")
     end
 
-    it "adds an error if minimum_ph is missing when valid? called with ph_range" do
+    it "adds an error if minimum_ph is missing when valid? called with ph" do
       predefined_component.minimum_ph = nil
 
-      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component).not_to be_valid(:ph)
       expect(predefined_component.errors[:minimum_ph]).to include("Enter a minimum pH")
     end
 
-    it "adds an error if maximum_ph is missing when valid? called with ph_range" do
+    it "adds an error if maximum_ph is missing when valid? called with ph" do
       predefined_component.maximum_ph = nil
 
-      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component).not_to be_valid(:ph)
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a maximum pH")
     end
 
     it "adds an error if minimum_ph is unparseable string" do
       predefined_component.minimum_ph = "N/A"
 
-      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component).not_to be_valid(:ph)
       expect(predefined_component.errors[:minimum_ph]).to include("Enter a minimum pH")
     end
 
     it "adds an error if maximum_ph is unparseable string" do
       predefined_component.maximum_ph = "N/A"
 
-      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component).not_to be_valid(:ph)
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a maximum pH")
     end
 
@@ -405,7 +455,7 @@ RSpec.describe Component, type: :model do
       predefined_component.minimum_ph = 2.0
       predefined_component.maximum_ph = 3.01
 
-      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component).not_to be_valid(:ph)
       expect(predefined_component.errors[:maximum_ph]).to include("The maximum pH cannot be greater than 1 above the minimum pH")
     end
 
@@ -414,7 +464,7 @@ RSpec.describe Component, type: :model do
       predefined_component.minimum_ph = 3.0
       predefined_component.maximum_ph = 4.0
 
-      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component).not_to be_valid(:ph)
       expect(predefined_component.errors[:minimum_ph]).to include("Enter a value lower than 3 for minimum pH")
     end
 
@@ -423,7 +473,7 @@ RSpec.describe Component, type: :model do
       predefined_component.minimum_ph = 9.0
       predefined_component.maximum_ph = 10.0
 
-      expect(predefined_component).not_to be_valid(:ph_range)
+      expect(predefined_component).not_to be_valid(:ph)
       expect(predefined_component.errors[:maximum_ph]).to include("Enter a value higher than 10 for maximum pH")
     end
 

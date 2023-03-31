@@ -91,7 +91,7 @@ def expect_check_your_answers_page_to_contain(product_name:, number_of_component
   end
 
   if ph
-    expect(page).to have_summary_item(key: "pH", value: ph)
+    expect(page).to have_summary_item(key: "pH range", value: ph)
   end
 
   if application_instruction
