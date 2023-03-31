@@ -10,6 +10,7 @@
 * [Opensearch](cosmetics-web/docs/Opensearch.md)
 * [Frame formulations](cosmetics-web/docs/frame_formulations.md)
 * [User Roles](cosmetics-web/docs/ROLES.md)
+* [Smoke test](cosmetics-web/docs/smoke_test.md)
 
 ## Inviting search users
 
