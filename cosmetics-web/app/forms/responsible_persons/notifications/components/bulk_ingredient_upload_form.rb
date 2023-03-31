@@ -123,7 +123,7 @@ module ResponsiblePersons::Notifications::Components
       return if unwanted.present?
 
       ingredient = Ingredient.new(
-        inci_name:, cas_number:, poisonous: poisonous?(poisonous),
+        component:, inci_name:, cas_number:, poisonous: poisonous?(poisonous),
       )
       if component.exact?
         ingredient.exact_concentration = concentration
@@ -131,7 +131,6 @@ module ResponsiblePersons::Notifications::Components
         ingredient.exact_concentration = concentration.to_f
         ingredient.poisonous = true
       end
-      ingredient.component = component
       ingredient
     end
 
