@@ -287,6 +287,54 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
         end
       end
     end
+
+    context "when the file has too many columns in the header but right row values" do
+      let(:csv) do
+        <<~CSV
+          Name,Concentration,CAS, Is poisonous?,Foo
+          Aqua,65,497-19-8,false
+        CSV
+      end
+
+      it { expect(form).to be_valid }
+    end
+
+    context "when the file has an extra empty column in the header but right row values" do
+      let(:csv) do
+        <<~CSV
+          Name,Concentration,CAS, Is poisonous?,
+          Aqua,65,497-19-8,false
+        CSV
+      end
+
+      it { expect(form).to be_valid }
+    end
+
+    context "when the file has an extra empty column" do
+      let(:csv) do
+        <<~CSV
+          Name,Concentration,CAS, Is poisonous?
+          Aqua,65,497-19-8,false,
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file has error in row: 2"] }
+      end
+    end
+
+    context "when a row has an extra column" do
+      let(:csv) do
+        <<~CSV
+          Name,Concentration,CAS, Is poisonous?
+          Aqua,65,497-19-8,false,bar
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The file has error in row: 2"] }
+      end
+    end
   end
 
   context "when using CSV for adding ingredients" do
