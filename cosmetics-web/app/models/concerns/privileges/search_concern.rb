@@ -22,6 +22,10 @@ module Privileges
       trading_standards_user?
     end
 
+    def can_view_archive_history?
+      trading_standards_user? || opss_enforcement_user?
+    end
+
     def poison_centre_user?
       poison_centre?
     end

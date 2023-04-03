@@ -59,7 +59,7 @@
   </div>
 </div>
 
-<% if @history_entries.length > 0 %>
+<% if @archive_history.length > 0 %>
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
     <h2 class="govuk-heading-m">Archive history</h2>
@@ -73,20 +73,20 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-      <% @history_entries.each do |entry| %>
+      <% @archive_history.each do |entry| %>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= display_date_time(entry["object"]["updated_at"]) %></td>
+          <td class="govuk-table__cell"><%= display_date_time(entry.object["updated_at"]) %></td>
           <td class="govuk-table__cell">
-            <% if entry["object"]["state"] == "archived" %>
-              <strong>Archived:</strong> <%= get_archive_reason_name(entry["object"]["archive_reason"]) %>
+            <% if entry.object["state"] == "archived" %>
+              <strong>Archived:</strong> <%= get_archive_reason_name(entry.object["archive_reason"]) %>
             <% else %>
               <strong>Unarchived</strong>
             <% end %>
-          <td class="govuk-table__cell"><%= entry["whodunnit"] %></td>
+          <td class="govuk-table__cell"><%= entry.whodunnit %></td>
         </tr>
       <% end %>
       </tbody>
-      <% if @history_entries.length > 11 %>
+      <% if @archive_history.length > 11 %>
         <tfoot class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Date &amp; time</th>

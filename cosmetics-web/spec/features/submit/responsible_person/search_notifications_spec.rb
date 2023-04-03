@@ -18,8 +18,6 @@ RSpec.describe "Search notifications page", type: :feature do
     paste
     powder
 
-    Notification.import_to_opensearch(force: true)
-
     sign_in_as_member_of_responsible_person(responsible_person, submit_user)
   end
 
