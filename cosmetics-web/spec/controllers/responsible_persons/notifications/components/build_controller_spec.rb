@@ -152,6 +152,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       # rubocop:disable RSpec/MultipleExpectations
       it "shows the page for adding ingredients with exact concentration" do
         expect(response.body).to match(/<title>Add the ingredients .+<\/title>/)
+        expect(response.body).to have_link("Upload ingredients using CSV file")
         expect(response.body).not_to include("Is it used for different shades?")
         expect(response.body).to include("What is the exact concentration?")
         expect(response.body).not_to include("What is the concentration range?")
@@ -186,10 +187,13 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
 
       render_views
 
+      # rubocop:disable RSpec/MultipleExpectations
       it "shows the page for adding ingredients with exact concentration" do
         expect(response.body).to match(/<title>Add the ingredients .+<\/title>/)
+        expect(response.body).not_to have_link("Upload ingredients using CSV file")
         expect(response.body).to include("What is the concentration range?")
       end
+      # rubocop:enable RSpec/MultipleExpectations
 
       it "links to the select formulation type page" do
         expect(response.body).to have_back_link_to(

@@ -7,7 +7,7 @@
 
 <%= error_summary(@ingredient_concentration_form.errors, map_errors: { used_for_multiple_shades: "used_for_multiple_shades_true" }) %>
 
-<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
+<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form, show_csv_upload_link: true do |form| %>
   <%= render "ingredient_exact_concentration_fields", component: @component, model: @ingredient_concentration_form, form: form %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

@@ -9,7 +9,8 @@
            title: "Add an ingredient the <abbr>NPIS</abbr> needs to know about".html_safe,
            component: @component,
            model: @ingredient_concentration_form,
-           poisonous: true do |form| %>
+           poisonous: true,
+           show_csv_upload_link: true do |form| %>
   <%= render "ingredient_exact_concentration_fields", component: @component, model: @ingredient_concentration_form, form: form %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
