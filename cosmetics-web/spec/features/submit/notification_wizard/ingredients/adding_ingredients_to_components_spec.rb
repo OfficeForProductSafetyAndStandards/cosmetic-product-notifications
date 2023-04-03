@@ -8,7 +8,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications"
-    click_on "Add a cosmetic product"
+    click_on "Create a new product notification"
     complete_product_wizard(name: "FooProduct")
     expect_progress(1, 3)
     expect_product_details_task_not_started

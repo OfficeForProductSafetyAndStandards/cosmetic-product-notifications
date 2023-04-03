@@ -11,7 +11,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Simple notification cloning" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Add a cosmetic product"
+    click_on "Create a new product notification"
 
     complete_product_wizard(name: "Product no nano no items")
 
@@ -45,8 +45,8 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Product no nano no items"
-    click_on "Create a draft notification using this notification as a template"
+    click_on "View Product no nano no items"
+    click_on "Copy this notification"
 
     fill_in "What is the product name?", with: "Product no nano no items copy"
     click_button "Save"

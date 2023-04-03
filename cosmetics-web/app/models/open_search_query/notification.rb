@@ -1,5 +1,9 @@
 module OpenSearchQuery
   class Notification
+    NOTIFIED_STATUS = "notified".freeze
+    ARCHIVED_STATUS = "archived".freeze
+    BOTH_STATUS = "both".freeze
+
     SCORE_SORTING = "score".freeze
     DATE_ASCENDING_SORTING  = "date_ascending".freeze
     DATE_DESCENDING_SORTING = "date_descending".freeze
@@ -30,11 +34,12 @@ module OpenSearchQuery
                            SEARCH_NOTIFICATION_NAME_FIELD => NOTIFICATION_SEARCHABLE_FIELDS,
                            SEARCH_ALL_FIELDS => ALL_FIELDS }.freeze
 
-    def initialize(keyword:, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:, responsible_person_id:)
+    def initialize(keyword:, category:, from_date:, to_date:, status:, sort_by:, match_similar:, search_fields:, responsible_person_id:)
       @keyword   = keyword
       @category  = category
       @from_date = from_date
       @to_date   = to_date
+      @status    = status.presence || NOTIFIED_STATUS
       @sort_by   = sort_by.presence || default_sorting
       @match_similar = match_similar
       @search_fields = search_fields
@@ -83,6 +88,7 @@ module OpenSearchQuery
         filter_categories_query,
         filter_dates_query,
         filter_rp,
+        filter_status,
       ].compact
     end
 
@@ -131,6 +137,23 @@ module OpenSearchQuery
         bool: {
           filter: [
             { term: { "responsible_person.id": @responsible_person_id } },
+          ],
+        },
+      }
+    end
+
+    def filter_status
+      return if @status == BOTH_STATUS
+
+      status = {
+        NOTIFIED_STATUS => "notification_complete",
+        ARCHIVED_STATUS => "archived",
+      }[@status]
+
+      {
+        bool: {
+          filter: [
+            { term: { "state": status } },
           ],
         },
       }

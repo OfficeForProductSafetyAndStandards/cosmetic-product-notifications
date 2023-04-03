@@ -26,6 +26,7 @@ private
       { date_from: %i[day month year] },
       { date_to: %i[day month year] },
       :category,
+      :status,
       :sort_by,
     )
   end
@@ -43,6 +44,7 @@ private
       category: @search_form.category,
       from_date: @search_form.date_from_for_search,
       to_date: @search_form.date_to_for_search,
+      status: @search_form.status,
       sort_by: @search_form.sort_by,
       match_similar: @search_form.match_similar,
       search_fields: @search_form.search_fields,

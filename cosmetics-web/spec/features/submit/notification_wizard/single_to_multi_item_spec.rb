@@ -11,7 +11,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Notification changing from single to multi item" do
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
-    click_on "Add a cosmetic product"
+    click_on "Create a new product notification"
 
     complete_product_wizard(name: "Product single to multi item")
 

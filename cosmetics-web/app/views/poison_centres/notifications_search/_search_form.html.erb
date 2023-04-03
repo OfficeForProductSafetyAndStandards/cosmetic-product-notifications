@@ -57,6 +57,31 @@
               ) %>
         </fieldset>
       </div>
+      <%= govukRadios(
+            form: form,
+            key: :status,
+            idPrefix: "status",
+            hint: { text: "You can filter the search results to show only notified or archived notifications.", classes: "govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" },
+            fieldset: { classes: "govuk-fieldset opss-grouping", legend: { text: "Notification status", classes: "govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" } },
+            classes: "govuk-radios--inline govuk-radios--small",
+            items: [
+              {
+                value: OpenSearchQuery::Notification::NOTIFIED_STATUS,
+                text: "Notified",
+                label: { classes: "govuk-label govuk-radios__label" }
+              },
+              {
+                value: OpenSearchQuery::Notification::ARCHIVED_STATUS,
+                text: "Archived",
+                label: { classes: "govuk-label govuk-radios__label" }
+              },
+              {
+                value: OpenSearchQuery::Notification::BOTH_STATUS,
+                text: "Both",
+                label: { classes: "govuk-label govuk-radios__label" }
+              },
+            ],
+            ) %>
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset govuk-!-padding-bottom-5 opss-grouping" aria-describedby="notified-date">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm">

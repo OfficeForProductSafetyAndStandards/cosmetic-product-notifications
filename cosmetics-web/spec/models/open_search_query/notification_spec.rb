@@ -12,17 +12,18 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
   let(:from_date)      { nil }
   let(:to_date)        { nil }
   let(:sort_by)        { nil }
+  let(:status)         { nil }
   let(:match_similar)  { nil }
   let(:search_fields)  { nil }
   let(:responsible_person_id) { nil }
   let(:fields) { described_class::ALL_FIELDS }
 
-  let(:query) { described_class.new(keyword: q, category:, from_date:, to_date:, sort_by:, match_similar:, search_fields:, responsible_person_id:).build_query }
+  let(:query) { described_class.new(keyword: q, category:, from_date:, to_date:, sort_by:, status:, match_similar:, search_fields:, responsible_person_id:).build_query }
 
   context "when search term is provided and category filter is empty" do
     it_behaves_like "correct query" do
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end
@@ -33,7 +34,17 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:category) { "Bar baz" }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
+      end
+    end
+  end
+
+  context "when search term is provided and status is filtered" do
+    it_behaves_like "correct query" do
+      let(:status) { "archived" }
+
+      let(:expected_es_query) do
+        { query: { bool: { filter: [{ bool: { filter: [{ term: { "state": "archived" } }] } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end
@@ -44,7 +55,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:category) { nil }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
+        { query: { bool: { filter: [{ bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end
@@ -56,7 +67,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:sort_by) { OpenSearchQuery::Notification::DATE_ASCENDING_SORTING }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :asc } }] }
+        { query: { bool: { filter: [{ bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :asc } }] }
       end
     end
   end
@@ -68,7 +79,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:sort_by) { OpenSearchQuery::Notification::DATE_DESCENDING_SORTING }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :desc } }] }
+        { query: { bool: { filter: [{ bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { match_all: {} } } }, sort:  [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end
@@ -80,7 +91,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:sort_by) { "" }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
+        { query: { bool: { filter: [{ bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end
@@ -91,7 +102,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:category) { "Bar baz" }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { match_all: {} } } }, sort: [{ notification_complete_at: { order: :desc } }] }
       end
     end
   end
@@ -104,7 +115,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:to_date) { Date.new(2021, 6, 16) }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ nested: { path: "components", query: { bool: { should: [{ term: { "components.display_root_category": "Bar baz" } }] } } } }, { range: { notification_complete_at: { gte: Date.new(2021, 6, 6), lte: Date.new(2021, 6, 16) } } }, { bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { multi_match: { fields:, fuzziness: 0, query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end
@@ -114,7 +125,7 @@ RSpec.describe OpenSearchQuery::Notification, type: :model do
       let(:match_similar) { true }
 
       let(:expected_es_query) do
-        { query: { bool: { filter: [], must: { multi_match: { fields:, fuzziness: "AUTO", query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
+        { query: { bool: { filter: [{ bool: { filter: [{ term: { "state": "notification_complete" } }] } }], must: { multi_match: { fields:, fuzziness: "AUTO", query: "Foo bar", operator: "AND" } } } }, sort: %w[_score] }
       end
     end
   end

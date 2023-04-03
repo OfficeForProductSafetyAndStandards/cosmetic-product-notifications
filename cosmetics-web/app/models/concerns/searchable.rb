@@ -65,6 +65,12 @@ module Searchable
     opensearch_log "#{self.class} with id=#{id} indexed with result #{result}"
   end
 
+  def update_document
+    result = __elasticsearch__.update_document
+
+    opensearch_log "#{self.class} with id=#{id} updated with result #{result}"
+  end
+
   def delete_document_from_index
     result = __elasticsearch__.delete_document
 
