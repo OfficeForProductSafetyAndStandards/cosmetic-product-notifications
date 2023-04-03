@@ -57,7 +57,9 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_on "Create the product"
     2.times { click_button "Continue" }
     choose "No" # children under 3
-    3.times { click_button "Continue" }
+    click_button "Continue"
+    choose "No" # nano materials
+    2.times { click_button "Continue" }
     click_button "Save and continue" # images page
     expect_task_has_been_completed_page
     click_on "task list page"

@@ -85,7 +85,7 @@ module ResponsiblePersons::Notifications::Components
     def header_missing_validation
       return if csv_header.blank?
 
-      if row_to_ingredient(**csv_header.to_h).valid?
+      if row_to_ingredient(**csv_header.to_h)&.valid?
         errors.add(:file, "The supplied header row must be included in the file")
       end
     end
@@ -100,7 +100,7 @@ module ResponsiblePersons::Notifications::Components
 
       ingredients_from_csv&.each_with_index do |row, i|
         ingredient = row_to_ingredient(**row.to_h)
-        unless ingredient.valid?
+        unless ingredient&.valid?
           @error_rows << i + 2
         end
         @ingredients << ingredient
@@ -119,9 +119,11 @@ module ResponsiblePersons::Notifications::Components
       file&.tempfile&.size.to_i > MAX_FILE_SIZE
     end
 
-    def row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:)
+    def row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:, **unwanted)
+      return if unwanted.present?
+
       ingredient = Ingredient.new(
-        inci_name:, cas_number:, poisonous: poisonous?(poisonous),
+        component:, inci_name:, cas_number:, poisonous: poisonous?(poisonous),
       )
       if component.exact?
         ingredient.exact_concentration = concentration
@@ -129,7 +131,6 @@ module ResponsiblePersons::Notifications::Components
         ingredient.exact_concentration = concentration.to_f
         ingredient.poisonous = true
       end
-      ingredient.component = component
       ingredient
     end
 

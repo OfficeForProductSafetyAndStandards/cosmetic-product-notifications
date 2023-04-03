@@ -19,6 +19,11 @@ module NotificationCloner
 
     def self.clone_notification(old_notification, new_notification)
       new_notification = clone_model(old_notification, object_to_clone_to: new_notification)
+
+      if new_notification.nano_materials.empty? && new_notification.routing_questions_answers
+        new_notification.routing_questions_answers[:contains_nanomaterials] = nil
+      end
+
       new_notification.save!
       new_notification
     end
