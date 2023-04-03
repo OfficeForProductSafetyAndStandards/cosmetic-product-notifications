@@ -46,7 +46,7 @@ RSpec.describe ResponsiblePersons::Notifications::Product::ContainsNanomaterials
         end
 
         it "adds an error message for the contains nanomaterials attribute" do
-          expect(form.errors.full_messages_for(:contains_nanomaterials)).to eq(["Select yes if the product is a multi-item kit, no if its single item"])
+          expect(form.errors.full_messages_for(:contains_nanomaterials)).to eq(["Select yes if the product contains nanomaterials"])
         end
 
         context "when the nanomaterials count is also invalid" do
