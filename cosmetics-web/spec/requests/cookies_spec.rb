@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "user declarations", type: :request do
+describe "cookies", type: :request do
   before do
     cookies["essential"] = "cosmetics"
     cookies["_ga_NSLSMEMX9S"] = "foo"
@@ -8,7 +8,7 @@ describe "user declarations", type: :request do
     cookies["_gat_gtag_UA_126364208_2"] = "baz"
     cookies["journey_uuid"] = "baz"
 
-    cookies["accept_analytics_cookies"] = accept_analytics_cookies
+    cookies["accept_analytics_cookies"] = { value: accept_analytics_cookies, expires: 1.year.from_now }
 
     get "/help/terms-and-conditions"
   end
@@ -18,8 +18,7 @@ describe "user declarations", type: :request do
 
     it "has analytics cookies" do
       # response is not returning any cookies to delete
-      # returned cookie is the one that stores cookie options
-      expect(response.cookies.to_hash.size).to eq(1)
+      expect(cookies.to_hash.size).to eq(7)
     end
   end
 
