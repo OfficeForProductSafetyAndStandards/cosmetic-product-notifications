@@ -13,4 +13,6 @@ module PrivilegesHelper
   delegate :can_view_nanomaterial_review_period_end_date?, to: :current_user
 
   delegate :can_view_responsible_person_address_history?, to: :current_user
+
+  delegate :can_view_archive_history?, to: :current_user
 end

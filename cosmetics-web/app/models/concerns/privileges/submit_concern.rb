@@ -21,5 +21,9 @@ module Privileges
     def can_view_responsible_person_address_history?
       true
     end
+
+    def can_view_archive_history?
+      true
+    end
   end
 end

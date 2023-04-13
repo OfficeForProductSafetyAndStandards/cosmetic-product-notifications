@@ -206,11 +206,6 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
   describe "GET /unarchive" do
     let(:archived_notification) { create(:registered_notification, :archived, responsible_person:) }
 
-    before do
-      archived_notification
-      Notification.import_to_opensearch(force: true)
-    end
-
     it "unarchives the notification and redirects to the index page" do
       get :unarchive, params: { responsible_person_id: responsible_person.id, notification_reference_number: archived_notification.reference_number }
       get :index, params: { responsible_person_id: responsible_person.id, reference_number: archived_notification.reference_number }

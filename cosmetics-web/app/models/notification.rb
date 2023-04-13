@@ -312,6 +312,15 @@ class Notification < ApplicationRecord
     EDITABLE_STATES.include? state.to_sym
   end
 
+  def versions_with_name
+    PaperTrail::Version
+      .where(item: self)
+      .joins("LEFT JOIN users ON users.id::text = versions.whodunnit")
+      .order(created_at: :asc)
+      .order(id: :asc)
+      .select("versions.*, COALESCE(users.name, 'Unknown') AS whodunnit")
+  end
+
 private
 
   def all_required_attributes_must_be_set
