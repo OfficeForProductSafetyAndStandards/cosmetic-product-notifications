@@ -205,6 +205,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_h1("Cosmetic products search")
 
     choose "Notification name"
+    choose "Archived"
     choose "Skin products"
     choose "Newest"
     check "Include similar words"
@@ -216,6 +217,7 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_h1("Cosmetic products search")
 
     expect(page).to have_checked_field("Notification name")
+    expect(page).to have_checked_field("Archived")
     expect(page).to have_checked_field("Skin products")
     expect(page).to have_checked_field("Newest")
     expect(page).to have_checked_field("Include similar words")
