@@ -18,8 +18,8 @@
       <%= govukWarningText(
         iconFallbackText: "Warning",
         classes: "govuk-!-margin-top-6 govuk-!-margin-bottom-5",
-        text: "You are required to include ingredients accurately."
-      )%>
+        html: "You are required to include ingredients accurately.<br>#{link_to "Find a frame formulation", frame_formulations_path, target: :_blank} to see all ingredients.".html_safe
+      ) %>
 
       <%= govukSelect(form: form,
                       key: :frame_formulation,
