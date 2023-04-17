@@ -9,6 +9,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-form-group <%= "govuk-form-group--error" if @bulk_ingredients_form.errors.any? %>">
+        <% if @ingredients_imported %>
+          <%= govukNotificationBanner(type: "success") do %>
+            <h3 class="govuk-notification-banner__heading">
+              <%= @component.ingredients_file.filename %> uploaded successfully
+            </h3>
+          <% end %>
+        <% end %>
+
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="csv-upload">
             Upload the ingredients <abbr>CSV</abbr> file
@@ -17,15 +25,6 @@
         <div id="csv-hint" class="govuk-hint govuk-!-margin-bottom-8">
           Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
         </div>
-
-        <% if @ingredients_imported %>
-          <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-4">
-            <h1 class="govuk-panel__title">Upload successful</h1>
-            <div class="govuk-panel__body">
-              <strong><%= @component.ingredients_file.filename %></strong>
-            </div>
-          </div>
-        <% end %>
 
         <% if @component.ingredients_file.present? %>
           <div class="govuk-warning-text">
