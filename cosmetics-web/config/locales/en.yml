@@ -160,25 +160,36 @@ en:
               invalid: "Enter a valid telephone, like 0344 411 1444 or +44 7700 900 982"
         ingredient:
           attributes:
-            inci_name:
-              blank: "Enter an ingredient name"
-              invalid: "Enter a valid ingredient name"
-              taken: "Ingredient name already exists in this component"
             exact_concentration:
-              blank: "Enter the concentration"
-              present: "Cannot have both exact and range concentrations"
-              greater_than: "Enter a concentration greater than 0"
-              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
-              not_a_number: "Enter a number for the concentration"
-              non_poisonous_wrong_component_type: "non poisonous exact ingredients must belong to a exact component"
-            range_concentration:
-              blank: "Enter the concentration"
-              present: "Cannot have both exact and range concentrations"
-              non_range_component: "ingredient with range concentration must belong to a range component"
+              blank: "Enter the exact concentration"
+              greater_than: "Enter an exact concentration greater than 0"
+              less_than_or_equal_to: "Enter an exact concentration less than or equal to 100"
+              not_a_number: "Enter a number for the exact concentration"
+            inci_name:
+              blank: "Enter a name"
+              invalid: "Enter a valid ingredient name"
+              taken: "Enter a name which is unique to this component"
+              too_long: "Ingredient name must be 100 characters or less"
+            maximum_concentration:
+              blank: "Enter the maximum concentration"
+              greater_than: "Enter a maximum concentration greater than 0"
+              less_than_or_equal_to: "Enter a maximum concentration less than or equal to 100"
+              not_a_number: "Enter a number for the maximum concentration"
+            maximum_exact_concentration:
+              blank: "Enter the maximum concentration"
+              greater_than: "Enter a maximum concentration greater than 0"
+              less_than_or_equal_to: "Enter a maximum concentration less than or equal to 100"
+              not_a_number: "Enter a number for the maximum concentration"
+            minimum_concentration:
+              blank: "Enter the minimum concentration"
+              greater_than: "Enter a minimum concentration greater than 0"
+              less_than_or_equal_to: "Enter a minimum concentration less than or equal to 100"
+              not_a_number: "Enter a number for the minimum concentration"
             poisonous:
               with_range_concentration: "ingredients with range concentration cannot be poisonous"
-              inclusion: "Specify if ingredient is poisonous"
-              blank: "Specify if ingredient is poisonous"
+              inclusion: "Select yes if the ingredient is poisonous"
+            used_for_multiple_shades:
+              inclusion: "Select yes if the ingredient is used for different shades"
   activemodel:
     attributes:
       registration/account_security_form:
@@ -294,6 +305,11 @@ en:
               greater_than: "Enter a concentration greater than 0"
               less_than_or_equal_to: "Enter a concentration less than or equal to 100"
               not_a_number: "Enter a number for the concentration"
+            minimum_concentration:
+              blank: "Enter the concentration"
+              greater_than: "Enter a concentration greater than 0"
+              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
+              not_a_number: "Enter a number for the concentration"
             name:
               blank: "Enter a name"
               invalid: "Enter a valid ingredient name"
@@ -301,10 +317,6 @@ en:
               too_long: "Ingredient name must be 100 characters or less"
             poisonous:
               inclusion: "Select yes if the ingredient is poisonous"
-            range_concentration:
-              blank: "Select a concentration range"
-            type:
-              inclusion: "Type must be 'exact' or 'range'"
         responsible_persons/notifications/nanomaterials/purposes_form:
           attributes:
             purpose_type:

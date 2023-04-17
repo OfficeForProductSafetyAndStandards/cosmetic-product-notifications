@@ -152,7 +152,7 @@ end
 
 def fill_ingredients_exact_concentrations(single_item: false)
   fill_ingredients_concentrations(single_item:) do
-    fill_in "exact_concentration", with: "0.5"
+    fill_in "What is the exact concentration?", with: "0.5"
   end
 end
 
@@ -170,14 +170,30 @@ def fill_ingredients_concentrations(single_item: false)
     answer_add_another_ingredient_with("No", success_banner: false, single_item:)
   else
     expect_to_be_on_add_ingredients_page
-    fill_in "name", with: "FooBar ingredient"
-    yield # Fill/Select ingredient concentration
-    fill_in "cas_number", with: "123456-78-9"
-    click_on "Save and continue"
 
-    answer_add_another_ingredient_with("Yes", success_banner: true, single_item:)
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
-    click_link "Skip"
+    within("#ingredient-0") do
+      fill_in "What is the name?", with: "FooBar ingredient"
+      yield # Fill/Select ingredient concentration
+      fill_in "What is the CAS number?", with: "123456-78-0"
+    end
+
+    click_on "Add another ingredient"
+
+    within("#ingredient-1") do
+      fill_in "What is the name?", with: "FooBar ingredient 1"
+      yield # Fill/Select ingredient concentration
+      fill_in "What is the CAS number?", with: "123456-78-1"
+    end
+
+    if page.has_css?("#ingredient-2")
+      within("#ingredient-2") do
+        fill_in "What is the name?", with: "FooBar ingredient 2"
+        yield # Fill/Select ingredient concentration
+        fill_in "What is the CAS number?", with: "123456-78-2"
+      end
+    end
+
+    click_on "Save and continue"
   end
 end
 
@@ -216,22 +232,6 @@ def select_item_and_remove(answer)
   click_button "Delete and continue"
 end
 
-def answer_add_another_ingredient_with(answer, success_banner: true, single_item: true)
-  expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
-  if success_banner
-    expect(page).to have_css("p", text: "The ingredient was successfully added to the #{single_item ? 'product' : 'item'}.")
-  end
-  page.choose answer
-  click_button "Continue"
-end
-
-def answer_remove_ingredient_with(answer, name: nil)
-  expect(page).to have_css("h1", text: "Do you want to remove this ingredient?")
-  expect(page).to have_css("#confirmation-hint", text: "Ingredient '#{name}' will be removed from this product.")
-  page.choose answer
-  click_button "Save and continue"
-end
-
 def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: [], forced_poisonous: false)
   if forced_poisonous
     expect(page).to have_css("h1", text: "Add an ingredient the NPIS needs to know about")
@@ -241,23 +241,18 @@ def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: []
   expect(page).to have_css("legend.govuk-fieldset__legend--s", text: "Ingredient #{ingredient_number}")
 
   if forced_poisonous # Poisonous checkbox is pre-selected and disabled
-    expect(page).to have_checked_field("ingredient_concentration_form_poisonous", disabled: true)
+    expect(page).to have_checked_field("component_ingredients_attributes_0_poisonous", disabled: true)
   end
 
   if already_added.any?
-    expect(page).to have_css("h2", text: "Already added")
-    already_added.each do |ingredient|
-      expect(page).to have_css("ol.govuk-list--number li", text: ingredient)
+    already_added.each_with_index do |ingredient, index|
+      expect(page).to have_field("component_ingredients_attributes_#{index}_inci_name", with: ingredient)
     end
   end
 end
 
 def expect_to_be_on_add_csv_ingredients_page
   expect(page).to have_css("h1", text: "Upload the ingredients CSV file")
-end
-
-def expect_to_be_on_ingredient_removed_confirmation_page
-  expect(page).to have_css("h1", text: "The ingredient was removed")
 end
 
 def expect_product_details_task_completed

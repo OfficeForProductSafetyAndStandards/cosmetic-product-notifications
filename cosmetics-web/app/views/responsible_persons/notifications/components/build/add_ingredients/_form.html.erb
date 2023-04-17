@@ -1,0 +1,36 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @component, url: wizard_path, method: :put, id: "skip-to-form", html: { novalidate: true } do |form| %>
+      <%=  form.fields_for :ingredients do |ingredient_fields| %>
+        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+
+        <div class="govuk-form-group" id="ingredient-<%= ingredient_fields.index %>">
+          <%= govukFieldset(legend: { text: "Ingredient #{ingredient_fields.index + 1}", classes: "govuk-fieldset__legend--s" }) do %>
+            <%= govukInput(form: ingredient_fields,
+                           key: :inci_name,
+                           label: { text: "What is the name?" },
+                           attributes: { spellcheck: "false" }) %>
+
+            <%= render partial: "responsible_persons/notifications/components/build/add_ingredients/#{ local_assigns[:mode] }_fields", locals: { ingredient_fields: ingredient_fields } %>
+
+            <div class="govuk-form-group opss-text-align-right">
+              <% if (ingredient_fields.index + 1) == @component.ingredients.size %>
+                <%= govukButton text: "Add another ingredient", classes: "govuk-button--secondary", name: "add_ingredient", value: "true" %>
+              <% end %>
+              <% if @component.ingredients.size > 1 %>
+                <%= govukButton text: "Remove ingredient", classes: "govuk-button--secondary", name: "remove_ingredient_with_id", value: ingredient_fields.object.id || "unsaved" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

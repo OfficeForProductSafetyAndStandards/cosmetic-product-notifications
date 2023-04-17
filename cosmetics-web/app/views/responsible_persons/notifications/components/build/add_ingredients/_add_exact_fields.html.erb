@@ -1,0 +1,64 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <div class="govuk-form-group">
+      <% exact_concentration_field_html = capture do %>
+        <div class="govuk-input__wrapper">
+           <%= render partial: "responsible_persons/notifications/components/build/add_ingredients/exact_input", locals: { ingredient_fields: ingredient_fields } %>
+        </div>
+      <% end %>
+      <% maximum_exact_concentration_field_html = capture do %>
+        <div class="govuk-input__wrapper">
+          <%= govukInput(form: ingredient_fields,
+               key: :maximum_exact_concentration,
+               label: { text: "What is the maximum concentration?" },
+               hint: { text: "Enter the maximum concentration used in the shades." },
+               suffix: { text: "% w/w", attributes: { title: "Percentage weight by weight" } },
+               classes: "govuk-input--width-5",
+               attributes: { maxlength: 12 }) %>
+        </div>
+      <% end %>
+
+      <% if @component.shades.present? %>
+        <%= govukRadios(
+          form: ingredient_fields,
+          key: :used_for_multiple_shades,
+          fieldset: { legend: { text: "Is it used for different shades?", classes: "govuk-label--s" } },
+          items: [
+            { text: "Yes",
+              value: "true",
+              conditional: { html: maximum_exact_concentration_field_html } },
+            { text: "No",
+              value: "false",
+              conditional: { html: exact_concentration_field_html } },
+          ],
+        ) %>
+      <% else %>
+        <%= exact_concentration_field_html %>
+      <% end %>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <%= render partial: "responsible_persons/notifications/components/build/add_ingredients/cas_number_input", locals: { ingredient_fields: ingredient_fields } %>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% if local_assigns[:npis_journey] %>
+      <% ingredient_fields.object.poisonous = true %>
+      <%= ingredient_fields.hidden_field :poisonous %>
+    <% elsif ingredient_fields.object.poisonous == true %>
+      <%= ingredient_fields.hidden_field :poisonous, value: false %>
+    <% end %>
+    <%= govukCheckboxes(form: ingredient_fields,
+                        key: :poisonous,
+                        classes: " govuk-!-padding-top-6",
+                        items: [{ key: :poisonous,
+                                  text: "The NPIS must be notified about this ingredient".html_safe,
+                                  label: { classes: "govuk-!-padding-right-0" },
+                                  value: true,
+                                  disabled: local_assigns[:npis_journey],
+                                  disable_ghost: true }]) %>
+  </div>
+</div>
+
+

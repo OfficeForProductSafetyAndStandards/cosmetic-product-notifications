@@ -30,33 +30,32 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
 
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A", "Ingredient B"])
-    expect(page).to have_field("What is the name?", with: "Ingredient A")
-    expect(page).to have_field("What is the exact concentration?", with: "4.0")
-    expect(page).to have_field("What is the CAS number?")
-    expect(page).to have_unchecked_field("Is it listed in the NPIS tables and does the NPIS need to know about it?")
-    expect(page).not_to have_link("Skip", exact: true)
 
-    fill_in "What is the name?", with: "Ingredient A poisonous"
-    fill_in "exact_concentration", with: "5.1"
-    check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
+    within("#ingredient-0") do
+      expect(page).to have_field("What is the name?", with: "Ingredient A")
+      expect(page).to have_field("What is the exact concentration?", with: "4.0")
+      expect(page).to have_field("What is the CAS number?")
+      expect(page).to have_unchecked_field("The NPIS must be notified about this ingredient")
+
+      fill_in "What is the name?", with: "Ingredient A poisonous"
+      fill_in "What is the exact concentration?", with: "5.1"
+      check "The NPIS must be notified about this ingredient"
+    end
+
+    within("#ingredient-1") do
+      expect(page).to have_field("What is the name?", with: "Ingredient B")
+      expect(page).to have_field("What is the exact concentration?", with: "3.0")
+      expect(page).to have_field("What is the CAS number?")
+      expect(page).to have_checked_field("The NPIS must be notified about this ingredient")
+
+      fill_in "What is the name?", with: "Ingredient B non poisonous"
+      uncheck "The NPIS must be notified about this ingredient"
+      fill_in "What is the CAS number?", with: "123456-78-9"
+    end
 
     click_on "Save and continue"
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["Ingredient A poisonous", "Ingredient B"])
-    expect(page).to have_field("What is the name?", with: "Ingredient B")
-    expect(page).to have_field("What is the exact concentration?", with: "3.0")
-    expect(page).to have_field("What is the CAS number?")
-    expect(page).to have_checked_field("Is it listed in the NPIS tables and does the NPIS need to know about it?")
-    expect(page).not_to have_link("Skip", exact: true)
-
-    fill_in "What is the name?", with: "Ingredient B non poisonous"
-    uncheck "Is it listed in the NPIS tables and does the NPIS need to know about it?"
-    fill_in "What is the CAS number?", with: "123456-78-9"
-
-    click_on "Save and continue"
-    answer_add_another_ingredient_with("No", success_banner: false)
-
-    expect_to_be_on__what_is_ph_range_of_product_page
+    expect_to_be_on_what_is_ph_range_of_product_page
 
     # Updated the values in Database.
     expect(component.ingredients.exact).to have(2).items
@@ -66,6 +65,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
       poisonous: true,
       cas_number: "",
     )
+
     expect(component.ingredients.exact.second).to have_attributes(
       inci_name: "Ingredient B non poisonous",
       exact_concentration: 3.0,
@@ -76,8 +76,8 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
   scenario "Editing ingredients on a range concentration notification" do
     component = create(:ranges_component, :completed, notification:)
-    create(:range_ingredient, inci_name: "Ingredient A", range_concentration: "greater_than_75_less_than_100_percent", component:)
-    create(:range_ingredient, inci_name: "Ingredient B", range_concentration: "greater_than_10_less_than_25_percent", component:)
+    create(:range_ingredient, inci_name: "Ingredient A", minimum_concentration: 75, maximum_concentration: 100, component:)
+    create(:range_ingredient, inci_name: "Ingredient B", minimum_concentration: 10, maximum_concentration: 25, component:)
     # Poisonous ingredient on Range component
     create(:poisonous_ingredient, inci_name: "Ingredient C", exact_concentration: 3.0, component:)
 
@@ -95,57 +95,61 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_item_sub_subcategory_with "Shampoo"
     answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their concentration range manually"
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A", "Ingredient B", "Ingredient C"])
-    expect(page).to have_field("What is the name?", with: "Ingredient A")
-    expect(page).to have_field("What is the CAS number?")
-    expect(page).to have_checked_field("No")
-    expect(page).to have_checked_field("greater_than_75_less_than_100_percent")
-    expect(page).not_to have_link("Skip", exact: true)
+    expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["Ingredient A", "Ingredient B", "Ingredient C"])
+    within("#ingredient-0") do
+      expect(page).to have_field("What is the name?", with: "Ingredient A")
+      expect(page).to have_field("What is the CAS number?")
+      expect(page).to have_checked_field("No")
+      expect(page).to have_field("Minimum", with: "75.0")
+      expect(page).to have_field("Maximum", with: "100.0")
+    end
+
+    within("#ingredient-1") do
+      expect(page).to have_field("What is the name?", with: "Ingredient B")
+      expect(page).to have_field("What is the CAS number?")
+      expect(page).to have_checked_field("No")
+      expect(page).to have_field("Minimum", with: "10.0")
+      expect(page).to have_field("Maximum", with: "25.0")
+
+      fill_in "What is the name?", with: "Ingredient B modified"
+      fill_in "Minimum", with: "55.0"
+      fill_in "Maximum", with: "10.0"
+    end
+
+    within("#ingredient-2") do
+      expect(page).to have_field("What is the name?", with: "Ingredient C")
+      expect(page).to have_field("What is the CAS number?")
+      expect(page).to have_checked_field("Yes")
+      expect(page).to have_field("What is the exact concentration?", with: "3.0")
+
+      fill_in "What is the name?", with: "Ingredient C non poisonous"
+      fill_in "What is the CAS number?", with: "123456-78-9"
+      page.choose("No")
+      fill_in "Minimum", with: "25.0"
+      fill_in "Maximum", with: "50.0"
+    end
+
     click_on "Save and continue"
-
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["Ingredient A", "Ingredient B", "Ingredient C"])
-    expect(page).to have_field("What is the name?", with: "Ingredient B")
-    expect(page).to have_field("What is the CAS number?")
-    expect(page).to have_checked_field("No")
-    expect(page).to have_checked_field("greater_than_10_less_than_25_percent")
-    expect(page).not_to have_link("Skip", exact: true)
-
-    fill_in "What is the name?", with: "Ingredient B modified"
-    page.choose("greater_than_5_less_than_10_percent")
-    click_on "Save and continue"
-
-    expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["Ingredient A", "Ingredient B modified", "Ingredient C"])
-    expect(page).to have_field("What is the name?", with: "Ingredient C")
-    expect(page).to have_field("What is the CAS number?")
-    expect(page).to have_checked_field("Yes")
-    expect(page).to have_field("What is the exact concentration?", with: "3.0")
-    expect(page).not_to have_link("Skip", exact: true)
-
-    fill_in "What is the name?", with: "Ingredient C non poisonous"
-    fill_in "What is the CAS number?", with: "123456-78-9"
-    page.choose("No")
-    page.choose("greater_than_25_less_than_50_percent")
-
-    click_on "Save and continue"
-    answer_add_another_ingredient_with("No", success_banner: false)
-
-    expect_to_be_on__what_is_ph_range_of_product_page
+    expect_to_be_on_what_is_ph_range_of_product_page
 
     # Updated the values in Database.
     expect(component.ingredients.range).to have(3).items
     expect(component.ingredients.range.first).to have_attributes(
       inci_name: "Ingredient A",
-      range_concentration: "greater_than_75_less_than_100_percent",
+      minimum_concentration: 75.0,
+      maximum_concentration: 100.0,
       cas_number: "",
     )
     expect(component.ingredients.range.second).to have_attributes(
       inci_name: "Ingredient B modified",
-      range_concentration: "greater_than_5_less_than_10_percent",
+      minimum_concentration: 55.0,
+      maximum_concentration: 10.0,
       cas_number: "",
     )
     expect(component.ingredients.range.third).to have_attributes(
       inci_name: "Ingredient C non poisonous",
-      range_concentration: "greater_than_25_less_than_50_percent",
+      minimum_concentration: 25.0,
+      maximum_concentration: 50.0,
       cas_number: "123456-78-9",
     )
   end
@@ -173,28 +177,27 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     answer_select_formulation_with "Shampoo plus conditioner"
     answer_contains_ingredients_npis_needs_to_know_about_with("Yes")
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 1, forced_poisonous: true, already_added: ["Ingredient A", "Ingredient B"])
-    expect(page).to have_field("What is the name?", with: "Ingredient A")
-    expect(page).to have_field("What is the exact concentration?", with: "4.0")
-    expect(page).to have_field("What is the CAS number?")
-    expect(page).not_to have_link("Skip", exact: true)
+    expect_to_be_on_add_ingredients_page(ingredient_number: 2, forced_poisonous: true, already_added: ["Ingredient A", "Ingredient B"])
+    within("#ingredient-0") do
+      expect(page).to have_field("What is the name?", with: "Ingredient A")
+      expect(page).to have_field("What is the exact concentration?", with: "4.0")
+      expect(page).to have_field("What is the CAS number?")
 
-    fill_in "What is the name?", with: "Ingredient A poisonous"
-    fill_in "exact_concentration", with: "5.1"
+      fill_in "What is the name?", with: "Ingredient A poisonous"
+      fill_in "What is the exact concentration?", with: "5.1"
+    end
+
+    within("#ingredient-1") do
+      expect(page).to have_field("What is the name?", with: "Ingredient B")
+      expect(page).to have_field("What is the exact concentration?", with: "3.0")
+      expect(page).to have_field("What is the CAS number?")
+
+      fill_in "What is the name?", with: "Ingredient B poisonous"
+      fill_in "What is the CAS number?", with: "123456-78-9"
+    end
     click_on "Save and continue"
 
-    expect_to_be_on_add_ingredients_page(ingredient_number: 2, forced_poisonous: true, already_added: ["Ingredient A poisonous", "Ingredient B"])
-    expect(page).to have_field("What is the name?", with: "Ingredient B")
-    expect(page).to have_field("What is the exact concentration?", with: "3.0")
-    expect(page).to have_field("What is the CAS number?")
-    expect(page).not_to have_link("Skip", exact: true)
-
-    fill_in "What is the name?", with: "Ingredient B poisonous"
-    fill_in "What is the CAS number?", with: "123456-78-9"
-    click_on "Save and continue"
-
-    answer_add_another_ingredient_with("No", success_banner: false)
-    expect_to_be_on__what_is_ph_range_of_product_page
+    expect_to_be_on_what_is_ph_range_of_product_page
 
     # Updated the values in Database.
     expect(component.ingredients.exact).to have(2).items

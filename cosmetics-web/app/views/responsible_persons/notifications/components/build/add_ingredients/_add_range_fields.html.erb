@@ -1,0 +1,51 @@
+<% exact_concentration_html = capture do %>
+  <%= render partial: "responsible_persons/notifications/components/build/add_ingredients/exact_input", locals: { ingredient_fields: ingredient_fields } %>
+<% end %>
+
+<% range_concentration_html = capture do %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <%= govukInput(form: ingredient_fields,
+                   key: :minimum_concentration,
+                   label: { text: "Minimum" },
+                   suffix: { text: "% w/w", attributes: { title: "Minimum" } },
+                   classes: "govuk-input--width-3",
+                   attributes: { maxlength: 12 }) %>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <%= govukInput(form: ingredient_fields,
+                   key: :maximum_concentration,
+                   label: { text: "Maximum" },
+                   suffix: { text: "% w/w", attributes: { title: "Maximum" } },
+                   classes: "govuk-input--width-3",
+                   attributes: { maxlength: 12 }) %>
+    </div>
+  </div>
+<% end %>
+
+<%= render partial: "responsible_persons/notifications/components/build/add_ingredients/cas_number_input", locals: { ingredient_fields: ingredient_fields } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% if ingredient_fields.object.poisonous == nil %>
+      <%= ingredient_fields.hidden_field :poisonous, value: nil %>
+    <% end %>
+    <%= govukRadios(
+        form: ingredient_fields,
+        key: :poisonous,
+        fieldset: { legend: { html: "Does the NPIS need to be notified of this ingredient?".html_safe,
+                              classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular",
+                              isPageHeading: false } },
+        hint: { html: "The <abbr>NPIS</abbr> tables are included above<span class='govuk-visually-hidden'>/before</span> this form.".html_safe,
+                classes: "govuk-!-font-size-16" },
+        items: [
+          { text: "Yes",
+            value: "true",
+            conditional: { html: exact_concentration_html } },
+          { text: "No",
+            value: "false",
+            conditional: { html: range_concentration_html } },
+        ],
+      ) %>
+  </div>
+</div>

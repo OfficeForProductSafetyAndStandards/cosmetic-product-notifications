@@ -418,7 +418,7 @@ def expect_back_link_to_poisonous_ingredients_page
   expect_back_link_to(/\/build\/contains_poisonous_ingredients$/)
 end
 
-def expect_to_be_on__what_is_ph_range_of_product_page
+def expect_to_be_on_what_is_ph_range_of_product_page
   expect(page.current_path).to end_with("/build/select_ph_option")
   expect(page).to have_h1("What is the pH range of the product?")
 end
