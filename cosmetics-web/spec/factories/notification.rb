@@ -26,8 +26,13 @@ FactoryBot.define do
     end
 
     trait :archived do
-      state { NotificationStateConcern::ARCHIVED }
       archive_reason { "significant_change_to_the_formulation" }
+
+      after(:create) do |notification, _evaluator|
+        Notification.import_to_opensearch(force: true)
+        notification.archive
+        notification.reload
+      end
     end
 
     trait :ph_values do

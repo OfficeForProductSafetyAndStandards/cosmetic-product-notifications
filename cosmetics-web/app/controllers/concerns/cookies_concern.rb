@@ -44,6 +44,6 @@ module CookiesConcern
   end
 
   def set_analytics_cookies(accept_analytics_cookies)
-    cookies[:accept_analytics_cookies] = accept_analytics_cookies
+    cookies[:accept_analytics_cookies] = { value: accept_analytics_cookies, expires: 1.year.from_now }
   end
 end
