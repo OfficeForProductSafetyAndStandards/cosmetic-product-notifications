@@ -27,7 +27,8 @@ FactoryBot.define do
     end
 
     trait :range do
-      range_concentration { "greater_than_75_less_than_100_percent" }
+      minimum_concentration { 75.0 }
+      maximum_concentration { 100.0 }
       association :component, notification_type: "range"
     end
   end

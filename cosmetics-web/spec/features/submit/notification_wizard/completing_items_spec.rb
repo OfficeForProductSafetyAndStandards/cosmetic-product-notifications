@@ -32,8 +32,6 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_button "Continue"
     click_button "Continue"
     click_button "Save and continue"
-    choose "No"
-    click_button "Continue"
     click_button "Continue"
     click_link "Continue"
     expect_item_name_page
@@ -60,8 +58,6 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_button "Continue"
     click_button "Continue"
     click_button "Save and continue"
-    choose "No"
-    click_button "Continue"
     click_button "Continue"
     click_link "Continue"
     expect_accept_and_submit_page
