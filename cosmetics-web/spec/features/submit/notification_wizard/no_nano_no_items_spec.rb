@@ -35,7 +35,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       formulation_given_as: "Exact concentration",
       ingredients: { "FooBar ingredient" => "0.5% w/w" },
       physical_form: "Liquid",
-      ph: "Between 3 and 10",
+      ph: "1.0 to 1.9",
     )
 
     click_link "Continue"

@@ -50,7 +50,7 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
     fill_ingredients_range_concentrations(single_item:)
   end
 
-  answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
+  answer_what_is_ph_range_when_ph_is_required
   expect_task_has_been_completed_page
 
   return_to_task_list_page
@@ -184,6 +184,16 @@ end
 def answer_what_is_ph_range_of_product_with(answer)
   within_fieldset("What is the pH range of the product?") do
     page.choose(answer)
+  end
+  click_button "Continue"
+end
+
+def answer_what_is_ph_range_when_ph_is_required
+  page.choose("The minimum pH is lower than 3")
+
+  within("#conditional-component_ph_lower_than_3") do
+    fill_in "Minimum pH", with: "1.0"
+    fill_in "Maximum pH", with: "1.9"
   end
   click_button "Continue"
 end
