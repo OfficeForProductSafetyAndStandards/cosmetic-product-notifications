@@ -29,19 +29,30 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body-s opss-secondary-text">Add each ingredient individually. For every ingredient:</p>
-    <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
+    <p class="govuk-body opss-secondary-text">Add each ingredient individually. For every ingredient:</p>
+    <ul class="govuk-list govuk-list--bullet opss-secondary-text">
       <% unless local_assigns[:poisonous] == true %>
         <li>If it is shown as an ingredient on the product label it must to be added to the notification as an ingredient</li>
       <% end %>
       <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
       <li>Confirm if the ingredient is listed in the National Poisons Information Service (<abbr>NPIS</abbr>) tables and if it is an ingredient the <abbr>NPIS</abbr> needs to know about</li>
+      <li>Refer to the National Poisons Information Service (NPIS) tables to confirm if the NPIS needs to be notified of the ingredient</li>
     </ul>
 
     <%= link_to "Skip <abbr>NPIS</abbr> tables.".html_safe, "#skip-to-form", class: "govuk-skip-link opss-skip-link" %>
 
-    <%= govukDetails(summaryText: "Show the <abbr>NPIS</abbr> tables".html_safe, classes: "govuk-!-margin-left-0") do %>
-      <%= render "npis_tables" %>
+    <%= govukDetails(
+          summaryText: "Help with notifying the NPIS about your ingredient".html_safe,
+          classes: "govuk-!-margin-left-0") do %>
+          <p class="govuk-body opss-secondary-text">
+            The NPIS tables show a list of ingredients categorised by type. These have the CAS numbers included to help fill out the form below.
+          </p>
+          <p class="govuk-body opss-secondary-text">
+            Clicking on the NPIS tables link will open the tables in a new tab for you to use as a reference when entering the ingredient details.
+          </p>
+          <p class="govuk-body">
+            If an ingredient meets or exceeds the weight-by-weight (%w/w) criteria displayed in the table, the checkbox below must be checked to notify the NPIS about the ingredient.
+          </p>
     <% end %>
 
     <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
