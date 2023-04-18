@@ -81,9 +81,9 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       end
     end
 
-    it "initialises 5 empty cmrs in add_cmrs step" do
+    it "initialises an empty cmr in add_cmrs step" do
       get(:show, params: params.merge(id: :add_cmrs))
-      expect(assigns(:component).cmrs).to have(5).items
+      expect(assigns(:component).cmrs).to have(1).item
       expect(assigns(:component).cmrs).to all(have_attributes(name: be_nil))
     end
 
@@ -288,10 +288,10 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
 
     it "adds non empty cmrs to the component when add_cmrs" do
       cmr_name = "ABC"
-      cmrs_params = params.merge(id: :add_cmrs, component: { cmrs_attributes: { "0": { name: cmr_name }, "1": { name: "" } } })
+      cmrs_params = params.merge(id: :add_cmrs, component: { cmrs_attributes: { "0": { name: cmr_name, cas_number: "1234-56-7" }, "1": { name: "" } } })
 
       post(:update, params: cmrs_params)
-      expect(assigns(:component).cmrs.count).to eq(1)
+      expect(assigns(:component).cmrs.size).to eq(2)
       expect(assigns(:component).cmrs.first.name).to eq(cmr_name)
     end
 

@@ -14,16 +14,35 @@
       <h1 class="govuk-heading-l"><%= title %></h1>
 
       <p class="govuk-!-margin-bottom-2">
-        Carcinogenic, mutagenic or reprotoxic (CMR) substances can cause or promote cancers, cause genetic mutations or damage the reproductive process.</p>
+        Carcinogenic, mutagenic or reprotoxic (<abbr>CMR</abbr>) substances can cause or promote cancers, cause genetic mutations or damage the reproductive process.</p>
 
       <p class="govuk-!-margin-bottom-2">
-        CMR substances are classified into 3 categories:
+        <abbr>CMR</abbr> substances are classified into 3 categories:
       </p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>1A – known to be CMRs, based on human studies</li>
-        <li>1B – presumed to be CMRs, based on animal studies</li>
-        <li>2 – suspected to be CMRs, based on some human or animal studies</li>
+        <li>1A – known to be <abbr>CMRs</abbr>, based on human studies</li>
+        <li>1B – presumed to be <abbr>CMRs</abbr>, based on animal studies</li>
+        <li>2 – suspected to be <abbr>CMRs</abbr>, based on some human or animal studies</li>
       </ul>
+
+      <%= govukDetails(summaryText: "Help understanding CMR substances") do %>
+        <p class="govuk-body">
+          Some cosmetics ingredients can cause cancers, promote genetic mutations, or damage the reproductive process when used in large quantities, or in certain
+          types of products. These are called carcinogens, mutagens, and reproductive toxins, respectively, and are collectively known as "<abbr>CMRs</abbr>".
+        </p>
+        <p class="govuk-body">
+          All cosmetic products should be safe for consumers to use, and to this end, they need to be specifically assessed for chemical safety by a qualified
+          risk assessor.
+        </p>
+        <p class="govuk-body">
+          In addition to this, any cosmetic ingredient used in a product that is classified as a category 1A or 1B <abbr>CMR</abbr>, under the Classification, Labelling and
+          Packaging of substances and mixtures Regulations (<abbr>GB CLP</abbr>) needs to be notified to <abbr>OPSS</abbr>.
+        </p>
+        <p class="govuk-!-margin-bottom-1">
+          The Health and Safety Executive (<abbr>HSE</abbr>) maintains the <abbr>GB</abbr> Mandatory Classification and Labelling list (<abbr>GB MCL</abbr>) which shows
+          what mandatory classifications apply to certain chemicals used in the <abbr>UK</abbr>. This can be found on the <a href="https://www.hse.gov.uk/chemical-classification/classification/harmonised-classification-self-classification.htm" target="_blank"><abbr>HSE</abbr> website</a>.
+        </p>
+      <% end %>
 
       <%= govukRadios(form: form,
                       key: :contains_cmrs,

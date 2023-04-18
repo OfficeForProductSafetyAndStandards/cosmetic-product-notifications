@@ -59,7 +59,7 @@ class Component < ApplicationRecord
     not_given: "not_given",
   }, _prefix: true
 
-  accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
+  accepts_nested_attributes_for :cmrs
 
   scope :complete, -> { where(state: "component_complete") }
 
