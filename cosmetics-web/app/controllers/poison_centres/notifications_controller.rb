@@ -8,6 +8,7 @@ class PoisonCentres::NotificationsController < SearchApplicationController
     if current_user&.poison_centre_user? || current_user&.opss_science_user?
       render "show_poison_centre"
     else
+      @archive_history = @notification.versions_with_name
       render "show_msa"
     end
   end

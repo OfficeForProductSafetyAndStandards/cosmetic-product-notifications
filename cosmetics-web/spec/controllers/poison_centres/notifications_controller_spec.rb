@@ -1,17 +1,9 @@
 require "rails_helper"
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
-  let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person) }
-  let(:responsible_person_2) { create(:responsible_person, :with_a_contact_person) }
-
-  let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
-  let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
-
-  let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
-
-  let(:distinct_notification) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "bbbb") }
-  let(:similar_notification_one) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaaa") }
-  let(:similar_notification_two) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaab") }
+  let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
+  let(:notifications) { create_list(:registered_notification, 3, responsible_person:) }
+  let(:archived_notification) { create(:archived_notification, responsible_person:) }
 
   after do
     sign_out(:search_user)
@@ -23,7 +15,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
 
     describe "GET #show" do
-      let(:notification) { rp_1_notifications.first }
+      let(:notification) { notifications.first }
       let(:reference_number) { notification.reference_number }
 
       before { get :show, params: { reference_number: } }
@@ -34,6 +26,16 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
       it "renders the show template" do
         expect(response).to render_template("notifications/show_poison_centre")
+      end
+
+      describe "displayed information for archived notifications", versioning: true do
+        let(:reference_number) { archived_notification.reference_number }
+
+        render_views
+
+        it "does not render the archive history" do
+          expect(response.body).not_to match(/Archive history/)
+        end
       end
 
       context "when the notification is not found" do
@@ -52,9 +54,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
 
     describe "GET #show" do
-      let(:notification) { rp_1_notifications.first }
+      let(:notification) { notifications.first }
+      let(:reference_number) { notification.reference_number }
 
-      before { get :show, params: { reference_number: notification.reference_number } }
+      before { get :show, params: { reference_number: } }
 
       it "renders the show template" do
         expect(response).to render_template("notifications/show_msa")
@@ -109,6 +112,16 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
 
+      describe "displayed information for archived notifications", versioning: true do
+        let(:reference_number) { archived_notification.reference_number }
+
+        render_views
+
+        it "does not render the archive history" do
+          expect(response.body).not_to match(/Archive history/)
+        end
+      end
+
       describe "Notification with CMRS substances" do
         let(:cmr) { create(:cmr) }
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
@@ -130,9 +143,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
 
     describe "GET #show" do
-      let(:notification) { rp_1_notifications.first }
+      let(:notification) { notifications.first }
+      let(:reference_number) { notification.reference_number }
 
-      before { get :show, params: { reference_number: notification.reference_number } }
+      before { get :show, params: { reference_number: } }
 
       it "renders the show template" do
         expect(response).to render_template("notifications/show_msa")
@@ -187,6 +201,16 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
 
+      describe "displayed information for archived notifications", versioning: true do
+        let(:reference_number) { archived_notification.reference_number }
+
+        render_views
+
+        it "renders the archive history" do
+          expect(response.body).to match(/Archive history/)
+        end
+      end
+
       describe "Notification with CMRS substances" do
         let(:cmr) { create(:cmr) }
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
@@ -208,9 +232,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     end
 
     describe "GET #show" do
-      let(:notification) { rp_1_notifications.first }
+      let(:notification) { notifications.first }
+      let(:reference_number) { notification.reference_number }
 
-      before { get :show, params: { reference_number: notification.reference_number } }
+      before { get :show, params: { reference_number: } }
 
       it "renders the show template" do
         expect(response).to render_template("notifications/show_msa")
@@ -265,6 +290,16 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
 
+      describe "displayed information for archived notifications", versioning: true do
+        let(:reference_number) { archived_notification.reference_number }
+
+        render_views
+
+        it "renders the archive history" do
+          expect(response.body).to match(/Archive history/)
+        end
+      end
+
       describe "Notification with CMRS substances" do
         let(:cmr) { create(:cmr) }
         let(:component) { create(:component, :with_poisonous_ingredients, :with_trigger_questions, cmrs: [cmr]) }
@@ -282,12 +317,12 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
   describe "When signed in as a Responsible Person user" do
     before do
-      sign_in_as_member_of_responsible_person(responsible_person_1)
+      sign_in_as_member_of_responsible_person(responsible_person)
     end
 
     describe "GET #show" do
       it "redirects to invalid account" do
-        expect(get(:show, params: { reference_number: rp_1_notifications.first.reference_number })).to redirect_to("/invalid-account")
+        expect(get(:show, params: { reference_number: notifications.first.reference_number })).to redirect_to("/invalid-account")
       end
     end
   end

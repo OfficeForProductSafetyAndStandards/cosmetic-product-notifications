@@ -14,6 +14,7 @@
         <%= render partial: 'poison_centres/notifications_search/hidden_date_fields', locals: { attribute: :date_to, id: :sort_form, search_type: 'notification' } %>
         <%= form.hidden_field :sort_by, id: 'notification_search_form_sort_by_hidden' %>
         <%= form.hidden_field :category, id: :notification_search_form_category_hidden %>
+        <%= form.hidden_field :status, id: :notification_search_form_status_hidden %>
         <%= form.hidden_field :search_fields, id: :notification_search_form_search_fields_hidden %>
         <%= form.hidden_field :match_similar, id: :notification_search_form_match_similar_hidden %>
         <button class="govuk-button opss-button-link govuk-!-font-size-14">

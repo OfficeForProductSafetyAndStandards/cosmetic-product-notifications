@@ -10,7 +10,7 @@
                   %i[name cas_number poisonous exact_concentration range_concentration],
                   map_errors: { range_concentration: ingredient_range_concentration_items.first[:id], poisonous: "poisonous_true" }) %>
 
-<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form, show_csv_upload_link: false do |form| %>
+<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
   <%= govukInput(form: form,
                  id: "name",
                  key: :name,

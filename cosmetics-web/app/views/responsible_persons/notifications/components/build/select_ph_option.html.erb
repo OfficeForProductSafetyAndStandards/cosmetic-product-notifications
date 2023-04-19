@@ -7,19 +7,54 @@
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <%= ph_value_error_summary(@component) %>
 
-      <%= error_summary_for(@component, first_values: {ph: "between_3_and_10"}) %>
+      <% lower_than_3_min_max_ph_field_html = capture do %>
+        <div class="govuk-body opss-secondary-text">
+          The pH range of the notified product should not exceed 1 pH unit.<br/>For example, a range of 2.0 - 2.9 is acceptable, a range of 1.8 - 2.9 is not.
+        </div>
+
+        <%= render partial: "responsible_persons/notifications/components/build/ph_range",
+                   locals: { ph_scope: "lower_than_3", form: form, component: @component } %>
+      <% end %>
+
+      <% above_10_min_max_ph_field_html = capture do %>
+        <div class="govuk-body opss-secondary-text">
+          The pH range of the notified product should not exceed 1 pH unit.<br/>For example, a range of 10.0 - 10.9 is acceptable, a range of 11.8 - 12.9 is not.
+        </div>
+
+        <%= render partial: "responsible_persons/notifications/components/build/ph_range",
+                   locals: { ph_scope: "above_10", form: form, component: @component } %>
+      <% end %>
+
       <%= govukRadios(
             form: form,
             key: :ph,
             fieldset: { legend: { text: title, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
             hint: { text: local_assigns[:hint] },
-            items: [{ text: "The minimum pH is 3 or higher, and the maximum pH is 10 or lower", value: "between_3_and_10" },
-              { text: "The minimum pH is lower than 3", value: "lower_than_3" },
-              { text: "The maximum pH is higher than 10", value: "above_10" },
-              { text: "It does not have a pH", value: "not_applicable" }],
+            items: [
+              {
+                text: "The minimum pH is 3 or higher, and the maximum pH is 10 or lower",
+                value: "between_3_and_10"
+              },
+              {
+                text: "The minimum pH is lower than 3",
+                value: "lower_than_3",
+                conditional: { html: lower_than_3_min_max_ph_field_html  }
+              },
+              {
+                text: "The maximum pH is higher than 10",
+                value: "above_10",
+                conditional: { html: above_10_min_max_ph_field_html }
+              },
+              {
+                divider: "or"
+              },
+              {
+                text: "It does not have a pH value",
+                value: "not_applicable"
+              }],
           ) %>
-
       <%= govukButton text: "Continue" %>
     </div>
   </div>

@@ -28,7 +28,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def show
     @notification = Notification.where.not(state: :deleted).find_by!(reference_number: params[:reference_number])
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
-    @history_entries = @notification.versions.map { |version| { "whodunnit" => SubmitUser.find(version.whodunnit)&.name || "Unknown", "object" => version.object } }
+    @archive_history = @notification.versions_with_name
   end
 
   def new
@@ -51,10 +51,6 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification.notification_complete? || @notification.archived?
 
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
-
-    if params[:submit_failed]
-      add_image_upload_errors
-    end
   end
 
   def choose_archive_reason
@@ -114,16 +110,6 @@ private
       .archived
       .order(notification_complete_at: :desc)
       .page(params[:page]).per(page_size)
-  end
-
-  def add_image_upload_errors
-    if @notification.images_failed_anti_virus_check?
-      @notification.errors.add :image_uploads, "failed anti virus check"
-    end
-
-    if @notification.images_pending_anti_virus_check?
-      @notification.errors.add :image_uploads, "waiting for files to pass anti virus check. Refresh to update"
-    end
   end
 
   def notification_params
