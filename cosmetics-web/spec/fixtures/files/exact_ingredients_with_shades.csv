@@ -1,0 +1,4 @@
+Ingredient name,% w/w,CAS number,Does NPIS need to know about it?,Is it used for different shades?
+Sodium,35,498-19-8,false,false
+Aqua,65,,false,true
+ethanol,23,497-19-8,true,true

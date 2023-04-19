@@ -1,0 +1,4 @@
+Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+Sodium,35,498-19-8,false
+Aqua,65,,false
+ethanol,23,497-19-8,true

@@ -12,7 +12,9 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     complete_product_wizard(name: "FooProduct")
     expect_progress(1, 3)
     expect_product_details_task_not_started
+  end
 
+  scenario "Adding exact concentration ingredients to a product using a CSV file" do
     click_link "Product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Liquid"
@@ -21,9 +23,6 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     answer_item_category_with "Hair and scalp products"
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
-  end
-
-  scenario "Adding exact concentration ingredients to a product using a CSV file" do
     answer_how_do_you_want_to_give_formulation_with "Provide ingredients and their exact concentration using a CSV file"
     expect_to_be_on_add_csv_ingredients_page
 
@@ -33,15 +32,15 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     expect_to_be_on_add_csv_ingredients_page
     expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
-    page.attach_file "spec/fixtures/files/Exact_ingredients_duplicate_row.csv"
+    page.attach_file "spec/fixtures/files/exact_ingredients_duplicate_row.csv"
     click_on "Continue"
 
-    expect_form_to_have_errors(file: { message: "The file has error in row: 5", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The file has an error in row: 5", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
-    page.attach_file "spec/fixtures/files/Exact_ingredients.csv"
+    page.attach_file "spec/fixtures/files/exact_ingredients.csv"
     click_on "Continue"
 
-    expect_success_banner_with_text "Exact_ingredients.csv uploaded successful"
+    expect_success_banner_with_text "exact_ingredients.csv uploaded successful"
     click_on "Continue"
 
     expect_to_be_on__what_is_ph_range_of_product_page
@@ -54,7 +53,63 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     click_link "Accept and submit"
 
     expect(page).to have_css("dt", text: "Sodium")
+    expect(page).to have_css("dd", text: "35.0% w/w")
     expect(page).to have_css("dt", text: "Aqua")
+    expect(page).to have_css("dd", text: "65.0% w/w")
     expect(page).to have_css("dt", text: "ethanol")
+    expect(page).to have_css("dd", text: "23.0% w/w")
+  end
+
+  with_feature_flag_enabled :csv_upload_exact_with_shades do
+    scenario "Adding exact concentration ingredients to a product with multiple shades using a CSV file" do
+      click_link "Product details"
+
+      answer_is_item_available_in_shades_with "Yes"
+      all("input#component_shades").first.fill_in with: "Blue"
+      all("input#component_shades").last.fill_in with: "Red"
+      click_button "Continue"
+
+      answer_what_is_physical_form_of_item_with "Liquid"
+      answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+      answer_does_item_contain_cmrs_with "No"
+      answer_item_category_with "Hair and scalp products"
+      answer_item_subcategory_with "Hair and scalp care and cleansing products"
+      answer_item_sub_subcategory_with "Shampoo"
+      answer_how_do_you_want_to_give_formulation_with "Provide ingredients and their exact concentration using a CSV file"
+      expect_to_be_on_add_csv_ingredients_page
+
+      # First attempt with validation errors
+      click_on "Continue"
+
+      expect_to_be_on_add_csv_ingredients_page
+      expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+
+      page.attach_file "spec/fixtures/files/exact_ingredients.csv"
+      click_on "Continue"
+
+      expect_form_to_have_errors(file: { message: "The file has an error in rows: 2,3,4", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+
+      page.attach_file "spec/fixtures/files/exact_ingredients_with_shades.csv"
+      click_on "Continue"
+
+      expect_success_banner_with_text "exact_ingredients_with_shades.csv uploaded successful"
+      click_on "Continue"
+
+      expect_to_be_on__what_is_ph_range_of_product_page
+
+      answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
+      expect_task_has_been_completed_page
+
+      return_to_task_list_page
+
+      click_link "Accept and submit"
+
+      expect(page).to have_css("dt", text: "Sodium")
+      expect(page).to have_css("dd", text: "35.0% w/w")
+      expect(page).to have_css("dt", text: "Aqua")
+      expect(page).to have_css("dd", text: "Maximum concentration: 65.0% w/w")
+      expect(page).to have_css("dt", text: "ethanol")
+      expect(page).to have_css("dd", text: "Maximum concentration: 23.0% w/w")
+    end
   end
 end

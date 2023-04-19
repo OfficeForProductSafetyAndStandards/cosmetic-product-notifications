@@ -72,7 +72,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
 
@@ -111,7 +111,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
 
@@ -137,17 +137,17 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
 
     context "when file with invalid characters is used" do
       let(:file) do
-        f = File.open("spec/fixtures/files/Exact_ingredients_long_name.csv")
+        f = File.open("spec/fixtures/files/exact_ingredients_long_name.csv")
         Rack::Test::UploadedFile.new(f, "text/csv")
       end
 
-      let(:error_messages) { ["File has incorrect characters. Please check and try again"] }
+      let(:error_messages) { ["The file has invalid characters. Please check and try again"] }
 
       it "does have proper message after saving attempt" do
         form.save_ingredients
@@ -181,7 +181,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
 
@@ -196,7 +196,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 4"] }
+        let(:error_messages) { ["The file has an error in row: 4"] }
       end
     end
 
@@ -212,7 +212,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
       include_examples "validation" do
         let(:error_messages) do
-          ["The file has error in rows: 2,4"]
+          ["The file has an error in rows: 2,4"]
         end
       end
     end
@@ -246,7 +246,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 3"] }
+        let(:error_messages) { ["The file has an error in row: 3"] }
       end
     end
 
@@ -259,7 +259,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The selected file must be smaller than 15KB"] }
+        let(:error_messages) { ["The file must be smaller than 15KB"] }
       end
     end
 
@@ -319,7 +319,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
 
@@ -332,7 +332,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has error in row: 2"] }
+        let(:error_messages) { ["The file has an error in row: 2"] }
       end
     end
   end

@@ -1,5 +1,6 @@
 <% title = "Select formulation type" %>
 <% question = "How will you provide #{@component_name} formulation?" %>
+<% csv_file_type = FeatureFlags.csv_upload_exact_with_shades_enabled? && @component.shades.present? ? "exact-with-multiple-shades" : "exact" %>
 <%
   frame_formulations = FrameFormulations::CATEGORIES.dig(@component.root_category.to_s, @component.sub_category.to_s, @component.sub_sub_category.to_s)
   items = formulations_types_label
@@ -48,7 +49,7 @@
             There are three formulation types: Predefined frame formulations, exact concentrations and concentration ranges. You can enter information manually or by uploading a <abbr title="Comma Separated Values">CSV</abbr> file.
             </p>
             <p class="govuk-body govuk-!-width-three-quarters govuk-!-margin-bottom-8 opss-secondary-text">
-            Learn how you can <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">use a <abbr>CSV</abbr> file (opens in a new tab)</a>.
+            Learn how you can <a href="/help/csv?csv_file_type=<%= csv_file_type %>" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">use a <abbr>CSV</abbr> file (opens in a new tab)</a>.
             </p>
             <div class="govuk-hint" id="component_notification_type-hint">
               <%= warning_html %>
