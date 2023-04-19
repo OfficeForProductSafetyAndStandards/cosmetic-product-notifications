@@ -171,6 +171,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
     travel_to time_now
 
+    # We need to sign in again because the session above would have timed out
+    sign_in_as_member_of_responsible_person(responsible_person, user)
+    visit team_path
     click_on "Resend invitation"
 
     select_secondary_authentication_sms
@@ -255,6 +258,9 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     time_now = (Time.zone.at(Time.zone.now.to_i) + (PendingResponsiblePersonUser::INVITATION_TOKEN_VALID_FOR + 1))
     travel_to time_now
 
+    # We need to sign in again because the session above would have timed out
+    sign_in(user)
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
     click_on "Resend invitation"
     select_secondary_authentication_sms
     expect_to_be_on_secondary_authentication_sms_page

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
-  shared_examples "sign up" do
+  shared_examples "sign in" do
     scenario "user tries to sign in with email address that does not belong to any user" do
       visit "/sign-in"
 
@@ -263,7 +263,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         end
       end
 
-      include_examples "sign up"
+      include_examples "sign in"
     end
   end
 
@@ -458,7 +458,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         end
       end
 
-      include_examples "sign up"
+      include_examples "sign in"
     end
   end
 end
