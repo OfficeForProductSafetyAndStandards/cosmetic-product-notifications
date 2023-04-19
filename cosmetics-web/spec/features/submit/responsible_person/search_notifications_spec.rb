@@ -79,10 +79,12 @@ RSpec.describe "Search notifications page", type: :feature do
     visit responsible_person_search_notifications_path(responsible_person.id)
 
     fill_in "notification_search_form[q]", with: "Cream"
+    choose "Archived"
     click_button "Search"
     click_button "Edit your search"
 
     expect(page).to have_field("notification_search_form[q]", with: "Cream")
+    expect(page).to have_checked_field("notification_search_form[status]", with: "archived")
   end
 
   scenario "Show the total number of results" do
