@@ -459,7 +459,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
     end
 
     describe "used for multiple shades selection validation" do
-      RSpec.shared_examples "valid with a value" do
+      RSpec.shared_examples "form valid with a value" do
         context "when used for multiple shades" do
           before do
             form.used_for_multiple_shades = true
@@ -477,7 +477,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
 
-      RSpec.shared_examples "valid without a value" do
+      RSpec.shared_examples "form valid without a value" do
         context "when not specifying if used for multiple shades" do
           before do
             form.used_for_multiple_shades = nil
@@ -487,7 +487,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         end
       end
 
-      RSpec.shared_examples "invalid without a value" do
+      RSpec.shared_examples "form invalid without a value" do
         context "when not specifying if the ingredient is used for multiple shades" do
           before do
             form.used_for_multiple_shades = nil
@@ -509,8 +509,8 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           form.type = "range"
         end
 
-        include_examples "valid with a value"
-        include_examples "valid without a value"
+        include_examples "form valid with a value"
+        include_examples "form valid without a value"
       end
 
       context "with an exact type" do
@@ -524,43 +524,43 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
         context "with a multi-shade exact component" do
           let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "exact") }
 
-          include_examples "valid with a value"
-          include_examples "invalid without a value"
+          include_examples "form valid with a value"
+          include_examples "form invalid without a value"
         end
 
         context "with a multi-shade range component" do
           let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "range") }
 
-          include_examples "valid with a value"
-          include_examples "valid without a value"
+          include_examples "form valid with a value"
+          include_examples "form valid without a value"
         end
 
         context "with a multi-shade predefined component" do
           let(:component) { build_stubbed(:exact_component, :with_multiple_shades, notification_type: "predefined") }
 
-          include_examples "valid with a value"
-          include_examples "invalid without a value"
+          include_examples "form valid with a value"
+          include_examples "form invalid without a value"
         end
 
         context "with a non multi-shade exact component" do
           let(:component) { build_stubbed(:exact_component) }
 
-          include_examples "valid with a value"
-          include_examples "valid without a value"
+          include_examples "form valid with a value"
+          include_examples "form valid without a value"
         end
 
         context "with a non multi-shade range component" do
           let(:component) { build_stubbed(:ranges_component) }
 
-          include_examples "valid with a value"
-          include_examples "valid without a value"
+          include_examples "form valid with a value"
+          include_examples "form valid without a value"
         end
 
         context "with a non multi-shade predefined component" do
           let(:component) { build_stubbed(:predefined_component) }
 
-          include_examples "valid with a value"
-          include_examples "valid without a value"
+          include_examples "form valid with a value"
+          include_examples "form valid without a value"
         end
       end
     end
