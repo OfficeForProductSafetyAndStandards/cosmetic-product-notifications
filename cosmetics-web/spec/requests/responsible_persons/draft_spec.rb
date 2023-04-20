@@ -19,19 +19,19 @@ RSpec.describe "Edit Responsible Person Details", type: :request do
     let(:accept_path) { accept_responsible_person_notification_draft_path(responsible_person, draft_notification) }
 
     it "assigns the correct notification" do
-      post accept_path, params: params
+      post(accept_path, params:)
       expect(assigns(:notification)).to eq(draft_notification)
     end
 
     it "marks the notification as complete" do
       attach_image_to_draft_with_metadata(safe: true)
-      post accept_path, params: params
+      post(accept_path, params:)
       expect(draft_notification.reload.state).to eq("notification_complete")
     end
 
     it "populates the completion timestamp" do
       attach_image_to_draft_with_metadata(safe: true)
-      post accept_path, params: params
+      post(accept_path, params:)
       expect(draft_notification.reload.notification_complete_at).not_to be_nil
     end
   end
