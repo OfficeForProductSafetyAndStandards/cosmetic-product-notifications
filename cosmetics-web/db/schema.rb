@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_135051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -149,6 +149,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
     t.datetime "updated_at", null: false
     t.bigint "component_id"
     t.boolean "used_for_multiple_shades"
+    t.decimal "minimum_concentration"
+    t.decimal "maximum_concentration"
     t.index ["component_id"], name: "index_ingredients_on_component_id"
     t.index ["created_at"], name: "index_ingredients_on_created_at"
     t.index ["exact_concentration"], name: "index_ingredients_on_exact_concentration"

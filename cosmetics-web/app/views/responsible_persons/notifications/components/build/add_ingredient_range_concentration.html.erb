@@ -12,8 +12,8 @@
 
 <%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
   <%= govukInput(form: form,
-                 id: "name",
-                 key: :name,
+                 id: "inci_name",
+                 key: :inci_name,
                  label: { text: "What is the name?" },
                  attributes: { spellcheck: "false" }) %>
 

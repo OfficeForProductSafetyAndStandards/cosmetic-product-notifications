@@ -87,7 +87,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         return jump_to_step(:number_of_shades)
       end
     when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
-      @ingredient_concentration_form = ingredient_concentration_form
+      create_required_ingredients
     when :upload_ingredients_file
       @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component)
     when :want_to_add_another_ingredient
@@ -127,7 +127,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :select_formulation_type
       update_select_formulation_type
     when :add_ingredient_exact_concentration
-      update_add_ingredient_concentration("exact")
+      update_add_exact_ingredient_concentration
     when :add_ingredient_range_concentration
       update_add_ingredient_concentration("range")
     when :upload_ingredients_file
@@ -367,6 +367,24 @@ private
     render_next_step @component
   end
 
+  def update_add_exact_ingredient_concentration
+    if @component.update_with_context(component_params, step)
+      if params[:add_ingredient]
+        @component.ingredients.build
+        rerender_current_step
+      elsif params.key?(:remove_ingredient_with_id)
+        @component.ingredients.find(params[:remove_ingredient_with_id].to_i).destroy unless params[:remove_ingredient_with_id] == "unsaved"
+        @component.ingredients.reload
+        rerender_current_step
+      else
+        jump_to_step(:select_ph_option)
+      end
+    else
+      create_required_ingredients
+      rerender_current_step
+    end
+  end
+
   def update_select_component_ph_options
     if @component.update_with_context(component_params, :ph)
       jump_to :completed
@@ -425,22 +443,27 @@ private
         nano_material_ids: [],
         exposure_routes: [],
         cmrs_attributes: %i[id name cas_number ec_number],
+        ingredients_attributes: ingredients_attributes,
         shades: [],
       )
   end
 
+  def ingredients_attributes
+    %i[
+      id
+      inci_name
+      used_for_multiple_shades
+      exact_concentration
+      maximum_concentration
+      range_concentration
+      cas_number
+      poisonous
+      ingredient_number
+    ]
+  end
+
   def ingredient_concentration_params
-    params.fetch(:ingredient_concentration_form, {})
-      .permit(
-        :name,
-        :used_for_multiple_shades,
-        :exact_concentration,
-        :maximum_concentration,
-        :range_concentration,
-        :cas_number,
-        :poisonous,
-        :ingredient_number,
-      )
+    params.fetch(:ingredient_concentration_form, {}).permit(ingredients_attributes)
   end
 
   def create_required_shades
@@ -455,6 +478,10 @@ private
       cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
       cmrs_needed.times { @component.cmrs.build }
     end
+  end
+
+  def create_required_ingredients
+    @component.ingredients.build if @component.ingredients.blank?
   end
 
   def model

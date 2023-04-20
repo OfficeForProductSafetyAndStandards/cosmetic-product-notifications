@@ -1,25 +1,103 @@
 <% title = "Add the ingredients" %>
 
-<% page_title title, errors: @ingredient_concentration_form.errors.any? %>
+<% page_title title, errors: @component.errors.any? %>
+
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
 
-<%= error_summary(@ingredient_concentration_form.errors, map_errors: { used_for_multiple_shades: "used_for_multiple_shades_true" }) %>
-
-<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
-  <%= render "ingredient_exact_concentration_fields", component: @component, model: @ingredient_concentration_form, form: form %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <%= govukCheckboxes(form: form,
-                          key: :poisonous_check,
-                          id: "poisonous_check",
-                          classes: " govuk-!-padding-top-6",
-                          items: [{ key: :poisonous,
-                                    text: "The NPIS must be notified about this ingredient".html_safe,
-                                    label: { classes: "govuk-!-padding-right-0" },
-                                    value: true,
-                                    disable_ghost: true }]) %>
-    </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-3"><%= title %></h1>
   </div>
-<% end %>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body opss-secondary-text">Add each ingredient individually. For every ingredient:</p>
+    <ul class="govuk-list govuk-list--bullet opss-secondary-text">
+      <% unless local_assigns[:poisonous] == true %>
+        <li>If it is shown as an ingredient on the product label it must to be added to the notification as an ingredient</li>
+      <% end %>
+      <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
+      <li>Refer to the National Poisons Information Service (NPIS) tables to confirm if the NPIS needs to be notified of the ingredient</li>
+    </ul>
+
+    <%= link_to "Skip <abbr>NPIS</abbr> tables.".html_safe, "#skip-to-form", class: "govuk-skip-link opss-skip-link" %>
+
+    <%= govukDetails(
+          summaryText: "Help with notifying the NPIS about your ingredient".html_safe,
+          classes: "govuk-!-margin-left-0") do %>
+          <p class="govuk-body opss-secondary-text">
+            The NPIS tables show a list of ingredients categorised by type. These have the CAS numbers included to help fill out the form below.
+          </p>
+          <p class="govuk-body opss-secondary-text">
+            Clicking on the NPIS tables link will open the tables in a new tab for you to use as a reference when entering the ingredient details.
+          </p>
+          <p class="govuk-body">
+            If an ingredient meets or exceeds the weight-by-weight (%w/w) criteria displayed in the table, the checkbox below must be checked to notify the NPIS about the ingredient.
+          </p>
+    <% end %>
+
+    <%= error_summary(@component.errors) %>
+
+    <%= form_with model: @component, url: wizard_path, method: :put, id: "skip-to-form", html: { novalidate: true } do |form| %>
+      <%=  form.fields_for :ingredients do |ingredient_fields| %>
+        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+
+        <div class="govuk-form-group">
+          <%= govukFieldset(legend: { text: "Ingredient #{ingredient_fields.index + 1}", classes: "govuk-fieldset__legend--s" }) do %>
+            <%= govukInput(form: ingredient_fields,
+                           id: "inci_name",
+                           key: :inci_name,
+                           label: { text: "What is the name?" },
+                           attributes: { spellcheck: "false" }) %>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-half">
+                <%= render "exact_concentration_input", model: model, form: ingredient_fields, show_maximum_concentration: @component.shades.present? %>
+              </div>
+              <div class="govuk-grid-column-one-half">
+                <%= govukInput(form: ingredient_fields,
+                             key: :cas_number,
+                             id: "cas_number",
+                             label: { html: "What is the CAS number? <span class='opss-secondary-text'>(optional)</span>".html_safe, classes: "govuk-label--s govuk-!-font-weight-regular" },
+                             classes: "govuk-input--width-12") %>
+              </div>
+            </div>
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                <%= govukCheckboxes(form: ingredient_fields,
+                                    key: :poisonous_check,
+                                    id: "poisonous_check",
+                                    classes: " govuk-!-padding-top-6",
+                                    items: [{ key: :poisonous,
+                                              text: "The NPIS must be notified about this ingredient".html_safe,
+                                              label: { classes: "govuk-!-padding-right-0" },
+                                              value: true,
+                                              disable_ghost: true }]) %>
+              </div>
+            </div>
+
+            <div class="govuk-form-group opss-text-align-right">
+              <% if (ingredient_fields.index + 1) == @component.ingredients.size %>
+                <%= govukButton text: "Add another ingredient", classes: "govuk-button--secondary", name: "add_ingredient", value: "true" %>
+              <% end %>
+              <% unless ingredient_fields.index == 0 %>
+                <%= govukButton text: "Remove ingredient", classes: "govuk-button--secondary", name: "remove_ingredient_with_id", value: ingredient_fields.object.id || "unsaved" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+
+      <div class="govuk-button-group">
+        <%= govukButton text: "Save and continue" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

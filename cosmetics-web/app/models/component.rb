@@ -41,7 +41,7 @@ class Component < ApplicationRecord
 
   belongs_to :notification, touch: true
 
-  has_many :ingredients, dependent: :destroy
+  has_many :ingredients, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :component_nano_materials
@@ -60,6 +60,7 @@ class Component < ApplicationRecord
   }, _prefix: true
 
   accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
+  accepts_nested_attributes_for :ingredients
 
   scope :complete, -> { where(state: "component_complete") }
 
