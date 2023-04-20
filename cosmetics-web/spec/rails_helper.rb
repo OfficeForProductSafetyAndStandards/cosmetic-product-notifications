@@ -17,7 +17,6 @@ Sidekiq.logger.level = Logger::FATAL
 
 # Test coverage
 require "simplecov"
-require "coveralls"
 require "simplecov-lcov"
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
