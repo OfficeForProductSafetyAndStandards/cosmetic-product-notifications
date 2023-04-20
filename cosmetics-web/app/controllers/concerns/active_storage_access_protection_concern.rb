@@ -1,6 +1,6 @@
 module ActiveStorageAccessProtectionConcern
   extend ActiveSupport::Concern
-  include Pundit
+  include Pundit::Authorization
   include DomainConcern
 
   def pundit_user
