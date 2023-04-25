@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Unlockin account", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :feature do
+RSpec.feature "Unlocking account", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :feature do
   shared_examples "locked account" do
     context "when using wrong credentials over and over again" do
       let(:unlock_email) { delivered_emails.last }

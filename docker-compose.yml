@@ -23,13 +23,6 @@ services:
     ports:
       - "9200:9200"
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana-oss:7.9.2
-    environment:
-      - "ELASTICSEARCH_HOSTS=http://opensearch:9200"
-    ports:
-      - "5601:5601"
-
   redis:
     image: redis
     hostname: redis
@@ -60,9 +53,9 @@ services:
       - TEST_DATABASE_URL=postgres://db/cosmetics_test?user=postgres
       - OPENSEARCH_URL=http://opensearch:9200
       - REDIS_URL=redis://redis:6379
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit_cosmetics
+      - SEARCH_HOST=cosmetics-search
+      - SUBMIT_HOST=cosmetics-submit
+      - COSMETICS_HOST=cosmetics-submit
       - ANTIVIRUS_ENABLED=false
 
   cosmetics-worker:
@@ -80,9 +73,9 @@ services:
       - OPENSEARCH_URL=http://opensearch:9200
       - REDIS_URL=redis://redis:6379
       - ANTIVIRUS_ENABLED=false
-      - SEARCH_HOST=search_cosmetics
-      - SUBMIT_HOST=submit_cosmetics
-      - COSMETICS_HOST=submit-cosmetics
+      - SEARCH_HOST=cosmetics-search
+      - SUBMIT_HOST=cosmetics-submit
+      - COSMETICS_HOST=cosmetics-submit
     depends_on:
       - db
       - opensearch

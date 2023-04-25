@@ -59,7 +59,7 @@ class Component < ApplicationRecord
     not_given: "not_given",
   }, _prefix: true
 
-  accepts_nested_attributes_for :cmrs, reject_if: proc { |attributes| %i[name ec_number cas_number].all? { |key| attributes[key].blank? } }
+  accepts_nested_attributes_for :cmrs
 
   scope :complete, -> { where(state: "component_complete") }
 
@@ -91,8 +91,8 @@ class Component < ApplicationRecord
 
   validates :maximum_ph, presence: { message: "Enter a maximum pH" }, if: -> { minimum_ph.present? }
   validates :minimum_ph, presence: { message: "Enter a minimum pH" }, if: -> { maximum_ph.present? }
-  validates :maximum_ph, presence: { message: "Enter a maximum pH" }, on: :ph_range
-  validates :minimum_ph, presence: { message: "Enter a minimum pH" }, on: :ph_range
+  validates :maximum_ph, presence: { message: "Enter a maximum pH" }, on: :ph, unless: -> { ph_range_not_required? }
+  validates :minimum_ph, presence: { message: "Enter a minimum pH" }, on: :ph, unless: -> { ph_range_not_required? }
   validate :maximum_ph_must_be_equal_or_above_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
   validate :difference_between_maximum_and_minimum_ph, if: -> { maximum_ph.present? && minimum_ph.present? }
   validates :minimum_ph, numericality: { message: "Enter a value of 0 or higher for minimum pH", greater_than_or_equal_to: 0 }, if: -> { minimum_ph.present? }
@@ -225,6 +225,38 @@ class Component < ApplicationRecord
 
   def ph_required?
     !(solid_or_pressed_powder? || loose_powder?)
+  end
+
+  def lower_than_3_minimum_ph=(val)
+    self.minimum_ph = val if ph_lower_than_3?
+  end
+
+  def lower_than_3_minimum_ph
+    minimum_ph if ph_lower_than_3?
+  end
+
+  def lower_than_3_maximum_ph=(val)
+    self.maximum_ph = val if ph_lower_than_3?
+  end
+
+  def lower_than_3_maximum_ph
+    maximum_ph if ph_lower_than_3?
+  end
+
+  def above_10_minimum_ph=(val)
+    self.minimum_ph = val if ph_above_10?
+  end
+
+  def above_10_minimum_ph
+    minimum_ph if ph_above_10?
+  end
+
+  def above_10_maximum_ph=(val)
+    self.maximum_ph = val if ph_above_10?
+  end
+
+  def above_10_maximum_ph
+    maximum_ph if ph_above_10?
   end
 
   def component_name

@@ -1,8 +1,6 @@
 require "csv"
 
 class ResponsiblePersons::Notifications::Components::BuildController < SubmitApplicationController
-  NUMBER_OF_CMRS = 5
-
   include Wicked::Wizard
   include WizardConcern
   include CategoryHelper
@@ -36,7 +34,6 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         :add_ingredient_npis_needs_to_know, # only for frame formulation
         :want_to_add_another_ingredient,
         :select_ph_option,
-        :min_max_ph,
         :completed
 
   BACK_ROUTING = {
@@ -71,7 +68,6 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       select_formulation_type: -> { @component.exact? || @component.range? },
       contains_ingredients_npis_needs_to_know: -> { @component.predefined? },
     },
-    min_max_ph: :select_ph_option,
   }.freeze
 
   def show
@@ -144,8 +140,6 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       update_want_to_add_another_ingredient
     when :select_ph_option
       update_select_component_ph_options
-    when :min_max_ph
-      update_component_min_max_ph
     else
       # Apply this since render_wizard(@component, context: :context) doesn't work as expected
       if @component.update_with_context(component_params, step)
@@ -244,7 +238,16 @@ private
 
   def update_add_cmrs
     if @component.update_with_context(component_params, step)
-      render_next_step @component
+      if params[:add_cmr]
+        @component.cmrs.build
+        rerender_current_step
+      elsif params.key?(:remove_cmr_with_id)
+        @component.cmrs.find(params[:remove_cmr_with_id].to_i).destroy unless params[:remove_cmr_with_id] == "unsaved"
+        @component.cmrs.reload
+        rerender_current_step
+      else
+        render_next_step @component
+      end
     else
       create_required_cmrs
       rerender_current_step
@@ -346,7 +349,7 @@ private
 
     if @bulk_ingredients_form.save_ingredients
       @component.ingredients_file.attach(ingredients_file)
-      # we actually want to rerender current step with parameter saying that all went well
+      # we actually want to re-render current step with parameter saying that all went well
       @ingredients_imported = true
     end
 
@@ -371,24 +374,10 @@ private
     render_next_step @component
   end
 
-  # In views, the wording here is about range. Its confusing, as param name here is ph
-  # and in next action is `ph_range`.
   def update_select_component_ph_options
-    return rerender_current_step unless @component.update_with_context(component_params, :ph)
-
-    if @component.ph_range_not_required?
+    if @component.update_with_context(component_params, :ph)
       jump_to :completed
       render_next_step @component
-    else
-      redirect_to wizard_path(:min_max_ph)
-    end
-  end
-
-  # In views, the wording here is about ph. Its confusing, as param name here is ph_range
-  # and wording in previous action is about range.
-  def update_component_min_max_ph
-    if @component.update_with_context(component_params, :ph_range)
-      jump_to_step :completed
     else
       rerender_current_step
     end
@@ -435,8 +424,10 @@ private
         :sub_sub_category,
         :frame_formulation,
         :ph,
-        :minimum_ph,
-        :maximum_ph,
+        :lower_than_3_minimum_ph,
+        :lower_than_3_maximum_ph,
+        :above_10_minimum_ph,
+        :above_10_maximum_ph,
         :exposure_condition,
         nano_material_ids: [],
         exposure_routes: [],
@@ -467,10 +458,7 @@ private
   end
 
   def create_required_cmrs
-    if @component.cmrs.size < NUMBER_OF_CMRS
-      cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
-      cmrs_needed.times { @component.cmrs.build }
-    end
+    @component.cmrs.build if @component.cmrs.blank?
   end
 
   def model

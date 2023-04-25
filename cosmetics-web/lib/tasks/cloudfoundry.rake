@@ -1,5 +1,5 @@
 namespace :cf do
-  desc "Only run on the first application instance"
+  desc "Run a task on the first CloudFoundry application instance"
   task on_first_instance: :environment do
     instance_index = begin
       JSON.parse(ENV["VCAP_APPLICATION"])["instance_index"]
