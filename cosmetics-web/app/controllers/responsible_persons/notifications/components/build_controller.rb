@@ -1,8 +1,6 @@
 require "csv"
 
 class ResponsiblePersons::Notifications::Components::BuildController < SubmitApplicationController
-  NUMBER_OF_CMRS = 5
-
   include Wicked::Wizard
   include WizardConcern
   include CategoryHelper
@@ -240,7 +238,16 @@ private
 
   def update_add_cmrs
     if @component.update_with_context(component_params, step)
-      render_next_step @component
+      if params[:add_cmr]
+        @component.cmrs.build
+        rerender_current_step
+      elsif params.key?(:remove_cmr_with_id)
+        @component.cmrs.find(params[:remove_cmr_with_id].to_i).destroy unless params[:remove_cmr_with_id] == "unsaved"
+        @component.cmrs.reload
+        rerender_current_step
+      else
+        render_next_step @component
+      end
     else
       create_required_cmrs
       rerender_current_step
@@ -342,7 +349,7 @@ private
 
     if @bulk_ingredients_form.save_ingredients
       @component.ingredients_file.attach(ingredients_file)
-      # we actually want to rerender current step with parameter saying that all went well
+      # we actually want to re-render current step with parameter saying that all went well
       @ingredients_imported = true
     end
 
@@ -451,10 +458,7 @@ private
   end
 
   def create_required_cmrs
-    if @component.cmrs.size < NUMBER_OF_CMRS
-      cmrs_needed = NUMBER_OF_CMRS - @component.cmrs.size
-      cmrs_needed.times { @component.cmrs.build }
-    end
+    @component.cmrs.build if @component.cmrs.blank?
   end
 
   def model

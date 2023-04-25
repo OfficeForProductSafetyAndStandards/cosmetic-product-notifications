@@ -1,5 +1,5 @@
 <% title = "Add CMRs" %>
-<% question = "List category 1A or 1B CMRs" %>
+<% question = "Add category 1A or 1B CMRs" %>
 <% cmr_errors = cmr_errors(@component) %>
 
 <% page_title title, errors: cmr_errors.any? %>
@@ -14,6 +14,12 @@
         <%= govukErrorSummary titleText: "There is a problem", errorList: cmr_errors %>
       <% end %>
       <%= govukFieldset(legend: { text: question, classes: "govuk-label--l", isPageHeading: true }) do %>
+        <p class="govuk-body">
+          It is a requirement that the fields for each substance categorised as a 1A or 1B <abbr>CMR</abbr> are filled out correctly.
+        </p>
+        <p class="govuk-body">
+          At minimum, the <abbr>CAS</abbr> number or <abbr>EC</abbr> number must be provided. You can provide both.
+        </p>
         <%= form.fields_for :cmrs do |cmr_fields| %>
           <%= cmr_fields.label "Substance #{cmr_fields.index + 1}", class: "govuk-heading-m" %>
           <%= govukInput(form: cmr_fields,
@@ -22,7 +28,7 @@
           <div class="govuk-grid-row multi-field-row">
             <%= govukInput(form: cmr_fields,
                           key: :cas_number,
-                          label: { html: "Chemical Abstracts Service (CAS) number <span class='opss-secondary-text govuk-!-font-size-16'>(optional)</span>".html_safe, classes: "multi-field-item-label" },
+                          label: { text: "Chemical Abstracts Service (CAS) number", classes: "multi-field-item-label" },
                           hint: { text: "For example, 1111-11-1" },
                           formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }) %>
             <%= govukInput(form: cmr_fields,
@@ -31,9 +37,17 @@
                           hint: { text: "For example, 111-111-1" },
                           formGroup: { classes: "multi-field-item govuk-grid-column-one-half" }) %>
           </div>
+          <div class="govuk-form-group opss-text-align-right">
+            <% if (cmr_fields.index + 1) == @component.cmrs.size %>
+              <%= govukButton text: "Add another substance", classes: "govuk-button--secondary", name: "add_cmr", value: "true" %>
+            <% end %>
+            <% unless cmr_fields.index == 0 %>
+              <%= govukButton text: "Remove substance", classes: "govuk-button--secondary", name: "remove_cmr_with_id", value: cmr_fields.object.id || "unsaved" %>
+            <% end %>
+          </div>
         <% end %>
       <% end %>
-      <%= govukButton text: "Continue" %>
+      <%= govukButton text: "Save and continue" %>
     </div>
   </div>
 <% end %>

@@ -64,13 +64,13 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
       inci_name: "Ingredient A poisonous",
       exact_concentration: 5.1,
       poisonous: true,
-      cas_number: nil,
+      cas_number: "",
     )
     expect(component.ingredients.exact.second).to have_attributes(
       inci_name: "Ingredient B non poisonous",
       exact_concentration: 3.0,
       poisonous: false,
-      cas_number: "123456789",
+      cas_number: "123456-78-9",
     )
   end
 
@@ -136,17 +136,17 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect(component.ingredients.range.first).to have_attributes(
       inci_name: "Ingredient A",
       range_concentration: "greater_than_75_less_than_100_percent",
-      cas_number: nil,
+      cas_number: "",
     )
     expect(component.ingredients.range.second).to have_attributes(
       inci_name: "Ingredient B modified",
       range_concentration: "greater_than_5_less_than_10_percent",
-      cas_number: nil,
+      cas_number: "",
     )
     expect(component.ingredients.range.third).to have_attributes(
       inci_name: "Ingredient C non poisonous",
       range_concentration: "greater_than_25_less_than_50_percent",
-      cas_number: "123456789",
+      cas_number: "123456-78-9",
     )
   end
 
@@ -202,13 +202,13 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
       inci_name: "Ingredient A poisonous",
       exact_concentration: 5.1,
       poisonous: true,
-      cas_number: nil,
+      cas_number: "",
     )
     expect(component.ingredients.exact.second).to have_attributes(
       inci_name: "Ingredient B poisonous",
       exact_concentration: 3.0,
       poisonous: true,
-      cas_number: "123456789",
+      cas_number: "123456-78-9",
     )
   end
 
