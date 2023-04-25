@@ -9,7 +9,6 @@ class Ingredient < ApplicationRecord
   ].freeze
   NAME_LENGTH_LIMIT = 100
 
-  include CasNumberConcern
   include Clonable
 
   belongs_to :component
@@ -65,6 +64,8 @@ class Ingredient < ApplicationRecord
   validate :poisonous_on_exact_concentration
   validate :non_poisonous_exact_component_type
   validate :range_component_type
+
+  validates_with CasNumberValidator
 
   def used_for_multiple_shades?
     used_for_multiple_shades == true

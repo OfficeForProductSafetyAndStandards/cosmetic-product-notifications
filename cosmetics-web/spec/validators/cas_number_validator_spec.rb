@@ -89,7 +89,7 @@ RSpec.describe CasNumberValidator do
 
       it "populates error messages" do
         expect(validator.errors.messages[:cas_number])
-          .to eq ["CAS number is invalid", "CAS number must contain between 5 to 10 digits"]
+          .to eq ["CAS number is invalid", "CAS number must contain between 5 and 10 digits"]
       end
     end
   end

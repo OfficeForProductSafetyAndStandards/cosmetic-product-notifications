@@ -629,7 +629,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           inci_name: name,
           exact_concentration: exact_concentration.to_f,
           range_concentration: nil,
-          cas_number: "111111",
+          cas_number: "111-11-1",
           poisonous: true,
         )
       end
@@ -649,7 +649,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
             .to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
             .and change(updating_ingredient, :exact_concentration).from(2.0).to(exact_concentration.to_f)
             .and change(updating_ingredient, :poisonous).from(false).to(true)
-            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
+            .and change(updating_ingredient, :cas_number).from(nil).to("111-11-1")
         end
       end
 
@@ -672,7 +672,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
             .and change(updating_ingredient, :exact_concentration).from(nil).to(exact_concentration.to_f)
             .and change(updating_ingredient, :range_concentration).from("greater_than_5_less_than_10_percent").to(nil)
             .and change(updating_ingredient, :poisonous).from(false).to(true)
-            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
+            .and change(updating_ingredient, :cas_number).from(nil).to("111-11-1")
         end
       end
     end
@@ -694,7 +694,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           inci_name: name,
           range_concentration:,
           exact_concentration: nil,
-          cas_number: "111111",
+          cas_number: "111-11-1",
           poisonous: false,
         )
       end
@@ -716,7 +716,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
           expect { form.save }
             .to change(updating_ingredient, :inci_name).from("Ingredient pre-update").to(name)
             .and change(updating_ingredient, :range_concentration).from("greater_than_5_less_than_10_percent").to(range_concentration)
-            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
+            .and change(updating_ingredient, :cas_number).from(nil).to("111-11-1")
         end
       end
 
@@ -735,7 +735,7 @@ RSpec.describe ResponsiblePersons::Notifications::IngredientConcentrationForm do
             .and change(updating_ingredient, :range_concentration).from(nil).to(range_concentration)
             .and change(updating_ingredient, :exact_concentration).from(3.0).to(nil)
             .and change(updating_ingredient, :poisonous).from(true).to(false)
-            .and change(updating_ingredient, :cas_number).from(nil).to("111111")
+            .and change(updating_ingredient, :cas_number).from(nil).to("111-11-1")
         end
       end
     end
