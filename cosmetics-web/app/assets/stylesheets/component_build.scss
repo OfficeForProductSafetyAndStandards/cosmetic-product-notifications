@@ -18,4 +18,10 @@
       flex: 1 0 auto;
     }
   }
+
+  // cancels the `margin-left` on `govuk-grid-row` when a half-width child
+  // item has an error, otherwise it does not align with full-width siblings
+  .multi-field-item.govuk-form-group--error {
+    margin-left: 15px;
+  }
 }
