@@ -11,7 +11,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
 
       perform_enqueued_jobs do
         expect(page).to have_css("h1", text: "Reset your password")
-        fill_in "Email address", with: Faker::Internet.safe_email
+        fill_in "Email address", with: Faker::Internet.email
         click_on "Send email"
 
         expect(delivered_emails).to be_empty

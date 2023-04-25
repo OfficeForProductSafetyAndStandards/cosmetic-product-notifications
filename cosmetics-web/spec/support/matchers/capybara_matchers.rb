@@ -1,6 +1,6 @@
 module PageMatchers
   def have_h1(text)
-    have_selector("h1", text:, exact_text: true)
+    have_selector("h1", text:, exact_text: text.is_a?(String))
   end
 
   def have_notification_banner(text)

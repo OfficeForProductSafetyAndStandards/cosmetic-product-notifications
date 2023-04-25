@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "ac07c288ecf5a13ffef4861ad347f202af0c2d2e6f7d451fea9561c6f6ed4d2c",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/postgres_distributed_lock.rb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.select_value(\"SELECT pg_try_advisory_xact_lock(#{Zlib.crc32(lock_name.to_s)})\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "PostgresDistributedLock",
+        "method": "s(:self).try_with_lock"
+      },
+      "user_input": "Zlib.crc32(lock_name.to_s)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Lock name is hardcoded in app"
+    }
+  ],
+  "updated": "2023-04-20 16:25:37 +0100",
+  "brakeman_version": "5.4.1"
+}

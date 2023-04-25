@@ -18,12 +18,12 @@ RSpec.describe ResponsiblePersons::TeamMembersController, :with_stubbed_mailer, 
     let(:params) { { responsible_person_id: responsible_person.id } }
 
     it "assigns @responsible_person" do
-      get :index, params: params
+      get(:index, params:)
       expect(assigns(:responsible_person)).to eq(responsible_person)
     end
 
     it "renders the index template" do
-      get :index, params: params
+      get(:index, params:)
       expect(response).to render_template("responsible_persons/team_members/index")
     end
   end

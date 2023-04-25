@@ -18,7 +18,7 @@ RSpec.describe "Delete product image", type: :request do
   end
 
   describe "success" do
-    it "works" do
+    it "deletes the product image" do
       expect {
         delete responsible_person_notification_draft_delete_product_image_path(responsible_person, notification1, image_id: notification1.image_uploads.first.id)
       }.to change { notification1.image_uploads.count }.from(1).to(0)
@@ -26,7 +26,7 @@ RSpec.describe "Delete product image", type: :request do
   end
 
   describe "failure" do
-    it "raises authorisation error" do
+    it "raises an authorisation error" do
       expect {
         delete responsible_person_notification_draft_delete_product_image_path(responsible_person, notification1, image_id: notification2.image_uploads.first.id)
       }.not_to(change { notification1.image_uploads.count })

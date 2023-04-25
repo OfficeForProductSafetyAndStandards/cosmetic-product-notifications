@@ -95,11 +95,9 @@ jobs:
       env:
         TWO_FACTOR_AUTHENTICATION_ENABLED: false
         CI: true
-        COVERALLS_REPO_TOKEN: ${{secrets.CoverallsToken}}
       run: |
         cd cosmetics-web
-        # to display branch properly, coveralls needs GIT_BRANCH env var to be set
-        GIT_BRANCH=${GITHUB_REF##*/} bundle exec rspec ${{ matrix.rspec-group }}
+        bundle exec rspec ${{ matrix.rspec-group }}
     - name: Dump docker logs
       uses: jwalton/gh-docker-logs@v1
       if: always()

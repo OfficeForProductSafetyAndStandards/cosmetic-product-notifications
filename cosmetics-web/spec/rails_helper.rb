@@ -17,7 +17,6 @@ Sidekiq.logger.level = Logger::FATAL
 
 # Test coverage
 require "simplecov"
-require "coveralls"
 require "simplecov-lcov"
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
@@ -66,7 +65,7 @@ end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = Rails.root.join("spec/fixtures")
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
