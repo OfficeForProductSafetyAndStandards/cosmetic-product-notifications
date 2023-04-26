@@ -8,15 +8,7 @@ if Rails.env.production?
     ActiveSupport::SecurityUtils.secure_compare(username, ENV["SIDEKIQ_USERNAME"]) &&
       ActiveSupport::SecurityUtils.secure_compare(password, ENV["SIDEKIQ_PASSWORD"])
   end
-
-  flipper_app = Flipper::UI.app do |builder|
-    builder.use Rack::Auth::Basic do |username, password|
-      ActiveSupport::SecurityUtils.secure_compare(username, ENV["FLIPPER_USERNAME"]) &&
-        ActiveSupport::SecurityUtils.secure_compare(password, ENV["FLIPPER_PASSWORD"])
-    end
-  end
 end
-
 Rails.application.routes.draw do
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
@@ -46,14 +38,6 @@ Rails.application.routes.draw do
 
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
     mount Sidekiq::Web => "/sidekiq"
-  end
-
-  unless Rails.env.production? && (!ENV["FLIPPER_USERNAME"] || !ENV["FLIPPER_PASSWORD"])
-    if flipper_app
-      mount flipper_app => "/flipper"
-    else
-      mount Flipper::UI.app(Flipper) => "/flipper"
-    end
   end
 
   constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
