@@ -5,29 +5,6 @@ require "domain_helpers"
 require "responsible_person_helpers"
 require "file_helpers"
 require "policy_helpers"
-# require "support/render_errors"
-# require "request_helpers"
-# require "support/feature_helpers"
-# require "support/antivirus"
-# require "support/mailer"
-
-# Quiet Sidekiq's logging in test suite
-require "sidekiq/testing"
-Sidekiq.logger.level = Logger::FATAL
-
-# Test coverage
-require "simplecov"
-require "simplecov-lcov"
-
-SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
-SimpleCov::Formatter::LcovFormatter.config.single_report_path = "coverage/lcov.info"
-SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
-unless SimpleCov.running
-  SimpleCov.start "rails"
-end
-
-require "faker"
-Faker::Config.locale = "en-GB"
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
@@ -35,6 +12,7 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 # Add additional requires below this line. Rails is not loaded until this point!
 require "rspec/rails"
+
 require "paper_trail/frameworks/rspec"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }

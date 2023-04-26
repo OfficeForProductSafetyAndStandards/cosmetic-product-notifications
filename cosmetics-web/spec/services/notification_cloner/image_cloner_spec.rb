@@ -1,5 +1,4 @@
 require "rails_helper"
-require "sidekiq/testing"
 
 RSpec.describe NotificationCloner::ImageCloner, :with_stubbed_antivirus do
   let(:new_notification_with_name_only) { Notification.create!(product_name: "Cloned notification", responsible_person: notification.responsible_person) }

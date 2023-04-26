@@ -28,7 +28,7 @@ class SubmitNotifyMailer < NotifyMailer
     )
 
     mail(to: user.email)
-    Sidekiq.logger.info "Account creation with existing email send"
+    Sidekiq.logger.info "Account creation with existing email sent"
   end
 
   def send_responsible_person_invite_email(responsible_person, invited_team_member, inviting_user_name)
@@ -60,7 +60,7 @@ class SubmitNotifyMailer < NotifyMailer
     )
 
     mail(to: user.email)
-    Sidekiq.logger.info "Confirmation email send"
+    Sidekiq.logger.info "Confirmation email sent"
   end
 
   def send_responsible_person_address_change_confirmation_email(responsible_person, user, old_rp_address)
