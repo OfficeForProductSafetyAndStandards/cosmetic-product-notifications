@@ -1,4 +1,5 @@
 <% title = "Upload ingredients file" %>
+<% csv_file_type = FeatureFlags.csv_upload_exact_with_shades_enabled? && @component.shades.present? ? "exact-with-multiple-shades" : "exact" %>
 <% page_title title, errors: @bulk_ingredients_form.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
@@ -8,7 +9,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-form-group <%= "govuk-form-group--error" if @bulk_ingredients_form.errors.any? %>">
+      <div class="govuk-form-group">
         <% if @ingredients_imported %>
           <%= govukNotificationBanner(type: "success") do %>
             <h3 class="govuk-notification-banner__heading">
@@ -23,7 +24,7 @@
           </label>
         </h1>
         <div id="csv-hint" class="govuk-hint govuk-!-margin-bottom-8">
-          Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
+          Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv?csv_file_type=<%= csv_file_type %>" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
         </div>
 
         <% if @component.ingredients_file.present? %>

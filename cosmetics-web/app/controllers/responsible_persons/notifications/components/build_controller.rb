@@ -1,4 +1,5 @@
 require "csv"
+require "feature_flags"
 
 class ResponsiblePersons::Notifications::Components::BuildController < SubmitApplicationController
   include Wicked::Wizard

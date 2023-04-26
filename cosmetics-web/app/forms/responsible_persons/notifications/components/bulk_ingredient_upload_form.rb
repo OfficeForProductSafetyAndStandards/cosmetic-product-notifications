@@ -1,4 +1,5 @@
 require "csv"
+require "feature_flags"
 
 module ResponsiblePersons::Notifications::Components
   class BulkIngredientUploadForm < Form
@@ -22,14 +23,14 @@ module ResponsiblePersons::Notifications::Components
 
       super
     rescue ActiveRecord::StatementInvalid
-      errors.add(:file, "File has incorrect characters. Please check and try again")
+      errors.add(:file, "The file has invalid characters. Please check and try again")
       false
     end
 
     def save_ingredients
-      # Despite validations above, there might be rare case when ingredient can not be saved, eg:
-      # * there will be duplicated ingredient in the file
-      # * between validation and creation ingredient will be created (very rare edge case)
+      # Despite the validations above, there might be rare cases when ingredients cannot be saved, eg:
+      # * there is a duplicate ingredient in the file
+      # * an ingredient is created outside this process between validation and creation (very rare edge case)
       # * difference between ingredient form and model validations
       # * internal ActiveRecord issue
       ActiveRecord::Base.transaction do
@@ -40,12 +41,12 @@ module ResponsiblePersons::Notifications::Components
         @ingredients.each_with_index do |ingredient, i|
           ingredient.save
           unless ingredient.persisted?
-            raise IngredientCanNotBeSavedError, "The file has error in row #{i + 1}: #{ingredient.errors.full_messages.join(', ')}"
+            raise IngredientCanNotBeSavedError, "The file has an error in row #{i + 1}: #{ingredient.errors.full_messages.join(', ')}"
           end
         end
       end
     rescue ActiveRecord::StatementInvalid
-      errors.add(:file, "File has incorrect characters. Please check and try again")
+      errors.add(:file, "The file has invalid characters. Please check and try again")
       false
     rescue IngredientCanNotBeSavedError => e
       errors.add(:file, e.message)
@@ -56,7 +57,7 @@ module ResponsiblePersons::Notifications::Components
 
     def file_size_validation
       if file_too_large?
-        errors.add(:file, "The selected file must be smaller than 15KB")
+        errors.add(:file, "The file must be smaller than 15KB")
       end
     end
 
@@ -69,16 +70,19 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def parse_csv_file
-      @csv_data ||= CSV.parse(file&.tempfile, headers: %i[inci_name concentration cas_number poisonous])
+      headers = %i[inci_name concentration cas_number poisonous]
+      headers << :multiple_shades if FeatureFlags.csv_upload_exact_with_shades_enabled? && multiple_shades?
+
+      @csv_data ||= CSV.parse(file&.tempfile, headers:)
     end
 
     def correct_ingredients_validation
       prepare_ingredients
 
       if @error_rows.count == 1
-        errors.add(:file, "The file has error in row: #{@error_rows.first}")
+        errors.add(:file, "The file has an error in row: #{@error_rows.first}")
       elsif @error_rows.count > 1
-        errors.add(:file, "The file has error in rows: #{@error_rows.join(',')}")
+        errors.add(:file, "The file has an error in rows: #{@error_rows.join(',')}")
       end
     end
 
@@ -119,12 +123,24 @@ module ResponsiblePersons::Notifications::Components
       file&.tempfile&.size.to_i > MAX_FILE_SIZE
     end
 
-    def row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:, **unwanted)
-      return if unwanted.present?
+    def multiple_shades?
+      component.shades.present?
+    end
 
-      ingredient = Ingredient.new(
-        component:, inci_name:, cas_number:, poisonous: poisonous?(poisonous),
-      )
+    def row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:, multiple_shades: nil, **unwanted)
+      return if unwanted.present?
+      return if FeatureFlags.csv_upload_exact_with_shades_enabled? && multiple_shades.present? && !multiple_shades?
+
+      ingredient = if FeatureFlags.csv_upload_exact_with_shades_enabled?
+                     Ingredient.new(
+                       component:, inci_name:, cas_number:, poisonous: cast_boolean(poisonous), used_for_multiple_shades: cast_boolean(multiple_shades),
+                     )
+                   else
+                     Ingredient.new(
+                       component:, inci_name:, cas_number:, poisonous: cast_boolean(poisonous),
+                     )
+                   end
+
       if component.exact?
         ingredient.exact_concentration = concentration
       elsif component.predefined?
@@ -139,7 +155,6 @@ module ResponsiblePersons::Notifications::Components
       ingredients_from_csv&.each_with_index do |row, i|
         name = row[0]
         if names.include? name
-          # errors.add(:file, "The file has error in row #{i + 1}")
           @error_rows << i + 2
           return true
         end
@@ -162,7 +177,7 @@ module ResponsiblePersons::Notifications::Components
       @csv_data[1..]
     end
 
-    def poisonous?(entry)
+    def cast_boolean(entry)
       { "TRUE" => true,
         "FALSE" => false,
         "true" => true,
