@@ -99,7 +99,7 @@ jobs:
         cd cosmetics-web
         bundle exec rspec ${{ matrix.rspec-group }}
     - name: Dump docker logs
-      uses: jwalton/gh-docker-logs@v1
+      uses: jwalton/gh-docker-logs@v2
       if: always()
       with:
         images: 'opensearchproject/opensearch'
