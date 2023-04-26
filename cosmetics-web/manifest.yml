@@ -23,6 +23,7 @@ applications:
     - ((sentry-service-name))
     - cosmetics-notify-env
     - cosmetics-sidekiq-env
+    - cosmetics-flipper-env
     - cosmetics-puma-env
     - cosmetics-scout-env
     - antivirus-auth-env

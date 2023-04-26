@@ -114,6 +114,13 @@ Start by setting up the following credentials:
         "SIDEKIQ_PASSWORD": "XXX"
     }'
 
+* To enable and add basic auth to the Flipper feature flag UI at `/flipper`:
+
+    cf cups cosmetics-flipper-env -p '{
+        "FLIPPER_USERNAME": "XXX",
+        "FLIPPER_PASSWORD": "XXX"
+    }'
+
 Once all the credentials are created, the app can be deployed using:
 
     SPACE=<<space>> ./cosmetics-web/deploy.sh

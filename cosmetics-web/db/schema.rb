@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_26_122308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
@@ -88,9 +89,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
     t.float "minimum_ph"
     t.float "maximum_ph"
     t.text "ph"
-    t.jsonb "routing_questions_answers"
     t.string "exposure_condition"
     t.string "exposure_routes", array: true
+    t.jsonb "routing_questions_answers"
     t.string "notification_type_given_as"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
@@ -129,6 +130,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_deleted_notifications_on_cpnp_reference_and_rp_id", unique: true
     t.index ["reference_number"], name: "index_deleted_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_deleted_notifications_on_responsible_person_id"
+  end
+
+  create_table "flipper_features", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string "feature_key", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
   create_table "image_uploads", force: :cascade do |t|
@@ -214,11 +231,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
-    t.string "industry_reference"
     t.datetime "cpnp_notification_date", precision: nil
-    t.boolean "was_notified_before_eu_exit", default: false
+    t.string "industry_reference"
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
@@ -267,7 +284,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
     t.bigint "responsible_person_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.uuid "user_id", default: -> { "gen_random_uuid()" }
+    t.uuid "user_id", default: -> { "public.gen_random_uuid()" }
     t.index ["responsible_person_id"], name: "index_responsible_person_users_on_responsible_person_id"
   end
 
@@ -311,7 +328,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_095558) do
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "mobile_number"
     t.boolean "mobile_number_verified", default: false, null: false
     t.string "name"
