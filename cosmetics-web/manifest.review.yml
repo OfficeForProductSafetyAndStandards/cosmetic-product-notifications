@@ -28,6 +28,7 @@ applications:
     - cosmetics-rails-env
     - cosmetics-review-apps-sentry-env
     - cosmetics-sidekiq-env
+    - cosmetics-flipper-env
     - cosmetics-notify-env
     - cosmetics-devise-env
     - cosmetics-seed-env
