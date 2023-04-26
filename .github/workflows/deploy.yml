@@ -128,7 +128,7 @@ jobs:
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure production $LOG_URL
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Create Sentry release
       if: success()
       uses: getsentry/action-release@v1
