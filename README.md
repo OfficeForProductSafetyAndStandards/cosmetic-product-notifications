@@ -51,7 +51,6 @@ User-uploaded files are saved to AWS S3 - ask someone on the team to invite you.
 * [Review apps](cosmetics-web/docs/review_apps.md)
 * [Code checks](cosmetics-web/docs/code_checks.md)
 * [Deployment](cosmetics-web/docs/deployment.md)
-* [Feature flags](cosmetics-web/docs/feature_flags.md)
 * [Maintenance](cosmetics-web/docs/maintenance.md)
 * [OpenSearch](cosmetics-web/docs/opensearch.md)
 * [Smoke tests](cosmetics-web/docs/smoke_tests.md)
