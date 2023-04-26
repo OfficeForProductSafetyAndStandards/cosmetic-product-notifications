@@ -107,7 +107,7 @@ jobs:
         cd cosmetics-web
         bundle exec erd
 
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v3
       with:
         name: ERD
         path: cosmetics-web/erd.pdf
