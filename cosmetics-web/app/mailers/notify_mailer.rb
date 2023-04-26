@@ -48,7 +48,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     )
 
     mail(to: user.new_email)
-    Sidekiq.logger.info "Confirmation email send"
+    Sidekiq.logger.info "Confirmation email sent"
   end
 
   def update_email_address_notification_email(user, old_email)
@@ -63,7 +63,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     )
 
     mail(to: old_email)
-    Sidekiq.logger.info "Confirmation email send"
+    Sidekiq.logger.info "Confirmation email sent"
   end
 
 private

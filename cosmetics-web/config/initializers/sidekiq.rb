@@ -134,6 +134,12 @@ end
 
 Sidekiq.configure_server do |config|
   config.redis = Rails.application.config_for(:redis)
+  config.logger.formatter = proc do |_, datetime, _, msg|
+    extra_data = %i[worker_class_name job_id app_request_id].map { |k| Thread.current[k] }.select(&:present?)
+    extra_data = extra_data.map { |data| "[#{data}]" }.join(" ")
+
+    "[Sidekiq] [ActiveJob] #{extra_data}[#{datetime.utc.iso8601}] #{msg}\n"
+  end
   create_log_db_metrics_job
   delete_unused_opensearch_indices_job
   reindex_opensearch_index_job
@@ -161,12 +167,3 @@ Sidekiq.configure_client do |config|
     chain.add SidekiqAppLogDataMiddleware
   end
 end
-
-formatter = proc do |_, datetime, _, msg|
-  extra_data = %i[worker_class_name job_id app_request_id].map { |k| Thread.current[k] }.select(&:present?)
-  extra_data = extra_data.map { |data| "[#{data}]" }.join(" ")
-
-  "[Sidekiq] [ActiveJob] #{extra_data}[#{datetime.utc.iso8601}] #{msg}\n"
-end
-
-Sidekiq::Logging.logger.formatter = formatter
