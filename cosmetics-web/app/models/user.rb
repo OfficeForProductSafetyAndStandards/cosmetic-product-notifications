@@ -120,6 +120,11 @@ class User < ApplicationRecord
     save(validate: false)
   end
 
+  # Use the `email` when targeting feature flags
+  def flipper_id
+    email
+  end
+
 private
 
   # Overwrites Devise::Models::Recoverable#send_reset_password_instructions_notification

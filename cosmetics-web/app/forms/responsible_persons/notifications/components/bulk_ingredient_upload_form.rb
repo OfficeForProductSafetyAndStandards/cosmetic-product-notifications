@@ -8,6 +8,7 @@ module ResponsiblePersons::Notifications::Components
 
     attribute :file
     attribute :component
+    attribute :current_user
 
     validate :file_size_validation
     validate :file_is_csv_file_validation
@@ -71,7 +72,7 @@ module ResponsiblePersons::Notifications::Components
 
     def parse_csv_file
       headers = %i[inci_name concentration cas_number poisonous]
-      headers << :multiple_shades if FeatureFlags.csv_upload_exact_with_shades_enabled? && multiple_shades?
+      headers << :multiple_shades if FeatureFlags.csv_upload_exact_with_shades_enabled?(current_user) && multiple_shades?
 
       @csv_data ||= CSV.parse(file&.tempfile, headers:)
     end
@@ -129,9 +130,9 @@ module ResponsiblePersons::Notifications::Components
 
     def row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:, multiple_shades: nil, **unwanted)
       return if unwanted.present?
-      return if FeatureFlags.csv_upload_exact_with_shades_enabled? && multiple_shades.present? && !multiple_shades?
+      return if FeatureFlags.csv_upload_exact_with_shades_enabled?(current_user) && multiple_shades.present? && !multiple_shades?
 
-      ingredient = if FeatureFlags.csv_upload_exact_with_shades_enabled?
+      ingredient = if FeatureFlags.csv_upload_exact_with_shades_enabled?(current_user)
                      Ingredient.new(
                        component:, inci_name:, cas_number:, poisonous: cast_boolean(poisonous), used_for_multiple_shades: cast_boolean(multiple_shades),
                      )

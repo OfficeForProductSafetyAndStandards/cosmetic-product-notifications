@@ -88,7 +88,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
       @ingredient_concentration_form = ingredient_concentration_form
     when :upload_ingredients_file
-      @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component)
+      @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, current_user:)
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :select_ph_option
@@ -342,7 +342,7 @@ private
   def update_upload_ingredients_file
     ingredients_file = params.dig(:responsible_persons_notifications_components_bulk_ingredient_upload_form, :file)
 
-    @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, file: ingredients_file)
+    @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component, file: ingredients_file, current_user:)
 
     if ingredients_file.nil? && @component.ingredients_file.present?
       return jump_to_step :select_ph_option
