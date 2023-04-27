@@ -20,6 +20,12 @@ common: &defaults
   # - Valid Options: true, false
   monitor: true
 
+  # Scout APM and Sentry both try to instrument `Net:HTTP` which causes a conflict
+  # and results in `StackLevelTooDeep` exceptions. Disable Scout APM instrumentation
+  # since they have not released a fix.
+  disabled_instruments:
+    - "NetHttp"
+
 production:
   <<: *defaults
 
