@@ -48,6 +48,7 @@ User-uploaded files are saved to AWS S3 - ask someone on the team to invite you.
 * [Frame formulations](cosmetics-web/docs/frame_formulations.md)
 * [ERDs](cosmetics-web/docs/erd.md)
 * [Users and roles](cosmetics-web/docs/users_and_roles.md)
+* [Secondary authentication](cosmetics-web/docs/secondary_authentication.md)
 * [Review apps](cosmetics-web/docs/review_apps.md)
 * [Code checks](cosmetics-web/docs/code_checks.md)
 * [Deployment](cosmetics-web/docs/deployment.md)

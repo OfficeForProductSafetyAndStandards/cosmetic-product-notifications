@@ -6,6 +6,7 @@
 @import "./opss-shared";
 @import "./opss-search";
 @import "./opss-pagination";
+@import "./opss-secondary-authentication";
 
 .govuk-list *[class^="govuk-heading"] .govuk-link {
   @include word-wrap;

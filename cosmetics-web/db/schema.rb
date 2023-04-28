@@ -371,6 +371,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_100237) do
     t.text "encrypted_totp_secret_key"
     t.integer "last_totp_at"
     t.string "secondary_authentication_methods", array: true
+    t.integer "last_recovery_code_at"
+    t.datetime "secondary_authentication_recovery_codes_generated_at", precision: nil
+    t.string "secondary_authentication_recovery_codes", default: [], array: true
+    t.string "secondary_authentication_recovery_codes_used", default: [], array: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["new_email"], name: "index_users_on_new_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -9,25 +9,34 @@ FactoryBot.define do
 
     trait :with_all_secondary_authentication_methods do
       last_totp_at { 1_432_703_530 }
+      last_recovery_code_at { nil }
       totp_secret_key { ROTP::Base32.random }
       mobile_number { "07500 000 000" }
       mobile_number_verified { true }
       direct_otp_sent_at { Time.zone.now }
       direct_otp { "12345" }
       secondary_authentication_methods { %w[app sms] }
+      secondary_authentication_recovery_codes_generated_at { Time.zone.now }
+      secondary_authentication_recovery_codes { Array.new(10) { rand(10_000_000..99_999_999) } }
+      secondary_authentication_recovery_codes_used { [] }
     end
 
     trait :with_app_secondary_authentication do
       last_totp_at { 1_432_703_530 }
+      last_recovery_code_at { nil }
       totp_secret_key { ROTP::Base32.random }
       mobile_number { nil }
       mobile_number_verified { false }
       direct_otp_sent_at { nil }
       direct_otp { nil }
       secondary_authentication_methods { %w[app] }
+      secondary_authentication_recovery_codes_generated_at { Time.zone.now }
+      secondary_authentication_recovery_codes { Array.new(10) { rand(10_000_000..99_999_999) } }
+      secondary_authentication_recovery_codes_used { [] }
     end
 
     trait :with_sms_secondary_authentication do
+      last_recovery_code_at { nil }
       mobile_number { "07500 000 000" }
       mobile_number_verified { true }
       direct_otp_sent_at { Time.zone.now }
@@ -35,10 +44,14 @@ FactoryBot.define do
       last_totp_at { nil }
       totp_secret_key { nil }
       secondary_authentication_methods { %w[sms] }
+      secondary_authentication_recovery_codes_generated_at { Time.zone.now }
+      secondary_authentication_recovery_codes { Array.new(10) { rand(10_000_000..99_999_999) } }
+      secondary_authentication_recovery_codes_used { [] }
     end
 
     trait :without_secondary_authentication do
       last_totp_at { nil }
+      last_recovery_code_at { nil }
       totp_secret_key { nil }
       mobile_number { nil }
       mobile_number_verified { false }
@@ -46,6 +59,9 @@ FactoryBot.define do
       direct_otp { nil }
       secondary_authentication_methods { nil }
       account_security_completed { false }
+      secondary_authentication_recovery_codes_generated_at { nil }
+      secondary_authentication_recovery_codes { [] }
+      secondary_authentication_recovery_codes_used { [] }
     end
 
     trait :invited do

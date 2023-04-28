@@ -101,4 +101,10 @@ module SecondaryAuthenticationConcern
   def app_authentication_available?
     available_secondary_authentication_methods.include? "app"
   end
+
+  def recovery_codes_available?
+    return false unless secondary_authentication_user
+
+    !secondary_authentication_user.secondary_authentication_recovery_codes.empty?
+  end
 end
