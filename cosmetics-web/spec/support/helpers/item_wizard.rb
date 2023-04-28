@@ -249,6 +249,8 @@ def expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: []
       expect(page).to have_field("component_ingredients_attributes_#{index}_inci_name", with: ingredient)
     end
   end
+
+  expect(page).to have_link("NPIS tables", href: "/help/npis_tables", target: "_blank")
 end
 
 def expect_to_be_on_add_csv_ingredients_page

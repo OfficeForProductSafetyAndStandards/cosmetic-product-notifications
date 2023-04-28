@@ -12,4 +12,6 @@ class HelpController < PubliclyAccessibleController
   def csv
     return redirect_to "/404" unless %w[exact exact-with-multiple-shades range].include?(params[:csv_file_type])
   end
+
+  def npis_tables; end
 end
