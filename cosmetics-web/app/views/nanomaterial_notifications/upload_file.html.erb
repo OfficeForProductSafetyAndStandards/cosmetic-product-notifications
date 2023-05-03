@@ -1,9 +1,9 @@
 <% page_title = "Upload details about the nanomaterial" %>
 <% page_title page_title, errors: @nanomaterial_notification.errors.any? %>
+
 <% content_for :after_header do %>
   <%= govukBackLink(text: "Back", href: @previous_page_path) %>
 <% end %>
-
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -33,6 +33,10 @@
 
       <p class="govuk-body">You’ll also need to include the email address of someone to contact about the nanomaterial.</p>
 
+      <p class="govuk-body">Any scientific data submitted for the safety assessment must include all relevant elements as
+        prescribed in the <a href="https://health.ec.europa.eu/system/files/2020-10/sccs_o_233_0.pdf" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Scientific Committee on Consumer Safety Notes of Guidance on the Safety of Nanomaterials in Cosmetics (opens in a new tab)</a>.</p>
+
+      <p class="govuk-body">The file can be up to 30MB and must be a PDF.</p>
 
       <% if @nanomaterial_notification.file.attached? %>
         <div class="govuk-inset-text">
