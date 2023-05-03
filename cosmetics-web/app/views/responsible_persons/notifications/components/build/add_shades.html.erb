@@ -9,25 +9,40 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component) %>
-      <%= govukFieldset(legend: { text: title, classes: "govuk-label--l", isPageHeading: true }) do %>
-        <% @component.shades.each_with_index do |shade, index| %>
-          <div class="govuk-form-group">
-            <%= form.text_field :shades, multiple: true, value: shade,
-                    class: "govuk-input govuk-input--width-20 shade-input" %>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-3"><%= title %></h1>
+    </div>
+  </div>
 
+  <% @component.shades.each_with_index do |shade, index| %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half" id="shade-<%= index %>">
+        <label class="govuk-label" for="component_shades-<%= index %>">
+          Shade name
+        </label>
+        <div class="govuk-hint" id="component_shades-<%= index %>-hint">
+          For example: Blue 01
+        </div>
+        <%= form.text_field :shades, multiple: true, value: shade,
+                id: "component_shades-#{index}",
+                class: "govuk-input shade-input" %>
+        <div class="opss-text-align-right">
+          <% if index == (@component.shades.size - 1) %>
+            <%= govukButton text: "Add a shade", classes: "govuk-button--secondary", name: "add_shade", value: "true" %>
+          <% end %>
+          <% if @component.shades.size > 2 %>
             <%= govukButton text: "Remove shade", name: "remove_shade_with_id", value: index, classes: "govuk-button--secondary" %>
-          </div>
-        <% end %>
-      <% end %>
-
-      <div class="govuk-form-group">
-        <%= govukButton text: "Add a shade", classes: "govuk-button--secondary", name: "add_shade", value: "true" %>
+          <% end %>
+        </div>
       </div>
-
+    </div>
+  <% end %>
       <div class="govuk-form-group">
         <%= govukButton text: "Continue" %>
       </div>
-
     </div>
   </div>
 <% end %>
