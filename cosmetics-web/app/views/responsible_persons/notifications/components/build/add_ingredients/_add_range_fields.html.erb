@@ -36,7 +36,7 @@
         fieldset: { legend: { text: "Does the NPIS need to be notified of this ingredient?",
                               classes: "govuk-fieldset__legend--s govuk-!-font-weight-regular",
                               isPageHeading: false } },
-        hint: { text: "The <abbr>NPIS</abbr> tables are included above<span class='govuk-visually-hidden'>/before</span> this form.",
+        hint: { html: "The <abbr>NPIS</abbr> tables are included above<span class='govuk-visually-hidden'>/before</span> this form.".html_safe,
                 classes: "govuk-!-font-size-16" },
         items: [
           { text: "Yes",
