@@ -783,4 +783,22 @@ RSpec.describe Component, type: :model do
       expect(component.range?).to eq(true)
     end
   end
+
+  describe "validate: #at_least_two_shades" do
+    before do
+      predefined_component.update_with_context({ shades: }, :add_shades)
+    end
+
+    context "with two shades" do
+      let(:shades) { %w[red blue] }
+
+      it { expect(predefined_component).to be_valid }
+    end
+
+    context "with one shade" do
+      let(:shades) { ["red", ""] }
+
+      it { expect(predefined_component.errors[:shades]).to include("Enter a shade value") }
+    end
+  end
 end
