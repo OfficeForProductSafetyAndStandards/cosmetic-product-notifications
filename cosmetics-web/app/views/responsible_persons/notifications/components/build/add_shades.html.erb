@@ -10,15 +10,16 @@
     <div class="govuk-grid-column-two-thirds">
       <%= error_summary_for(@component) %>
       <%= govukFieldset(legend: { text: title, classes: "govuk-label--l", isPageHeading: true }) do %>
-        <% @component.shades.each_with_index do |shade, _index| %>
+        <% @component.shades.each_with_index do |shade, index| %>
           <div class="govuk-form-group">
             <%= form.text_field :shades, multiple: true, value: shade,
                     class: "govuk-input govuk-input--width-20 shade-input" %>
 
-            <%= govukButton text: "Remove shade", name: "remove_shade_with_id", value: "_index", classes: "govuk-button--secondary" %>
+            <%= govukButton text: "Remove shade", name: "remove_shade_with_id", value: index, classes: "govuk-button--secondary" %>
           </div>
         <% end %>
       <% end %>
+
       <div class="govuk-form-group">
         <%= govukButton text: "Add a shade", classes: "govuk-button--secondary", name: "add_shade", value: "true" %>
       </div>
