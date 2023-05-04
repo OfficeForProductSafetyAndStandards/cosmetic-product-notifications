@@ -482,7 +482,7 @@ GEM
       fugit (~> 1.8)
       globalid (>= 1.0.1)
       sidekiq (>= 6)
-    sidekiq-status (3.0.2)
+    sidekiq-status (3.0.3)
       chronic_duration
       sidekiq (>= 6.0, < 8)
     simplecov (0.22.0)
