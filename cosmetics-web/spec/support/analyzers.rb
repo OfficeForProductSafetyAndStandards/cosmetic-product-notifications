@@ -1,18 +1,16 @@
 RSpec.shared_context "without default file analyzers", shared_context: :metadata do
-  # rubocop:disable RSpec/InstanceVariable
-  before do
-    @default_analyzers = Rails.application.config.active_storage.analyzers.dup
-    @default_analyzers.each { |analyzer| Rails.application.config.active_storage.analyzers.delete(analyzer) }
+  let(:default_analyzers) { Rails.application.config.active_storage.analyzers.dup }
+  let(:default_document_analyzers) { Rails.application.config.document_analyzers.dup }
 
-    @default_document_analyzers = Rails.application.config.document_analyzers.dup
-    @default_document_analyzers.each { |analyzer| Rails.application.config.document_analyzers.delete(analyzer) }
+  before do
+    default_analyzers.each { |analyzer| Rails.application.config.active_storage.analyzers.delete(analyzer) }
+    default_document_analyzers.each { |analyzer| Rails.application.config.document_analyzers.delete(analyzer) }
   end
 
   after do
-    @default_analyzers.each { |analyzer| Rails.application.config.active_storage.analyzers.append(analyzer) }
-    @default_document_analyzers.each { |analyzer| Rails.application.config.document_analyzers.append(analyzer) }
+    default_analyzers.each { |analyzer| Rails.application.config.active_storage.analyzers.append(analyzer) }
+    default_document_analyzers.each { |analyzer| Rails.application.config.document_analyzers.append(analyzer) }
   end
-  # rubocop:enable RSpec/InstanceVariable
 end
 
 RSpec.configure do |rspec|
