@@ -4,7 +4,6 @@ RSpec.describe UploadNanomaterialNotificationsJob, :with_stubbed_antivirus do
   include_examples "Active Storage Upload jobs tests"
 
   # rubocop:disable RSpec/ExampleLength
-  # rubocop:disable Style/TrailingCommaInArguments
   it "generates a CSV containing all submitted nanomaterials data" do
     travel_to Time.zone.local(2022, 3, 12, 12, 0, 0) do
       rp = create(:responsible_person, :with_a_contact_person, name: "Soaps LTD")
@@ -27,7 +26,7 @@ RSpec.describe UploadNanomaterialNotificationsJob, :with_stubbed_antivirus do
       file = ActiveStorage::Blob.find_by(filename: described_class.file_name)
       file.open do |f|
         expect(f.read).to eq(
-          <<~CSV
+          <<~CSV,
             Responsible Person,Contact person email address,UKN number,Date nanomaterial notification was submitted,Name of the nanomaterial,Was the EU notified about test on CPNP before 1 January 2021?,Date EU notified on
             Soaps LTD,contact.person@example.com,#{nano.id},2021-11-12,Zinc oxide,false,
             Soaps LTD,contact.person@example.com,#{nano2.id},2022-03-12,Zinc Peroxide,true,2021-03-12
@@ -36,6 +35,5 @@ RSpec.describe UploadNanomaterialNotificationsJob, :with_stubbed_antivirus do
       end
     end
   end
-  # rubocop:enable Style/TrailingCommaInArguments
   # rubocop:enable RSpec/ExampleLength
 end
