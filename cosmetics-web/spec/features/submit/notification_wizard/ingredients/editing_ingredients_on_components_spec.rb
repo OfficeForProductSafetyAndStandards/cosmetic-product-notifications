@@ -113,7 +113,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
       fill_in "What is the name?", with: "Ingredient B modified"
       fill_in "Minimum", with: "55.0"
-      fill_in "Maximum", with: "10.0"
+      fill_in "Maximum", with: "90.0"
     end
 
     within("#ingredient-2") do
@@ -143,7 +143,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
     expect(component.ingredients.range.second).to have_attributes(
       inci_name: "Ingredient B modified",
       minimum_concentration: 55.0,
-      maximum_concentration: 10.0,
+      maximum_concentration: 90.0,
       cas_number: "",
     )
     expect(component.ingredients.range.third).to have_attributes(

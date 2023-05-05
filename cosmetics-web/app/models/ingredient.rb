@@ -63,6 +63,8 @@ class Ingredient < ApplicationRecord
             numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
             if: -> { (range? && poisonous == false) }
 
+  validate :maximum_minimum_concentration_range, if: -> { range? && poisonous == false }
+
   validates :used_for_multiple_shades, inclusion: { in: [true, false] }, if: -> { exact? && multi_shade? }
 
   validates_with CasNumberValidator
@@ -102,5 +104,14 @@ private
 
     notification = component&.notification
     notification && !notification&.via_zip_file? && !notification&.deleted?
+  end
+
+  def maximum_minimum_concentration_range
+    return unless maximum_concentration && minimum_concentration
+
+    unless maximum_concentration > minimum_concentration
+      errors.add(:maximum_concentration,
+                 message: "Maximum concentration must be greater than the minimum concentration")
+    end
   end
 end

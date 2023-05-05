@@ -264,7 +264,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       fill_in "What is the name?", with: "non-poisonous"
       page.choose "No"
       fill_in "Minimum", with: "6"
-      fill_in "Maximum", with: "6"
+      fill_in "Maximum", with: "6.1"
       click_on "Add another ingredient"
 
       expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: %w[non-poisonous])

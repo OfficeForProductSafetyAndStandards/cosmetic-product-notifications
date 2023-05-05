@@ -85,6 +85,44 @@ RSpec.describe Ingredient, type: :model do
       end
     end
 
+    describe "validate concentration range" do
+      let(:ingredient) do
+        build(:range_ingredient,
+              minimum_concentration: 1, maximum_concentration:, poisonous: false)
+      end
+
+      let(:error_message) do
+        "Maximum concentration must be greater than the minimum concentration"
+      end
+
+      context "when the maximum_concentration is equal to the minimum_concentration" do
+        let(:maximum_concentration) { 1 }
+
+        it "is not valid" do
+          ingredient.valid?
+          expect(ingredient.errors[:maximum_concentration]).to include(error_message)
+        end
+      end
+
+      context "when the maximum_concentration is less than the minimum_concentration" do
+        let(:maximum_concentration) { 0.1 }
+
+        it "is not valid" do
+          ingredient.valid?
+          expect(ingredient.errors[:maximum_concentration]).to include(error_message)
+        end
+      end
+
+      context "when the maximum_concentration is greater than the minimum_concentration" do
+        let(:maximum_concentration) { 1.1 }
+
+        it "is valid" do
+          ingredient.valid?
+          expect(ingredient).to be_valid
+        end
+      end
+    end
+
     describe "used for multiple shades validation" do
       RSpec.shared_examples "valid with a value" do
         context "when the ingredient is used for multiple shades" do
