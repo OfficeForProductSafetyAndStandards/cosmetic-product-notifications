@@ -72,23 +72,26 @@ RSpec.describe "Edit Responsible Person Details", type: :request do
 
     context "when providing the needed data" do
       let(:update_request) { put "/responsible_persons/#{responsible_person.id}", params: { responsible_person: params } }
+      let(:expected_attributes) do
+        {
+          account_type: "business",
+          address_line_1: "11",
+          address_line_2: "Fake St",
+          city: "Fake City",
+          county: "County",
+          postal_code: "FA1 1FA",
+        }
+      end
 
       it "redirects to the responsible person page" do
         update_request
         expect(response).to redirect_to("/responsible_persons/#{responsible_person.id}")
       end
 
-      # rubocop:disable RSpec/ExampleLength
       it "updates the responsible person's details" do
         update_request
-        expect(responsible_person.reload).to have_attributes(account_type: "business",
-                                                             address_line_1: "11",
-                                                             address_line_2: "Fake St",
-                                                             city: "Fake City",
-                                                             county: "County",
-                                                             postal_code: "FA1 1FA")
+        expect(responsible_person.reload).to have_attributes(expected_attributes)
       end
-      # rubocop:enable RSpec/ExampleLength
 
       it "response includes a confirmation message" do
         update_request
