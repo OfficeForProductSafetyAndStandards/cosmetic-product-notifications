@@ -27,7 +27,7 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
     let(:image_upload) { create(:image_upload, :uploaded_and_virus_identified, notification:) }
 
     it "complains about image" do
-      expect(notification.errors.messages_for(:image_uploads)).to eq(["Image #{image_upload.filename} failed antivirus check. Remove image and try again"])
+      expect(notification.errors.messages_for(:image_uploads)).to eq(["Image #{image_upload.filename} failed virus scan; remove the image and try again"])
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
     let(:image_upload) { create(:image_upload, notification:) }
 
     it "complains about image" do
-      expect(notification.errors.messages_for(:image_uploads)).to eq(["Image #{image_upload.filename} is still being processed"])
+      expect(notification.errors.messages_for(:image_uploads)).to eq(["Image #{image_upload.filename} is pending virus scan"])
     end
   end
 

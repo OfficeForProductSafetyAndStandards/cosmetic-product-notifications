@@ -1,10 +1,24 @@
 class NanomaterialNotification < ApplicationRecord
   class AlreadySubmittedError < StandardError; end
 
-  include FileAntivirusCheckable
-
   belongs_to :responsible_person
   has_many :nano_materials
+
+  # BEGIN: File uploads
+  # `@_validate_on` must be set before `FileUploadConcern` is included
+  # since it is used during inclusion.
+  @_validate_on = :upload_file
+
+  include FileUploadConcern
+  include FileAntivirusConcern
+
+  has_one_attached :file
+  set_attachment_name :file
+  set_attachment_name_for_antivirus :file
+  set_allowed_types %w[application/pdf].freeze
+  set_max_file_size 30.megabytes
+  set_check_file_exists true
+  # END: File uploads
 
   validates :name, presence: true, on: :add_name
 
@@ -14,10 +28,6 @@ class NanomaterialNotification < ApplicationRecord
   validate :eu_notification_date_must_be_pre_brexit, on: :eu_notification, if: :eu_notified?
 
   validate :eu_notification_date_is_real
-
-  validate :pdf_file_attached, on: :upload_file
-
-  has_one_attached :file
 
   scope :submitted, -> { where.not(submitted_at: nil) }
 
@@ -120,15 +130,6 @@ private
       end
 
       errors.add(:notified_to_eu_on, error_message)
-    end
-  end
-
-  def pdf_file_attached
-    if !file.attached?
-      errors.add(:file, I18n.t(:missing, scope: %i[activerecord errors models nanomaterial_notification attributes file]))
-    elsif file.blob.content_type != "application/pdf"
-      file.purge
-      errors.add(:file, I18n.t(:must_be_a_pdf, scope: %i[activerecord errors models nanomaterial_notification attributes file]))
     end
   end
 

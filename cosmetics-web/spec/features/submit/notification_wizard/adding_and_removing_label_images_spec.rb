@@ -38,7 +38,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       expect(page).to have_h1("Upload an image of the product label")
       page.attach_file "spec/fixtures/files/testImage.png"
       click_button "Save and upload another image"
-      expect_product_label_images(["testImage.png"])
+      expect_product_label_images([{ name: "testImage.png", virus_scan_status: "pending" }])
 
       click_button "Save and continue"
       expect_task_has_been_completed_page
@@ -48,7 +48,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       expect(page).to have_h1("Upload an image of the product label")
       page.attach_file ["spec/fixtures/files/testImage.png", "spec/fixtures/files/testLabelImage.jpg"]
       click_button "Save and upload another image"
-      expect_product_label_images(["testImage.png", "testLabelImage.jpg"])
+      expect_product_label_images([{ name: "testImage.png", virus_scan_status: "pending" }, { name: "testLabelImage.jpg", virus_scan_status: "pending" }])
 
       click_button "Save and continue"
       expect_task_has_been_completed_page
@@ -59,14 +59,14 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       page.attach_file ["spec/fixtures/files/testImage.png"]
       click_button "Save and upload another image"
       expect(page).to have_notification_banner("[testImage.png] was uploaded.")
-      expect_product_label_images(["testImage.png"])
+      expect_product_label_images([{ name: "testImage.png", virus_scan_status: "pending" }])
 
       click_button "Save and upload another image"
       expect(page).to have_h1("Upload an image of the product label")
 
       page.attach_file "spec/fixtures/files/testLabelImage.jpg"
       click_button "Save and upload another image"
-      expect_product_label_images(["testImage.png", "testLabelImage.jpg"])
+      expect_product_label_images([{ name: "testImage.png", virus_scan_status: "passed" }, { name: "testLabelImage.jpg", virus_scan_status: "pending" }])
 
       click_button "Save and continue"
       expect_task_has_been_completed_page
@@ -76,10 +76,10 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
       expect(page).to have_h1("Upload an image of the product label")
       page.attach_file ["spec/fixtures/files/testImage.png", "spec/fixtures/files/testLabelImage.jpg"]
       click_button "Save and upload another image"
-      expect_product_label_images(["testImage.png", "testLabelImage.jpg"])
+      expect_product_label_images([{ name: "testImage.png", virus_scan_status: "pending" }, { name: "testLabelImage.jpg", virus_scan_status: "pending" }])
 
       click_button("Remove", match: :first)
-      expect_product_label_images(["testImage.png"])
+      expect_product_label_images([{ name: "testImage.png", virus_scan_status: "passed" }])
 
       click_button "Save and continue"
       expect_task_has_been_completed_page

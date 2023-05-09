@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe FileAntivirusCheckable, type: :model do
+RSpec.describe FileAntivirusConcern, type: :model do
   let(:attachment_stub) { instance_double(ActiveStorage::Attachment) }
   let(:file_metadata) { {} }
   let(:file_stub) { double("File Stub", attachment: attachment_stub, metadata: file_metadata) } # rubocop:disable RSpec/VerifiedDoubles
@@ -8,9 +8,10 @@ RSpec.describe FileAntivirusCheckable, type: :model do
     Class.new do
       include ActiveModel::Model
       include ActiveModel::Attributes
-      include FileAntivirusCheckable
+      include FileAntivirusConcern
 
       attribute :file
+      set_attachment_name_for_antivirus :file
 
       def initialize(file)
         super

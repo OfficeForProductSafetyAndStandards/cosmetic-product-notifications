@@ -1,16 +1,16 @@
 <% formulation_file = component.formulation_file %>
 <% if formulation_file.attached? %>
-  <% if formulation_file.metadata["safe"] %>
+  <% if component.passed_antivirus_check? %>
     <%= link_to formulation_file.filename, url_for(formulation_file), target: "_blank" %>
     <%= render("shared/pdf_size", file: formulation_file) %>
-  <% elsif formulation_file.metadata["safe"].nil? %>
-    <%= "Processing file #{formulation_file.filename} ..." %>
+  <% elsif component.pending_antivirus_check? %>
+    <%= formulation_file.filename %> pending virus scan
     <br>
     <%= link_to "Refresh",
             edit_responsible_person_notification_path(@responsible_person, @notification),
             class: "govuk-link--no-visited-state" %>
   <% else %>
-    <%= "The uploaded file has been flagged as a virus" %>
+    <%= formulation_file.filename %> failed virus scan
   <% end %>
 <% else %>
   Not provided

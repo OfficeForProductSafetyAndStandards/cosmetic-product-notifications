@@ -1,8 +1,22 @@
-module FileAntivirusCheckable
+module FileAntivirusConcern
   extend ActiveSupport::Concern
 
+  module ClassMethods
+    attr_reader :attachment_name_for_antivirus
+
+  private
+
+    def set_attachment_name_for_antivirus(name)
+      @attachment_name_for_antivirus = name
+    end
+  end
+
+  def attachment_name_for_antivirus
+    self.class.attachment_name_for_antivirus
+  end
+
   def file_exists?
-    file.attachment.present?
+    send(attachment_name_for_antivirus).attachment.present?
   end
 
   def failed_antivirus_check?
@@ -23,6 +37,6 @@ private
   def virus_safe
     return true if ENV["ANTIVIRUS_ENABLED"] == "false"
 
-    file.metadata["safe"]
+    send(attachment_name_for_antivirus).metadata["safe"]
   end
 end

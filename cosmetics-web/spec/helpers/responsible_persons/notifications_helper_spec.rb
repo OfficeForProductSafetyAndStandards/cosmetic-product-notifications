@@ -45,7 +45,7 @@ describe ResponsiblePersons::NotificationsHelper do
         allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: true)
         allow(helper).to receive_messages(link_to: "<a href='/edit/path'>Refresh</a>",
                                           edit_responsible_person_notification_path: "/edit/path")
-        expect(label_image_link).to eq("Processing image testImage.png...<br><a href='/edit/path'>Refresh</a>")
+        expect(label_image_link).to eq("testImage.png pending virus scan<br><a href='/edit/path'>Refresh</a>")
         expect(helper).to have_received(:link_to).with("Refresh", "/edit/path", class: "govuk-link govuk-link--no-visited-state")
       end
     end

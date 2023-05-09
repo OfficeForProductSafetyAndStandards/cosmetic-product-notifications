@@ -61,6 +61,10 @@
               <%= @nanomaterial_notification.file.filename %>
             <% end %>
             <%= render("shared/pdf_size", file: @nanomaterial_notification.file) %>
+          <% elsif @nanomaterial_notification.pending_antivirus_check? %>
+            <%= @nanomaterial_notification.file.filename %> pending virus scan
+          <% else %>
+            <%= @nanomaterial_notification.file.filename %> failed virus scan
           <% end %>
         </dd>
       </div>
