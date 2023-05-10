@@ -17,7 +17,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
   scenario "Adding Red, Orange, Yellow shades, Removing Orange" do
     fill_in "component_shades-0", with: "Red"
     fill_in "component_shades-1", with: "Orange"
-    click_on "Add a shade"
+    click_on "Add another shade"
 
     expect(page).to have_field("component_shades-0", with: "Red")
     expect(page).to have_field("component_shades-1", with: "Orange")
