@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbed_antivirus, type: :feature do
+RSpec.describe "Adding and removing shades", :with_stubbed_antivirus, type: :feature do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:user) { responsible_person.responsible_person_users.first.user }
 
