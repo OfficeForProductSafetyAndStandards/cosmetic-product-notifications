@@ -41,7 +41,7 @@ class Component < ApplicationRecord
 
   belongs_to :notification, touch: true
 
-  has_many :ingredients, dependent: :destroy
+  has_many :ingredients, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :component_nano_materials
@@ -60,6 +60,7 @@ class Component < ApplicationRecord
   }, _prefix: true
 
   accepts_nested_attributes_for :cmrs
+  accepts_nested_attributes_for :ingredients
 
   scope :complete, -> { where(state: "component_complete") }
 
@@ -101,6 +102,7 @@ class Component < ApplicationRecord
   validates :maximum_ph, numericality: { message: "Enter a value of 14 or lower for maximum pH", less_than_or_equal_to: 14 }, if: -> { maximum_ph.present? }
   validates :minimum_ph, numericality: { message: "Enter a value lower than 3 for minimum pH", less_than: 3 }, if: -> { minimum_ph.present? && ph_lower_than_3? }
   validates :maximum_ph, numericality: { message: "Enter a value higher than 10 for maximum pH", greater_than: 10 }, if: -> { maximum_ph.present? && ph_above_10? }
+  validate :at_least_two_shades, on: :add_shades
 
   validates :exposure_condition, presence: {
     on: :add_exposure_condition,
@@ -140,10 +142,8 @@ class Component < ApplicationRecord
     %i[dermal oral inhalation].freeze
   end
 
-  def prune_blank_shades
-    return if self[:shades].nil?
-
-    self[:shades] = self[:shades].select(&:present?)
+  def at_least_two_shades
+    errors.add(:shades, message: "Enter a shade value") if shades.count(&:present?) < 2
   end
 
   def sub_category

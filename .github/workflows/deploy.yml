@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -21,7 +21,7 @@ jobs:
     - name: Create GitHub deployment for Staging
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: master
+        BRANCH: main
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_create staging
@@ -33,7 +33,7 @@ jobs:
         source cosmetics-web/deploy-github-functions.sh
 
         # URL where the deployment progress can be tracked. Exported for future steps.
-        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amaster+workflow%3ADeploy")
+        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amain+workflow%3ADeploy")
         echo "LOG_URL=$log_url" >> $GITHUB_ENV
 
         gh_deploy_initiate staging $log_url
@@ -79,7 +79,7 @@ jobs:
     - name: Create GitHub deployment for Production
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: master
+        BRANCH: main
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_create production

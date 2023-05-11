@@ -1,6 +1,6 @@
 # Deployment
 
-Anything which is merged to `master` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy.yml)
+Anything which is merged to `main` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy.yml)
 and deploy the various components to the `int` space on GOV.UK PaaS.
 
 ## Deployment from scratch

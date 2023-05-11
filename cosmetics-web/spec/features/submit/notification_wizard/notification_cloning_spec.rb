@@ -69,8 +69,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     choose "No" # contains CMRs
     5.times { click_button "Continue" }
     click_button "Save and continue" # ingredient page
-    choose "No"
-    2.times { click_button "Continue" }
+    click_button "Continue"
 
     expect_task_has_been_completed_page
     click_on "task list page"

@@ -1,27 +1,3 @@
-<% title = "Add the ingredients" %>
-
-<% page_title title, errors: @ingredient_concentration_form.errors.any? %>
-<% content_for :after_header do %>
-  <%= govukBackLink text: "Back", href: previous_wizard_path %>
-<% end %>
-
-<%= error_summary(@ingredient_concentration_form.errors, map_errors: { used_for_multiple_shades: "used_for_multiple_shades_true" }) %>
-
-<%= render "add_ingredient_concentration", title: title, component: @component, model: @ingredient_concentration_form do |form| %>
-  <%= render "ingredient_exact_concentration_fields", component: @component, model: @ingredient_concentration_form, form: form %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <%= govukCheckboxes(form: form,
-                          key: :poisonous_check,
-                          id: "poisonous_check",
-                          classes: " govuk-!-padding-top-6",
-                          items: [{ key: :poisonous,
-                                    text: "Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?".html_safe,
-                                    hint: { html: "The <abbr>NPIS</abbr> tables are included above<span class='govuk-visually-hidden'>/before</span> this form.".html_safe,
-                                            classes: "govuk-!-font-size-16" },
-                                    label: { classes: "govuk-!-padding-right-0" },
-                                    value: true,
-                                    disable_ghost: true }]) %>
-    </div>
-  </div>
-<% end %>
+<%= render partial: "responsible_persons/notifications/components/build/add_ingredients/header_and_title" %>
+<%= render partial: "responsible_persons/notifications/components/build/add_ingredients/instructions" %>
+<%= render partial: "responsible_persons/notifications/components/build/add_ingredients/form", locals: { mode: :add_exact } %>

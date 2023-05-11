@@ -226,6 +226,7 @@ Rails.application.routes.draw do
     get :privacy_notice, path: "privacy-notice"
     get :cookies_policy, path: "cookies"
     get :csv, path: "csv"
+    get :npis_tables, path: "npis_tables"
   end
 
   resource :cookie_form, only: [:create]

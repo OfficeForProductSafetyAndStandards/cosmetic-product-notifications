@@ -1,25 +1,25 @@
-<details class="govuk-details govuk-!-margin-left-0" data-module="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      Show the <abbr>NPIS</abbr> tables
-    </span>
-  </summary>
-  <div class="govuk-details__text">
+<% title = "NPIS tables" %>
+<% content_for :page_title, title %>
 
-    <p class="govuk-body-s opss-secondary-text">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= title %></h1>
+    <p>
       The <abbr>NPIS</abbr> needs to know about these ingredients in the product.
+    </p>
+    <p>
       <span class="govuk-!-font-weight-bold opss-primary-text">
-        If the ingredient is listed here and the amount meets the weight-by-weight (<abbr class="opss-no-wrap">w/w</abbr>) criteria,
+        If the ingredient is listed here and the amount meets or exceeds the weight-by-weight (<abbr class="opss-no-wrap">w/w</abbr>) criteria,
         then it is an ingredient the <abbr>NPIS</abbr> needs to know about
       </span>.
     </p>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
-      <caption class="govuk-table__caption govuk-table__caption--s">Alcohols</caption>
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
+      <caption class="govuk-table__caption">Alcohols</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Name</th>
-          <th scope="col" class="govuk-table__header">CAS Number</th>
+          <th scope="col" class="govuk-table__header" nowrap="">CAS Number</th>
           <th scope="col" class="govuk-table__header">Amount</th>
         </tr>
       </thead>
@@ -57,12 +57,12 @@
       </tbody>
     </table>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
       <caption class="govuk-table__caption govuk-table__caption--s">Cresols</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Name</th>
-          <th scope="col" class="govuk-table__header">CAS Number</th>
+          <th scope="col" class="govuk-table__header" nowrap="">CAS Number</th>
           <th scope="col" class="govuk-table__header">Amount</th>
         </tr>
       </thead>
@@ -90,12 +90,12 @@
       </tbody>
     </table>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
       <caption class="govuk-table__caption govuk-table__caption--s">Essential oils, Camphor, Eucalyptol or Menthol</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Name</th>
-          <th scope="col" class="govuk-table__header">CAS Number</th>
+          <th scope="col" class="govuk-table__header" nowrap="">CAS Number</th>
           <th scope="col" class="govuk-table__header">Amount</th>
         </tr>
       </thead>
@@ -128,12 +128,12 @@
       </tbody>
     </table>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
       <caption class="govuk-table__caption govuk-table__caption--s">Glycols and Glycol ethers</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Name</th>
-          <th scope="col" class="govuk-table__header">CAS Number</th>
+          <th scope="col" class="govuk-table__header" nowrap="">CAS Number</th>
           <th scope="col" class="govuk-table__header">Amount</th>
         </tr>
       </thead>
@@ -226,12 +226,12 @@
       </tbody>
     </table>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
       <caption class="govuk-table__caption govuk-table__caption--s">Hydrocarbon solvents</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Name</th>
-          <th scope="col" class="govuk-table__header">CAS Number</th>
+          <th scope="col" class="govuk-table__header" nowrap="">CAS Number</th>
           <th scope="col" class="govuk-table__header">Amount</th>
         </tr>
       </thead>
@@ -269,12 +269,12 @@
       </tbody>
     </table>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
       <caption class="govuk-table__caption govuk-table__caption--s">Other</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Name</th>
-          <th scope="col" class="govuk-table__header">CAS Number</th>
+          <th scope="col" class="govuk-table__header" nowrap="">CAS Number</th>
           <th scope="col" class="govuk-table__header">Amount</th>
         </tr>
       </thead>
@@ -367,7 +367,7 @@
       </tbody>
     </table>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
       <caption class="govuk-table__caption govuk-table__caption--s">Ingredient groups</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -395,7 +395,7 @@
       </tbody>
     </table>
 
-    <table class="govuk-table opss-table-items opss-table-items--sm opss-table-items--first-col-50 opss-table-stripes">
+    <table class="govuk-table opss-table-items opss-table-items--first-col-50 opss-table-stripes">
       <caption class="govuk-table__caption govuk-table__caption--s">Any ingredients acting as</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -423,4 +423,4 @@
       </tbody>
     </table>
   </div>
-</details>
+</div>
