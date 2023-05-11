@@ -55,7 +55,7 @@ class Ingredient < ApplicationRecord
 
   validates :minimum_concentration,
             presence: true,
-            numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
+            numericality: { allow_blank: true, less_than_or_equal_to: 100 },
             if: -> { range? && poisonous == false }
 
   validates :maximum_concentration,
