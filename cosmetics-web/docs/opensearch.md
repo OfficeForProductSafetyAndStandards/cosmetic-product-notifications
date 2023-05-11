@@ -3,7 +3,7 @@
 OpenSearch contains an index for all the completed and archived notifications in the service. This powers
 notification searching for both the search and submit services.
 
-The ["Searchable" model concern](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/blob/master/cosmetics-web/app/models/concerns/searchable.rb)
+The ["Searchable" model concern](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/blob/main/cosmetics-web/app/models/concerns/searchable.rb)
 wraps the [ElasticSearch gem](https://github.com/elastic/elasticsearch-rails).
 
 ## Adding/updating/removing notifications
