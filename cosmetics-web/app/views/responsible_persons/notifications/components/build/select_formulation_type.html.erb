@@ -1,6 +1,6 @@
 <% title = "Select formulation type" %>
 <% question = "How will you provide #{@component_name} formulation?" %>
-<% csv_file_type = FeatureFlags.csv_upload_exact_with_shades_enabled? && @component.shades.present? ? "exact-with-multiple-shades" : "exact" %>
+<% csv_file_type = FeatureFlags.csv_upload_exact_with_shades_enabled?(current_user) && @component.shades.present? ? "exact-with-multiple-shades" : "exact" %>
 <%
   frame_formulations = FrameFormulations::CATEGORIES.dig(@component.root_category.to_s, @component.sub_category.to_s, @component.sub_sub_category.to_s)
   items = formulations_types_label
