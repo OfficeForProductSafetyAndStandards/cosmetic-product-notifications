@@ -64,8 +64,11 @@
             <% end %>
             <div class="govuk-radios" data-module="govuk-radios">
               <% items.each do |item| %>
-                 <div class="govuk-radios__item <%= item[:wrapper_classes]%>">
-                   <%
+                <% if item[:value] == :separator %>
+                  <div class="govuk-radios__divider"><%= item[:text] %></div>
+                <% else %>
+                  <div class="govuk-radios__item <%= item[:wrapper_classes]%>">
+                    <%
                      input_attributes = {
                       id: item[:id],
                       name: "component[notification_type]",
@@ -88,8 +91,9 @@
                        attributes: item[:label].try(:[], :attributes),
                        for: item[:id]
                      })
-                   %>
-                 </div>
+                    %>
+                  </div>
+                 <% end %>
               <% end %>
             </div>
           </fieldset>

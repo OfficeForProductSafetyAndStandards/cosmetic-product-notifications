@@ -23,7 +23,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     answer_item_category_with "Hair and scalp products"
     answer_item_subcategory_with "Hair and scalp care and cleansing products"
     answer_item_sub_subcategory_with "Shampoo"
-    answer_how_do_you_want_to_give_formulation_with "Provide ingredients and their exact concentration using a CSV file"
+    answer_how_do_you_want_to_give_formulation_with "Upload a CSV file for ingredients and their exact concentration"
     expect_to_be_on_add_csv_ingredients_page
 
     # First attempt with validation errors
@@ -75,7 +75,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
       answer_item_category_with "Hair and scalp products"
       answer_item_subcategory_with "Hair and scalp care and cleansing products"
       answer_item_sub_subcategory_with "Shampoo"
-      answer_how_do_you_want_to_give_formulation_with "Provide ingredients and their exact concentration using a CSV file"
+      answer_how_do_you_want_to_give_formulation_with "Upload a CSV file for ingredients and their exact concentration"
       expect_to_be_on_add_csv_ingredients_page
 
       # First attempt with validation errors
