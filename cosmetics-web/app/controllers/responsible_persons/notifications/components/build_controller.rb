@@ -86,7 +86,7 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
         return jump_to_step(:number_of_shades)
       end
     when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
-      @ingredient_concentration_form = ingredient_concentration_form
+      create_required_ingredients
     when :upload_ingredients_file
       @bulk_ingredients_form = ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm.new(component: @component)
     when :want_to_add_another_ingredient
@@ -126,13 +126,13 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :select_formulation_type
       update_select_formulation_type
     when :add_ingredient_exact_concentration
-      update_add_ingredient_concentration("exact")
+      update_add_ingredients
     when :add_ingredient_range_concentration
-      update_add_ingredient_concentration("range")
+      update_add_ingredients
+    when :add_ingredient_npis_needs_to_know
+      update_add_ingredients
     when :upload_ingredients_file
       update_upload_ingredients_file
-    when :add_ingredient_npis_needs_to_know
-      update_add_ingredient_concentration("exact", force_poisonous: true)
     when :select_frame_formulation
       update_frame_formulation
     when :contains_ingredients_npis_needs_to_know
@@ -287,46 +287,6 @@ private
     end
   end
 
-  def update_add_ingredient_concentration(type, force_poisonous: false)
-    ingredient_number = ingredient_concentration_params[:ingredient_number]&.to_i
-    updating_ingredient = @component.ingredients[ingredient_number] if ingredient_number
-
-    form_attrs = ingredient_concentration_params.merge(
-      component: @component, type:, updating_ingredient:,
-    )
-    form_attrs[:poisonous] = true if force_poisonous == true
-
-    @ingredient_concentration_form = ResponsiblePersons::Notifications::IngredientConcentrationForm.new(form_attrs)
-    if @ingredient_concentration_form.save
-      # When updating an existing ingredient: Send to next ingredient page if there are more ingredients
-      if ingredient_number.present? && @component.reload.ingredients.size > ingredient_number + 1
-        jump_to_step(step, ingredient_number: ingredient_number + 1)
-      else
-        jump_to_step(:want_to_add_another_ingredient, success_banner: updating_ingredient.nil?)
-      end
-    else
-      rerender_current_step
-    end
-  end
-
-  def update_want_to_add_another_ingredient
-    case params[:add_another_ingredient]
-    when "yes"
-      if @component.exact?
-        jump_to_step(:add_ingredient_exact_concentration)
-      elsif @component.range?
-        jump_to_step(:add_ingredient_range_concentration)
-      elsif @component.predefined?
-        jump_to_step(:add_ingredient_npis_needs_to_know)
-      end
-    when "no"
-      jump_to_step(:select_ph_option)
-    else
-      @component.errors.add(:add_another_ingredient, "Select yes if you want to add an ingredient")
-      rerender_current_step
-    end
-  end
-
   # for frame formulation only
   def update_frame_formulation
     if @component.update_with_context(component_params, :select_frame_formulation)
@@ -372,6 +332,24 @@ private
     render_next_step @component
   end
 
+  def update_add_ingredients
+    if @component.update_with_context(component_params, step)
+      if params[:add_ingredient]
+        @component.ingredients.build(poisonous: nil)
+        rerender_current_step
+      elsif params.key?(:remove_ingredient_with_id)
+        @component.ingredients.find(params[:remove_ingredient_with_id].to_i).destroy unless params[:remove_ingredient_with_id] == "unsaved"
+        @component.ingredients.reload
+        rerender_current_step
+      else
+        jump_to_step(:select_ph_option)
+      end
+    else
+      create_required_ingredients
+      rerender_current_step
+    end
+  end
+
   def update_select_component_ph_options
     if @component.update_with_context(component_params, :ph)
       jump_to :completed
@@ -379,35 +357,6 @@ private
     else
       rerender_current_step
     end
-  end
-
-  def ingredient_concentration_form
-    ingredient_number = params[:ingredient_number]&.to_i
-    updating_ingredient = @component.ingredients[ingredient_number] if ingredient_number
-    form_attrs = ingredient_form_values(updating_ingredient, ingredient_number) if updating_ingredient
-    ResponsiblePersons::Notifications::IngredientConcentrationForm.new(form_attrs)
-  end
-
-  def ingredient_form_values(ingredient, ingredient_number)
-    return {} if ingredient.blank?
-
-    { name: ingredient.inci_name,
-      cas_number: ingredient.cas_number,
-      used_for_multiple_shades: ingredient.used_for_multiple_shades,
-      exact_concentration: ingredient_form_value_exact_concentration(ingredient),
-      maximum_concentration: ingredient_form_value_maximum_concentration(ingredient),
-      range_concentration: ingredient.range_concentration,
-      poisonous: ingredient.poisonous,
-      updating_ingredient: ingredient,
-      ingredient_number: }
-  end
-
-  def ingredient_form_value_exact_concentration(ingredient)
-    ingredient.exact_concentration unless ingredient.used_for_multiple_shades
-  end
-
-  def ingredient_form_value_maximum_concentration(ingredient)
-    ingredient.exact_concentration if ingredient.used_for_multiple_shades
   end
 
   def component_params
@@ -430,22 +379,24 @@ private
         nano_material_ids: [],
         exposure_routes: [],
         cmrs_attributes: %i[id name cas_number ec_number],
+        ingredients_attributes:,
         shades: [],
       )
   end
 
-  def ingredient_concentration_params
-    params.fetch(:ingredient_concentration_form, {})
-      .permit(
-        :name,
-        :used_for_multiple_shades,
-        :exact_concentration,
-        :maximum_concentration,
-        :range_concentration,
-        :cas_number,
-        :poisonous,
-        :ingredient_number,
-      )
+  def ingredients_attributes
+    %i[
+      id
+      inci_name
+      used_for_multiple_shades
+      exact_concentration
+      maximum_exact_concentration
+      minimum_concentration
+      maximum_concentration
+      range_concentration
+      cas_number
+      poisonous
+    ]
   end
 
   def create_required_shades
@@ -457,6 +408,11 @@ private
 
   def create_required_cmrs
     @component.cmrs.build if @component.cmrs.blank?
+  end
+
+  def create_required_ingredients
+    # set poisonous to nil so the radio buttons are not pre-selected
+    @component.ingredients.build(poisonous: nil) if @component.ingredients.blank?
   end
 
   def model
