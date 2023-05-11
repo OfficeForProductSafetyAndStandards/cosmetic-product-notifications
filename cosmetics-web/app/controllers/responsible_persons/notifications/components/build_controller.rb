@@ -209,23 +209,20 @@ private
   end
 
   def update_add_shades
-    @component.update(component_params)
-
-    if params[:add_shade]
-      @component.shades.push ""
-      render :add_shades
-    elsif params.key?(:remove_shade_with_id)
-      @component.shades.delete_at(params[:remove_shade_with_id].to_i)
-      create_required_shades
-      render :add_shades
-    else
-      @component.prune_blank_shades
-      if @component.valid?
-        render_next_step @component
-      else
+    if @component.update_with_context(component_params, step)
+      if params[:add_shade]
+        @component.shades.push ""
+        rerender_current_step
+      elsif params.key?(:remove_shade_with_id)
+        @component.shades.delete_at(params[:remove_shade_with_id].to_i)
         create_required_shades
         rerender_current_step
+      else
+        render_next_step @component
       end
+    else
+      create_required_shades
+      rerender_current_step
     end
   end
 
