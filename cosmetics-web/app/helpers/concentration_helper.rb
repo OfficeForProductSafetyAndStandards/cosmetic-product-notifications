@@ -8,6 +8,10 @@ module ConcentrationHelper
     end
   end
 
+  def display_min_max_concentration_range(minimum_concentration, maximum_concentration)
+    "#{minimum_concentration}%&nbsp;w/w - #{maximum_concentration}%&nbsp;w/w".html_safe
+  end
+
   def display_concentration_range(range)
     "#{get_unit_name(range)}%&nbsp;w/w".html_safe
   end

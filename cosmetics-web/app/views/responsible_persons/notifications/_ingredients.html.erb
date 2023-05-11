@@ -8,6 +8,10 @@
         <% end %>
         <% if ingredient.exact_concentration.present? %>
           <dd><% if ingredient.used_for_multiple_shades? %>Maximum concentration: <% end %><%= ingredient.exact_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+        <%
+          # range_concentration will be removed when the legacy data has been migrated
+          # to minimum / maximum
+        %>
         <% elsif ingredient.range_concentration.present? %>
           <% range = ingredient_concentration_range(ingredient.range_concentration) %>
           <% if range.upto.present? %>
@@ -18,6 +22,12 @@
                <dd>Up to and including <%= range.upto %>%&nbsp;<abbr>w/w</abbr></dd>
             <% end %>
           <% end %>
+        <%
+          # Minimum/Maximum replaces range_concentation
+        %>
+        <% elsif ingredient.range? %>
+          <dd>Minimum range: <%= ingredient.minimum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+          <dd>Maximum range: <%= ingredient.maximum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
         <% end %>
       </div>
     <% end %>

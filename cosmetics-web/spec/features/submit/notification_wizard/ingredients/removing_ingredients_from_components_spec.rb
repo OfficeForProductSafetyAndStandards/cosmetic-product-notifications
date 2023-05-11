@@ -10,7 +10,7 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
     sign_in_as_member_of_responsible_person(responsible_person, user)
   end
 
-  def navigate_to_edit_first_ingredient_page
+  def navigate_to_edit_ingredients_page
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}/draft"
 
     expect_product_details_task_completed
@@ -26,58 +26,20 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
     answer_how_do_you_want_to_give_formulation_with "Enter ingredients and their exact concentration manually"
   end
 
-  scenario "Removing an ingredient from a component with multiple ingredients" do
-    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component:)
-    create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component:)
-
-    navigate_to_edit_first_ingredient_page
-    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A", "Ingredient B"])
-    expect(page).to have_field("What is the name?", with: "Ingredient A")
-
-    click_link "Remove this ingredient"
-    answer_remove_ingredient_with("Yes", name: "Ingredient A")
-    expect_to_be_on_ingredient_removed_confirmation_page
-    click_link "Continue"
-    # Sends the user to the next ingredient edit page
-    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient B"])
-    expect(page).to have_field("What is the name?", with: "Ingredient B")
-  end
-
   scenario "Removing the last ingredient from a component with multiple ingredients" do
     create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component:)
     create(:poisonous_ingredient, inci_name: "Ingredient B", exact_concentration: 3.0, component:)
 
-    navigate_to_edit_first_ingredient_page
-    # Move to the second ingredient
-    click_on "Save and continue"
-
+    navigate_to_edit_ingredients_page
     expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["Ingredient A", "Ingredient B"])
+
+    within("#ingredient-0") do
+      expect(page).to have_field("What is the name?", with: "Ingredient A")
+      click_on "Remove ingredient"
+    end
+
+    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient B"])
     expect(page).to have_field("What is the name?", with: "Ingredient B")
-
-    click_link "Remove this ingredient"
-    answer_remove_ingredient_with("Yes", name: "Ingredient B")
-    expect_to_be_on_ingredient_removed_confirmation_page
-    click_link "Continue"
-    # Sends the user to the add ingredients page
-    expect(page).to have_css("h1", text: "Do you want to add another ingredient?")
-  end
-
-  scenario "Removing the only ingredient for the component" do
-    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component:)
-
-    navigate_to_edit_first_ingredient_page
-    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A"])
-    expect(page).to have_field("What is the name?", with: "Ingredient A")
-
-    click_link "Remove this ingredient"
-    answer_remove_ingredient_with("Yes", name: "Ingredient A")
-    expect_to_be_on_ingredient_removed_confirmation_page
-    click_link "Continue"
-
-    # Sends the user back to the "choose fomulation type" page without any preselection
-    expect(page).to have_css("h1", text: "How will you provide the product formulation?")
-    expect(page).to have_checked_field("Enter ingredients and their exact concentration manually")
-    expect(page).to have_unchecked_field("Provide ingredients and their exact concentration using a CSV file")
-    expect(page).to have_unchecked_field("Enter ingredients and their concentration range manually")
+    expect(page).not_to have_button("Remove ingredient")
   end
 end

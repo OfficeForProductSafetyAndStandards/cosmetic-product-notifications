@@ -25,12 +25,14 @@
           The information you provide will be used to help treat people who might accidentally be affected by them.
         </div>
 
-        <a href="#component_contains_ingredients_npis_needs_to_know_true" class="govuk-skip-link opss-skip-link">
-          Skip ingredients the <abbr>NPIS</abbr> needs to know about tables.
-        </a>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body opss-secondary-text">
+              <a href="/help/npis_tables" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">NPIS tables (opens in a new tab)</a>
+            </p>
+          </div>
+        </div>
 
-
-        <%= render "ingredients_npis_needs_to_know" %>
         <%= govukRadios(
               form: form,
               key: :contains_ingredients_npis_needs_to_know,

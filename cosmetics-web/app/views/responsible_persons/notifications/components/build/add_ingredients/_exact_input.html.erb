@@ -1,0 +1,6 @@
+<%= govukInput(form: ingredient_fields,
+               key: :exact_concentration,
+               label: { text: "What is the exact concentration?" },
+               suffix: { text: "% w/w", attributes: { title: "Percentage weight by weight" } },
+               classes: "govuk-input--width-5",
+               attributes: { maxlength: 12 }) %>

@@ -35,40 +35,44 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       click_on "Save and continue"
 
       expect_to_be_on_add_ingredients_page
-      expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
-                                 exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
+      expect_form_to_have_errors(
+        component_ingredients_attributes_0_inci_name:
+          { message: "Enter a name", id: "component_ingredients_attributes_0_inci_name" },
+        component_ingredients_attributes_0_exact_concentration:
+          { message: "Enter the exact concentration", id: "component_ingredients_attributes_0_exact_concentration" },
+      )
 
       # Successfully adds the first ingredient
-      fill_in "name", with: "FooBar ingredient"
-      fill_in "exact_concentration", with: "10.1"
-      fill_in "cas_number", with: "123456-78-9"
-      click_on "Save and continue"
-
-      answer_add_another_ingredient_with "Yes"
+      fill_in "What is the name?", with: "FooBar ingredient"
+      fill_in "What is the exact concentration?", with: "10.1"
+      fill_in "What is the CAS number?", with: "123456-78-9"
+      click_on "Add another ingredient"
 
       expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
 
       # Attempts to add the same ingredient again
-      fill_in "name", with: "foobar ingredient"
-      fill_in "exact_concentration", with: "2.0"
-      click_on "Save and continue"
+      within("#ingredient-1") do
+        fill_in "What is the name?", with: "foobar ingredient"
+        fill_in "What is the exact concentration?", with: "2.0"
+      end
+      click_on "Add another ingredient"
 
       expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
-      expect_form_to_have_errors(name: { message: "Enter a name which is unique to this product", id: "name" })
+      expect_form_to_have_errors(
+        component_ingredients_attributes_1_inci_name:
+          { message: "Enter a name which is unique to this component",
+            id: "component_ingredients_attributes_1_inci_name" },
+      )
 
       # Adds a new poisonous ingredient
-      fill_in "name", with: "newfoo poisonous"
-      check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
-      fill_in "exact_concentration", with: "7.0"
+      within("#ingredient-1") do
+        fill_in "What is the name?", with: "newfoo poisonous"
+        fill_in "What is the exact concentration?", with: "7.0"
+        check "The NPIS must be notified about this ingredient"
+      end
       click_on "Save and continue"
 
-      answer_add_another_ingredient_with "Yes"
-
-      expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["FooBar ingredient", "newfoo poisonous"])
-
-      # Skips adding the ingredient
-      click_link "Skip"
-      expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_what_is_ph_range_of_product_page
     end
 
     scenario "Adding range concentration ingredients to a product" do
@@ -77,47 +81,61 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       expect_to_be_on_add_ingredients_page
 
       # First attempt failing due not indicating if ingredient is poisonous
-      fill_in "name", with: "FooBar ingredient"
-      click_on "Save and continue"
+      fill_in "What is the name?", with: "FooBar ingredient"
+      click_on "Add another ingredient"
 
       expect_to_be_on_add_ingredients_page
-      expect_form_to_have_errors(poisonous_true: {
-        message: "Select yes if the ingredient is poisonous",
-        id: "ingredient_concentration_form_poisonous",
-      })
+      expect_form_to_have_errors(
+        component_ingredients_attributes_0_poisonous_true: {
+          message: "Select yes if the ingredient is poisonous",
+          id: "component_ingredients_attributes_0_poisonous",
+        },
+      )
 
-      # Second attempt failing due to not selecting a concentration range for a non poisonous ingredient
       page.choose "No"
-      click_on "Save and continue"
+      click_on "Add another ingredient"
 
       expect_to_be_on_add_ingredients_page
-      expect_form_to_have_errors(greater_than_75_less_than_100_percent: {
-        message: "Select a concentration range",
-        id: "ingredient_concentration_form_range_concentration",
-      })
+      expect_form_to_have_errors(
+        component_ingredients_attributes_0_minimum_concentration: {
+          message: "Enter the minimum concentration",
+          id: "component_ingredients_attributes_0_minimum_concentration",
+        },
+      )
+      expect_form_to_have_errors(
+        component_ingredients_attributes_0_maximum_concentration: {
+          message: "Enter the maximum concentration",
+          id: "component_ingredients_attributes_0_maximum_concentration",
+        },
+      )
 
-      # Successfully adding the first ingredient by its concentration range
-      page.choose("greater_than_5_less_than_10_percent")
+      within("#ingredient-0") do
+        fill_in("Minimum", with: "1")
+        fill_in("Maximum", with: "2")
+      end
+      click_on "Add another ingredient"
+
+      within("#ingredient-1") do
+        fill_in "What is the name?", with: "New ingredient"
+        page.choose "Yes"
+        fill_in "What is the exact concentration?", with: "Not Valid"
+      end
       click_on "Save and continue"
 
-      answer_add_another_ingredient_with "Yes"
       expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
+      expect_form_to_have_errors(
+        component_ingredients_attributes_1_exact_concentration: {
+          message: "Enter a number for the exact concentration",
+          id: "component_ingredients_attributes_1_exact_concentration",
+        },
+      )
 
-      # Attempt to add a poisonous ingredient with wrong value for concentration
-      fill_in "name", with: "New ingredient"
-      page.choose "Yes"
-      fill_in "exact_concentration", with: "Not Valid"
+      within("#ingredient-1") do
+        fill_in "What is the exact concentration?", with: "5.2"
+      end
       click_on "Save and continue"
 
-      expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["FooBar ingredient"])
-      expect_form_to_have_errors(exact_concentration: { message: "Enter a number for the concentration", id: "exact_concentration" })
-
-      # Adds the second ingredient after entering a valid exact concentration
-      fill_in "exact_concentration", with: "5.2"
-      click_on "Save and continue"
-
-      answer_add_another_ingredient_with("No")
-      expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_what_is_ph_range_of_product_page
     end
 
     scenario "Adding poisonous ingredients for a product with predefined formulation" do
@@ -132,17 +150,24 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       # First attempt with validation errors
       click_on "Save and continue"
       expect(page).to have_css("h1", text: "Add an ingredient the NPIS needs to know about")
-      expect_form_to_have_errors(name: { message: "Enter a name", id: "name" },
-                                 exact_concentration: { message: "Enter the concentration", id: "exact_concentration" })
+      expect_form_to_have_errors(
+        component_ingredients_attributes_0_inci_name: {
+          message: "Enter a name",
+          id: "component_ingredients_attributes_0_inci_name",
+        },
+        component_ingredients_attributes_0_exact_concentration: {
+          message: "Enter the exact concentration",
+          id: "component_ingredients_attributes_0_exact_concentration",
+        },
+      )
 
       # Successfully adds the first ingredient
-      fill_in "name", with: "FooBar ingredient"
-      fill_in "exact_concentration", with: "10.1"
-      fill_in "cas_number", with: "123456-78-9"
+      fill_in "What is the name?", with: "FooBar ingredient"
+      fill_in "What is the exact concentration?", with: "10.1"
+      fill_in "What is the CAS number? ", with: "123456-78-9"
       click_on "Save and continue"
 
-      answer_add_another_ingredient_with "No"
-      expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_what_is_ph_range_of_product_page
     end
   end
 
@@ -170,60 +195,64 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       click_on "Save and continue"
 
       expect_to_be_on_add_ingredients_page
-      expect_form_to_have_errors(used_for_multiple_shades_true: {
-        message: "Select yes if the ingredient is used for different shades",
-        id: "ingredient_concentration_form_used_for_multiple_shades",
-      })
+      expect_form_to_have_errors(
+        component_ingredients_attributes_0_used_for_multiple_shades_true: {
+          message: "Select yes if the ingredient is used for different shades",
+          id: "component_ingredients_attributes_0_used_for_multiple_shades",
+        },
+      )
 
       # Selecting the ingredient is used for multiple shades but not filling the max concentration field
       choose "Yes"
       click_on "Save and continue"
-      expect_form_to_have_errors(maximum_concentration: { message: "Enter the concentration", id: "maximum_concentration" })
+
+      expect_form_to_have_errors(
+        component_ingredients_attributes_0_maximum_exact_concentration: {
+          message: "Enter the maximum concentration",
+          id: "component_ingredients_attributes_0_maximum_exact_concentration",
+        },
+      )
 
       # Adds a non poisonous ingredient used for multiple shades
-      fill_in "maximum_concentration", with: "10.1"
-      fill_in "cas_number", with: "123456-78-9"
-      click_on "Save and continue"
+      fill_in "What is the maximum concentration?", with: "10.1"
+      fill_in "What is the CAS number?", with: "123456-78-9"
+      click_on "Add another ingredient"
 
-      answer_add_another_ingredient_with "Yes"
       expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: ["non-poisonous multi"])
 
       # Adds a poisonous ingredient used for multiple shades
-      fill_in "name", with: "poisonous multi"
-      check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
-      choose "Yes"
-      fill_in "maximum_concentration", with: "7.0"
-      click_on "Save and continue"
+      within("#ingredient-1") do
+        fill_in "What is the name?", with: "poisonous multi"
+        choose "Yes"
+        fill_in "What is the maximum concentration?", with: "7.0"
+        check "The NPIS must be notified about this ingredient"
+      end
+      click_on "Add another ingredient"
 
-      answer_add_another_ingredient_with "Yes"
       expect_to_be_on_add_ingredients_page(ingredient_number: 3, already_added: ["non-poisonous multi", "poisonous multi"])
 
       # Adds a non poisonous ingredient not used for multiple shades
-      fill_in "name", with: "non-poisonous no-multi"
-      choose "No"
-      fill_in "exact_concentration", with: "2.3"
-      click_on "Save and continue"
+      within("#ingredient-2") do
+        fill_in "What is the name?", with: "non-poisonous no-multi"
+        choose "No"
+        fill_in "What is the exact concentration?", with: "2.3"
+      end
+      click_on "Add another ingredient"
 
-      answer_add_another_ingredient_with "Yes"
       expect_to_be_on_add_ingredients_page(
-        ingredient_number: 4, already_added: ["non-poisonous multi", "poisonous multi", "non-poisonous no-multi"],
+        ingredient_number: 3, already_added: ["non-poisonous multi", "poisonous multi", "non-poisonous no-multi"],
       )
 
       # Adds a poisonous ingredient not used for multiple shades
-      fill_in "name", with: "poisonous no-multi"
-      check "Is it listed in the NPIS tables and does the NPIS need to know about it?"
-      choose "No"
-      fill_in "exact_concentration", with: "3.1"
+      within("#ingredient-3") do
+        fill_in "What is the name?", with: "poisonous no-multi"
+        check "The NPIS must be notified about this ingredient"
+        choose "No"
+        fill_in "What is the exact concentration?", with: "3.1"
+      end
       click_on "Save and continue"
 
-      answer_add_another_ingredient_with "Yes"
-      expect_to_be_on_add_ingredients_page(
-        ingredient_number: 5,
-        already_added: ["non-poisonous multi", "poisonous multi", "non-poisonous no-multi", "poisonous no-multi"],
-      )
-      # Skips adding the ingredient
-      click_link "Skip"
-      expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_what_is_ph_range_of_product_page
     end
 
     scenario "Adding range concentration ingredients to a product" do
@@ -232,22 +261,23 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       expect_to_be_on_add_ingredients_page
 
       # Adding a non-poisonous ingredient
-      fill_in "name", with: "non-poisonous"
+      fill_in "What is the name?", with: "non-poisonous"
       page.choose "No"
-      page.choose("greater_than_5_less_than_10_percent")
-      click_on "Save and continue"
+      fill_in "Minimum", with: "6"
+      fill_in "Maximum", with: "6.1"
+      click_on "Add another ingredient"
 
-      answer_add_another_ingredient_with "Yes"
       expect_to_be_on_add_ingredients_page(ingredient_number: 2, already_added: %w[non-poisonous])
 
       # Adding a poisonous ingredient
-      fill_in "name", with: "poisonous"
-      page.choose "Yes"
-      fill_in "exact_concentration", with: "5.2"
+      within("#ingredient-1") do
+        fill_in "What is the name?", with: "poisonous"
+        page.choose "Yes"
+        fill_in "What is the exact concentration?", with: "5.2"
+      end
       click_on "Save and continue"
 
-      answer_add_another_ingredient_with("No")
-      expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_what_is_ph_range_of_product_page
     end
 
     scenario "Adding poisonous ingredients for a product with predefined formulation" do
@@ -260,23 +290,23 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       expect_to_be_on_add_ingredients_page(forced_poisonous: true)
 
       # Adds a poisonous ingredient used for multiple shades
-      fill_in "name", with: "poisonous multi"
+      fill_in "What is the name?", with: "poisonous multi"
       choose "Yes"
-      fill_in "maximum_concentration", with: "7.0"
-      click_on "Save and continue"
+      fill_in "What is the maximum concentration?", with: "7.0"
+      click_on "Add another ingredient"
 
-      answer_add_another_ingredient_with "Yes"
       expect_to_be_on_add_ingredients_page(forced_poisonous: true, ingredient_number: 2, already_added: ["poisonous multi"])
 
       # Adds a poisonous ingredient not used for multiple shades
-      fill_in "name", with: "poisonous no-multi"
-      choose "No"
-      fill_in "exact_concentration", with: "10.1"
-      fill_in "cas_number", with: "123456-78-9"
+      within("#ingredient-1") do
+        fill_in "What is the name?", with: "poisonous no-multi"
+        choose "No"
+        fill_in "What is the exact concentration?", with: "10.1"
+        fill_in "What is the CAS number", with: "123456-78-9"
+      end
       click_on "Save and continue"
 
-      answer_add_another_ingredient_with "No"
-      expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_what_is_ph_range_of_product_page
     end
   end
 end
