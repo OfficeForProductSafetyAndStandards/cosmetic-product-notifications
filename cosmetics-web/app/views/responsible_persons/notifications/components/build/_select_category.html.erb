@@ -10,6 +10,20 @@
             { text: get_category_name(category), value: category, checked: ((category.to_s == params[:select_category]) || (params[:select_category].nil? && category == @selected_sub_category))  }
   }
 %>
+<% details = capture do %>
+  <% if @category.present? %>
+    <!-- -->
+  <% else %>
+    <p class="govuk-body">Selecting from one of the options will enable you to narrow down the category of the cosmetic product and provide some useful frame formulations to choose from.</p>
+    <p class="govuk-body"><a href="/frame_formulations" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Frame formulations (opens in a new tab)</a></p>
+    <%= govukDetails(summaryText: "Help with frame formulations") do %>
+      <p class="govuk-body">
+        To ensure that you are selecting the most relevant and appropriate categories for the cosmetic product; the link above has a complete list of all
+        currently available frame formulations associated with any particular category.
+      </p>
+    <% end %>
+  <% end %>
+<% end %>
 
 <% page_title title, errors: @component.errors.any? %>
 <% content_for :after_header do %>
@@ -25,6 +39,7 @@
       <%= govukRadios(form: form,
                       key: :sub_category,
                       fieldset: { legend: { text: question, classes: "govuk-label--l", isPageHeading: true } },
+                      hint: { html: details.html_safe },
                       items: items) %>
       <%= govukButton text: "Continue" %>
     </div>
