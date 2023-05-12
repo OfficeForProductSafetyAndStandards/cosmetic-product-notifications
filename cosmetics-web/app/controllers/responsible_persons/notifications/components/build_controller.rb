@@ -277,6 +277,7 @@ private
       "exact" => :add_ingredient_exact_concentration,
       "range" => :add_ingredient_range_concentration,
       "exact_csv" => :upload_ingredients_file,
+      "range_csv" => :upload_ingredients_file,
     }[formulation_type]
 
     if @component.ingredients.any? && !@component.predefined?

@@ -25,4 +25,11 @@ module IngredientHelper
       { inci_name: ingredient.inci_name, range_concentration: display_concentration_range(ingredient.range_concentration) }
     end
   end
+
+  def csv_file_type(component)
+    return "range" if component.range?
+    return "exact-with-multiple-shades" if component.shades.present?
+
+    "exact"
+  end
 end

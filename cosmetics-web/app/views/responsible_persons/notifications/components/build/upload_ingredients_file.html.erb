@@ -3,7 +3,6 @@
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
-
 <%= error_summary_for(@bulk_ingredients_form) %>
 
   <div class="govuk-grid-row">
@@ -23,7 +22,7 @@
           </label>
         </h1>
         <div id="csv-hint" class="govuk-hint govuk-!-margin-bottom-8">
-          Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv?csv_file_type=<%= csv_file_type %>" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
+          Your <abbr title="Comma Separated Values">CSV</abbr> file must follow the correct requirements for your chosen formulation type. Learn about <a href="/help/csv?csv_file_type=<%= csv_file_type(@component) %>" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">ingredient <abbr>CSV</abbr> files (opens in a new tab)</a>.
         </div>
 
         <% if @component.ingredients_file.present? %>
