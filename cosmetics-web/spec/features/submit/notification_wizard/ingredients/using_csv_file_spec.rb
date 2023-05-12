@@ -91,7 +91,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     page.attach_file "spec/fixtures/files/exact_ingredients_with_shades.csv"
     click_on "Continue"
 
-    expect_success_banner_with_text "exact_ingredients_with_shades.csv uploaded successful"
+    expect_success_banner_with_text "exact_ingredients_with_shades.csv uploaded successfully"
     click_on "Continue"
 
     expect_to_be_on_what_is_ph_range_of_product_page
@@ -109,5 +109,38 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     expect(page).to have_css("dd", text: "Maximum concentration: 65.0% w/w")
     expect(page).to have_css("dt", text: "ethanol")
     expect(page).to have_css("dd", text: "Maximum concentration: 23.0% w/w")
+  end
+
+  scenario "Adding range concentration ingredients to a product using a CSV file" do
+    click_link "Product details"
+
+    answer_is_item_available_in_shades_with "No"
+    click_button "Continue"
+
+    answer_what_is_physical_form_of_item_with "Liquid"
+    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+    answer_does_item_contain_cmrs_with "No"
+    answer_item_category_with "Hair and scalp products"
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+    answer_item_sub_subcategory_with "Shampoo"
+    answer_how_do_you_want_to_give_formulation_with "Upload a CSV file for ingredients and their concentration range"
+    expect_to_be_on_add_csv_ingredients_page
+
+    page.attach_file "spec/fixtures/files/range_ingredients.csv"
+    click_on "Continue"
+
+    expect_success_banner_with_text "range_ingredients.csv uploaded successfully"
+    click_on "Continue"
+
+    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
+    return_to_task_list_page
+    click_link "Accept and submit"
+
+    expect(page).to have_css("dt", text: "Sodium carbonate")
+    expect(page).to have_css("dd", text: "CAS: 497-19-8")
+    expect(page).to have_css("dt", text: "Water")
+    expect(page).to have_css("dd", text: "CAS: 497-19-8")
+    expect(page).to have_css("dt", text: "Eucalyptol")
+    expect(page).to have_css("dd", text: "12.0% w/w")
   end
 end

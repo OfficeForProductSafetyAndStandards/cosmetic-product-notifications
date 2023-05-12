@@ -70,8 +70,12 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def parse_csv_file
-      headers = %i[inci_name concentration cas_number poisonous]
-      headers << :multiple_shades if multiple_shades?
+      if component.range?
+        headers = %i[inci_name minimum_concentration maximum_concentration exact_concentration cas_number poisonous]
+      else
+        headers = %i[inci_name concentration cas_number poisonous]
+        headers << :multiple_shades if multiple_shades?
+      end
 
       @csv_data ||= CSV.parse(file&.tempfile, headers:)
     end
@@ -127,7 +131,11 @@ module ResponsiblePersons::Notifications::Components
       component.shades.present?
     end
 
-    def row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:, multiple_shades: nil, **unwanted)
+    def row_to_ingredient(opts)
+      component.range? ? range_row_to_ingredient(**opts) : exact_row_to_ingredient(**opts)
+    end
+
+    def exact_row_to_ingredient(inci_name:, cas_number:, concentration:, poisonous:, multiple_shades: nil, **unwanted)
       return if unwanted.present?
       return if multiple_shades.present? && !multiple_shades?
 
@@ -142,6 +150,13 @@ module ResponsiblePersons::Notifications::Components
         ingredient.poisonous = true
       end
       ingredient
+    end
+
+    def range_row_to_ingredient(inci_name:, cas_number:, minimum_concentration:, maximum_concentration:, exact_concentration:, poisonous:, **_unwanted)
+      Ingredient.new(
+        component:, inci_name:, cas_number:, poisonous: cast_boolean(poisonous),
+        minimum_concentration:, maximum_concentration:, exact_concentration:
+      )
     end
 
     def duplicated_ingredients_in_file?
