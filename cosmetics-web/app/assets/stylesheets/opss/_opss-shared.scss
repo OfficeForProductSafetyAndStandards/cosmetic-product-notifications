@@ -5,6 +5,13 @@
   display: inline-block;
 }
 
+@mixin print-link {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASAgMAAAAvVbb5AAAACVBMVEX///////8KDAwmYEUdAAAAAXRSTlMAQObYZgAAADBJREFUCFtjYOBa1cDAoBkKJFYCCSYwEYpCrAICZCI0FEhkrURmQRRnrYRpW7WqAQAlGR86Ip1rwwAAAABJRU5ErkJggg==");
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
 @function calculaterem($s) {
   $remsize: calc($s / 16);
   @return #{$remsize}rem;
@@ -410,6 +417,16 @@ samp {
   @include down-load-link(rgba($govuk-link-colour, .9), 20);
   width: 17px;
   height: 17px;
+  margin-right: 5px;
+
+  position: relative;
+  top: 2px;
+}
+
+.opss-print-link-l {
+  @include print-link;
+  width: 20px;
+  height: 20px;
   margin-right: 5px;
 
   position: relative;

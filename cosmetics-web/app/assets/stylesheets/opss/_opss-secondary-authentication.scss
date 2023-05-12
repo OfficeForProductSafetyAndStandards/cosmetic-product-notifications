@@ -1,0 +1,19 @@
+.opss-recovery-codes {
+  border-color: $govuk-border-colour;
+  border-style: solid;
+  border-width: 1px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  text-align: center;
+
+  p {
+    flex-basis: 50%;
+    font-weight: bold;
+
+    &.opss-recovery-codes--used {
+      color: $govuk-secondary-text-colour;
+      text-decoration-line: line-through;
+    }
+  }
+}

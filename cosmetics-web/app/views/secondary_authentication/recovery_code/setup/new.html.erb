@@ -1,0 +1,48 @@
+<% title = "Recovery codes" %>
+<% page_title(title) %>
+
+<% content_for :after_header do %>
+  <%= govukBackLink text: "Back", href: my_account_path %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l"><%= title %></h1>
+    <p class="govuk-body opss-secondary-text">
+      Make sure these codes are kept somewhere safe.
+      They will enable you to sign in to your account if you are unable to complete the <abbr>2FA</abbr> process.
+    </p>
+    <%= govukWarningText(
+      iconFallbackText: "Warning",
+      text: "Each recovery code can only be used once - if you have used them all or need new recovery codes, for whatever reason, you must contact the support team to receive more recovery codes."
+    ) %>
+    <p class="govuk-body">
+      Download or print the recovery codes to ensure they are not lost.
+    </p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="opss-recovery-codes">
+      <% @recovery_codes_used.each do |code| %>
+        <p class="opss-recovery-codes--used"><%= number_with_delimiter(code, delimiter: " ", delimiter_pattern: /(\d{4})(?=\d)/) %></p>
+      <% end %>
+      <% @recovery_codes.each do |code| %>
+        <p><%= number_with_delimiter(code, delimiter: " ", delimiter_pattern: /(\d{4})(?=\d)/) %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-top-4">
+    <div class="govuk-button-group">
+      <%= govukButton(text: "Download recovery codes", href: new_secondary_authentication_recovery_codes_setup_path(format: :txt), classes: "govuk-button--secondary", attributes: { target: "_blank", download: "scpn-recovery-codes.txt" }) %>
+      <a href="#" class="govuk-link govuk-link--no-visited-state opss-print-link opss-nojs-hide"><span class="opss-print-link-l"></span>Print these codes</a>
+    </div>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= govukButton(text: "Continue", href: @continue_path) %>
+  </div>
+</div>

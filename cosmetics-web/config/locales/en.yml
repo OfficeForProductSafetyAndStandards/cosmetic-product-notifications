@@ -388,6 +388,15 @@ en:
               invalid: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982"
             password:
               invalid: "Password is incorrect"
+        secondary_authentication/recovery_code/auth_form:
+          attributes:
+            recovery_code:
+              blank: "Enter the recovery code"
+              too_short: "You haven’t entered enough numbers"
+              too_long: "You’ve entered too many numbers"
+              incorrect: "Incorrect recovery code"
+              numericality: "The code must be 8 numbers"
+              used: "The recovery code has already been used"
         sign_in_form:
           attributes:
             password:

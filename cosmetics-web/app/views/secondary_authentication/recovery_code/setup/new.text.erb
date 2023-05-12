@@ -1,0 +1,33 @@
+<% if current_user.is_a?(SearchUser) %>
+Search cosmetic product notifications
+=====================================
+
+<%= search_root_url %>
+<% else %>
+Submit cosmetic product notifications
+=====================================
+
+<%= submit_root_url %>
+<% end %>
+
+--------------------------------------------------------------------------------
+
+Downloaded <%= display_full_month_date(Time.zone.now) %>
+
+--------------------------------------------------------------------------------
+
+Make sure these codes are kept somewhere safe. They will enable you to sign in
+to your account if you are unable to complete the 2FA process.
+
+Each recovery code can only be used once - if you have used them all or need
+new recovery codes, for whatever reason, you must contact the support team to
+receive more recovery codes.
+
+--------------------------------------------------------------------------------
+
+<% @recovery_codes_used.each do |code| %>
+<%= number_with_delimiter(code, delimiter: " ", delimiter_pattern: /(\d{4})(?=\d)/) %> (already used)
+<% end %>
+<% @recovery_codes.each do |code| %>
+<%= number_with_delimiter(code, delimiter: " ", delimiter_pattern: /(\d{4})(?=\d)/) %>
+<% end %>
