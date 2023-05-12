@@ -60,56 +60,54 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     expect(page).to have_css("dd", text: "23.0% w/w")
   end
 
-  with_feature_flag_enabled :csv_upload_exact_with_shades do
-    scenario "Adding exact concentration ingredients to a product with multiple shades using a CSV file" do
-      click_link "Product details"
+  scenario "Adding exact concentration ingredients to a product with multiple shades using a CSV file" do
+    click_link "Product details"
 
-      answer_is_item_available_in_shades_with "Yes"
-      fill_in "component_shades-0", with: "Blue"
-      fill_in "component_shades-1", with: "Blue"
-      click_button "Continue"
+    answer_is_item_available_in_shades_with "Yes"
+    fill_in "component_shades-0", with: "Blue"
+    fill_in "component_shades-1", with: "Blue"
+    click_button "Continue"
 
-      answer_what_is_physical_form_of_item_with "Liquid"
-      answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
-      answer_does_item_contain_cmrs_with "No"
-      answer_item_category_with "Hair and scalp products"
-      answer_item_subcategory_with "Hair and scalp care and cleansing products"
-      answer_item_sub_subcategory_with "Shampoo"
-      answer_how_do_you_want_to_give_formulation_with "Upload a CSV file for ingredients and their exact concentration"
-      expect_to_be_on_add_csv_ingredients_page
+    answer_what_is_physical_form_of_item_with "Liquid"
+    answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
+    answer_does_item_contain_cmrs_with "No"
+    answer_item_category_with "Hair and scalp products"
+    answer_item_subcategory_with "Hair and scalp care and cleansing products"
+    answer_item_sub_subcategory_with "Shampoo"
+    answer_how_do_you_want_to_give_formulation_with "Upload a CSV file for ingredients and their exact concentration"
+    expect_to_be_on_add_csv_ingredients_page
 
-      # First attempt with validation errors
-      click_on "Continue"
+    # First attempt with validation errors
+    click_on "Continue"
 
-      expect_to_be_on_add_csv_ingredients_page
-      expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_to_be_on_add_csv_ingredients_page
+    expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
-      page.attach_file "spec/fixtures/files/exact_ingredients.csv"
-      click_on "Continue"
+    page.attach_file "spec/fixtures/files/exact_ingredients.csv"
+    click_on "Continue"
 
-      expect_form_to_have_errors(file: { message: "The file has an error in rows: 2,3,4", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The file has an error in rows: 2,3,4", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
-      page.attach_file "spec/fixtures/files/exact_ingredients_with_shades.csv"
-      click_on "Continue"
+    page.attach_file "spec/fixtures/files/exact_ingredients_with_shades.csv"
+    click_on "Continue"
 
-      expect_success_banner_with_text "exact_ingredients_with_shades.csv uploaded successful"
-      click_on "Continue"
+    expect_success_banner_with_text "exact_ingredients_with_shades.csv uploaded successful"
+    click_on "Continue"
 
-      expect_to_be_on_what_is_ph_range_of_product_page
+    expect_to_be_on_what_is_ph_range_of_product_page
 
-      answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
-      expect_task_has_been_completed_page
+    answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
+    expect_task_has_been_completed_page
 
-      return_to_task_list_page
+    return_to_task_list_page
 
-      click_link "Accept and submit"
+    click_link "Accept and submit"
 
-      expect(page).to have_css("dt", text: "Sodium")
-      expect(page).to have_css("dd", text: "35.0% w/w")
-      expect(page).to have_css("dt", text: "Aqua")
-      expect(page).to have_css("dd", text: "Maximum concentration: 65.0% w/w")
-      expect(page).to have_css("dt", text: "ethanol")
-      expect(page).to have_css("dd", text: "Maximum concentration: 23.0% w/w")
-    end
+    expect(page).to have_css("dt", text: "Sodium")
+    expect(page).to have_css("dd", text: "35.0% w/w")
+    expect(page).to have_css("dt", text: "Aqua")
+    expect(page).to have_css("dd", text: "Maximum concentration: 65.0% w/w")
+    expect(page).to have_css("dt", text: "ethanol")
+    expect(page).to have_css("dd", text: "Maximum concentration: 23.0% w/w")
   end
 end
