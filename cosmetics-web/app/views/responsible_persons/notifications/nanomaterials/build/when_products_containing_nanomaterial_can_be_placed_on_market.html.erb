@@ -11,24 +11,11 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <p class="govuk-body">
-      This will depend upon if and when you notified the nanomaterial using the <abbr>EU</abbr>
-      Cosmetic Products Notification Portal (<abbr>CPNP</abbr>).
+      Products containing nanomaterials notified in GB after 1 January 2021 can be placed on the market 6 months after the nanomaterial has first been notified.
     </p>
 
-    <p class="govuk-body">
-      If you notified this nanomaterial using <abbr>CPNP</abbr> before
-      <span class="no-wrap"><%= display_full_month_date(EU_EXIT_DATE) %>,</span>
-      and notified it in <abbr>GB</abbr> before
-      <span class="no-wrap"><%= display_full_month_date(SUBMISSION_WINDOW_END_DATE) %></span>
-      you must wait 7 months from the original <abbr>EU</abbr> notification before you can place products
-      containing this nanomaterial on the market.
-    </p>
-
-    <p class="govuk-body">
-      If you didn’t notify this nanomaterial using <abbr>CPNP</abbr> before
-      <span class="no-wrap"><%= display_full_month_date(EU_EXIT_DATE) %></span>
-      you must wait 6 months from the date you notified it in <abbr>GB</abbr> before you can place products
-      containing this nanomaterial on the market.
+    <p class="govuk-body govuk-!-font-weight-bold">
+       Note that you cannot use a nanomaterial as a preservative, UV-filter or colourant that is not listed in the Annexes.
     </p>
 
     <%= form_with model: @nano_material, url: wizard_path, method: :put do |form| %>
