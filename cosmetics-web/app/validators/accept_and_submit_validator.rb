@@ -17,9 +17,9 @@ class AcceptAndSubmitValidator < ActiveModel::Validator
   def validate_image_uploads(notification)
     notification.image_uploads.each do |image_upload|
       if image_upload.pending_antivirus_check?
-        notification.errors.add :image_uploads, "Image #{image_upload.file.filename} is still being processed"
+        notification.errors.add :image_uploads, "Image #{image_upload.file.filename} is pending virus scan"
       elsif image_upload.failed_antivirus_check?
-        notification.errors.add :image_uploads, "Image #{image_upload.file.filename} failed antivirus check. Remove image and try again"
+        notification.errors.add :image_uploads, "Image #{image_upload.file.filename} failed virus scan; remove the image and try again"
       end
     end
     if notification.image_uploads.blank?

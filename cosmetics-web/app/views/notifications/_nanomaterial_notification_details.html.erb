@@ -1,5 +1,6 @@
 <%= nanomaterial_notification.ukn %> - <%= nanomaterial_notification.name %>
-<% if can_view_nanomaterial_notification_files? && nanomaterial_notification.passed_antivirus_check? %>
+<% if can_view_nanomaterial_notification_files? %>
+  <% if nanomaterial_notification.passed_antivirus_check? %>
     <% file = nanomaterial_notification.file %>
     <br>
     <%= link_to(file.filename,
@@ -8,4 +9,9 @@
                 target: "_blank",
                 rel: "noopener") %>
     <%= render("shared/pdf_size", file: file) %>
+  <% elsif nanomaterial_notification.pending_antivirus_check? %>
+    <%= nanomaterial_notification.file.filename %> pending virus scan
+ <% else %>
+    <%= nanomaterial_notification.file.filename %> failed virus scan
+  <% end %>
 <% end %>

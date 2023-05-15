@@ -25,17 +25,13 @@ class Component < ApplicationRecord
     category
     unit
   ].freeze
+
   include AASM
   include NotificationProperties
   include NotificationPropertiesHelper
   include CategoryHelper
   include Clonable
-  include FileUploadConcern
   include RoutingQuestionCacheConcern
-
-  set_attachment_name :formulation_file
-  set_allowed_types %w[application/pdf].freeze
-  set_max_file_size 30.megabytes
 
   attr_writer :skip_name_uniqueness_on_import
 
@@ -46,8 +42,20 @@ class Component < ApplicationRecord
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :component_nano_materials
   has_many :nano_materials, through: :component_nano_materials
+
+  # BEGIN: File uploads
+  include FileUploadConcern
+  include FileAntivirusConcern
+
   has_one_attached :formulation_file
+  set_attachment_name :formulation_file
+  set_attachment_name_for_antivirus :formulation_file
+  set_allowed_types %w[application/pdf].freeze
+  set_max_file_size 30.megabytes
+
+  # Ingredients CSV files are validated in `ResponsiblePersons::Notifications::Components::BulkIngredientUploadForm`
   has_one_attached :ingredients_file
+  # END: File uploads
 
   delegate :responsible_person, to: :notification
 

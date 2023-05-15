@@ -185,10 +185,12 @@ module ResponsiblePersons::NotificationsHelper
   def notification_summary_label_image_link(image, responsible_person, notification)
     if image.passed_antivirus_check?
       link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noopener")
-    elsif image.file_exists? && notification.editable?
-      "Processing image #{image.file.filename}..." \
+    elsif image.pending_antivirus_check? && notification.editable?
+      "#{image.file.filename} pending virus scan" \
       "<br>" \
       "#{link_to('Refresh', edit_responsible_person_notification_path(responsible_person, notification), class: 'govuk-link govuk-link--no-visited-state')}".html_safe
+    elsif image.failed_antivirus_check?
+      "#{image.file.filename} failed virus scan"
     end
   end
 

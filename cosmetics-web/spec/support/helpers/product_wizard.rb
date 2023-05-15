@@ -93,15 +93,19 @@ def expect_product_task_completed
   expect_task_completed "Create the product"
 end
 
-def expect_product_label_images(images_names)
-  images_names = images_names.compact_blank
-  images_count = images_names.size
+def expect_product_label_images(images)
+  images_count = images.size
 
   expect(page).to have_h1("Upload an image of the product label")
   within("#label-images-table") do
     expect(page).to have_css("tr.govuk-table__row", count: images_count)
-    images_names.each do |name|
-      expect(page).to have_link(name)
+    images.each do |image|
+      case image["virus_scan_status"]
+      when "passed"
+        expect(page).to have_link(image["name"])
+      when "pending"
+        expect(page).to have_text("#{image['name']} pending virus scan")
+      end
     end
     if images_count > 1
       expect(page).to have_button("Remove", count: images_count)

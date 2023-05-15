@@ -57,7 +57,13 @@
           <% @notification.image_uploads.each do |image| %>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header govuk-!-width-two-thirds" scope="row">
-                  <%= link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state") %>
+                  <% if image.passed_antivirus_check? %>
+                    <%= link_to(image.filename, url_for(image.file), class: "govuk-link govuk-link--no-visited-state") %>
+                  <% elsif image.pending_antivirus_check? %>
+                    <%= image.filename %> pending virus scan
+                  <% else %>
+                    <%= image.filename %> failed virus scan
+                  <% end %>
                 </th>
                 <td class="govuk-table__cell">
                   <% if image_count > 1 %>

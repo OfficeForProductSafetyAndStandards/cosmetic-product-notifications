@@ -41,8 +41,14 @@
       <% if @nanomaterial_notification.file.attached? %>
         <div class="govuk-inset-text">
           Previously uploaded file:
-          <%= link_to @nanomaterial_notification.file.filename, @nanomaterial_notification.file %>
-          <%= render("shared/pdf_size", file: @nanomaterial_notification.file) %>
+          <% if @nanomaterial_notification.passed_antivirus_check? %>
+            <%= link_to @nanomaterial_notification.file.filename, @nanomaterial_notification.file %>
+            <%= render("shared/pdf_size", file: @nanomaterial_notification.file) %>
+          <% elsif @nanomaterial_notification.pending_antivirus_check? %>
+            <%= @nanomaterial_notification.file.filename %> (pending virus scan)
+          <% else %>
+            <%= @nanomaterial_notification.file.filename %> (failed virus scan)
+          <% end %>
         </div>
       <% end %>
 

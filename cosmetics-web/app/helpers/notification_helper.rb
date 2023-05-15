@@ -17,7 +17,7 @@ module NotificationHelper
 
   def component_ingredients(component)
     if component.formulation_file.attached?
-      if component.formulation_file.metadata["safe"]
+      if component.passed_antivirus_check?
         ["<a href=\"#{url_for(component.formulation_file)}\">#{component.formulation_file.filename}</a>"]
       end
     elsif component.ingredients.any?
