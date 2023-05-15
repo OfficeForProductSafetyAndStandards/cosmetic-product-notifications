@@ -1,5 +1,7 @@
+require "feature_flags"
+
 module SecondaryAuthentication
-  # Dont inherit from authentication controller
+  # Don't inherit from authentication controller
   class AppController < ApplicationController
     skip_before_action :authenticate_user!,
                        :require_secondary_authentication,

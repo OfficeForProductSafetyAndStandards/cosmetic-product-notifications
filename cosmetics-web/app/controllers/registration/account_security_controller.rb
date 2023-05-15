@@ -1,3 +1,5 @@
+require "feature_flags"
+
 module Registration
   class AccountSecurityController < SubmitApplicationController
     before_action :check_user, except: :reset
@@ -21,13 +23,13 @@ module Registration
     def create
       if account_security_form.update!
         bypass_sign_in(current_user)
-        # Sets 2FA cookie for users that have set authentication APP in the account security page.
+        # Sets 2FA cookie for users that have set authentication app in the account security page.
         # If they have chosen the SMS code authentication option we won't set the cookie until
-        # they confirm their mobile number with the sms code at SMS code authentication page.
+        # they confirm their mobile number with the SMS code at SMS code authentication page.
         if account_security_form.app_authentication_selected? && !account_security_form.sms_authentication_selected? && current_user.last_totp_at
           set_secondary_authentication_cookie(Time.zone.now.to_i)
         end
-        redirect_to after_creation_path
+        redirect_to FeatureFlags.secondary_authentication_recovery_codes_enabled?(current_user) ? new_secondary_authentication_recovery_codes_setup_path : after_creation_path
       else
         render :new
       end
@@ -59,6 +61,7 @@ module Registration
                     :app_authentication)
     end
 
+    # TODO(ruben): Remove once recovery codes are enabled for everyone
     def after_creation_path
       invitation_id = session.delete(:registered_from_responsible_person_invitation_id)
       if (invitation = PendingResponsiblePersonUser.find_by(id: invitation_id))

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   shared_examples "sign in" do
-    scenario "user tries to sign in with email address that does not belong to any user" do
+    scenario "user attempts to sign in with email address that does not belong to any user" do
       visit "/sign-in"
 
       expect_back_link_to("/")
@@ -14,7 +14,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
       expect_incorrect_email_or_password
     end
 
-    scenario "user introduces wrong password" do
+    scenario "user attempts to sign in with the wrong password" do
       visit "/sign-in"
 
       fill_in "Email address", with: user.email
@@ -24,7 +24,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
       expect_incorrect_email_or_password
     end
 
-    scenario "user introduces email address with incorrect format" do
+    scenario "user attempts to sign in with an email address in an incorrect format" do
       visit "/sign-in"
 
       fill_in "Email address", with: "test.email"
@@ -97,12 +97,120 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
         expect(page).to have_css("h1", text: "Are you or your organisation a UK Responsible Person?")
       end
+
+      with_feature_flag_enabled :secondary_authentication_recovery_codes do
+        context "when using a recovery code" do
+          let(:used_recovery_code) { user.secondary_authentication_recovery_codes.sample }
+
+          before do
+            user.secondary_authentication_recovery_codes.delete(used_recovery_code)
+            user.secondary_authentication_recovery_codes_used = [used_recovery_code]
+            user.save!
+          end
+
+          scenario "user signs in with a correct recovery code" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code(user.secondary_authentication_recovery_codes.sample)
+
+            expect(page).to have_current_path("/two-factor/recovery-code/interstitial")
+            click_link "Continue to your account"
+
+            expect(page).to have_current_path("/declaration?redirect_path=%2Fdashboard")
+            expect(page).to have_css("h1", text: "Responsible Person Declaration")
+            click_button "I confirm"
+
+            expect(page).to have_css("h1", text: "Are you or your organisation a UK Responsible Person?")
+          end
+
+          scenario "user attempts to sign in with an incorrect recovery code" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("00000000")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("div.govuk-error-summary__body", text: "Incorrect recovery code")
+          end
+
+          scenario "user attempts to sign in with a recovery code that is too short" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("1234")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "You haven’t entered enough numbers")
+          end
+
+          scenario "user attempts to sign in with a recovery code that is too long" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("123456789")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "You’ve entered too many numbers")
+          end
+
+          scenario "user attempts to sign in with a recovery code that has already been used" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code(used_recovery_code)
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "The recovery code has already been used")
+          end
+
+          context "when there are no remaining recovery codes for a user" do
+            before do
+              user.secondary_authentication_recovery_codes = []
+              user.secondary_authentication_recovery_codes_used = []
+              user.save!
+            end
+
+            scenario "user attempts to sign in" do
+              visit "/sign-in"
+              fill_in_credentials
+              select_secondary_authentication_recovery_code
+
+              expect(page).to have_current_path("/two-factor/recovery-code?back_to=app")
+              expect(page).to have_css("h2", text: "There is a problem")
+              expect(page).to have_css("div.govuk-error-summary__body", text: "All recovery codes have been used")
+            end
+          end
+
+          scenario "user attempts to sign in with an empty recovery code" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "Enter the recovery code")
+          end
+        end
+      end
     end
 
     describe "for user with app secondary authentication", :with_2fa_app do
       let(:user) { create(:submit_user, :with_app_secondary_authentication, has_accepted_declaration: false) }
 
-      scenario "user signs in for first time" do
+      scenario "user signs in for the first time" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -117,7 +225,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_css("h1", text: "Are you or your organisation a UK Responsible Person?")
       end
 
-      scenario "user attempts to sign in with wrong two factor authentication code" do
+      scenario "user attempts to sign in with the wrong two factor authentication code" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -133,7 +241,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
     describe "for user with sms secondary authentication", :with_2fa do
       let(:user) { create(:submit_user, :with_sms_secondary_authentication, has_accepted_declaration: false) }
 
-      scenario "user signs in for first time" do
+      scenario "user signs in for the first time" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -148,7 +256,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_css("h1", text: "Are you or your organisation a UK Responsible Person?")
       end
 
-      scenario "user signs out when required to fill two factor authentication code" do
+      scenario "user signs out when required to fill in a two factor authentication code" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -162,7 +270,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_link("Sign in")
       end
 
-      scenario "user attempts to sign in with wrong two factor authentication code" do
+      scenario "user attempts to sign in with the wrong two factor authentication code" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -175,7 +283,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_css("#otp_code-error", text: "Error: Incorrect security code")
       end
 
-      scenario "user signs in with correct secondary authentication code after requesting a second code" do
+      scenario "user signs in with the correct secondary authentication code after requesting a second code" do
         allow(SecureRandom).to receive(:random_number).and_return(12_345, 54_321)
 
         visit "/sign-in"
@@ -245,7 +353,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
           expect(page.status_code).to eq(404)
         end
 
-        scenario "locked user receives email with reset password link" do
+        scenario "locked user receives an email with a reset password link" do
           Devise.maximum_attempts.times do
             visit "/sign-in"
             fill_in_credentials(password_override: "XXX")
@@ -299,12 +407,117 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
         expect(page).to have_css("h1", text: "Cosmetic products search")
       end
+
+      with_feature_flag_enabled :secondary_authentication_recovery_codes do
+        context "when using a recovery code" do
+          let(:used_recovery_code) { user.secondary_authentication_recovery_codes.sample }
+
+          before do
+            user.secondary_authentication_recovery_codes.delete(used_recovery_code)
+            user.secondary_authentication_recovery_codes_used = [used_recovery_code]
+            user.save!
+          end
+
+          scenario "user signs in with a correct recovery code" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code(user.secondary_authentication_recovery_codes.sample)
+
+            expect(page).to have_current_path("/two-factor/recovery-code/interstitial")
+            click_link "Continue to your account"
+
+            expect(page).to have_current_path("/notifications")
+            expect(page).to have_css("h1", text: "Cosmetic products search")
+          end
+
+          scenario "user attempts to sign in with an incorrect recovery code" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("00000000")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("div.govuk-error-summary__body", text: "Incorrect recovery code")
+          end
+
+          scenario "user attempts to sign in with a recovery code that is too short" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("1234")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "You haven’t entered enough numbers")
+          end
+
+          scenario "user attempts to sign in with a recovery code that is too long" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("123456789")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "You’ve entered too many numbers")
+          end
+
+          scenario "user attempts to sign in with a recovery code that has already been used" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code(used_recovery_code)
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "The recovery code has already been used")
+          end
+
+          context "when there are no remaining recovery codes for a user" do
+            before do
+              user.secondary_authentication_recovery_codes = []
+              user.secondary_authentication_recovery_codes_used = []
+              user.save!
+            end
+
+            scenario "user attempts to sign in" do
+              visit "/sign-in"
+              fill_in_credentials
+              select_secondary_authentication_recovery_code
+
+              expect(page).to have_current_path("/two-factor/recovery-code?back_to=app")
+              expect(page).to have_css("h2", text: "There is a problem")
+              expect(page).to have_css("div.govuk-error-summary__body", text: "All recovery codes have been used")
+            end
+          end
+
+          scenario "user attempts to sign in with an empty recovery code" do
+            visit "/sign-in"
+            fill_in_credentials
+            select_secondary_authentication_recovery_code
+
+            expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+            complete_secondary_authentication_recovery_code("")
+
+            expect_to_be_on_secondary_authentication_recovery_code_page
+            expect(page).to have_css("p.govuk-error-message", text: "Enter the recovery code")
+          end
+        end
+      end
     end
 
     describe "for user with app secondary authentication", :with_2fa_app do
       let(:user) { create(:poison_centre_user, :with_app_secondary_authentication, has_accepted_declaration: true) }
 
-      scenario "user signs in for first time" do
+      scenario "user signs in for the first time" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -315,7 +528,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_css("h1", text: "Cosmetic products search")
       end
 
-      scenario "user attempts to sign in with wrong two factor authentication code" do
+      scenario "user attempts to sign in with the wrong two factor authentication code" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -333,7 +546,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
     describe "for user with sms secondary authentication", :with_2fa do
       let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication, has_accepted_declaration: true) }
 
-      scenario "user signs in for first time" do
+      scenario "user signs in for the first time" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -345,7 +558,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_css("h1", text: "Cosmetic products search")
       end
 
-      scenario "user signs out when required to fill two factor authentication code" do
+      scenario "user signs out when required to fill in a two factor authentication code" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -359,7 +572,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_link("Sign in")
       end
 
-      scenario "user attempts to sign in with wrong two factor authentication code" do
+      scenario "user attempts to sign in with the wrong two factor authentication code" do
         visit "/sign-in"
         fill_in_credentials
 
@@ -372,7 +585,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
         expect(page).to have_css("#otp_code-error", text: "Error: Incorrect security code")
       end
 
-      scenario "user signs in with correct secondary authentication code after requesting a second code" do
+      scenario "user signs in with the correct secondary authentication code after requesting a second code" do
         allow(SecureRandom).to receive(:random_number).and_return(12_345, 54_321)
 
         visit "/sign-in"
@@ -440,7 +653,7 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
           expect(page.status_code).to eq(404)
         end
 
-        scenario "locked user receives email with reset password link" do
+        scenario "locked user receives an email with a reset password link" do
           Devise.maximum_attempts.times do
             visit "/sign-in"
             fill_in_credentials(password_override: "XXX")

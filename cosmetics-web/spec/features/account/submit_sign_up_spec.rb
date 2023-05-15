@@ -5,251 +5,291 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     configure_requests_for_submit_domain
   end
 
-  scenario "user signs up and verifies its email" do
-    visit "/"
-    click_on "Create an account"
-    expect(page).to have_current_path("/create-an-account")
+  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
+    scenario "user signs up and verifies its email" do
+      visit "/"
+      click_on "Create an account"
+      expect(page).to have_current_path("/create-an-account")
 
-    # First attempt with validation errors
-    fill_in "Full name", with: ""
-    fill_in "Email address", with: "signing_up.example.com"
-    click_button "Continue"
+      # First attempt with validation errors
+      fill_in "Full name", with: ""
+      fill_in "Email address", with: "signing_up.example.com"
+      click_button "Continue"
 
-    expect(page).to have_current_path("/create-an-account")
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter your full name", href: "#full_name")
-    expect(page).to have_css("p#full_name-error", text: "Enter your full name")
+      expect(page).to have_current_path("/create-an-account")
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter your full name", href: "#full_name")
+      expect(page).to have_css("p#full_name-error", text: "Enter your full name")
 
-    expect(page).to have_link("Enter an email address", href: "#email")
-    expect(page).to have_css("p#email-error", text: "Enter an email address")
+      expect(page).to have_link("Enter an email address", href: "#email")
+      expect(page).to have_css("p#email-error", text: "Enter an email address")
 
-    # Second attempt with no validation issues
-    fill_in "Full name", with: "Joe Doe"
-    fill_in "Email address", with: "signing_up@example.com"
-    click_button "Continue"
+      # Second attempt with no validation issues
+      fill_in "Full name", with: "Joe Doe"
+      fill_in "Email address", with: "signing_up@example.com"
+      click_button "Continue"
 
-    expect_to_be_on_check_your_email_page("signing_up@example.com")
+      expect_to_be_on_check_your_email_page("signing_up@example.com")
 
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+      email = delivered_emails.last
+      expect(email.recipient).to eq "signing_up@example.com"
+      expect(email.personalization[:name]).to eq("Joe Doe")
 
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
+      verify_url = email.personalization[:verify_email_url]
+      visit verify_url
 
-    # Some links should not be shown to users during the sign up flow
-    expect(page).not_to have_link("Your account")
+      # Some links should not be shown to users during the sign up flow
+      expect(page).not_to have_link("Your account")
 
-    click_link "Submit cosmetic product notifications"
-    expect(page).to have_current_path("/account-security")
+      click_link "Submit cosmetic product notifications"
+      expect(page).to have_current_path("/account-security")
 
-    expect(page).to have_link("How to notify nanomaterials", href: "/guidance/how-to-notify-nanomaterials")
-    expect(page).to have_link("How to prepare images for notification", href: "/guidance/how-to-prepare-images-for-notification")
-    expect(page).to have_link("Privacy policy", href: "/help/privacy-notice")
-    expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
-    expect(page).to have_link("Accessibility Statement", href: "/help/accessibility-statement")
+      expect(page).to have_link("How to notify nanomaterials", href: "/guidance/how-to-notify-nanomaterials")
+      expect(page).to have_link("How to prepare images for notification", href: "/guidance/how-to-prepare-images-for-notification")
+      expect(page).to have_link("Privacy policy", href: "/help/privacy-notice")
+      expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
+      expect(page).to have_link("Accessibility Statement", href: "/help/accessibility-statement")
 
-    # Attempts to submit security page without selecting secondary authentication method
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    click_button "Continue"
+      # Attempts to submit security page without selecting secondary authentication method
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      click_button "Continue"
 
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
 
-    # Attempts to submit security page with invalid phone and wrong app authentication code
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
-    fill_in "Enter the access code", with: "000000"
-    check "Text message"
-    fill_in "Mobile number", with: "07000 invalid 000000"
+      # Attempts to submit security page with invalid phone and wrong app authentication code
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      check "Authenticator app for smartphone or tablet"
+      fill_in "Enter the access code", with: "000000"
+      check "Text message"
+      fill_in "Mobile number", with: "07000 invalid 000000"
 
-    original_secret_key = page.find("p", text: "Secret key:").text
+      original_secret_key = page.find("p", text: "Secret key:").text
 
-    click_button "Continue"
+      click_button "Continue"
 
-    expect(page).to have_current_path("/account-security")
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
-    expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
-    expect(page).to have_css("p#app_authentication_code-error", text: "Enter a correct code")
-    expect(page).to have_css("p#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
+      expect(page).to have_current_path("/account-security")
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter a correct code", href: "#app_authentication_code")
+      expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#mobile_number")
+      expect(page).to have_css("p#app_authentication_code-error", text: "Enter a correct code")
+      expect(page).to have_css("p#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
 
-    # New attempt setting both secondary authentication methods with no issues
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
-    fill_in "Enter the access code", with: correct_app_code
-    check "Text message"
-    fill_in "Mobile number", with: "07000000000"
+      # New attempt setting both secondary authentication methods with no issues
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      check "Authenticator app for smartphone or tablet"
+      fill_in "Enter the access code", with: correct_app_code
+      check "Text message"
+      fill_in "Mobile number", with: "07000000000"
 
-    # Ensure that the secret key/QR code don't change between failed attempts
-    reloaded_secret_key = page.find("p", text: "Secret key:").text
-    expect(reloaded_secret_key).to eq original_secret_key
+      # Ensure that the secret key/QR code don't change between failed attempts
+      reloaded_secret_key = page.find("p", text: "Secret key:").text
+      expect(reloaded_secret_key).to eq original_secret_key
 
-    click_button "Continue"
+      click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_sms_page
-    expect(page).not_to have_link("Back", href: "/two-factor/method")
-    expect_user_to_have_received_sms_code(otp_code)
-    complete_secondary_authentication_sms_with(otp_code)
+      expect_to_be_on_secondary_authentication_sms_page
+      expect(page).not_to have_link("Back", href: "/two-factor/method")
+      expect_user_to_have_received_sms_code(otp_code)
+      complete_secondary_authentication_sms_with(otp_code)
 
-    expect_to_be_on_declaration_page
+      if feature_flag_enabled
+        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+        click_link "Continue"
+      end
+
+      expect_to_be_on_declaration_page
+    end
   end
 
-  scenario "user signs up with authentication app 2FA but without text message" do
-    visit "/"
-    click_on "Create an account"
-    expect(page).to have_current_path("/create-an-account")
+  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
+    scenario "user signs up with authentication app 2FA but without text message" do
+      visit "/"
+      click_on "Create an account"
+      expect(page).to have_current_path("/create-an-account")
 
-    fill_in "Full name", with: "Joe Doe"
-    fill_in "Email address", with: "signing_up@example.com"
-    click_button "Continue"
+      fill_in "Full name", with: "Joe Doe"
+      fill_in "Email address", with: "signing_up@example.com"
+      click_button "Continue"
 
-    expect_to_be_on_check_your_email_page("signing_up@example.com")
+      expect_to_be_on_check_your_email_page("signing_up@example.com")
 
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+      email = delivered_emails.last
+      expect(email.recipient).to eq "signing_up@example.com"
+      expect(email.personalization[:name]).to eq("Joe Doe")
 
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
+      verify_url = email.personalization[:verify_email_url]
+      visit verify_url
 
-    expect(page).to have_current_path("/account-security")
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
-    fill_in "Enter the access code", with: correct_app_code
-    click_button "Continue"
+      expect(page).to have_current_path("/account-security")
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      check "Authenticator app for smartphone or tablet"
+      fill_in "Enter the access code", with: correct_app_code
+      click_button "Continue"
 
-    expect_to_be_on_declaration_page
+      if feature_flag_enabled
+        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+        click_link "Continue"
+      end
+
+      expect_to_be_on_declaration_page
+    end
   end
 
-  scenario "user signs up originally selecting both text and app methods but then moving back to only use the app" do
-    visit "/"
-    click_on "Create an account"
-    expect(page).to have_current_path("/create-an-account")
+  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
+    scenario "user signs up originally selecting both text and app methods but then moving back to only use the app" do
+      visit "/"
+      click_on "Create an account"
+      expect(page).to have_current_path("/create-an-account")
 
-    fill_in "Full name", with: "Joe Doe"
-    fill_in "Email address", with: "signing_up@example.com"
-    click_button "Continue"
+      fill_in "Full name", with: "Joe Doe"
+      fill_in "Email address", with: "signing_up@example.com"
+      click_button "Continue"
 
-    expect_to_be_on_check_your_email_page("signing_up@example.com")
+      expect_to_be_on_check_your_email_page("signing_up@example.com")
 
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+      email = delivered_emails.last
+      expect(email.recipient).to eq "signing_up@example.com"
+      expect(email.personalization[:name]).to eq("Joe Doe")
 
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
+      verify_url = email.personalization[:verify_email_url]
+      visit verify_url
 
-    # User reaches account security page and select both text and app methods
-    expect(page).to have_current_path("/account-security")
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Authenticator app for smartphone or tablet"
-    fill_in "Enter the access code", with: correct_app_code
-    check "Text message"
-    fill_in "Mobile number", with: "07000000000"
-    click_button "Continue"
+      # User reaches account security page and select both text and app methods
+      expect(page).to have_current_path("/account-security")
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      check "Authenticator app for smartphone or tablet"
+      fill_in "Enter the access code", with: correct_app_code
+      check "Text message"
+      fill_in "Mobile number", with: "07000000000"
+      click_button "Continue"
 
-    # User decides to not use text authentication and goes back to change the account security preferences
-    expect_to_be_on_secondary_authentication_sms_page
-    expect_user_to_have_received_sms_code(otp_code)
-    expect(page).to have_button("Back")
-    click_button("Back")
+      # User decides to not use text authentication and goes back to change the account security preferences
+      expect_to_be_on_secondary_authentication_sms_page
+      expect_user_to_have_received_sms_code(otp_code)
+      expect(page).to have_button("Back")
+      click_button("Back")
 
-    expect(page).to have_current_path("/account-security")
-    # Account Security form has the previously values pre-filled
-    expect(page).to have_checked_field("Authenticator app for smartphone or tablet")
-    expect(page).to have_checked_field("Text message")
-    expect(page).to have_field("Mobile number", with: "07000000000")
+      expect(page).to have_current_path("/account-security")
+      # Account Security form has the previously values pre-filled
+      expect(page).to have_checked_field("Authenticator app for smartphone or tablet")
+      expect(page).to have_checked_field("Text message")
+      expect(page).to have_field("Mobile number", with: "07000000000")
 
-    # Finally user unchecks the text message authentication and re-submits the form
-    uncheck "Text message"
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    fill_in "Enter the access code", with: correct_app_code
-    click_button "Continue"
+      # Finally user unchecks the text message authentication and re-submits the form
+      uncheck "Text message"
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      fill_in "Enter the access code", with: correct_app_code
+      click_button "Continue"
 
-    expect_to_be_on_declaration_page
+      if feature_flag_enabled
+        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+        click_link "Continue"
+      end
+
+      expect_to_be_on_declaration_page
+    end
   end
 
-  scenario "user signs up and verifies its email with 2FA disabled for the environment", with_2fa: false do
-    visit "/"
-    click_on "Create an account"
-    expect(page).to have_current_path("/create-an-account")
-    # First attempt with validation errors
-    fill_in "Full name", with: ""
-    fill_in "Email address", with: "signing_up.example.com"
-    click_button "Continue"
+  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
+    scenario "user signs up and verifies its email with 2FA disabled for the environment", with_2fa: false do
+      visit "/"
+      click_on "Create an account"
+      expect(page).to have_current_path("/create-an-account")
+      # First attempt with validation errors
+      fill_in "Full name", with: ""
+      fill_in "Email address", with: "signing_up.example.com"
+      click_button "Continue"
 
-    expect(page).to have_current_path("/create-an-account")
-    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Enter your full name", href: "#full_name")
-    expect(page).to have_css("p#full_name-error", text: "Enter your full name")
+      expect(page).to have_current_path("/create-an-account")
+      expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+      expect(page).to have_link("Enter your full name", href: "#full_name")
+      expect(page).to have_css("p#full_name-error", text: "Enter your full name")
 
-    expect(page).to have_link("Enter an email address", href: "#email")
-    expect(page).to have_css("p#email-error", text: "Enter an email address")
+      expect(page).to have_link("Enter an email address", href: "#email")
+      expect(page).to have_css("p#email-error", text: "Enter an email address")
 
-    fill_in "Full name", with: "Joe Doe"
-    fill_in "Email address", with: "signing_up@example.com"
-    click_button "Continue"
+      fill_in "Full name", with: "Joe Doe"
+      fill_in "Email address", with: "signing_up@example.com"
+      click_button "Continue"
 
-    expect_to_be_on_check_your_email_page("signing_up@example.com")
+      expect_to_be_on_check_your_email_page("signing_up@example.com")
 
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+      email = delivered_emails.last
+      expect(email.recipient).to eq "signing_up@example.com"
+      expect(email.personalization[:name]).to eq("Joe Doe")
 
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
+      verify_url = email.personalization[:verify_email_url]
+      visit verify_url
 
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
-    fill_in "Mobile number", with: "07000000000"
-    click_button "Continue"
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      check "Text message"
+      fill_in "Mobile number", with: "07000000000"
+      click_button "Continue"
 
-    expect_to_be_on_declaration_page
+      if feature_flag_enabled
+        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+        click_link "Continue"
+      end
+
+      expect_to_be_on_declaration_page
+    end
   end
 
-  scenario "user signs up and verifies its email with, confirmation expired during the process" do
-    visit "/"
-    click_on "Create an account"
-    expect(page).to have_current_path("/create-an-account")
-    # First attempt with validation errors
+  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
+    scenario "user signs up and verifies its email with, confirmation expired during the process" do
+      visit "/"
+      click_on "Create an account"
+      expect(page).to have_current_path("/create-an-account")
+      # First attempt with validation errors
 
-    fill_in "Full name", with: "Joe Doe"
-    fill_in "Email address", with: "signing_up@example.com"
-    click_button "Continue"
+      fill_in "Full name", with: "Joe Doe"
+      fill_in "Email address", with: "signing_up@example.com"
+      click_button "Continue"
 
-    expect_to_be_on_check_your_email_page("signing_up@example.com")
+      expect_to_be_on_check_your_email_page("signing_up@example.com")
 
-    travel_to(3.days.from_now)
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+      travel_to(3.days.from_now)
+      email = delivered_emails.last
+      expect(email.recipient).to eq "signing_up@example.com"
+      expect(email.personalization[:name]).to eq("Joe Doe")
 
-    verify_url = email.personalization[:verify_email_url]
-    visit verify_url
+      verify_url = email.personalization[:verify_email_url]
+      visit verify_url
 
-    expect(page).to have_css("h1", text: "Confirmation token is expired or invalid")
+      expect(page).to have_css("h1", text: "Confirmation token is expired or invalid")
 
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+      email = delivered_emails.last
+      expect(email.recipient).to eq "signing_up@example.com"
+      expect(email.personalization[:name]).to eq("Joe Doe")
 
-    verify_url = email.personalization[:verify_email_url]
+      verify_url = email.personalization[:verify_email_url]
 
-    visit verify_url[0..-2]
-    expect(page).to have_css("h1", text: "Confirmation token is expired or invalid")
+      visit verify_url[0..-2]
+      expect(page).to have_css("h1", text: "Confirmation token is expired or invalid")
 
-    visit verify_url
+      visit verify_url
 
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
-    fill_in "Mobile number", with: "07000000000"
-    click_button "Continue"
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      check "Text message"
+      fill_in "Mobile number", with: "07000000000"
+      click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_sms_page
-    complete_secondary_authentication_sms_with(otp_code)
+      expect_to_be_on_secondary_authentication_sms_page
+      complete_secondary_authentication_sms_with(otp_code)
 
-    expect_to_be_on_declaration_page
+      if feature_flag_enabled
+        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+        click_link "Continue"
+      end
+
+      expect_to_be_on_declaration_page
+    end
   end
 
   context "when account already exists" do
@@ -280,40 +320,48 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
       expect(page).to have_current_path("/password/new")
     end
 
-    context "when user is not confirmed" do
-      let!(:user) { create(:submit_user, :unconfirmed) }
+    with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
+      context "when user is not confirmed" do
+        let!(:user) { create(:submit_user, :unconfirmed) }
 
-      scenario "sending account reconfirmation to unconfirmed email" do
-        # Guard for confirmation email
-        expect(delivered_emails.count).to eq(1)
-        visit "/"
-        click_on "Create an account"
-        expect(page).to have_current_path("/create-an-account")
+        scenario "sending account reconfirmation to unconfirmed email" do
+          # Guard for confirmation email
+          expect(delivered_emails.count).to eq(1)
+          visit "/"
+          click_on "Create an account"
+          expect(page).to have_current_path("/create-an-account")
 
-        fill_in "Full name", with: "Joe Doe"
-        fill_in "Email address", with: user.email
-        click_button "Continue"
+          fill_in "Full name", with: "Joe Doe"
+          fill_in "Email address", with: user.email
+          click_button "Continue"
 
-        expect_to_be_on_check_your_email_page(user.email)
+          expect_to_be_on_check_your_email_page(user.email)
 
-        expect(delivered_emails.count).to eq(2)
-        email = delivered_emails.last
-        expect(email.recipient).to eq user.email
-        expect(email.personalization[:name]).to eq user.name
+          expect(delivered_emails.count).to eq(2)
+          email = delivered_emails.last
+          expect(email.recipient).to eq user.email
+          expect(email.personalization[:name]).to eq user.name
 
-        verify_url = email.personalization[:verify_email_url]
-        visit verify_url
+          verify_url = email.personalization[:verify_email_url]
+          visit verify_url
 
-        fill_in "Create your password", with: "userpassword", match: :prefer_exact
-        check "Text message"
-        fill_in "Mobile number", with: "07000000000"
-        click_button "Continue"
+          fill_in "Create your password", with: "userpassword", match: :prefer_exact
+          check "Text message"
+          fill_in "Mobile number", with: "07000000000"
+          click_button "Continue"
 
-        expect_user_to_have_received_sms_code(otp_code)
-        expect_to_be_on_secondary_authentication_sms_page
-        complete_secondary_authentication_sms_with(otp_code)
+          expect_user_to_have_received_sms_code(otp_code)
+          expect_to_be_on_secondary_authentication_sms_page
+          complete_secondary_authentication_sms_with(otp_code)
 
-        expect_to_be_on_declaration_page
+          if feature_flag_enabled
+            expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+            expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+            click_link "Continue"
+          end
+
+          expect_to_be_on_declaration_page
+        end
       end
     end
 
@@ -365,40 +413,48 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     end
   end
 
-  scenario "user signs up and creates new account while signed in as someone else" do
-    visit "/"
-    click_on "Create an account"
-    expect(page).to have_current_path("/create-an-account")
+  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
+    scenario "user signs up and creates new account while signed in as someone else" do
+      visit "/"
+      click_on "Create an account"
+      expect(page).to have_current_path("/create-an-account")
 
-    fill_in "Full name", with: "Joe Doe"
-    fill_in "Email address", with: "signing_up@example.com"
-    click_button "Continue"
+      fill_in "Full name", with: "Joe Doe"
+      fill_in "Email address", with: "signing_up@example.com"
+      click_button "Continue"
 
-    expect_to_be_on_check_your_email_page("signing_up@example.com")
+      expect_to_be_on_check_your_email_page("signing_up@example.com")
 
-    email = delivered_emails.last
-    expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+      email = delivered_emails.last
+      expect(email.recipient).to eq "signing_up@example.com"
+      expect(email.personalization[:name]).to eq("Joe Doe")
 
-    verify_url = email.personalization[:verify_email_url]
+      verify_url = email.personalization[:verify_email_url]
 
-    second_user = create(:submit_user, :with_responsible_person)
-    sign_in(second_user)
+      second_user = create(:submit_user, :with_responsible_person)
+      sign_in(second_user)
 
-    # Visit the confirmation link while signed in as a different user
-    visit verify_url
+      # Visit the confirmation link while signed in as a different user
+      visit verify_url
 
-    click_on "Create new account"
+      click_on "Create new account"
 
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
-    check "Text message"
-    fill_in "Mobile number", with: "07000000000"
-    click_button "Continue"
+      fill_in "Create your password", with: "userpassword", match: :prefer_exact
+      check "Text message"
+      fill_in "Mobile number", with: "07000000000"
+      click_button "Continue"
 
-    expect_to_be_on_secondary_authentication_sms_page
-    complete_secondary_authentication_sms_with(otp_code("signing_up@example.com"))
+      expect_to_be_on_secondary_authentication_sms_page
+      complete_secondary_authentication_sms_with(otp_code("signing_up@example.com"))
 
-    expect_to_be_on_declaration_page
+      if feature_flag_enabled
+        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.find_by(email: "signing_up@example.com").secondary_authentication_recovery_codes))
+        click_link "Continue"
+      end
+
+      expect_to_be_on_declaration_page
+    end
   end
 
   scenario "user signs up and skips creating an account while signed in as someone else" do

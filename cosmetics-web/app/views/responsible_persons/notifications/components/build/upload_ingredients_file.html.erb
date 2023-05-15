@@ -1,5 +1,5 @@
 <% title = "Upload ingredients file" %>
-<% csv_file_type = FeatureFlags.csv_upload_exact_with_shades_enabled? && @component.shades.present? ? "exact-with-multiple-shades" : "exact" %>
+<% csv_file_type = FeatureFlags.csv_upload_exact_with_shades_enabled?(current_user) && @component.shades.present? ? "exact-with-multiple-shades" : "exact" %>
 <% page_title title, errors: @bulk_ingredients_form.errors.any? %>
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>

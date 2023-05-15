@@ -43,7 +43,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     expect_success_banner_with_text "exact_ingredients.csv uploaded successful"
     click_on "Continue"
 
-    expect_to_be_on__what_is_ph_range_of_product_page
+    expect_to_be_on_what_is_ph_range_of_product_page
 
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
     expect_task_has_been_completed_page
@@ -65,8 +65,8 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
       click_link "Product details"
 
       answer_is_item_available_in_shades_with "Yes"
-      all("input#component_shades").first.fill_in with: "Blue"
-      all("input#component_shades").last.fill_in with: "Red"
+      fill_in "component_shades-0", with: "Blue"
+      fill_in "component_shades-1", with: "Blue"
       click_button "Continue"
 
       answer_what_is_physical_form_of_item_with "Liquid"
@@ -95,7 +95,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
       expect_success_banner_with_text "exact_ingredients_with_shades.csv uploaded successful"
       click_on "Continue"
 
-      expect_to_be_on__what_is_ph_range_of_product_page
+      expect_to_be_on_what_is_ph_range_of_product_page
 
       answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
       expect_task_has_been_completed_page

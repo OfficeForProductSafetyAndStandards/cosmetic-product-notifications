@@ -188,7 +188,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
 
       it "shows the page for adding ingredients with exact concentration" do
         expect(response.body).to match(/<title>Add the ingredients .+<\/title>/)
-        expect(response.body).to include("What is the concentration range?")
+        expect(response.body).to have_css("#component_ingredients_attributes_0_minimum_concentration")
       end
 
       it "links to the select formulation type page" do

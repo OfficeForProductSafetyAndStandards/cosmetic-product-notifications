@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_26_122308) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_28_100237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -166,6 +166,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_122308) do
     t.datetime "updated_at", null: false
     t.bigint "component_id"
     t.boolean "used_for_multiple_shades"
+    t.decimal "minimum_concentration"
+    t.decimal "maximum_concentration"
     t.index ["component_id"], name: "index_ingredients_on_component_id"
     t.index ["created_at"], name: "index_ingredients_on_created_at"
     t.index ["exact_concentration"], name: "index_ingredients_on_exact_concentration"
@@ -369,6 +371,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_122308) do
     t.text "encrypted_totp_secret_key"
     t.integer "last_totp_at"
     t.string "secondary_authentication_methods", array: true
+    t.integer "last_recovery_code_at"
+    t.datetime "secondary_authentication_recovery_codes_generated_at", precision: nil
+    t.string "secondary_authentication_recovery_codes", default: [], array: true
+    t.string "secondary_authentication_recovery_codes_used", default: [], array: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["new_email"], name: "index_users_on_new_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

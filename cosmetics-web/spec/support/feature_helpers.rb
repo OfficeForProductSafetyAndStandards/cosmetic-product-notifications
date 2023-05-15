@@ -4,11 +4,15 @@ RSpec.configure do |config|
   config.include PageMatchers
 end
 
-# --- Page expections -----
+# --- Page expectations -----
 
 module Fspec
   YES = "Yes".freeze
   NO  = "No".freeze
+end
+
+def recovery_codes_to_string(recovery_codes)
+  recovery_codes.map { |code| ActiveSupport::NumberHelper.number_to_delimited(code, delimiter: " ", delimiter_pattern: /(\d{4})(?=\d)/) }.join("\n")
 end
 
 def fill_in_credentials(password_override: nil)
@@ -40,6 +44,12 @@ def complete_secondary_authentication_app(access_code = nil)
   click_on "Continue"
 end
 
+def complete_secondary_authentication_recovery_code(recovery_code = nil)
+  # Allow empty recovery codes for testing
+  fill_in "Recovery code", with: recovery_code.nil? ? correct_recovery_code : recovery_code
+  click_on "Continue"
+end
+
 def select_secondary_authentication_sms
   expect(page).to have_css("h1", text: "How do you want to get an access code?")
   choose "Text message"
@@ -50,6 +60,13 @@ def select_secondary_authentication_app
   expect(page).to have_css("h1", text: "How do you want to get an access code?")
   choose "Authenticator app for smartphone or tablet"
   click_on "Continue"
+end
+
+def select_secondary_authentication_recovery_code
+  expect(page).to have_css("h1", text: "How do you want to get an access code?")
+  choose "Authenticator app for smartphone or tablet"
+  click_on "Continue"
+  click_on "Use recovery code"
 end
 
 def expect_to_be_on_secondary_authentication_method_selection_page
@@ -70,6 +87,17 @@ end
 def expect_to_be_on_resend_secondary_authentication_page
   expect(page).to have_current_path("/two-factor/sms/not-received")
   expect(page).to have_h1("Resend security code")
+end
+
+def expect_to_be_on_secondary_authentication_recovery_code_page(back_to: nil)
+  back_to = back_to.present? ? "?back_to=#{back_to}" : ""
+  expect(page).to have_current_path("/two-factor/recovery-code#{back_to}")
+  expect(page).to have_h1("Enter a recovery code")
+end
+
+def expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+  expect(page).to have_current_path("/two-factor/recovery-codes/setup")
+  expect(page).to have_h1("Recovery codes")
 end
 
 def expect_to_be_on_signed_in_as_another_user_page
@@ -418,7 +446,7 @@ def expect_back_link_to_poisonous_ingredients_page
   expect_back_link_to(/\/build\/contains_poisonous_ingredients$/)
 end
 
-def expect_to_be_on__what_is_ph_range_of_product_page
+def expect_to_be_on_what_is_ph_range_of_product_page
   expect(page.current_path).to end_with("/build/select_ph_option")
   expect(page).to have_h1("What is the pH range of the product?")
 end

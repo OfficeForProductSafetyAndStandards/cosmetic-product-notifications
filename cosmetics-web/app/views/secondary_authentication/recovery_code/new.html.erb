@@ -1,0 +1,45 @@
+<% title = "Enter a recovery code" %>
+<% page_title(title, errors: @form.errors.any?) %>
+
+<% if @form.user&.multiple_secondary_authentication_methods? %>
+  <% content_for(:after_header) do %>
+    <%= govukBackLink(text: "Back", href: new_secondary_authentication_method_path) %>
+  <% end %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <% if @recovery_codes_available %>
+      <%= error_summary @form.errors %>
+
+      <h1 class="govuk-heading-l"><%= title %></h1>
+
+      <%= form_with(url: secondary_authentication_recovery_code_path, method: :post, html: { novalidate: true }) do |f| %>
+        <%= f.hidden_field :user_id, value: @form.user_id %>
+        <%= govukInput(key: :recovery_code,
+                       form: f,
+                       classes: "govuk-input--width-5",
+                       label: { text: "Recovery code" },
+                       attributes: { pattern: "[0-9]*", inputmode: "numeric" },
+                       errorMessage: format_errors_for(@form, @form.errors.full_messages_for(:recovery_code))) %>
+
+        <%= govukButton(text: "Continue") %>
+      <% end %>
+
+      <% if %w[app sms].include?(params[:back_to]) %>
+        <div class="govuk-body">
+          <% link = params[:back_to] == "sms" ? new_secondary_authentication_sms_path : new_secondary_authentication_app_path %>
+          <p><%= link_to "Use access code", link, class: "govuk-link" %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <%= govukErrorSummary(titleText: "There is a problem", errorList: [{ text: "All recovery codes have been used", href: "#" }]) %>
+      <%= govukWarningText(
+        iconFallbackText: "Warning",
+        text: "You have used all your recovery codes and must generate a new set."
+      ) %>
+      <p class="govuk-body">Contact <a href="mailto:opss.enquiries@beis.gov.uk" class="govuk-link">opss.enquiries@beis.gov.uk</a> in order to get new recovery codes.</p>
+    <% end %>
+  </div>
+</div>

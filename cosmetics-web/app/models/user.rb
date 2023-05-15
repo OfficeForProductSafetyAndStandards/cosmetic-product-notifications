@@ -80,7 +80,7 @@ class User < ApplicationRecord
     secondary_authentication_methods.size > 1
   end
 
-  # Needed for user support requests. We call it from Rails Console.
+  # Needed for user support requests
   def reset_secondary_authentication!
     update(mobile_number: nil,
            mobile_number_verified: false,
@@ -88,7 +88,11 @@ class User < ApplicationRecord
            direct_otp_sent_at: nil,
            encrypted_totp_secret_key: nil,
            last_totp_at: nil,
+           last_recovery_code_at: nil,
            secondary_authentication_methods: nil,
+           secondary_authentication_recovery_codes_generated_at: nil,
+           secondary_authentication_recovery_codes: [],
+           secondary_authentication_recovery_codes_used: [],
            account_security_completed: false)
   end
 
@@ -118,6 +122,11 @@ class User < ApplicationRecord
     self.locked_at = nil
     self.unlock_token = nil
     save(validate: false)
+  end
+
+  # Use the `email` when targeting feature flags
+  def flipper_id
+    email
   end
 
 private

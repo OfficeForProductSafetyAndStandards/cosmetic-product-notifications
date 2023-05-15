@@ -42,6 +42,15 @@ Rails.application.routes.draw do
       get "setup", to: "setup#new", as: :new_secondary_authentication_app_setup
       post "setup", to: "setup#create", as: :secondary_authentication_app_setup
     end
+
+    get "recovery-code", to: "recovery_code#new", as: :new_secondary_authentication_recovery_code
+    post "recovery-code", to: "recovery_code#create", as: :secondary_authentication_recovery_code
+    get "recovery-code/interstitial", to: "recovery_code#interstitial", as: :secondary_authentication_recovery_code_interstitial
+    get "recovery-code/redirect", to: "recovery_code#redirect_to_saved_path", as: :secondary_authentication_recovery_code_redirect
+    scope module: "recovery_code", path: "recovery-codes" do
+      get "setup", to: "setup#new", as: :new_secondary_authentication_recovery_codes_setup
+      post "setup", to: "setup#create", as: :secondary_authentication_recovery_codes_setup
+    end
   end
 
   unless Rails.env.production? && (!ENV["SIDEKIQ_USERNAME"] || !ENV["SIDEKIQ_PASSWORD"])
@@ -226,6 +235,7 @@ Rails.application.routes.draw do
     get :privacy_notice, path: "privacy-notice"
     get :cookies_policy, path: "cookies"
     get :csv, path: "csv"
+    get :npis_tables, path: "npis_tables"
   end
 
   resource :cookie_form, only: [:create]
