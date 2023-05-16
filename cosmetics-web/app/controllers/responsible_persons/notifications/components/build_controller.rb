@@ -56,7 +56,10 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     select_root_category: :contains_cmrs,
     select_sub_category: :select_root_category,
     select_sub_sub_category: :select_sub_category,
-    select_formulation_type: :select_sub_sub_category,
+    select_formulation_type: {
+      select_sub_sub_category: -> { more_than_one_sub_category? },
+      select_sub_category: -> { !more_than_one_sub_category? },
+    },
     add_ingredient_exact_concentration: :select_formulation_type,
     add_ingredient_range_concentration: :select_formulation_type,
     upload_ingredients_file: :select_formulation_type,
@@ -254,11 +257,16 @@ private
   def update_select_category_step
     sub_category = params.dig(:component, :sub_category)
     if sub_category
-      if has_sub_categories(sub_category)
-        render_wizard @component, {}, category: sub_category
-      else
+      sub_categories = get_sub_categories(sub_category)
+      if sub_categories.empty?
         @component.update(sub_sub_category: sub_category)
         render_next_step @component
+      elsif sub_categories.length == 1
+        @component.update(sub_sub_category: sub_categories.first)
+        skip_next_steps(1)
+      else
+        has_sub_categories(sub_category)
+        render_wizard @component, {}, category: sub_category
       end
     else
       @component.errors.add :sub_category, "Choose an option"
@@ -441,5 +449,9 @@ private
 
   def minimum_state
     NotificationStateConcern::READY_FOR_COMPONENTS
+  end
+
+  def more_than_one_sub_category?
+    @more_than_one_sub_category ||= get_sub_categories(@component.sub_category).length > 1
   end
 end
