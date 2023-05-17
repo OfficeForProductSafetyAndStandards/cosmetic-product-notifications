@@ -460,7 +460,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scout_apm (5.3.3)
+    scout_apm (5.3.5)
       parser
     selenium-webdriver (4.9.1)
       rexml (~> 3.2, >= 3.2.5)
