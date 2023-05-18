@@ -1,6 +1,5 @@
 require "rails_helper"
 
-# rubocop:disable Style/RescueModifier
 RSpec.describe NotificationDeleteService do
   let(:responsible_person) { create(:responsible_person) }
   let(:submit_user) { create(:submit_user) }
@@ -69,27 +68,35 @@ RSpec.describe NotificationDeleteService do
       end
     end
 
-    context "when 7 days passed" do
+    context "when 7 days have passed" do
       before do
         travel_to 8.days.from_now
-      end
-
-      it "doesn't delete the notification" do
-        expect {
-          service.call rescue nil
-        }.to change(Notification, :count).by(0)
-      end
-
-      it "doesn't create log" do
-        expect {
-          service.call rescue nil
-        }.to change(NotificationDeleteLog, :count).by(0)
       end
 
       it "raises proper exception" do
         expect {
           service.call
         }.to raise_error(Notification::DeletionPeriodExpired)
+      end
+
+      it "doesn't delete the notification" do
+        expect {
+          begin
+            service.call
+          rescue Notification::DeletionPeriodExpired
+            nil
+          end
+        }.not_to change(Notification, :count)
+      end
+
+      it "doesn't create log" do
+        expect {
+          begin
+            service.call
+          rescue Notification::DeletionPeriodExpired
+            nil
+          end
+        }.not_to change(NotificationDeleteLog, :count)
       end
     end
   end
@@ -110,4 +117,3 @@ RSpec.describe NotificationDeleteService do
     end
   end
 end
-# rubocop:enable Style/RescueModifier

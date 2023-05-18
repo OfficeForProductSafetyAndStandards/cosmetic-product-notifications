@@ -55,7 +55,9 @@ module GovUk
     end
 
     def date_from_string(date_as_string)
-      Date.parse(date_as_string) rescue Date::Error # rubocop:disable Style/RescueModifier
+      Date.parse(date_as_string)
+    rescue Date::Error
+      nil
     end
 
     def date_values

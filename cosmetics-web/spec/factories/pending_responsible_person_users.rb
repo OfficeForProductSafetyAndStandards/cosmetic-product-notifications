@@ -11,9 +11,8 @@ FactoryBot.define do
       end
 
       after(:create) do |obj|
-        # rubocop:disable Rails/SkipsModelValidations
-        obj.update_attribute(:invitation_token_expires_at, 1.second.ago)
-        # rubocop:enable Rails/SkipsModelValidations
+        obj.invitation_token_expires_at = 1.second.ago
+        obj.save(validate: false)
       end
     end
   end

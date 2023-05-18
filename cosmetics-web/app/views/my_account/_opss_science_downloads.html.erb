@@ -1,108 +1,109 @@
+<div id="opss_science_downloads">
+  <h2 class="govuk-heading-l">Downloadable data</h2>
+  <p class="govuk-body opss-secondary-text">
+    Your account privileges allow you to download this information directly to your computer or device. <br class="opss-br-desktop">
+    (Downloadable data is updated at midnight).
+  </p>
+  <%= govukSummaryList(
+    attributes: { id: "opss-downloads" },
+    rows: [
+      {
+        key: { text: "All notified cosmetic products containing nanomaterials" },
+        value: { html: "Download as a <abbr>CSV</abbr> (spreadsheet) file".html_safe },
+        actions: {
+          items: [
+            {
+              href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsContainingNanomaterialsJob.file_name)&.url,
+              html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+              visuallyHiddenText: "products with nanomaterials",
+              classes: "govuk-link--no-visited-state opss-downloads",
+            }
+          ]
+        }
+      },
+      {
+        key: { html: "<span class='govuk-visually-hidden'>All notified cosmetic products containing nanomaterials for the last three months</span>".html_safe },
+        value: { html: "<span class='govuk-!-font-size-16 opss-secondary-text'>Download the last three months only<a href='#mths' class='govuk-link govuk-link--no-visited-state govuk-link--no-underline'><sup class='govuk-!-font-size-14'>*</sup></a></span>".html_safe },
+        actions: {
+          items: [
+            {
+              href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsInLastThreeMonthsContainingNanomaterialsJob.file_name)&.url,
+              html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+              visuallyHiddenText: "last 3 months of products with nanomaterials",
+              classes: "govuk-link--no-visited-state opss-downloads",
+            }
+          ]
+        }
+      },
+      {
+        key: { text: "All notified nanomaterials" },
+        value: { html: "Download as a <abbr>CSV</abbr> (spreadsheet) file".html_safe },
+        actions: {
+          items: [
+            {
+              href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsJob.file_name)&.url,
+              html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+              visuallyHiddenText: "notified nanomaterials",
+              classes: "govuk-link--no-visited-state opss-downloads",
+            }
+          ]
+        }
+      },
+      {
+        key: { html: "<span class='govuk-visually-hidden'>All notified nanomaterials for the last three months</span>".html_safe },
+        value: { html: "<span class='govuk-!-font-size-16 opss-secondary-text'>Download the last three months only<a href='#mths' class='govuk-link govuk-link--no-visited-state govuk-link--no-underline'><sup class='govuk-!-font-size-14'>*</sup></a></span>".html_safe },
+        actions: {
+          items: [
+            {
+              href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsInLastThreeMonthsJob.file_name)&.url,
+              html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+              visuallyHiddenText: "last 3 months of notified nanomaterials",
+              classes: "govuk-link--no-visited-state opss-downloads",
+            }
+          ]
+        }
+      },
+      {
+        key: { html: "All notified nanomaterials as <abbr>PDF</abbr>s".html_safe },
+        value: { html: "Download as a ZIP file (containing <abbr>PDF</abbr>s)".html_safe },
+        actions: {
+          items: [
+            {
+              href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsJob.file_name)&.url,
+              html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+              visuallyHiddenText: "notified nanomaterials as <abbr>PDF</abbr>s".html_safe,
+              classes: "govuk-link--no-visited-state opss-downloads",
+            }
+          ]
+        }
+      },
+      {
+        key: { html: "<span class='govuk-visually-hidden'>All notified nanomaterials as <abbr>PDF</abbr>s for the last three months</span>".html_safe },
+        value: { html: "<span class='govuk-!-font-size-16 opss-secondary-text'>Download the last three months only<a href='#mths' class='govuk-link govuk-link--no-visited-state govuk-link--no-underline'><sup class='govuk-!-font-size-14'>*</sup></a></span>".html_safe },
+        actions: {
+          items: [
+            {
+              href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsInLastThreeMonthsJob.file_name)&.url,
+              html: "<span class='opss-download-link-sm'></span>Download".html_safe,
+              visuallyHiddenText: "last 3 months of notified nanomaterials as <abbr>PDF</abbr>s".html_safe,
+              classes: "govuk-link--no-visited-state opss-downloads",
+            }
+          ]
+        }
+      },
+    ]
+  ) %>
+  <p id="mths" class="govuk-body govuk-!-font-size-14 govuk-!-margin-top-0 govuk-!-margin-bottom-0 opss-secondary-text opss-text-align-right">
+    <sup>*</sup>3 month downloads include the current month, plus the 3 preceding calendar months.
+  </p>
 
-<h2 class="govuk-heading-l">Downloadable data</h2>
-<p class="govuk-body opss-secondary-text">
-  Your account privileges allow you to download this information directly to your computer or device. <br class="opss-br-desktop">
-  (Downloadable data is updated at midnight).
-</p>
-<%= govukSummaryList(
-  attributes: { id: "opss-downloads" },
-  rows: [
-    {
-      key: { text: "All notified cosmetic products containing nanomaterials" },
-      value: { html: "Download as a <abbr>CSV</abbr> (spreadsheet) file".html_safe },
-      actions: {
-        items: [
-          {
-            href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsContainingNanomaterialsJob.file_name)&.url,
-            html: "<span class='opss-download-link-sm'></span>Download".html_safe,
-            visuallyHiddenText: "products with nanomaterials",
-            classes: "govuk-link--no-visited-state opss-downloads",
-          }
-        ]
-      }
-    },
-    {
-      key: { html: "<span class='govuk-visually-hidden'>All notified cosmetic products containing nanomaterials for the last three months</span>".html_safe },
-      value: { html: "<span class='govuk-!-font-size-16 opss-secondary-text'>Download the last three months only<a href='#mths' class='govuk-link govuk-link--no-visited-state govuk-link--no-underline'><sup class='govuk-!-font-size-14'>*</sup></a></span>".html_safe },
-      actions: {
-        items: [
-          {
-            href: ActiveStorage::Blob.find_by(filename: UploadCosmeticProductsInLastThreeMonthsContainingNanomaterialsJob.file_name)&.url,
-            html: "<span class='opss-download-link-sm'></span>Download".html_safe,
-            visuallyHiddenText: "last 3 months of products with nanomaterials",
-            classes: "govuk-link--no-visited-state opss-downloads",
-          }
-        ]
-      }
-    },
-    {
-      key: { text: "All notified nanomaterials" },
-      value: { html: "Download as a <abbr>CSV</abbr> (spreadsheet) file".html_safe },
-      actions: {
-        items: [
-          {
-            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsJob.file_name)&.url,
-            html: "<span class='opss-download-link-sm'></span>Download".html_safe,
-            visuallyHiddenText: "notified nanomaterials",
-            classes: "govuk-link--no-visited-state opss-downloads",
-          }
-        ]
-      }
-    },
-    {
-      key: { html: "<span class='govuk-visually-hidden'>All notified nanomaterials for the last three months</span>".html_safe },
-      value: { html: "<span class='govuk-!-font-size-16 opss-secondary-text'>Download the last three months only<a href='#mths' class='govuk-link govuk-link--no-visited-state govuk-link--no-underline'><sup class='govuk-!-font-size-14'>*</sup></a></span>".html_safe },
-      actions: {
-        items: [
-          {
-            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialNotificationsInLastThreeMonthsJob.file_name)&.url,
-            html: "<span class='opss-download-link-sm'></span>Download".html_safe,
-            visuallyHiddenText: "last 3 months of notified nanomaterials",
-            classes: "govuk-link--no-visited-state opss-downloads",
-          }
-        ]
-      }
-    },
-    {
-      key: { html: "All notified nanomaterials as <abbr>PDF</abbr>s".html_safe },
-      value: { html: "Download as a ZIP file (containing <abbr>PDF</abbr>s)".html_safe },
-      actions: {
-        items: [
-          {
-            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsJob.file_name)&.url,
-            html: "<span class='opss-download-link-sm'></span>Download".html_safe,
-            visuallyHiddenText: "notified nanomaterials as <abbr>PDF</abbr>s".html_safe,
-            classes: "govuk-link--no-visited-state opss-downloads",
-          }
-        ]
-      }
-    },
-    {
-      key: { html: "<span class='govuk-visually-hidden'>All notified nanomaterials as <abbr>PDF</abbr>s for the last three months</span>".html_safe },
-      value: { html: "<span class='govuk-!-font-size-16 opss-secondary-text'>Download the last three months only<a href='#mths' class='govuk-link govuk-link--no-visited-state govuk-link--no-underline'><sup class='govuk-!-font-size-14'>*</sup></a></span>".html_safe },
-      actions: {
-        items: [
-          {
-            href: ActiveStorage::Blob.find_by(filename: UploadNanomaterialsPdfsInLastThreeMonthsJob.file_name)&.url,
-            html: "<span class='opss-download-link-sm'></span>Download".html_safe,
-            visuallyHiddenText: "last 3 months of notified nanomaterials as <abbr>PDF</abbr>s".html_safe,
-            classes: "govuk-link--no-visited-state opss-downloads",
-          }
-        ]
-      }
-    },
-  ]
-) %>
-<p id="mths" class="govuk-body govuk-!-font-size-14 govuk-!-margin-top-0 govuk-!-margin-bottom-0 opss-secondary-text opss-text-align-right">
-  <sup>*</sup>3 month downloads include the current month, plus the 3 preceding calendar months.
-</p>
-
-<%= javascript_tag nonce: true do -%>
-  document.addEventListener('DOMContentLoaded', (e) => {//fallback for some browsers
-    var theList = document.getElementById("opss-downloads");
-    var elements = theList.getElementsByClassName('opss-downloads');
-    Array.prototype.forEach.call(elements, function (el, i) {
-      el.setAttribute("download", "");
+  <%= javascript_tag nonce: true do -%>
+    document.addEventListener('DOMContentLoaded', (e) => {//fallback for some browsers
+      var theList = document.getElementById("opss-downloads");
+      var elements = theList.getElementsByClassName('opss-downloads');
+      Array.prototype.forEach.call(elements, function (el, i) {
+        el.setAttribute("download", "");
+      });
     });
-  });
-<% end %>
+  <% end %>
+</div>

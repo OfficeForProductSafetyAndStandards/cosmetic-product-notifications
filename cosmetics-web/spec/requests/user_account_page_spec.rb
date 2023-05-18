@@ -48,29 +48,9 @@ RSpec.describe "User account page", type: :request do
   end
 
   RSpec.shared_examples "can't download nanomaterials" do
-    # rubocop:disable RSpec/MultipleExpectations
-    it "does not have downloadable data section" do
-      expect(response.body).not_to have_tag("h2", text: "Downloadable data")
+    it "does not show the downloadable data section" do
+      expect(response.body).not_to have_tag("div#opss_science_downloads")
     end
-
-    it "does not allow user to download a list of cosmetic products containing nanomaterials" do
-      expect(response.body).not_to have_tag("dt", text: "All notified cosmetic products containing nanomaterials", with: { class: "govuk-summary-list__key" })
-      expect(response.body).not_to have_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
-      expect(response.body).not_to have_tag("dd.govuk-summary-list__actions a", text: "Download products with nanomaterials")
-    end
-
-    it "does not allow user to download a list of nanomaterial notifications" do
-      expect(response.body).not_to have_tag("dt", text: "All notified nanomaterials", with: { class: "govuk-summary-list__key" })
-      expect(response.body).not_to have_tag("dd", text: "Download as a CSV (spreadsheet) file", with: { class: "govuk-summary-list__value" })
-      expect(response.body).not_to have_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials")
-    end
-
-    it "does not allow user to download all nanomaterial notifications PDFs" do
-      expect(response.body).not_to have_tag("dt", text: "All notified nanomaterials as PDFs", with: { class: "govuk-summary-list__key" })
-      expect(response.body).not_to have_tag("dd", text: "Download as a ZIP file (containing PDFs)", with: { class: "govuk-summary-list__value" })
-      expect(response.body).not_to have_tag("dd.govuk-summary-list__actions a", text: "Download notified nanomaterials as PDFs")
-    end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 
   context "with a Submit/business user" do
@@ -145,7 +125,7 @@ RSpec.describe "User account page", type: :request do
     include_examples "can't change email"
 
     it "includes the downloadable data section" do
-      expect(response.body).to have_tag("h2", text: "Downloadable data")
+      expect(response.body).to have_tag("div#opss_science_downloads")
     end
 
     it "allows user to download a list of cosmetic products containing nanomaterials" do
