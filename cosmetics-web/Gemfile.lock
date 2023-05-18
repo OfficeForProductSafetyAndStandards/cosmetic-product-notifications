@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/OfficeForProductSafetyAndStandards/govuk-design-system-rails.git
+  revision: 1b9e78777630bd07dd83360af054edb666f446b0
+  specs:
+    govuk-design-system-rails (0.10.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -207,7 +213,6 @@ GEM
       raabro (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    govuk-design-system-rails (0.10.3)
     govuk_notify_rails (2.2.0)
       notifications-ruby-client (~> 5.1)
       rails (>= 4.1.0)
@@ -581,7 +586,7 @@ DEPENDENCIES
   flipper (~> 0.28)
   flipper-active_record (~> 0.28)
   flipper-ui (~> 0.28)
-  govuk-design-system-rails (~> 0.10.3)
+  govuk-design-system-rails (~> 0.10.4)!
   govuk_notify_rails (~> 2.2)
   hashie (~> 5.0)
   image_processing (~> 1.12)
