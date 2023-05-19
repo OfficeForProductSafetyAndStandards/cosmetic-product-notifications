@@ -66,3 +66,23 @@ $govuk-global-styles: true;
 .govuk-table__header--right {
   text-align: right;
 }
+
+@media screen {
+  .print-only {
+    display: none;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .govuk-cookie-banner {
+    display: none;
+  }
+
+  .govuk-back-link {
+    display: none;
+  }
+}

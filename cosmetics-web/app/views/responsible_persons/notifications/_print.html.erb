@@ -1,0 +1,103 @@
+<div class="govuk-panel govuk-panel--confirmation">
+  <h2 class="govuk-heading-l">
+    Notification successfully submitted
+  </h2>
+  <div class="govuk-panel__body">
+    <p class="govuk-body govuk-!-font-size-27"><%= display_full_month_date(@notification.notification_complete_at) %></p>
+    <p class="govuk-body govuk-!-font-size-36"><%= @notification.reference_number_for_display %></p>
+  </div>
+</div>
+
+<h1 class="govuk-heading-l"><%= @notification.product_name %></h1>
+
+<table class="govuk-table">
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">UK cosmetic product number</th>
+      <td class="govuk-table__cell"><%= @notification.reference_number_for_display %></td>
+    </tr>
+     <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Internal reference number</th>
+      <td class="govuk-table__cell"><%= @notification.industry_reference %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">UK notified</th>
+      <td class="govuk-table__cell"><%= display_full_month_date(@notification.notification_complete_at) %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Product name</th>
+      <td class="govuk-table__cell"><%= @notification.product_name %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">For children under 3</th>
+      <td class="govuk-table__cell"><%= @notification.under_three_years ? "Yes" : "No" %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Number of items</th>
+      <td class="govuk-table__cell"><%= @notification.components.length %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Shades</th>
+      <td class="govuk-table__cell"><%= display_shades(@notification) %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Are the items mixed?</th>
+      <td class="govuk-table__cell"><%= @notification.components_are_mixed ? "Yes" : "No" %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Submission type</th>
+      <td class="govuk-table__cell">
+        <% if @notification.components.any? %>
+        <%= get_notification_type_name(@notification.components[0].notification_type) %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="govuk-heading-s">Responsible Person</h2>
+<% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
+<%= govukSummaryList(
+  classes: "govuk-summary-list--no-border opss-summary-list-vertical",
+  rows: [
+    {
+      key: { text: "Company", classes: key_value_classes },
+      value: { text: @notification.responsible_person.name, classes: key_value_classes },
+    },
+    {
+      key: { text: "Address", classes: key_value_classes },
+      value: {
+        html: sanitize(@notification.responsible_person.address_lines.join("<span class='govuk-visually-hidden'>, </span><br>")),
+        classes: key_value_classes,
+      },
+    },
+  ]
+) %>
+
+<%
+  contact_person = @notification.responsible_person.contact_persons.first
+  key_value_classes = "govuk-!-font-size-16"
+%>
+<%= govukSummaryList(
+  classes: "govuk-summary-list--no-border opss-summary-list-vertical",
+  rows: [
+    {
+      key: { text: "Assigned contact", classes: key_value_classes },
+      value: { text: contact_person.name, classes: key_value_classes },
+    },
+    {
+      key: { text: "Email address", classes: key_value_classes },
+      value: { text: contact_person.email_address, classes: key_value_classes },
+    },
+    {
+      key: { text: "Telephone", classes: key_value_classes },
+      value: { text: contact_person.phone_number, classes: key_value_classes },
+    },
+  ]
+) %>
+
+<% if @notification.can_be_deleted? %>
+  <p class="govuk-body">
+    Your notification has been successfully submitted. Please note that this is not an indication that all information required has been submitted. Please note further that where information in relation to a cosmetic product changes, you are required to update the notification without delay.
+  </p>
+<% end %>
