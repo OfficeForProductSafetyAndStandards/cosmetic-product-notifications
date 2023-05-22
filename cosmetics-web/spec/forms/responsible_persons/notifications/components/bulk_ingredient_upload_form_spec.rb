@@ -236,7 +236,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
     end
 
-    context "when ingredients repeat withing file" do
+    context "when ingredients repeat within the file" do
       let(:csv) do
         <<~CSV
           Name,Concentration,CAS, Is poisonous?
@@ -334,6 +334,25 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       include_examples "validation" do
         let(:error_messages) { ["The file has an error in row: 2"] }
       end
+    end
+  end
+
+  context "when the CSV is for range concentrations" do
+    let(:component) { create(:ranges_component) }
+
+    let(:csv) do
+      <<~CSV
+        Ingredient name,Minimum % w/w,Maximum % w/w,Exact % w/w,CAS number,Does NPIS need to know about it?
+        Sodium carbonate,10,30,,497-19-8,false
+        Water,35,65,,7732-18-5,false
+        Eucalyptol,,,12,,true
+      CSV
+    end
+
+    it "creates 3 ingredients" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(3)
     end
   end
 

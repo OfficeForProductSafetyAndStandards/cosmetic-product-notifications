@@ -26,4 +26,32 @@ describe IngredientHelper do
       end
     end
   end
+
+  describe "#csv_file_type" do
+    subject(:csv_file_type) { helper.csv_file_type(component) }
+
+    let(:shades) { nil }
+    let(:component) do
+      build(:component, notification_type:, shades:)
+    end
+
+    context "with exact concentration" do
+      let(:notification_type) { "exact" }
+
+      it { expect(csv_file_type).to eq("exact") }
+    end
+
+    context "with exact concentration and shades" do
+      let(:notification_type) { "exact" }
+      let(:shades) { :foo }
+
+      it { expect(csv_file_type).to eq("exact-with-multiple-shades") }
+    end
+
+    context "with range concentration" do
+      let(:notification_type) { "range" }
+
+      it { expect(csv_file_type).to eq("range") }
+    end
+  end
 end

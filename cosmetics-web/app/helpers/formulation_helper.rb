@@ -3,8 +3,10 @@ module FormulationHelper
     {
       predefined: { text: "Choose a predefined frame formulation" },
       exact: { text: "Enter ingredients and their exact concentration manually" },
-      exact_csv: { text: "Provide ingredients and their exact concentration using a CSV file", classes: "govuk-!-font-size-16", wrapper_classes: "govuk-radios--small govuk-!-margin-left-8" },
       range: { text: "Enter ingredients and their concentration range manually" },
+      separator: { text: "or" },
+      exact_csv: { text: "Upload a CSV file for ingredients and their exact concentration" },
+      range_csv: { text: "Upload a CSV file for ingredients and their concentration range" },
     }
   end
 end

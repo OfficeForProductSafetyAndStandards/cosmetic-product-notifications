@@ -2,6 +2,7 @@ class Component < ApplicationRecord
   COMPONENT_TYPES_MAP = {
     "exact" => "exact",
     "exact_csv" => "exact",
+    "range_csv" => "range",
     "predefined" => "predefined",
     "range" => "range",
   }.freeze

@@ -1,6 +1,5 @@
 <% title = "Select formulation type" %>
 <% question = "How will you provide #{@component_name} formulation?" %>
-<% csv_file_type = FeatureFlags.csv_upload_exact_with_shades_enabled?(current_user) && @component.shades.present? ? "exact-with-multiple-shades" : "exact" %>
 <%
   frame_formulations = FrameFormulations::CATEGORIES.dig(@component.root_category.to_s, @component.sub_category.to_s, @component.sub_sub_category.to_s)
   items = formulations_types_label
@@ -45,17 +44,12 @@
                 <%= question %>
               </h1>
             </legend>
-            <p class="govuk-body govuk-!-width-three-quarters opss-secondary-text" id="type-hint">
-            There are three formulation types: Predefined frame formulations, exact concentrations and concentration ranges. You can enter information manually or by uploading a <abbr title="Comma Separated Values">CSV</abbr> file.
-            </p>
-            <p class="govuk-body govuk-!-width-three-quarters govuk-!-margin-bottom-8 opss-secondary-text">
-            Learn how you can <a href="/help/csv?csv_file_type=<%= csv_file_type %>" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">use a <abbr>CSV</abbr> file (opens in a new tab)</a>.
+            <p class="govuk-body opss-secondary-text" id="type-hint">
+            There are three formulation types: Predefined frame formulations, exact concentrations and concentration ranges. You can enter information manually or by uploading a <abbr title="Comma Separated Values">CSV</abbr> file for exact concentrations and concentration ranges.
             </p>
             <div class="govuk-hint" id="component_notification_type-hint">
               <%= warning_html %>
             </div>
-
-
             <% if @component.errors.present?  %>
               <p class="govuk-error-message" id="component_notification_type-error">
                 <span class="govuk-visually-hidden">Error:</span>
@@ -64,8 +58,11 @@
             <% end %>
             <div class="govuk-radios" data-module="govuk-radios">
               <% items.each do |item| %>
-                 <div class="govuk-radios__item <%= item[:wrapper_classes]%>">
-                   <%
+                <% if item[:value] == :separator %>
+                  <div class="govuk-radios__divider"><%= item[:text] %></div>
+                <% else %>
+                  <div class="govuk-radios__item <%= item[:wrapper_classes]%>">
+                    <%
                      input_attributes = {
                       id: item[:id],
                       name: "component[notification_type]",
@@ -88,8 +85,9 @@
                        attributes: item[:label].try(:[], :attributes),
                        for: item[:id]
                      })
-                   %>
-                 </div>
+                    %>
+                  </div>
+                 <% end %>
               <% end %>
             </div>
           </fieldset>

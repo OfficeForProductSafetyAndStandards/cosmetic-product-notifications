@@ -12,6 +12,7 @@ module NotificationTypes
       predefined: "predefined",
       exact: "exact",
       exact_csv: "exact_csv",
+      range_csv: "range_csv",
       range: "range",
     }, _prefix: :notification_type_given_as
   end
