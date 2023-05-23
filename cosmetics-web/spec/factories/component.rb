@@ -121,7 +121,7 @@ FactoryBot.define do
     end
 
     trait :with_other_category do
-      sub_sub_category { "other_skin_care_products_child" }
+      sub_sub_category { "other_skin_products_child" }
     end
 
     trait :with_range_ingredients do
