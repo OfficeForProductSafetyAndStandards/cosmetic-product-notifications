@@ -56,11 +56,13 @@
         <% end %>
       </div>
     </div>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-       <a href="#" class="govuk-link govuk-link--no-visited-state opss-print-link opss-nojs-hide"><span class="opss-print-link-l"></span>Print this page</a>
+    <% unless @notification.can_be_deleted? %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+         <a href="#" class="govuk-link govuk-link--no-visited-state opss-print-link opss-nojs-hide"><span class="opss-print-link-l"></span>Print this page</a>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
 
