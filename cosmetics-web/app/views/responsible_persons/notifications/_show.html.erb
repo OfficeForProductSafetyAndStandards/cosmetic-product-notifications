@@ -1,0 +1,108 @@
+<% content_for :page_title, safe_join(["Product details: ", @notification.product_name]) %>
+<% content_for :after_header do %>
+  <%= render 'responsible_persons/shared/back_links' %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Notified product: </span>
+          <%= @notification.product_name %>
+          <% if @notification.archived? %>
+            <%= govukTag(text: "Archived", classes: "govuk-tag--grey") %>
+          <% end %>
+        </h1>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <div class="opss-text-align-right govuk-!-margin-bottom-8">
+          <%= govukButton(text: "Copy this notification", href: new_responsible_person_notification_clone_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
+        </div>
+      </div>
+    </div>
+    <% if @notification.can_be_deleted? %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <%= govukWarningText(
+            iconFallbackText: "Warning",
+            text: "You have #{Notification::DELETION_PERIOD_DAYS} days from the date you submitted your notification to delete it. You should only do this if your notification contains wrong information."
+          )%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <article class="govuk-grid-column-three-quarters">
+    <%= render("product_details", notification: @notification) %>
+  </article>
+
+  <%= render("aside_responsible_person_details", responsible_person: @responsible_person) %>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-top-4">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <% if @notification.archived? %>
+          <%= govukButton(text: "Unarchive this notification", href: responsible_person_notification_unarchive_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
+        <% else %>
+          <%= govukButton(text: "Archive this notification", href: responsible_person_notification_choose_archive_reason_path(@responsible_person, @notification, back_to: "notification"), classes: "govuk-button--secondary") %>
+        <% end %>
+        <% if @notification.can_be_deleted? %>
+          <%= govukButton(text: "Delete this notification", href: delete_responsible_person_delete_notification_path(@responsible_person, @notification), classes: "govuk-button--warning") %>
+        <% end %>
+      </div>
+    </div>
+    <% unless @notification.can_be_deleted? %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+         <a href="#" class="govuk-link govuk-link--no-visited-state opss-print-link opss-nojs-hide"><span class="opss-print-link-l"></span>Print this page</a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @archive_history.length > 0 %>
+<div class="govuk-grid-row">
+  <article class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-m">Archive history</h2>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-visually-hidden">List of archive and un-archive events</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Date &amp; time</th>
+          <th scope="col" class="govuk-table__header">Archive action</th>
+          <th scope="col" class="govuk-table__header">Team member</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <% @archive_history.each do |entry| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= display_date_time(entry.object["updated_at"]) %></td>
+          <td class="govuk-table__cell">
+            <% if entry.object["state"] == "archived" %>
+              <strong>Archived:</strong> <%= get_archive_reason_name(entry.object["archive_reason"]) %>
+            <% else %>
+              <strong>Unarchived</strong>
+            <% end %>
+          <td class="govuk-table__cell"><%= entry.whodunnit %></td>
+        </tr>
+      <% end %>
+      </tbody>
+      <% if @archive_history.length > 11 %>
+        <tfoot class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Date &amp; time</th>
+          <th scope="col" class="govuk-table__header">Archive action</th>
+          <th scope="col" class="govuk-table__header">Team member</th>
+        </tr>
+        </tfoot>
+      <% end %>
+    </table>
+  </article>
+</div>
+<% end %>

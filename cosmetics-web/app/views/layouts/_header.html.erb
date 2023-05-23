@@ -21,9 +21,9 @@
     <div class="govuk-header__content">
       <%= render partial: ("search/header_link") if search_domain? %>
       <%= render partial: ("submit/header_link") if submit_domain? %>
-      <button class="govuk-header__menu-button govuk-js-header-toggle" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+      <button class="govuk-header__menu-button govuk-js-header-toggle no-print" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
-        <ul id="navigation" class="govuk-header__navigation" aria-label="Top Level Navigation">
+        <ul id="navigation" class="govuk-header__navigation no-print" aria-label="Top Level Navigation">
           <% if current_user && current_user.has_completed_registration? %>
             <li class="govuk-header__navigation-item">
               <%= link_to "Your account", my_account_path, class: "govuk-header__link" %>
