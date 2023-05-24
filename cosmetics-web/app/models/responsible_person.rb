@@ -1,6 +1,8 @@
 class ResponsiblePerson < ApplicationRecord
   include StripWhitespace
 
+  has_paper_trail
+
   ADDRESS_FIELDS = %i[address_line_1 address_line_2 city county postal_code].freeze
   NAME_MAX_LENGTH = 250
 
