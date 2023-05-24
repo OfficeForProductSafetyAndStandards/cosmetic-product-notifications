@@ -127,6 +127,7 @@ class Component < ApplicationRecord
   }
 
   before_save :remove_other_special_applicator, unless: :other_special_applicator?
+  before_save :remove_blank_shades
 
   # Deletes all the associated poisonous ingredients from predefined components when
   # "contains_poisonous_ingredients" is set to "false"
@@ -360,5 +361,9 @@ private
 
   def remove_poisonous_ingredients!
     ingredients.poisonous.destroy_all
+  end
+
+  def remove_blank_shades
+    shades.reject!(&:blank?) if shades
   end
 end

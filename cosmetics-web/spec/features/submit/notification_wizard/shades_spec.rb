@@ -29,8 +29,13 @@ RSpec.describe "Adding and removing shades", :with_stubbed_antivirus, type: :fea
 
     expect(page).to have_field("component_shades-0", with: "Red")
     expect(page).to have_field("component_shades-1", with: "Yellow")
+
+    click_on "Add another shade" # attempt to add a blank shade
+
     click_on "Continue"
 
     expect(page).to have_css("h1", text: "What is the physical form of the product?")
+
+    expect(Component.last.shades).to eq(%w[Red Yellow])
   end
 end
