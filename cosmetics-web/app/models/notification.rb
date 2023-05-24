@@ -168,10 +168,14 @@ class Notification < ApplicationRecord
   end
 
   def add_image(image)
+    # Check that an image with this filename has not already
+    # been uploaded to this notification
+    if image_uploads.map(&:filename).include?(image.original_filename)
+      errors.add(:image_uploads, :duplicate_filename)
     # We need to use `length` here rather than `count` since we're potentially adding multiple
     # image uploads before saving the notification, and `count` will only tell us what's already
     # in the database.
-    if image_uploads.length < MAXIMUM_IMAGE_UPLOADS
+    elsif image_uploads.length < MAXIMUM_IMAGE_UPLOADS
       image_uploads.build.tap do |upload|
         upload.file.attach(image)
         upload.filename = image.original_filename

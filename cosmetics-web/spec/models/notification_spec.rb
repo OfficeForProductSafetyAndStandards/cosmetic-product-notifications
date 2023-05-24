@@ -296,9 +296,9 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     context "when fewer than 10 images are attached" do
       let(:image_uploads) { create_list(:image_upload, 8, :uploaded_and_virus_scanned) }
       let(:notification) { create(:notification, image_uploads:) }
-      let(:attachment1) { fixture_file_upload("/testImage.png", "image/png") }
-      let(:attachment2) { fixture_file_upload("/testImage.png", "image/png") }
-      let(:attachment3) { fixture_file_upload("/testImage.png", "image/png") }
+      let(:attachment1) { fixture_file_upload("/testImage1.png", "image/png") }
+      let(:attachment2) { fixture_file_upload("/testImage2.png", "image/png") }
+      let(:attachment3) { fixture_file_upload("/testImage3.png", "image/png") }
 
       it "allows another image to be attached" do
         notification.add_image(attachment1)
@@ -317,12 +317,23 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         notification.add_image(attachment3)
         expect { notification.save }.to(change { notification.image_uploads.count }.by(2))
       end
+
+      context "when a file with the same name has already been uploaded to this notification" do
+        before do
+          notification.add_image(attachment1)
+        end
+
+        it "sets an error message" do
+          notification.add_image(attachment1)
+          expect(notification.errors[:image_uploads]).to include("A file with this name has already been uploaded to this notification.")
+        end
+      end
     end
 
     context "when 10 images are attached" do
       let(:image_uploads) { create_list(:image_upload, 10, :uploaded_and_virus_scanned) }
       let(:notification) { create(:notification, image_uploads:) }
-      let(:attachment) { fixture_file_upload("/testImage.png", "image/png") }
+      let(:attachment) { fixture_file_upload("/testImage1.png", "image/png") }
 
       it "does not allow another image to be attached" do
         notification.add_image(attachment)

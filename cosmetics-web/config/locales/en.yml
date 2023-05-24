@@ -48,6 +48,8 @@ en:
               blank: "Enter the maximum\u00A0pH"
             product_name:
               taken: "Enter a name which has not been used in your active notifications"
+            image_uploads:
+              duplicate_filename: "A file with this name has already been uploaded to this notification."
         component:
           attributes:
             name:
