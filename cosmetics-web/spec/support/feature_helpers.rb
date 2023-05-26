@@ -251,6 +251,22 @@ def expect_to_be_on__physical_form_of_item_page(item_name: nil)
   expect(page).to have_h1("What is the physical form of #{item_name || 'the product'}?")
 end
 
+def expect_back_link_to_add_shades_page
+  expect_back_link_to(/\/build\/add_shades$/)
+end
+
+def expect_back_link_to_number_of_shades_page
+  expect_back_link_to(/\/build\/number_of_shades$/)
+end
+
+def expect_back_link_to_add_ingredient_exact_concentration_page
+  expect_back_link_to(/\/build\/add_ingredient_exact_concentration$/)
+end
+
+def expect_back_link_to_add_ingredient_range_concentration_page
+  expect_back_link_to(/\/build\/add_ingredient_range_concentration$/)
+end
+
 def expect_back_link_to_physical_form_of_item_page
   expect_back_link_to(/\/build\/add_physical_form$/)
 end

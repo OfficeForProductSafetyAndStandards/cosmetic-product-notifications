@@ -73,6 +73,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       click_on "Save and continue"
 
       expect_to_be_on_what_is_ph_range_of_product_page
+      expect_back_link_to_add_ingredient_exact_concentration_page
     end
 
     scenario "Adding range concentration ingredients to a product" do
@@ -136,6 +137,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       click_on "Save and continue"
 
       expect_to_be_on_what_is_ph_range_of_product_page
+      expect_back_link_to_add_ingredient_range_concentration_page
     end
 
     scenario "Adding poisonous ingredients for a product with predefined formulation" do
