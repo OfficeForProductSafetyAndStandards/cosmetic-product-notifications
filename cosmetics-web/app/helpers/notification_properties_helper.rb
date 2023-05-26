@@ -140,7 +140,7 @@ module NotificationPropertiesHelper
   }.freeze
 
   PHYSICAL_FORM = {
-    solid_or_pressed_powder: "Solid or pressed powder",
+    solid_or_pressed_powder: "Solid, or pressed powder",
     loose_powder: "Loose powder",
     cream_or_paste: "Cream or paste",
     liquid: "Liquid",
