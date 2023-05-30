@@ -17,6 +17,10 @@ module SecondaryAuthentication
     end
 
     def create
+      # Prevent users from entering a recovery code if they're already logged in
+      user_id = session[:secondary_authentication_user_id]
+      return redirect_to(root_path) unless user_id
+
       if form.valid?
         set_secondary_authentication_cookie(Time.zone.now.to_i)
         remaining_recovery_codes = form.user.secondary_authentication_recovery_codes
