@@ -11,10 +11,10 @@ RSpec.describe "Adding and removing shades", :with_stubbed_antivirus, type: :fea
     click_on "Create a new product notification"
     complete_product_wizard(name: "FooProduct")
     click_link "Product details"
-    answer_is_item_available_in_shades_with "Yes"
   end
 
   scenario "Adding Red, Orange, Yellow shades, Removing Orange" do
+    answer_is_item_available_in_shades_with "Yes"
     fill_in "component_shades-0", with: "Red"
     fill_in "component_shades-1", with: "Orange"
     click_on "Add another shade"
@@ -35,7 +35,15 @@ RSpec.describe "Adding and removing shades", :with_stubbed_antivirus, type: :fea
     click_on "Continue"
 
     expect(page).to have_css("h1", text: "What is the physical form of the product?")
-
     expect(Component.last.shades).to eq(%w[Red Yellow])
+    expect_back_link_to_add_shades_page
+  end
+
+  scenario "No shades" do
+    answer_is_item_available_in_shades_with "No"
+    click_on "Continue"
+
+    expect(page).to have_css("h1", text: "What is the physical form of the product?")
+    expect_back_link_to_number_of_shades_page
   end
 end

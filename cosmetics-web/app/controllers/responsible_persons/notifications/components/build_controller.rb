@@ -48,7 +48,10 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
       add_component_name: -> { @component.notification.multi_component? },
     },
     add_shades: :number_of_shades,
-    add_physical_form: :number_of_shades,
+    add_physical_form: {
+      add_shades: -> { multi_shade? },
+      number_of_shades: -> { !multi_shade? },
+    },
     contains_special_applicator: :add_physical_form,
     select_special_applicator_type: :contains_special_applicator, # only if contains special applicator,
     contains_cmrs: :contains_special_applicator,
@@ -68,7 +71,8 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     contains_ingredients_npis_needs_to_know: :select_formulation_type, # only for frame formulation,
     add_ingredient_npis_needs_to_know: :contains_ingredients_npis_needs_to_know, # only for frame formulation,
     select_ph_option: {
-      select_formulation_type: -> { @component.exact? || @component.range? },
+      add_ingredient_exact_concentration: -> { @component.exact? },
+      add_ingredient_range_concentration: -> { @component.range? },
       contains_ingredients_npis_needs_to_know: -> { @component.predefined? },
     },
   }.freeze
@@ -453,5 +457,9 @@ private
 
   def more_than_one_sub_category?
     @more_than_one_sub_category ||= get_sub_categories(@component.sub_category).length > 1
+  end
+
+  def multi_shade?
+    @component.shades.present?
   end
 end
