@@ -13,8 +13,13 @@ then
   exit
 fi
 
-MANIFEST_FILE=./cosmetics-web/manifest.yml
+if [ -z "$SUPPORT_HOST" ]
+then
+  echo "Please set your support host, eg SUPPORT_HOST=support.cosmetic-product-notifications.service.gov.uk"
+  exit
+fi
 
+MANIFEST_FILE=./cosmetics-web/manifest.yml
 
 # Copy the environment helper script
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
@@ -26,8 +31,8 @@ cp -a ./infrastructure/env/. ./cosmetics-web/env/
 # See https://docs.cloudfoundry.org/devguide/deploy-apps/large-app-deploy.html
 export CF_STARTUP_TIMEOUT=25
 
-# Deploy the submit app and set the hostname
-cf push $APP_NAME -f $MANIFEST_FILE --app-start-timeout 180 --var app-name=$APP_NAME --var submit-host=$SUBMIT_HOST --var search-host=$SEARCH_HOST --var web-instances=$WEB_INSTANCES --var worker-instances=$WORKER_INSTANCES --var worker-max-threads=$WORKER_MAX_THREADS --var sentry-service-name=$SENTRY_SERVICE_NAME --strategy rolling
+# Deploy the app and set the hostname
+cf push $APP_NAME -f $MANIFEST_FILE --app-start-timeout 180 --var app-name=$APP_NAME --var submit-host=$SUBMIT_HOST --var search-host=$SEARCH_HOST --var support-host=$SUPPORT_HOST --var web-instances=$WEB_INSTANCES --var worker-instances=$WORKER_INSTANCES --var worker-max-threads=$WORKER_MAX_THREADS --var sentry-service-name=$SENTRY_SERVICE_NAME --strategy rolling
 
 # Remove the copied infrastructure env files to clean up
 rm -R cosmetics-web/env/

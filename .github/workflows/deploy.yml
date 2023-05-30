@@ -44,6 +44,7 @@ jobs:
         APP_NAME: cosmetics-web
         SUBMIT_HOST: staging-submit.cosmetic-product-notifications.service.gov.uk
         SEARCH_HOST: staging-search.cosmetic-product-notifications.service.gov.uk
+        SUPPORT_HOST: staging-support.cosmetic-product-notifications.service.gov.uk
         WEB_INSTANCES: 2
         WEB_MAX_THREADS: 1
         WORKER_MAX_THREADS: 10
@@ -97,6 +98,7 @@ jobs:
         APP_NAME: cosmetics-web
         SUBMIT_HOST: submit.cosmetic-product-notifications.service.gov.uk
         SEARCH_HOST: search.cosmetic-product-notifications.service.gov.uk
+        SUPPORT_HOST: support.cosmetic-product-notifications.service.gov.uk
         WEB_INSTANCES: 8
         WEB_MAX_THREADS: 1
         WORKER_MAX_THREADS: 10

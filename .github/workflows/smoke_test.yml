@@ -7,6 +7,7 @@ on:
 env:
   SEARCH_HOST: search
   SUBMIT_HOST: submit
+  SUPPORT_HOST: support
   DATABASE_URL: postgres://localhost:5432/cosmetics_test
   PGHOST: localhost
   PGUSER: postgres

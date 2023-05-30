@@ -15,6 +15,7 @@
 <!-- Edit the following links after the PR is created to replace "xxxx" with the PR number -->
 https://cosmetics-pr-xxxx-submit-web.london.cloudapps.digital/
 https://cosmetics-pr-xxxx-search-web.london.cloudapps.digital/
+https://cosmetics-pr-xxxx-support-web.london.cloudapps.digital/
 
 ## Checklist
 
@@ -34,6 +35,7 @@ https://cosmetics-pr-xxxx-search-web.london.cloudapps.digital/
 - [ ] Database migrations have been tested (both up and down) and are safe (e.g. stop using a column before removing it)
 - [ ] A feature flag has been added (if required in the ticket; a ticket has also been added to remove the feature flag once deployment is completed)
 - [ ] Comms have been sent to users (if required in the ticket)
+- [ ] OSU Support service has been updated (if required in the ticket)
 
 ## Post-deploy tasks
 

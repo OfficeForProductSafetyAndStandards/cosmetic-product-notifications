@@ -2,7 +2,7 @@
 
 require "thor" # included with rails.
 
-# Cli tool that turns maintenance mode on or off for Submit and Search production pages.
+# CLI tool that turns maintenance mode on or off for SCPN in production.
 #
 # Usage:
 #   $ ./bin/production-maintenance-mode on
@@ -15,24 +15,29 @@ class ProductionMaintenanceModeCLI < Thor
   MAINTENANCE_APP_NAME = "maintenance".freeze
   SUBMIT_HOSTNAME = "submit".freeze
   SEARCH_HOSTNAME = "search".freeze
+  SUPPORT_HOSTNAME = "support".freeze
 
   ON_COMMANDS = [
     "cf map-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
     "cf map-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+    "cf map-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SUPPORT_HOSTNAME}",
     "cf unmap-route #{APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
     "cf unmap-route #{APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+    "cf unmap-route #{APP_NAME} #{DOMAIN} --hostname #{SUPPORT_HOSTNAME}",
   ].freeze
 
   OFF_COMMANDS = [
     "cf map-route #{APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
     "cf map-route #{APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+    "cf map-route #{APP_NAME} #{DOMAIN} --hostname #{SUPPORT_HOSTNAME}",
     "cf unmap-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SUBMIT_HOSTNAME}",
     "cf unmap-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SEARCH_HOSTNAME}",
+    "cf unmap-route #{MAINTENANCE_APP_NAME} #{DOMAIN} --hostname #{SUPPORT_HOSTNAME}",
   ].freeze
 
-  desc "on", "Sets Cosmetics production websites (Submit and Search services) into maintenance mode."
+  desc "on", "Sets SCPN production websites (Submit/Search/Support services) into maintenance mode."
   def on
-    say("This command will make the production live Submit and Search services unavailable for the users.", :yellow)
+    say("This command will make the production live Submit, Search and Support services unavailable for users.", :yellow)
     return unless yes?("Do you want to proceed? (y/n)", :yellow)
     return unless ensure_space_access && ensure_maintenance_app_presence && ensure_app_presence
 
@@ -42,9 +47,9 @@ class ProductionMaintenanceModeCLI < Thor
     end
   end
 
-  desc "off", "Sets Cosmetics production websites (Submit and Search services) back to live from maintenance mode."
+  desc "off", "Sets SCPN production websites (Submit/Search/Support services) back to live from maintenance mode."
   def off
-    say("This command will remove the production live Submit and Search services from maintenance mode and make them available for the users.", :yellow)
+    say("This command will remove the production live Submit, Search and Support services from maintenance mode and make them available for users.", :yellow)
     return unless yes?("Do you want to proceed? (y/n)", :yellow)
     return unless ensure_space_access && ensure_maintenance_app_presence && ensure_app_presence
 
@@ -114,6 +119,7 @@ private
     say("To check the pages:")
     say("Submit: https://#{SUBMIT_HOSTNAME}.#{DOMAIN}")
     say("Search: https://#{SEARCH_HOSTNAME}.#{DOMAIN}")
+    say("Support: https://#{SUPPORT_HOSTNAME}.#{DOMAIN}")
   end
 end
 

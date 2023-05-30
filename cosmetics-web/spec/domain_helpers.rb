@@ -8,6 +8,10 @@ module DomainHelpers
     configure_request_for_domain("SEARCH_HOST")
   end
 
+  def configure_requests_for_support_domain
+    configure_request_for_domain("SUPPORT_HOST")
+  end
+
   def configure_request_for_domain(domain_env_reference)
     Capybara.app_host = "http://#{ENV.fetch(domain_env_reference)}" # For feature specs
     if defined? host!
