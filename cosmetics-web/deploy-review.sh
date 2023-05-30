@@ -11,6 +11,7 @@ INSTANCE_NAME=cosmetics-$REVIEW_INSTANCE_NAME
 
 SEARCH_APP=$INSTANCE_NAME-search-web
 SUBMIT_APP=$INSTANCE_NAME-submit-web
+SUPPORT_APP=$INSTANCE_NAME-support-web
 
 APP=$INSTANCE_NAME
 
@@ -42,7 +43,6 @@ until cf service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_ex
 # Wait until redis service is prepared, might take up to 10 minutes
 until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
 
-
 # Copy files from infrastructure env
 cp -a ./infrastructure/env/. ./cosmetics-web/env/
 
@@ -61,8 +61,8 @@ then
   WORKER_MAX_THREADS=10
 fi
 
-# Deploy the submit app and set the hostname
-cf push $APP -f $MANIFEST_FILE --app-start-timeout 180 --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --var web-max-threads=$WEB_MAX_THREADS --var web-concurrency=$WEB_CONCURRENCY --var worker-max-threads=$WORKER_MAX_THREADS --strategy rolling
+# Deploy the app and set the hostname
+cf push $APP -f $MANIFEST_FILE --app-start-timeout 180 --var cosmetics-instance-name=$INSTANCE_NAME --var cosmetics-web-database=$DB_NAME --var submit-host=$SUBMIT_APP.$DOMAIN --var search-host=$SEARCH_APP.$DOMAIN --var support-host=$SUPPORT_APP.$DOMAIN --var cosmetics-host=$SUBMIT_APP.$DOMAIN --var cosmetics-redis-service=$REDIS_NAME --var sentry-current-env=$REVIEW_INSTANCE_NAME --var web-max-threads=$WEB_MAX_THREADS --var web-concurrency=$WEB_CONCURRENCY --var worker-max-threads=$WORKER_MAX_THREADS --strategy rolling
 
 cf scale $APP --process worker -i 1
 

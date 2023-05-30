@@ -55,6 +55,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - SEARCH_HOST=cosmetics-search
       - SUBMIT_HOST=cosmetics-submit
+      - SUPPORT_HOST=cosmetics-support
       - COSMETICS_HOST=cosmetics-submit
       - ANTIVIRUS_ENABLED=false
 
@@ -75,6 +76,7 @@ services:
       - ANTIVIRUS_ENABLED=false
       - SEARCH_HOST=cosmetics-search
       - SUBMIT_HOST=cosmetics-submit
+      - SUPPORT_HOST=cosmetics-support
       - COSMETICS_HOST=cosmetics-submit
     depends_on:
       - db

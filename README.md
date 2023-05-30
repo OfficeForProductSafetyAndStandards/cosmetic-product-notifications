@@ -24,10 +24,6 @@ The [antivirus API](https://github.com/OfficeForProductSafetyAndStandards/antivi
 
 The [maintenance app](https://github.com/OfficeForProductSafetyAndStandards/infrastructure/blob/master/maintenance/README.md) is used to display a holding page while the app is down for maintenance.
 
-### Infrastructure
-
-The [infrastructure repo](https://github.com/OfficeForProductSafetyAndStandards/infrastructure) contains Terraform code to set up some ancillary infrastructure for things like monitoring and alerting.
-
 ### Accounts
 
 #### GOV.UK Platform as a Service

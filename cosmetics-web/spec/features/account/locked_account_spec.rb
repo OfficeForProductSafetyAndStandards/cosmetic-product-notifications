@@ -94,4 +94,6 @@ RSpec.feature "Unlocking account", :with_stubbed_mailer, :with_stubbed_notify, :
 
     include_examples "locked account"
   end
+
+  # TODO(ruben): Add example for support domain
 end

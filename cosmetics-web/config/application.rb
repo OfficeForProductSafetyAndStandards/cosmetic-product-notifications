@@ -47,6 +47,7 @@ module Cosmetics
     config.antivirus_url = ENV.fetch("ANTIVIRUS_URL", "http://localhost:3006/safe")
     config.search_notify_api_key = ENV.fetch("SEARCH_NOTIFY_API_KEY", "")
     config.submit_notify_api_key = ENV.fetch("NOTIFY_API_KEY", "")
+    config.support_notify_api_key = ENV.fetch("SUPPORT_NOTIFY_API_KEY", "")
     config.secondary_authentication_enabled = ENV.fetch("TWO_FACTOR_AUTHENTICATION_ENABLED", "true") == "true"
     config.two_factor_attempts = 10
     config.whitelisted_direct_otp_code = ENV["WHITELISTED_DIRECT_OTP_CODE"]

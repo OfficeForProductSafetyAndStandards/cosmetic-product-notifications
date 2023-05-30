@@ -6,9 +6,11 @@ applications:
   routes:
     - route: ((search-host))
     - route: ((submit-host))
+    - route: ((support-host))
   env:
     SEARCH_HOST: ((search-host))
     SUBMIT_HOST: ((submit-host))
+    SUPPORT_HOST: ((support-host))
     COSMETICS_HOST: ((submit-host))
   stack: cflinuxfs3
   services:

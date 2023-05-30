@@ -16,6 +16,7 @@ env:
   ANTIVIRUS_PASSWORD: password
   SEARCH_HOST: search
   SUBMIT_HOST: submit
+  SUPPORT_HOST: support
   EMAIL_WHITELIST_ENABLED: false
   TWO_FACTOR_AUTHENTICATION_ENABLED: false
   CI: true

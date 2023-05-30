@@ -317,6 +317,8 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     end
   end
 
+  # TODO(ruben): Add example for support domain
+
   def request_password_reset
     user.update!(reset_password_token: reset_token)
 
