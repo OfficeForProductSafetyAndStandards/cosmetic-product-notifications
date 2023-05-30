@@ -16,7 +16,7 @@
       iconFallbackText: "Warning",
       text: "Each recovery code can only be used once - if you have used them all or need new recovery codes, for whatever reason, you must contact the support team to receive more recovery codes."
     ) %>
-    <p class="govuk-body">
+    <p class="govuk-body no-print">
       Download or print the recovery codes to ensure they are not lost.
     </p>
   </div>
@@ -33,7 +33,7 @@
     </div>
   </div>
 </div>
-<div class="govuk-grid-row">
+<div class="govuk-grid-row no-print">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-top-4">
     <div class="govuk-button-group">
       <%= govukButton(text: "Download recovery codes", href: new_secondary_authentication_recovery_codes_setup_path(format: :txt), classes: "govuk-button--secondary", attributes: { target: "_blank", download: "scpn-recovery-codes.txt" }) %>
@@ -41,7 +41,7 @@
     </div>
   </div>
 </div>
-<div class="govuk-grid-row">
+<div class="govuk-grid-row no-print">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= govukButton(text: "Continue", href: @continue_path) %>
   </div>
