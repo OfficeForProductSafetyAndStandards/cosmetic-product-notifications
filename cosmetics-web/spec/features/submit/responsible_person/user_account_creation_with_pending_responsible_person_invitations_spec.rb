@@ -18,55 +18,53 @@ RSpec.describe "Creating an account when having pending responsible person invit
     travel_back
   end
 
-  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
-    scenario "user is invited to multiple responsible persons" do
-      create(:pending_responsible_person_user,
-             :expired,
-             email_address: invited_user_email,
-             responsible_person:,
-             inviting_user:,
-             created_at: 3.days.ago)
-      create(:pending_responsible_person_user,
-             email_address: invited_user_email,
-             inviting_user:,
-             responsible_person: responsible_person2)
+  scenario "user is invited to multiple responsible persons" do
+    create(:pending_responsible_person_user,
+           :expired,
+           email_address: invited_user_email,
+           responsible_person:,
+           inviting_user:,
+           created_at: 3.days.ago)
+    create(:pending_responsible_person_user,
+           email_address: invited_user_email,
+           inviting_user:,
+           responsible_person: responsible_person2)
 
-      user_creates_an_account_with_invitation_email(feature_flag_enabled)
+    user_creates_an_account_with_invitation_email
 
-      # User sees RP invites list showing when user is invited
-      expect(page).to have_css("h1", text: "Who do you want to submit cosmetic product notifications for?")
-      expect(page).to have_text(responsible_person.name)
-      # Shows invitation date for active invitations
-      expect(page).to have_text("Check your email inbox for your invite, sent 24 November 2020.")
-      # Expired invitations show the name of the user who sent the invitation
-      expect(page).to have_text(responsible_person2.name)
-      expect(page).to have_text("Your invite has expired and needs to be resent. You were invited by #{inviting_user.name}.")
-      # Invitations are displayed in order of most recent to oldest invite
-      expect(page.body.index(responsible_person2.name)).to be < page.body.index(responsible_person.name)
-      # User gets the option to create a new responsible person
-      expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
-    end
-
-    scenario "user is invited to responsible person but invitation has expired" do
-      create(:pending_responsible_person_user,
-             :expired,
-             email_address: invited_user_email,
-             inviting_user:,
-             responsible_person:,
-             created_at: 5.days.ago)
-
-      user_creates_an_account_with_invitation_email(feature_flag_enabled)
-      # User sees RP invites list
-      expect(page).to have_css("h1", text: "Who do you want to submit cosmetic product notifications for?")
-      # Displays the invitations to the RP as a single line with all the inviting users
-      expect(page).to have_text(responsible_person.name).once
-      expect(page).to have_text("Your invite has expired and needs to be resent. You were invited by #{inviting_user.name}.")
-      # User gets the option to create a new responsible person
-      expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
-    end
+    # User sees RP invites list showing when user is invited
+    expect(page).to have_css("h1", text: "Who do you want to submit cosmetic product notifications for?")
+    expect(page).to have_text(responsible_person.name)
+    # Shows invitation date for active invitations
+    expect(page).to have_text("Check your email inbox for your invite, sent 24 November 2020.")
+    # Expired invitations show the name of the user who sent the invitation
+    expect(page).to have_text(responsible_person2.name)
+    expect(page).to have_text("Your invite has expired and needs to be resent. You were invited by #{inviting_user.name}.")
+    # Invitations are displayed in order of most recent to oldest invite
+    expect(page.body.index(responsible_person2.name)).to be < page.body.index(responsible_person.name)
+    # User gets the option to create a new responsible person
+    expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
   end
 
-  def user_creates_an_account_with_invitation_email(feature_flag_enabled)
+  scenario "user is invited to responsible person but invitation has expired" do
+    create(:pending_responsible_person_user,
+           :expired,
+           email_address: invited_user_email,
+           inviting_user:,
+           responsible_person:,
+           created_at: 5.days.ago)
+
+    user_creates_an_account_with_invitation_email
+    # User sees RP invites list
+    expect(page).to have_css("h1", text: "Who do you want to submit cosmetic product notifications for?")
+    # Displays the invitations to the RP as a single line with all the inviting users
+    expect(page).to have_text(responsible_person.name).once
+    expect(page).to have_text("Your invite has expired and needs to be resent. You were invited by #{inviting_user.name}.")
+    # User gets the option to create a new responsible person
+    expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
+  end
+
+  def user_creates_an_account_with_invitation_email
     visit "/"
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
@@ -94,10 +92,8 @@ RSpec.describe "Creating an account when having pending responsible person invit
     expect_user_to_have_received_sms_code(otp_code)
     complete_secondary_authentication_sms_with(otp_code)
 
-    if feature_flag_enabled
-      expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-      expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.find_by(email: invited_user_email).secondary_authentication_recovery_codes))
-      click_link "Continue"
-    end
+    expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.find_by(email: invited_user_email).secondary_authentication_recovery_codes))
+    click_link "Continue"
   end
 end

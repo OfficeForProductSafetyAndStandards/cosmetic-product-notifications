@@ -45,9 +45,7 @@
 
     <div class="govuk-body">
       <p><%= link_to "Not received a text message?", new_secondary_authentication_sms_resend_path, class: "govuk-link" %></p>
-      <% if FeatureFlags.secondary_authentication_recovery_codes_enabled?(current_user) %>
-        <p><%= link_to "Use recovery code", new_secondary_authentication_recovery_code_path(back_to: "sms"), class: "govuk-link" %></p>
-      <% end %>
+      <p><%= link_to "Use recovery code", new_secondary_authentication_recovery_code_path(back_to: "sms"), class: "govuk-link" %></p>
     </div>
   </div>
 </div>

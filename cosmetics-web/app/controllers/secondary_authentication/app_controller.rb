@@ -1,5 +1,3 @@
-require "feature_flags"
-
 module SecondaryAuthentication
   # Don't inherit from authentication controller
   class AppController < ApplicationController

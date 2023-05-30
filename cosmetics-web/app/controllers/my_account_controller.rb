@@ -1,5 +1,3 @@
-require "feature_flags"
-
 class MyAccountController < ApplicationController
   # Sets the ActiveStorage::Current.url_options attribute, which the disk service uses to generate URLs.
   # Include this concern in custom controllers that call ActiveStorage::Blob#url, ActiveStorage::Variant#url,

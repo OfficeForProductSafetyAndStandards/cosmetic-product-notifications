@@ -123,20 +123,18 @@
               ]
             }
           },
-          if FeatureFlags.secondary_authentication_recovery_codes_enabled?(current_user)
-            {
-              key: { text: "Recovery codes" },
-              actions: {
-                items: [
-                  {
-                    href: new_secondary_authentication_recovery_codes_setup_path(back_to: "my_account"),
-                    text: "View",
-                    visuallyHiddenText: "recovery codes"
-                  }
-                ]
-              }
+          {
+            key: { text: "Recovery codes" },
+            actions: {
+              items: [
+                {
+                  href: new_secondary_authentication_recovery_codes_setup_path(back_to: "my_account"),
+                  text: "View",
+                  visuallyHiddenText: "recovery codes"
+                }
+              ]
             }
-          end,
+          },
         ]
       ) %>
 

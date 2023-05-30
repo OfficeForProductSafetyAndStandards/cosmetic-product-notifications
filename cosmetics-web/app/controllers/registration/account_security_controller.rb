@@ -1,5 +1,3 @@
-require "feature_flags"
-
 module Registration
   class AccountSecurityController < SubmitApplicationController
     before_action :check_user, except: :reset
@@ -29,7 +27,7 @@ module Registration
         if account_security_form.app_authentication_selected? && !account_security_form.sms_authentication_selected? && current_user.last_totp_at
           set_secondary_authentication_cookie(Time.zone.now.to_i)
         end
-        redirect_to FeatureFlags.secondary_authentication_recovery_codes_enabled?(current_user) ? new_secondary_authentication_recovery_codes_setup_path : after_creation_path
+        redirect_to new_secondary_authentication_recovery_codes_setup_path
       else
         render :new
       end
@@ -59,19 +57,6 @@ module Registration
                     :app_authentication_code,
                     :sms_authentication,
                     :app_authentication)
-    end
-
-    # TODO(ruben): Remove once recovery codes are enabled for everyone
-    def after_creation_path
-      invitation_id = session.delete(:registered_from_responsible_person_invitation_id)
-      if (invitation = PendingResponsiblePersonUser.find_by(id: invitation_id))
-        join_responsible_person_team_members_path(invitation.responsible_person_id,
-                                                  invitation_token: invitation.invitation_token)
-      elsif pending_invitations.any?
-        account_path(:pending_invitations)
-      else
-        declaration_path
-      end
     end
 
     def check_user

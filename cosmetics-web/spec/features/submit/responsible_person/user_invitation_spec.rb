@@ -320,46 +320,42 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     end
   end
 
-  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
-    scenario "accepting an invitation for a new user when not signed in" do
-      pending = create(:pending_responsible_person_user, responsible_person:)
+  scenario "accepting an invitation for a new user when not signed in" do
+    pending = create(:pending_responsible_person_user, responsible_person:)
 
-      visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
-      expect(page).to have_current_path("/account-security")
-      expect(page).to have_css("h1", text: "Setup your account")
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h1", text: "Setup your account")
 
-      # User name is pre-filled with name provided in the invitation
-      expect(page).to have_field("Full name", with: pending.name)
+    # User name is pre-filled with name provided in the invitation
+    expect(page).to have_field("Full name", with: pending.name)
 
-      # User can change the name
-      fill_in "Full name", with: "Joe Doe"
-      fill_in "Create your password", with: "userpassword", match: :prefer_exact
-      check "Text message"
-      fill_in "Mobile number", with: "07000000000"
-      click_button "Continue"
+    # User can change the name
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    check "Text message"
+    fill_in "Mobile number", with: "07000000000"
+    click_button "Continue"
 
-      invited_user = SubmitUser.find_by!(email: pending.email_address)
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-      complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    invited_user = SubmitUser.find_by!(email: pending.email_address)
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
+    complete_secondary_authentication_sms_with(invited_user.direct_otp)
 
-      if feature_flag_enabled
-        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
-        click_link "Continue"
-      end
+    expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
+    click_link "Continue"
 
-      expect(page).to have_current_path("/declaration", ignore_query: true)
-      expect(page).to have_css("h1", text: "Responsible Person Declaration")
-      click_button "I confirm"
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-      expect(page).to have_css("h1", text: "Product notifications")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Product notifications")
 
-      expect(invited_user.responsible_persons).to include(responsible_person)
-      # Updated user name from account security page
-      expect(invited_user.name).to eq("Joe Doe")
-    end
+    expect(invited_user.responsible_persons).to include(responsible_person)
+    # Updated user name from account security page
+    expect(invited_user.name).to eq("Joe Doe")
   end
 
   scenario "accepting an invitation by an new user who belongs to another team" do
@@ -444,203 +440,191 @@ RSpec.describe "Inviting a team member", :with_stubbed_antivirus, :with_stubbed_
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
-  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
-    scenario "accepting an invitation for a new user when signed in as different user" do
-      # User invites a new member to the team
-      sign_in_as_member_of_responsible_person(responsible_person, user)
+  scenario "accepting an invitation for a new user when signed in as different user" do
+    # User invites a new member to the team
+    sign_in_as_member_of_responsible_person(responsible_person, user)
 
-      visit "/responsible_persons/#{responsible_person.id}/team_members"
+    visit "/responsible_persons/#{responsible_person.id}/team_members"
 
-      wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
-      travel_to(Time.zone.now + wait_time.seconds)
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    travel_to(Time.zone.now + wait_time.seconds)
 
-      click_on "Invite another team member"
+    click_on "Invite another team member"
 
-      select_secondary_authentication_sms
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
-      complete_secondary_authentication_sms_with(user.direct_otp)
+    select_secondary_authentication_sms
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(user.reload.direct_otp, user)
+    complete_secondary_authentication_sms_with(user.direct_otp)
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/invitations/new")
 
-      fill_in "Full name", with: "John New User"
-      fill_in "Email address", with: "newusertoregister@example.com"
-      click_on "Send invitation"
+    fill_in "Full name", with: "John New User"
+    fill_in "Email address", with: "newusertoregister@example.com"
+    click_on "Send invitation"
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/team_members")
 
-      # Invitation gets listed
-      expect(page).to have_css(
-        "tr",
-        text: "John New User: Awaiting confirmation newusertoregister@example.com | Resend invitation to John New User | Cancel invitation to John New User #{user.name}",
-      )
+    # Invitation gets listed
+    expect(page).to have_css(
+      "tr",
+      text: "John New User: Awaiting confirmation newusertoregister@example.com | Resend invitation to John New User | Cancel invitation to John New User #{user.name}",
+    )
 
-      expect(delivered_emails.size).to eq 1
+    expect(delivered_emails.size).to eq 1
 
-      email = delivered_emails.last
-      expect(email.recipient).to eq "newusertoregister@example.com"
-      expect(email.personalization[:responsible_person]).to eq("Responsible Person")
+    email = delivered_emails.last
+    expect(email.recipient).to eq "newusertoregister@example.com"
+    expect(email.personalization[:responsible_person]).to eq("Responsible Person")
 
-      # Accepting the invitation when signed in as a different user
-      different_user = create(:submit_user, name: "John Doedifferent")
-      sign_out
-      sign_in_as_member_of_responsible_person(responsible_person, different_user)
+    # Accepting the invitation when signed in as a different user
+    different_user = create(:submit_user, name: "John Doedifferent")
+    sign_out
+    sign_in_as_member_of_responsible_person(responsible_person, different_user)
 
-      wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
-      travel_to(Time.zone.now + wait_time.seconds)
-      visit email.personalization[:invitation_url]
-      expect(page).to have_css("h1", text: "You are already signed in")
+    wait_time = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::INVITE_USER] + 1
+    travel_to(Time.zone.now + wait_time.seconds)
+    visit email.personalization[:invitation_url]
+    expect(page).to have_css("h1", text: "You are already signed in")
 
-      click_button "Create a new account"
+    click_button "Create a new account"
 
-      expect(page).to have_css("h1", text: "Setup your account")
-      # User name is pre-filled with name provided in the invitation
-      expect(page).to have_field("Full name", with: "John New User")
+    expect(page).to have_css("h1", text: "Setup your account")
+    # User name is pre-filled with name provided in the invitation
+    expect(page).to have_field("Full name", with: "John New User")
 
-      # User can change the name
-      fill_in "Full name", with: "Joe Doe"
-      fill_in "Create your password", with: "userpassword", match: :prefer_exact
-      check "Text message"
-      fill_in "Mobile number", with: "07000000000"
-      click_button "Continue"
+    # User can change the name
+    fill_in "Full name", with: "Joe Doe"
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    check "Text message"
+    fill_in "Mobile number", with: "07000000000"
+    click_button "Continue"
 
-      invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-      complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
+    complete_secondary_authentication_sms_with(invited_user.direct_otp)
 
-      if feature_flag_enabled
-        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
-        click_link "Continue"
-      end
+    expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
+    click_link "Continue"
 
-      expect(page).to have_current_path("/declaration", ignore_query: true)
-      expect(page).to have_css("h1", text: "Responsible Person Declaration")
-      click_button "I confirm"
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-      expect(page).to have_css("h1", text: "Product notifications")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Product notifications")
 
-      expect(invited_user.responsible_persons).to include(responsible_person)
-      # Updated user name from account security page
-      expect(invited_user.name).to eq("Joe Doe")
-    end
+    expect(invited_user.responsible_persons).to include(responsible_person)
+    # Updated user name from account security page
+    expect(invited_user.name).to eq("Joe Doe")
   end
 
-  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
-    scenario "accepting an invitation for a new user after user self-registered post-invitation without completing the user registration" do
-      pending = create(:pending_responsible_person_user,
-                       email_address: "newusertoregister@example.com",
-                       responsible_person:)
+  scenario "accepting an invitation for a new user after user self-registered post-invitation without completing the user registration" do
+    pending = create(:pending_responsible_person_user,
+                     email_address: "newusertoregister@example.com",
+                     responsible_person:)
 
-      # User self-registers without following the invitation link
-      visit "/"
-      click_on "Create an account"
-      expect(page).to have_current_path("/create-an-account")
+    # User self-registers without following the invitation link
+    visit "/"
+    click_on "Create an account"
+    expect(page).to have_current_path("/create-an-account")
 
-      fill_in "Full name", with: "Joe Doe self-registered"
-      fill_in "Email address", with: "newusertoregister@example.com"
-      click_button "Continue"
-      expect_to_be_on_check_your_email_page
+    fill_in "Full name", with: "Joe Doe self-registered"
+    fill_in "Email address", with: "newusertoregister@example.com"
+    click_button "Continue"
+    expect_to_be_on_check_your_email_page
 
-      email = delivered_emails.last
-      expect(email.recipient).to eq "newusertoregister@example.com"
+    email = delivered_emails.last
+    expect(email.recipient).to eq "newusertoregister@example.com"
 
-      verify_url = email.personalization[:verify_email_url]
+    verify_url = email.personalization[:verify_email_url]
 
-      # Follows the registration email verification link
-      visit verify_url
-      expect(page).to have_current_path("/account-security")
+    # Follows the registration email verification link
+    visit verify_url
+    expect(page).to have_current_path("/account-security")
 
-      # Signs out without completing the account security for the self-registered account
-      click_button "Sign out"
+    # Signs out without completing the account security for the self-registered account
+    click_button "Sign out"
 
-      # Now they realise they had a RP invitation and accept it following the invitation link
-      visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
-      expect(page).to have_current_path("/account-security")
-      expect(page).to have_css("h1", text: "Setup your account")
+    # Now they realise they had a RP invitation and accept it following the invitation link
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h1", text: "Setup your account")
 
-      # User name is pre-filled with name provided by the user when self-registered
-      expect(page).to have_field("Full name", with: "Joe Doe self-registered")
+    # User name is pre-filled with name provided by the user when self-registered
+    expect(page).to have_field("Full name", with: "Joe Doe self-registered")
 
-      fill_in "Create your password", with: "userpassword", match: :prefer_exact
-      check "Text message"
-      fill_in "Mobile number", with: "07000000000"
-      click_button "Continue"
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    check "Text message"
+    fill_in "Mobile number", with: "07000000000"
+    click_button "Continue"
 
-      invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-      complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
+    complete_secondary_authentication_sms_with(invited_user.direct_otp)
 
-      if feature_flag_enabled
-        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
-        click_link "Continue"
-      end
+    expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
+    click_link "Continue"
 
-      expect(page).to have_current_path("/declaration", ignore_query: true)
-      expect(page).to have_css("h1", text: "Responsible Person Declaration")
-      click_button "I confirm"
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
 
-      # User has access to the Responsible person that issued the invitation
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-      expect(page).to have_css("h1", text: "Product notifications")
+    # User has access to the Responsible person that issued the invitation
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Product notifications")
 
-      expect(invited_user.responsible_persons).to include(responsible_person)
-    end
+    expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
-  with_feature_flag_both_enabled_and_disabled :secondary_authentication_recovery_codes do |feature_flag_enabled|
-    scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
-      pending = create(:pending_responsible_person_user,
-                       email_address: "newusertoregister@example.com",
-                       responsible_person:)
+  scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
+    pending = create(:pending_responsible_person_user,
+                     email_address: "newusertoregister@example.com",
+                     responsible_person:)
 
-      # Invited user originally accepts the invitation
-      visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
-      expect(page).to have_current_path("/account-security")
-      expect(page).to have_css("h1", text: "Setup your account")
+    # Invited user originally accepts the invitation
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h1", text: "Setup your account")
 
-      # Abandons the service without completing its registration
-      sign_out
+    # Abandons the service without completing its registration
+    sign_out
 
-      # Later, decides to follow the invitation again
-      visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
+    # Later, decides to follow the invitation again
+    visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
 
-      # Invitation is still valid and allows them to register and be added to the team
-      expect(page).to have_current_path("/account-security")
-      expect(page).to have_css("h1", text: "Setup your account")
+    # Invitation is still valid and allows them to register and be added to the team
+    expect(page).to have_current_path("/account-security")
+    expect(page).to have_css("h1", text: "Setup your account")
 
-      # User name is pre-filled with name provided in the invitation
-      expect(page).to have_field("Full name", with: pending.name)
+    # User name is pre-filled with name provided in the invitation
+    expect(page).to have_field("Full name", with: pending.name)
 
-      fill_in "Create your password", with: "userpassword", match: :prefer_exact
-      check "Text message"
-      fill_in "Mobile number", with: "07000000000"
-      click_button "Continue"
+    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    check "Text message"
+    fill_in "Mobile number", with: "07000000000"
+    click_button "Continue"
 
-      invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
-      expect_to_be_on_secondary_authentication_sms_page
-      expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
-      complete_secondary_authentication_sms_with(invited_user.direct_otp)
+    invited_user = SubmitUser.find_by!(email: "newusertoregister@example.com")
+    expect_to_be_on_secondary_authentication_sms_page
+    expect_user_to_have_received_sms_code(invited_user.reload.direct_otp, invited_user)
+    complete_secondary_authentication_sms_with(invited_user.direct_otp)
 
-      if feature_flag_enabled
-        expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
-        click_link "Continue"
-      end
+    expect_to_be_on_secondary_authentication_recovery_codes_setup_page
+    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(invited_user.reload.secondary_authentication_recovery_codes))
+    click_link "Continue"
 
-      expect(page).to have_current_path("/declaration", ignore_query: true)
-      expect(page).to have_css("h1", text: "Responsible Person Declaration")
-      click_button "I confirm"
+    expect(page).to have_current_path("/declaration", ignore_query: true)
+    expect(page).to have_css("h1", text: "Responsible Person Declaration")
+    click_button "I confirm"
 
-      expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
-      expect(page).to have_css("h1", text: "Product notifications")
+    expect(page).to have_current_path("/responsible_persons/#{responsible_person.id}/notifications")
+    expect(page).to have_css("h1", text: "Product notifications")
 
-      expect(invited_user.responsible_persons).to include(responsible_person)
-    end
+    expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
   scenario "accepting an invitation for an existent user when not signed in" do
