@@ -4,7 +4,7 @@ SCPN is a dual-purpose application used by organisations to notify the Office fo
 
 Built by the [Office for Product Safety and Standards](https://www.gov.uk/government/organisations/office-for-product-safety-and-standards).
 
-For enquiries, contact [opss.enquiries@beis.gov.uk](opss.enquiries@beis.gov.uk).
+For enquiries, contact [opss.enquiries@beis.gov.uk](mailto:opss.enquiries@beis.gov.uk).
 
 ## Getting started
 

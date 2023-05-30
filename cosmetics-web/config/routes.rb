@@ -65,6 +65,10 @@ Rails.application.routes.draw do
     end
   end
 
+  constraints DomainInclusionConstraint.new(ENV.fetch("SUPPORT_HOST")) do
+    mount SupportPortal::Engine, at: "/"
+  end
+
   constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
     devise_for :search_users,
                path: "",
@@ -96,7 +100,7 @@ Rails.application.routes.draw do
   end
 
   # All requests besides "Search" host ones will default to "Submit" pages.
-  constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
+  constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST"), ENV.fetch("SUPPORT_HOST")) do
     devise_for :submit_users,
                path: "",
                path_names: { sign_in: "sign-in", sign_out: "sign-out" },

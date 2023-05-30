@@ -59,6 +59,9 @@ gem "strong_migrations", "~> 1.4"
 gem "webrick", "~> 1.8"
 gem "wicked", "~> 2.0"
 
+# OSU Support Portal engine
+gem "support_portal", path: "support_portal"
+
 group :development do
   gem "rails-erd"
 end

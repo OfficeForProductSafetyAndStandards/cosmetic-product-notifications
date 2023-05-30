@@ -1,6 +1,6 @@
 class DomainExclusionConstraint
-  def initialize(domains)
-    @domains = domains.split(",").map(&:strip)
+  def initialize(*domains)
+    @domains = domains.map(&:strip)
   end
 
   def matches?(request)
