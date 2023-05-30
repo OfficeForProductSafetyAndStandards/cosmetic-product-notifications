@@ -125,6 +125,24 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
           expect(page).to have_css("h1", text: "Are you or your organisation a UK Responsible Person?")
         end
 
+        scenario "user signs in with a correct recovery code that contains spaces" do
+          visit "/sign-in"
+          fill_in_credentials
+          select_secondary_authentication_recovery_code
+
+          expect_to_be_on_secondary_authentication_recovery_code_page(back_to: "app")
+          complete_secondary_authentication_recovery_code("#{user.secondary_authentication_recovery_codes.sample.unpack('a4a*').join(' ')} ")
+
+          expect(page).to have_current_path("/two-factor/recovery-code/interstitial")
+          click_link "Continue to your account"
+
+          expect(page).to have_current_path("/declaration?redirect_path=%2Fdashboard")
+          expect(page).to have_css("h1", text: "Responsible Person Declaration")
+          click_button "I confirm"
+
+          expect(page).to have_css("h1", text: "Are you or your organisation a UK Responsible Person?")
+        end
+
         scenario "user attempts to sign in with an incorrect recovery code" do
           visit "/sign-in"
           fill_in_credentials
