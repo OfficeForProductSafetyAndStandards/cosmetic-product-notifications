@@ -1,8 +1,8 @@
 class DomainInclusionConstraint
-  def initialize(domains)
+  def initialize(*domains)
     raise "No domains specified" if domains.blank?
 
-    @domains = domains.split(",").map(&:strip)
+    @domains = domains.map(&:strip)
   end
 
   def matches?(request)

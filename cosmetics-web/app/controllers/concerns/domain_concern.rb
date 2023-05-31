@@ -17,7 +17,7 @@ module DomainConcern
     if submit_domain?
       submit_root_path
     elsif support_domain?
-      support_root_path
+      support_portal.support_root_path
     else
       search_root_path
     end
@@ -36,7 +36,7 @@ private
     @service_name = if submit_domain?
                       "Submit cosmetic product notifications"
                     elsif support_domain?
-                      "OSU Support"
+                      "OSU Support Portal"
                     else
                       "Search cosmetic product notifications"
                     end

@@ -34,6 +34,7 @@ applications:
     - cosmetics-notify-env
     - cosmetics-devise-env
     - cosmetics-seed-env
+    - cosmetics-support-portal-env
   processes:
     - type: web
       command: bin/rake cf:on_first_instance db:migrate db:seed open_search:reindex && bundle exec puma -C config/puma.rb
