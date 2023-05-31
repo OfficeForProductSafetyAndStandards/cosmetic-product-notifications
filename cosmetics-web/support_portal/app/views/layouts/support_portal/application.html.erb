@@ -52,9 +52,9 @@
         <a class="govuk-header__link govuk-header__link--service-name" href="/">
           <%= @service_name %>
         </a>
-        <button class="govuk-header__menu-button govuk-js-header-toggle no-print" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+        <button class="govuk-header__menu-button govuk-js-header-toggle govuk-!-display-none-print" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
         <nav>
-          <ul id="navigation" class="govuk-header__navigation no-print" aria-label="Top Level Navigation">
+          <ul id="navigation" class="govuk-header__navigation govuk-!-display-none-print" aria-label="Top Level Navigation">
             <% if current_user %>
               <li class="govuk-header__navigation-item">
                 <%= link_to "Your account", "#", class: "govuk-header__link" %>
@@ -73,11 +73,19 @@
     </div>
   </header>
   <div class="govuk-width-container">
-    <%= govuk_phase_banner(tag: { text: "Beta" }, classes: "no-print") do %>This is a new service – your
+    <%= govuk_phase_banner(tag: { text: "Beta" }, classes: "govuk-!-display-none-print") do %>This is a new service – your
       <%= link_to "https://forms.office.com/Pages/ResponsePage.aspx?id=BXCsy8EC60O0l-ZJLRst2EL9OANlth1GkVkjQONYxK1URUFIQVhSRE5aNU4ySDU3N09RQUJERFRVSi4u", class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noopener" do %>feedback<span class="govuk-visually-hidden"> (opens new window)</span><% end %>
       will help us to improve it.
     <% end %>
     <main class="govuk-main-wrapper" id="main-content" role="main">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h1 class="govuk-heading-l"><%= yield :page_title %></h1>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <p class="govuk-body govuk-!-font-weight-bold govuk-!-text-align-right">Username</p>
+        </div>
+      </div>
       <%= yield %>
     </main>
   </div>
