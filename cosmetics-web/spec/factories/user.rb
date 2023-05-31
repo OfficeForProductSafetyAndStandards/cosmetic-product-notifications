@@ -95,6 +95,9 @@ FactoryBot.define do
       end
     end
 
+    factory :support_user, class: "SupportUser" do
+    end
+
     factory :search_user, class: "SearchUser" do
       role {}
       invitation_token { Devise.friendly_token }

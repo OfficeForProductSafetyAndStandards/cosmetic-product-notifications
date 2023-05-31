@@ -135,6 +135,8 @@ module Users
         return SearchUser
       elsif params.key?("submit_user")
         return SubmitUser
+      elsif params.key?("support_user")
+        return SupportUser
       end
 
       raise ArgumentError

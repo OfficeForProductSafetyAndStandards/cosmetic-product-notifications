@@ -674,4 +674,26 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
       include_examples "sign in"
     end
   end
+
+  describe "for support" do
+    before do
+      configure_requests_for_support_domain
+    end
+
+    describe "for user with both app and sms secondary authentication", :with_2fa, :with_2fa_app do
+      let(:user) { create(:support_user, :with_all_secondary_authentication_methods) }
+
+      scenario "user signs in selecting app authentication" do
+        visit "/sign-in"
+        fill_in_credentials
+        select_secondary_authentication_app
+
+        expect_to_be_on_secondary_authentication_app_page
+        complete_secondary_authentication_app
+
+        expect(page).to have_current_path("/")
+        expect(page).to have_link("OSU Portal", href: "#")
+      end
+    end
+  end
 end

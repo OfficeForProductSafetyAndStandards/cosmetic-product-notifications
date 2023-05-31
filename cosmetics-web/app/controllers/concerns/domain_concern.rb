@@ -33,13 +33,14 @@ module DomainConcern
 private
 
   def set_service_name
-    @service_name = if submit_domain?
-                      "Submit cosmetic product notifications"
-                    elsif support_domain?
-                      "OSU Support"
-                    else
-                      "Search cosmetic product notifications"
-                    end
+    @service_name =
+      if support_domain?
+        "OSU Portal"
+      elsif search_domain?
+        "Search cosmetic product notifications"
+      else
+        "Submit cosmetic product notifications"
+      end
   end
 
   def submit_domains

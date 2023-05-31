@@ -21,6 +21,7 @@
     <div class="govuk-header__content">
       <%= render partial: ("search/header_link") if search_domain? %>
       <%= render partial: ("submit/header_link") if submit_domain? %>
+      <%= render partial: ("support/header_link") if support_domain? %>
       <button class="govuk-header__menu-button govuk-js-header-toggle no-print" role="button" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
         <ul id="navigation" class="govuk-header__navigation no-print" aria-label="Top Level Navigation">

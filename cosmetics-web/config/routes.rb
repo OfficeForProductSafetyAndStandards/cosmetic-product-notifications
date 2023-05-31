@@ -96,7 +96,7 @@ Rails.application.routes.draw do
   end
 
   # All requests besides "Search" host ones will default to "Submit" pages.
-  constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
+  constraints DomainInclusionConstraint.new(ENV.fetch("SUBMIT_HOST")) do
     devise_for :submit_users,
                path: "",
                path_names: { sign_in: "sign-in", sign_out: "sign-out" },
@@ -205,6 +205,18 @@ Rails.application.routes.draw do
       end
     end
     resource :dashboard, controller: "submit/dashboard", only: %i[show]
+  end
+
+  constraints DomainInclusionConstraint.new(ENV.fetch("SUPPORT_HOST")) do
+    devise_for :support_users,
+               path: "",
+               path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
+    devise_scope :support_user do
+      resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+      post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
+    end
+    root "support/landing_page#index", as: :support_root
   end
 
   resource :my_account, only: [:show], controller: :my_account do
