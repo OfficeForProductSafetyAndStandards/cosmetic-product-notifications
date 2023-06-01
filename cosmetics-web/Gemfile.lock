@@ -4,6 +4,14 @@ GIT
   specs:
     govuk-design-system-rails (0.10.4)
 
+PATH
+  remote: support_portal
+  specs:
+    support_portal (0.1.0)
+      govuk-components (~> 4.0)
+      govuk_design_system_formbuilder (~> 4.0)
+      rails (>= 7.0.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -213,11 +221,22 @@ GEM
       raabro (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    govuk-components (4.0.0)
+      html-attributes-utils (~> 1.0.0, >= 1.0.0)
+      pagy (~> 6.0)
+      view_component (~> 3.0.0)
+    govuk_design_system_formbuilder (4.0.0)
+      actionview (>= 6.1)
+      activemodel (>= 6.1)
+      activesupport (>= 6.1)
+      html-attributes-utils (~> 1)
     govuk_notify_rails (2.2.0)
       notifications-ruby-client (~> 5.1)
       rails (>= 4.1.0)
     hashdiff (1.0.1)
     hashie (5.0.0)
+    html-attributes-utils (1.0.0)
+      activesupport (>= 6.1.4.4)
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
@@ -303,6 +322,7 @@ GEM
     numerizer (0.1.1)
     okcomputer (1.18.4)
     orm_adapter (0.5.0)
+    pagy (6.0.4)
     paper_trail (14.0.0)
       activerecord (>= 6.0)
       request_store (~> 1.4)
@@ -317,7 +337,7 @@ GEM
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
     public_suffix (5.0.1)
-    puma (6.2.2)
+    puma (6.3.0)
       nio4r (~> 2.0)
     pundit (2.3.0)
       activesupport (>= 3.0.0)
@@ -354,8 +374,9 @@ GEM
       activesupport (>= 4.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.5.0)
-      loofah (~> 2.19, >= 2.19.1)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
     railties (7.0.5)
       actionpack (= 7.0.5)
       activesupport (= 7.0.5)
@@ -406,7 +427,7 @@ GEM
     rspec-mocks (3.12.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-rails (6.0.2)
+    rspec-rails (6.0.3)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       railties (>= 6.1)
@@ -540,6 +561,10 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
+    view_component (3.0.0)
+      activesupport (>= 5.2.0, < 8.0)
+      concurrent-ruby (~> 1.0)
+      method_source (~> 1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     webmock (3.18.1)
@@ -640,6 +665,7 @@ DEPENDENCIES
   sprockets (~> 4.2)
   sprockets-rails (~> 3.4)
   strong_migrations (~> 1.4)
+  support_portal!
   webmock
   webrick (~> 1.8)
   wicked (~> 2.0)

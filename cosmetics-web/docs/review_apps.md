@@ -5,9 +5,10 @@ Review apps are created automatically via a GitHub Action for each PR and can be
 However, they can also be created manually by running `REVIEW_INSTANCE_NAME=ticket-123 ./cosmetics-web/deploy-review.sh`,
 where `ticket-123` is the desired name of the review app.
 
-This will create 2 URLs:
+This will create 3 URLs:
 * `https://cosmetics-ticket-123-submit-web.london.cloudapps.digital`
 * `https://cosmetics-ticket-123-search-web.london.cloudapps.digital`
+* `https://cosmetics-ticket-123-support-web.london.cloudapps.digital`
 
 And 2 applications:
 * cosmetics-ticket-123-web

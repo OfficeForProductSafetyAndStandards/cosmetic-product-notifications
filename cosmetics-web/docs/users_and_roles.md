@@ -24,13 +24,7 @@ To invite a new search user:
 
 ### Two-factor authentication
 
-Two-factor authentication (2FA) is mandatory for all users. As part of the user setup process, users are
-required to choose at least one 2FA method from app-based or SMS.
-
-There is currently no self-service recovery process for user accounts if the 2FA code is lost. Users are
-required to email for support. There is work ongoing as of April 2023 to add support for recovery codes.
-
-SMS messages for 2FA are sent via GOV.UK Notify.
+See [secondary authentication](secondary_authentication.md).
 
 ## Roles
 

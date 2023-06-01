@@ -1,4 +1,5 @@
 class NotifyMailer < GovukNotifyRails::Mailer
+  # TODO(ruben): Add support domain
   def self.get_mailer(user)
     return SubmitNotifyMailer if user.is_a? SubmitUser
     return SearchNotifyMailer if user.is_a? SearchUser

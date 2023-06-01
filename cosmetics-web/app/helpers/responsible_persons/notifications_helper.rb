@@ -212,6 +212,11 @@ private
           key: { html: "<abbr title='Power of hydrogen'>pH</abbr>".html_safe },
           value: { text: t(component.ph, scope: %i[component_ph check_your_answers]) },
         }
+      elsif !component.ph_required?
+        {
+          key: { html: "<abbr title='Power of hydrogen'>pH</abbr>".html_safe },
+          value: { text: "N/A" },
+        }
       elsif component.minimum_ph == component.maximum_ph
         {
           key: { html: "Exact <abbr title='Power of hydrogen'>pH</abbr>".html_safe },

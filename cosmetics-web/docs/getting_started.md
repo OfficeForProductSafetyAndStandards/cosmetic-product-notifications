@@ -10,6 +10,7 @@ Add the required hosts in `/etc/hosts`:
 ```
 127.0.0.1       cosmetics-search
 127.0.0.1       cosmetics-submit
+127.0.0.1       cosmetics-support
 ```
 
 To start all the required dependencies, run `docker compose up db redis opensearch`.
@@ -43,6 +44,7 @@ Add the required hosts in `/etc/hosts`:
 ```
 127.0.0.1       cosmetics-search
 127.0.0.1       cosmetics-submit
+127.0.0.1       cosmetics-support
 ```
 
 Run Docker Compose: `docker compose up`.

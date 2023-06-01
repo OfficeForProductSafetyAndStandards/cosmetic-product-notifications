@@ -5,6 +5,7 @@ on: [push]
 env:
   SEARCH_HOST: search
   SUBMIT_HOST: submit
+  SUPPORT_HOST: support
   DATABASE_URL: postgres://localhost:5432/cosmetics_test
   OPENSEARCH_URL: http://localhost:9200
   PGHOST: localhost

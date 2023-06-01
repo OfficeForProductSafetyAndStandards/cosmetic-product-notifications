@@ -1,7 +1,11 @@
 # Secondary authentication
---------------------------------------------------------------------------------
+
 Secondary authentication refers to the various methods of two-factor
 authentication (2FA) available to users of the search and submit services.
+
+Two-factor authentication (2FA) is mandatory for all users.
+As part of the user setup process, users are required to choose at least
+one 2FA method from app-based or SMS.
 
 ## SMS
 
