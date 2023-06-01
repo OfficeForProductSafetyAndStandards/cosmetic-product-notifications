@@ -44,6 +44,19 @@ RSpec.describe UserNameFormatValidator do
     "Hello Jane, we have an offer for you",
     "Hello Sarah. There is an offer for you",
     "Welcome Jane\nYou can join us at",
+    "“Jane“",
+    '"Jane"',
+    "Jane £",
+    "Jane %",
+    "Jane ^",
+    "Jane &",
+    "Jane *",
+    "Jane (",
+    "Jane )",
+    "Jane (",
+    "Jane _",
+    "Jane +",
+    "Jane ¬",
   ]
 
   valid_names.each do |name|
