@@ -36,6 +36,7 @@ gem "net-smtp", require: false # Needed for running Rails 6 with ruby 3.1
 gem "okcomputer", "~> 1.18.4"
 gem "paper_trail", "~> 14.0"
 gem "pg", "~> 1.4"
+gem "pg_search", "~> 2.3"
 gem "puma", "~> 6.2"
 gem "pundit", "~> 2.3"
 gem "rails", "~> 7.0.4"

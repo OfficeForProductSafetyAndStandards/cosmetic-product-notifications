@@ -5,6 +5,9 @@ class User < ApplicationRecord
 
   include Encryptable
   include NewEmailConcern
+  include PgSearch::Model
+
+  pg_search_scope :search, against: %i[name email new_email]
 
   devise :database_authenticatable,
          :recoverable,
