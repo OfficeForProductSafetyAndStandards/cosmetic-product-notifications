@@ -1,5 +1,3 @@
-require "feature_flags"
-
 class UsersController < SearchApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :require_secondary_authentication, only: %i[complete_registration reset_complete_registration update]
@@ -54,7 +52,7 @@ class UsersController < SearchApplicationController
       if account_security_form.app_authentication_selected? && !account_security_form.sms_authentication_selected? && @user.last_totp_at
         set_secondary_authentication_cookie(Time.zone.now.to_i)
       end
-      redirect_to FeatureFlags.secondary_authentication_recovery_codes_enabled?(current_user) ? new_secondary_authentication_recovery_codes_setup_path : root_path
+      redirect_to new_secondary_authentication_recovery_codes_setup_path
     else
       render :complete_registration
     end

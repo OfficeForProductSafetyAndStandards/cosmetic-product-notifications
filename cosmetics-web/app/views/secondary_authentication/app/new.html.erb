@@ -31,10 +31,8 @@
       <%= govukButton(text: "Continue") %>
     <% end %>
 
-    <% if FeatureFlags.secondary_authentication_recovery_codes_enabled?(current_user) %>
-      <div class="govuk-body">
-        <p><%= link_to "Use recovery code", new_secondary_authentication_recovery_code_path(back_to: "app"), class: "govuk-link" %></p>
-      </div>
-    <% end %>
+    <div class="govuk-body">
+      <p><%= link_to "Use recovery code", new_secondary_authentication_recovery_code_path(back_to: "app"), class: "govuk-link" %></p>
+    </div>
   </div>
 </div>

@@ -3,6 +3,7 @@ module SecondaryAuthentication
     class AuthForm < Form
       RECOVERY_CODE_LENGTH = 8
       INTEGER_REGEX = /\A\d+\z/
+      WHITESPACE_REGEX = /[[:space:]]/
 
       attribute :recovery_code
       attribute :user_id
@@ -23,7 +24,7 @@ module SecondaryAuthentication
       delegate :last_recovery_code_at, to: :secondary_authentication
 
       def recovery_code=(code)
-        super(code.to_s.strip)
+        super(code.to_s.gsub(WHITESPACE_REGEX, ""))
       end
 
       def user
