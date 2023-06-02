@@ -77,6 +77,7 @@
       <%= link_to "https://forms.office.com/Pages/ResponsePage.aspx?id=BXCsy8EC60O0l-ZJLRst2EL9OANlth1GkVkjQONYxK1URUFIQVhSRE5aNU4ySDU3N09RQUJERFRVSi4u", class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noopener" do %>feedback<span class="govuk-visually-hidden"> (opens new window)</span><% end %>
       will help us to improve it.
     <% end %>
+    <%= yield :back_link %>
     <main class="govuk-main-wrapper" id="main-content" role="main">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

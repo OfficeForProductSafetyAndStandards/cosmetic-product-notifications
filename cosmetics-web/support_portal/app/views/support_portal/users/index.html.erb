@@ -1,7 +1,13 @@
 <% content_for :page_title, "Search for an account" %>
 
 <% if @users %>
+  <% content_for :back_link do %>
+    <%= link_to "Back", users_path, class: "govuk-back-link" %>
+  <% end %>
   <%= render "users" %>
 <% else %>
+  <% content_for :back_link do %>
+    <%= link_to "Back", "/", class: "govuk-back-link" %>
+  <% end %>
   <%= render "search" %>
 <% end %>
