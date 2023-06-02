@@ -1,5 +1,7 @@
 module SupportPortal
   class ApplicationController < ActionController::Base
+    include Pagy::Backend
+
     before_action :set_service_name
 
     def current_user

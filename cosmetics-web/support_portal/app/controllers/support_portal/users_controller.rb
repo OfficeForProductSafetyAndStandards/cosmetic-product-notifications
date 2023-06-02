@@ -8,13 +8,9 @@ module SupportPortal
 
     def search_users
       search_term = params[:search_term]
+      search_scope = search_term.blank? ? User.all : User.search(search_term)
 
-      @users =
-        if search_term.blank?
-          User.page(params[:page]).per(10)
-        else
-          User.search(search_term).page(params[:page]).per(10)
-        end
+      @pagy, @users = pagy(search_scope, items: 10)
     end
   end
 end
