@@ -1,0 +1,32 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Search results</h2>
+    <% if @users.empty? %>
+      <p class="govuk-body">Nothing found</p>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third govuk-!-text-align-right">
+    <%= link_to "Clear search results", users_path, class: "govuk-link govuk-heading-s" %>
+  </div>
+</div>
+
+<dl class="govuk-summary-list">
+  <% @users.each do |user| %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__value">
+        <%= user.name %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= user.email %>
+      </dd>
+      <dd class="govuk-summary-list__value">
+        <%= user.type %>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="#">
+          View<span class="govuk-visually-hidden"> user</span>
+        </a>
+      </dd>
+    </div>
+  <% end %>
+</dl>
