@@ -4,6 +4,10 @@ module SupportPortal
       search_users if params[:search_term]
     end
 
+    def show
+      @user = User.find(params[:id])
+    end
+
   protected
 
     def search_users

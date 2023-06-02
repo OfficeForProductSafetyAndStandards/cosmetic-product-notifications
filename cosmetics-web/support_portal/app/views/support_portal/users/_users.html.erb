@@ -23,9 +23,7 @@
         <%= user.type %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="#">
-          View<span class="govuk-visually-hidden"> user</span>
-        </a>
+        <%= link_to "View", user_path(user), class: "govuk-link" %>
       </dd>
     </div>
   <% end %>
