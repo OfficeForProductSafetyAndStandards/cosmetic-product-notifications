@@ -40,3 +40,5 @@ test:
 staging:
   <<: *defaults
 
+pre-prod:
+  <<: *defaults

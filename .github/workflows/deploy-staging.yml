@@ -1,13 +1,13 @@
-name: Deploy
+name: Deploy Staging
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
-    name: Deploy to Staging and Production
+    name: Deploy to Staging
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
     - name: Create GitHub deployment for Staging
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: main
+        BRANCH: develop
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_create staging
@@ -33,7 +33,7 @@ jobs:
         source cosmetics-web/deploy-github-functions.sh
 
         # URL where the deployment progress can be tracked. Exported for future steps.
-        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amain+workflow%3ADeploy")
+        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Adevelop+workflow%3ADeploy+Staging")
         echo "LOG_URL=$log_url" >> $GITHUB_ENV
 
         gh_deploy_initiate staging $log_url
@@ -76,67 +76,3 @@ jobs:
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_failure staging $LOG_URL
-
-    - name: Create GitHub deployment for Production
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: main
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_create production
-
-    - name: Initiate Production deployment status
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_initiate production $LOG_URL
-
-    - name: Deploy to production
-      env:
-        SPACE: prod
-        APP_NAME: cosmetics-web
-        SUBMIT_HOST: submit.cosmetic-product-notifications.service.gov.uk
-        SEARCH_HOST: search.cosmetic-product-notifications.service.gov.uk
-        SUPPORT_HOST: support.cosmetic-product-notifications.service.gov.uk
-        WEB_INSTANCES: 8
-        WEB_MAX_THREADS: 1
-        WORKER_MAX_THREADS: 10
-        WORKER_INSTANCES: 4
-        CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
-        CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
-        SENTRY_SERVICE_NAME: cosmetics-sentry-env
-      run: |
-        cf api api.london.cloud.service.gov.uk
-        cf auth
-        cf target -o 'beis-opss' -s $SPACE
-        ./cosmetics-web/deploy.sh
-        cf logout
-
-    - name: Update Production deployment status (success)
-      if: success()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
-        environment_url=https://submit.cosmetic-product-notifications.service.gov.uk/
-        gh_deploy_success production $LOG_URL $environment_url
-
-    - name: Update Production deployment status (failure)
-      if: failure()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_failure production $LOG_URL
-
-    - uses: actions/checkout@v3
-    - name: Create Sentry release
-      if: success()
-      uses: getsentry/action-release@v1
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        SENTRY_ORG: beis
-        SENTRY_PROJECT: beis-cosmetics
-      with:
-        environment: prod
