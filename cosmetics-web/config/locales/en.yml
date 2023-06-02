@@ -124,6 +124,12 @@ en:
               blank: "Enter a password"
             password_confirmation:
               confirmation: "Password and confirmation does not match"
+        support_user:
+              attributes:
+                password:
+                  blank: "Enter a password"
+                password_confirmation:
+                  confirmation: "Password and confirmation does not match"
         user:
           attributes:
             email:

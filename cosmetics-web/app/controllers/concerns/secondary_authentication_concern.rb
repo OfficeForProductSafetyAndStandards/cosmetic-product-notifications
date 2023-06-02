@@ -32,12 +32,12 @@ module SecondaryAuthenticationConcern
     end
   end
 
-  # Use as `before_filter` in application_controller controller
+  # Used as a `before_filter` in `ApplicationController`
   def ensure_secondary_authentication
     session[:last_secondary_authentication_performed_at] = {}
   end
 
-  # returns true if 2 FA not needed
+  # Returns true if 2FA is not needed
   def secondary_authentication_present_in_session?
     return false if get_secondary_authentication_time.nil?
 
@@ -45,14 +45,12 @@ module SecondaryAuthenticationConcern
     (last_otp_time + SecondaryAuthentication::Operations::TIMEOUTS[current_operation].seconds) > Time.zone.now
   end
 
-  # can be overrided for actions which require
-  # custom secondary authentication flow
+  # Can be overridden for actions which require custom secondary authentication flow
   def user_id_for_secondary_authentication
     current_user&.id
   end
 
-  # can be overrided for actions which require
-  # custom secondary authentication flow
+  # Can be overridden for actions which require custom secondary authentication flow
   def current_operation
     SecondaryAuthentication::Operations::DEFAULT
   end

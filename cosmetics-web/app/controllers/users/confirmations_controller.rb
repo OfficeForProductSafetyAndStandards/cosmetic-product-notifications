@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Users
   class ConfirmationsController < Devise::ConfirmationsController
     # GET /resource/confirmation?confirmation_token=abcdef

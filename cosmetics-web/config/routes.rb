@@ -66,6 +66,24 @@ Rails.application.routes.draw do
   end
 
   constraints DomainInclusionConstraint.new(ENV.fetch("SUPPORT_HOST")) do
+    # Authentication is handled by the main app since most functionality is shared
+    devise_for :support_users,
+               path: "",
+               path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" }
+    devise_scope :support_user do
+      resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
+      post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
+    end
+
+    scope "/users" do
+      patch "/:id", to: "support_users#update", as: :support_user
+      put "/:id", to: "support_users#update"
+      get "/:id/complete-registration", to: "support_users#complete_registration", as: :complete_registration_support_user
+      delete "/:id/complete-registration", to: "support_users#reset_complete_registration", as: :reset_complete_registration_support_user
+      post "/:id/sign-out-before-accepting-invitation", to: "support_users#sign_out_before_accepting_invitation", as: :sign_out_before_accepting_invitation_support_user
+    end
+
     mount SupportPortal::Engine, at: "/"
   end
 

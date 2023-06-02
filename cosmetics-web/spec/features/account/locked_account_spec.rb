@@ -95,5 +95,16 @@ RSpec.feature "Unlocking account", :with_stubbed_mailer, :with_stubbed_notify, :
     include_examples "locked account"
   end
 
-  # TODO(ruben): Add example for support domain
+  describe "for support" do
+    before do
+      configure_requests_for_support_domain
+      Capybara.app_host = "http://#{ENV['SUPPORT_HOST']}"
+    end
+
+    let(:user) { create(:support_user) }
+    let(:expected_text) { "Dashboard" }
+    let(:expected_host_header) { "Dashboard" }
+
+    include_examples "locked account"
+  end
 end

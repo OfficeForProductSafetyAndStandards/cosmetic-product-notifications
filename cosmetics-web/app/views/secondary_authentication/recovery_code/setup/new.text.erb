@@ -3,6 +3,11 @@ Search cosmetic product notifications
 =====================================
 
 <%= search_root_url %>
+<% elsif current_user.is_a?(SupportUser) %>
+OSU Support Portal
+==================
+
+<%= support_portal.support_root_url %>
 <% else %>
 Submit cosmetic product notifications
 =====================================

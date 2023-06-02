@@ -8,6 +8,7 @@ PATH
   remote: support_portal
   specs:
     support_portal (0.1.0)
+      devise (~> 4.9)
       govuk-components (~> 4.0)
       govuk_design_system_formbuilder (~> 4.0)
       rails (>= 7.0.5)

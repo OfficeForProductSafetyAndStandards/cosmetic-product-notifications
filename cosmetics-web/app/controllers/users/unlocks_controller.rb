@@ -11,7 +11,7 @@ module Users
 
   private
 
-    # Overriden methods to customize the behaviour of SecondaryAuthenticationConcern
+    # Overridden methods to customise the behaviour of SecondaryAuthenticationConcern
     def user_id_for_secondary_authentication
       user_with_unlock_token.id
     rescue ActiveRecord::RecordNotFound

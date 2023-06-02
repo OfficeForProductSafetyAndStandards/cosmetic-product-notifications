@@ -30,6 +30,24 @@ $govuk-global-styles: true;
   margin: 0;
   padding: 0;
   list-style: none;
+
+  button {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: govuk-colour("white");
+
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    font-family: inherit;
+    cursor: pointer;
+
+    @include govuk-link-common;
+
+    text-decoration: none;
+  }
 }
 
 .app-card {
