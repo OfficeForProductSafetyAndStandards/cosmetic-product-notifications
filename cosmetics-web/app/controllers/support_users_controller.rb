@@ -1,16 +1,16 @@
-class UsersController < SearchApplicationController
+class SupportUsersController < SupportApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :require_secondary_authentication, only: %i[complete_registration reset_complete_registration update]
 
   def complete_registration
     @user = User.find(params[:id])
 
-    return render :accept_invitation_signed_in_as_another_search_user if user_signed_in? && !signed_in_as?(@user)
+    return render "users/accept_invitation_signed_in_as_another_support_user" if user_signed_in? && !signed_in_as?(@user)
 
     # Some users will bookmark the invitation URL received on the email and may re-use
     # this even once their account has been created. Hence redirecting them to the root page.
     return redirect_to(root_path) if @user.has_completed_registration?
-    return render(:expired_invitation) if @user.invitation_expired?
+    return render "users/expired_support_invitation" if @user.invitation_expired?
     return (render "errors/not_found", status: :not_found) if !params[:invitation] || (@user.invitation_token != params[:invitation])
 
     # User attributes are only set at this stage when the complete registration was previously submitted
@@ -25,23 +25,23 @@ class UsersController < SearchApplicationController
       secret_key: @user.totp_secret_key,
     )
 
-    render :complete_registration
+    render "users/complete_registration"
   end
 
   # Needed to re-display the complete registration page for an user that has submitted it but needs to go back.
   # EG: Navigating back from the SMS code authentication page after selecting SMS as one of the 2FA methods.
   def reset_complete_registration
     current_user.update(account_security_completed: false)
-    redirect_to complete_registration_user_path(current_user, invitation: current_user.invitation_token)
+    redirect_to complete_registration_support_user_path(current_user, invitation: current_user.invitation_token)
   end
 
   def sign_out_before_accepting_invitation
     sign_out
-    redirect_to complete_registration_user_path(params[:id], invitation: params[:invitation])
+    redirect_to complete_registration_support_user_path(params[:id], invitation: params[:invitation])
   end
 
   def update
-    @user = SearchUser.find(params[:id])
+    @user = SupportUser.find(params[:id])
     return render("errors/forbidden", status: :forbidden) if params[:invitation] != @user.invitation_token
 
     if account_security_form.update!
@@ -54,7 +54,7 @@ class UsersController < SearchApplicationController
       end
       redirect_to new_secondary_authentication_recovery_codes_setup_path
     else
-      render :complete_registration
+      render "users/complete_registration"
     end
   end
 

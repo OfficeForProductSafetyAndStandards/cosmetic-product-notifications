@@ -11,7 +11,6 @@ applications:
     SEARCH_HOST: ((search-host))
     SUBMIT_HOST: ((submit-host))
     SUPPORT_HOST: ((support-host))
-    COSMETICS_HOST: ((submit-host))
   stack: cflinuxfs3
   services:
     - cosmetics-database

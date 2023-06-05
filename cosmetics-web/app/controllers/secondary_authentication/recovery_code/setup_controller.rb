@@ -28,6 +28,8 @@ module SecondaryAuthentication
                                                     invitation_token: invitation.invitation_token)
         elsif pending_invitations.any?
           account_path(:pending_invitations)
+        elsif current_user.is_a?(SupportUser)
+          root_path
         else
           declaration_path
         end

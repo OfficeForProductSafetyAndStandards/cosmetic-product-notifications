@@ -1,8 +1,8 @@
 class NotifyMailer < GovukNotifyRails::Mailer
-  # TODO(ruben): Add support domain
   def self.get_mailer(user)
     return SubmitNotifyMailer if user.is_a? SubmitUser
     return SearchNotifyMailer if user.is_a? SearchUser
+    return SupportNotifyMailer if user.is_a? SupportUser
 
     raise "No Mailer for #{user.class}"
   end
@@ -16,6 +16,8 @@ class NotifyMailer < GovukNotifyRails::Mailer
                   edit_submit_user_password_url(reset_password_token: token, host: @host)
                 when SearchUser
                   edit_search_user_password_url(reset_password_token: token, host: @host)
+                when SupportUser
+                  edit_support_user_password_url(reset_password_token: token, host: @host)
                 end
     set_personalisation(
       name: user.name,
@@ -75,6 +77,9 @@ private
     end
     if user.is_a? SearchUser
       @host = ENV["SEARCH_HOST"]
+    end
+    if user.is_a? SupportUser
+      @host = ENV["SUPPORT_HOST"]
     end
   end
 

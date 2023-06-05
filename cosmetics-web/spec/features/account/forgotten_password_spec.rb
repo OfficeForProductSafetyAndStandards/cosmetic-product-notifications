@@ -133,6 +133,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
           other_user = case user
                        when SubmitUser then create(:submit_user, :with_responsible_person)
                        when SearchUser then create(:poison_centre_user)
+                       when SupportUser then create(:support_user)
                        end
 
           sign_in(other_user)
@@ -317,7 +318,45 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
     end
   end
 
-  # TODO(ruben): Add example for support domain
+  describe "for support" do
+    before do
+      configure_requests_for_support_domain
+    end
+
+    let(:mailer) { SupportNotifyMailer }
+
+    let(:user) { create(:support_user) }
+    let!(:reset_token)                      { stubbed_devise_generated_token }
+    let(:edit_user_password_url_with_token) { "http://#{ENV.fetch('SUPPORT_HOST')}/password/edit?reset_password_token=#{reset_token.first}" }
+    let(:expected_text) { "Dashboard" }
+
+    include_examples "password reset"
+
+    context "when the user hasn't completed its registration" do
+      let(:user) { create(:support_user, :registration_incomplete) }
+
+      scenario "resends the invitation email and shows the confirmation page" do
+        visit "/sign-in"
+        click_link "Forgot your password?"
+
+        expect(page).to have_css("h1", text: "Reset your password")
+        fill_in "Email address", with: user.email
+
+        perform_enqueued_jobs do
+          click_on "Send email"
+        end
+
+        expect(delivered_emails.size).to eq 1
+        email = delivered_emails.first
+        expect(email.recipient).to eq user.email
+        expect(email.template).to eq mailer::TEMPLATES[:invitation]
+        expect(email.personalization).to eq(
+          invitation_url: "http://#{ENV.fetch('SUPPORT_HOST')}/users/#{user.id}/complete-registration?invitation=#{user.invitation_token}",
+        )
+        expect_to_be_on_check_your_email_page
+      end
+    end
+  end
 
   def request_password_reset
     user.update!(reset_password_token: reset_token)

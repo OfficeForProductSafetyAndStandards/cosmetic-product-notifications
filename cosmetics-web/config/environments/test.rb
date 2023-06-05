@@ -54,7 +54,7 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation_warnings = []
 
   config.action_controller.default_url_options = {
-    host: ENV["HTTP_HOST"] || "localhost",
+    host: ENV["HTTP_HOST"] || ENV["SUBMIT_HOST"] || "localhost",
     port: ENV["HTTP_PORT"] || 3003,
   }
   # Raises error for missing translations.

@@ -43,10 +43,10 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   # For Devise
-  config.action_controller.default_url_options = { host: "localhost", port: ENV.fetch("PORT", "3000") }
+  config.action_controller.default_url_options = { host: ENV["SUBMIT_HOST"], port: ENV.fetch("PORT", "3000") }
 
   # Url for mailer
-  config.action_mailer.default_url_options = { host: "localhost", port: ENV.fetch("PORT", "3000") }
+  config.action_mailer.default_url_options = { host: ENV["SUBMIT_HOST"], port: ENV.fetch("PORT", "3000") }
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.

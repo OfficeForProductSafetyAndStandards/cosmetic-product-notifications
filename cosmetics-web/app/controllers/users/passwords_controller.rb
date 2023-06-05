@@ -25,6 +25,8 @@ module Users
         redirect_to edit_submit_user_password_path(reset_password_token: params[:reset_password_token])
       when SearchUser
         redirect_to edit_search_user_password_path(reset_password_token: params[:reset_password_token])
+      when SupportUser
+        redirect_to edit_support_user_password_path(reset_password_token: params[:reset_password_token])
       end
     end
 
@@ -135,6 +137,8 @@ module Users
         return SearchUser
       elsif params.key?("submit_user")
         return SubmitUser
+      elsif params.key?("support_user")
+        return SupportUser
       end
 
       raise ArgumentError

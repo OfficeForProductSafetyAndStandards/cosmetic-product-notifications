@@ -56,13 +56,13 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   config.action_controller.default_url_options = {
-    host: ENV["COSMETICS_HOST"],
+    host: ENV["SUBMIT_HOST"],
     protocol: "https",
   }
 
   # Url for mailer
   config.action_mailer.default_url_options = {
-    host: ENV["COSMETICS_HOST"],
+    host: ENV["SUBMIT_HOST"],
     protocol: "https",
   }
   config.action_mailer.perform_caching = false

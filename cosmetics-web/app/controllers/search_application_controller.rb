@@ -9,6 +9,7 @@ private
   end
 
   def authorize_user!
-    redirect_to invalid_account_path if current_user && !current_user.is_a?(SearchUser)
+    # Support users can also access the search service using their support user account
+    redirect_to invalid_account_path if current_user && !current_user.is_a?(SearchUser) && !current_user.is_a?(SupportUser)
   end
 end

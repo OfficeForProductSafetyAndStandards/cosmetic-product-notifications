@@ -57,14 +57,14 @@
           <ul id="navigation" class="govuk-header__navigation govuk-!-display-none-print" aria-label="Top Level Navigation">
             <% if current_user %>
               <li class="govuk-header__navigation-item">
-                <%= link_to "Your account", "#", class: "govuk-header__link" %>
+                <%= link_to "Your account", main_app.my_account_path, class: "govuk-header__link" %>
               </li>
               <li class="govuk-header__navigation-item">
-                <%= button_to "Sign out", "#", method: :delete, class: "govuk-header__link" %>
+                <%= button_to "Sign out", main_app.destroy_support_user_session_path, method: :delete, class: "govuk-header__link" %>
               </li>
             <% else %>
               <li class="govuk-header__navigation-item">
-                <%= link_to "Sign in", "#", class: "govuk-header__link" %>
+                <%= link_to "Sign in", main_app.new_support_user_session_path, class: "govuk-header__link" %>
               </li>
             <% end %>
           </ul>

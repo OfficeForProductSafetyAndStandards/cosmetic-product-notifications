@@ -131,5 +131,21 @@ FactoryBot.define do
         to_create { |user| user.save(validate: false) }
       end
     end
+
+    factory :support_user, class: "SupportUser" do
+      invitation_token { Devise.friendly_token }
+      invited_at { Time.zone.now }
+
+      transient do
+        first_login { false }
+      end
+
+      trait :registration_incomplete do
+        without_secondary_authentication
+        password { nil }
+        account_security_completed { false }
+        to_create { |user| user.save(validate: false) }
+      end
+    end
   end
 end

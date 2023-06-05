@@ -8,6 +8,10 @@ class SendSecondaryAuthenticationDirectOtpJob < ApplicationJob
       SendSearchSms.otp_code(mobile_number: user.mobile_number, code:)
       return
     end
-    raise "Imposible to find SMS sending class for '#{user.class}'"
+    if user.is_a? SupportUser
+      SendSupportSms.otp_code(mobile_number: user.mobile_number, code:)
+      return
+    end
+    raise "SMS sending class for '#{user.class}' not found"
   end
 end

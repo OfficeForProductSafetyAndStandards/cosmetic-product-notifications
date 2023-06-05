@@ -6,6 +6,8 @@
     if @form.user&.mobile_number_pending_verification? && !request.referer&.end_with?("two-factor/sms/setup")
       if submit_domain?
         button_to(registration_reset_account_security_path, method: :delete, class: "button-link govuk-back-link") { "Back" }
+      elsif support_domain?
+        button_to(reset_complete_registration_support_user_path(@form.user), method: :delete, class: "button-link govuk-back-link") { "Back" }
       else
         button_to(reset_complete_registration_user_path(@form.user), method: :delete, class: "button-link govuk-back-link") { "Back" }
       end

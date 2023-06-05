@@ -50,6 +50,8 @@ private
       return SearchUser
     elsif params.key?("submit_user")
       return SubmitUser
+    elsif params.key?("support_user")
+      return SupportUser
     end
 
     raise ArgumentError
@@ -67,12 +69,14 @@ private
     stored_location_for(resource) ||
       if submit_domain?
         dashboard_path
+      elsif support_domain?
+        support_portal.support_root_path
       else
         poison_centre_notifications_search_path
       end
   end
 
-  # needs to be overriden
+  # needs to be overridden
   def authorize_user!; end
 
   def has_accepted_declaration
@@ -84,34 +88,64 @@ private
   end
 
   def current_user
-    current_submit_user || current_search_user
+    current_submit_user || current_search_user || current_support_user
   end
 
   def user_signed_in?
-    submit_user_signed_in? || search_user_signed_in?
+    submit_user_signed_in? || search_user_signed_in? || support_user_signed_in?
   end
 
   def new_user_session_path(*args)
-    submit_domain? ? new_submit_user_session_path(*args) : new_search_user_session_path(*args)
+    if submit_domain?
+      new_submit_user_session_path(*args)
+    elsif support_domain?
+      new_support_user_session_path(*args)
+    else
+      new_search_user_session_path(*args)
+    end
   end
   helper_method :new_user_session_path
 
   def authenticate_user!
-    submit_domain? ? authenticate_submit_user! : authenticate_search_user!
+    if submit_domain?
+      authenticate_submit_user!
+    elsif support_domain?
+      authenticate_support_user!
+    else
+      authenticate_search_user!
+    end
   end
 
   def destroy_user_session_path
-    submit_domain? ? destroy_submit_user_session_path : destroy_search_user_session_path
+    if submit_domain?
+      destroy_submit_user_session_path
+    elsif support_domain?
+      destroy_support_user_session_path
+    else
+      destroy_search_user_session_path
+    end
   end
   helper_method :destroy_user_session_path
 
   def user_session_path
-    submit_domain? ? submit_user_session_path : search_user_session_path
+    if submit_domain?
+      submit_user_session_path
+    elsif support_domain?
+      support_user_session_path
+    else
+      search_user_session_path
+    end
   end
   helper_method :user_session_path
 
   def user_password_path
-    submit_domain? ? submit_user_password_path : search_user_password_path
+    if submit_domain?
+      submit_user_password_path
+    elsif support_domain?
+      support_user_password_path
+    else
+      search_user_password_path
+    end
   end
   helper_method :user_password_path
 end

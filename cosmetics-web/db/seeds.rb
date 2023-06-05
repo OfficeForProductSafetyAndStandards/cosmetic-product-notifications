@@ -15,7 +15,7 @@ def get_users(env_users)
 end
 
 ActiveRecord::Base.transaction do
-  # Create RP
+  # Create RP 1
   rp_attributes = {
     account_type: "individual",
     name: "Some Trader",
@@ -26,6 +26,7 @@ ActiveRecord::Base.transaction do
     postal_code: "SO14 5QF",
   }
   rp = ResponsiblePerson.create!(rp_attributes)
+
   # Create Contact Person
   contact_person_attributes = { name: "John Doe",
                                 email_address: "example@example.org",
@@ -33,6 +34,7 @@ ActiveRecord::Base.transaction do
                                 responsible_person: rp }
   ContactPerson.create!(contact_person_attributes)
 
+  # Create RP 2
   rp_attributes = {
     account_type: "individual",
     name: "Some Trader Another",
@@ -43,14 +45,15 @@ ActiveRecord::Base.transaction do
     postal_code: "SO14 5QF",
   }
   rp2 = ResponsiblePerson.create!(rp_attributes)
+
   # Create Contact Person
   contact_person_attributes = { name: "John Doe",
                                 email_address: "example@example.org",
                                 phone_number: "07700 900000",
                                 responsible_person: rp2 }
   ContactPerson.create!(contact_person_attributes)
-  # Create SearchUser
 
+  # Create SearchUser
   search_user_attributes = {
     id: "8718d008-da2d-4975-8cbf-4502afb5f4b6",
     mobile_number: "07700 900000",
@@ -68,9 +71,29 @@ ActiveRecord::Base.transaction do
     skip_password_validation: false,
   }
   SearchUser.create!(search_user_attributes)
+
+  # Create SupportUser
+  support_user_attributes = {
+    id: "a52323a4-6ab1-4de8-af48-9b298a52c6c0",
+    mobile_number: "07700 900000",
+    mobile_number_verified: true,
+    name: "John Doe",
+    has_accepted_declaration: true,
+    email: "support@example.org",
+    password: "testpassword",
+    failed_attempts: 0,
+    second_factor_attempts_count: 0,
+    secondary_authentication_operation: "secondary_authentication",
+    account_security_completed: true,
+    secondary_authentication_methods: %w[sms],
+    skip_password_validation: false,
+  }
+  SupportUser.create!(support_user_attributes)
+
   keywords = %w[cream luxury premium]
   category_names = %i[skin hair nail oral]
   categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
+
   # Create Notifications
   ENV.fetch("SEED_NOTIFICATIONS_COUNT", 60).to_i.times do |i|
     notification_attributes = {
