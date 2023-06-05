@@ -2,15 +2,15 @@ module DomainConcern
   extend ActiveSupport::Concern
 
   def search_domain?
-    search_domains.include?(request.host)
+    search_domain == request.host
   end
 
   def submit_domain?
-    submit_domains.include?(request.host)
+    submit_domain == request.host
   end
 
   def support_domain?
-    support_domains.include?(request.host)
+    support_domain == request.host
   end
 
   def root_path
@@ -42,15 +42,15 @@ private
                     end
   end
 
-  def submit_domains
-    ENV["SUBMIT_HOST"].split(",")
+  def submit_domain
+    ENV["SUBMIT_HOST"]
   end
 
-  def search_domains
-    ENV["SEARCH_HOST"].split(",")
+  def search_domain
+    ENV["SEARCH_HOST"]
   end
 
-  def support_domains
-    ENV["SUPPORT_HOST"].split(",")
+  def support_domain
+    ENV["SUPPORT_HOST"]
   end
 end

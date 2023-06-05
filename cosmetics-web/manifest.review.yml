@@ -12,7 +12,6 @@ applications:
     SEARCH_HOST: ((search-host))
     SUBMIT_HOST: ((submit-host))
     SUPPORT_HOST: ((support-host))
-    COSMETICS_HOST: ((cosmetics-host))
     OS_NAMESPACE: ((cosmetics-instance-name))
     SENTRY_CURRENT_ENV: ((sentry-current-env))
     RAILS_MAX_THREADS: ((web-max-threads))

@@ -56,7 +56,6 @@ services:
       - SEARCH_HOST=cosmetics-search
       - SUBMIT_HOST=cosmetics-submit
       - SUPPORT_HOST=cosmetics-support
-      - COSMETICS_HOST=cosmetics-submit
       - ANTIVIRUS_ENABLED=false
 
   cosmetics-worker:
@@ -77,7 +76,6 @@ services:
       - SEARCH_HOST=cosmetics-search
       - SUBMIT_HOST=cosmetics-submit
       - SUPPORT_HOST=cosmetics-support
-      - COSMETICS_HOST=cosmetics-submit
     depends_on:
       - db
       - opensearch
