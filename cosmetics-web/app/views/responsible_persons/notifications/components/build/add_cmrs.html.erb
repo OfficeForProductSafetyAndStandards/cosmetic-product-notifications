@@ -8,6 +8,9 @@
 <% end %>
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
+  <div class="opss-visibility-hidden">
+    <%= govukButton text: ".", attributes: { "aria-hidden" => "true", "tabindex" => "-1" } %>
+  </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <% if cmr_errors.any? %>
