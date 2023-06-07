@@ -1,0 +1,39 @@
+<% content_for :page_title, "Search for an account" %>
+<% @back_link_href = account_administration_index_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Search results</h2>
+  </div>
+  <div class="govuk-grid-columm-one-third govuk-!-text-align-right">
+    <a href="<%= account_administration_index_path %>" class="govuk-button govuk-button--secondary">Clear search results</a>
+  </div>
+</div>
+
+<% if @records_count.zero? %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">There are no accounts for "<%= @search_query %>".</p>
+  </div>
+</div>
+<% else %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%=
+      govuk_table do |table|
+        table.with_body do |body|
+          @records.each do |record|
+            body.with_row do |row|
+              row.with_cell(header: true, text: record.name)
+              row.with_cell(text: record.email)
+              row.with_cell(text: account_type(record.type))
+              row.with_cell(text: "<a href=\"#{account_administration_path(record, q: params[:q])}\" class=\"govuk-link\">View<span class=\"govuk-visually-hidden\"> account details</span></a>".html_safe)
+            end
+          end
+        end
+      end
+    %>
+    <%= govuk_pagination(pagy: @pagy) %>
+  </div>
+</div>
+<% end %>

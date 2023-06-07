@@ -3,6 +3,14 @@ module PageMatchers
     have_selector("h1", text:, exact_text: text.is_a?(String))
   end
 
+  def have_h2(text)
+    have_selector("h2", text:, exact_text: text.is_a?(String))
+  end
+
+  def have_h3(text)
+    have_selector("h3", text:, exact_text: text.is_a?(String))
+  end
+
   def have_notification_banner(text)
     have_selector(".govuk-notification-banner--success", text:)
   end

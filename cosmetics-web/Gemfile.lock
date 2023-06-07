@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/OfficeForProductSafetyAndStandards/govuk-design-system-rails.git
-  revision: 1779cf92e4357377ed5519b3b3f0a56e274012b6
+  revision: 3243b6f04f4313dc82eeff7a3c1a8e152a8161db
   specs:
-    govuk-design-system-rails (0.10.4)
+    govuk-design-system-rails (0.10.5)
 
 PATH
   remote: support_portal
@@ -11,6 +11,8 @@ PATH
       devise (~> 4.9)
       govuk-components (~> 4.0)
       govuk_design_system_formbuilder (~> 4.0)
+      pagy (~> 6.0)
+      pg (~> 1.4)
       rails (>= 7.0.5)
 
 GEM
@@ -612,7 +614,7 @@ DEPENDENCIES
   flipper (~> 0.28)
   flipper-active_record (~> 0.28)
   flipper-ui (~> 0.28)
-  govuk-design-system-rails (~> 0.10.4)!
+  govuk-design-system-rails (~> 0.10.5)!
   govuk_notify_rails (~> 2.2)
   hashie (~> 5.0)
   image_processing (~> 1.12)

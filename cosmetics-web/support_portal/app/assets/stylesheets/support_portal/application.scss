@@ -10,7 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *  require_tree .
  *= require_self
  */
 
@@ -20,6 +20,9 @@ $govuk-fonts-path: "";
 $govuk-global-styles: true;
 
 @import "govuk-frontend/govuk/all";
+@import "app_cards";
+@import "search";
+@import "sortable_table";
 
 .govuk-header nav {
   float: right;
@@ -48,30 +51,4 @@ $govuk-global-styles: true;
 
     text-decoration: none;
   }
-}
-
-.app-card {
-  display: block;
-  background-color: govuk-colour("light-grey");
-  border: 1px solid $govuk-border-colour;
-  margin-bottom: govuk-spacing(4);
-  padding: govuk-spacing(4);
-  text-decoration: none;
-
-  @include govuk-media-query(desktop) {
-    min-height: 168px;
-  }
-}
-
-.app-card__heading {
-  color: $govuk-link-colour;
-}
-
-.app-card:hover {
-  background-color: $govuk-brand-colour;
-  color: govuk-colour("white");
-}
-
-.app-card:hover > * {
-  color: inherit;
 }

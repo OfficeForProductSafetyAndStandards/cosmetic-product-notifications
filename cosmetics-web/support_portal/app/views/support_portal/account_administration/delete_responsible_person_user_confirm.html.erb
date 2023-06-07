@@ -1,0 +1,25 @@
+<% content_for :page_title, "#{@user.name} - Remove access" %>
+<% @back_link_href = edit_responsible_persons_account_administration_path(@user, q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @allow_removal %>
+      <%= govuk_warning_text do %>
+        Removing <%= @user.name %> from <%= @responsible_person.name %> means that <%= @user.name %> will no longer have access to <%= @responsible_person.name %> when logging back in to <abbr>SCPN</abbr>.
+        <br><br>
+        If <%= @user.name %> has access to other Responsible Person accounts, they will still be able to access them.
+      <% end %>
+      <%= form_with url: delete_responsible_person_user_account_administration_path(@user, @responsible_person.responsible_person_user_id), method: :delete do |f| %>
+        <div class="govuk-button-group">
+          <input type="hidden" name="q" value="<%= params[:q] %>">
+          <%= f.govuk_submit "Remove access" %>
+          <%= govuk_button_link_to "Cancel", edit_responsible_persons_account_administration_path(@user, q: params[:q]), secondary: true %>
+        </div>
+      <% end %>
+    <% else %>
+      <%= govuk_warning_text do %>
+        <%= @user.name %> cannot be removed from the Responsible Person because <%= @responsible_person.name %> does not have any other user accounts with access.
+      <% end %>
+    <% end %>
+  </div>
+</div>

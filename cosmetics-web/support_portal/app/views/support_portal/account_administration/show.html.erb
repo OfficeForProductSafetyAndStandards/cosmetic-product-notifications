@@ -1,0 +1,38 @@
+<% content_for :page_title, @user.name %>
+<% @back_link_href = account_administration_index_path(q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%=
+      govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key(text: "Name")
+          row.with_value(text: @user.name)
+          row.with_action(text: "Change", href: edit_name_account_administration_path(@user, q: params[:q]), visually_hidden_text: "name")
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Email")
+          row.with_value(text: @user.email)
+          row.with_action(text: "Change", href: edit_email_account_administration_path(@user, q: params[:q]), visually_hidden_text: "email")
+        end
+      end
+    %>
+    <h2 class="govuk-heading-m">Security details</h2>
+    <%=
+      govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key(text: "Reset account")
+          row.with_value(text: "")
+          row.with_action(text: "Reset", href: reset_account_account_administration_path(@user, q: params[:q]), visually_hidden_text: "account")
+        end
+        if @user.type == "SubmitUser" && @responsible_persons.present?
+          summary_list.with_row do |row|
+            row.with_key(text: "Responsible Person accounts")
+            row.with_value(text: @responsible_persons.pluck(:name).join(", "))
+            row.with_action(text: "Change", href: edit_responsible_persons_account_administration_path(@user, q: params[:q]), visually_hidden_text: "Responsible Person accounts")
+          end
+        end
+      end
+    %>
+  </div>
+</div>

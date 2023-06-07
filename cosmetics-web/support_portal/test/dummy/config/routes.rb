@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount SupportPortal::Engine => "/support_portal"
+  mount SupportPortal::Engine => "/"
 end
