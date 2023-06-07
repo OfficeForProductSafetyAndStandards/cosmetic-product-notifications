@@ -153,7 +153,7 @@ class Component < ApplicationRecord
   end
 
   def at_least_two_shades
-    errors.add(:shades, message: "Enter a shade value") if shades.count(&:present?) < 2
+    errors.add(:shades, message: "Enter at least 2 shades") if shades.count(&:present?) < 2
   end
 
   def sub_category

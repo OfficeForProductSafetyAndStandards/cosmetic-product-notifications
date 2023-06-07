@@ -13,7 +13,7 @@ RSpec.describe "Adding and removing shades", :with_stubbed_antivirus, type: :fea
     click_link "Product details"
   end
 
-  scenario "Adding Red, Orange, Yellow shades, Removing Orange" do
+  scenario "Adding Red, Orange, Yellow, Blue shades, Removing Yellow" do
     answer_is_item_available_in_shades_with "Yes"
     fill_in "component_shades-0", with: "Red"
     fill_in "component_shades-1", with: "Orange"
@@ -22,20 +22,27 @@ RSpec.describe "Adding and removing shades", :with_stubbed_antivirus, type: :fea
     expect(page).to have_field("component_shades-0", with: "Red")
     expect(page).to have_field("component_shades-1", with: "Orange")
     fill_in "component_shades-2", with: "Yellow"
+    click_on "Add another shade"
 
-    within "#shade-1" do
+    expect(page).to have_field("component_shades-0", with: "Red")
+    expect(page).to have_field("component_shades-1", with: "Orange")
+    expect(page).to have_field("component_shades-2", with: "Yellow")
+    fill_in "component_shades-3", with: "Blue"
+
+    within "#shade-2" do
       click_on "Remove shade"
     end
 
     expect(page).to have_field("component_shades-0", with: "Red")
-    expect(page).to have_field("component_shades-1", with: "Yellow")
+    expect(page).to have_field("component_shades-1", with: "Orange")
+    expect(page).to have_field("component_shades-2", with: "Blue")
 
     click_on "Add another shade" # attempt to add a blank shade
 
     click_on "Continue"
 
     expect(page).to have_css("h1", text: "What is the physical form of the product?")
-    expect(Component.last.shades).to eq(%w[Red Yellow])
+    expect(Component.last.shades).to eq(%w[Red Orange Blue])
     expect_back_link_to_add_shades_page
   end
 

@@ -798,7 +798,7 @@ RSpec.describe Component, type: :model do
     context "with one shade" do
       let(:shades) { ["red", ""] }
 
-      it { expect(predefined_component.errors[:shades]).to include("Enter a shade value") }
+      it { expect(predefined_component.errors[:shades]).to include("Enter at least 2 shades") }
     end
   end
 end
