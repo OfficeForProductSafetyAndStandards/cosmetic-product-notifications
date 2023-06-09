@@ -1,5 +1,7 @@
 module SupportPortal
   class ApplicationController < ActionController::Base
+    include Pagy::Backend
+
     include CacheConcern
     include HttpAuthConcern
     include SecondaryAuthenticationConcern
@@ -18,7 +20,7 @@ module SupportPortal
 
     helper_method :current_user
 
-    before_action :configure_permitted_parameters, if: :devise_controller?
+    default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
     rescue_from "ActiveRecord::RecordNotFound" do |_e|
       redirect_to "/404"
@@ -27,12 +29,6 @@ module SupportPortal
     # Used by Devise
     def self.default_url_options
       Rails.configuration.action_controller.default_url_options
-    end
-
-  protected
-
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[name mobile_number])
     end
 
   private

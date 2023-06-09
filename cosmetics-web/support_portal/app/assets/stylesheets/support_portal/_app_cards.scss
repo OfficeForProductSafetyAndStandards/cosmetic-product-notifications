@@ -1,0 +1,25 @@
+.app-card {
+  display: block;
+  background-color: govuk-colour("light-grey");
+  border: 1px solid $govuk-border-colour;
+  margin-bottom: govuk-spacing(4);
+  padding: govuk-spacing(4);
+  text-decoration: none;
+
+  @include govuk-media-query(desktop) {
+    min-height: 168px;
+  }
+}
+
+.app-card__heading {
+  color: $govuk-link-colour;
+}
+
+.app-card:hover {
+  background-color: $govuk-brand-colour;
+  color: govuk-colour("white");
+}
+
+.app-card:hover > * {
+  color: inherit;
+}

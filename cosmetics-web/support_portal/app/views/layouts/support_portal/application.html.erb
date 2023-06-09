@@ -2,7 +2,7 @@
 <html lang="en" class="govuk-template">
 <head>
   <meta charset="utf-8">
-  <title><%= yield :page_title %><%= " - #{@service_name}" %></title>
+  <title><% if @errors %>Error: <% end %><%= yield :page_title %><%= " - #{@service_name}" %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0b0c0c">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,14 +57,14 @@
           <ul id="navigation" class="govuk-header__navigation govuk-!-display-none-print" aria-label="Top Level Navigation">
             <% if current_user %>
               <li class="govuk-header__navigation-item">
-                <%= link_to "Your account", main_app.my_account_path, class: "govuk-header__link" %>
+                <a href="<%= main_app.my_account_path %>" class="govuk-header__link">Your account</a>
               </li>
               <li class="govuk-header__navigation-item">
                 <%= button_to "Sign out", main_app.destroy_support_user_session_path, method: :delete, class: "govuk-header__link" %>
               </li>
             <% else %>
               <li class="govuk-header__navigation-item">
-                <%= link_to "Sign in", main_app.new_support_user_session_path, class: "govuk-header__link" %>
+                <a href="<%= main_app.new_support_user_session_path %>" class="govuk-header__link">Sign in</a>
               </li>
             <% end %>
           </ul>
@@ -73,17 +73,40 @@
     </div>
   </header>
   <div class="govuk-width-container">
-    <%= govuk_phase_banner(tag: { text: "Beta" }, classes: "govuk-!-display-none-print") do %>This is a new service – your
-      <%= link_to "https://forms.office.com/Pages/ResponsePage.aspx?id=BXCsy8EC60O0l-ZJLRst2EL9OANlth1GkVkjQONYxK1URUFIQVhSRE5aNU4ySDU3N09RQUJERFRVSi4u", class: "govuk-link govuk-link--no-visited-state", target: "_blank", rel: "noopener" do %>feedback<span class="govuk-visually-hidden"> (opens new window)</span><% end %>
-      will help us to improve it.
+    <%= govuk_phase_banner(tag: { text: "Beta" }, classes: "govuk-!-display-none-print") do %>This is a new service – your <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=BXCsy8EC60O0l-ZJLRst2EL9OANlth1GkVkjQONYxK1URUFIQVhSRE5aNU4ySDU3N09RQUJERFRVSi4u" class="govuk-link govuk-link--no-visited-state" target="_blank" rel="noreferrer noopener">feedback<span class="govuk-visually-hidden"> (opens new window)</span></a> will help us to improve it.<% end %>
+    <% if @back_link_href.present? %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <%= govuk_back_link(href: @back_link_href) %>
+        </div>
+      </div>
     <% end %>
     <main class="govuk-main-wrapper" id="main-content" role="main">
+      <% if flash[:notice] %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <%=
+            govuk_notification_banner(title_text: "Success", success: true) do |nb|
+              nb.with_heading(text: flash[:notice])
+            end
+          %>
+        </div>
+      </div>
+      <% end %>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-          <h1 class="govuk-heading-l"><%= yield :page_title %></h1>
+          <% if @errors %>
+            <p></p>
+          <% else %>
+            <h1 class="govuk-heading-l"><%= yield :page_title %></h1>
+          <% end %>
         </div>
         <div class="govuk-grid-column-one-third">
-          <p class="govuk-body govuk-!-font-weight-bold govuk-!-text-align-right">Username</p>
+          <p class="govuk-body govuk-!-font-weight-bold govuk-!-text-align-right">
+            <% if current_user %>
+              <%= current_user.name %>
+            <% end %>
+          </p>
         </div>
       </div>
       <%= yield %>
@@ -95,13 +118,13 @@
         <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
           <ul class="govuk-footer__inline-list">
             <li class="govuk-footer__inline-list-item">
-              <%= link_to "Privacy policy", main_app.privacy_notice_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
+              <a href="<%= main_app.privacy_notice_path %>" class="govuk-footer__link govuk-!-margin-right-2" target="_blank">Privacy policy</a>
             </li>
             <li class="govuk-footer__inline-list-item">
-              <%= link_to "Terms and conditions", main_app.terms_and_conditions_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
+              <a href="<%= main_app.terms_and_conditions_path %>" class="govuk-footer__link govuk-!-margin-right-2" target="_blank">Terms and conditions</a>
             </li>
             <li class="govuk-footer__inline-list-item">
-              <%= link_to "Cookies", main_app.cookies_policy_path, class: "govuk-footer__link govuk-!-margin-right-2", target: :_blank  %>
+              <a href="<%= main_app.cookies_policy_path %>" class="govuk-footer__link govuk-!-margin-right-2" target="_blank">Cookies</a>
             </li>
           </ul>
         </div>

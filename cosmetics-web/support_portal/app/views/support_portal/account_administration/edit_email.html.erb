@@ -1,0 +1,14 @@
+<% content_for :page_title, "Change account email address" %>
+<% @errors = @user.errors.any? %>
+<% @back_link_href = account_administration_path(@user, q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @user, url: update_email_account_administration_path, method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
+      <%= f.govuk_email_field :email, label: { text: "Email address" } %>
+      <%= f.govuk_submit "Save changes" %>
+    <% end %>
+  </div>
+</div>

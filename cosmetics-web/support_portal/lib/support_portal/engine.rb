@@ -1,4 +1,5 @@
 require "govuk/components"
+require "govuk_design_system_formbuilder"
 
 module SupportPortal
   class Engine < ::Rails::Engine

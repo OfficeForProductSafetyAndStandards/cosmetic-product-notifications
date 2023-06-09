@@ -5,6 +5,8 @@ PATH
       devise (~> 4.9)
       govuk-components (~> 4.0)
       govuk_design_system_formbuilder (~> 4.0)
+      pagy (~> 6.0)
+      pg (~> 1.4)
       rails (>= 7.0.5)
 
 GEM
@@ -86,7 +88,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    diff-lcs (1.5.0)
     erubi (1.12.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -129,6 +130,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pagy (6.0.4)
+    pg (1.5.3)
     racc (1.6.2)
     rack (2.2.7)
     rack-test (2.1.0)
@@ -164,23 +166,6 @@ GEM
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rspec-core (3.12.2)
-      rspec-support (~> 3.12.0)
-    rspec-expectations (3.12.3)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
-    rspec-mocks (3.12.5)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
-    rspec-rails (6.0.2)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      railties (>= 6.1)
-      rspec-core (~> 3.12)
-      rspec-expectations (~> 3.12)
-      rspec-mocks (~> 3.12)
-      rspec-support (~> 3.12)
-    rspec-support (3.12.0)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -207,7 +192,6 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
-  rspec-rails
   sprockets-rails
   support_portal!
 
