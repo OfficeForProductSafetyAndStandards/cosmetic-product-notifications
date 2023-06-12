@@ -8,6 +8,7 @@ PATH
   remote: support_portal
   specs:
     support_portal (0.1.0)
+      active_record_extended (~> 3.2)
       devise (~> 4.9)
       govuk-components (~> 4.0)
       govuk_design_system_formbuilder (~> 4.0)
@@ -65,6 +66,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_record_extended (3.2.1)
+      activerecord (>= 5.2, < 7.2.0)
+      pg (< 3.0)
     activejob (7.0.5)
       activesupport (= 7.0.5)
       globalid (>= 0.3.6)
