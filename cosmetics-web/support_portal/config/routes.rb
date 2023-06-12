@@ -1,6 +1,14 @@
 SupportPortal::Engine.routes.draw do
   root "dashboard#index", as: :support_root
 
+  resources :notifications, only: %i[index show] do
+    member do
+      delete "delete"
+      patch "undelete"
+      put "undelete"
+    end
+  end
+
   resources :account_administration, path: "account-admin", only: %i[index show] do
     member do
       get "edit-name"

@@ -1,0 +1,50 @@
+<% content_for :page_title, "Search for cosmetic product notifications" %>
+<% @back_link_href = notifications_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Search results</h2>
+    <% unless @records_count.zero? %><p class="govuk-hint">Click on a heading to sort the results</p><% end %>
+  </div>
+  <div class="govuk-grid-columm-one-third govuk-!-text-align-right">
+    <a href="<%= notifications_path %>" class="govuk-button govuk-button--secondary">Clear search results</a>
+  </div>
+</div>
+
+<% if @records_count.zero? %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">There are no cosmetic product notifications for your search.</p>
+  </div>
+</div>
+<% else %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%=
+      govuk_table(classes: %w[opss-sortable-table]) do |table|
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(text: "<a href=\"#{product_name_sort_order_link(params[:notification_search][:product_name_sort_order])}\" class=\"govuk-link\">Cosmetic product notification name #{sort_order_icon(params[:notification_search][:product_name_sort_order])}</a>".html_safe)
+            row.with_cell(text: "<abbr>UKCP</abbr> number".html_safe)
+            row.with_cell(text: "<a href=\"#{notification_completed_at_sort_order_link(params[:notification_search][:notification_completed_at_sort_order])}\" class=\"govuk-link\">Submitted date #{sort_order_icon(params[:notification_search][:notification_completed_at_sort_order])}</a>".html_safe)
+            row.with_cell(text: "Notification status")
+            row.with_cell(text: "<span class=\"govuk-visually-hidden\">View cosmetic product notification details</span>".html_safe)
+          end
+        end
+        table.with_body do |body|
+          @records.each do |record|
+            body.with_row do |row|
+              row.with_cell(header: true, text: record.product_name)
+              row.with_cell(text: record.reference_number)
+              row.with_cell(text: record.notification_complete_at.strftime("%d/%m/%Y"))
+              row.with_cell(text: status_type(record.state))
+              row.with_cell(text: "<a href=\"#{notification_path(record, notification_search: @notification_search_params)}\" class=\"govuk-link\">View<span class=\"govuk-visually-hidden\"> cosmetic product notification details</span></a>".html_safe)
+            end
+          end
+        end
+      end
+    %>
+    <%= govuk_pagination(pagy: @pagy) %>
+  </div>
+</div>
+<% end %>

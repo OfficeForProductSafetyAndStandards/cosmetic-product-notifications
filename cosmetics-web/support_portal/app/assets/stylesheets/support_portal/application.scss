@@ -22,7 +22,14 @@ $govuk-global-styles: true;
 @import "govuk-frontend/govuk/all";
 @import "app_cards";
 @import "search";
-@import "sortable_table";
+
+.opss-nojs-hide {
+  display: none;
+}
+
+body.js-enabled .opss-nojs-hide {
+  display: inline;
+}
 
 .govuk-header nav {
   float: right;
@@ -51,4 +58,21 @@ $govuk-global-styles: true;
 
     text-decoration: none;
   }
+}
+
+.opss-bordered-form-group {
+  border: 1px solid $govuk-border-colour;
+}
+
+.opss-sortable-table th .govuk-link {
+  &:link, &:visited, &:focus, &:active, &:hover {
+    color: govuk-colour("black");
+    text-decoration: none;
+  }
+}
+
+.opss-info-panel {
+  border: 1px solid $govuk-border-colour;
+  padding: govuk-spacing(4);
+  margin-bottom: govuk-spacing(4);
 }

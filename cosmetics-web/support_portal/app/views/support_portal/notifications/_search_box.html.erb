@@ -1,0 +1,39 @@
+<% content_for :page_title, "Search for cosmetic product notifications" %>
+<% @errors = @notification_search.errors.any? %>
+<% @back_link_href = support_root_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @notification_search, url: notifications_path, method: :get, id: "notification-search-form" do |f| %>
+      <%= f.govuk_error_summary %>
+      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
+      <div class="moj-search">
+        <div class="govuk-form-group">
+          <label for="q-field" class="govuk-label moj-search__label">Enter a search term</label>
+          <div class="govuk-hint moj-search__hint" id="q-hint">For example, ingredient name, product name, <abbr>UKCP</abbr> number</div>
+          <input id="q-field" class="govuk-input moj-search__input" aria-describedby="q-hint" type="search" name="notification_search[q]" value="<%= params.dig(:notification_search, :q) %>">
+        </div>
+        <button type="submit" formnovalidate="formnovalidate" class="govuk-button moj-search__button" data-module="govuk-button" data-prevent-double-click="true">
+          <span class="govuk-visually-hidden">Search</span>
+        </button>
+      </div>
+      <%= f.govuk_collection_check_boxes :status, status_checkboxes, :id, :name, include_hidden: false, legend: { text: "Cosmetic notification status" }, hint: { text: "Display results containing live, archived or deleted options" }, form_group: { class: "opss-bordered-form-group govuk-!-margin-top-4 govuk-!-padding-4" } %>
+      <div class="govuk-form-group opss-bordered-form-group govuk-!-padding-4">
+        <%= f.govuk_fieldset legend: { text: "Cosmetic notification date" }, hint: { text: "You can filter the search results to show only notifications notified within a date range." } do %>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <%= f.govuk_date_field :date_from, legend: { text: "From" }, hint: { text: "For example, 27 9 2020" } %>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <%= f.govuk_date_field :date_to, legend: { text: "To" }, hint: { text: "&nbsp;".html_safe } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="govuk-button-group">
+        <%= f.govuk_submit "Search" %>
+        <a href="#" class="govuk-link govuk-link--no-visited-state opss-nojs-hide" data-reset-form="notification-search-form">Clear filters</a>
+      </div>
+    <% end %>
+  </div>
+</div>
