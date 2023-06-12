@@ -192,7 +192,6 @@ en:
               less_than_or_equal_to: "Enter a minimum concentration less than or equal to 100"
               not_a_number: "Enter a number for the minimum concentration"
             poisonous:
-              with_range_concentration: "ingredients with range concentration cannot be poisonous"
               inclusion: "Select yes if the ingredient is poisonous"
             used_for_multiple_shades:
               inclusion: "Select yes if the ingredient is used for different shades"
@@ -295,34 +294,6 @@ en:
           attributes:
             component_id:
               blank: "Select an item"
-        responsible_persons/notifications/ingredient_concentration_form:
-          attributes:
-            component:
-              blank: "Provide a component to associate the ingredient to"
-            used_for_multiple_shades:
-              inclusion: "Select yes if the ingredient is used for different shades"
-            exact_concentration:
-              blank: "Enter the concentration"
-              greater_than: "Enter a concentration greater than 0"
-              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
-              not_a_number: "Enter a number for the concentration"
-            maximum_concentration:
-              blank: "Enter the concentration"
-              greater_than: "Enter a concentration greater than 0"
-              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
-              not_a_number: "Enter a number for the concentration"
-            minimum_concentration:
-              blank: "Enter the concentration"
-              greater_than: "Enter a concentration greater than 0"
-              less_than_or_equal_to: "Enter a concentration less than or equal to 100"
-              not_a_number: "Enter a number for the concentration"
-            name:
-              blank: "Enter a name"
-              invalid: "Enter a valid ingredient name"
-              taken: "Enter a name which is unique to this %{entity}"
-              too_long: "Ingredient name must be 100 characters or less"
-            poisonous:
-              inclusion: "Select yes if the ingredient is poisonous"
         responsible_persons/notifications/nanomaterials/purposes_form:
           attributes:
             purpose_type:
