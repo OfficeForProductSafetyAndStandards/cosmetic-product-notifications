@@ -206,8 +206,8 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
         render_views
 
-        it "renders the archive history" do
-          expect(response.body).to match(/Archive history/)
+        it "renders the history" do
+          expect(response.body).to match(/History/)
         end
       end
 
@@ -295,8 +295,8 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
         render_views
 
-        it "renders the archive history" do
-          expect(response.body).to match(/Archive history/)
+        it "renders the history" do
+          expect(response.body).to match(/History/)
         end
       end
 

@@ -50,7 +50,7 @@ RSpec.describe "Notifications archiving", type: :feature do
     expect(page).not_to have_link("View #{notification.product_name}")
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{notification.reference_number}"
-    expect(page).to have_css("h2", text: "Archive history")
+    expect(page).to have_css("h2", text: "History")
     expect(page).to have_css("td.govuk-table__cell", text: "Archived: Significant change to the formulation")
   end
 
@@ -103,7 +103,7 @@ RSpec.describe "Notifications archiving", type: :feature do
     expect(title).to have_sibling("td", text: "1 January 2020", exact_text: true)
 
     visit "/responsible_persons/#{responsible_person.id}/notifications/#{archived_notification.reference_number}"
-    expect(page).to have_css("h2", text: "Archive history")
+    expect(page).to have_css("h2", text: "History")
     expect(page).to have_css("td.govuk-table__cell", text: "Unarchived")
   end
 end

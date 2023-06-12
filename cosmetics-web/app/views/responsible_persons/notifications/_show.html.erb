@@ -66,38 +66,42 @@
   </div>
 </div>
 
-<% if @archive_history.length > 0 %>
+<% if @history.length > 0 %>
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
-    <h2 class="govuk-heading-m">Archive history</h2>
+    <h2 class="govuk-heading-m">History</h2>
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-visually-hidden">List of archive and un-archive events</caption>
+      <caption class="govuk-table__caption govuk-visually-hidden">List of notification events</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Date &amp; time</th>
-          <th scope="col" class="govuk-table__header">Archive action</th>
+          <th scope="col" class="govuk-table__header">Action</th>
           <th scope="col" class="govuk-table__header">Team member</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-      <% @archive_history.each do |entry| %>
+      <% @history.each do |entry| %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell"><%= display_date_time(entry.object["updated_at"]) %></td>
           <td class="govuk-table__cell">
-            <% if entry.object["state"] == "archived" %>
+            <% if entry.event == "archive" %>
               <strong>Archived:</strong> <%= get_archive_reason_name(entry.object["archive_reason"]) %>
-            <% else %>
+            <% elsif entry.event == "unarchive" %>
               <strong>Unarchived</strong>
+            <% elsif entry.event == "delete" %>
+              <strong>Deleted</strong>
+            <% elsif entry.event == "undelete" %>
+              <strong>Recovered</strong>
             <% end %>
-          <td class="govuk-table__cell"><%= entry.whodunnit %></td>
+          <td class="govuk-table__cell"><%= %w[delete undelete].include?(entry.event) ? "OPSS" : entry.whodunnit %></td>
         </tr>
       <% end %>
       </tbody>
-      <% if @archive_history.length > 11 %>
+      <% if @history.length > 11 %>
         <tfoot class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Date &amp; time</th>
-          <th scope="col" class="govuk-table__header">Archive action</th>
+          <th scope="col" class="govuk-table__header">Action</th>
           <th scope="col" class="govuk-table__header">Team member</th>
         </tr>
         </tfoot>

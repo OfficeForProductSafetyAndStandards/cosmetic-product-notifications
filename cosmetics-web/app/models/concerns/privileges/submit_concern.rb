@@ -22,7 +22,7 @@ module Privileges
       true
     end
 
-    def can_view_archive_history?
+    def can_view_notification_history?
       true
     end
   end

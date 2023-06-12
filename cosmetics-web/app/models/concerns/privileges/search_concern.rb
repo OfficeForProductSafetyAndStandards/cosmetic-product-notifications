@@ -22,7 +22,7 @@ module Privileges
       trading_standards_user?
     end
 
-    def can_view_archive_history?
+    def can_view_notification_history?
       trading_standards_user? || opss_enforcement_user?
     end
 

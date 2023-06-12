@@ -29,7 +29,7 @@ module Privileges
       raise ArgumentError, "Implement role in each user type roles concern"
     end
 
-    def can_view_archive_history?
+    def can_view_notification_history?
       raise ArgumentError, "Implement role in each user type roles concern"
     end
 
