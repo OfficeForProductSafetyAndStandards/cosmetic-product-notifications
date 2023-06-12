@@ -245,8 +245,8 @@ class Notification < ApplicationRecord
   # =========================================
   #
   # Notifications will be soft deleted by default. We want to avoid hard deletes unless
-  # particular cases arise.
-  # EG: We need to completely remove a Responsible Person and its associated notifications.
+  # particular cases arise, eg. we need to completely remove a Responsible Person and
+  # its associated notifications.
   #
   # The following code overwrites ActiveRecord methods to default to soft deletion.
   # - Notification will be soft deleted when calling:
@@ -258,6 +258,8 @@ class Notification < ApplicationRecord
   # - Disabled methods:
   #   - delete
   #   - delete!
+  #
+  # A deleted notification can be recovered by calling `recover!` on `DeletedNotification`.
 
   # Keeps the original "ActiveRecord::Persistence#destroy" behaviour as "#hard_delete!"
   # This allows to still hard delete notifications after "#destroy" is overwritten
@@ -280,7 +282,8 @@ class Notification < ApplicationRecord
       end
       self.deleted_at = Time.zone.now
       self.state = DELETED
-      save!(validate: false)
+      self.paper_trail_event = "delete"
+      self.paper_trail.save_with_version(validate: false)
 
       delete_document_from_index if needs_index_deletion
     end
