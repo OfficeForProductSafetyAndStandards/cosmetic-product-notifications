@@ -177,7 +177,6 @@ ActiveRecord::Base.transaction do
       confirmed_at: Time.zone.now,
       unique_session_id: Devise.friendly_token,
     }
-    SearchUser.create!(user_params.merge({ role: :poison_centre, invite: true }))
     u = SubmitUser.create!(user_params)
     u.responsible_persons << rp
   end
