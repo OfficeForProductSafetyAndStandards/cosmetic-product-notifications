@@ -283,7 +283,7 @@ class Notification < ApplicationRecord
       self.deleted_at = Time.zone.now
       self.state = DELETED
       self.paper_trail_event = "delete"
-      self.paper_trail.save_with_version(validate: false)
+      self.paper_trail.save_with_version(validate: false) # rubocop:disable Style/RedundantSelf
 
       delete_document_from_index if needs_index_deletion
     end

@@ -4,7 +4,7 @@ module SupportPortal
       [
         OpenStruct.new(id: "live", name: "Live"),
         OpenStruct.new(id: "archived", name: "Archived"),
-        OpenStruct.new(id: "deleted", name: "Deleted")
+        OpenStruct.new(id: "deleted", name: "Deleted"),
       ]
     end
 
@@ -30,14 +30,7 @@ module SupportPortal
     end
 
     def status_type(state)
-      case state
-      when "notification_complete"
-        "Live"
-      when "archived"
-        "Archived"
-      when "deleted"
-        "Deleted"
-      end
+      { "notification_complete" => "Live", "archived" => "Archived", "deleted" => "Deleted" }[state]
     end
 
     def notification_ukcp_reference_number

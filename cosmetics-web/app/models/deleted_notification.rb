@@ -13,7 +13,7 @@ class DeletedNotification < ApplicationRecord
 
       notification.index_document
 
-      self.delete
+      self.delete # rubocop:disable Style/RedundantSelf
     end
   end
 end
