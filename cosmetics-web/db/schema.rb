@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_14_105151) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_14_133328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -399,6 +399,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_105151) do
     t.string "whodunnit"
     t.jsonb "object"
     t.datetime "created_at"
+    t.jsonb "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 

@@ -13,6 +13,7 @@ PATH
       govuk-components (~> 4.0)
       govuk_design_system_formbuilder (~> 4.0)
       pagy (~> 6.0)
+      paper_trail (~> 14.0)
       pg (~> 1.4)
       rails (>= 7.0.5)
 
