@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_28_100237) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_14_105151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -128,8 +129,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_100237) do
     t.datetime "notification_complete_at", precision: nil
     t.text "csv_cache"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_deleted_notifications_on_cpnp_reference_and_rp_id", unique: true
+    t.index ["notification_complete_at"], name: "index_deleted_notifications_on_notification_complete_at"
+    t.index ["product_name"], name: "index_deleted_notifications_on_product_name", opclass: :gin_trgm_ops, using: :gin
     t.index ["reference_number"], name: "index_deleted_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_deleted_notifications_on_responsible_person_id"
+    t.index ["state"], name: "index_deleted_notifications_on_state"
   end
 
   create_table "flipper_features", force: :cascade do |t|
@@ -249,8 +253,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_100237) do
     t.integer "source_notification_id"
     t.string "archive_reason"
     t.index ["cpnp_reference", "responsible_person_id"], name: "index_notifications_on_cpnp_reference_and_rp_id", unique: true
+    t.index ["notification_complete_at"], name: "index_notifications_on_notification_complete_at"
+    t.index ["product_name"], name: "index_notifications_on_product_name", opclass: :gin_trgm_ops, using: :gin
     t.index ["reference_number"], name: "index_notifications_on_reference_number", unique: true
     t.index ["responsible_person_id"], name: "index_notifications_on_responsible_person_id"
+    t.index ["state"], name: "index_notifications_on_state"
   end
 
   create_table "pending_responsible_person_users", force: :cascade do |t|
@@ -376,9 +383,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_100237) do
     t.string "secondary_authentication_recovery_codes", default: [], array: true
     t.string "secondary_authentication_recovery_codes_used", default: [], array: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["name"], name: "index_users_on_name"
     t.index ["new_email"], name: "index_users_on_new_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
+    t.index ["type"], name: "index_users_on_type"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
