@@ -392,6 +392,38 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     end
   end
 
+  context "when the fields start or end with extra spaces" do
+    let(:csv) do
+      <<~CSV
+        Name,Concentration,CAS, Is poisonous?
+         Foo,12 ,  497-19-8 , TRUE
+      CSV
+    end
+
+    it "is valid" do
+      form.valid?
+
+      expect(form).to be_valid
+    end
+  end
+
+  context "when the file contains blank rows" do
+    let(:csv) do
+      <<~CSV
+        Name,Concentration,CAS, Is poisonous?
+
+        Foo,12 ,497-19-8,TRUE
+
+      CSV
+    end
+
+    it "is valid" do
+      form.valid?
+
+      expect(form).to be_valid
+    end
+  end
+
   context "when using CSV for poisonous ingredients in frame formulation" do
     let(:component) { create(:predefined_component, contains_poisonous_ingredients: true) }
 

@@ -77,7 +77,7 @@ module ResponsiblePersons::Notifications::Components
         headers << :multiple_shades if multiple_shades?
       end
 
-      @csv_data ||= CSV.parse(file&.tempfile, headers:)
+      @csv_data ||= CSV.parse(file&.tempfile, headers:, skip_blanks: true)
     end
 
     def correct_ingredients_validation
@@ -132,6 +132,8 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def row_to_ingredient(opts)
+      opts = opts.transform_values { |v| v.to_s.strip }
+
       component.range? ? range_row_to_ingredient(**opts) : exact_row_to_ingredient(**opts)
     end
 
