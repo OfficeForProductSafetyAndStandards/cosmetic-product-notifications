@@ -405,12 +405,19 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
       expect(form).to be_valid
     end
+
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(1)
+    end
   end
 
   context "when the file contains blank rows" do
     let(:csv) do
       <<~CSV
         Name,Concentration,CAS, Is poisonous?
+        ,,,
 
         Foo,12 ,497-19-8,TRUE
 
@@ -421,6 +428,12 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       form.valid?
 
       expect(form).to be_valid
+    end
+
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(1)
     end
   end
 
