@@ -2,6 +2,10 @@ SupportPortal::Engine.routes.draw do
   root "dashboard#index", as: :support_root
 
   resources :notifications, only: %i[index show] do
+    collection do
+      get "search"
+    end
+
     member do
       delete "delete"
       patch "undelete"

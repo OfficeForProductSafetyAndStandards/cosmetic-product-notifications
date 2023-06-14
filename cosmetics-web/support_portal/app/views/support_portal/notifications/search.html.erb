@@ -1,5 +1,5 @@
 <% content_for :page_title, "Search for cosmetic product notifications" %>
-<% @back_link_href = notifications_path %>
+<% @back_link_href = notifications_path(notification_search: @notification_search_params) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -26,7 +26,7 @@
           head.with_row do |row|
             row.with_cell(text: "<a href=\"#{product_name_sort_order_link(params[:notification_search][:product_name_sort_order])}\" class=\"govuk-link\">Cosmetic product notification name #{sort_order_icon(params[:notification_search][:product_name_sort_order])}</a>".html_safe)
             row.with_cell(text: "<abbr>UKCP</abbr> number".html_safe)
-            row.with_cell(text: "<a href=\"#{notification_completed_at_sort_order_link(params[:notification_search][:notification_completed_at_sort_order])}\" class=\"govuk-link\">Submitted date #{sort_order_icon(params[:notification_search][:notification_completed_at_sort_order])}</a>".html_safe)
+            row.with_cell(text: "<a href=\"#{notification_complete_at_sort_order_link(params[:notification_search][:notification_complete_at_sort_order])}\" class=\"govuk-link\">Submitted date #{sort_order_icon(params[:notification_search][:notification_complete_at_sort_order])}</a>".html_safe)
             row.with_cell(text: "Notification status")
             row.with_cell(text: "<span class=\"govuk-visually-hidden\">View cosmetic product notification details</span>".html_safe)
           end
@@ -36,7 +36,7 @@
             body.with_row do |row|
               row.with_cell(header: true, text: record.product_name)
               row.with_cell(text: record.reference_number)
-              row.with_cell(text: record.notification_complete_at.strftime("%d/%m/%Y"))
+              row.with_cell(text: record.notification_complete_at&.strftime("%d/%m/%Y"))
               row.with_cell(text: status_type(record.state))
               row.with_cell(text: "<a href=\"#{notification_path(record, notification_search: @notification_search_params)}\" class=\"govuk-link\">View<span class=\"govuk-visually-hidden\"> cosmetic product notification details</span></a>".html_safe)
             end

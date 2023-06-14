@@ -5,22 +5,21 @@ module SupportPortal
 
     # GET /
     def index
-      @search_query = params.dig(:notification_search, :q).presence
+      @notification_search = NotificationSearch.new
+    end
 
-      if @search_query
-        @notification_search = NotificationSearch.new(notification_search_params)
+    # GET /search
+    def search
+      return redirect_to notifications_path unless params[:notification_search].present?
 
-        if @notification_search.valid?
-          notifications = @notification_search.search
-          @records_count = notifications.size
-          @pagy, @records = pagy(notifications)
-          @notification_search_params = notification_search_params
-        else
-          @search_query = nil
-          render :index
-        end
+      @notification_search = NotificationSearch.new(notification_search_params)
+
+      if @notification_search.valid?
+        notifications = @notification_search.search
+        @records_count = notifications.size
+        @pagy, @records = pagy(notifications)
       else
-        @notification_search = NotificationSearch.new
+        render :index
       end
     end
 
@@ -48,6 +47,7 @@ module SupportPortal
     def set_notification
       @notification = ::Notification.includes(responsible_person: :contact_persons).find_by(reference_number: params[:id]) ||
         ::DeletedNotification.find_by(reference_number: params[:id])
+      raise ActiveRecord::RecordNotFound if @notification.nil?
     end
 
     def set_notification_search_params

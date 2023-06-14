@@ -1,5 +1,5 @@
 <% content_for :page_title, @notification.product_name %>
-<% @back_link_href = notifications_path(notification_search: @notification_search_params) %>
+<% @back_link_href = search_notifications_path(notification_search: @notification_search_params) %>
 <%
   @heading_tag = if @notification.is_a?(::Notification) && @notification.archived?
                    { text: "Archived", colour: "grey"}

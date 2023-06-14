@@ -19,13 +19,13 @@ module SupportPortal
 
     def product_name_sort_order_link(current_sort_order)
       sort_order = current_sort_order.nil? || current_sort_order == "asc" ? "desc" : "asc"
-      query_string = { notification_search: request.params[:notification_search].merge(product_name_sort_order: sort_order) }.to_query
+      query_string = { notification_search: request.params[:notification_search].except(:notification_complete_at_sort_order).merge(product_name_sort_order: sort_order) }.to_query
       "?#{query_string}"
     end
 
-    def notification_completed_at_sort_order_link(current_sort_order)
+    def notification_complete_at_sort_order_link(current_sort_order)
       sort_order = current_sort_order.nil? || current_sort_order == "asc" ? "desc" : "asc"
-      query_string = { notification_search: request.params[:notification_search].merge(notification_completed_at_sort_order: sort_order) }.to_query
+      query_string = { notification_search: request.params[:notification_search].except(:product_name_sort_order).merge(notification_complete_at_sort_order: sort_order) }.to_query
       "?#{query_string}"
     end
 
