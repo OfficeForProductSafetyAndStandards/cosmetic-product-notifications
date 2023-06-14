@@ -129,7 +129,10 @@ RSpec.feature "Manage cosmetic notifications", :with_stubbed_mailer, :with_stubb
 
     click_on "Search", match: :first
 
-    expect(page).to have_text("Enter a search term")
+    expect(page).to have_text(notification1.reference_number)
+    expect(page).to have_text(notification2.reference_number)
+    expect(page).to have_text(notification3.reference_number)
+    expect(page).to have_text(archived_notification.reference_number)
   end
 
   scenario "Viewing a notification" do
