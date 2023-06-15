@@ -10,7 +10,7 @@ module SupportPortal
 
     # GET /search
     def search
-      return redirect_to notifications_path unless params[:notification_search].present?
+      return redirect_to notifications_path if params[:notification_search].blank?
 
       @notification_search = NotificationSearch.new(notification_search_params)
 
