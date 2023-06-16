@@ -30,7 +30,7 @@ module SupportPortal
         .or(::Notification.left_joins(components: %i[ingredients]).where(reference_number: q))
         .where(state: non_deleted_states)
         .where(notification_complete_at: date_from.presence..date_to.presence)
-        .select(:id, :product_name, :reference_number, :notification_complete_at, :state)
+        .select(:id, :product_name, :reference_number, :notification_complete_at, :state).distinct
 
       if states.include?("deleted")
         notifications = ::Notification
@@ -41,7 +41,7 @@ module SupportPortal
                                      .or(::DeletedNotification.left_joins(notification: { components: %i[ingredients] }).where("ingredients.inci_name ILIKE ?", "%#{q}%"))
                                      .or(::DeletedNotification.left_joins(notification: { components: %i[ingredients] }).where(reference_number: q))
                                      .where(notification_complete_at: date_from.presence..date_to.presence)
-                                     .select(:id, :product_name, :reference_number, :notification_complete_at, "'deleted' AS state"))
+                                     .select(:id, :product_name, :reference_number, :notification_complete_at, "'deleted' AS state").distinct)
       end
 
       if notification_complete_at_sort_order.present?
