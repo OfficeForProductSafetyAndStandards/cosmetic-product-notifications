@@ -38,7 +38,7 @@ module SupportPortal
     end
 
     def notification_uk_notified_date
-      @notification.notification_complete_at.strftime("#{@notification.notification_complete_at.day.ordinalize} %B %Y")
+      @notification.notification_complete_at.strftime("#{@notification.notification_complete_at.day.ordinalize} %B %Y") if @notification.notification_complete_at.present?
     end
 
     def notification_children_under_three
