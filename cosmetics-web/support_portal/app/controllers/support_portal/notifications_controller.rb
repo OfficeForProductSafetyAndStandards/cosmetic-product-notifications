@@ -1,11 +1,11 @@
 module SupportPortal
   class NotificationsController < ApplicationController
     before_action :set_notification, only: %i[show delete undelete]
-    before_action :set_notification_search_params, except: %i[index]
+    before_action :set_notification_search_params
 
     # GET /
     def index
-      @notification_search = NotificationSearch.new
+      @notification_search = NotificationSearch.new(@notification_search_params)
     end
 
     # GET /search

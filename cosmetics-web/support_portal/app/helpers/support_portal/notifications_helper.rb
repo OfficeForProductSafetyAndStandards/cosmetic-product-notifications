@@ -50,7 +50,10 @@ module SupportPortal
     end
 
     def notification_shades
-      @notification.shades.blank? ? "None" : @notification.shades.join(", ")
+      return "None" if @notification.shades.blank?
+
+      shades = @notification.shades.is_a?(String) ? @notification.shades.split(" ") : @notification.shades
+      shades.join(", ")
     end
 
     def notification_labels

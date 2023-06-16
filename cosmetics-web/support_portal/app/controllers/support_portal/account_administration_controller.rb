@@ -22,7 +22,7 @@ module SupportPortal
     # GET /:id/edit-name
     def edit_name; end
 
-    # PATCH/PUT /:id/edit-name
+    # PATCH/PUT /:id/update-name
     def update_name
       existing_name = @user.name
 
@@ -38,7 +38,7 @@ module SupportPortal
     # GET /:id/edit-email
     def edit_email; end
 
-    # PATCH/PUT /:id/edit-email
+    # PATCH/PUT /:id/update-email
     def update_email
       existing_email = @user.email
 
