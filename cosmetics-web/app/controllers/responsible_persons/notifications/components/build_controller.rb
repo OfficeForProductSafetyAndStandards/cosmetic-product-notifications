@@ -345,12 +345,17 @@ private
   end
 
   def update_add_ingredients
+    if params[:remove_ingredient_with_id] == "unsaved"
+      @component.ingredients.reload
+      rerender_current_step && return
+    end
+
     if @component.update_with_context(component_params, step)
       if params[:add_ingredient]
         @component.ingredients.build(poisonous: nil)
         rerender_current_step
       elsif params.key?(:remove_ingredient_with_id)
-        @component.ingredients.find(params[:remove_ingredient_with_id].to_i).destroy unless params[:remove_ingredient_with_id] == "unsaved"
+        @component.ingredients.find(params[:remove_ingredient_with_id].to_i).destroy
         @component.ingredients.reload
         rerender_current_step
       else
