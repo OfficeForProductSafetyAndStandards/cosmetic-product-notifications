@@ -18,7 +18,7 @@
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
     <%= render "notifications/product_details", notification: @notification %>
-    <%= render "archive_history", archive_history: @archive_history %>
+    <%= render "notification_history", history: @history %>
   </article>
 
   <%= render("aside_responsible_person_details", responsible_person: @responsible_person) %>

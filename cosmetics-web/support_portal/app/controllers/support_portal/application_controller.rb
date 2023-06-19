@@ -15,6 +15,7 @@ module SupportPortal
     before_action :set_sentry_context
     before_action :set_cache_headers
     before_action :set_service_name
+    before_action :set_paper_trail_whodunnit
 
     add_flash_types :confirmation
 
@@ -34,7 +35,7 @@ module SupportPortal
   private
 
     def prepare_logger_data
-      RequestStore.store[:logger_request_id] = request.request_id
+      ::RequestStore.store[:logger_request_id] = request.request_id
       cookies[:journey_uuid] ||= { value: request.request_id, secure: Rails.env.production?, httponly: true }
     end
 

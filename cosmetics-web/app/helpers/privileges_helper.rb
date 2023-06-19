@@ -14,5 +14,5 @@ module PrivilegesHelper
 
   delegate :can_view_responsible_person_address_history?, to: :current_user
 
-  delegate :can_view_archive_history?, to: :current_user
+  delegate :can_view_notification_history?, to: :current_user
 end
