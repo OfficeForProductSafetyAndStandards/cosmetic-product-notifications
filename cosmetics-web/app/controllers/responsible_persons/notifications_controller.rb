@@ -28,7 +28,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   def show
     @notification = Notification.where.not(state: :deleted).find_by!(reference_number: params[:reference_number])
     authorize @notification, policy_class: ResponsiblePersonNotificationPolicy
-    @archive_history = @notification.versions_with_name
+    @history = @notification.versions_with_name
   end
 
   def new

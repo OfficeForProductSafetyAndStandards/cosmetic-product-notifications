@@ -1,3 +1,4 @@
+require "active_record_extended"
 require "govuk/components"
 require "govuk_design_system_formbuilder"
 

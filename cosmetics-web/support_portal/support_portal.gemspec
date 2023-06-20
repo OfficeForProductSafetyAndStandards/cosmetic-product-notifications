@@ -27,10 +27,12 @@ Gem::Specification.new do |spec|
 
   # Ensure any gems that are also used in the main app have the same version constraints
   # Run `bundle install` for both this engine and the main app when adding or changing gems
+  spec.add_runtime_dependency "active_record_extended", "~> 3.2"
   spec.add_runtime_dependency "devise", "~> 4.9"
   spec.add_runtime_dependency "govuk-components", "~> 4.0"
   spec.add_runtime_dependency "govuk_design_system_formbuilder", "~> 4.0"
   spec.add_runtime_dependency "pagy", "~> 6.0"
+  spec.add_runtime_dependency "paper_trail", "~> 14.0"
   spec.add_runtime_dependency "pg", "~> 1.4"
   spec.add_runtime_dependency "rails", ">= 7.0.5"
 end

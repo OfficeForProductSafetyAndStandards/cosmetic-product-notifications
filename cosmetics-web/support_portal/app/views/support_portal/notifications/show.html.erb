@@ -1,0 +1,112 @@
+<% content_for :page_title, @notification.product_name %>
+<% @back_link_href = search_notifications_path(notification_search: @notification_search_params) %>
+<%
+  @heading_tag = if @notification.is_a?(::Notification) && @notification.archived?
+                   { text: "Archived", colour: "grey"}
+                 elsif @notification.is_a?(::DeletedNotification)
+                   { text: "Deleted", colour: "red" }
+                 end
+%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%=
+      govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key(text: "UK cosmetic product number")
+          row.with_value(text: notification_ukcp_reference_number)
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "UK notified")
+          row.with_value(text: notification_uk_notified_date)
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Product name")
+          row.with_value(text: @notification.product_name)
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "For children under 3")
+          row.with_value(text: notification_children_under_three)
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Number of items")
+          row.with_value(text: notification_number_of_items)
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Shades")
+          row.with_value(text: notification_shades)
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Label")
+          row.with_value(text: notification_labels)
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Are the items mixed?")
+          row.with_value(text: notification_mixed)
+        end
+      end
+    %>
+    <% if @notification.is_a?(::DeletedNotification) %>
+      <%= form_with url: undelete_notification_path(@notification.reference_number, notification_search: @notification_search_params), method: :patch do |f| %>
+        <%= f.govuk_submit "Recover this notification", secondary: true %>
+      <% end %>
+    <% else %>
+      <%= form_with url: delete_notification_path(@notification.reference_number, notification_search: @notification_search_params), method: :delete do |f| %>
+        <%= f.govuk_submit "Delete this notification", warning: true %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="opss-info-panel">
+      <h2 class="govuk-heading-m">Responsible Person</h2>
+      <h3 class="govuk-heading-s">Name</h3>
+      <p class="govuk-body"><%= responsible_person.name %></p>
+      <h3 class="govuk-heading-s">Address</h3>
+      <p class="govuk-body">
+        <%= responsible_person.address_line_1 %><br>
+        <% if responsible_person.address_line_2.present? %><%= responsible_person.address_line_2 %><br><% end %>
+        <%= responsible_person.city %><br>
+        <% if responsible_person.county.present? %><%= responsible_person.county %><br><% end %>
+        <%= responsible_person.postal_code %>
+      </p>
+    </div>
+    <div class="opss-info-panel">
+      <h2 class="govuk-heading-m">Assigned contact</h2>
+      <% contact_persons.each do |contact_person| %>
+        <h3 class="govuk-heading-s">Name</h3>
+        <p class="govuk-body"><%= contact_person.name %></p>
+        <h3 class="govuk-heading-s">Email address</h3>
+        <p class="govuk-body"><%= contact_person.email_address %></p>
+        <h3 class="govuk-heading-s">Telephone</h3>
+        <p class="govuk-body"><%= contact_person.phone_number %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% if @history.length > 0 %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">History</h2>
+      <%=
+        govuk_table do |table|
+          table.with_head do |head|
+            head.with_row do |row|
+              row.with_cell(text: "Date &amp; time".html_safe)
+              row.with_cell(text: "Action")
+              row.with_cell(text: "Team member")
+            end
+          end
+          table.with_body do |body|
+            @history.each do |record|
+              body.with_row do |row|
+                row.with_cell(header: true, text: history_event_time(record))
+                row.with_cell(text: history_event_name(record).html_safe)
+                row.with_cell(text: record.whodunnit)
+              end
+            end
+          end
+        end
+      %>
+    </div>
+  </div>
+<% end %>

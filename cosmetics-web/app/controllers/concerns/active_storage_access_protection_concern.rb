@@ -20,7 +20,7 @@ module ActiveStorageAccessProtectionConcern
       rp = @blob.attachments.first.record.responsible_person
       authorize rp, :show?
     else
-      raise Pundit::NotAuthorizedError unless search_user_signed_in?
+      raise Pundit::NotAuthorizedError unless search_user_signed_in? || support_user_signed_in?
     end
   end
 end

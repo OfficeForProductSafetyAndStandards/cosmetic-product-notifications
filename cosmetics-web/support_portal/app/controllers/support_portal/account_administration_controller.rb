@@ -22,7 +22,7 @@ module SupportPortal
     # GET /:id/edit-name
     def edit_name; end
 
-    # PATCH/PUT /:id/edit-name
+    # PATCH/PUT /:id/update-name
     def update_name
       existing_name = @user.name
 
@@ -38,7 +38,7 @@ module SupportPortal
     # GET /:id/edit-email
     def edit_email; end
 
-    # PATCH/PUT /:id/edit-email
+    # PATCH/PUT /:id/update-email
     def update_email
       existing_email = @user.email
 
@@ -52,9 +52,11 @@ module SupportPortal
     end
 
     # GET /:id/reset-account
+    # TODO(ruben): Add functionality
     def reset_account; end
 
     # DELETE /:id/reset
+    # TODO(ruben): Add functionality
     def reset; end
 
     # GET /:id/edit-responsible-persons
@@ -83,7 +85,7 @@ module SupportPortal
     end
 
     def set_responsible_persons
-      return unless @user.is_a?(SubmitUser)
+      return unless @user.is_a?(::SubmitUser)
 
       @responsible_persons = @user.responsible_persons
         .select("responsible_persons.id AS id", "responsible_persons.name AS name", "responsible_person_users.id AS responsible_person_user_id")
@@ -98,9 +100,9 @@ module SupportPortal
 
     def user_type_param(user)
       case user
-      when SubmitUser
+      when ::SubmitUser
         :submit_user
-      when SearchUser
+      when ::SearchUser
         :search_user
       end
     end

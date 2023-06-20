@@ -42,4 +42,18 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
     expect(page).to have_field("What is the name?", with: "Ingredient B")
     expect(page).not_to have_button("Remove ingredient")
   end
+
+  scenario "Adding an ingredient, then immediately removing it" do
+    create(:exact_ingredient, inci_name: "Ingredient A", exact_concentration: 4.0, component:)
+    navigate_to_edit_ingredients_page
+    click_on "Add another ingredient"
+
+    within("#ingredient-1") do
+      click_on "Remove ingredient"
+    end
+    expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient A"])
+
+    click_on "Save and continue"
+    expect_to_be_on_what_is_ph_range_of_product_page
+  end
 end

@@ -95,7 +95,8 @@ module NotificationStateConcern
         end
 
         after do
-          paper_trail.save_with_version
+          self.paper_trail_event = "archive"
+          self.paper_trail.save_with_version(validate: false) # rubocop:disable Style/RedundantSelf
           update_document
         end
       end
@@ -108,7 +109,8 @@ module NotificationStateConcern
         end
 
         after do
-          paper_trail.save_with_version
+          self.paper_trail_event = "unarchive"
+          self.paper_trail.save_with_version(validate: false) # rubocop:disable Style/RedundantSelf
           update_document
         end
       end

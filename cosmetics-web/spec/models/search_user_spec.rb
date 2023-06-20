@@ -140,30 +140,30 @@ RSpec.describe SearchUser, type: :model do
     end
   end
 
-  describe "#can_view_archive_history?" do
+  describe "#can_view_notification_history?" do
     it "is false for OPSS General users" do
       user.role = :opss_general
-      expect(user).not_to be_can_view_archive_history
+      expect(user).not_to be_can_view_notification_history
     end
 
     it "is true for OPSS Enforcement users" do
       user.role = :opss_enforcement
-      expect(user).to be_can_view_archive_history
+      expect(user).to be_can_view_notification_history
     end
 
     it "is true for Trading Standards users" do
       user.role = :trading_standards
-      expect(user).to be_can_view_archive_history
+      expect(user).to be_can_view_notification_history
     end
 
     it "is false for Poison Centre users" do
       user.role = :poison_centre
-      expect(user).not_to be_can_view_archive_history
+      expect(user).not_to be_can_view_notification_history
     end
 
     it "is false for OPSS Science users" do
       user.role = :opss_science
-      expect(user).not_to be_can_view_archive_history
+      expect(user).not_to be_can_view_notification_history
     end
   end
 end
