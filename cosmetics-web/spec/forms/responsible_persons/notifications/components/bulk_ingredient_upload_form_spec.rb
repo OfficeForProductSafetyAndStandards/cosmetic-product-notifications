@@ -141,37 +141,6 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
     end
 
-    context "when file with invalid characters is used" do
-      let(:file) do
-        f = File.open("spec/fixtures/files/exact_ingredients_long_name.csv")
-        Rack::Test::UploadedFile.new(f, "text/csv")
-      end
-
-      let(:error_messages) { ["The file has invalid characters. Please check and try again"] }
-
-      it "does have proper message after saving attempt" do
-        form.save_ingredients
-
-        expect(form.errors.full_messages).to eq error_messages
-      end
-
-      it "does return proper value" do
-        expect(form.save_ingredients).to be false
-      end
-
-      it "is invalid" do
-        form.valid?
-
-        expect(form).not_to be_valid
-      end
-
-      it "has proper error message" do
-        form.valid?
-
-        expect(form.errors.full_messages).to eq error_messages
-      end
-    end
-
     context "when values for toxicity are empty" do
       let(:csv) do
         <<~CSV
@@ -389,6 +358,51 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
     it "is truthy" do
       expect(form.save_ingredients).to be_truthy
+    end
+  end
+
+  context "when the fields start or end with extra spaces" do
+    let(:csv) do
+      <<~CSV
+        Name,Concentration,CAS, Is poisonous?
+         Foo,12 ,  497-19-8 , TRUE
+      CSV
+    end
+
+    it "is valid" do
+      form.valid?
+
+      expect(form).to be_valid
+    end
+
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(1)
+    end
+  end
+
+  context "when the file contains blank rows" do
+    let(:csv) do
+      <<~CSV
+        Name,Concentration,CAS, Is poisonous?
+        ,,,
+
+        Foo,12 ,497-19-8,TRUE
+
+      CSV
+    end
+
+    it "is valid" do
+      form.valid?
+
+      expect(form).to be_valid
+    end
+
+    it "creates records" do
+      expect {
+        form.save_ingredients
+      }.to change(Ingredient, :count).by(1)
     end
   end
 

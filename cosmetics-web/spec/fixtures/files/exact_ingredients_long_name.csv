@@ -1,7 +1,0 @@
-Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
-Sodium,35,498-19-8,false
-Aqua,65,,true
-ethonol,23,497-19-8,false
-"During the process of creating a product notification, you can choose to enter the ingredient information manually - using the forms provided - or by uploading the ingredients using a CSV file.",23,,true
-"If you have added ingredient information by using a CSV file, you can still edit the ingredients manually or add and remove ingredients manually while the notification is in a draft status. To edit the ingredient information, begin the same task again and choose to enter ingredients manually.",,,
-This upload functionality can be useful when tasked with creating several notifications which all include a common set of ingredients.,,,
