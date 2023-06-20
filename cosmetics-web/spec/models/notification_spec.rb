@@ -356,6 +356,23 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         expect(notification.errors[:image_uploads]).to eq(["The selected file must be smaller than 30MB"])
       end
     end
+
+    context "when an uploaded file contains a virus" do
+      let(:notification) { create(:notification) }
+      let(:attachment) { fixture_file_upload("/testImage.png", "image/png") }
+
+      before do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(ImageUpload).to receive(:failed_antivirus_check?).and_return(true)
+        # rubocop:enable RSpec/AnyInstance
+      end
+
+      it "sets an error message" do
+        notification.add_image(attachment)
+
+        expect(notification.errors[:image_uploads]).to eq(["The selected file contains a virus"])
+      end
+    end
   end
 
   describe "#make_ready_for_nanomaterials!" do
