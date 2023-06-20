@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # Support service
   constraints DomainInclusionConstraint.new(ENV.fetch("SUPPORT_HOST")) do
     # Authentication is handled by the main app since most functionality is shared
     devise_for :support_users,
@@ -87,6 +88,7 @@ Rails.application.routes.draw do
     mount SupportPortal::Engine, at: "/"
   end
 
+  # Search service
   constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
     devise_for :search_users,
                path: "",
@@ -96,7 +98,26 @@ Rails.application.routes.draw do
       resource :check_your_email, path: "check-your-email", only: :show, controller: "users/check_your_email"
       post "sign-out-before-resetting-password", to: "users/passwords#sign_out_before_resetting_password"
     end
+
+    # Allow support users to log into the search service using their support user credentials
+    devise_for :support_on_search_users,
+               class_name: "SupportUser",
+               path: "support",
+               path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
+               controllers: { passwords: "users/passwords", registrations: "users/registrations", sessions: "users/sessions", unlocks: "users/unlocks" },
+               singular: "support_on_search_user"
+
+    resources :users, only: [:update] do
+      member do
+        get "complete-registration", action: :complete_registration
+        delete "complete-registration", action: :reset_complete_registration, as: :reset_complete_registration
+        post "sign-out-before-accepting-invitation", action: :sign_out_before_accepting_invitation
+      end
+    end
+
     root "search/landing_page#index", as: :search_root
+
+    resource :dashboard, controller: "search/dashboard", only: %i[show]
 
     scope module: "poison_centres", as: "poison_centre" do
       resources :notifications, param: :reference_number, only: %i[show]
@@ -106,18 +127,9 @@ Rails.application.routes.draw do
       get "ingredients-list/responsible-persons", to: "ingredients#responsible_persons", as: :ingredients_responsible_persons
       get "ingredients-list/responsible-persons/:responsible_person_id/notifications", to: "ingredients#responsible_person_notifications", as: :ingredients_responsible_person_notifications
     end
-    resources :users, only: [:update] do
-      member do
-        get "complete-registration", action: :complete_registration
-        delete "complete-registration", action: :reset_complete_registration, as: :reset_complete_registration
-        post "sign-out-before-accepting-invitation", action: :sign_out_before_accepting_invitation
-      end
-    end
-
-    resource :dashboard, controller: "search/dashboard", only: %i[show]
   end
 
-  # All requests besides "Search" host ones will default to "Submit" pages.
+  # Submit service
   constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST"), ENV.fetch("SUPPORT_HOST")) do
     devise_for :submit_users,
                path: "",

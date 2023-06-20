@@ -3,9 +3,10 @@ require "rails_helper"
 RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:responsible_person_with_no_contact_person) { create(:responsible_person) }
-  let(:user) { create(:submit_user) }
 
-  context "when requested from the submit sub-domain" do
+  context "when requested from the submit subdomain" do
+    let(:user) { create(:submit_user) }
+
     before do
       configure_requests_for_submit_domain
     end
@@ -29,18 +30,18 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
     end
 
-    context "when signed in as a user not associated with a responsible person" do
+    context "when signed in as a user not associated with a Responsible Person" do
       before do
         sign_in user
         get "/"
       end
 
-      it "redirects to a page prompting user to create or join a company" do
+      it "redirects to a page prompting the user to create or join a Responsible Person" do
         expect(response).to redirect_to("/responsible_persons/account/overview")
       end
     end
 
-    context "when signed in as a user who hasn’t accepted declaration yet" do
+    context "when signed in as a user who hasn’t accepted the declaration yet" do
       let(:user_who_hasnt_accepted_declaration) { create(:submit_user, has_accepted_declaration: false) }
 
       before do
@@ -78,7 +79,7 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     end
   end
 
-  context "when requested from the search sub-domain" do
+  context "when requested from the search subdomain" do
     before do
       configure_requests_for_search_domain
     end
@@ -99,6 +100,8 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
     end
 
     context "when signed in as a user associated with a Responsible Person account" do
+      let(:user) { create(:submit_user) }
+
       before do
         responsible_person.add_user(user)
         sign_in user
@@ -109,7 +112,7 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
         sign_out(:submit_user)
       end
 
-      it "redirects to invalid account page" do
+      it "redirects to the invalid account page" do
         expect(response).to redirect_to("/invalid-account")
       end
     end
@@ -181,30 +184,115 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
         expect(response).to redirect_to("/notifications")
       end
     end
+
+    context "when signed in as a Trading Standards user" do
+      let(:user) { create(:trading_standards_user) }
+
+      before do
+        sign_in_as_trading_standards_user(user:)
+        get "/"
+      end
+
+      after do
+        sign_out(:search_user)
+      end
+
+      it "redirects to the notifications page" do
+        expect(response).to redirect_to("/notifications")
+      end
+    end
+
+    context "when signed in as a support user" do
+      let(:user) { create(:support_user) }
+
+      before do
+        sign_in user
+        get "/"
+      end
+
+      after do
+        sign_out(:support_user)
+      end
+
+      it "redirects to the notifications page" do
+        expect(response).to redirect_to("/notifications")
+      end
+    end
   end
 
-  context "when signed in as a Trading Standards user" do
-    let(:user) { create(:trading_standards_user) }
+  context "when requested from the support subdomain" do
+    let(:user) { create(:support_user) }
 
     before do
-      sign_in_as_trading_standards_user(user:)
-      get "/"
+      configure_requests_for_support_domain
     end
 
     after do
-      sign_out(:search_user)
+      sign_out(:support_user)
     end
 
-    it "redirects to the notifications page" do
-      expect(response).to redirect_to("/notifications")
+    context "when not signed in" do
+      before do
+        get "/"
+      end
+
+      it "redirects to the sign in page" do
+        expect(response).to redirect_to("/sign-in")
+      end
+    end
+
+    context "when signed in as a user associated with a Responsible Person account" do
+      let(:user) { create(:submit_user) }
+
+      before do
+        responsible_person.add_user(user)
+        sign_in user
+        get "/"
+      end
+
+      after do
+        sign_out(:submit_user)
+      end
+
+      it "redirects to the sign in page" do
+        expect(response).to redirect_to("/sign-in")
+      end
+    end
+
+    context "when signed in as a search user" do
+      let(:user) { create(:search_user) }
+
+      before do
+        sign_in user
+        get "/"
+      end
+
+      after do
+        sign_out(:search_user)
+      end
+
+      it "redirects to the sign in page" do
+        expect(response).to redirect_to("/sign-in")
+      end
+    end
+
+    context "when signed in as a support user" do
+      before do
+        sign_in user
+        get "/"
+      end
+
+      it "renders the homepage" do
+        expect(response).to render_template("support_portal/dashboard/index")
+      end
     end
   end
 
   context "when requested from localhost" do
     before { host! "localhost" }
 
-    xit "raises error" do
-      expect(get("/")).to raise_error(RuntimeError)
+    it "raises an error" do
+      expect { get("/") }.to raise_error(RuntimeError)
     end
   end
 end
