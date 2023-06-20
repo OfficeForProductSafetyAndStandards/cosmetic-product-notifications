@@ -334,6 +334,28 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         expect(notification.errors[:image_uploads]).to eq(["You can only upload up to 10 images"])
       end
     end
+
+    context "when a file with a disallowed extension is added" do
+      let(:notification) { create(:notification) }
+      let(:attachment) { fixture_file_upload("/badfile.xyz", "application/xyz") }
+
+      it "sets an error message" do
+        notification.add_image(attachment)
+        expect(notification.errors[:image_uploads]).to eq(["The selected file must be a JPG, PNG or PDF"])
+      end
+    end
+
+    context "when an image is too large" do
+      let(:notification) { create(:notification) }
+      let(:attachment) { fixture_file_upload("/testImage.png", "image/png") }
+
+      it "sets an error message" do
+        allow(attachment.tempfile).to receive(:size).and_return(31.megabytes)
+        notification.add_image(attachment)
+
+        expect(notification.errors[:image_uploads]).to eq(["The selected file must be smaller than 30MB"])
+      end
+    end
   end
 
   describe "#make_ready_for_nanomaterials!" do

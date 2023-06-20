@@ -168,16 +168,13 @@ class Notification < ApplicationRecord
   end
 
   def add_image(image)
-    # We need to use `length` here rather than `count` since we're potentially adding multiple
-    # image uploads before saving the notification, and `count` will only tell us what's already
-    # in the database.
-    if image_uploads.length < MAXIMUM_IMAGE_UPLOADS
-      image_uploads.build.tap do |upload|
-        upload.file.attach(image)
-        upload.filename = image.original_filename
-      end
-    else
-      errors.add(:image_uploads, :too_long, message: "You can only upload up to #{MAXIMUM_IMAGE_UPLOADS} images")
+    validate_image(image)
+
+    return unless errors.empty?
+
+    image_uploads.build.tap do |upload|
+      upload.file.attach(image)
+      upload.filename = image.original_filename
     end
   end
 
@@ -384,6 +381,15 @@ private
     if Notification.where(responsible_person_id:).where("TRIM(LOWER(product_name))=TRIM(LOWER(?))", product_name).count.positive?
       errors.add(:product_name, :taken)
     end
+  end
+
+  def validate_image(image)
+    # We need to use `length` here rather than `count` since we're potentially adding multiple
+    # image uploads before saving the notification, and `count` will only tell us what's already
+    # in the database.
+    errors.add(:image_uploads, :too_long, message: "You can only upload up to #{MAXIMUM_IMAGE_UPLOADS} images") unless image_uploads.length < MAXIMUM_IMAGE_UPLOADS
+    errors.add(:image_uploads, :bad_file_extension, message: "The selected file must be a JPG, PNG or PDF") unless ImageUpload.allowed_types.include?(image.content_type)
+    errors.add(:image_uploads, :too_large, message: "The selected file must be smaller than 30MB") unless image.tempfile.size <= ImageUpload.max_file_size
   end
 end
 
