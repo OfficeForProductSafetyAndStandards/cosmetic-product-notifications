@@ -173,14 +173,12 @@ class Notification < ApplicationRecord
     return unless errors.empty?
 
     image_uploads.build.tap do |upload|
+      break unless errors.empty?
+
       upload.file.attach(image)
       upload.filename = image.original_filename
 
-      if upload.failed_antivirus_check?
-        errors.add(:image_uploads, :virus_detected, message: "The selected file contains a virus")
-
-        break
-      end
+      errors.add(:image_uploads, :virus_detected, message: "The selected file contains a virus") if upload.failed_antivirus_check?
     end
 
     image_uploads.delete(image_uploads.last) unless errors.empty?
