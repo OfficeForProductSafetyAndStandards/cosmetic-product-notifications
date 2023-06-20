@@ -134,7 +134,7 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def row_to_ingredient(opts)
-      opts = opts.transform_values { |v| v.to_s.strip }
+      opts = opts.transform_values { |v| v.to_s.strip.gsub(/[[:^ascii:]]/, "") }
 
       component.range? ? range_row_to_ingredient(**opts) : exact_row_to_ingredient(**opts)
     end
