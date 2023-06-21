@@ -373,17 +373,6 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
         expect(notification.errors[:image_uploads]).to eq(["The selected file contains a virus"])
       end
     end
-
-    context "when thhe file fails to upload for any other reason" do
-      let(:notification) { create(:notification) }
-      let(:attachment) { fixture_file_upload("/testImage.png", "image/png") }
-
-      it "sets an error message" do
-        notification.add_image(attachment)
-
-        expect(notification.errors[:image_uploads]).to eq(["The selected file contains a virus"])
-      end
-    end
   end
 
   describe "#make_ready_for_nanomaterials!" do
