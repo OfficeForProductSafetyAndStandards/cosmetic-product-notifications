@@ -165,7 +165,9 @@ ActiveRecord::Base.transaction do
 
   get_users(ENV["SEED_USERS"]).each do |user|
     name, email = user.split(":")
-    user_params = {
+    email_user, email_domain = email.split("@")
+
+    submit_user_params = {
       email:,
       name:,
       account_security_completed: true,
@@ -177,8 +179,38 @@ ActiveRecord::Base.transaction do
       confirmed_at: Time.zone.now,
       unique_session_id: Devise.friendly_token,
     }
-    u = SubmitUser.create!(user_params)
-    u.responsible_persons << rp
+    submit_user = SubmitUser.create!(submit_user_params)
+    submit_user.responsible_persons << rp
+
+    search_user_params = {
+      email: "#{email_user}+search@#{email_domain}",
+      name:,
+      role: :opss_general,
+      account_security_completed: true,
+      password: "testpassword",
+      secondary_authentication_methods: %w[sms],
+      mobile_number: "07700 900000",
+      mobile_number_verified: true,
+      has_accepted_declaration: true,
+      confirmed_at: Time.zone.now,
+      unique_session_id: Devise.friendly_token,
+    }
+    SearchUser.create!(search_user_params)
+
+    support_user_params = {
+      email: "#{email_user}+support@#{email_domain}",
+      name:,
+      role: :opss_general,
+      account_security_completed: true,
+      password: "testpassword",
+      secondary_authentication_methods: %w[sms],
+      mobile_number: "07700 900000",
+      mobile_number_verified: true,
+      has_accepted_declaration: true,
+      confirmed_at: Time.zone.now,
+      unique_session_id: Devise.friendly_token,
+    }
+    SupportUser.create!(support_user_params)
   end
 
   30.times do |i|
