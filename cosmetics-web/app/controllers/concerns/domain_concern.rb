@@ -13,6 +13,10 @@ module DomainConcern
     support_domain == request.host
   end
 
+  def support_user_on_search_domain?
+    search_domain? && request.path.start_with?("/support/")
+  end
+
   def root_path
     if submit_domain?
       submit_root_path
@@ -27,6 +31,7 @@ module DomainConcern
     helper_method :search_domain?
     helper_method :submit_domain?
     helper_method :support_domain?
+    helper_method :support_user_on_search_domain?
     helper_method :root_path
   end
 

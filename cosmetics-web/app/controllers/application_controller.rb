@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   include CookiesConcern
 
   protect_from_forgery with: :exception
+
+  # Allow both search and support users to sign in to the search service
+  devise_group :searcher, contains: %i[search_user support_on_search_user]
+
   before_action :prepare_logger_data
   before_action :authorize_user!
   before_action :authenticate_user!
@@ -88,11 +92,11 @@ private
   end
 
   def current_user
-    current_submit_user || current_search_user || current_support_user
+    current_submit_user || current_searcher || current_support_user
   end
 
   def user_signed_in?
-    submit_user_signed_in? || search_user_signed_in? || support_user_signed_in?
+    submit_user_signed_in? || searcher_signed_in? || support_user_signed_in?
   end
 
   def new_user_session_path(*args)
@@ -100,6 +104,8 @@ private
       new_submit_user_session_path(*args)
     elsif support_domain?
       new_support_user_session_path(*args)
+    elsif support_user_on_search_domain?
+      new_support_on_search_user_session_path(*args)
     else
       new_search_user_session_path(*args)
     end
@@ -112,7 +118,7 @@ private
     elsif support_domain?
       authenticate_support_user!
     else
-      authenticate_search_user!
+      authenticate_searcher!
     end
   end
 
@@ -121,6 +127,8 @@ private
       destroy_submit_user_session_path
     elsif support_domain?
       destroy_support_user_session_path
+    elsif support_user_on_search_domain?
+      destroy_support_on_search_user_session_path
     else
       destroy_search_user_session_path
     end
@@ -132,6 +140,8 @@ private
       submit_user_session_path
     elsif support_domain?
       support_user_session_path
+    elsif support_user_on_search_domain?
+      support_on_search_user_session_path
     else
       search_user_session_path
     end
@@ -143,6 +153,8 @@ private
       submit_user_password_path
     elsif support_domain?
       support_user_password_path
+    elsif support_user_on_search_domain?
+      support_on_search_user_password_path
     else
       search_user_password_path
     end

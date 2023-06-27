@@ -56,6 +56,6 @@ private
   end
 
   def resource_form_name(resource_object)
-    ActiveModel::Naming.param_key(resource_object.class)
+    support_user_on_search_domain? ? "support_on_search_user" : ActiveModel::Naming.param_key(resource_object.class)
   end
 end
