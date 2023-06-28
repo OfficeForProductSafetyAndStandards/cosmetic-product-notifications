@@ -137,7 +137,7 @@ module Users
         return SearchUser
       elsif params.key?("submit_user")
         return SubmitUser
-      elsif params.key?("support_user")
+      elsif params.key?("support_user") || params.key?("support_on_search_user")
         return SupportUser
       end
 
@@ -145,7 +145,7 @@ module Users
     end
 
     def user_param_key
-      user_class.name.underscore.to_sym
+      params.key?("support_on_search_user") ? :support_on_search_user : user_class.name.underscore.to_sym
     end
   end
 end

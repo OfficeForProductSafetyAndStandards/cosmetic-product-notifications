@@ -138,6 +138,10 @@
         ]
       ) %>
 
+    <% if support_domain? %>
+      <%= govukButton(text: "Go to Cosmetic products search", href: main_app.new_support_on_search_user_session_url(host: ENV['SEARCH_HOST']), classes: "govuk-button--secondary", attributes: { target: "_blank" }) %>
+    <% end %>
+
     <% if search_domain? && current_user.opss_science_user? %>
       <%= render "opss_science_downloads" %>
     <% end %>
