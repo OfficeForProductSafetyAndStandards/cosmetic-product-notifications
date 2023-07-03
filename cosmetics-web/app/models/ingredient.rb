@@ -109,7 +109,7 @@ private
   def maximum_minimum_concentration_range
     return unless maximum_concentration && minimum_concentration
 
-    unless maximum_concentration > minimum_concentration
+    unless maximum_concentration >= minimum_concentration
       errors.add(:maximum_concentration,
                  message: "Maximum concentration must be greater than the minimum concentration")
     end
