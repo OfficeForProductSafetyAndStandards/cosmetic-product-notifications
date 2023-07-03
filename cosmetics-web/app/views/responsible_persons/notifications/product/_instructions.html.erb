@@ -7,7 +7,7 @@
 <% if @notification.is_multicomponent? %>
   <%= render "shared/multiple_images_upload_description" %>
 <% else %>
-  <div class="govuk-inset-text">You must upload an image of the product label. You can also upload a photo of the product.</div>
+  <p class="govuk-body">You <span  class="govuk-body govuk-!-font-weight-bold">must</span> upload an image of the product label. You can also upload a photo of the product.</p>
   <p class="govuk-body">
     The images you provide must be in focus and all packaging text legible. If you are uploading multiple images, you must upload them all at the same time.
     You can upload up to 10 images. Each file can be up to 30MB and must be a JPG, PNG or PDF.
