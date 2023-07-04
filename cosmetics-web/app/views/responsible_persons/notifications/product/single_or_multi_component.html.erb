@@ -22,19 +22,21 @@
             </span>
           </summary>
           <div class="govuk-details__text">
-            <p class="govuk-!-margin-bottom-1">Examples of multi-item kits include:</p>
+            <p class="govuk-!-margin-bottom-20">Examples of multi-item kits include:</p>
 
-          <ul class="govuk-list govuk-list--bullet">
-            <li>hair dye kits</li>
-            <li>skin peeling kits</li>
-            <li>permanent styling products</li>
-            <li>anti-ageing or revitalising kits</li>
-          </ul>
+            <div class= "govuk-!-margin-bottom-20">
+              <ul class="govuk-list govuk-list--bullet">
+                <li>hair dye kits</li>
+                <li>skin peeling kits</li>
+                <li>permanent styling products</li>
+                <li>anti-ageing or revitalising kits</li>
+              </ul>
+            </div>
 
-          Where a set contains separate products that do not need to be mixed together or used in a particular order for the product to work, you’ll need to
-          submit a separate notification for each product.
-        </div>
-      </details>
+            Where a set contains separate products that do not need to be mixed together or used in a particular order for the product to work, you’ll need to
+            submit a separate notification for each product.
+          </div>
+        </details>
 
         <%= govukWarningText(
           iconFallbackText: "Warning",
@@ -55,7 +57,7 @@
         <%= govukRadios(
               form: form,
               key: :single_or_multi_component,
-              hint: { text: "The product draft is currently a single item product. You can add more items by making it a multi-item kit.",
+              hint: { text: "This draft is currently a single item product. You can make it a multi-item kit by selecting yes and adding more items.",
                       classes: "govuk-!-font-size-16 govuk-!-width-three-quarters govuk-!-margin-botton-6",
                       id: "single_or_multi_component_form_single_or_multi_component-hint" },
               fieldset: { legend: { text: "Is the product a multi-item kit?", classes: "govuk-label--m"}},
