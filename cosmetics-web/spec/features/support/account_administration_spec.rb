@@ -191,4 +191,29 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     expect(page).to have_h1("#{submit_user2.name} - Remove access")
     expect(page).to have_text("#{submit_user2.name} cannot be removed from the Responsible Person because #{responsible_person_user4.responsible_person.name} does not have any other user accounts with access.")
   end
+
+  scenario "Resetting an account" do
+    visit "/account-admin/#{submit_user2.id}"
+
+    expect(page).to have_h1(submit_user2.name)
+
+    click_link "Reset"
+
+    #select_secondary_authentication_app
+
+    #expect_to_be_on_secondary_authentication_app_page
+    #complete_secondary_authentication_app
+
+    expect(page).to have_h1("Reset account")
+    click_link("Cancel")
+
+    expect(page).not_to have_css("div.govuk-notification-banner", text: "The account has been reset")
+
+    click_link "Reset"
+
+    expect(page).to have_h1("Reset account")
+    click_button("Reset account")
+
+    expect(page).to have_css("div.govuk-notification-banner", text: "The account has been reset")
+  end
 end

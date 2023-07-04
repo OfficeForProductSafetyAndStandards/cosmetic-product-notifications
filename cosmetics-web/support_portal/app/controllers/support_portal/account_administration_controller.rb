@@ -57,7 +57,13 @@ module SupportPortal
 
     # DELETE /:id/reset
     # TODO(ruben): Add functionality
-    def reset; end
+    def reset
+      if @user.reset_secondary_authentication!
+        redirect_to account_administration_path(@user, q: params[:q]), notice: "The account has been reset"
+      else
+        redirect_to reset_account_path(@user, q: params[:q]), notice: "The account failed to reset"
+      end
+    end
 
     # GET /:id/edit-responsible-persons
     def edit_responsible_persons; end
