@@ -1,7 +1,10 @@
 # Deployment
 
-Anything which is merged to `main` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy.yml)
-and deploy the various components to the `int` space on GOV.UK PaaS.
+Anything which is merged to `develop` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy-staging.yml)
+and deploy the various components to the `staging` space on GOV.UK PaaS.
+
+Anything which is merged to `main` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy-production.yml)
+and deploy the various components to the `pre-prod` and `prod` spaces on GOV.UK PaaS.
 
 ## Deployment from scratch
 
@@ -21,6 +24,8 @@ If you need to create a new environment, you can run `cf create-space SPACE-NAME
 select the correct space using `cf target -o beis-opss -s SPACE-NAME`.
 
 The staging SCPN app is hosted at https://cosmetics-staging.london.cloudapps.digital/.
+
+The pre-prod SCPN app is hosted at https://cosmetics-pre-prod.london.cloudapps.digital/.
 
 The production SCPN app is hosted at https://cosmetics-prod.london.cloudapps.digital/.
 
