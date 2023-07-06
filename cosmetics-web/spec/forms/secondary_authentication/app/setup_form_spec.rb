@@ -41,7 +41,7 @@ RSpec.describe SecondaryAuthentication::App::SetupForm, :with_2fa_app do
     context "when the user password is misssing" do
       let(:password) { "" }
 
-      include_examples "invalid app setup form", :password, "Password can not be blank"
+      include_examples "invalid app setup form", :password, "Password cannot be blank"
     end
 
     context "when the authentication code is missing" do

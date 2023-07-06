@@ -8,21 +8,21 @@ RSpec.describe ResponsiblePersonAddressLog, type: :model do
       address_log.line_1 = nil
 
       expect(address_log.valid?).to be false
-      expect(address_log.errors[:line_1]).to include("Line 1 can not be blank")
+      expect(address_log.errors[:line_1]).to include("Line 1 cannot be blank")
     end
 
     it "fails if a city is not specified" do
       address_log.city = nil
 
       expect(address_log.valid?).to be false
-      expect(address_log.errors[:city]).to include("City can not be blank")
+      expect(address_log.errors[:city]).to include("City cannot be blank")
     end
 
     it "fails if a postal code is not specified" do
       address_log.postal_code = nil
 
       expect(address_log.valid?).to be false
-      expect(address_log.errors[:postal_code]).to include("Postal code can not be blank")
+      expect(address_log.errors[:postal_code]).to include("Postal code cannot be blank")
     end
 
     it "fails if postal code does not belong to UK" do

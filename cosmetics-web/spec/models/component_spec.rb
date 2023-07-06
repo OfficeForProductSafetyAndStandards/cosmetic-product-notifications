@@ -103,7 +103,7 @@ RSpec.describe Component, type: :model do
 
         it "has errors on name" do
           component.valid?(:add_component_name)
-          expect(component.errors[:name]).to eql(["Name can not be blank"])
+          expect(component.errors[:name]).to eql(["Name cannot be blank"])
         end
       end
 

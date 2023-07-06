@@ -12,14 +12,14 @@ RSpec.describe ResponsiblePerson, type: :model do
       responsible_person.account_type = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors.messages[:account_type]).to include("Account type can not be blank")
+      expect(responsible_person.errors.messages[:account_type]).to include("Account type cannot be blank")
     end
 
     it "fails if a name is not specified" do
       responsible_person.name = nil
 
       expect(responsible_person.save).to be false
-      expect(responsible_person.errors[:name]).to include("Name can not be blank")
+      expect(responsible_person.errors[:name]).to include("Name cannot be blank")
     end
 
     it "fails if a street address is not specified" do

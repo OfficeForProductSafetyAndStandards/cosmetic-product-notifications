@@ -20,7 +20,7 @@ RSpec.shared_examples "common user tests" do
       user.name = nil
       user.invite = false
       expect(user).not_to be_valid
-      expect(user.errors[:name]).to include("Name can not be blank")
+      expect(user.errors[:name]).to include("Name cannot be blank")
     end
 
     it "does not require name when user is invited" do

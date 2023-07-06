@@ -32,8 +32,8 @@ RSpec.describe "Editing responsible person contact person details", type: :featu
 
     expect(page).to have_h1("Edit the assigned contact name")
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-    expect(page).to have_link("Name can not be blank", href: "#contact_person_name")
-    expect(page).to have_css("p#contact_person_name-error", text: "Name can not be blank")
+    expect(page).to have_link("Name cannot be blank", href: "#contact_person_name")
+    expect(page).to have_css("p#contact_person_name-error", text: "Name cannot be blank")
 
     fill_in "Full name", with: "Foo Bar www.example.org"
     click_button "Save and continue"
