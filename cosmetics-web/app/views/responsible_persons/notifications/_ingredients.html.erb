@@ -26,8 +26,12 @@
           # Minimum/Maximum replaces range_concentation
         %>
         <% elsif ingredient.range? %>
-          <dd>Minimum range: <%= ingredient.minimum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
-          <dd>Maximum range: <%= ingredient.maximum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+          <% if ingredient.minimum_concentration == ingredient.maximum_concentration %>
+            <dd><% if ingredient.used_for_multiple_shades? %>Maximum concentration: <% end %> <%= ingredient.maximum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+          <% else %>
+            <dd>Minimum range: <%= ingredient.minimum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+            <dd>Maximum range: <%= ingredient.maximum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+          <% end %>
         <% end %>
       </div>
     <% end %>

@@ -142,5 +142,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     expect(page).to have_css("dd", text: "CAS: 497-19-8")
     expect(page).to have_css("dt", text: "Eucalyptol")
     expect(page).to have_css("dd", text: "12.0% w/w")
+    expect(page).to have_css("dt", text: "Ethanol")
+    expect(page).to have_css("dd", text: "10.0% w/w")
   end
 end

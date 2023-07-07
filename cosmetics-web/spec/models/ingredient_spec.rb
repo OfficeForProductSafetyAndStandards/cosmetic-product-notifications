@@ -98,9 +98,9 @@ RSpec.describe Ingredient, type: :model do
       context "when the maximum_concentration is equal to the minimum_concentration" do
         let(:maximum_concentration) { 1 }
 
-        it "is not valid" do
+        it "is valid" do
           ingredient.valid?
-          expect(ingredient.errors[:maximum_concentration]).to include(error_message)
+          expect(ingredient).to be_valid
         end
       end
 
