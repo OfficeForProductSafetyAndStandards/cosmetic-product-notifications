@@ -1,0 +1,48 @@
+<% content_for :page_title, "Search for a Responsible Person account" %>
+<% @back_link_href = responsible_persons_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Search results</h2>
+    <% unless @records_count.zero? %><p class="govuk-hint">Click on a heading to sort the results</p><% end %>
+  </div>
+  <div class="govuk-grid-columm-one-third govuk-!-text-align-right">
+    <a href="<%= responsible_persons_path %>" class="govuk-button govuk-button--secondary">Clear search results</a>
+  </div>
+</div>
+
+<% if @records_count.zero? %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">There are no Responsible Person accounts for "<%= @search_query %>".</p>
+  </div>
+</div>
+<% else %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%=
+      govuk_table(classes: %w[opss-sortable-table]) do |table|
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(text: "<a href=\"#{company_name_sort_order_link(params[:company_name_sort_order])}\" class=\"govuk-link\">Company name #{sort_order_icon(params[:company_name_sort_order])}</a>".html_safe)
+            row.with_cell(text: "Company address")
+            row.with_cell(text: "<a href=\"#{assigned_contact_sort_order_link(params[:assigned_contact_sort_order])}\" class=\"govuk-link\">Assigned contact #{sort_order_icon(params[:assigned_contact_sort_order])}</a>".html_safe)
+            row.with_cell(text: "<span class=\"govuk-visually-hidden\">View Responsible Person account details</span>".html_safe)
+          end
+        end
+        table.with_body do |body|
+          @records.each do |record|
+            body.with_row do |row|
+              row.with_cell(header: true, text: record.name)
+              row.with_cell(text: responsible_person_address(record))
+              row.with_cell(text: assigned_contact_details(record.contact_persons.first).html_safe)
+              row.with_cell(text: "<a href=\"#{responsible_person_path(record, q: params[:q])}\" class=\"govuk-link\">View<span class=\"govuk-visually-hidden\"> Responsible Person account details</span></a>".html_safe)
+            end
+          end
+        end
+      end
+    %>
+    <%= govuk_pagination(pagy: @pagy) %>
+  </div>
+</div>
+<% end %>

@@ -162,7 +162,7 @@ en:
               wrong_format: "Enter an email in the correct format, like name@example.com"
               blank: "Enter an email"
             phone_number:
-              blank: "Telephone can not be blank"
+              blank: "Telephone cannot be blank"
               invalid: "Enter a valid telephone, like 0344 411 1444 or +44 7700 900 982"
         ingredient:
           attributes:
@@ -390,8 +390,8 @@ en:
       taken: "%{attribute} has already been taken"
       confirmation: "%{attribute} does not match %{attribute}"
       accepted: "%{attribute} must be accepted"
-      empty: "%{attribute} can not be empty"
-      blank: "%{attribute} can not be blank"
+      empty: "%{attribute} cannot be empty"
+      blank: "%{attribute} cannot be blank"
       present: "%{attribute} must be blank"
       too_long:
         one: "%{attribute} is too long (maximum is 1 character)"
@@ -425,7 +425,7 @@ en:
     blank: *empty_email
   user_password_check_form_validation:
     invalid: "Password is incorrect"
-    blank: "Password can not be blank"
+    blank: "Password cannot be blank"
   users:
     check_your_email:
       message_sent:

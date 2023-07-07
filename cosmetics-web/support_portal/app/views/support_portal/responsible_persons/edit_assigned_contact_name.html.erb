@@ -1,0 +1,14 @@
+<% content_for :page_title, "Change assigned contact name" %>
+<% @errors = @assigned_contact.errors.any? %>
+<% @back_link_href = responsible_person_path(@responsible_person, q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @assigned_contact, url: update_assigned_contact_name_responsible_person_path, method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
+      <%= f.govuk_text_field :name, label: { text: "Full name" } %>
+      <%= f.govuk_submit "Save changes" %>
+    <% end %>
+  </div>
+</div>

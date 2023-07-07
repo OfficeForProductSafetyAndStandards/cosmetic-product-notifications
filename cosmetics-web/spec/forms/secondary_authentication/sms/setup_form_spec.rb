@@ -42,7 +42,7 @@ RSpec.describe SecondaryAuthentication::Sms::SetupForm do
     context "when the user password is misssing" do
       let(:password) { "" }
 
-      include_examples "invalid sms setup form", :password, "Password can not be blank"
+      include_examples "invalid sms setup form", :password, "Password cannot be blank"
     end
 
     context "when the mobile number is missing" do

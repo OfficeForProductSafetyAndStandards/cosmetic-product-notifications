@@ -7,14 +7,14 @@ RSpec.describe ContactPerson, type: :model do
     contact_person.name = nil
 
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:name]).to include("Name can not be blank")
+    expect(contact_person.errors[:name]).to include("Name cannot be blank")
   end
 
   it "fails if a phone number is not specified" do
     contact_person.phone_number = nil
 
     expect(contact_person.save).to be false
-    expect(contact_person.errors[:phone_number]).to include("Telephone can not be blank")
+    expect(contact_person.errors[:phone_number]).to include("Telephone cannot be blank")
   end
 
   it "fails if an email address is not specified" do
