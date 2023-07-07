@@ -1,0 +1,18 @@
+<% content_for :page_title, "Change Responsible Person address" %>
+<% @errors = @responsible_person.errors.any? %>
+<% @back_link_href = responsible_person_path(@responsible_person, q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @responsible_person, url: update_address_responsible_person_path, method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
+      <%= f.govuk_text_field :address_line_1, label: { text: "Building and street" } %>
+      <%= f.govuk_text_field :address_line_2, label: nil %>
+      <%= f.govuk_text_field :city, label: { text: "Town or city" } %>
+      <%= f.govuk_text_field :county, label: { text: "County" } %>
+      <%= f.govuk_text_field :postal_code, label: { text: "Postcode" }, width: 10 %>
+      <%= f.govuk_submit "Save changes" %>
+    <% end %>
+  </div>
+</div>

@@ -117,7 +117,7 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     fill_in "Full name", with: ""
     click_on "Save changes"
 
-    expect(page).to have_link("Name can not be blank", href: "#search-user-name-field-error")
+    expect(page).to have_link("Name cannot be blank", href: "#search-user-name-field-error")
 
     fill_in "Full name", with: "This is a different name"
     click_on "Save changes"

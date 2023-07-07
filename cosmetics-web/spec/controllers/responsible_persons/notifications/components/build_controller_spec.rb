@@ -314,7 +314,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
         post(:update, params: params.merge(id: :select_frame_formulation, component: { frame_formulation: "" }))
 
         expect(response.status).to be(200)
-        expect(assigns(:component).errors[:frame_formulation]).to include("Frame formulation can not be blank")
+        expect(assigns(:component).errors[:frame_formulation]).to include("Frame formulation cannot be blank")
       end
     end
 

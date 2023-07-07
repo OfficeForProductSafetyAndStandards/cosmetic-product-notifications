@@ -1,0 +1,49 @@
+<% content_for :page_title, "Responsible Person account" %>
+<% @back_link_href = responsible_persons_path(q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Company</h2>
+    <%=
+      govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key(text: "Name")
+          row.with_value(text: @responsible_person.name)
+          row.with_action(text: "Change", href: edit_name_responsible_person_path(@responsible_person, q: params[:q]), visually_hidden_text: "Responsible Person name")
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Address")
+          row.with_value(text: responsible_person_address)
+          row.with_action(text: "Change", href: edit_address_responsible_person_path(@responsible_person, q: params[:q]), visually_hidden_text: "Responsible Person address")
+        end
+        summary_list.with_row do |row|
+          row.with_key(text: "Business type")
+          row.with_value(text: responsible_person_business_type)
+          row.with_action(text: "Change", href: edit_business_type_responsible_person_path(@responsible_person, q: params[:q]), visually_hidden_text: "Responsible Person business type")
+        end
+      end
+    %>
+    <% if @assigned_contact.present? %>
+      <h2 class="govuk-heading-m">Assigned contact</h2>
+      <%=
+        govuk_summary_list do |summary_list|
+          summary_list.with_row do |row|
+            row.with_key(text: "Name")
+            row.with_value(text: @assigned_contact.name)
+            row.with_action(text: "Change", href: edit_assigned_contact_name_responsible_person_path(@responsible_person, @assigned_contact, q: params[:q]), visually_hidden_text: "assigned contact name")
+          end
+          summary_list.with_row do |row|
+            row.with_key(text: "Email")
+            row.with_value(text: @assigned_contact.email_address)
+            row.with_action(text: "Change", href: edit_assigned_contact_email_responsible_person_path(@responsible_person, @assigned_contact, q: params[:q]), visually_hidden_text: "assigned contact email address")
+          end
+          summary_list.with_row do |row|
+            row.with_key(text: "Contact number")
+            row.with_value(text: @assigned_contact.phone_number)
+            row.with_action(text: "Change", href: edit_assigned_contact_phone_number_responsible_person_path(@responsible_person, @assigned_contact, q: params[:q]), visually_hidden_text: "assigned contact contact number")
+          end
+        end
+      %>
+    <% end %>
+  </div>
+</div>
