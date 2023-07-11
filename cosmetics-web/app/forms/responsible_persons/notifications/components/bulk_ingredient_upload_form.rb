@@ -64,6 +64,8 @@ module ResponsiblePersons::Notifications::Components
     def file_is_csv_file_validation
       return if file_too_large?
 
+      errors.add(:file, "The selected file must be a CSV file") && return if file_type_incorrect?
+
       parse_csv_file
     rescue CSV::MalformedCSVError, ArgumentError
       errors.add(:file)
@@ -125,6 +127,10 @@ module ResponsiblePersons::Notifications::Components
 
     def file_too_large?
       file&.tempfile&.size.to_i > MAX_FILE_SIZE
+    end
+
+    def file_type_incorrect?
+      file&.content_type != "text/csv"
     end
 
     def multiple_shades?

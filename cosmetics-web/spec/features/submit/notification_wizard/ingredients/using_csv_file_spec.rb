@@ -83,6 +83,12 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     expect_to_be_on_add_csv_ingredients_page
     expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
+    page.attach_file "spec/fixtures/files/testText.txt"
+    click_on "Continue"
+
+    expect_to_be_on_add_csv_ingredients_page
+    expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+
     page.attach_file "spec/fixtures/files/exact_ingredients.csv"
     click_on "Continue"
 
