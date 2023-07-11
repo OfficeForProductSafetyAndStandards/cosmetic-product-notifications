@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/feature_helpers"
 
 RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
-  let(:user) { create(:support_user, :with_sms_secondary_authentication) }
+  let(:user) { create(:support_user, :with_all_secondary_authentication_methods) }
   let(:search_user1) { create(:search_user) }
   let(:search_user2) { create(:search_user) }
   let(:search_user3) { create(:search_user, name: search_user1.name) }
@@ -27,6 +27,8 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     responsible_person_user4
 
     sign_in user
+    select_secondary_authentication_app
+    complete_secondary_authentication_app
   end
 
   scenario "Searching for an account that exists" do
@@ -195,14 +197,18 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
   scenario "Resetting an account" do
     visit "/account-admin/#{submit_user2.id}"
 
+    future_time = 30.seconds.from_now
+    past_time = 2.seconds.ago
+
+    travel_to(future_time)
+
     expect(page).to have_h1(submit_user2.name)
 
     click_link "Reset"
-
-    #select_secondary_authentication_app
-
-    #expect_to_be_on_secondary_authentication_app_page
-    #complete_secondary_authentication_app
+    select_secondary_authentication_app
+    expect_to_be_on_secondary_authentication_app_page
+    travel_to(past_time)
+    complete_secondary_authentication_app
 
     expect(page).to have_h1("Reset account")
     click_link("Cancel")

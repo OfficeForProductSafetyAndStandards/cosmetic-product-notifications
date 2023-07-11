@@ -3,6 +3,7 @@ module SupportPortal
     before_action :set_user, except: %i[index]
     before_action :set_responsible_persons, only: %i[show edit_responsible_persons]
     before_action :set_responsible_person, only: %i[delete_responsible_person_user_confirm delete_responsible_person_user]
+    before_action :reenforce_secondary_authentication, only: :reset_account
 
     # GET /
     def index
