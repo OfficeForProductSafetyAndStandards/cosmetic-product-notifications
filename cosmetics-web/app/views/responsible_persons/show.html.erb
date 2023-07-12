@@ -13,7 +13,7 @@
           Responsible Person
         </h1>
       </div>
-      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
+      <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2 govuk-!-text-align-right">
         <% if current_user.responsible_persons.length > 1 %>
           <%= link_to "Change the Responsible Person", select_responsible_persons_path, class: 'govuk-button' %>
         <% else %>
