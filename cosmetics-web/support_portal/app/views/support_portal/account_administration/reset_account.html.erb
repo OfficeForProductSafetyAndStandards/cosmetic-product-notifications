@@ -3,20 +3,15 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        Resetting a user account will reset the user's authenticator app, telephone number for text messaging, recovery codes and their password.
-      </strong>
-      <br>
-      <strong class="govuk-warning-text__text">
-        The user will need to follow login instructions as per the email they receive
-      </strong>
-    </div>
+  <%= govuk_warning_text do %>
+    Resetting a user account will reset the user's authenticator app, telephone number for text messaging, recovery codes and their password.
+    <br>
+    <br>
+    The user will need to follow login instructions as per the email they receive
+  <% end %>
     <%= form_with model: @user, url: reset_account_administration_path, method: :delete do |f| %>
       <%= f.govuk_submit "Reset account" %>
-      <%= link_to "Cancel", account_administration_path(@user, q: params[:q]), class: "govuk-button govuk-button--secondary" %>
+      <%= govuk_button_link_to "Cancel", account_administration_path(@user, q: params[:q]), secondary: true %>
     <% end %>
   </div>
 </div>
