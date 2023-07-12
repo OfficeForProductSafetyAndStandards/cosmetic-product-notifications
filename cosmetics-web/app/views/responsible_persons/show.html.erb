@@ -15,9 +15,9 @@
       </div>
       <div class="govuk-grid-column-one-third govuk-!-margin-bottom-2">
         <% if current_user.responsible_persons.length > 1 %>
-          <%= link_to "Change the Responsible Person", select_responsible_persons_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
+          <%= link_to "Change the Responsible Person", select_responsible_persons_path, class: 'govuk-button' %>
         <% else %>
-          <%= link_to "Add a Responsible Person", account_path(:enter_details), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-align-right opss-text-underline-offset' %>
+          <%= link_to "Add a Responsible Person", account_path(:enter_details), class: 'govuk-button' %>
         <% end %>
       </div>
     </div>
