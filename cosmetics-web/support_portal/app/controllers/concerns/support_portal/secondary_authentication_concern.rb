@@ -40,7 +40,7 @@ module SupportPortal
       user = secondary_authentication_user
       return unless user && Rails.configuration.secondary_authentication_enabled
 
-      return if Time.zone.at(user.last_totp_at) > 30.seconds.ago
+      return if secondary_authentication_present_in_session? && get_secondary_authentication_time > 30.seconds.ago
 
       session[:secondary_authentication_redirect_to] = redirect_to
       session[:secondary_authentication_user_id] = user.id

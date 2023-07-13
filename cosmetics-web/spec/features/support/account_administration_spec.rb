@@ -197,17 +197,13 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
   scenario "Resetting an account" do
     visit "/account-admin/#{submit_user2.id}"
 
-    future_time = 30.seconds.from_now
-    past_time = 2.seconds.ago
-
-    travel_to(future_time)
+    travel_to(30.seconds.from_now)
 
     expect(page).to have_h1(submit_user2.name)
 
     click_link "Reset"
     select_secondary_authentication_app
     expect_to_be_on_secondary_authentication_app_page
-    travel_to(past_time)
     complete_secondary_authentication_app
 
     expect(page).to have_h1("Reset account")
