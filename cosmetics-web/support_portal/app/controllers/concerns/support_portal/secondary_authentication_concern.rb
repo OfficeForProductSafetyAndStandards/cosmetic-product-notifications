@@ -34,6 +34,27 @@ module SupportPortal
       session[:last_secondary_authentication_performed_at] = {}
     end
 
+    # Used for actions where we want to ensure extra security
+
+    def reenforce_secondary_authentication(redirect_to: request.fullpath)
+      user = secondary_authentication_user
+      return unless user && Rails.configuration.secondary_authentication_enabled
+
+      return if Time.zone.at(user.last_totp_at) > 30.seconds.ago
+
+      session[:secondary_authentication_redirect_to] = redirect_to
+      session[:secondary_authentication_user_id] = user.id
+      session[:secondary_authentication_notice] = notice
+      session[:secondary_authentication_confirmation] = confirmation
+      if use_sms_authentication?
+        redirect_to main_app.new_secondary_authentication_sms_path
+      elsif use_app_authentication?
+        redirect_to main_app.new_secondary_authentication_app_path
+      else
+        redirect_to main_app.new_secondary_authentication_method_path
+      end
+    end
+
     # Returns true if 2FA is not needed
     def secondary_authentication_present_in_session?
       return false if get_secondary_authentication_time.nil?
