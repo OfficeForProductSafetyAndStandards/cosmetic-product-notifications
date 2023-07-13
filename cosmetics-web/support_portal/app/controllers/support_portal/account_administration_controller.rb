@@ -3,6 +3,7 @@ module SupportPortal
     before_action :set_user, except: %i[index]
     before_action :set_responsible_persons, only: %i[show edit_responsible_persons]
     before_action :set_responsible_person, only: %i[delete_responsible_person_user_confirm delete_responsible_person_user]
+    before_action :reenforce_secondary_authentication, only: :reset_account
 
     # GET /
     def index
@@ -52,12 +53,16 @@ module SupportPortal
     end
 
     # GET /:id/reset-account
-    # TODO(ruben): Add functionality
     def reset_account; end
 
     # DELETE /:id/reset
-    # TODO(ruben): Add functionality
-    def reset; end
+    def reset
+      if @user.reset_secondary_authentication!
+        redirect_to account_administration_path(@user, q: params[:q]), notice: "The account has been reset"
+      else
+        redirect_to reset_account_path(@user, q: params[:q]), notice: "The account failed to reset"
+      end
+    end
 
     # GET /:id/edit-responsible-persons
     def edit_responsible_persons; end
