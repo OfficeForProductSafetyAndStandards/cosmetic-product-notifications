@@ -25,6 +25,18 @@ RSpec.describe DateHelper, type: :helper do
     end
   end
 
+  describe "#display_time" do
+    it "returns a Date string" do
+      date = Date.new(2022, 2, 1)
+      expect(helper.display_time(date)).to eq("00:00:00")
+    end
+
+    it "returns nil when passed nil" do
+      date = nil
+      expect(helper.display_time(date)).to be_nil
+    end
+  end
+
   describe "#display_date_time" do
     it "returns a Date string" do
       date = Date.new(2022, 2, 1)
