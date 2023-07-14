@@ -17,16 +17,20 @@
       <% if @user.mobile_number_change_allowed? %>
         <%= govukDetails(summaryText: "Change where the text message is sent", open: @user.errors.any?) do %>
           <%= govukInput(key: :mobile_number,
-                         form: form,
-                         classes: "app-!-max-width-two-thirds",
-                         label: { text: "Mobile number" },
-                         value: @user.mobile_number,
-                         id: "mobile_number",
-                         autocomplete: "tel",
-                         type: "tel") %>
+                          form: form,
+                          classes: "app-!-max-width-two-thirds",
+                          label: { text: "Mobile number" },
+                          value: @user.mobile_number,
+                          id: "mobile_number",
+                          autocomplete: "tel",
+                          type: "tel") %>
         <% end %>
       <% else %>
-        <p class="govuk-body">If you no longer have access to the phone with the number you registered for this service, contact <%= mail_to t(:enquiries_email), nil, subject: "Update mobile number", class: "govuk-link" %> to reset the number.</p>
+        <% if @user.is_a?(SupportUser) && @user.opss? %>
+          <p class="govuk-body">Alternatively, log in using your authenticator app.</p>
+        <% else %>
+          <p class="govuk-body">If you no longer have access to the phone with the number you registered for this service, contact <%= mail_to t(:enquiries_email), nil, subject: "Update mobile number", class: "govuk-link" %> to reset the number.</p>
+        <% end %>
       <% end %>
 
       <%= govukButton(text: "Resend security code") %>

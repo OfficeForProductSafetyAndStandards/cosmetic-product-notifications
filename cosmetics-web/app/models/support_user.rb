@@ -30,6 +30,10 @@ class SupportUser < User
     invited_at <= INVITATION_EXPIRATION_DAYS.days.ago
   end
 
+  def opss?
+    role&.match?(/opss_/)
+  end
+
 private
 
   # Overwrites Devise::Models::Validatable#password_required?
