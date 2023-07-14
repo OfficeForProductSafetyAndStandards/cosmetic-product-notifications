@@ -26,7 +26,7 @@
                           type: "tel") %>
         <% end %>
       <% else %>
-        <% if @user.is_a?("SupportUser") && @user.opss? %>
+        <% if @user.is_a?(SupportUser) && @user.opss? %>
           <p class="govuk-body">Alternatively, log in using your authenticator app.</p>
         <% else %>
           <p class="govuk-body">If you no longer have access to the phone with the number you registered for this service, contact <%= mail_to t(:enquiries_email), nil, subject: "Update mobile number", class: "govuk-link" %> to reset the number.</p>
