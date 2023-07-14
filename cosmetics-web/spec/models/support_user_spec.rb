@@ -8,17 +8,17 @@ RSpec.describe SupportUser, type: :model do
   include_examples "common user tests"
 
   describe ".opss?" do
-    context "for an opss user" do
+    context "when user is part of opss" do
       it "returns true" do
-        expect(subject.opss?).to be true
+        expect(user.opss?).to be true
       end
     end
 
-    context "for a non-opss user" do
+    context "when user is not part of opss" do
       let(:role) { "trading_standards" }
 
       it "returns false" do
-        expect(subject.opss?).to be false
+        expect(user.opss?).to be false
       end
     end
   end
