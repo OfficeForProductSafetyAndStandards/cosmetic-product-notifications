@@ -103,6 +103,7 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
 
     expect(page).to have_text(search_user2.name)
     expect(page).to have_text(search_user2.email)
+    expect(page).to have_h2("Last login details")
   end
 
   scenario "Changing the name on an account" do
