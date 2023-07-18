@@ -34,5 +34,22 @@
         end
       end
     %>
+    <h2 class="govuk-heading-m">Last login details</h2>
+    <%=
+      govuk_table do |table|
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(text: "Date")
+            row.with_cell(text: "Time")
+          end
+        end
+        table.with_body do |body|
+          body.with_row do |row|
+            row.with_cell(text: display_date(@user.last_sign_in_at))
+            row.with_cell(text: display_time(@user.last_sign_in_at))
+          end
+        end
+      end
+    %>
   </div>
 </div>
