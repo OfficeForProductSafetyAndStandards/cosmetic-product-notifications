@@ -16,7 +16,6 @@ module SecondaryAuthentication
 
       uris = JSON(Rails.configuration.vcap_application)["application_uris"]
       return false if uris.blank?
-      return false if uris.length > 2
 
       uris.all? do |uri|
         Rails.application.config.domains_allowing_otp_whitelisting["domains-regexps"].any? do |domain_regexp|

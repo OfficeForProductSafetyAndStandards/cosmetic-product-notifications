@@ -29,6 +29,7 @@ applications:
     - cosmetics-scout-env
     - antivirus-auth-env
     - cosmetics-support-portal-env
+    - cosmetics-devise-env
   path: .
   processes:
     - type: web
