@@ -19,7 +19,7 @@ RSpec.describe "Edit product image page", type: :request do
     end
 
     context "when the notification has a single component" do
-      let(:notification) { create(:notification, responsible_person:, components: [create(:component)]) }
+      let(:notification) { create(:notification, responsible_person:, components: create_list(:component, 1)) }
 
       it "has a singular page title" do
         expect(response.body).to have_tag("h1", text: "Upload an image of the product label")
@@ -27,7 +27,7 @@ RSpec.describe "Edit product image page", type: :request do
     end
 
     context "when the notification has multiple components" do
-      let(:notification) { create(:notification, responsible_person:, components: [create(:component), create(:component)]) }
+      let(:notification) { create(:notification, responsible_person:, components: create_list(:component, 2)) }
 
       it "has a plural page title" do
         expect(response.body).to have_tag("h1", text: "Upload images of the item labels")
@@ -36,7 +36,7 @@ RSpec.describe "Edit product image page", type: :request do
 
     context "when the notification has a single image" do
       let(:notification) do
-        create(:notification, responsible_person:, image_uploads: [create(:image_upload)])
+        create(:notification, responsible_person:, image_uploads: create_list(:image_upload, 1))
       end
 
       it "has a section for the label images" do
