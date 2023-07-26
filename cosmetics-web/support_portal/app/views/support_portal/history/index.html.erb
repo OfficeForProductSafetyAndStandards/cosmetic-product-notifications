@@ -1,0 +1,67 @@
+<% content_for :page_title, "History/Audit Log" %>
+<% @back_link_href = support_root_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column opss-bordered-form-group govuk-!-padding-4">
+    <%= form_with model: @history_search, url: history_index_path, method: :get, id: "history-search-form" do |f| %>
+      <%= f.govuk_error_summary %>
+      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
+      <div class="moj-search">
+        <div class="govuk-form-group">
+          <label for="query-field" class="govuk-label moj-search__label">Enter a search term</label>
+          <div class="govuk-hint moj-search__hint" id="query-hint">For example, name, email address, Responsible Person name or <abbr>UKCP</abbr> number</div>
+          <input id="query-field" class="govuk-input moj-search__input" aria-describedby="q-hint" type="search" name="history_search[query]" value="<%= params.dig(:history_search, :query) %>">
+        </div>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_fieldset legend: {} do %>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+              <%= f.govuk_date_field :date_from, legend: { text: "From" }, hint: { text: "For example, 27 9 2020" } %>
+            </div>
+            <div class="govuk-grid-column-two-thirds">
+              <%= f.govuk_date_field :date_to, legend: { text: "To" }, hint: { text: "&nbsp;".html_safe } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class = "govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <%= f.govuk_collection_select :action, @history_search.actions, :id, :name, options: { include_blank: true }, label: { text: "Display by action" } %>
+        </div>
+        <div class="govuk-grid-column-one-half govuk-!-text-align-right govuk-!-padding-top-6">
+          <%= f.govuk_submit "Search" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column">
+    <%=
+      govuk_table do |table|
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(text: "Name")
+            row.with_cell(text: "Date/Time")
+            row.with_cell(text: "Action")
+            row.with_cell(text: "Details")
+          end
+        end
+        table.with_body do |body|
+          @records.each do |record|
+            body.with_row do |row|
+              row.with_cell(text: record.whodunnit)
+              row.with_cell(text: display_date_time(record.created_at))
+              row.with_cell(text: display_action(record))
+              row.with_cell(text: raw(display_action_change(record)))
+            end
+          end
+        end
+      end
+    %>
+  </div>
+</div>
+
+<%= govuk_pagination(pagy: @pagy) %>
