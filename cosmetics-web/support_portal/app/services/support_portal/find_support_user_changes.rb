@@ -28,7 +28,7 @@ module SupportPortal
                                        .or(@changes.where("object_changes->>'city' IS NOT  NULL"))
                                        .or(@changes.where("object_changes->>'county' IS NOT  NULL"))
                    else
-                     @changes.where("object_changes->>? IS NOT NULL", @action.split('rp_').last)
+                     @changes.where("object_changes->>? IS NOT NULL", @action.split("rp_").last)
                    end
       end
 
