@@ -16,6 +16,8 @@ class ResponsiblePerson < ApplicationRecord
 
   has_many :nanomaterial_notifications, dependent: :destroy
 
+  has_paper_trail
+
   enum account_type: { business: "business", individual: "individual" }
 
   validates :account_type, presence: true

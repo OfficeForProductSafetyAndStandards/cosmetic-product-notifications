@@ -13,6 +13,8 @@ SupportPortal::Engine.routes.draw do
     end
   end
 
+  resources :history, only: %i[index]
+
   resources :account_administration, path: "account-admin", only: %i[index show] do
     member do
       get "edit-name"
