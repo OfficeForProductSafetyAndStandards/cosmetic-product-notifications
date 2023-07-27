@@ -109,6 +109,8 @@ module ResponsiblePersons::Notifications::Components
       return if duplicated_ingredients_in_file?
 
       ingredients_from_csv&.each_with_index do |row, i|
+        next if row.to_h.values.compact.empty?
+
         ingredient = row_to_ingredient(**row.to_h)
         unless ingredient&.valid?
           @error_rows << i + 2
@@ -138,6 +140,8 @@ module ResponsiblePersons::Notifications::Components
     end
 
     def row_to_ingredient(opts)
+      opts = opts.transform_values { |v| v.to_s.strip.gsub(/^\s+|\s+$/, "") }
+
       component.range? ? range_row_to_ingredient(**opts) : exact_row_to_ingredient(**opts)
     end
 
