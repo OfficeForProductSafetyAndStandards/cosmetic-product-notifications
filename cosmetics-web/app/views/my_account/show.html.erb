@@ -50,7 +50,69 @@
           }
         ]
       ) %>
-    <% else %>
+    <% end %>
+
+  <% if support_domain? %>
+      <%= govukSummaryList(
+        classes: "govuk-!-margin-bottom-9",
+        rows: [
+          {
+            key: { text: "Full name" },
+            value: { text: current_user.name },
+            actions: {
+              items: [
+                {
+                  href: edit_my_account_name_path,
+                  text: "Change",
+                  visuallyHiddenText: "name"
+                }
+              ]
+            }
+          },
+          {
+            key: { text: "Email address" },
+            value: { text: current_user.email },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "email address"
+                }
+              ]
+            }
+          },
+          {
+            key: { text: "Mobile number" },
+            value: { text: current_user.mobile_number },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "phone number"
+                }
+              ]
+            }
+          },
+          {
+            key: { text: "Password" },
+            value: { text: "********" },
+            actions: {
+              items: [
+                {
+                  href: edit_my_account_password_path,
+                  text: "Change",
+                  visuallyHiddenText: "password"
+                }
+              ]
+            }
+          }
+        ]
+      ) %>
+    <% end %>
+
+    <% if search_domain? %>
       <%= govukSummaryList(
         classes: "govuk-!-margin-bottom-9",
         rows: [
@@ -139,6 +201,36 @@
       ) %>
 
     <% if support_domain? %>
+      <h2 class="govuk-heading-l">User Management</h2>
+        <%= govukSummaryList(
+          classes: "govuk-!-margin-bottom-9",
+          rows: [
+            {
+              key: { text: "Add a team member" },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Invite",
+                    visuallyHiddenText: "invite team member"
+                  }
+                ]
+              }
+            },
+            {
+              key: { text: "Remove team member" },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "View team members",
+                    visuallyHiddenText: "rView team members"
+                  }
+                ]
+              }
+            },
+          ]
+        ) %>
       <%= govukButton(text: "Go to Cosmetic products search", href: main_app.new_support_on_search_user_session_url(host: ENV['SEARCH_HOST']), classes: "govuk-button--secondary", attributes: { target: "_blank" }) %>
     <% end %>
 
