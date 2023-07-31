@@ -1,6 +1,6 @@
 module MyAccount
-  class EmailController < SubmitApplicationController
-    skip_before_action :create_or_join_responsible_person
+  class EmailController < ApplicationController
+    before_action :allow_only_submit_support_domains
 
     def edit
       @user = current_user
@@ -36,6 +36,14 @@ module MyAccount
 
     def current_operation
       SecondaryAuthentication::Operations::CHANGE_EMAIL_ADDRESS
+    end
+
+    def allow_only_submit_support_domains
+      raise "Not a submit or support domain" unless submit_domain? || support_domain?
+    end
+
+    def authorize_user!
+      redirect_to invalid_account_path if current_user && current_user.is_a?(SearchUser)
     end
   end
 end
