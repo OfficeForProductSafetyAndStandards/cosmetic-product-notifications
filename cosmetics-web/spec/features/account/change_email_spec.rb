@@ -134,4 +134,62 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
       end
     end
   end
+
+  describe "for support domain" do
+    let(:old_email) { "old@example.gov.uk" }
+    let(:user) { create(:support_user, has_accepted_declaration: true, email: old_email) }
+
+    before do
+      configure_requests_for_support_domain
+      visit "/sign-in"
+      fill_in_credentials
+      select_secondary_authentication_sms
+
+      expect(page).to have_css("h1", text: "Check your phone")
+      fill_in "Enter security code", with: "#{otp_code} "
+      click_on "Continue"
+
+      click_on "Your account"
+      expect_to_be_on_my_account_page
+
+      wait_for = SecondaryAuthentication::Operations::TIMEOUTS[SecondaryAuthentication::Operations::CHANGE_EMAIL_ADDRESS]
+      travel_to((wait_for + 1).seconds.from_now)
+
+      click_on "Change email address"
+      select_secondary_authentication_sms
+      expect(page).to have_css("h1", text: "Check your phone")
+      fill_in "Enter security code", with: "#{otp_code} "
+      click_on "Continue"
+      expect(page).to have_css("h1", text: "Change your email address")
+    end
+
+    context "when the email change is fine" do
+      it "changes email properly" do
+        fill_in "Password", with: user.password
+        fill_in "New email", with: "new@example.org"
+        click_on "Continue"
+
+        expect_to_be_on_my_account_page
+        expect(page).to have_css("h1", text: "Check your email")
+        expect(page).to have_text(/A message with a confirmation link has been sent to your email address/)
+        email = delivered_emails.first
+        expect(email.recipient).to eq "new@example.org"
+
+        confirm_url = email.personalization[:verify_email_url]
+        expect(confirm_url).to include("/my_account/email/confirm?confirmation_token=")
+
+        visit confirm_url
+
+        expect_to_be_on_my_account_page
+
+        email = delivered_emails.last
+        expect(email.recipient).to eq old_email
+        expect(email.personalization[:old_email_address]).to eq old_email
+        expect(email.personalization[:new_email_address]).to eq "new@example.org"
+
+        expect(page).to have_text(/Email changed successfully/)
+        expect(user.reload.email).to eq("new@example.org")
+      end
+    end
+  end
 end
