@@ -31,6 +31,8 @@ SupportPortal::Engine.routes.draw do
     end
   end
 
+  resource :invite_support_user, path: "invite-support-user", only: %i[new create]
+
   resources :responsible_persons, path: "responsible-persons", only: %i[index show] do
     member do
       get "edit-name"

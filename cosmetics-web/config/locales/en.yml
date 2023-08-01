@@ -378,6 +378,10 @@ en:
           attributes:
             password:
               blank: "Enter your password"
+        invite_support_user_form:
+          attributes:
+            name:
+              blank: "Enter the full name"
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
