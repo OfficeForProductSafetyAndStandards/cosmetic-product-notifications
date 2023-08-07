@@ -227,6 +227,67 @@ RSpec.describe "Poison centre page", type: :request do
       end
     end
 
+    context "with an OPSS IMT user" do
+      before do
+        sign_in_as_opss_imt_user
+      end
+
+      it "displays the cosmetics product name " do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to include(notification_exact.product_name)
+      end
+
+      it "displays the product ingredients" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to include("Foo Ingredient")
+      end
+
+      it "does not display the product frame formulations for a product with only exact or range ingredients" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).not_to include("Frame formulation")
+      end
+
+      it "displays the product frame formulations for a product with only frame formulations" do
+        get poison_centre_notification_path(params_frame_formulation)
+        expect(response.body).to have_tag("section#item-2") do
+          with_tag("dt", text: /Frame formulation/)
+        end
+      end
+
+      it "displays the product CMRs" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to have_tag("dd", text: /Foo CMR/)
+      end
+
+      it "displays the product Nanomaterials" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to have_tag("dd", text: /Foo Nanomaterial/)
+      end
+
+      it "displays the Responsible Person" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to have_tag("h2", text: "Responsible Person")
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.name))
+      end
+
+      it "displays the Responsible Person's current address" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.address_line_1))
+      end
+
+      it "does not display the Responsible Person's previous address(es)" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).not_to have_tag("dd", text: optional_spaces(responsible_person.address_logs.first.line_1))
+        expect(response.body).not_to have_tag("dd", text: optional_spaces(responsible_person.address_logs.second.line_1))
+      end
+
+      it "displays the Contact Person" do
+        get poison_centre_notification_path(params_exact)
+        expect(response.body).to have_tag("h2", text: "Assigned contact")
+        expect(response.body).to have_tag("dd", text: optional_spaces(responsible_person.contact_persons.first.name))
+      end
+    end
+
     context "with an OPSS Science user" do
       before do
         sign_in_as_opss_science_user

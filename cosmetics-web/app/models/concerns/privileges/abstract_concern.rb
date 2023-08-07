@@ -49,6 +49,10 @@ module Privileges
       false
     end
 
+    def opss_imt_user?
+      false
+    end
+
     def opss_science_user?
       false
     end

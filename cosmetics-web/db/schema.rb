@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_14_133328) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_07_095619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_133328) do
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "ingredient_range_concentration", ["less_than_01_percent", "greater_than_01_less_than_1_percent", "greater_than_1_less_than_5_percent", "greater_than_5_less_than_10_percent", "greater_than_10_less_than_25_percent", "greater_than_25_less_than_50_percent", "greater_than_50_less_than_75_percent", "greater_than_75_less_than_100_percent"]
-  create_enum "user_roles", ["poison_centre", "market_surveilance_authority", "opss_science", "opss_general", "opss_enforcement", "trading_standards"]
+  create_enum "user_roles", ["poison_centre", "market_surveilance_authority", "opss_science", "opss_general", "opss_enforcement", "trading_standards", "opss_imt"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false

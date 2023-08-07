@@ -44,6 +44,19 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
     it { is_expected.not_to permit(:destroy) }
   end
 
+  context "with an OPSS IMT user" do
+    let(:user) { build_stubbed(:opss_imt_user) }
+
+    it { is_expected.to permit(:index) }
+    it { is_expected.to permit(:show) }
+
+    it { is_expected.not_to permit(:create)  }
+    it { is_expected.not_to permit(:new)     }
+    it { is_expected.not_to permit(:update)  }
+    it { is_expected.not_to permit(:edit)    }
+    it { is_expected.not_to permit(:destroy) }
+  end
+
   context "with a Trading Standards user" do
     let(:user) { build_stubbed(:trading_standards_user) }
 
@@ -70,7 +83,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
     it { is_expected.not_to permit(:destroy) }
   end
 
-  context "with neither a poison centre/OPSS General/OPSS Enforcement/OPSS Science/Trading Standards user" do
+  context "with neither a poison centre/OPSS General/OPSS Enforcement/OPSS IMT/OPSS Science/Trading Standards user" do
     let(:user) { build_stubbed(:search_user) }
 
     it { is_expected.not_to permit(:index) }

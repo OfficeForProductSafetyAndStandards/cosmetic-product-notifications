@@ -16,6 +16,11 @@ RSpec.describe SearchUser, type: :model do
       expect(user).to be_can_view_product_ingredients
     end
 
+    it "is true for OPSS IMT users" do
+      user.role = :opss_imt
+      expect(user).to be_can_view_product_ingredients
+    end
+
     it "is false for Trading Standards users" do
       user.role = :trading_standards
       expect(user).not_to be_can_view_product_ingredients
@@ -40,6 +45,11 @@ RSpec.describe SearchUser, type: :model do
 
     it "is false for OPSS Enforcement users" do
       user.role = :opss_enforcement
+      expect(user).not_to be_can_view_ingredients_list
+    end
+
+    it "is false for OPSS IMT users" do
+      user.role = :opss_imt
       expect(user).not_to be_can_view_ingredients_list
     end
 
@@ -70,6 +80,11 @@ RSpec.describe SearchUser, type: :model do
       expect(user).not_to be_can_view_nanomaterial_notification_files
     end
 
+    it "is false for OPSS IMT users" do
+      user.role = :opss_imt
+      expect(user).not_to be_can_view_nanomaterial_notification_files
+    end
+
     it "is false for Trading Standards users" do
       user.role = :trading_standards
       expect(user).not_to be_can_view_nanomaterial_notification_files
@@ -94,6 +109,11 @@ RSpec.describe SearchUser, type: :model do
 
     it "is true for OPSS Enforcement users" do
       user.role = :opss_enforcement
+      expect(user).to be_can_view_nanomaterial_review_period_end_date
+    end
+
+    it "is true for OPSS IMT users" do
+      user.role = :opss_imt
       expect(user).to be_can_view_nanomaterial_review_period_end_date
     end
 
@@ -124,6 +144,11 @@ RSpec.describe SearchUser, type: :model do
       expect(user).not_to be_can_view_responsible_person_address_history
     end
 
+    it "is false for OPSS IMT users" do
+      user.role = :opss_imt
+      expect(user).not_to be_can_view_responsible_person_address_history
+    end
+
     it "is true for Trading Standards users" do
       user.role = :trading_standards
       expect(user).to be_can_view_responsible_person_address_history
@@ -148,6 +173,11 @@ RSpec.describe SearchUser, type: :model do
 
     it "is true for OPSS Enforcement users" do
       user.role = :opss_enforcement
+      expect(user).to be_can_view_notification_history
+    end
+
+    it "is true for OPSS IMT users" do
+      user.role = :opss_imt
       expect(user).to be_can_view_notification_history
     end
 

@@ -3,7 +3,7 @@ module Privileges
     include AbstractConcern
 
     def can_view_product_ingredients?
-      poison_centre_user? || opss_enforcement_user? || opss_science_user?
+      poison_centre_user? || opss_enforcement_user? || opss_imt_user? || opss_science_user?
     end
 
     def can_view_ingredients_list?
@@ -23,7 +23,7 @@ module Privileges
     end
 
     def can_view_notification_history?
-      trading_standards_user? || opss_enforcement_user?
+      trading_standards_user? || opss_enforcement_user? || opss_imt_user?
     end
 
     def poison_centre_user?
@@ -31,7 +31,7 @@ module Privileges
     end
 
     def opss_user?
-      opss_general? || opss_enforcement? || opss_science?
+      opss_general? || opss_enforcement? || opss_imt? || opss_science?
     end
 
     def opss_general_user?
@@ -40,6 +40,10 @@ module Privileges
 
     def opss_enforcement_user?
       opss_enforcement?
+    end
+
+    def opss_imt_user?
+      opss_imt?
     end
 
     def opss_science_user?

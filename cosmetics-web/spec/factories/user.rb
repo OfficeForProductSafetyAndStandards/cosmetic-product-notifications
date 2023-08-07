@@ -116,6 +116,10 @@ FactoryBot.define do
         role { :opss_enforcement }
       end
 
+      factory :opss_imt_user do
+        role { :opss_imt }
+      end
+
       factory :opss_science_user do
         role { :opss_science }
       end

@@ -52,6 +52,23 @@ RSpec.describe Search::DashboardController, type: :controller do
     end
   end
 
+  describe "When signed in as an OPSS IMT user" do
+    before do
+      sign_in_as_opss_imt_user
+    end
+
+    after do
+      sign_out(:search_user)
+    end
+
+    describe "GET #show" do
+      it "redirects to the correct notifications index page" do
+        get :show
+        expect(response).to redirect_to(poison_centre_notifications_search_path)
+      end
+    end
+  end
+
   describe "When signed in as a Trading Standards user" do
     before do
       sign_in_as_trading_standards_user

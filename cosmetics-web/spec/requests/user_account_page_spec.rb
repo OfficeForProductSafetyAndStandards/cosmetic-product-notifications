@@ -113,6 +113,19 @@ RSpec.describe "User account page", type: :request do
     include_examples "can't download nanomaterials"
   end
 
+  context "with a Search OPSS IMT user" do
+    let(:user) { create(:opss_imt_user) }
+
+    before do
+      sign_in_as_opss_imt_user(user:)
+      get "/my_account"
+    end
+
+    include_examples "can change name and security"
+    include_examples "can't change email"
+    include_examples "can't download nanomaterials"
+  end
+
   context "with a Search OPSS Science user" do
     let(:user) { create(:opss_science_user) }
 

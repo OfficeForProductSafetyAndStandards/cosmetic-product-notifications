@@ -18,6 +18,11 @@ module LoginHelpers
     sign_in(user)
   end
 
+  def sign_in_as_opss_imt_user(user: create(:opss_imt_user))
+    configure_requests_for_search_domain
+    sign_in(user)
+  end
+
   def sign_in_as_opss_science_user(user: create(:opss_science_user))
     configure_requests_for_search_domain
     sign_in(user)

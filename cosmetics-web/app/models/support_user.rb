@@ -14,6 +14,7 @@ class SupportUser < User
     poison_centre: "poison_centre",
     opss_general: "opss_general",
     opss_enforcement: "opss_enforcement",
+    opss_imt: "opss_imt",
     opss_science: "opss_science",
     trading_standards: "trading_standards",
   }
