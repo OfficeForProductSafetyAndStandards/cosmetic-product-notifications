@@ -79,7 +79,7 @@ ActiveRecord::Base.transaction do
     mobile_number_verified: true,
     name: "John Doe",
     has_accepted_declaration: true,
-    email: "support@example.org",
+    email: "support@example.gov.uk",
     password: "testpassword",
     failed_attempts: 0,
     second_factor_attempts_count: 0,
