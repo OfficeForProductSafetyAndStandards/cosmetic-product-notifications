@@ -137,6 +137,7 @@ FactoryBot.define do
     end
 
     factory :support_user, class: "SupportUser" do
+      sequence(:email) { |n| "john.doe#{n}@example.gov.uk" }
       invitation_token { Devise.friendly_token }
       invited_at { Time.zone.now }
 

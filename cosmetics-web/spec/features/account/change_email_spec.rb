@@ -166,14 +166,14 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
     context "when the email change is fine" do
       it "changes email properly" do
         fill_in "Password", with: user.password
-        fill_in "New email", with: "new@example.org"
+        fill_in "New email", with: "new@example.gov.uk"
         click_on "Continue"
 
         expect_to_be_on_my_account_page
         expect(page).to have_css("h1", text: "Check your email")
         expect(page).to have_text(/A message with a confirmation link has been sent to your email address/)
         email = delivered_emails.first
-        expect(email.recipient).to eq "new@example.org"
+        expect(email.recipient).to eq "new@example.gov.uk"
 
         confirm_url = email.personalization[:verify_email_url]
         expect(confirm_url).to include("/my_account/email/confirm?confirmation_token=")
@@ -185,10 +185,21 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         email = delivered_emails.last
         expect(email.recipient).to eq old_email
         expect(email.personalization[:old_email_address]).to eq old_email
-        expect(email.personalization[:new_email_address]).to eq "new@example.org"
+        expect(email.personalization[:new_email_address]).to eq "new@example.gov.uk"
 
         expect(page).to have_text(/Email changed successfully/)
-        expect(user.reload.email).to eq("new@example.org")
+        expect(user.reload.email).to eq("new@example.gov.uk")
+      end
+    end
+
+    context "when trying to change email to a non gov.uk email" do
+      it "changes email properly" do
+        fill_in "Password", with: user.password
+        fill_in "New email", with: "new@example.com"
+        click_on "Continue"
+
+        expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+        expect(page).to have_link("", href: "#new_email")
       end
     end
   end
