@@ -125,11 +125,15 @@ en:
             password_confirmation:
               confirmation: "Password and confirmation does not match"
         support_user:
-              attributes:
-                password:
-                  blank: "Enter a password"
-                password_confirmation:
-                  confirmation: "Password and confirmation does not match"
+          attributes:
+            email:
+              invalid: &invalid_gov_uk_email "Enter an email address in the correct format and end in gov.uk"
+            new_email:
+              invalid: *invalid_gov_uk_email
+            password:
+              blank: "Enter a password"
+            password_confirmation:
+              confirmation: "Password and confirmation does not match"
         user:
           attributes:
             email:
@@ -382,6 +386,8 @@ en:
           attributes:
             name:
               blank: "Enter the full name"
+            email:
+              invalid: *invalid_gov_uk_email
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
@@ -426,6 +432,7 @@ en:
   email_form_validation:
     wrong_email_or_password: *invalid_email
     wrong_format: *invalid_email
+    wrong_format_gov_uk: *invalid_gov_uk_email
     blank: *empty_email
   user_password_check_form_validation:
     invalid: "Password is incorrect"

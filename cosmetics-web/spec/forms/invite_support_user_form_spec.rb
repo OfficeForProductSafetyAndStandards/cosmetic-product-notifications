@@ -6,7 +6,7 @@ RSpec.describe InviteSupportUserForm do
                         name:)
   end
 
-  let(:email) { "invited.user@example.com" }
+  let(:email) { "invited.user@example.gov.uk" }
   let(:name) { "Invited User" }
 
   describe "#valid?" do
@@ -55,7 +55,7 @@ RSpec.describe InviteSupportUserForm do
 
       it "populates an error message" do
         expect(form.errors.full_messages_for(:email))
-          .to eq(["Enter an email address in the correct format, like name@example.com"])
+          .to eq(["Enter an email address in the correct format and end in gov.uk"])
       end
     end
   end
