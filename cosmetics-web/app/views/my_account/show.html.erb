@@ -83,19 +83,6 @@
             }
           },
           {
-            key: { text: "Mobile number" },
-            value: { text: current_user.mobile_number },
-            actions: {
-              items: [
-                {
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "phone number"
-                }
-              ]
-            }
-          },
-          {
             key: { text: "Password" },
             value: { text: "********" },
             actions: {
@@ -155,7 +142,7 @@
     <% end %>
 
     <h2 class="govuk-heading-l">Your security preferences</h2>
-    <p class="govuk-body opss-secondary-text">This is how you get access codes.</p>
+    <p class="govuk-body opss-secondary-text">This is how you get access codes</p>
       <%= govukSummaryList(
         classes: "govuk-!-margin-bottom-9",
         rows: [
