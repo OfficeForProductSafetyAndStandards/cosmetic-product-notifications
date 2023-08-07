@@ -90,8 +90,6 @@ class Notification < ApplicationRecord
   validate :max_ph_is_greater_than_min_ph
   validate :difference_between_maximum_and_minimum_ph, on: :ph_range
 
-  validate :product_name_uniqueness, on: :cloning
-
   validates_with AcceptAndSubmitValidator, on: :accept_and_submit
 
   validates :archive_reason, presence: { on: :archive, message: "A reason for archiving must be selected" }
@@ -378,14 +376,6 @@ private
 
     if (ph_max_value - ph_min_value).round(2) > 1.0
       errors.add(:ph_max_value, "The maximum pH cannot be greater than 1 above the minimum pH")
-    end
-  end
-
-  def product_name_uniqueness
-    raise ArgumentError if responsible_person.nil?
-
-    if Notification.where(responsible_person_id:).where("TRIM(LOWER(product_name))=TRIM(LOWER(?))", product_name).count.positive?
-      errors.add(:product_name, :taken)
     end
   end
 

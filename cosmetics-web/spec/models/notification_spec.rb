@@ -589,20 +589,19 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "product name uniqueness validation on clone" do
+  describe "product name duplication validation on clone" do
     let(:name) { "Some notification" }
     let(:notification) { create(:notification, product_name: name) }
     let(:responsible_person) { notification.responsible_person }
     let(:new_notification) { build(:notification, responsible_person:, product_name: new_name) }
-    let(:validation_result) { false }
 
     shared_examples_for "product name validation" do
       before do
         notification
       end
 
-      it "validates uniqueness of name" do
-        expect(new_notification.valid?(:cloning)).to eq validation_result
+      it "allows a duplicate name" do
+        expect(new_notification.valid?(:cloning)).to eq true
       end
     end
 
@@ -618,7 +617,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       it_behaves_like "product name validation"
     end
 
-    context "when new name is the same but with differen case" do
+    context "when new name is the same but with different case" do
       let(:new_name) { "some Notification" }
 
       it_behaves_like "product name validation"
@@ -627,18 +626,8 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     context "when responsible person is different" do
       let(:new_name) { name }
       let(:responsible_person) { create(:responsible_person) }
-      let(:validation_result) { true }
 
       it_behaves_like "product name validation"
-    end
-
-    context "when new record has no responsible person" do
-      let(:new_name) { name }
-      let(:responsible_person) { nil }
-
-      it "raises ArgumentError" do
-        expect { new_notification.valid?(:cloning) }.to raise_error(ArgumentError)
-      end
     end
   end
 
