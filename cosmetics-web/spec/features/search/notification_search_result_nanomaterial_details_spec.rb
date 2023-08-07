@@ -81,6 +81,23 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
     end
   end
 
+  context "with an opss imt user" do
+    let(:user) { create(:opss_imt_user, :with_sms_secondary_authentication) }
+
+    scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
+      expect(page).to have_h1("Cosmetic products search")
+      click_on "Search"
+      click_link("View Cream")
+
+      expect(page).to have_h1("Cream")
+      expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
+      expect(page).to have_summary_item(
+        key: "Nanomaterials review period end date",
+        value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
+      )
+    end
+  end
+
   context "with a trading standards user" do
     let(:user) { create(:trading_standards_user, :with_sms_secondary_authentication) }
 

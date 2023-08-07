@@ -36,11 +36,12 @@ See [secondary authentication](secondary_authentication.md).
 
 Only search users have roles.
 
-There are five roles:
+There are six roles:
 
 * Poison centre
 * OPSS General
 * OPSS Enforcement
+* OPSS IMT
 * OPSS Science
 * Trading Standards
 

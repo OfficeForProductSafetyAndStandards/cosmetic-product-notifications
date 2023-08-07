@@ -168,6 +168,23 @@ RSpec.describe "Root path", :with_stubbed_antivirus, type: :request do
       end
     end
 
+    context "when signed in as an OPSS IMT user" do
+      let(:user) { create(:opss_imt_user) }
+
+      before do
+        sign_in_as_opss_imt_user(user:)
+        get "/"
+      end
+
+      after do
+        sign_out(:search_user)
+      end
+
+      it "redirects to the notifications page" do
+        expect(response).to redirect_to("/notifications")
+      end
+    end
+
     context "when signed in as an OPSS Science user" do
       let(:user) { create(:opss_science_user) }
 

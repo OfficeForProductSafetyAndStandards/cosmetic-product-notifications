@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SupportUser, type: :model do
   subject(:user) { build_stubbed(:support_user, role:) }
 
-  let(:role) { "opss_enforcement" }
+  let(:role) { "opss_general" }
 
   include_examples "common user tests"
 
