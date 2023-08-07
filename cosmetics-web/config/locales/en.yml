@@ -192,7 +192,7 @@ en:
               less_than_or_equal_to: "Enter a minimum concentration less than or equal to 100"
               not_a_number: "Enter a number for the minimum concentration"
             poisonous:
-              inclusion: "Select yes if the ingredient is poisonous"
+              inclusion: "Select yes if the NPIS needs to know about this ingredient"
             used_for_multiple_shades:
               inclusion: "Select yes if the ingredient is used for different shades"
   activemodel:

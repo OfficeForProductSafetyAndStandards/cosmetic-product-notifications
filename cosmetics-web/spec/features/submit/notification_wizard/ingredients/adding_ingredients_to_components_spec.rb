@@ -88,7 +88,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
       expect_to_be_on_add_ingredients_page
       expect_form_to_have_errors(
         component_ingredients_attributes_0_poisonous_true: {
-          message: "Select yes if the ingredient is poisonous",
+          message: "Select yes if the NPIS needs to know about this ingredient",
           id: "component_ingredients_attributes_0_poisonous",
         },
       )
