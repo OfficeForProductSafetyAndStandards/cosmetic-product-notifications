@@ -10,4 +10,11 @@ RSpec.describe SubmitUser, type: :model do
       expect(described_class.confirm_by_token("foobar")).to be_nil
     end
   end
+
+  it "validates the format of new_email" do
+    user.new_email = "wrongformat"
+    expect(user).not_to be_valid
+    expect(user.errors[:new_email])
+      .to include("Enter an email address in the correct format, like name@example.com")
+  end
 end
