@@ -20,7 +20,7 @@ private
   end
 
   def gov_uk_email_required?(record, value)
-    (for_support_user?(record) && value.match?(/[\W\w]*.gov.uk$/)) || !for_support_user?(record)
+    (for_support_user?(record) && value.match?(/[\W\w]*\.gov\.uk$/)) || !for_support_user?(record)
   end
 
   def for_support_user?(record)
