@@ -57,6 +57,19 @@
         classes: "govuk-!-margin-bottom-9",
         rows: [
           {
+            key: { text: "Full name" },
+            value: { text: current_user.name },
+            actions: {
+              items: [
+                {
+                  href: edit_my_account_name_path,
+                  text: "Change",
+                  visuallyHiddenText: "name"
+                }
+              ]
+            }
+          },
+          {
             key: { text: "Email address" },
             value: { text: current_user.email },
             actions: {
