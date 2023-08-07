@@ -1,5 +1,5 @@
 class FeatureFlags
-  def self.csv_upload_exact_with_shades_enabled?(user)
-    Flipper.enabled?(:csv_upload_exact_with_shades, user)
+  def self.recovery_codes_for_existing_users_enabled?(user)
+    Flipper.enabled?(:recovery_codes_for_existing_users, user)
   end
 end

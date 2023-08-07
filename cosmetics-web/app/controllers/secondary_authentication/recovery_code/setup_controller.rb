@@ -21,6 +21,7 @@ module SecondaryAuthentication
 
       def continue_path
         return my_account_path if params[:back_to] == "my_account"
+        return root_path if params[:back_to] == "home"
 
         invitation_id = session.delete(:registered_from_responsible_person_invitation_id)
         if (invitation = PendingResponsiblePersonUser.find_by(id: invitation_id))

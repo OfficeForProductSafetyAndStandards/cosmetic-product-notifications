@@ -1,3 +1,5 @@
+require "feature_flags"
+
 class ApplicationController < ActionController::Base
   include AuthenticationConcern
   include CacheConcern
@@ -70,6 +72,8 @@ private
   end
 
   def after_sign_in_path_for(resource)
+    return new_secondary_authentication_recovery_codes_setup_path(back_to: "home") if redirect_to_secondary_authentication_recovery_codes?(resource)
+
     stored_location_for(resource) ||
       if submit_domain?
         dashboard_path
@@ -78,6 +82,10 @@ private
       else
         poison_centre_notifications_search_path
       end
+  end
+
+  def redirect_to_secondary_authentication_recovery_codes?(resource)
+    FeatureFlags.recovery_codes_for_existing_users_enabled?(resource) && resource.secondary_authentication_recovery_codes_generated_at.nil?
   end
 
   # needs to be overridden
