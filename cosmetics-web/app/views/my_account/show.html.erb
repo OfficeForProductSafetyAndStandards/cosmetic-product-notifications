@@ -57,19 +57,6 @@
         classes: "govuk-!-margin-bottom-9",
         rows: [
           {
-            key: { text: "Full name" },
-            value: { text: current_user.name },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_name_path,
-                  text: "Change",
-                  visuallyHiddenText: "name"
-                }
-              ]
-            }
-          },
-          {
             key: { text: "Email address" },
             value: { text: current_user.email },
             actions: {
@@ -78,19 +65,6 @@
                   href: edit_my_account_email_path,
                   text: "Change",
                   visuallyHiddenText: "email address"
-                }
-              ]
-            }
-          },
-          {
-            key: { text: "Mobile number" },
-            value: { text: current_user.mobile_number },
-            actions: {
-              items: [
-                {
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "phone number"
                 }
               ]
             }
