@@ -21,6 +21,12 @@
           <li>is intentionally manufactured</li>
         </ul>
 
+        <%= govukDetails(summaryText: "Help with nanomaterials") do %>
+          <p class="govuk-body">Cosmetic products available to consumers must be safe for human health. <abbr>OPSS</abbr> will take the necessary action to ensure the safety of consumers including but not limited to prohibiting or restricting specific nanomaterials if a risk to human health is identified. Any scientific data submitted for the safety assessment <span class="govuk-!-font-weight-bold">must include all</span> relevant elements as prescribed in the <a href="/pdf/sccs_1611_19.pdf" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Scientific Committee on Consumer Safety Notes of Guidance on the Safety of Nanomaterials in Cosmetics (opens in a new tab)</a>.</p>
+          <p class="govuk-body">Products containing nanomaterials notified in <abbr>GB</abbr> after 1 January 2021 can be placed on the market 6 months after the nanomaterial has first been notified.</p>
+          <p class="govuk-body govuk-!-font-weight-bold">Note that you cannot use a nanomaterial as a preservative, UV-filter or colourant that is not listed in the Annexes.</p>
+        <% end %>
+
         <% count_input_html = capture do %>
           <%= govukInput(form: form,
                          key: :nanomaterials_count,
