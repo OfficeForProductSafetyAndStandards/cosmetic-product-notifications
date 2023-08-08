@@ -4,7 +4,7 @@ module NotificationCloner
     REDIS_HASH_NAME = "notification_cloner_job_tracker".freeze
 
     def self.save_job_id(notification_id, job_id)
-      redis.hset(REDIS_HASH_NAME, notification_id, job_id)
+      redis.hset(REDIS_HASH_NAME, notification_id, job_id) if job_id.present?
     end
 
     def self.redis
