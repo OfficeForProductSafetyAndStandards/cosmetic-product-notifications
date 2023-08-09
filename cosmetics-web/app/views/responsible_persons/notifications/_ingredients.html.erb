@@ -7,7 +7,7 @@
           <dd><abbr>CAS</abbr>: <%= ingredient.cas_number %> </dd>
         <% end %>
         <% if ingredient.exact_concentration.present? %>
-          <dd><% if ingredient.used_for_multiple_shades? %>Maximum concentration: <% end %><%= ingredient.exact_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+          <dd><% if ingredient.multi_shade? && ingredient.used_for_multiple_shades? %>Maximum concentration: <% end %><%= ingredient.exact_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
         <%
           # range_concentration will be removed when the legacy data has been migrated
           # to minimum / maximum
@@ -27,7 +27,7 @@
         %>
         <% elsif ingredient.range? %>
           <% if ingredient.minimum_concentration == ingredient.maximum_concentration %>
-            <dd><% if ingredient.used_for_multiple_shades? %>Maximum concentration: <% end %> <%= ingredient.maximum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
+            <dd><% if ingredient.multi_shade? && ingredient.used_for_multiple_shades? %>Maximum concentration: <% end %> <%= ingredient.maximum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
           <% else %>
             <dd>Minimum range: <%= ingredient.minimum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
             <dd>Maximum range: <%= ingredient.maximum_concentration %>%&nbsp;<abbr>w/w</abbr></dd>
