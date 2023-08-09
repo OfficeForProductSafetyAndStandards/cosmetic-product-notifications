@@ -1,7 +1,8 @@
 module SupportPortal
   class HistoryController < ApplicationController
     def index
-      @history_search = HistorySearch.new(**search_params.to_h.symbolize_keys)
+      @search_params = search_params
+      @history_search = HistorySearch.new(**@search_params.to_h.symbolize_keys)
 
       changes = if @history_search.valid?
                   @history_search.search

@@ -56,5 +56,26 @@ module SupportPortal
     def display_notification_action_details(action)
       "#{action.whodunnit} #{NOTIFICATION_ACTIONS_PAST_TENSE[action.event.to_sym]} UKCP (#{action.item.reference_number})"
     end
+
+    def sorting_params(sort_by, params)
+      if params[:sort_by] == sort_by
+        params[:sort_direction] = set_sort_direction(params[:sort_direction])
+      else
+        params[:sort_by] = sort_by
+        params[:sort_direction] = "asc"
+      end
+
+      params
+    end
+
+    def sort_indicator_direction(sort_by, params)
+      return "none" if params[:sort_by] != sort_by || params[:sort_direction].blank?
+
+      "#{params[:sort_direction]}ending"
+    end
+
+    def set_sort_direction(starting_sort_direction)
+      starting_sort_direction == "desc" ? "asc" : "desc"
+    end
   end
 end
