@@ -1,5 +1,5 @@
 class CommonPasswordValidator < ActiveModel::EachValidator
-  COMMON_PASSWORDS_FILE = "app/assets/10-million-password-list-top-1000000.txt".freeze
+  COMMON_PASSWORDS_FILE = "app/assets/files/PwnedPasswordsTop100k.txt".freeze
   DEFAULT_ERROR = "Choose a less frequently used password".freeze
 
   def self.cache_common_passwords
