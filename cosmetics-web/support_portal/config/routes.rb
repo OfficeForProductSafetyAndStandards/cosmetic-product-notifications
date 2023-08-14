@@ -13,9 +13,15 @@ SupportPortal::Engine.routes.draw do
     end
   end
 
-  resources :history, only: %i[index]
-
   resources :account_administration, path: "account-admin", only: %i[index show] do
+    collection do
+      get "search"
+      get "search-results"
+      get "invite-search-user"
+      patch "create-search-user"
+      put "create-search-user"
+    end
+
     member do
       get "edit-name"
       patch "update-name"
@@ -23,6 +29,9 @@ SupportPortal::Engine.routes.draw do
       get "edit-email"
       patch "update-email"
       put "update-email"
+      get "edit-role"
+      patch "update-role"
+      put "update-role"
       get "reset-account"
       delete "reset"
       get "edit-responsible-persons"
@@ -30,8 +39,6 @@ SupportPortal::Engine.routes.draw do
       delete "delete-responsible-person-user/:responsible_person_user_id", to: "account_administration#delete_responsible_person_user", as: :delete_responsible_person_user
     end
   end
-
-  resource :invite_support_user, path: "invite-support-user", only: %i[new create]
 
   resources :responsible_persons, path: "responsible-persons", only: %i[index show] do
     member do
@@ -55,4 +62,7 @@ SupportPortal::Engine.routes.draw do
       put "update-assigned-contact-phone-number/:assigned_contact_id", to: "responsible_persons#update_assigned_contact_phone_number"
     end
   end
+
+  resources :history, only: %i[index]
+  resource :invite_support_user, path: "invite-support-user", only: %i[new create]
 end

@@ -1,13 +1,13 @@
 module SupportPortal
   module HistoryHelper
     NOTIFICATION_ACTIONS = {
-      "delete": "Deletion",
-      "undelete": "Recovery",
+      "delete": "deletion",
+      "undelete": "recovery",
     }.freeze
 
     NOTIFICATION_ACTIONS_PAST_TENSE = {
-      "delete": "Deleted",
-      "undelete": "Recovered",
+      "delete": "deleted",
+      "undelete": "recovered",
     }.freeze
 
     RESPONSIBLE_PERSON_ACTIONS = {
@@ -20,25 +20,41 @@ module SupportPortal
       "city": "Address",
     }.freeze
 
+    USER_ACTIONS = {
+      "role": "role",
+    }.freeze
+
     def display_action(action)
       case action.item_type
       when "Notification"
         display_notification_action(action)
       when "ResponsiblePerson"
         display_responsible_person_action(action.object_changes)
+      when "User"
+        display_user_action(action.object_changes)
       end
     end
 
     def display_action_change(action)
       return display_notification_action_details(action) if action.item_type == "Notification"
 
-      display_responsible_person_action_details(action.object_changes)
+      return display_responsible_person_action_details(action.object_changes) if action.item_type == "ResponsiblePerson"
+
+      display_user_action_details(action.object_changes)
+    end
+
+    def display_notification_action(action)
+      "UKCP number (#{action.item.reference_number}) #{NOTIFICATION_ACTIONS[action.event.to_sym]}"
+    end
+
+    def display_notification_action_details(action)
+      "#{action.whodunnit} #{NOTIFICATION_ACTIONS_PAST_TENSE[action.event.to_sym]} UKCP #{action.item.reference_number}"
     end
 
     def display_responsible_person_action(object_changes)
       change = object_changes.except("updated_at").keys.first
 
-      "RP (#{RESPONSIBLE_PERSON_ACTIONS[change.to_sym]}) Change"
+      "RP #{RESPONSIBLE_PERSON_ACTIONS[change.to_sym]} change"
     end
 
     def display_responsible_person_action_details(object_changes)
@@ -49,12 +65,18 @@ module SupportPortal
       }.join("<br>")
     end
 
-    def display_notification_action(action)
-      "UKCP Number (#{action.item.reference_number}) #{NOTIFICATION_ACTIONS[action.event.to_sym]}"
+    def display_user_action(object_changes)
+      change = object_changes.except("updated_at").keys.first
+
+      "User #{USER_ACTIONS[change.to_sym]} change"
     end
 
-    def display_notification_action_details(action)
-      "#{action.whodunnit} #{NOTIFICATION_ACTIONS_PAST_TENSE[action.event.to_sym]} UKCP (#{action.item.reference_number})"
+    def display_user_action_details(object_changes)
+      changes = object_changes.except("updated_at").values
+
+      changes.map { |change|
+        "Change from: #{role_type(change[0])}<br>To: #{role_type(change[1])}"
+      }.join("<br>")
     end
 
     def sorting_params(sort_by, params)
