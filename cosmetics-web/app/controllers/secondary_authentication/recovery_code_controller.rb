@@ -24,11 +24,11 @@ module SecondaryAuthentication
       if form.valid?
         set_secondary_authentication_cookie(Time.zone.now.to_i)
         remaining_recovery_codes = form.user.secondary_authentication_recovery_codes
-        remaining_recovery_codes.delete(params[:recovery_code])
+        remaining_recovery_codes.delete(form.recovery_code)
         form.user.update!(
           last_recovery_code_at: form.last_recovery_code_at,
           secondary_authentication_recovery_codes: remaining_recovery_codes,
-          secondary_authentication_recovery_codes_used: form.user.secondary_authentication_recovery_codes_used.push(params[:recovery_code]),
+          secondary_authentication_recovery_codes_used: form.user.secondary_authentication_recovery_codes_used.push(form.recovery_code),
         )
         session[:secondary_authentication_user_id] = nil
         redirect_to secondary_authentication_recovery_code_interstitial_path
