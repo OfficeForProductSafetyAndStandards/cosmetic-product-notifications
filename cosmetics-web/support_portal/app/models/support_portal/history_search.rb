@@ -20,7 +20,7 @@ module SupportPortal
       [
         OpenStruct.new(id: :rp_name, name: "Change to Responsible Person Name"),
         OpenStruct.new(id: :rp_address, name: "Change to Responsible Person Address"),
-        OpenStruct.new(id: :rp_account_type, name: "Change to Responsible Person business type"),
+        OpenStruct.new(id: :rp_account_type, name: "Change to Responsible Person Business type"),
       ].freeze
 
     NOTIFICATION_ACTIONS =

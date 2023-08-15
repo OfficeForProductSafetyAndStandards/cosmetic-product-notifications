@@ -49,8 +49,8 @@ module SupportPortal
                   .includes(:item)
                   .joins("LEFT JOIN users ON users.id::text = versions.whodunnit")
                   .where("users.type = ?", "SupportUser")
-                  .order(**sort_order)
                   .select("versions.*, COALESCE(users.name, 'Unknown') AS whodunnit")
+                  .order(**sort_order)
     end
 
     def sort_order

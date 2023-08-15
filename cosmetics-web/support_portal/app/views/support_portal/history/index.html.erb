@@ -9,7 +9,7 @@
       <div class="moj-search">
         <div class="govuk-form-group">
           <label for="query-field" class="govuk-label moj-search__label">Enter a search term</label>
-          <div class="govuk-hint moj-search__hint" id="query-hint">For example, name, email address, Responsible Person name or <abbr>UKCP</abbr> number</div>
+          <div class="govuk-hint moj-search__hint" id="query-hint">For example SupportUserName, Email Address, Responsible Person name, <abbr>UKCP</abbr> number</div>
           <input id="query-field" class="govuk-input moj-search__input" aria-describedby="q-hint" type="search" name="history_search[query]" value="<%= params.dig(:history_search, :query) %>">
         </div>
       </div>
@@ -43,8 +43,8 @@
       govuk_table do |table|
         table.with_head do |head|
           head.with_row do |row|
-            row.with_cell(text: "Name")
-            row.with_cell(text: "Date/Time")
+            row.with_cell(text: link_to("Name", history_index_path(history_search: sorting_params("whodunnit", @search_params.dup)), class: "govuk-link--no-underline govuk-link--no-visited-state"), html_attributes: { aria: { sort: sort_indicator_direction("whodunnit", @search_params.dup) } })
+            row.with_cell(text: link_to("Date/time",  history_index_path(history_search: sorting_params("created_at", @search_params.dup)), class: "govuk-link--no-underline govuk-link--no-visited-state"), html_attributes: { aria: { sort: sort_indicator_direction("created_at", @search_params.dup) } })
             row.with_cell(text: "Action")
             row.with_cell(text: "Details")
           end

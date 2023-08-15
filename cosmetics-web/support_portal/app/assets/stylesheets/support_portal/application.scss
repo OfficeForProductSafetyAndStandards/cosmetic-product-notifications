@@ -22,6 +22,7 @@ $govuk-global-styles: true;
 @import "govuk-frontend/govuk/all";
 @import "app_cards";
 @import "search";
+@import "sortable_table";
 
 .opss-nojs-hide {
   display: none;
@@ -65,7 +66,12 @@ body.js-enabled .opss-nojs-hide {
 }
 
 .opss-sortable-table th .govuk-link {
-  &:link, &:visited, &:focus, &:active, &:hover {
+
+  &:link,
+  &:visited,
+  &:focus,
+  &:active,
+  &:hover {
     color: govuk-colour("black");
     text-decoration: none;
   }
