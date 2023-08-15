@@ -17,7 +17,7 @@ RSpec.feature "Invite support user", :with_stubbed_mailer, :with_stubbed_notify,
 
     expect(page).to have_h1("Your account")
 
-    expect(page).to have_h2("User Management")
+    expect(page).to have_h2("User management")
 
     click_link "Invite"
 
