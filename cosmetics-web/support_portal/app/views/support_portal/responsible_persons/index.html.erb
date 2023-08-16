@@ -1,1 +1,23 @@
-<%= render partial: @search_query ? "search_results" : "search_box" %>
+<% content_for :page_title, "Search for a Responsible Person account" %>
+<% @back_link_href = support_root_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: search_results_responsible_persons_path, method: :get do |f| %>
+      <div class="moj-search">
+        <div class="govuk-form-group">
+          <label for="q-field" class="govuk-label moj-search__label">Enter a search term</label>
+          <div class="govuk-hint moj-search__hint" id="q-hint">For example, Responsible Person name, assigned contact name or assigned contact email address</div>
+          <input id="q-field" class="govuk-input moj-search__input" aria-describedby="q-hint" type="search" name="q" value="<%= params[:q] %>">
+        </div>
+        <button type="submit" formnovalidate="formnovalidate" class="govuk-button moj-search__button" data-module="govuk-button" data-prevent-double-click="true">
+          <span class="govuk-visually-hidden">Search</span>
+        </button>
+      </div>
+
+      <button type="submit" class="govuk-button govuk-!-margin-top-5" data-module="govuk-button">
+        Search
+      </button>
+    <% end %>
+  </div>
+</div>

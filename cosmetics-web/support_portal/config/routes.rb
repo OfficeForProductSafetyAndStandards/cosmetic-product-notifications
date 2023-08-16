@@ -41,6 +41,10 @@ SupportPortal::Engine.routes.draw do
   end
 
   resources :responsible_persons, path: "responsible-persons", only: %i[index show] do
+    collection do
+      get "search-results"
+    end
+
     member do
       get "edit-name"
       patch "update-name"
