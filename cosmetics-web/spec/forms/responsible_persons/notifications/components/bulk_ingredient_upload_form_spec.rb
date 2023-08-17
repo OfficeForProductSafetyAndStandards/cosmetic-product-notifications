@@ -11,7 +11,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
   let(:csv) do
     <<~CSV
-      Name,Concentration,CAS, Is poisonous?
+      Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
       Sodium,35,497-19-8,true
       Aqua,65,497-19-8,false
     CSV
@@ -37,216 +37,21 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
           }.not_to change(Ingredient, :count)
         end
 
-        it "does have proper message after saving attempt" do
+        it "has error messages" do
           form.save_ingredients
 
-          expect(form.errors.full_messages).to eq error_messages
+          expect(form.errors.full_messages).to eq(error_messages)
         end
 
-        it "does return proper value" do
+        it "collates all row-based error messages" do
+          form.save_ingredients
+
+          expect(form.error_rows).to eq(error_rows)
+        end
+
+        it "returns false" do
           expect(form.save_ingredients).to be false
         end
-      end
-
-      describe "#valid?" do
-        it "is invalid" do
-          form.valid?
-
-          expect(form).not_to be_valid
-        end
-
-        it "has proper error message" do
-          form.valid?
-
-          expect(form.errors.full_messages).to eq error_messages
-        end
-      end
-    end
-
-    context "when name is empty" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          ,35,497-19-8,true
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
-      end
-    end
-
-    context "when header is missing" do
-      let(:csv) do
-        <<~CSV
-          Sodium,35,497-19-8,true
-          Aqua,65,497-19-8,false
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The supplied header row must be included in the file"] }
-      end
-    end
-
-    context "when concentration number is empty" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Foo,,497-19-8,true
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
-      end
-    end
-
-    context "when values for concentration are incorrect" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Sodium,abc,497-19-8,foo
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
-      end
-    end
-
-    context "when values for toxicity are incorrect" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Sodium,32,497-19-8,foo
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
-      end
-    end
-
-    context "when name is too long" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,32,497-19-8,true
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
-      end
-    end
-
-    context "when file with invalid characters is used" do
-      let(:file) do
-        f = File.open("spec/fixtures/files/exact_ingredients_long_name.csv")
-        Rack::Test::UploadedFile.new(f, "text/csv")
-      end
-
-      let(:error_messages) { ["The file has invalid characters. Please check and try again"] }
-
-      it "does have proper message after saving attempt" do
-        form.save_ingredients
-
-        expect(form.errors.full_messages).to eq error_messages
-      end
-
-      it "does return proper value" do
-        expect(form.save_ingredients).to be false
-      end
-
-      it "is invalid" do
-        form.valid?
-
-        expect(form).not_to be_valid
-      end
-
-      it "has proper error message" do
-        form.valid?
-
-        expect(form.errors.full_messages).to eq error_messages
-      end
-    end
-
-    context "when values for toxicity are empty" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Aqua,65,497-19-8,
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
-      end
-    end
-
-    context "when one ingredient in csv is invalid" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Sodium,35,497-19-8,true
-          Aqua,65,497-19-8,false
-          Acid,50-75,497-19-8,false
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 4"] }
-      end
-    end
-
-    context "when file has more invalid lines" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Sodium,thirtyfive,497-19-8,true
-          Aqua,65,497-19-8,false
-          Acid,50-75,497-19-8,false
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) do
-          ["The file has an error in rows: 2,4"]
-        end
-      end
-    end
-
-    context "when file is not a proper file" do
-      let(:file) do
-        f = File.open("spec/fixtures/files/ingredients.xlsx")
-        Rack::Test::UploadedFile.new(f, "text/csv")
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The selected file must be a CSV file", "The selected file is empty"] }
-      end
-    end
-
-    context "when file is nil" do
-      let(:file) { nil }
-
-      include_examples "validation" do
-        let(:error_messages) { ["The selected file must be a CSV file", "The selected file is empty"] }
-      end
-    end
-
-    context "when ingredients repeat within the file" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Aqua,65,497-19-8,false
-          Aqua,50,497-19-8,false
-        CSV
-      end
-
-      include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 3"] }
       end
     end
 
@@ -259,85 +64,274 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file must be smaller than 15KB"] }
+        let(:error_messages) { ["The selected file must be smaller than 15KB"] }
+        let(:error_rows) { {} }
       end
     end
 
-    context "when ingredient file is empty" do
-      context "when only header is present" do
-        let(:csv) do
-          <<~CSV
-            Name,Concentration,CAS, Is poisonous?
-          CSV
-        end
-
-        include_examples "validation" do
-          let(:error_messages) { ["The selected file is empty"] }
-        end
+    context "when the file is not a CSV" do
+      let(:file) do
+        f = File.open("spec/fixtures/files/ingredients.xlsx")
+        Rack::Test::UploadedFile.new(f, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
       end
 
-      context "when file doesn't have even header" do
-        let(:csv) do
-          <<~CSV
-          CSV
-        end
-
-        include_examples "validation" do
-          let(:error_messages) { ["The selected file is empty"] }
-        end
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file must be a CSV"] }
+        let(:error_rows) { {} }
       end
     end
 
-    context "when the file has too many columns in the header but right row values" do
+    context "when the file is nil" do
+      let(:file) { nil }
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file must be a CSV"] }
+        let(:error_rows) { {} }
+      end
+    end
+
+    context "when the file is empty" do
       let(:csv) do
         <<~CSV
-          Name,Concentration,CAS, Is poisonous?,Foo
-          Aqua,65,497-19-8,false
-        CSV
-      end
-
-      it { expect(form).to be_valid }
-    end
-
-    context "when the file has an extra empty column in the header but right row values" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?,
-          Aqua,65,497-19-8,false
-        CSV
-      end
-
-      it { expect(form).to be_valid }
-    end
-
-    context "when the file has an extra empty column" do
-      let(:csv) do
-        <<~CSV
-          Name,Concentration,CAS, Is poisonous?
-          Aqua,65,497-19-8,false,
         CSV
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
+        let(:error_messages) { ["The selected file is empty"] }
+        let(:error_rows) { {} }
       end
     end
 
-    context "when a row has an extra column" do
+    context "when the file contains invalid characters" do
+      let(:file) do
+        f = File.open("spec/fixtures/files/exact_ingredients_long_name.csv")
+        Rack::Test::UploadedFile.new(f, "text/csv")
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file contains invalid characters"] }
+        let(:error_rows) { {} }
+      end
+    end
+
+    context "when only a header row is present" do
       let(:csv) do
         <<~CSV
-          Name,Concentration,CAS, Is poisonous?
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file is empty"] }
+        let(:error_rows) { {} }
+      end
+    end
+
+    context "when the header is missing" do
+      let(:csv) do
+        <<~CSV
+          Sodium,35,497-19-8,true
+          Aqua,65,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The header row must be included in the selected file"] }
+        let(:error_rows) { {} }
+      end
+    end
+
+    context "when the file has too many columns in the header row but correct ingredient row values" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?,Foo
+          Aqua,65,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The header row must be included in the selected file"] }
+        let(:error_rows) { {} }
+      end
+    end
+
+    context "when the file has an extra empty column in the header row but correct ingredient row values" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?,
+          Aqua,65,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The header row must be included in the selected file"] }
+        let(:error_rows) { {} }
+      end
+    end
+
+    context "when there are duplicate ingredients" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Aqua,65,497-19-8,false
+          Aqua,50,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file contains ingredients that are duplicated"] }
+        let(:error_rows) { {} }
+      end
+    end
+
+    context "when an ingredient row has an extra empty column" do
+      # rubocop:disable Layout/HeredocIndentation
+      let(:csv) do
+        <<~CSV
+         Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Aqua,65,497-19-8,false,
+        CSV
+      end
+      # rubocop:enable Layout/HeredocIndentation
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { base: ["The ingredient row contains extra columns"] } } }
+      end
+    end
+
+    context "when an ingredient row has an extra column" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
           Aqua,65,497-19-8,false,bar
         CSV
       end
 
       include_examples "validation" do
-        let(:error_messages) { ["The file has an error in row: 2"] }
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { base: ["The ingredient row contains extra columns"] } } }
+      end
+    end
+
+    context "when the ingredient name is empty" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          ,35,497-19-8,true
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { inci_name: ["Enter a name"] } } }
+      end
+    end
+
+    context "when the ingredient name is too long" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,32,497-19-8,true
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { inci_name: ["Ingredient name must be 100 characters or less"] } } }
+      end
+    end
+
+    context "when the ingredient concentration is empty" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Foo,,497-19-8,true
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { exact_concentration: ["Enter the exact concentration"] } } }
+      end
+    end
+
+    context "when the ingredient concentration value is incorrect" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Sodium,abc,497-19-8,foo
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { exact_concentration: ["Enter a number for the exact concentration"], poisonous: ["The selected file must provide `true` or `false` values to the NPIS column"] } } }
+      end
+    end
+
+    context "when the ingredient NPIS column is empty" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Aqua,65,497-19-8,
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { poisonous: ["The selected file must provide `true` or `false` values to the NPIS column"] } } }
+      end
+    end
+
+    context "when the ingredient NPIS column is incorrect" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Sodium,32,497-19-8,foo
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { poisonous: ["The selected file must provide `true` or `false` values to the NPIS column"] } } }
+      end
+    end
+
+    context "when one ingredient row is invalid" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Sodium,35,497-19-8,true
+          Aqua,65,497-19-8,false
+          Acid,50-75,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 4 => { exact_concentration: ["Enter a number for the exact concentration"] } } }
+      end
+    end
+
+    context "when multiple ingredient rows are invalid" do
+      let(:csv) do
+        <<~CSV
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Sodium,thirtyfive,497-19-8,true
+          Aqua,65,497-19-8,false
+          Acid,50-75,497-19-8,false
+        CSV
+      end
+
+      include_examples "validation" do
+        let(:error_messages) { ["The selected file could not be uploaded - try again"] }
+        let(:error_rows) { { 2 => { exact_concentration: ["Enter a number for the exact concentration"] }, 4 => { exact_concentration: ["Enter a number for the exact concentration"] } } }
       end
     end
   end
 
-  context "when the CSV is for range concentrations" do
+  context "when using range CSV" do
     let(:component) { create(:ranges_component) }
 
     let(:csv) do
@@ -364,7 +358,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when using upper case for toxicity" do
       let(:csv) do
         <<~CSV
-          Name,Concentration,CAS, Is poisonous?
+          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
           Foo,12,497-19-8,TRUE
         CSV
       end
@@ -382,7 +376,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       }.to change(Ingredient, :count).by(2)
     end
 
-    it "creates poisonous/non poisoning ingredients accordingly" do
+    it "creates poisonous/non poisonous ingredients accordingly" do
       form.save_ingredients
       expect(Ingredient.pluck(:poisonous)).to eq [true, false]
     end
@@ -395,7 +389,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
   context "when the fields start or end with extra spaces" do
     let(:csv) do
       <<~CSV
-        Name,Concentration,CAS, Is poisonous?
+        Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
          Foo,12 ,  497-19-8 , TRUE
       CSV
     end
@@ -416,7 +410,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
   context "when the file contains blank rows" do
     let(:csv) do
       <<~CSV
-        Name,Concentration,CAS, Is poisonous?
+        Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
         ,,,
         Foo,12 ,497-19-8,TRUE
       CSV
@@ -450,33 +444,10 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     end
   end
 
-  context "when header is not very meaningful" do
-    let(:csv) do
-      <<~CSV
-        Foo
-        Sodium,35,497-19-8,true
-        Aqua,65,497-19-8,false
-      CSV
-    end
-
-    let(:component) { create(:predefined_component, contains_poisonous_ingredients: true) }
-
-    it "is valid" do
-      form.save_ingredients
-      expect(form).to be_valid
-    end
-
-    it "creates records" do
-      expect {
-        form.save_ingredients
-      }.to change(Ingredient, :count).by(2)
-    end
-  end
-
   context "when ingredients are already present in product" do
     let(:csv) do
       <<~CSV
-        Foo
+        Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
         Sodium,35,497-19-8,true
         Aqua,65,497-19-8,false
       CSV

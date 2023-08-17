@@ -33,7 +33,7 @@ class Ingredient < ApplicationRecord
 
   validates :inci_name, presence: true, ingredient_name_format: { message: :invalid }
   validates :inci_name, uniqueness: { scope: :component_id }, if: :validate_inci_name_uniqueness?
-  validates :inci_name, length: { maximum: NAME_LENGTH_LIMIT }, on: :create
+  validates :inci_name, length: { maximum: NAME_LENGTH_LIMIT }, on: %i[create bulk_upload]
 
   validates :poisonous, inclusion: { in: [true, false] }, if: -> { range? || exact_concentration.present? }
 
@@ -49,9 +49,7 @@ class Ingredient < ApplicationRecord
   validates :maximum_exact_concentration,
             presence: true,
             numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
-            if: lambda {
-                  (exact? && multi_shade? && used_for_multiple_shades == true)
-                }
+            if: -> { exact? && multi_shade? && used_for_multiple_shades == true }
 
   validates :minimum_concentration,
             presence: true,
@@ -61,7 +59,17 @@ class Ingredient < ApplicationRecord
   validates :maximum_concentration,
             presence: true,
             numericality: { allow_blank: true, greater_than: 0, less_than_or_equal_to: 100 },
-            if: -> { (range? && poisonous == false) }
+            if: -> { range? && poisonous == false }
+
+  validates :exact_concentration,
+            absence: true,
+            if: -> { range? && poisonous == false },
+            on: :bulk_upload
+
+  validates :minimum_concentration, :maximum_concentration,
+            absence: true,
+            if: -> { range? && poisonous == true },
+            on: :bulk_upload
 
   validate :maximum_minimum_concentration_range, if: -> { range? && poisonous == false }
 
@@ -72,7 +80,7 @@ class Ingredient < ApplicationRecord
   delegate :range?, to: :component
   delegate :multi_shade?, to: :component
 
-  before_validation :reset_concentration_fields
+  before_save :reset_concentration_fields
 
   def exact?
     !range?

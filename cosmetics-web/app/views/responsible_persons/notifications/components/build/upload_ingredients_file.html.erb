@@ -3,7 +3,7 @@
 <% content_for :after_header do %>
   <%= govukBackLink text: "Back", href: previous_wizard_path %>
 <% end %>
-<%= error_summary_for(@bulk_ingredients_form) %>
+<%= error_summary_for(@bulk_ingredients_form, all_errors: true) %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -73,4 +73,38 @@
     </div>
   </div>
   <%= govukButton text: "Continue" %>
+<% end %>
+
+<% if @bulk_ingredients_form.errors && @bulk_ingredients_form.error_rows.present? %>
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m">
+      Errors found in <%= @bulk_ingredients_form.file.original_filename %>
+    </caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Column</th>
+        <th scope="col" class="govuk-table__header">Row</th>
+        <th scope="col" class="govuk-table__header">Error</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @bulk_ingredients_form.error_rows.each do |row, errors| %>
+        <% errors.each do |attribute, messages| %>
+          <% messages.each do |error_message| %>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                <%= ingredients_csv_column_reference_for(attribute, range_notification: @bulk_ingredients_form.component.range?) %>
+              </th>
+              <td class="govuk-table__cell">
+                <%= row %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= error_message %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
