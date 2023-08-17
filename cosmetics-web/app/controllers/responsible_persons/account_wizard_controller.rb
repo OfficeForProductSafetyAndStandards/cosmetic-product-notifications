@@ -4,7 +4,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
   steps :pending_invitations, :overview, :create_or_join_existing, :join_existing, :enter_details
 
   # Using directly the id parameter as'step' is set to nil at this point and 'if' condition gets ignored. Wicked Wizard magic...
-  skip_before_action :has_accepted_declaration, if: -> { params[:id] == "pending_invitations" }
+  skip_before_action :has_accepted_declaration, if: -> { %w[pending_invitations overview].include?(params[:id]) }
   skip_before_action :create_or_join_responsible_person
   before_action :pending_invitations, if: -> { step == :pending_invitations }
   before_action :clear_session, if: -> { step == :overview }
