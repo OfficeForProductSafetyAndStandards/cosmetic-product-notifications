@@ -5,7 +5,7 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
   let(:user) { create(:support_user, :with_all_secondary_authentication_methods) }
   let(:search_user1) { create(:search_user) }
   let(:search_user2) { create(:search_user) }
-  let(:search_user3) { create(:search_user, name: search_user1.name) }
+  let(:search_user3) { create(:opss_general_user, name: search_user1.name) }
   let(:submit_user1) { create(:submit_user) }
   let(:submit_user2) { create(:submit_user) }
   let(:responsible_person_user1) { create(:responsible_person_user, user: submit_user1) }
@@ -35,6 +35,7 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     expect(page).to have_h1("Dashboard")
 
     click_link "Account administration"
+    click_link "Search for an account"
 
     expect(page).to have_h1("Search for an account")
 
@@ -53,6 +54,7 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     expect(page).to have_h1("Dashboard")
 
     click_link "Account administration"
+    click_link "Search for an account"
 
     expect(page).to have_h1("Search for an account")
 
@@ -71,6 +73,7 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     expect(page).to have_h1("Dashboard")
 
     click_link "Account administration"
+    click_link "Search for an account"
 
     expect(page).to have_h1("Search for an account")
 
@@ -88,12 +91,22 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     expect(page).to have_h1("Dashboard")
 
     click_link "Account administration"
+    click_link "Search for an account"
 
     expect(page).to have_h1("Search for an account")
 
     click_on "Search"
 
-    expect(page).to have_text("Enter a search term")
+    expect(page).to have_text(search_user1.name)
+    expect(page).to have_text(search_user1.email)
+    expect(page).to have_text(search_user2.name)
+    expect(page).to have_text(search_user2.email)
+    expect(page).to have_text(search_user3.name)
+    expect(page).to have_text(search_user3.email)
+    expect(page).to have_text(submit_user1.name)
+    expect(page).to have_text(submit_user1.email)
+    expect(page).to have_text(submit_user2.name)
+    expect(page).to have_text(submit_user2.email)
   end
 
   scenario "Viewing account details" do
@@ -153,6 +166,21 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     click_on "Save changes"
 
     expect(page).to have_css("div.govuk-notification-banner", text: "The email address has been updated from #{existing_email} to something@example.com")
+  end
+
+  scenario "Changing the role on an account" do
+    visit "/account-admin/#{search_user3.id}"
+
+    expect(page).to have_h1(search_user3.name)
+
+    click_link "Change role type"
+
+    expect(page).to have_h1("Change account role type")
+
+    choose "OPSS Incident Management Team (IMT)"
+    click_on "Save changes"
+
+    expect(page).to have_css("div.govuk-notification-banner", text: "The account role type has been updated from OPSS General to OPSS Incident Management Team (IMT)")
   end
 
   scenario "Removing a Responsible Person from an account" do
@@ -218,5 +246,28 @@ RSpec.feature "Account administration", :with_stubbed_mailer, :with_stubbed_noti
     click_button("Reset account")
 
     expect(page).to have_css("div.govuk-notification-banner", text: "The account has been reset")
+  end
+
+  scenario "Inviting a new search user" do
+    expect(page).to have_h1("Dashboard")
+
+    click_link "Account administration"
+    click_link "Add a new search user account"
+
+    expect(page).to have_h1("Invite a new search user")
+
+    click_on "Send invitation"
+
+    expect(page).to have_link("Name cannot be blank", href: "#search-user-name-field-error")
+    expect(page).to have_link("Enter an email", href: "#search-user-email-field-error")
+    expect(page).to have_link("Select a role type for the user account", href: "#search-user-role-field-error")
+
+    fill_in "Full name", with: "Fake faker"
+    fill_in "Email", with: "fake@example.com"
+    choose "OPSS Enforcement"
+
+    click_on "Send invitation"
+
+    expect(page).to have_text("New search user account invitation sent")
   end
 end

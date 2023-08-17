@@ -1,6 +1,29 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "446e22fa1a1ecf3203beea97be5a1e54fcc2e9849db80017f8944bb39db66641",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "support_portal/app/controllers/support_portal/account_administration_controller.rb",
+      "line": 167,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:search_user).permit(:role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SupportPortal::AccountAdministrationController",
+        "method": "update_role_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
+      "note": "Role cannot be used to escalate privileges beyond defined limits"
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "ac07c288ecf5a13ffef4861ad347f202af0c2d2e6f7d451fea9561c6f6ed4d2c",
@@ -22,8 +45,31 @@
         89
       ],
       "note": "Lock name is hardcoded in app"
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "f0efe779d02ae48d7c61c713095573f152f85d2ff21398dcb5ab4b0e3ba2becd",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "support_portal/app/controllers/support_portal/account_administration_controller.rb",
+      "line": 171,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:search_user).permit(:name, :email, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SupportPortal::AccountAdministrationController",
+        "method": "invite_search_user_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
+      "note": "Role cannot be used to escalate privileges beyond defined limits"
     }
   ],
-  "updated": "2023-04-20 16:25:37 +0100",
-  "brakeman_version": "5.4.1"
+  "updated": "2023-08-14 14:10:41 +0100",
+  "brakeman_version": "6.0.1"
 }

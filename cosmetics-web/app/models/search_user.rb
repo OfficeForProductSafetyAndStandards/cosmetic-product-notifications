@@ -5,7 +5,10 @@ class SearchUser < User
   ALLOW_INTERNATIONAL_PHONE_NUMBER = false
   TOTP_ISSUER = "Search Cosmetics".freeze
 
+  has_paper_trail on: %i[update], only: %i[role]
+
   attribute :skip_password_validation, :boolean, default: false
+  attribute :validate_role, :boolean, default: false
 
   enum role: {
     poison_centre: "poison_centre",
@@ -19,6 +22,7 @@ class SearchUser < User
   validates :mobile_number,
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
+  validates :role, inclusion: { in: roles.keys }, if: -> { validate_role }
 
   def resend_account_setup_link
     SearchNotifyMailer.invitation_email(self).deliver_later

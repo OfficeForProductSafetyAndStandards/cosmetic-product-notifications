@@ -39,28 +39,28 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
 
     expect(page).to have_h1("History/Audit Log")
 
-    expect(page).to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
     expect(page).to have_text("Change from: Company A")
 
     fill_in "Enter a search term", with: user.name
     click_on "Search"
 
-    expect(page).to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).not_to have_text(other_support_user.name)
     expect(page).not_to have_text("Change from: Company A")
 
     fill_in "Enter a search term", with: notification.reference_number
     click_on "Search"
 
-    expect(page).to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).not_to have_text(other_support_user.name)
     expect(page).not_to have_text("Change from: Company A")
 
     fill_in "Enter a search term", with: other_support_user.name
     click_on "Search"
 
-    expect(page).not_to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).not_to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
     expect(page).to have_text("Change from: Company A")
   end
@@ -72,7 +72,7 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
 
     expect(page).to have_h1("History/Audit Log")
 
-    expect(page).to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
     expect(page).to have_text("Change from: Company A")
 
@@ -84,7 +84,7 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
     fill_in "history_search_date_to_1i", with: 2023
     click_on "Search"
 
-    expect(page).not_to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).not_to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
     expect(page).to have_text("Change from: Company A")
 
@@ -96,7 +96,7 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
     fill_in "history_search_date_to_1i", with: 2022
     click_on "Search"
 
-    expect(page).to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).not_to have_text(other_support_user.name)
     expect(page).not_to have_text("Change from: Company A")
   end
@@ -108,28 +108,28 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
 
     expect(page).to have_h1("History/Audit Log")
 
-    expect(page).to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
     expect(page).to have_text("Change from: Company A")
 
     select "Change to Notification", from: "Display by action"
     click_on "Search"
 
-    expect(page).to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).not_to have_text(other_support_user.name)
     expect(page).not_to have_text("Change from: Company A")
 
     select "Change to Responsible Person Name", from: "Display by action"
     click_on "Search"
 
-    expect(page).not_to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).not_to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
     expect(page).to have_text("Change from: Company A")
 
     select "Change to Responsible Person Address", from: "Display by action"
     click_on "Search"
 
-    expect(page).not_to have_text("UKCP Number (#{notification.reference_number}) Deletion")
+    expect(page).not_to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).not_to have_text(other_support_user.name)
     expect(page).not_to have_text("Change from: Company A")
   end

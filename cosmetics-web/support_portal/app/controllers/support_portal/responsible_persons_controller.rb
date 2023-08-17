@@ -1,27 +1,32 @@
 module SupportPortal
   class ResponsiblePersonsController < ApplicationController
-    before_action :set_responsible_person, except: %i[index]
-    before_action :set_assigned_contact, except: %i[index edit_name update_name edit_address update_address edit_business_type update_business_type]
+    before_action :set_responsible_person, except: %i[index search_results]
+    before_action :set_assigned_contact, except: %i[index search_results edit_name update_name edit_address update_address edit_business_type update_business_type]
 
     # GET /
-    def index
+    def index; end
+
+    # GET /search-results
+    def search_results
       @search_query = params[:q].presence
 
-      if @search_query
-        responsible_persons = ::ResponsiblePerson.left_joins(:contact_persons)
-          .where("responsible_persons.name ILIKE ?", "%#{@search_query}%")
-          .or(::ResponsiblePerson.left_joins(:contact_persons).where("contact_persons.name ILIKE ?", "%#{@search_query}%"))
-          .or(::ResponsiblePerson.left_joins(:contact_persons).where("contact_persons.email_address ILIKE ?", "%#{@search_query}%"))
+      responsible_persons = if @search_query
+                              ::ResponsiblePerson.left_joins(:contact_persons)
+                                .where("responsible_persons.name ILIKE ?", "%#{@search_query}%")
+                                .or(::ResponsiblePerson.left_joins(:contact_persons).where("contact_persons.name ILIKE ?", "%#{@search_query}%"))
+                                .or(::ResponsiblePerson.left_joins(:contact_persons).where("contact_persons.email_address ILIKE ?", "%#{@search_query}%"))
+                            else
+                              ::ResponsiblePerson.left_joins(:contact_persons)
+                            end
 
-        responsible_persons = if params[:assigned_contact_sort_order].present?
-                                responsible_persons.order("contact_persons.name": params[:assigned_contact_sort_order].to_sym)
-                              else
-                                responsible_persons.order(name: (params[:company_name_sort_order]&.to_sym || :asc))
-                              end
+      responsible_persons = if params[:assigned_contact_sort_order].present?
+                              responsible_persons.order("contact_persons.name": params[:assigned_contact_sort_order].to_sym)
+                            else
+                              responsible_persons.order(name: (params[:company_name_sort_order]&.to_sym || :asc))
+                            end
 
-        @records_count = responsible_persons.size
-        @pagy, @records = pagy(responsible_persons)
-      end
+      @records_count = responsible_persons.size
+      @pagy, @records = pagy(responsible_persons)
     end
 
     # GET /:id

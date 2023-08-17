@@ -4,6 +4,8 @@ class ResponsiblePerson < ApplicationRecord
   ADDRESS_FIELDS = %i[address_line_1 address_line_2 city county postal_code].freeze
   NAME_MAX_LENGTH = 250
 
+  has_paper_trail
+
   has_many :notifications, dependent: :destroy
   has_many :responsible_person_users, dependent: :destroy
   has_many :pending_responsible_person_users, dependent: :destroy
@@ -15,8 +17,6 @@ class ResponsiblePerson < ApplicationRecord
            dependent: :destroy
 
   has_many :nanomaterial_notifications, dependent: :destroy
-
-  has_paper_trail
 
   enum account_type: { business: "business", individual: "individual" }
 

@@ -1,0 +1,53 @@
+<% content_for :page_title, "Change account role type" %>
+<% @errors = @user.errors.any? %>
+<% @back_link_href = account_administration_path(@user, q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @user, url: update_role_account_administration_path, method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
+      <p class="govuk-body">This will affect what <%= @user.name %> can see and do within the Search Cosmetic Product Notifications service.</p>
+      <%= govuk_details(summary_text: "Help with role types") do %>
+        <p class="govuk-body">In order to assign the correct role type for a search user account, some guidance around each role type and the permissions associated with each role type is listed here:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            <strong>OPSS Enforcement / OPSS Incident Management Team (IMT)</strong>
+            <ul class="govuk-list">
+              <li>Access to Cosmetic products search.</li>
+              <li>Access ingredients search and ability to see ingredient information including their w/w percentages.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>OPSS Science team</strong>
+            <ul class="govuk-list">
+              <li>Access to Cosmetic products search.</li>
+              <li>Access to Nanomaterial reports available for download.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>OPSS General users</strong>
+            <ul class="govuk-list">
+              <li>Access to Cosmetic products search.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>National Poisons Information Service (NPIS)</strong>
+            <ul class="govuk-list">
+              <li>Access to Cosmetic products search and see RP address history.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Trading Standards</strong>
+            <ul class="govuk-list">
+              <li>Access to Cosmetic products search and see RP address history.</li>
+              <li>Access to ingredients search and ability to see ingredient information; unable to view the w/w percentage information.</li>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
+      <%= f.govuk_collection_radio_buttons :role, role_radios, :id, :name, legend: { text: "Role type" } %>
+      <%= f.govuk_submit "Save changes" %>
+    <% end %>
+  </div>
+</div>

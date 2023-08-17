@@ -122,6 +122,8 @@ en:
               blank: "Enter a password"
             password_confirmation:
               confirmation: "Password and confirmation does not match"
+            role:
+              inclusion: "Select a role type for the user account"
         support_user:
           attributes:
             email:
