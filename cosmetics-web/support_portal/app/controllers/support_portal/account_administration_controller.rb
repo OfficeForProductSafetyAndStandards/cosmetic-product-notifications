@@ -11,7 +11,7 @@ module SupportPortal
     # GET /search
     def search; end
 
-    # GET /search/results
+    # GET /search-results
     def search_results
       @search_query = params[:q].presence
 
