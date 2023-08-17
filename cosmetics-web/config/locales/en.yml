@@ -172,6 +172,7 @@ en:
           attributes:
             exact_concentration:
               blank: "Enter the exact concentration"
+              present: "Don't enter an exact concentration"
               greater_than: "Enter an exact concentration greater than 0"
               less_than_or_equal_to: "Enter an exact concentration less than or equal to 100"
               not_a_number: "Enter a number for the exact concentration"
@@ -182,6 +183,7 @@ en:
               too_long: "Ingredient name must be 100 characters or less"
             maximum_concentration:
               blank: "Enter the maximum concentration"
+              present: "Don't enter a maximum concentration"
               greater_than: "Enter a maximum concentration greater than 0"
               less_than_or_equal_to: "Enter a maximum concentration less than or equal to 100"
               not_a_number: "Enter a number for the maximum concentration"
@@ -192,6 +194,7 @@ en:
               not_a_number: "Enter a number for the maximum concentration"
             minimum_concentration:
               blank: "Enter the minimum concentration"
+              present: "Don't enter a minimum concentration"
               greater_than: "Enter a minimum concentration greater than 0"
               less_than_or_equal_to: "Enter a minimum concentration less than or equal to 100"
               not_a_number: "Enter a number for the minimum concentration"
@@ -263,11 +266,6 @@ en:
               too_common: "Choose a password that is harder to guess"
             secondary_authentication_methods:
               blank: "Select how to get an access code"
-        responsible_persons/notifications/components/bulk_ingredient_upload_form:
-          attributes:
-            file:
-              invalid: "The selected file must be a CSV file"
-              empty: "The selected file is empty"
         responsible_persons/details_form:
           attributes:
             account_type:

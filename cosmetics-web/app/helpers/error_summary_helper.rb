@@ -6,7 +6,7 @@ module ErrorSummaryHelper
   # attributes (eg radio buttons and checkboxes) and the value
   # of their first answer. This is used in the link for the error message,
   # so that that clicking the error focuses the first answer.
-  def error_summary_for(model, first_values: {})
+  def error_summary_for(model, first_values: {}, all_errors: false)
     if model.errors.any?
 
       error_list = []
@@ -20,7 +20,13 @@ module ErrorSummaryHelper
           href += "_#{first_values[attribute]}"
         end
 
-        error_list << { text: messages[0], href: }
+        if all_errors
+          messages.each do |message|
+            error_list << { text: message, href: }
+          end
+        else
+          error_list << { text: messages[0], href: }
+        end
       end
 
       govukErrorSummary(titleText: "There is a problem", errorList: error_list)
