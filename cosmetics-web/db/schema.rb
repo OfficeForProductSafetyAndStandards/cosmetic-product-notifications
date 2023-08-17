@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_07_095619) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_141240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -382,6 +382,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_095619) do
     t.datetime "secondary_authentication_recovery_codes_generated_at", precision: nil
     t.string "secondary_authentication_recovery_codes", default: [], array: true
     t.string "secondary_authentication_recovery_codes_used", default: [], array: true
+    t.datetime "deactivated_at", precision: nil
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["name"], name: "index_users_on_name"

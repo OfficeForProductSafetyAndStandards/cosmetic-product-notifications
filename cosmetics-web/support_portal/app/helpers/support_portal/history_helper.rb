@@ -21,7 +21,14 @@ module SupportPortal
     }.freeze
 
     USER_ACTIONS = {
-      "role": "role",
+      "role": "role change",
+      "deactivated_at_set": "deactivation",
+      "deactivated_at_unset": "reactivation",
+    }.freeze
+
+    USER_ACTIONS_PAST_TENSE = {
+      "deactivated_at_set": "deactivated",
+      "deactivated_at_unset": "reactivated",
     }.freeze
 
     def display_action(action)
@@ -40,7 +47,7 @@ module SupportPortal
 
       return display_responsible_person_action_details(action.object_changes) if action.item_type == "ResponsiblePerson"
 
-      display_user_action_details(action.object_changes)
+      display_user_action_details(action)
     end
 
     def display_notification_action(action)
@@ -67,16 +74,25 @@ module SupportPortal
 
     def display_user_action(object_changes)
       change = object_changes.except("updated_at").keys.first
+      change_to = object_changes.except("updated_at")[change].last
 
-      "User #{USER_ACTIONS[change.to_sym]} change"
+      change += change_to.nil? ? "_unset" : "_set" if change == "deactivated_at"
+
+      "User #{USER_ACTIONS[change.to_sym]}"
     end
 
-    def display_user_action_details(object_changes)
-      changes = object_changes.except("updated_at").values
+    def display_user_action_details(action)
+      change = action.object_changes.except("updated_at").keys.first
+      changes = action.object_changes.except("updated_at").values
 
-      changes.map { |change|
-        "Change from: #{role_type(change[0])}<br>To: #{role_type(change[1])}"
-      }.join("<br>")
+      if change == "deactivated_at"
+        change += action.object_changes.except("updated_at")[change].last.nil? ? "_unset" : "_set"
+        "#{action.whodunnit} #{USER_ACTIONS_PAST_TENSE[change.to_sym]} user #{action.object['email']}"
+      else
+        changes.map { |change|
+          "Change from: #{role_type(change[0])}<br>To: #{role_type(change[1])}"
+        }.join("<br>")
+      end
     end
 
     def sorting_params(sort_by, params)

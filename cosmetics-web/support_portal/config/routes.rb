@@ -34,6 +34,11 @@ SupportPortal::Engine.routes.draw do
       put "update-role"
       get "reset-account"
       delete "reset"
+      get "deactivate-account"
+      patch "deactivate"
+      put "deactivate"
+      patch "reactivate"
+      put "reactivate"
       get "edit-responsible-persons"
       get "delete-responsible-person-user/:responsible_person_user_id/confirm", to: "account_administration#delete_responsible_person_user_confirm", as: :confirm_delete_responsible_person_user
       delete "delete-responsible-person-user/:responsible_person_user_id", to: "account_administration#delete_responsible_person_user", as: :delete_responsible_person_user
