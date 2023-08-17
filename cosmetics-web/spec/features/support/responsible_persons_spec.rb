@@ -75,7 +75,9 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
 
     click_on "Search", match: :first
 
-    expect(page).to have_text("Enter a search term")
+    expect(page).to have_text(responsible_person1.name)
+    expect(page).to have_text(responsible_person2.name)
+    expect(page).to have_text(responsible_person3.name)
   end
 
   scenario "Viewing Responsible Person account details" do
