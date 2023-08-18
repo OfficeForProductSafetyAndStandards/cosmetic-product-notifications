@@ -31,8 +31,10 @@ module SecondaryAuthentication
           account_path(:pending_invitations)
         elsif current_user.is_a?(SupportUser)
           root_path
-        else
+        elsif current_user.is_a?(SearchUser)
           declaration_path
+        else
+          account_path(:overview)
         end
       end
 

@@ -35,9 +35,9 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
   scenario "Searching for changes made by support users using a search term" do
     expect(page).to have_h1("Dashboard")
 
-    click_link "History/Audit log"
+    click_link "Change history log"
 
-    expect(page).to have_h1("History/Audit Log")
+    expect(page).to have_h1("Change history log")
 
     expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
@@ -68,9 +68,9 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
   scenario "Searching for changes made by support users using a date range" do
     expect(page).to have_h1("Dashboard")
 
-    click_link "History/Audit log"
+    click_link "Change history log"
 
-    expect(page).to have_h1("History/Audit Log")
+    expect(page).to have_h1("Change history log")
 
     expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)
@@ -104,9 +104,9 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
   scenario "Searching for changes made by support users using an action" do
     expect(page).to have_h1("Dashboard")
 
-    click_link "History/Audit log"
+    click_link "Change history log"
 
-    expect(page).to have_h1("History/Audit Log")
+    expect(page).to have_h1("Change history log")
 
     expect(page).to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).to have_text(other_support_user.name)

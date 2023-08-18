@@ -30,12 +30,12 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     click_on "Continue"
 
     expect_to_be_on_add_csv_ingredients_page
-    expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The selected file must be a CSV", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
     page.attach_file "spec/fixtures/files/exact_ingredients_duplicate_row.csv"
     click_on "Continue"
 
-    expect_form_to_have_errors(file: { message: "The file has an error in row: 5", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The selected file contains ingredients that are duplicated", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
     page.attach_file "spec/fixtures/files/exact_ingredients.csv"
     click_on "Continue"
@@ -81,18 +81,18 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     click_on "Continue"
 
     expect_to_be_on_add_csv_ingredients_page
-    expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The selected file must be a CSV", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
     page.attach_file "spec/fixtures/files/testText.txt"
     click_on "Continue"
 
     expect_to_be_on_add_csv_ingredients_page
-    expect_form_to_have_errors(file: { message: "The selected file must be a CSV file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The selected file must be a CSV", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
     page.attach_file "spec/fixtures/files/exact_ingredients.csv"
     click_on "Continue"
 
-    expect_form_to_have_errors(file: { message: "The file has an error in rows: 2,3,4", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
+    expect_form_to_have_errors(file: { message: "The header row must be included in the selected file", id: "file", href: "responsible_persons_notifications_components_bulk_ingredient_upload_form_file" })
 
     page.attach_file "spec/fixtures/files/exact_ingredients_with_shades.csv"
     click_on "Continue"

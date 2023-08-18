@@ -123,6 +123,10 @@ def expect_to_be_on_reset_password_page
   expect(page).to have_current_path("/password/new")
 end
 
+def expect_to_be_on_account_overview_page
+  expect(page).to have_current_path("/responsible_persons/account/overview", ignore_query: true)
+end
+
 def expect_to_be_on_declaration_page
   expect(page).to have_current_path("/declaration", ignore_query: true)
 end

@@ -96,7 +96,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
     click_link "Continue"
 
-    expect_to_be_on_declaration_page
+    expect_to_be_on_account_overview_page
   end
 
   scenario "user signs up with authentication app 2FA but without text message" do
@@ -127,7 +127,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
     click_link "Continue"
 
-    expect_to_be_on_declaration_page
+    expect_to_be_on_account_overview_page
   end
 
   scenario "user signs up originally selecting both text and app methods but then moving back to only use the app" do
@@ -179,7 +179,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
     click_link "Continue"
 
-    expect_to_be_on_declaration_page
+    expect_to_be_on_account_overview_page
   end
 
   scenario "user signs up and verifies its email with 2FA disabled for the environment", with_2fa: false do
@@ -221,7 +221,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
     click_link "Continue"
 
-    expect_to_be_on_declaration_page
+    expect_to_be_on_account_overview_page
   end
 
   scenario "user signs up and verifies its email with, confirmation expired during the process" do
@@ -269,7 +269,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
     click_link "Continue"
 
-    expect_to_be_on_declaration_page
+    expect_to_be_on_account_overview_page
   end
 
   context "when account already exists" do
@@ -337,7 +337,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
         click_link "Continue"
 
-        expect_to_be_on_declaration_page
+        expect_to_be_on_account_overview_page
       end
     end
 
@@ -426,7 +426,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.find_by(email: "signing_up@example.com").secondary_authentication_recovery_codes))
     click_link "Continue"
 
-    expect_to_be_on_declaration_page
+    expect_to_be_on_account_overview_page
   end
 
   scenario "user signs up and skips creating an account while signed in as someone else" do
