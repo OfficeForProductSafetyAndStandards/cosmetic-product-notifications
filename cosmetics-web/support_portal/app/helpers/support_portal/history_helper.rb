@@ -44,11 +44,11 @@ module SupportPortal
     end
 
     def display_notification_action(action)
-      "UKCP number (#{action.item.reference_number}) #{NOTIFICATION_ACTIONS[action.event.to_sym]}"
+      "UKCP number (#{action.item.reference_number || action.item.deleted_notification.reference_number}) #{NOTIFICATION_ACTIONS[action.event.to_sym]}"
     end
 
     def display_notification_action_details(action)
-      "#{action.whodunnit} #{NOTIFICATION_ACTIONS_PAST_TENSE[action.event.to_sym]} UKCP #{action.item.reference_number}"
+      "#{action.whodunnit} #{NOTIFICATION_ACTIONS_PAST_TENSE[action.event.to_sym]} UKCP #{action.item.reference_number || action.item.deleted_notification.reference_number}"
     end
 
     def display_responsible_person_action(object_changes)
@@ -61,7 +61,7 @@ module SupportPortal
       changes = object_changes.except("updated_at").values
 
       changes.map { |change|
-        "Change from: #{change[0]}<br>To: #{change[1]}"
+        "Change from: #{change[0].presence || '<em>Empty</em>'}<br>To: #{change[1].presence || '<em>Empty</em>'}"
       }.join("<br>")
     end
 
