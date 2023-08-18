@@ -231,12 +231,12 @@ RSpec.describe ResponsiblePersons::DetailsForm do
 
       before { form.validate }
 
-      it "is is valid" do
-        expect(form).to be_valid
+      it "is not valid" do
+        expect(form).to be_invalid
       end
 
-      it "does not populate an error message" do
-        expect(form.errors.full_messages).to be_empty
+      it "populates an error message" do
+        expect(form.errors.full_messages).to eq(["Enter a county"])
       end
     end
 

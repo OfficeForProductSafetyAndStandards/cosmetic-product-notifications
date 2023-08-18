@@ -36,6 +36,13 @@ RSpec.describe ResponsiblePerson, type: :model do
       expect(responsible_person.errors[:city]).to include("Enter a town or city")
     end
 
+    it "fails if a county is not specified" do
+      responsible_person.county = nil
+
+      expect(responsible_person.save).to be false
+      expect(responsible_person.errors[:county]).to include("Enter a county")
+    end
+
     it "fails if a postal code is not specified" do
       responsible_person.postal_code = nil
 

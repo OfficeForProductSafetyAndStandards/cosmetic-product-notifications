@@ -43,6 +43,8 @@ RSpec.describe "Editing responsible person details", :with_stubbed_mailer, type:
     expect(page).to have_css("p#address_line_1-error", text: "Enter a building and street")
     expect(page).to have_link("Enter a town or city", href: "#city")
     expect(page).to have_css("p#city-error", text: "Enter a town or city")
+    expect(page).to have_link("Enter a county", href: "#county")
+    expect(page).to have_css("p#county-error", text: "Enter a county")
     expect(page).to have_link("Enter a postcode", href: "#postal_code")
     expect(page).to have_css("p#postal_code-error", text: "Enter a postcode")
 

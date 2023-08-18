@@ -158,6 +158,8 @@ en:
               blank: "Enter a building and street"
             city:
               blank: "Enter a town or city"
+            county:
+              blank: "Enter a county"
             postal_code:
               blank: "Enter a postcode"
         contact_person:
@@ -275,6 +277,8 @@ en:
               blank: "Enter a building and street"
             city:
               blank: "Enter a town or city"
+            county:
+              blank: "Enter a county"
             name:
               blank: "Enter a name"
               invalid: "Enter a valid name"

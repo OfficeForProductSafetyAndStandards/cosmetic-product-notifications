@@ -26,6 +26,7 @@ class ResponsiblePerson < ApplicationRecord
     rp.validates :name, presence: true
     rp.validates :address_line_1, presence: true
     rp.validates :city, presence: true
+    rp.validates :county, presence: true
     rp.validates :postal_code, presence: true
     rp.validates :postal_code, uk_postcode: true, if: -> { postal_code.present? }
   end
