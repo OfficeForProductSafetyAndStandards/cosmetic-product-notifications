@@ -114,6 +114,19 @@ def upload_nanomaterials_pdfs_in_last_three_months_job
   end
 end
 
+def delete_version_history_job
+  job = Sidekiq::Cron::Job.new(
+    name: "Delete version history older than seven years every day at 01:00",
+    cron: "0 1 * * *",
+    class: "DeleteVersionHistoryJob",
+    queue: "cosmetics",
+  )
+  unless job.save
+    Rails.logger.error "***** WARNING - Delete version history job was not saved! *****"
+    Rails.logger.error job.errors.join("; ")
+  end
+end
+
 class SidekiqAppLogDataMiddleware
   def call(_, job, _, _)
     job["app_request_id"] = RequestStore.store[:logger_request_id]
@@ -149,6 +162,7 @@ Sidekiq.configure_server do |config|
   upload_nanomaterial_notifications_in_last_three_months_job
   upload_nanomaterials_pdfs_job
   upload_nanomaterials_pdfs_in_last_three_months_job
+  delete_version_history_job
 
   Sidekiq::Status.configure_server_middleware(config)
   Sidekiq::Status.configure_client_middleware(config)

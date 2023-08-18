@@ -15,6 +15,6 @@ RSpec.feature "Dashboard", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa
     expect(page).to have_h3("Manage cosmetic notifications")
     expect(page).to have_h3("Account administration")
     expect(page).to have_h3("Responsible Person administration")
-    expect(page).to have_h3("History/Audit log")
+    expect(page).to have_h3("Change history log")
   end
 end
