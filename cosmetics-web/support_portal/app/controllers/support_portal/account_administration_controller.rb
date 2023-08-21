@@ -3,7 +3,7 @@ module SupportPortal
     before_action :set_user, except: %i[index search search_results invite_search_user create_search_user]
     before_action :set_responsible_persons, only: %i[show edit_responsible_persons]
     before_action :set_responsible_person, only: %i[delete_responsible_person_user_confirm delete_responsible_person_user]
-    before_action :reenforce_secondary_authentication, only: :reset_account
+    before_action :reenforce_secondary_authentication, only: %i[reset_account deactivate_account]
 
     # GET /
     def index; end
@@ -70,6 +70,33 @@ module SupportPortal
         redirect_to account_administration_path(@user, q: params[:q]), notice: "The account has been reset"
       else
         redirect_to reset_account_path(@user, q: params[:q]), notice: "The account failed to reset"
+      end
+    end
+
+    # GET /:id/deactivate-account
+    def deactivate_account
+      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated?
+    end
+
+    # PATCH/PUT /:id/deactivate
+    def deactivate
+      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated?
+
+      if @user.update(deactivated_at: Time.zone.now)
+        redirect_to account_administration_path, notice: "The account has been deactivated"
+      else
+        render :deactivate_account
+      end
+    end
+
+    # PATCH/PUT /:id/reactivate
+    def reactivate
+      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && @user.deactivated?
+
+      if @user.update(deactivated_at: nil) && @user.reset_secondary_authentication!
+        redirect_to account_administration_path, notice: "The account has been reactivated<br>An email was sent to #{@user.email} to inform #{@user.name}."
+      else
+        redirect_to account_administration_path
       end
     end
 
