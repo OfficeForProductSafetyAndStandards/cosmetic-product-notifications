@@ -11,14 +11,14 @@ RSpec.describe SupportUser, type: :model do
     user.new_email = "wrongformat"
     expect(user).not_to be_valid
     expect(user.errors[:new_email])
-      .to include("Enter an email address in the correct format and end in gov.uk")
+      .to include("Enter an email address in the correct format and ending in gov.uk")
   end
 
   it "validates that the new email is a gov.uk address" do
     user.new_email = "new@example.com"
     expect(user).not_to be_valid
     expect(user.errors[:new_email])
-      .to include("Enter an email address in the correct format and end in gov.uk")
+      .to include("Enter an email address in the correct format and ending in gov.uk")
   end
 
   describe ".opss?" do

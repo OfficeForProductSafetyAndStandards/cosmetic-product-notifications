@@ -127,7 +127,7 @@ en:
         support_user:
           attributes:
             email:
-              invalid: &invalid_gov_uk_email "Enter an email address in the correct format and end in gov.uk"
+              invalid: &invalid_gov_uk_email "Enter an email address in the correct format and ending in gov.uk"
             new_email:
               invalid: *invalid_gov_uk_email
             password:
@@ -380,12 +380,6 @@ en:
           attributes:
             password:
               blank: "Enter your password"
-        invite_support_user_form:
-          attributes:
-            name:
-              blank: "Enter the full name"
-            email:
-              invalid: *invalid_gov_uk_email
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
@@ -430,7 +424,6 @@ en:
   email_form_validation:
     wrong_email_or_password: *invalid_email
     wrong_format: *invalid_email
-    wrong_format_gov_uk: *invalid_gov_uk_email
     blank: *empty_email
   user_password_check_form_validation:
     invalid: "Password is incorrect"
