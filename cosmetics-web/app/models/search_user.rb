@@ -5,7 +5,7 @@ class SearchUser < User
   ALLOW_INTERNATIONAL_PHONE_NUMBER = false
   TOTP_ISSUER = "Search Cosmetics".freeze
 
-  has_paper_trail on: %i[update], only: %i[role]
+  has_paper_trail on: %i[update], only: %i[role deactivated_at]
 
   attribute :skip_password_validation, :boolean, default: false
   attribute :validate_role, :boolean, default: false
