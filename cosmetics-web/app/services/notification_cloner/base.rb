@@ -29,7 +29,7 @@ module NotificationCloner
     end
 
     def self.clone_components(new_notification, old_notification)
-      old_notification.components.map do |old_component|
+      old_notification.components.order(:created_at).map do |old_component|
         new_component = clone_model(old_component)
         new_component.notification = new_notification
         new_component.routing_questions_answers["contains_cmrs"] = nil if new_component.routing_questions_answers
@@ -42,7 +42,7 @@ module NotificationCloner
     end
 
     def self.clone_nano_materials(new_notification, old_notification)
-      old_notification.nano_materials.map do |nano|
+      old_notification.nano_materials.order(:created_at).map do |nano|
         nano_material = clone_model(nano)
         nano_material.notification = new_notification
         nano_material.save!
