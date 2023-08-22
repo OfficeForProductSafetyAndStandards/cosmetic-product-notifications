@@ -32,6 +32,8 @@ module SupportPortal
                    end
       end
 
+      search_user_changes if search_user_action?
+
       @changes = @changes.where("versions.created_at <= ?", @date_to) if @date_to.present?
       @changes = @changes.where("versions.created_at >= ?", @date_from) if @date_from.present?
 
@@ -53,6 +55,12 @@ module SupportPortal
                   .order(**sort_order)
     end
 
+    def search_user_changes
+      @changes = @changes.where("object_changes->>'role' IS NOT NULL") if @action.match?(/role_changed/)
+      @changes = @changes.where("object_changes #>> '{deactivated_at, 1}' IS NOT NULL") if @action.match?(/deactivated/)
+      @changes = @changes.where("object_changes #>> '{deactivated_at, 0}' IS NOT NULL") if @action.match?(/reactivated/)
+    end
+
     def sort_order
       return { @sort_by => @sort_direction } if @sort_by.present?
 
@@ -62,7 +70,9 @@ module SupportPortal
     def item_type
       return "ResponsiblePerson" if responsible_person_action?
 
-      "Notification" if notification_action?
+      return "Notification" if notification_action?
+
+      "User"
     end
 
     def responsible_person_action?
@@ -71,6 +81,10 @@ module SupportPortal
 
     def notification_action?
       HistorySearch::NOTIFICATION_ACTIONS.pluck(:id).include?(@action&.to_sym)
+    end
+
+    def search_user_action?
+      HistorySearch::SEARCH_USER_ACTIONS.pluck(:id).include?(@action&.to_sym)
     end
   end
 end
