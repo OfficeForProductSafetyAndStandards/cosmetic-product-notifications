@@ -120,4 +120,14 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
       expect(delivered_emails.last.recipient).to eq "inviteduser@example.com"
     end
   end
+
+  context "when a deactivated user is invited" do
+    subject(:inviter) { described_class.new(name: "John Doe", user:) }
+
+    let(:user) do
+      create(:support_user, :registration_incomplete, email: "deactivatedtuser@example.com", deactivated_at: 1.week.ago)
+    end
+
+    include_examples "existing user"
+  end
 end
