@@ -85,17 +85,14 @@ RSpec.describe Ingredient, type: :model do
       end
     end
 
-    describe "validate concentration range" do
+    describe "validate range concentrations" do
       let(:ingredient) do
         build(:range_ingredient,
-              minimum_concentration: 1, maximum_concentration:, poisonous: false)
+              minimum_concentration:, maximum_concentration:, poisonous: false)
       end
 
-      let(:error_message) do
-        "Maximum concentration must be greater than the minimum concentration"
-      end
-
-      context "when the maximum_concentration is equal to the minimum_concentration" do
+      context "when the maximum concentration is equal to the minimum concentration" do
+        let(:minimum_concentration) { 1 }
         let(:maximum_concentration) { 1 }
 
         it "is valid" do
@@ -104,21 +101,43 @@ RSpec.describe Ingredient, type: :model do
         end
       end
 
-      context "when the maximum_concentration is less than the minimum_concentration" do
+      context "when the maximum concentration is less than the minimum concentration" do
+        let(:minimum_concentration) { 1 }
         let(:maximum_concentration) { 0.1 }
 
         it "is not valid" do
           ingredient.valid?
-          expect(ingredient.errors[:maximum_concentration]).to include(error_message)
+          expect(ingredient.errors[:maximum_concentration]).to include("Maximum concentration must be greater than the minimum concentration")
         end
       end
 
-      context "when the maximum_concentration is greater than the minimum_concentration" do
+      context "when the maximum concentration is greater than the minimum concentration" do
+        let(:minimum_concentration) { 1 }
         let(:maximum_concentration) { 1.1 }
 
         it "is valid" do
           ingredient.valid?
           expect(ingredient).to be_valid
+        end
+      end
+
+      context "when the minimum concentration is negative" do
+        let(:minimum_concentration) { -0.1 }
+        let(:maximum_concentration) { 1 }
+
+        it "is not valid" do
+          ingredient.valid?
+          expect(ingredient.errors[:minimum_concentration]).to include("Enter a minimum concentration greater than or equal to 0")
+        end
+      end
+
+      context "when the maximum concentration is zero" do
+        let(:minimum_concentration) { 0 }
+        let(:maximum_concentration) { 0 }
+
+        it "is not valid" do
+          ingredient.valid?
+          expect(ingredient.errors[:maximum_concentration]).to include("Enter a maximum concentration greater than 0")
         end
       end
     end

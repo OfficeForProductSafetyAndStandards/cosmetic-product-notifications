@@ -195,7 +195,7 @@ en:
             minimum_concentration:
               blank: "Enter the minimum concentration"
               present: "Don't enter a minimum concentration"
-              greater_than: "Enter a minimum concentration greater than 0"
+              greater_than_or_equal_to: "Enter a minimum concentration greater than or equal to 0"
               less_than_or_equal_to: "Enter a minimum concentration less than or equal to 100"
               not_a_number: "Enter a number for the minimum concentration"
             poisonous:
