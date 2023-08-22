@@ -55,4 +55,10 @@ RSpec.feature "Support Users", :with_stubbed_mailer, :with_stubbed_notify, :with
     expect(page).not_to have_css("th", text: support_user_1.name)
     expect(page).not_to have_css("td", text: support_user_1.email)
   end
+
+  scenario "when trying to remove user's own account" do
+    visit "/support_users/#{user.id}/remove"
+
+    expect(page).to have_current_path("/support_users")
+  end
 end

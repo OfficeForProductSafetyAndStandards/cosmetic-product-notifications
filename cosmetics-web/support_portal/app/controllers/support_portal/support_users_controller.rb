@@ -1,7 +1,7 @@
 module SupportPortal
   class SupportUsersController < ApplicationController
     before_action :set_user, except: %i[index]
-    before_action :redirect_if_disallowed_user, only: %i[remove deactivate]
+    before_action :redirect_if_current_user, only: %i[remove deactivate]
 
     def index
       @users = SupportUser.where.not(id: current_user.id).where(deactivated_at: nil)
@@ -23,11 +23,11 @@ module SupportPortal
   private
 
     def set_user
-      @user = SupportUser.find(params[:id])
+      @user = SupportUser.where(deactivated_at: nil).where(id: params[:id]).first
     end
 
-    def redirect_if_disallowed_user
-      (@user.is_a?(::SupportUser) && !@user.deactivated?) || @user == current_user
+    def redirect_if_current_user
+      redirect_to support_users_path if @user == current_user
     end
   end
 end
