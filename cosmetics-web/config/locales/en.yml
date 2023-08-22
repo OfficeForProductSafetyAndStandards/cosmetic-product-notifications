@@ -442,6 +442,7 @@ en:
         generic: A message with a confirmation link has been sent to your email address.
       follow_link: Please follow the link to continue.
       check_spam: If you cannot find the email, check inside your email spam folder.
+    deactivated: Your account has been deactivated.
   sign_user_in:
     email:
       wrong_email_or_password: "Enter correct email address and password"
