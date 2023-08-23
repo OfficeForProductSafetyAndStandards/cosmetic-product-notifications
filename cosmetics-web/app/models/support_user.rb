@@ -19,6 +19,12 @@ class SupportUser < User
     trading_standards: "trading_standards",
   }
 
+  validates :email,
+            email: {
+              message: :invalid,
+              if: -> { email.present? },
+            }
+
   validates :mobile_number,
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
