@@ -145,7 +145,7 @@ module SupportPortal
       @user = ::SearchUser.new(invite_search_user_params.merge(skip_password_validation: true, validate_role: true))
 
       if @user.valid?
-        ::InviteSearchUser.call(**invite_search_user_params.to_h)
+        ::InviteSearchUser.call(invite_search_user_params)
         redirect_to invite_search_user_account_administration_index_path, notice: "New search user account invitation sent"
       else
         render :invite_search_user
