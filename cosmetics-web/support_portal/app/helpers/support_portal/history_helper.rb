@@ -36,9 +36,9 @@ module SupportPortal
       when "Notification"
         display_notification_action(action)
       when "ResponsiblePerson"
-        display_responsible_person_action(action.object_changes)
+        display_responsible_person_action(action)
       when "User"
-        display_user_action(action.object_changes)
+        display_user_action(action)
       end
     end
 
@@ -58,27 +58,34 @@ module SupportPortal
       "#{action.whodunnit} #{NOTIFICATION_ACTIONS_PAST_TENSE[action.event.to_sym]} UKCP #{action.item.reference_number || action.item.deleted_notification.reference_number}"
     end
 
-    def display_responsible_person_action(object_changes)
-      change = object_changes.except("updated_at").keys.first
+    def display_responsible_person_action(action)
+      change = action.object_changes.except("updated_at").keys.first
 
-      "RP #{RESPONSIBLE_PERSON_ACTIONS[change.to_sym]} change"
+      "RP (#{action.item.name}) #{RESPONSIBLE_PERSON_ACTIONS[change.to_sym]} change"
     end
 
     def display_responsible_person_action_details(object_changes)
+      account_type_change = object_changes.except("updated_at").keys.first == "account_type"
       changes = object_changes.except("updated_at").values
 
-      changes.map { |change|
-        "Change from: #{change[0].presence || '<em>Empty</em>'}<br>To: #{change[1].presence || '<em>Empty</em>'}"
-      }.join("<br>")
+      if account_type_change
+        changes.map { |change|
+          "Change from: #{responsible_person_business_type(change[0])}<br>To: #{responsible_person_business_type(change[1])}"
+        }.join("<br>")
+      else
+        changes.map { |change|
+          "Change from: #{change[0].presence || '<em>Empty</em>'}<br>To: #{change[1].presence || '<em>Empty</em>'}"
+        }.join("<br>")
+      end
     end
 
-    def display_user_action(object_changes)
-      change = object_changes.except("updated_at").keys.first
-      change_to = object_changes.except("updated_at")[change].last
+    def display_user_action(action)
+      change = action.object_changes.except("updated_at").keys.first
+      change_to = action.object_changes.except("updated_at")[change].last
 
       change += change_to.nil? ? "_unset" : "_set" if change == "deactivated_at"
 
-      "User #{USER_ACTIONS[change.to_sym]}"
+      "User (#{action.object['email']}) #{USER_ACTIONS[change.to_sym]}"
     end
 
     def display_user_action_details(action)
