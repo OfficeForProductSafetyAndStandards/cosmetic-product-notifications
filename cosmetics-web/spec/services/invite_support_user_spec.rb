@@ -141,7 +141,7 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
     subject(:inviter) { described_class.new(name: "John Doe", user:) }
 
     let(:user) do
-      create(:support_user, :registration_incomplete, email: "deactivatedtuser@example.com", deactivated_at: 1.week.ago)
+      create(:support_user, :registration_incomplete, email: "deactivatedtuser@example.gov.uk", deactivated_at: 1.week.ago)
     end
 
     include_examples "existing user"
