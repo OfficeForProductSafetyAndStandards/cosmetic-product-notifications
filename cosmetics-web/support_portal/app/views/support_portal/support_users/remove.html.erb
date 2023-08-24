@@ -1,0 +1,17 @@
+<% content_for :page_title, "Remove #{@user.name}" %>
+<% @back_link_href = support_users_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_warning_text do %>
+      Removing a team member from the OSU portal will mean that they will no longer be able to access the support service.
+      <br>
+      <br>
+      They can be invited back to the portal by sending an invitation email  to their support email address account.
+    <% end %>
+    <%= form_with model: @user, url: deactivate_support_user_path, method: :patch do |f| %>
+      <%= f.govuk_submit "Remove account" %>
+      <%= govuk_button_link_to "Cancel", support_users_path, secondary: true %>
+    <% end %>
+  </div>
+</div>
