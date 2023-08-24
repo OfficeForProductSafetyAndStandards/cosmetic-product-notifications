@@ -24,6 +24,6 @@ private
   end
 
   def for_support_user?(record)
-    [SupportUser, InviteSupportUserForm].include?(record.class)
+    record.is_a?(SupportUser)
   end
 end
