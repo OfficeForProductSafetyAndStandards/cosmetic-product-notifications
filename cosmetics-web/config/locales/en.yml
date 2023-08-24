@@ -122,10 +122,12 @@ en:
               blank: "Enter a password"
             password_confirmation:
               confirmation: "Password and confirmation does not match"
+            role:
+              inclusion: "Select a role type for the user account"
         support_user:
           attributes:
             email:
-              invalid: &invalid_gov_uk_email "Enter an email address in the correct format and end in gov.uk"
+              invalid: &invalid_gov_uk_email "Enter an email address in the correct format and ending in gov.uk"
             new_email:
               invalid: *invalid_gov_uk_email
             password:
@@ -170,6 +172,7 @@ en:
           attributes:
             exact_concentration:
               blank: "Enter the exact concentration"
+              present: "Don't enter an exact concentration"
               greater_than: "Enter an exact concentration greater than 0"
               less_than_or_equal_to: "Enter an exact concentration less than or equal to 100"
               not_a_number: "Enter a number for the exact concentration"
@@ -180,6 +183,7 @@ en:
               too_long: "Ingredient name must be 100 characters or less"
             maximum_concentration:
               blank: "Enter the maximum concentration"
+              present: "Don't enter a maximum concentration"
               greater_than: "Enter a maximum concentration greater than 0"
               less_than_or_equal_to: "Enter a maximum concentration less than or equal to 100"
               not_a_number: "Enter a number for the maximum concentration"
@@ -190,7 +194,8 @@ en:
               not_a_number: "Enter a number for the maximum concentration"
             minimum_concentration:
               blank: "Enter the minimum concentration"
-              greater_than: "Enter a minimum concentration greater than 0"
+              present: "Don't enter a minimum concentration"
+              greater_than_or_equal_to: "Enter a minimum concentration greater than or equal to 0"
               less_than_or_equal_to: "Enter a minimum concentration less than or equal to 100"
               not_a_number: "Enter a number for the minimum concentration"
             poisonous:
@@ -261,11 +266,6 @@ en:
               too_common: "Choose a password that is harder to guess"
             secondary_authentication_methods:
               blank: "Select how to get an access code"
-        responsible_persons/notifications/components/bulk_ingredient_upload_form:
-          attributes:
-            file:
-              invalid: "The selected file must be a CSV file"
-              empty: "The selected file is empty"
         responsible_persons/details_form:
           attributes:
             account_type:
@@ -380,12 +380,6 @@ en:
           attributes:
             password:
               blank: "Enter your password"
-        invite_support_user_form:
-          attributes:
-            name:
-              blank: "Enter the full name"
-            email:
-              invalid: *invalid_gov_uk_email
   enquiries_email: "opss.enquiries@beis.gov.uk"
   errors:
     format: "%{message}"
@@ -430,7 +424,6 @@ en:
   email_form_validation:
     wrong_email_or_password: *invalid_email
     wrong_format: *invalid_email
-    wrong_format_gov_uk: *invalid_gov_uk_email
     blank: *empty_email
   user_password_check_form_validation:
     invalid: "Password is incorrect"
@@ -442,6 +435,7 @@ en:
         generic: A message with a confirmation link has been sent to your email address.
       follow_link: Please follow the link to continue.
       check_spam: If you cannot find the email, check inside your email spam folder.
+    deactivated: Your account has been deactivated.
   sign_user_in:
     email:
       wrong_email_or_password: "Enter correct email address and password"

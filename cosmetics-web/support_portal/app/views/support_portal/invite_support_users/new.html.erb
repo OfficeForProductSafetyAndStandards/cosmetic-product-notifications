@@ -1,27 +1,25 @@
 <% content_for :page_title, "Invite a team member" %>
+<% @errors = @user.errors.any? %>
 <% @back_link_href = main_app.my_account_path %>
 
-<% content_for :after_header do %>
-  <%= link_to "Back", "#", class: "govuk-back-link" %>
-<% end %>
-
-<%= form_with model: @invite_support_user_form, url: invite_support_user_path, method: :post do |f| %>
-  <%= f.govuk_error_summary %>
-  <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
-  <div class="govuk-grid-row">
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <p>Inviting a team member will allow them to:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>Manage support issues</li>
-      <li>View, delete and recover cosmetic product notifications across the service</li>
-      <li>Invite other team members</li>
-      <li>View the history / audit log of the SCPN services</li>
-      <li>View a list of all users within the search and submit service</li>
-    </ul>
-    <%= f.govuk_text_field :name, label: { text: "Full name" } %>
-    <%= f.govuk_email_field :email, label: { text: "Email address" } %>
-    <%= f.govuk_submit "Send invitation" %>
+    <%= form_with model: @user, url: invite_support_user_path, method: :post do |f| %>
+      <%= f.govuk_error_summary %>
+      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
+      <p class="govuk-body">Inviting a team member will allow them to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Manage support issues</li>
+        <li>View, delete and recover cosmetic product notifications across the service</li>
+        <li>Invite other team members</li>
+        <li>View and edit name and email address details for all users within the search and submit service</li>
+        <li>Reset user accounts</li>
+        <li>Search and edit Responsible Person and Assigned contact accounts</li>
+        <li>View the Change history log of edit actions for the SCPN services</li>
+      </ul>
+      <%= f.govuk_text_field :name, label: { text: "Full name" } %>
+      <%= f.govuk_email_field :email, label: { text: "Email address" } %>
+      <%= f.govuk_submit "Send invitation" %>
+    <% end %>
   </div>
-  </div>
-<% end %>
+</div>

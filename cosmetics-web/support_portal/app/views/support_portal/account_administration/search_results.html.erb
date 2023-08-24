@@ -1,12 +1,12 @@
 <% content_for :page_title, "Search for an account" %>
-<% @back_link_href = account_administration_index_path %>
+<% @back_link_href = search_account_administration_index_path(q: params[:q]) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m">Search results</h2>
   </div>
   <div class="govuk-grid-columm-one-third govuk-!-text-align-right">
-    <a href="<%= account_administration_index_path %>" class="govuk-button govuk-button--secondary">Clear search results</a>
+    <a href="<%= search_account_administration_index_path %>" class="govuk-button govuk-button--secondary">Clear search results</a>
   </div>
 </div>
 

@@ -1,4 +1,4 @@
-<% content_for :page_title, "History/Audit Log" %>
+<% content_for :page_title, "Change history log" %>
 <% @back_link_href = support_root_path %>
 
 <div class="govuk-grid-row">
@@ -55,7 +55,7 @@
               row.with_cell(text: record.whodunnit)
               row.with_cell(text: display_date_time(record.created_at))
               row.with_cell(text: display_action(record))
-              row.with_cell(text: raw(display_action_change(record)))
+              row.with_cell(text: display_action_change(record).html_safe)
             end
           end
         end

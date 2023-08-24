@@ -68,6 +68,10 @@ FactoryBot.define do
       invite { true }
     end
 
+    trait :deactivated do
+      deactivated_at { Time.zone.now }
+    end
+
     factory :submit_user, class: "SubmitUser" do
       confirmed_at { 1.hour.ago }
 
