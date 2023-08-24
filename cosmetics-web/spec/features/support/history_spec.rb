@@ -170,19 +170,19 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
     select "Deactivate account", from: "Display by action"
     click_on "Search"
 
-    expect(page).to have_css("td", text: "User deactivation")
+    expect(page).to have_css("td", text: "User (#{search_user.email}) deactivation")
     expect(page).to have_css("td", text: "#{user.name} deactivated user #{search_user.email}")
 
     select "Reactivate account", from: "Display by action"
     click_on "Search"
 
-    expect(page).to have_css("td", text: "User reactivation")
+    expect(page).to have_css("td", text: "User (#{search_user.email}) reactivation")
     expect(page).to have_css("td", text: "#{other_support_user.name} reactivated user #{search_user.email}")
 
     select "User role change", from: "Display by action"
     click_on "Search"
 
-    expect(page).to have_css("td", text: "User role change")
+    expect(page).to have_css("td", text: "User (#{search_user.email}) role change")
     expect(page).to have_css("td", text: "Change from: OPSS ScienceTo: OPSS General")
   end
 end
