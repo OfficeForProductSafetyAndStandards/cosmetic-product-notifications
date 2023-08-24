@@ -124,6 +124,19 @@ class User < ApplicationRecord
     save(validate: false)
   end
 
+  # Used by Devise to ensure deactivated users cannot sign in
+  def active_for_authentication?
+    super && deactivated_at.blank?
+  end
+
+  def inactive_message
+    I18n.t("users.deactivated") if deactivated?
+  end
+
+  def deactivated?
+    deactivated_at.present?
+  end
+
   # Use the `email` when targeting feature flags
   def flipper_id
     email

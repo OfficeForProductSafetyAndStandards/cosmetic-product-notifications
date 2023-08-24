@@ -1,0 +1,17 @@
+<% content_for :page_title, "Deactivate account" %>
+<% @back_link_href = account_administration_path(@user, q: params[:q]) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_warning_text do %>
+      Deactivating this account will mean that <%= @user.name %> will no longer be able to access the Search Cosmetic Product Notifications service.
+      <br>
+      <br>
+      You can revert this action on the <%= @user.name %> account page by selecting "Reactivate account".
+    <% end %>
+    <%= form_with model: @user, url: deactivate_account_administration_path, method: :patch do |f| %>
+      <%= f.govuk_submit "Confirm deactivate account" %>
+      <%= govuk_button_link_to "Cancel", account_administration_path(@user, q: params[:q]), secondary: true %>
+    <% end %>
+  </div>
+</div>

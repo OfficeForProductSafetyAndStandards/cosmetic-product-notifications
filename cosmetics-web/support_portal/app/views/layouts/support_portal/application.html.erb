@@ -86,8 +86,10 @@
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <%=
+            heading, body = flash[:notice].split("<br>")
             govuk_notification_banner(title_text: "Success", success: true) do |nb|
-              nb.with_heading(text: flash[:notice])
+              nb.with_heading(text: heading)
+              "<p>#{body}</p>".html_safe if body
             end
           %>
         </div>

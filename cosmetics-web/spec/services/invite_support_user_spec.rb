@@ -43,7 +43,7 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
         user.update_columns(account_security_completed: true, invited_at: 1.week.ago)
       end
 
-      it "doest not send an invitation email for the user" do
+      it "does not send an invitation email for the user" do
         inviter.call
         expect(delivered_emails).to be_empty
       end
@@ -63,8 +63,19 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
     end
   end
 
+  context "when the email address provided is already in use by a non-support user" do
+    let(:user) do
+      create(:submit_user, email: "existinguser@example.com")
+    end
+
+    it "fails" do
+      expect { described_class.new(email: "existinguser@example.com").call }
+        .to raise_error(Interactor::Failure)
+    end
+  end
+
   it "fails when no user name is provided" do
-    expect { described_class.new(email: "user@example.com").call }
+    expect { described_class.new(email: "user@example.gov.uk").call }
       .to raise_error(Interactor::Failure)
   end
 
@@ -73,11 +84,16 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
       .to raise_error(Interactor::Failure)
   end
 
+  it "fails when a non-gov.uk email is provided" do
+    expect { described_class.new(name: "John Doe", email: "user@example.com").call }
+      .to raise_error(ActiveRecord::RecordInvalid)
+  end
+
   context "when an user is provided" do
     subject(:inviter) { described_class.new(name: "John Doe", user:) }
 
     let(:user) do
-      create(:support_user, :registration_incomplete, email: "existentuser@example.com")
+      create(:support_user, :registration_incomplete, email: "existinguser@example.gov.uk")
     end
 
     include_examples "existing user"
@@ -85,12 +101,12 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
 
   context "when an email is provided" do
     subject(:inviter) do
-      described_class.new(name: "John Doe", email: "inviteduser@example.com")
+      described_class.new(name: "John Doe", email: "inviteduser@example.gov.uk")
     end
 
     context "when the provided email belongs to an existing user" do
       let(:user) do
-        create(:support_user, :registration_incomplete, email: "inviteduser@example.com")
+        create(:support_user, :registration_incomplete, email: "inviteduser@example.gov.uk")
       end
 
       include_examples "existing user"
@@ -117,7 +133,7 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
     it "sends invitation email for the created user with the given email" do
       inviter.call
       expect(delivered_emails.size).to eq 1
-      expect(delivered_emails.last.recipient).to eq "inviteduser@example.com"
+      expect(delivered_emails.last.recipient).to eq "inviteduser@example.gov.uk"
     end
   end
 end

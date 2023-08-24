@@ -1,17 +1,15 @@
 module SupportPortal
   class InviteSupportUsersController < ApplicationController
     def new
-      @invite_support_user_form = InviteSupportUserForm.new
+      @user = ::SupportUser.new
     end
 
     def create
-      @invite_support_user_form = InviteSupportUserForm.new(support_user_params)
+      @user = ::SupportUser.new(support_user_params.merge(skip_password_validation: true))
 
-      if @invite_support_user_form.valid?
-        InviteSupportUser.call(support_user_params)
-
-        redirect_to(new_invite_support_user_path,
-                    notice: "Invitation sent to #{@invite_support_user_form.name} at #{@invite_support_user_form.email}")
+      if @user.valid?
+        ::InviteSupportUser.call(support_user_params)
+        redirect_to(new_invite_support_user_path, notice: "Invitation sent to #{@user.name} at #{@user.email}")
       else
         render :new
       end
@@ -20,7 +18,7 @@ module SupportPortal
   private
 
     def support_user_params
-      params.require(:invite_support_user_form).permit(:name, :email)
+      params.require(:support_user).permit(:name, :email)
     end
   end
 end
