@@ -3,7 +3,7 @@ module SupportPortal
     before_action :set_user, except: %i[index search search_results invite_search_user create_search_user]
     before_action :set_responsible_persons, only: %i[show edit_responsible_persons]
     before_action :set_responsible_person, only: %i[delete_responsible_person_user_confirm delete_responsible_person_user]
-    before_action :reenforce_secondary_authentication, only: :reset_account
+    before_action :reenforce_secondary_authentication, only: %i[reset_account deactivate_account]
 
     # GET /
     def index; end
@@ -73,6 +73,33 @@ module SupportPortal
       end
     end
 
+    # GET /:id/deactivate-account
+    def deactivate_account
+      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated?
+    end
+
+    # PATCH/PUT /:id/deactivate
+    def deactivate
+      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated?
+
+      if @user.update(deactivated_at: Time.zone.now)
+        redirect_to account_administration_path, notice: "The account has been deactivated"
+      else
+        render :deactivate_account
+      end
+    end
+
+    # PATCH/PUT /:id/reactivate
+    def reactivate
+      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && @user.deactivated?
+
+      if @user.update(deactivated_at: nil) && @user.reset_secondary_authentication!
+        redirect_to account_administration_path, notice: "The account has been reactivated<br>An email was sent to #{@user.email} to inform #{@user.name}."
+      else
+        redirect_to account_administration_path
+      end
+    end
+
     # GET /:id/edit-role
     def edit_role; end
 
@@ -118,7 +145,7 @@ module SupportPortal
       @user = ::SearchUser.new(invite_search_user_params.merge(skip_password_validation: true, validate_role: true))
 
       if @user.valid?
-        ::InviteSearchUser.call(**invite_search_user_params.to_h)
+        ::InviteSearchUser.call(invite_search_user_params)
         redirect_to invite_search_user_account_administration_index_path, notice: "New search user account invitation sent"
       else
         render :invite_search_user

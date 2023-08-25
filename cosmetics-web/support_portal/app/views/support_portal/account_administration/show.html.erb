@@ -1,5 +1,6 @@
 <% content_for :page_title, @user.name %>
 <% @back_link_href = search_results_account_administration_index_path(q: params[:q]) %>
+<% @heading_tag = { text: "Inactive", colour: "red" } if @user.deactivated? %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -61,6 +62,15 @@
       %>
     <% else %>
       <p class="govuk-body">This user has not logged in yet.</p>
+    <% end %>
+    <% if @user.type == "SearchUser" %>
+      <% if @user.deactivated? %>
+        <%= form_with model: @user, url: reactivate_account_administration_path, method: :patch do |f| %>
+          <%= f.govuk_submit "Reactivate account", secondary: true %>
+        <% end %>
+      <% else %>
+        <%= govuk_button_link_to "Deactivate account", deactivate_account_account_administration_path(@user, q: params[:q]), warning: true %>
+      <% end %>
     <% end %>
   </div>
 </div>

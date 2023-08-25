@@ -51,7 +51,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
         user.update_columns(account_security_completed: true, invited_at: 1.week.ago)
       end
 
-      it "doest not send an invitation email for the user" do
+      it "does not send an invitation email for the user" do
         inviter.call
         expect(delivered_emails).to be_empty
       end
@@ -68,6 +68,17 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
         inviter.call
         expect(Rails.logger).to have_received(:info).with("[InviteSearchUser] User with id: #{user.id} is already registered in the service and cannot be re-invited.")
       end
+    end
+  end
+
+  context "when the email address provided is already in use by a non-search user" do
+    let(:user) do
+      create(:submit_user, email: "existinguser@example.com")
+    end
+
+    it "fails" do
+      expect { described_class.new(email: "existinguser@example.com", role: "opss_general").call }
+        .to raise_error(Interactor::Failure)
     end
   end
 
@@ -90,7 +101,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
     subject(:inviter) { described_class.new(name: "John Doe", role: "opss_general", user:) }
 
     let(:user) do
-      create(:search_user, :registration_incomplete, email: "existentuser@example.com")
+      create(:search_user, :registration_incomplete, email: "existinguser@example.com")
     end
 
     include_examples "existing user"
