@@ -7,6 +7,8 @@ class InviteSupportUser
     context.fail!(error: "No user name supplied") unless name
     context.fail!(error: "No email or user supplied") unless email || user
 
+    context.fail!(error: "Supplied email address is already in use by a non-support user") if email_taken_by_other_user_type?
+
     context.user ||= create_user
 
     send_invite
@@ -14,12 +16,17 @@ class InviteSupportUser
 
 private
 
+  def email_taken_by_other_user_type?
+    SubmitUser.where(email:).or(SearchUser.where(email:)).count.positive?
+  end
+
   def create_user
     SupportUser.find_or_create_by!(email:) do |user|
       user.name = name
       user.skip_password_validation = true
       user.role = :opss_general # All support users also have the OPSS General role for the search service
       user.invite = true
+      user.deactivated_at = nil
     end
   end
 
