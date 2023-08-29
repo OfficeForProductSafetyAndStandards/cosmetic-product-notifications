@@ -10,11 +10,10 @@
         If <%= @user.name %> has access to other Responsible Person accounts, they will still be able to access them.
       <% end %>
       <%= form_with url: delete_responsible_person_user_account_administration_path(@user, @responsible_person.responsible_person_user_id), method: :delete do |f| %>
-        <div class="govuk-button-group">
-          <input type="hidden" name="q" value="<%= params[:q] %>">
-          <%= f.govuk_submit "Remove access" %>
+        <input type="hidden" name="q" value="<%= params[:q] %>">
+        <%= f.govuk_submit "Remove access" do %>
           <%= govuk_button_link_to "Cancel", edit_responsible_persons_account_administration_path(@user, q: params[:q]), secondary: true %>
-        </div>
+        <% end %>
       <% end %>
     <% else %>
       <%= govuk_warning_text do %>

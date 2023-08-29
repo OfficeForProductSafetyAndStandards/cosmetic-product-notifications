@@ -6,6 +6,7 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
   let(:other_support_user) { create(:support_user, name: "Max Mustermann") }
   let(:responsible_person) { create(:responsible_person) }
   let(:notification) { create(:notification) }
+  let(:search_user) { create(:search_user) }
   let(:notification_version) do
     create(:version,
            event: "delete",
@@ -25,10 +26,43 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
            created_at: Time.zone.local(2023, 3, 1))
   end
 
+  let(:search_user_version_1) do
+    create(:version,
+           event: "update",
+           item: search_user,
+           whodunnit: user.id,
+           object_changes: { "role" => %w[opss_science opss_general] },
+           object: search_user.attributes,
+           created_at: Time.zone.local(2023, 3, 1))
+  end
+
+  let(:search_user_version_2) do
+    create(:version,
+           event: "update",
+           item: search_user,
+           whodunnit: user.id,
+           object_changes: { "deactivated_at" => [nil, Time.zone.local(2023, 3, 2)] },
+           object: search_user.attributes,
+           created_at: Time.zone.local(2023, 3, 2))
+  end
+
+  let(:search_user_version_3) do
+    create(:version,
+           event: "update",
+           item: search_user,
+           whodunnit: other_support_user.id,
+           object_changes: { "deactivated_at" => [Time.zone.local(2023, 3, 3), nil] },
+           object: search_user.attributes,
+           created_at: Time.zone.local(2023, 3, 3))
+  end
+
   before do
     configure_requests_for_support_domain
     notification_version
     responsible_person_version
+    search_user_version_1
+    search_user_version_2
+    search_user_version_3
     sign_in user
   end
 
@@ -132,5 +166,23 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
     expect(page).not_to have_text("UKCP number (#{notification.reference_number}) deletion")
     expect(page).not_to have_text(other_support_user.name)
     expect(page).not_to have_text("Change from: Company A")
+
+    select "Deactivate account", from: "Display by action"
+    click_on "Search"
+
+    expect(page).to have_css("td", text: "User (#{search_user.email}) deactivation")
+    expect(page).to have_css("td", text: "#{user.name} deactivated user #{search_user.email}")
+
+    select "Reactivate account", from: "Display by action"
+    click_on "Search"
+
+    expect(page).to have_css("td", text: "User (#{search_user.email}) reactivation")
+    expect(page).to have_css("td", text: "#{other_support_user.name} reactivated user #{search_user.email}")
+
+    select "User role change", from: "Display by action"
+    click_on "Search"
+
+    expect(page).to have_css("td", text: "User (#{search_user.email}) role change")
+    expect(page).to have_css("td", text: "Change from: OPSS ScienceTo: OPSS General")
   end
 end

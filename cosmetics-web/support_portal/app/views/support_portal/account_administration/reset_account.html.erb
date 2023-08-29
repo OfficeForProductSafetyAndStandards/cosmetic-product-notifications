@@ -10,8 +10,9 @@
       The user will need to follow login instructions as per the email they receive
     <% end %>
     <%= form_with model: @user, url: reset_account_administration_path, method: :delete do |f| %>
-      <%= f.govuk_submit "Reset account" %>
-      <%= govuk_button_link_to "Cancel", account_administration_path(@user, q: params[:q]), secondary: true %>
+      <%= f.govuk_submit "Reset account" do %>
+        <%= govuk_button_link_to "Cancel", account_administration_path(@user, q: params[:q]), secondary: true %>
+      <% end %>
     <% end %>
   </div>
 </div>
