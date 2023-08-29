@@ -74,4 +74,11 @@ SupportPortal::Engine.routes.draw do
 
   resources :history, only: %i[index]
   resource :invite_support_user, path: "invite-support-user", only: %i[new create]
+  resources :support_users, only: %i[index] do
+    member do
+      get "remove"
+      patch "deactivate"
+      put "deactivate"
+    end
+  end
 end

@@ -10,40 +10,27 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <%= error_summary(errors, map_errors: { single_or_multi_component: :single_or_multi_component_multiple }) %>
-
         <h1 class="govuk-heading-l"><%= title %></h1>
-
         <p>Multi-item kits have items that need to be mixed together or used in a particular order for them to work.</p>
-
-        <details class="govuk-details" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Help with multi-item kits
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <p class="govuk-!-margin-bottom-20">Examples of multi-item kits include:</p>
-
-            <div class= "govuk-!-margin-bottom-20">
-              <ul class="govuk-list govuk-list--bullet">
-                <li>hair dye kits</li>
-                <li>skin peeling kits</li>
-                <li>permanent styling products</li>
-                <li>anti-ageing or revitalising kits</li>
-              </ul>
-            </div>
-
-            Where a set contains separate products that do not need to be mixed together or used in a particular order for the product to work, you’ll need to
-            submit a separate notification for each product.
-          </div>
-        </details>
-
+        <%= govukDetails(summaryText: "Help with multi-item kits") do %>
+          <p class="govuk-body">
+            Examples of multi-item kits include:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>hair dye kits</li>
+            <li>skin peeling kits</li>
+            <li>permanent styling products</li>
+            <li>anti-ageing or revitalising kits</li>
+          </ul>
+          <p class="govuk-body">
+            Where a set contains separate products that do not need to be mixed together or used in a particular order for the product to work, you’ll need to submit a separate notification for each product.
+          </p>
+        <% end %>
         <%= govukWarningText(
           iconFallbackText: "Warning",
           classes: "govuk-!-margin-top-6 govuk-!-margin-bottom-5",
           text: "You will be unable to change to a single item product once you select and confirm that this is a multi-item kit. You will need to create a new product notification in order to use the single item product option."
         )%>
-
         <% count_input_html = capture do %>
           <%= govukInput(form: form,
                          key: :components_count,
@@ -82,10 +69,8 @@
   <h1 class="govuk-heading-m">
     This draft product notification has been defined as a multi-item kit.
   </h1>
-
   <p class="govuk-body">
     A multi-item kit must contain, at least, 2 items. If this product is not a multi-item kit you will need to create a new product notification.
   </p>
-
   <%= link_to "Continue", next_step_path, class: "govuk-button govuk-!-margin-top-8" %>
 <% end %>

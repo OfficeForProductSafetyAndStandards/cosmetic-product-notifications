@@ -28,7 +28,14 @@ module SupportPortal
         OpenStruct.new(id: :notification, name: "Change to Notification"),
       ].freeze
 
-    ACTIONS = RP_ACTIONS + NOTIFICATION_ACTIONS
+    SEARCH_USER_ACTIONS =
+      [
+        OpenStruct.new(id: :search_user_deactivated, name: "Deactivate account"),
+        OpenStruct.new(id: :search_user_reactivated, name: "Reactivate account"),
+        OpenStruct.new(id: :search_user_role_changed, name: "User role change"),
+      ].freeze
+
+    ACTIONS = RP_ACTIONS + NOTIFICATION_ACTIONS + SEARCH_USER_ACTIONS
 
     def search
       FindSupportUserChanges.call(**attributes.to_h.symbolize_keys)

@@ -8,12 +8,18 @@ class InviteSearchUser
     context.fail!(error: "No email or user supplied") unless email || user
     context.fail!(error: "No user role supplied") unless role
 
+    context.fail!(error: "Supplied email address is already in use by a non-search user") if email_taken_by_other_user_type?
+
     context.user ||= create_user
 
     send_invite
   end
 
 private
+
+  def email_taken_by_other_user_type?
+    SubmitUser.where(email:).or(SupportUser.where(email:)).count.positive?
+  end
 
   def create_user
     SearchUser.find_or_create_by!(email:) do |user|
