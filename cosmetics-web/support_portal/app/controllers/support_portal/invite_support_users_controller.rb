@@ -1,13 +1,15 @@
 module SupportPortal
   class InviteSupportUsersController < ApplicationController
+    before_action :set_user, only: :create
+
     def new
       @user = ::SupportUser.new
     end
 
     def create
-      if valid_user?
+      if @user.valid?
         ::InviteSupportUser.call(support_user_params)
-        redirect_to(new_invite_support_user_path, notice: "Invitation sent to #{support_user_params[:name]} at #{support_user_params[:email]}")
+        redirect_to(new_invite_support_user_path, notice: "Invitation sent to #{@user.name} at #{@user.email}")
       else
         render :new
       end
@@ -19,10 +21,10 @@ module SupportPortal
       params.require(:support_user).permit(:name, :email)
     end
 
-    def valid_user?
-      return true unless SupportUser.where(email: support_user_params[:email]).where.not(deactivated_at: nil).empty?
+    def set_user
+      @user = SupportUser.where(email: support_user_params[:email]).where.not(deactivated_at: nil).first
 
-      SupportUser.new(support_user_params.merge(skip_password_validation: true)).valid?
+      @user = SupportUser.new(support_user_params.merge(skip_password_validation: true)) if @user.nil?
     end
   end
 end
