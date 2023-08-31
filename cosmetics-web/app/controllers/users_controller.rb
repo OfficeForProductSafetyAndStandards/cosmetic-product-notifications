@@ -10,8 +10,13 @@ class UsersController < SearchApplicationController
     # Some users will bookmark the invitation URL received on the email and may re-use
     # this even once their account has been created. Hence redirecting them to the root page.
     return redirect_to(root_path) if @user.has_completed_registration?
-    return render(:expired_invitation) if @user.invitation_expired?
-    return (render "errors/not_found", status: :not_found) if !params[:invitation] || (@user.invitation_token != params[:invitation])
+
+    # If a user has had an account reset or had their account deactivated and reactovated
+    # then they will have already accepted teh declaration and won't need to deal with the invitation params
+    unless @user.has_accepted_declaration?
+      return render(:expired_invitation) if @user.invitation_expired?
+      return (render "errors/not_found", status: :not_found) if !params[:invitation] || (@user.invitation_token != params[:invitation])
+    end
 
     # User attributes are only set at this stage when the complete registration was previously submitted
     # setting them. Then the user followed the back link from SMS code authentication page to return to
@@ -42,7 +47,7 @@ class UsersController < SearchApplicationController
 
   def update
     @user = SearchUser.find(params[:id])
-    return render("errors/forbidden", status: :forbidden) if params[:invitation] != @user.invitation_token
+    return render("errors/forbidden", status: :forbidden) if params[:invitation] != @user.invitation_token && !@user.has_accepted_declaration?
 
     if account_security_form.update!
       bypass_sign_in(@user)
