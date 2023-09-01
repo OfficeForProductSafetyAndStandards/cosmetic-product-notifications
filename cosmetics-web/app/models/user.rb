@@ -80,7 +80,6 @@ class User < ApplicationRecord
     secondary_authentication_methods.size > 1
   end
 
-  # Needed for user support requests
   def reset_secondary_authentication!
     update(mobile_number: nil,
            mobile_number_verified: false,
@@ -94,6 +93,7 @@ class User < ApplicationRecord
            secondary_authentication_recovery_codes: [],
            secondary_authentication_recovery_codes_used: [],
            account_security_completed: false)
+    send_reset_password_instructions
   end
 
   def uses_email_address?(email_address)

@@ -20,22 +20,15 @@
         <p id="responsible-person-hint" class="govuk-hint govuk-!-width-two-thirds">
           A team member is someone who can notify cosmetic product notifications on behalf of the Responsible Person.
         </p>
-        <details class="govuk-details opss-details--sm" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Help with team members
-            </span>
-          </summary>
-          <div class="govuk-details__text govuk-!-width-three-quarters">
-            <p class="govuk-body-s">
-              When a team member has been invited, they can view all of the cosmetic product notifications that have been notified for the Responsible Person.
-              (Team members will not be able to view cosmetic product notifications for a Responsible Person they have not been invited to).
-            </p>
-            <p class="govuk-body-s">
-              To remove team member accounts email <%= mail_to t(:enquiries_email), nil, class: "govuk-link govuk-link--no-visited-state" %>.
-            </p>
-          </div>
-        </details>
+        <%= govukDetails(summaryText: "Help with team members") do %>
+          <p class="govuk-body">
+            When a team member has been invited, they can view all of the cosmetic product notifications that have been notified for the Responsible Person.
+            (Team members will not be able to view cosmetic product notifications for a Responsible Person they have not been invited to).
+          </p>
+          <p class="govuk-body">
+            To remove team member accounts email <%= mail_to t(:enquiries_email), nil, class: "govuk-link govuk-link--no-visited-state" %>.
+          </p>
+        <% end %>
       </div>
     </div>
   </div>

@@ -19,6 +19,12 @@ class SupportUser < User
     trading_standards: "trading_standards",
   }
 
+  validates :email,
+            email: {
+              message: :invalid,
+              if: -> { email.present? },
+            }
+
   validates :mobile_number,
             phone: { message: :invalid, allow_international: ALLOW_INTERNATIONAL_PHONE_NUMBER },
             if: -> { mobile_number.present? }
@@ -33,6 +39,21 @@ class SupportUser < User
 
   def opss?
     role&.match?(/opss_/)
+  end
+
+  def reset_secondary_authentication!
+    update(mobile_number: nil,
+           mobile_number_verified: false,
+           direct_otp: nil,
+           direct_otp_sent_at: nil,
+           encrypted_totp_secret_key: nil,
+           last_totp_at: nil,
+           last_recovery_code_at: nil,
+           secondary_authentication_methods: nil,
+           secondary_authentication_recovery_codes_generated_at: nil,
+           secondary_authentication_recovery_codes: [],
+           secondary_authentication_recovery_codes_used: [],
+           account_security_completed: false)
   end
 
 private

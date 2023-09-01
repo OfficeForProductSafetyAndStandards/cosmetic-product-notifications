@@ -50,7 +50,7 @@ RSpec.describe "Changing name", :with_2fa, :with_stubbed_mailer, :with_stubbed_n
       configure_requests_for_submit_domain
     end
 
-    let(:user) { create(:submit_user, has_accepted_declaration: true) }
+    let(:user) { create(:submit_user, :with_responsible_person, has_accepted_declaration: true) }
 
     include_examples "change name"
   end
