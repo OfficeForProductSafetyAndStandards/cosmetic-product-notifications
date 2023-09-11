@@ -144,6 +144,12 @@ RSpec.describe InviteSupportUser, :with_stubbed_mailer do
       create(:support_user, :registration_incomplete, email: "deactivatedtuser@example.gov.uk", deactivated_at: 1.week.ago)
     end
 
+    it "sets deactivated_at to nil" do
+      inviter.call
+      user.reload
+      expect(user.deactivated_at).to be_nil
+    end
+
     include_examples "existing user"
   end
 end

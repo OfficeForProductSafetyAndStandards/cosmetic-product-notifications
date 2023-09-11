@@ -26,7 +26,6 @@ private
       user.skip_password_validation = true
       user.role = :opss_general # All support users also have the OPSS General role for the search service
       user.invite = true
-      user.deactivated_at = nil
     end
   end
 
@@ -37,6 +36,8 @@ private
       if !user.invitation_token || (user.invited_at < 1.hour.ago)
         user.update! invitation_token: (user.invitation_token || SecureRandom.hex(15)), invited_at: Time.zone.now
       end
+
+      user.update! deactivated_at: nil
 
       SupportNotifyMailer.invitation_email(user).deliver_later
     end
