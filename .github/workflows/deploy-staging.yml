@@ -79,7 +79,7 @@ jobs:
 
     - name: Trigger automated test framework
       if: success()
-      uses: OfficeForProductSafetyAndStandard/remote-workflow-control@latest
+      uses: OfficeForProductSafetyAndStandards/remote-workflow-control@latest
         with:
           github-auth-token: ${{ secrets.GITHUB_KEY }}
           workflow-org: 'OfficeForProductSafetyAndStandards'
