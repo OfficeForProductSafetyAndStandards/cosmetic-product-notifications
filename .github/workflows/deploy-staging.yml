@@ -1,5 +1,5 @@
 name: Deploy Staging
-'on':
+"on":
   push:
     branches:
       - develop
@@ -20,14 +20,14 @@ jobs:
           sudo cp /tmp/cf7 /usr/local/bin/cf
       - name: Create GitHub deployment for Staging
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           BRANCH: develop
         run: |
           source cosmetics-web/deploy-github-functions.sh
           gh_deploy_create staging
       - name: Initiate Staging deployment status
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: >
           source cosmetics-web/deploy-github-functions.sh
 
@@ -53,8 +53,8 @@ jobs:
           WEB_MAX_THREADS: 1
           WORKER_MAX_THREADS: 10
           WORKER_INSTANCES: 2
-          CF_USERNAME: '${{ secrets.PaaSUsernameStaging }}'
-          CF_PASSWORD: '${{ secrets.PaaSPasswordStaging }}'
+          CF_USERNAME: "${{ secrets.PaaSUsernameStaging }}"
+          CF_PASSWORD: "${{ secrets.PaaSPasswordStaging }}"
           SENTRY_SERVICE_NAME: cosmetics-staging-sentry-env
         run: |
           cf api api.london.cloud.service.gov.uk
@@ -66,7 +66,7 @@ jobs:
       - name: Update Staging deployment status (success)
         if: success()
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: >
           source cosmetics-web/deploy-github-functions.sh
 
@@ -76,18 +76,18 @@ jobs:
       - name: Update Staging deployment status (failure)
         if: failure()
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           source cosmetics-web/deploy-github-functions.sh
           gh_deploy_failure staging $LOG_URL
       - name: Trigger automated test framework
         if: success()
-        uses: OfficeForProductSafetyAndStandards/remote-workflow-control@latest
+        uses: anecdotes-ai/remote-workflow-control@latest
         with:
-          github-auth-token: '${{ secrets.GITHUB_KEY }}'
+          github-auth-token: "${{ secrets.GITHUB_KEY }}"
           workflow-org: OfficeForProductSafetyAndStandards
           workflow-repo: scpn-automation
           workflow-yaml: staging.yml
           workflow-branch: master
           workflow-inputs: '{\"deploy_frontend\": true \"debug_mode\": false}'
-          wait-timeout-in-minutes: '10'
+          wait-timeout-in-minutes: "10"

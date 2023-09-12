@@ -15,69 +15,81 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Create GitHub deployment
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: ${{ github.head_ref }}
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_create review-app-${PR_NUMBER}
+      - name: Create GitHub deployment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          source cosmetics-web/deploy-github-functions.sh
+          gh_deploy_create review-app-${PR_NUMBER}
 
-    - name: Initiate deployment status
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
+      - name: Initiate deployment status
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          source cosmetics-web/deploy-github-functions.sh
 
-        # URL where the deployment progress can be tracked. Exported for future steps.
-        log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
-        echo "LOG_URL=$log_url" >> $GITHUB_ENV
+          # URL where the deployment progress can be tracked. Exported for future steps.
+          log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER/checks")
+          echo "LOG_URL=$log_url" >> $GITHUB_ENV
 
-        gh_deploy_initiate review-app-${PR_NUMBER} $log_url
+          gh_deploy_initiate review-app-${PR_NUMBER} $log_url
 
-    - name: Install cf client
-      env:
-        CF_CLI_VERSION: v7
-      run: |
-        curl -A "" -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
-        sudo cp /tmp/cf7 /usr/local/bin/cf
+      - name: Install cf client
+        env:
+          CF_CLI_VERSION: v7
+        run: |
+          curl -A "" -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+          sudo cp /tmp/cf7 /usr/local/bin/cf
 
-    - name: Deploy
-      env:
-        SPACE: int
-        WEB_MAX_THREADS: 8
-        WEB_CONCURRENCY: 1
-        WORKER_MAX_THREADS: 10
-        CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
-        CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
-      run: |
-        cf api api.london.cloud.service.gov.uk
-        cf auth
-        cf target -o 'beis-opss' -s $SPACE
-        export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema\[.*\].define' | grep -o '[0-9_]\+' | tail -1`
-        export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
-        export DB_NAME=cosmetics-db-$DB_VERSION
-        export REDIS_NAME=cosmetics-review-redis-$PR_NUMBER
-        ./cosmetics-web/deploy-review.sh
-        cf logout
+      - name: Deploy
+        env:
+          SPACE: int
+          WEB_MAX_THREADS: 8
+          WEB_CONCURRENCY: 1
+          WORKER_MAX_THREADS: 10
+          CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
+          CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
+        run: |
+          cf api api.london.cloud.service.gov.uk
+          cf auth
+          cf target -o 'beis-opss' -s $SPACE
+          export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema\[.*\].define' | grep -o '[0-9_]\+' | tail -1`
+          export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
+          export DB_NAME=cosmetics-db-$DB_VERSION
+          export REDIS_NAME=cosmetics-review-redis-$PR_NUMBER
+          ./cosmetics-web/deploy-review.sh
+          cf logout
 
-    - name: Update deployment status (success)
-      if: success()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
+      - name: Update deployment status (success)
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          source cosmetics-web/deploy-github-functions.sh
 
-        environment_url=https://cosmetics-pr-${PR_NUMBER}-submit-web.london.cloudapps.digital/
+          environment_url=https://cosmetics-pr-${PR_NUMBER}-submit-web.london.cloudapps.digital/
 
-        gh_deploy_success review-app-${PR_NUMBER} $LOG_URL $environment_url
+          gh_deploy_success review-app-${PR_NUMBER} $LOG_URL $environment_url
 
-    - name: Update deployment status (failure)
-      if: failure()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        source cosmetics-web/deploy-github-functions.sh
-        gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
+      - name: Update deployment status (failure)
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          source cosmetics-web/deploy-github-functions.sh
+          gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
+
+      - name: Trigger automated test framework
+        if: success()
+        uses: anecdotes-ai/remote-workflow-control@latest
+        with:
+          github-auth-token: "${{ secrets.GITHUB_KEY }}"
+          workflow-org: OfficeForProductSafetyAndStandards
+          workflow-repo: scpn-automation
+          workflow-yaml: staging.yml
+          workflow-branch: master
+          workflow-inputs: '{\"deploy_frontend\": true \"debug_mode\": false}'
+          wait-timeout-in-minutes: "10"
