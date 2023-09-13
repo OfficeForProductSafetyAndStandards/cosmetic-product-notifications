@@ -91,5 +91,5 @@ jobs:
           workflow-repo: scpn-automation
           workflow-yaml: staging.yml
           workflow-branch: master
-          workflow-inputs: '{\"deploy_frontend\": true \"debug_mode\": false}'
+          workflow-inputs: '{\"deploy_frontend\": true, \"debug_mode\": false}'
           wait-timeout-in-minutes: "10"
