@@ -82,18 +82,6 @@ jobs:
           source cosmetics-web/deploy-github-functions.sh
           gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
 
-      - name: Trigger staging
-        if: success()
-        uses: anecdotes-ai/remote-workflow-control@latest
-        with:
-          github-auth-token: "${{ secrets.GITHUB_KEY }}"
-          workflow-org: OfficeForProductSafetyAndStandards
-          workflow-repo: cosmetic-product-notifications
-          workflow-yaml: staging.yml
-          workflow-branch: develop
-          workflow-inputs: '{\"deploy_frontend\": true \"debug_mode\": false}'
-          wait-timeout-in-minutes: "10"
-
       - name: Trigger automated test framework
         if: success()
         uses: anecdotes-ai/remote-workflow-control@latest
