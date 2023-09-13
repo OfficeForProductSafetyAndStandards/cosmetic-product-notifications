@@ -89,7 +89,7 @@ jobs:
           github-auth-token: "${{ secrets.GITHUB_TOKEN }}"
           workflow-org: OfficeForProductSafetyAndStandards
           workflow-repo: scpn-automation
-          workflow-yaml: staging.yml
+          workflow-yaml: staging.yaml
           workflow-branch: master
           workflow-inputs: '{\"deploy_frontend\": true, \"debug_mode\": false}'
           wait-timeout-in-minutes: "10"
