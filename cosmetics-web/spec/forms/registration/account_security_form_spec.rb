@@ -191,6 +191,15 @@ RSpec.describe Registration::AccountSecurityForm do
       end
     end
 
+    context "when password is not given" do
+      let(:password) { "" }
+
+      it "does not validate user" do
+        expect(form).not_to be_valid
+        expect(form.errors[:password]).to match_array(["Enter a password"])
+      end
+    end
+
     context "when password is too common" do
       let(:password) { "password" }
 

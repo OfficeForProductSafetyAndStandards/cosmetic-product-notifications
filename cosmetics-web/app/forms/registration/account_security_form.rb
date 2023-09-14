@@ -13,9 +13,9 @@ module Registration
     validates_presence_of :full_name
     validates :full_name, length: { maximum: User::NAME_MAX_LENGTH }, user_name_format: { message: :invalid }
 
-    validates :password, length: { minimum: 8 }, if: -> { password.present? }
     validates :password, presence: true
-    validates :password, common_password: true
+    validates :password, length: { minimum: 8 }, if: -> { password.present? }
+    validates :password, common_password: true, if: -> { password.present? }
 
     validate :secondary_authentication_methods_presence
 
