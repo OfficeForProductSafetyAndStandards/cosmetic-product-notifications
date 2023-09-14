@@ -84,7 +84,7 @@ jobs:
         if: success()
         uses: anecdotes-ai/remote-workflow-control@latest
         with:
-          github-auth-token: "${{ secrets.GITHUB_KEY }}"
+          github-auth-token: "${{ secrets.SCPN_AUTOMATION_KEY }}"
           workflow-org: OfficeForProductSafetyAndStandards
           workflow-repo: scpn-automation
           workflow-yaml: staging.yml
