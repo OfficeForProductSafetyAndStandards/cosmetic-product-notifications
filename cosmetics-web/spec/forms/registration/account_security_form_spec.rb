@@ -214,7 +214,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
       it "does not validate user" do
         expect(form).not_to be_valid
-        expect(form.errors[:password]).to match_array(["Choose a less frequently used password", "Password must be at least 8 characters"])
+        expect(form.errors[:password]).to match_array(["Password must be at least 8 characters"])
       end
     end
 
