@@ -3,8 +3,6 @@
   <%= render "layouts/navbar" %>
 <% end %>
 
-
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-top-4 govuk-!-margin-bottom-6">
     <div class="govuk-grid-row">
@@ -37,10 +35,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-
-
     <h2 class="govuk-heading-m">Business, individual or sole trader</h2>
-
     <%= govukSummaryList(
       classes: "govuk-!-margin-bottom-8",
       rows: [
@@ -86,10 +81,8 @@
     %>
 
     <h2 class="govuk-heading-m">Assigned contact</h2>
-
     <% @responsible_person.contact_persons.each do |contact_person| %>
       <%= render "/notifications/contact_person_details", contact_person: contact_person %>
     <% end %>
-
   </div>
 </div>
