@@ -84,7 +84,7 @@ jobs:
 
       - name: Trigger automated test framework
         if: success()
-        uses: kennyevil/remote-workflow-control@latest
+        uses: kennyevil/remote-workflow-control@1.0.0
         with:
           github-auth-token: "${{ secrets.SCPN_AUTOMATION_KEY }}"
           workflow-org: OfficeForProductSafetyAndStandards
