@@ -81,14 +81,3 @@ jobs:
         run: |
           source cosmetics-web/deploy-github-functions.sh
           gh_deploy_failure review-app-${PR_NUMBER} $LOG_URL
-
-      - name: Trigger automated test framework
-        if: success()
-        uses: convictional/trigger-workflow-and-wait@v1.6.1
-        with:
-          owner: OfficeForProductSafetyAndStandards
-          repo: scpn-automation
-          github_token: "${{ secrets.SCPN_AUTOMATION_KEY }}"
-          workflow_file_name: staging.yml
-          ref: master
-          wait_interval: 10
