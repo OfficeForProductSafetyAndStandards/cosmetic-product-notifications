@@ -15,7 +15,7 @@ module Registration
 
     validates :password, length: { minimum: 8 }, if: -> { password.present? }
     validates :password, presence: true
-    validates :password, common_password: { message: :too_common }
+    validates :password, common_password: true
 
     validate :secondary_authentication_methods_presence
 
