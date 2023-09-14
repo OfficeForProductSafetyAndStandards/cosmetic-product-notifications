@@ -84,11 +84,11 @@ jobs:
 
       - name: Trigger automated test framework
         if: success()
-        uses: kennyevil/remote-workflow-control@1.0.0
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
         with:
-          github-auth-token: "${{ secrets.SCPN_AUTOMATION_KEY }}"
-          workflow-org: OfficeForProductSafetyAndStandards
-          workflow-repo: scpn-automation
-          workflow-yaml: staging.yml
-          workflow-branch: master
-          wait-timeout-in-minutes: "10"
+          owner: OfficeForProductSafetyAndStandards
+          repo: scpn-automation
+          github_token: "${{ secrets.SCPN_AUTOMATION_KEY }}"
+          workflow_file_name: staging.yml
+          ref: master
+          wait_interval: 10
