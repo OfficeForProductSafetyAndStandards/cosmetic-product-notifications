@@ -8,7 +8,7 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install cf client
         env:
           CF_CLI_VERSION: v7
