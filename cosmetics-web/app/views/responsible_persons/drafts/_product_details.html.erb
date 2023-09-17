@@ -11,9 +11,59 @@
     <li class="app-task-list__item">
       <span class="app-task-list__task-name">
         <% if section_can_be_used?(DraftHelper::PRODUCT_DETAILS_SECTION) %>
-          <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="single-item-status">
-            Product details
-          </a>
+          <ul class="app-task-list__items opss-task-sub__list">
+          <% @notification.components.each do |component| %>
+            <li class="app-task-list__item">
+              Select nanomaterial
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/select_nanomaterials", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Rinse or leave
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/add_exposure_condition", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Exposure to nanomaterials
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/add_exposure_routes", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Shades
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/number_of_shades", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Physical form
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/add_physical_form", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Container
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/contains_special_applicator", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              CMR
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/contains_cmrs", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Category of cosmetic product
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/select_root_category", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Product formulation
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/select_formulation_type", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+            <li class="app-task-list__item">
+              Product formulation
+
+              <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/components/#{component.id}/build/select_formulation_type", class: "govuk-link govuk-link--no-visited-state") %>
+            </li>
+          <% end %>
         <% else %>
           Product details
         <% end %>

@@ -13,6 +13,33 @@
 
         <%= nanomaterial_badge(nano_material) %>
       </li>
+      <li class="app-task-list__item">
+        Purpose
+
+        <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/nanomaterials/#{nano_material.id}/build/select_purposes", class: "govuk-link govuk-link--no-visited-state") %>
+      </li>
+      <% if nano_material.standard? %>
+        <li class="app-task-list__item">
+          Nanomaterial notified
+
+          <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/nanomaterials/#{nano_material.id}/build/non_standard_nanomaterial_notified", class: "govuk-link govuk-link--no-visited-state") %>
+        </li>
+        <li class="app-task-list__item">
+          ICNI status
+
+          <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/nanomaterials/#{nano_material.id}/build/add_nanomaterial_name", class: "govuk-link govuk-link--no-visited-state") %>
+        </li>
+        <li class="app-task-list__item">
+          Regulation Annex
+
+          <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/nanomaterials/#{nano_material.id}/build/confirm_restrictions", class: "govuk-link govuk-link--no-visited-state") %>
+        </li>
+        <li class="app-task-list__item">
+          Restriction Annex
+
+          <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/nanomaterials/#{nano_material.id}/build/confirm_usage", class: "govuk-link govuk-link--no-visited-state") %>
+        </li>
+      <% end %>
     <% end %>
 
     <li class="app-task-list__item opss-task-sub__last">

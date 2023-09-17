@@ -20,5 +20,31 @@
 
       <%= product_badge(@notification) %>
     </li>
+    <li class="app-task-list__item">
+      Product name
+      <div class="govuk-!-text-align-right">
+        <%= link_to("Go to question", new_responsible_person_notification_product_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-text-align-right") %>
+      </div>
+    </li>
+    <li class="app-task-list__item">
+      Children under 3 years old
+
+      <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/product/for_children_under_three", class: "govuk-link govuk-link--no-visited-state") %>
+    </li>
+    <li class="app-task-list__item">
+      Nanomaterials
+
+      <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/product/contains_nanomaterials", class: "govuk-link govuk-link--no-visited-state") %>
+    </li>
+    <li class="app-task-list__item">
+      Multi-item kit
+
+      <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/product/single_or_multi_component", class: "govuk-link govuk-link--no-visited-state") %>
+    </li>
+    <li class="app-task-list__item">
+      Image upload
+
+      <%= link_to("Go to question", "/responsible_persons/#{@notification.responsible_person.id}/notifications/#{@notification.reference_number}/product/add_product_image", class: "govuk-link govuk-link--no-visited-state") %>
+    </li>
   </ul>
 </li>
