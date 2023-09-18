@@ -7,6 +7,11 @@
   end
 %>
 
+<% legend_html = capture do %>
+  <h1 class="govuk-fieldset__heading govuk-label--l">What is the purpose of this nanomaterial?</h1>
+  <p class="govuk-body"><%= link_to "How to notify nanomaterials  (opens in a new tab)", how_to_notify_nanomaterials_path, target: :_blank %></p>
+<% end %>
+
 <%= form_with(model: purposes_form, url: form_url, scope: :purposes_form, method: form_method, html: { novalidate: true }) do |f| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -24,9 +29,7 @@
       <%= govukRadios(
             form: f,
             key: :purpose_type,
-            fieldset: { legend: { text: "What is the purpose of this nanomaterial?",
-                                  classes: "govuk-label--l",
-                                  isPageHeading: true } },
+            fieldset: { legend: { html: legend_html } },
             items: [{ text: to_sentence(standard_purposes.map(&:upcase_display_name), last_word_connector: " or "),
                       value: "standard",
                       conditional: { html: standard_purposes_checkboxes_html } },
