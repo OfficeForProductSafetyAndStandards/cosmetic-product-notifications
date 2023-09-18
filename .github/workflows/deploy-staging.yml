@@ -82,7 +82,7 @@ jobs:
           gh_deploy_failure staging $LOG_URL
       - name: Trigger automated test framework
         if: success()
-        uses: convictional/trigger-workflow-and-wait@v1.6.1
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: OfficeForProductSafetyAndStandards
           repo: scpn-automation
