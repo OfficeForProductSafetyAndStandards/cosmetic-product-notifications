@@ -1,9 +1,9 @@
 class PoisonCentres::NotificationsController < SearchApplicationController
   PER_PAGE = 20
 
+  before_action :load_notification
+
   def show
-    @notification = Notification.find_by!(reference_number: params[:reference_number])
-    authorize @notification, policy_class: PoisonCentreNotificationPolicy
     @responsible_person = @notification.responsible_person
     if current_user&.poison_centre_user? || current_user&.opss_science_user?
       render "show_poison_centre"
@@ -14,6 +14,12 @@ class PoisonCentres::NotificationsController < SearchApplicationController
   end
 
 private
+
+  def load_notification
+    notification = Notification.find_by!(reference_number: params[:reference_number])
+    authorize notification, policy_class: PoisonCentreNotificationPolicy
+    @notification = NotificationSearchResultDecorator.new(notification)
+  end
 
   def search_params
     if params[:notification_search_form]
