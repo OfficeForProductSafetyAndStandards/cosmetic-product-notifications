@@ -37,4 +37,33 @@ RSpec.describe NotificationSearchResultDecorator do
       end
     end
   end
+
+  describe "#has_shades?" do
+    subject(:has_shades) { decorator.has_shades? }
+    context "when notification has no shades" do
+      it "returns false" do
+        expect(subject).to eq false
+      end
+    end
+
+    context "when notification has shades" do
+      let(:notification) { create(:notification, shades: ["green"]) }
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+    end
+
+    context "when notification has components with shades" do
+      let(:notification) { create(:notification, :with_components) }
+
+      before do
+        notification.components.first.update(shades: ["black"])
+      end
+
+      it "returns true" do
+        expect(subject).to eq true
+      end
+    end
+  end
 end
