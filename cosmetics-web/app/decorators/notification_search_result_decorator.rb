@@ -1,5 +1,6 @@
 class NotificationSearchResultDecorator
   attr_reader :notification
+
   delegate_missing_to :@notification
 
   def initialize(notification)
@@ -16,7 +17,7 @@ class NotificationSearchResultDecorator
     notification.components_are_mixed ? "Yes" : "No"
   end
 
-  private
+private
 
   def components_have_shades?
     components.pluck(:shades).flatten.compact.uniq.any?
