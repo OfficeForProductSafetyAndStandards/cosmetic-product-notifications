@@ -20,7 +20,7 @@ RSpec.describe NotificationSearchResultDecorator do
     end
 
     context "when notification is multi component" do
-      context "and components_are_mixed is true" do
+      context "with components_are_mixed is true" do
         let(:notification) { create(:notification, :with_components, components_are_mixed: true) }
 
         it "returns 'Yes'" do
@@ -28,7 +28,7 @@ RSpec.describe NotificationSearchResultDecorator do
         end
       end
 
-      context "and components_are_mixed is false" do
+      context "with components_are_mixed is false" do
         let(:notification) { create(:notification, :with_components, components_are_mixed: false) }
 
         it "returns 'No'" do
@@ -40,17 +40,18 @@ RSpec.describe NotificationSearchResultDecorator do
 
   describe "#has_shades?" do
     subject(:has_shades) { decorator.has_shades? }
+
     context "when notification has no shades" do
       it "returns false" do
-        expect(subject).to eq false
+        expect(has_shades).to eq false
       end
     end
 
     context "when notification has shades" do
-      let(:notification) { create(:notification, shades: ["green"]) }
+      let(:notification) { create(:notification, shades: %w[green]) }
 
       it "returns true" do
-        expect(subject).to eq true
+        expect(has_shades).to eq true
       end
     end
 
@@ -58,11 +59,11 @@ RSpec.describe NotificationSearchResultDecorator do
       let(:notification) { create(:notification, :with_components) }
 
       before do
-        notification.components.first.update(shades: ["black"])
+        notification.components.first.update(shades: %w[black])
       end
 
       it "returns true" do
-        expect(subject).to eq true
+        expect(has_shades).to eq true
       end
     end
   end
