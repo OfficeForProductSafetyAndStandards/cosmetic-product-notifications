@@ -1,0 +1,29 @@
+<%= govukSummaryList(
+  classes: "opss-summary-list-mixed",
+  rows: [
+    {
+      key: { text: "Product name" },
+      value: { text: @notification.product_name },
+    },
+    {
+      key: { text: "For children under 3" },
+      value: { text: @notification.under_three_years ? "Yes" : "No" },
+    },
+    {
+      key: { text: "Number of items" },
+      value: { text: @notification.components.size },
+    },
+    {
+      key: { text: "Shades" },
+      value: { html: @notification.shades.present? ? "Yes" : "No"},
+    },
+    {
+      key: { text: "Label image" },
+      value: { html: render("notifications/product_details_label_images", notification: @notification) },
+    },
+    {
+      key: { text: "Are the items mixed?" },
+      value: { text: @notification.are_these_items_mixed },
+    }
+  ].compact
+) %>
