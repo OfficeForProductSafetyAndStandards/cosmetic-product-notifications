@@ -17,6 +17,11 @@
 
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
+    <%= govukSummaryList(
+      classes: "govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
+      rows: notification_summary_references_rows(@notification)
+    ) %>
+
     <%= render "notifications/product_details", notification: @notification %>
     <%= render "notification_history", history: @history %>
   </article>
