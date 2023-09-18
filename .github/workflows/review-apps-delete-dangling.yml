@@ -17,7 +17,7 @@ jobs:
       CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
       CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install cf client
       env:
         CF_CLI_VERSION: v7
