@@ -8,9 +8,8 @@
 <section id="product-table" class="govuk-!-margin-top-7">
   <h2 class="govuk-visually-hidden">The product</h2>
 
-
-  <%= govukSummaryList(classes: "opss-summary-list-mixed",
-                        rows: notification_summary_product_rows(notification)) %>
+  <%= govukSummaryList(classes: "opss-summary-list-mixed", rows: notification_summary_references_rows(notification)) %>
+  <%= govukSummaryList(classes: "opss-summary-list-mixed", rows: notification_summary_product_rows(notification)) %>
 
   <%= govukSummaryList(
     classes: "opss-summary-list-mixed",
