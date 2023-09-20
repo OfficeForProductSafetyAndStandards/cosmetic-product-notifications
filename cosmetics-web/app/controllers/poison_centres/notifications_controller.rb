@@ -5,11 +5,17 @@ class PoisonCentres::NotificationsController < SearchApplicationController
 
   def show
     @responsible_person = @notification.responsible_person
-    if current_user&.poison_centre_user? || current_user&.opss_science_user?
-      render "show_poison_centre"
+    @history = @notification.versions_with_name
+
+    if current_user.can_view_product_ingredients_with_percentages?
+      @show_ingredient_percentages = true
+      render "show_detail"
+    elsif current_user.can_view_product_ingredients_without_percentages?
+      @show_ingredient_percentages = false
+      render "show_detail"
     else
-      @history = @notification.versions_with_name
-      render "show_msa"
+      # OPSS general users do not have access to any ingredient details
+      render "show"
     end
   end
 

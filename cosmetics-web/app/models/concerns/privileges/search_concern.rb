@@ -53,5 +53,13 @@ module Privileges
     def trading_standards_user?
       trading_standards?
     end
+
+    def can_view_product_ingredients_with_percentages?
+      poison_centre_user? || opss_enforcement_user? || opss_imt_user?
+    end
+
+    def can_view_product_ingredients_without_percentages?
+      trading_standards_user? || opss_science_user?
+    end
   end
 end

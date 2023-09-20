@@ -17,7 +17,14 @@
 
 <div class="govuk-grid-row">
   <article class="govuk-grid-column-three-quarters">
-    <%= render("product_details", notification: @notification) %>
+    <%= govukSummaryList(
+      classes: "govuk-summary-list--no-border govuk-!-margin-top-5 govuk-!-margin-bottom-4 opss-summary-list-mixed",
+      rows: notification_summary_references_rows(@notification)
+    ) %>
+
+    <%= render "product_summary" %>
+    <%= render "component_summary", notification: @notification, show_ingredient_detail: @show_ingredient_detail %>
+    <%= render "notification_history", history: @history %>
   </article>
 
   <%= render("aside_responsible_person_details", responsible_person: @responsible_person) %>
