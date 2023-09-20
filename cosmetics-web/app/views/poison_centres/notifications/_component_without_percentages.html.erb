@@ -1,0 +1,29 @@
+<%= govukSummaryList(
+  classes: "opss-summary-list-mixed",
+  rows: notification_summary_component_rows(component, include_shades: notification.is_multicomponent?)
+) %>
+
+<h3 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-2">Ingredients</h3>
+<%= govukSummaryList(
+  classes: "opss-summary-list-mixed",
+  rows: [
+    {
+      key: { text: "Formulation given as" },
+      value: { text: get_notification_type_name(component.notification_type) },
+    },
+    if component.predefined?
+      {
+        key: { text: "Frame formulation" },
+        value: { text: get_frame_formulation_name(component.frame_formulation) },
+      }
+    elsif component.formulation_file.attached?
+      {
+        key: { text: "Formulation" },
+        value: { html: render("notifications/component_details_formulation_ingredients", component: component) },
+      }
+    end,
+  ].compact
+) %>
+<% if component.ingredients.non_poisonous.any? %>
+  <%= render(partial: "ingredients_without_percentages", locals: { ingredients: component.ingredients }) %>
+<% end %>

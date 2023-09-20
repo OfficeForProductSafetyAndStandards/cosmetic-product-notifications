@@ -19,20 +19,17 @@
     elsif component.formulation_file.attached?
       {
         key: { text: "Formulation" },
-        value: { html: render("notifications/component_details_formulation_ingredients",
-                              component: component) },
+        value: { html: render("notifications/component_details_formulation_ingredients", component: component) },
       }
     end,
   ].compact
 ) %>
 <% if component.ingredients.non_poisonous.any? %>
-  <%= render(partial: "responsible_persons/notifications/ingredients",
-              locals: { ingredients: component.ingredients.non_poisonous }) %>
+  <%= render(partial: "responsible_persons/notifications/ingredients", locals: { ingredients: component.ingredients.non_poisonous }) %>
 <% end %>
 <% if component.ingredients.poisonous.any? %>
   <h4 class="govuk-heading-s govuk-!-margin-top-5 govuk-!-margin-bottom-2">
     Ingredients the <abbr title="National Poisons Information Service">NPIS</abbr> needs to know about
   </h4>
-  <%= render(partial: "responsible_persons/notifications/ingredients",
-              locals: { ingredients: component.ingredients.poisonous }) %>
+  <%= render(partial: "responsible_persons/notifications/ingredients", locals: { ingredients: component.ingredients.poisonous }) %>
 <% end %>

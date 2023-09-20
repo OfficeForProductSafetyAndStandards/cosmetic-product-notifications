@@ -11,6 +11,10 @@
   <% section_id = component.name&.parameterize.presence || item_count.parameterize %>
   <section id=<%= section_id %> class="govuk-!-margin-top-9 opss-grouping">
     <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
-    <%= render 'component', component:, notification: %>
+    <% if show_ingredient_detail %>
+      <%= render 'component_with_percentages', component:, notification: %>
+    <% else %>
+      <%= render 'component_without_percentages', component:, notification: %>
+    <% end%>
   </section>
 <% end %>
