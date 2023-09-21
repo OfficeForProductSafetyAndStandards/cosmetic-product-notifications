@@ -76,6 +76,50 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
+  def notification_summary_search_result_rows(notification)
+    [
+      {
+        key: { text: "Product name" },
+        value: { text: notification.product_name },
+      },
+      unless notification.under_three_years.nil?
+        {
+          key: { text: "For children under 3" },
+          value: { text: notification.under_three_years ? "Yes" : "No" },
+        }
+      end,
+      {
+        key: { text: "Number of items" },
+        value: { text: notification.components.length },
+      },
+      {
+        key: { text: "Shades" },
+        value: { html: display_shades(notification) },
+      },
+      {
+        key: { text: "Label image" },
+        value: { html: render("notifications/product_details_label_images",
+                              notification:) },
+      },
+      {
+        key: { text: "Are the items mixed?" },
+        value: { text: notification.components_are_mixed ? "Yes" : "No" },
+      },
+      if can_view_product_ingredients? && notification.ph_min_value.present?
+        {
+          key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+          value: { text: notification.ph_min_value },
+        }
+      end,
+      if can_view_product_ingredients? && notification.ph_max_value.present?
+        {
+          key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+          value: { text: notification.ph_max_value },
+        }
+      end,
+    ].compact
+  end
+
   def notification_summary_component_rows(component, include_shades: true)
     cmrs = component.cmrs
     nano_materials = component.nano_materials
