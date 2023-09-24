@@ -66,7 +66,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
     expect(page).to have_link("Bath Bubbles Powder")
   end
 
-
   scenario "Sorting search results" do
     fill_in "notification_search_form_q", with: "Bubbles"
     click_on "Search"
