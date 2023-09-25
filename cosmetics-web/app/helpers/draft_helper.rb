@@ -97,6 +97,13 @@ module DraftHelper
   end
 
   def nanomaterial_link(nano_material, index)
+  def product_link(step)
+    link_to("Go to question",
+            responsible_person_notification_product_path(@notification.responsible_person, @notification, step),
+            class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
+            aria: { describedby: step })
+  end
+
     text = nano_material.name.presence || "Nanomaterial ##{index + 1}"
 
     if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_material.blocked?
