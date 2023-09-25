@@ -46,7 +46,7 @@ module DraftHelper
     id = "product-status"
 
     if notification.state_lower_than?(NotificationStateConcern::READY_FOR_NANOMATERIALS)
-      not_started_badge(id)
+      in_progress_badge(id)
     else
       completed_badge(id)
     end
@@ -129,6 +129,10 @@ module DraftHelper
 
   def not_started_badge(id)
     badge("Not started", "govuk-tag--grey", id)
+  end
+
+  def in_progress_badge(id)
+    badge("In progress", "govuk-tag--blue", id)
   end
 
   def cannot_start_yet_badge(id)
