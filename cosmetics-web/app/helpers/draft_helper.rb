@@ -107,7 +107,7 @@ module DraftHelper
     describedby_text = ["nanomaterial", index, step].join("_")
 
     link_to("Go to question",
-            new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material, step),
+            responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material, step),
             class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
             aria: { describedby: describedby_text })
   end
