@@ -43,25 +43,32 @@
         <%= render 'product_details' %>
       <% end %>
       <li>
-        <h2 class="app-task-list__section">
-          <span class="app-task-list__section-number">
-            <%= section_number(DraftHelper::ACCEPT_SECTION) %>
-          </span>
-          Accept and submit
-        </h2>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <h2 class="app-task-list__section">
+              <span class="app-task-list__section-number">
+                <%= section_number(DraftHelper::ACCEPT_SECTION) %>
+              </span>
+              Accept and submit
+            </h2>
+          </div>
+          <div class="app-task-list__section-number govuk-grid-column-one-half">
+            <% if section_can_be_used?(DraftHelper::ACCEPT_SECTION) %>
+              <%= in_progress_badge("accept-and-submit-status") %>
+            <% else %>
+              <%= cannot_start_yet_badge("accept-and-submit-status") %>
+            <% end %>
+          </div>
+        </div>
 
         <ul class="app-task-list__items">
-          <li class="app-task-list__item">
+          <li class="app-task-list__item_no_border">
+            <span class="app-task-list__task-name govuk-!-font-weight-bold">
+              Accept and submit
+            </span>
+
             <% if section_can_be_used?(DraftHelper::ACCEPT_SECTION) %>
-              <span class="app-task-list__task-name">
-                <%= link_to "Accept and submit", review_responsible_person_notification_draft_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state", aria: { describedby: "accept-and-submit-status" } %>
-              </span>
-              <%= not_started_badge("accept-and-submit-status") %>
-            <% else %>
-              <span class="app-task-list__task-name">
-                Accept and submit
-              </span>
-              <b class="govuk-tag govuk-tag--grey app-task-list__tag" id="accept-status">Cannot start yet</b>
+              <%= link_to "Go to summary", review_responsible_person_notification_draft_path(@notification.responsible_person, @notification), aria: { describedby: "accept-and-submit-status" }, class: "govuk-link app-task-list__tag govuk-link--no-visited-state" %>
             <% end %>
           </li>
         </ul>
