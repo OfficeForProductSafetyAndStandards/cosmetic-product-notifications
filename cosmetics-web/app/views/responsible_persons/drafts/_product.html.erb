@@ -17,38 +17,38 @@
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="create_product">
           Product name
         </span>
-        <%= link_to "Go to question", new_responsible_person_notification_path(@responsible_person), class: "app-task-list__tag", "aria-describedby": "create_product" %>
+        <%= product_link(:create_product) %>
       </li>
       <li class="app-task-list__item_no_border">
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="internal_reference">
           Internal reference
         </span>
-        <%= link_to "Go to question", responsible_person_notification_product_path(@responsible_person, @notification, :add_internal_reference), class: "app-task-list__tag", "aria-describedby": "internal_reference" %>
+        <%= product_link(:add_internal_reference) %>
       </li>
       <li class="app-task-list__item_no_border">
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="for_children_under_three">
           Children under 3 years old
         </span>
-        <%= link_to "Go to question", responsible_person_notification_product_path(@responsible_person, @notification, :for_children_under_three), class: "app-task-list__tag", "aria-describedby": "for_children_under_three" %>
+        <%= product_link(:for_children_under_three) %>
       </li>
       <li class="app-task-list__item_no_border">
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="contains_nanomaterials">
           Nanomaterials
         </span>
-        <%= link_to "Go to question", responsible_person_notification_product_path(@responsible_person, @notification, :contains_nanomaterials), class: "app-task-list__tag", "aria-describedby": "contains_nanomaterials" %>
+        <%= product_link(:contains_nanomaterials) %>
       </li>
       <li class="app-task-list__item_no_border">
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="single_or_multi_component">
           Multi-item kit
         </span>
-        <%= link_to "Go to question", responsible_person_notification_product_path(@responsible_person, @notification, :single_or_multi_component), class: "app-task-list__tag", "aria-describedby": "single_or_multi_component" %>
+        <%= product_link(:single_or_multi_component) %>
       </li>
       <li class="app-task-list__item_no_border">
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="add_product_image">
           Image upload
         </span>
-        <%= link_to "Go to question", responsible_person_notification_product_path(@responsible_person, @notification, :add_product_image), class: "app-task-list__tag", "aria-describedby": "add_product_image" %>
-      </li>
+        <%= product_link(:add_product_image) %>
+    </li>
     <% else %>
       <li class="app-task-list__item">
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="create_product">
