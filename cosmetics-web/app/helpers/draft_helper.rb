@@ -182,8 +182,10 @@ module DraftHelper
     @notification.nano_materials.find { |n| !n.conforms_to_restrictions? }&.name
   end
 
-  def progress_bar
-    "<span class=\"govuk-visually-hidden\">The task list is </span><span class=\"govuk-!-font-weight-bold\">Incomplete</span>: #{sections_completed} of #{total_sections_count} tasks have been completed.".html_safe
+  def incomplete_progress
+    content_tag(:p, class: "govuk-body") do
+      "You have completed #{sections_completed} of #{total_sections_count} sections"
+    end
   end
 
   def total_sections_count
