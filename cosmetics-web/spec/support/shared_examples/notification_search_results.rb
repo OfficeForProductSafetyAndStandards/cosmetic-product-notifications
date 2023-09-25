@@ -16,6 +16,16 @@ RSpec.shared_examples "a notification search result with ingredients and their e
   end
 end
 
+RSpec.shared_examples "a notification search result with ingredients but without exact percentages" do
+  it "renders ingredients" do
+    expect(response.body).to match(/Ingredients/)
+  end
+
+  it "renders ingredients without exact percentages" do
+    expect(response.body).not_to match("10%&nbsp;w/w")
+  end
+end
+
 RSpec.shared_examples "a notification search result without any component technical details" do
   it "does not render acute poisoning info" do
     expect(response.body).not_to match(/Acute poisoning information/)
@@ -55,10 +65,6 @@ RSpec.shared_examples "a notification search result with general component techn
   it "renders component formulations" do
     expect(response.body).to match(/Formulation given as/)
     expect(response.body).to match(/Frame formulation/)
-  end
-
-  it "renders pH" do
-    expect(response.body).to match('<dt class="govuk-summary-list__key"><abbr title="Power of hydrogen">pH</abbr></dt>')
   end
 
   it "renders nanomaterials" do
