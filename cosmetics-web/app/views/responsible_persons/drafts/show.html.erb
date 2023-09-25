@@ -3,9 +3,6 @@
 
 <div class="govuk-grid-row opss-switch-cols">
   <div class="govuk-grid-column-one-quarter govuk-!-padding-top-9 opss-switch-cols__right">
-    <div class="opss-text-align-right">
-      <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-link govuk-link--no-visited-state govuk-!-font-size-19 opss-text-underline-offset" if @notification.id || @notification.product_wizard_completed? %>
-    </div>
     <% if @notification.source_notification %>
       <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-5 govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-1 govuk-!-padding-left-2 opss-border-all opss-rounded-corners">
         <h2 class="govuk-heading-s govuk-!-font-size-16 opss-primary-text">Start each task</h2>
@@ -20,7 +17,7 @@
     <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-4">
       <%= render "responsible_persons/drafts/guides/#{@notification.state}" %>
     </div>
-   </div>
+  </div>
 
   <section class="govuk-grid-column-three-quarters govuk-!-padding-top-9 opps-switch-cols__left" role="region" aria-label="Tasks">
     <p class="govuk-body">
@@ -30,13 +27,13 @@
       You will have 7 days from the date you submit the notification to delete it.
       You should only do this if our notification contains wrong information.
     </p>
-    <p class="govuk-body govuk-!-font-weight-bold">
+    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-2">
       Cosmetic product notification Incomplete
     </p>
 
     <%= incomplete_progress %>
 
-    <ol class="app-task-list">
+    <ol class="app-task-list govuk-!-margin-top-7">
       <%= render 'product' %>
       <%= render 'nanomaterials' if @notification.nano_materials.present? %>
       <% if @notification.multi_component? %>
@@ -70,5 +67,12 @@
         </ul>
       </li>
     </ol>
+
+    <% if @notification.persisted? %>
+      <div class="govuk-button-group">
+        <%= link_to "View draft", edit_responsible_person_notification_path(@notification.responsible_person, @notification), class: "govuk-button govuk-button--secondary" %>
+        <%= link_to "Delete this draft", delete_responsible_person_delete_notification_path(@notification.responsible_person, @notification), class: "govuk-button govuk-button--warning" %>
+      </div>
+    <% end %>
   </section>
 </div>
