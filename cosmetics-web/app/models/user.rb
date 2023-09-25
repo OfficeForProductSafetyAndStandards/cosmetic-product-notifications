@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   validate  :new_email_not_registered
 
-  validates :password, common_password: { message: :too_common }
+  validates :password, common_password: true
 
   validates :name, presence: true, unless: -> { invite }
   validates :name, length: { maximum: NAME_MAX_LENGTH }, user_name_format: true, if: :name_changed?
