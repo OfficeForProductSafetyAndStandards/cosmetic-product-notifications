@@ -1,21 +1,32 @@
-<li class="opss-task-sub">
-  <h3 class="app-task-list__section">
-    <span class="app-task-list__section-number">2. </span>
-    Nanomaterials
-  </h3>
+<li>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number">2. </span>
+        Nanomaterials
+      </h2>
+    </div>
+    <div class="app-task-list__section-number govuk-grid-column-one-half">
+      <%= nanomaterials_overall_badge(@notification) %>
+    </div>
+  </div>
 
-  <ul class="app-task-list__items opss-task-sub__list">
+  <ul class="app-task-list__items">
     <% @notification.nano_materials.order(:created_at).each_with_index do |nano_material, i| %>
-      <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-          <%= nanomaterial_link(nano_material, i) %>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold">
+         Nanomaterial #<%= i + 1 %>
         </span>
 
         <%= nanomaterial_badge(nano_material) %>
       </li>
+      <li class="app-task-list__item_no_border app-task-list__subitem">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="nanomaterial_<%= i %>_after_select_purposes_routing">Purpose</span>
+        <%= nanomaterial_link(nano_material, i, :select_purposes) %>
+      </li>
     <% end %>
 
-    <li class="app-task-list__item opss-task-sub__last">
+    <li class="app-task-list__item_no_border opss-task-sub__last">
       <span class="app-task-list__task-name">
         <a href="<%= new_responsible_person_notification_nanomaterial_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state">
           Add <span class="govuk-visually-hidden">another nanomaterial</span>
