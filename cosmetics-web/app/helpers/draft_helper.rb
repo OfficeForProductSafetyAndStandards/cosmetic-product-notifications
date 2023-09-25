@@ -48,7 +48,7 @@ module DraftHelper
     if notification.state_lower_than?(NotificationStateConcern::READY_FOR_NANOMATERIALS)
       in_progress_badge(id)
     else
-      completed_badge(id)
+      complete_badge(id)
     end
   end
 
@@ -61,7 +61,7 @@ module DraftHelper
     when Notification::DETAILS_COMPLETE
       not_started_badge(id)
     when Notification::READY_FOR_COMPONENTS, Notification::COMPONENTS_COMPLETE, Notification::DRAFT_COMPLETE, Notification::NOTIFICATION_COMPLETE
-      completed_badge(id)
+      complete_badge(id)
     else
       cannot_start_yet_badge(id)
     end
@@ -77,7 +77,7 @@ module DraftHelper
     elsif component.empty?
       not_started_badge(id)
     elsif component.component_complete?
-      completed_badge(id)
+      complete_badge(id)
     else
       cannot_start_yet_badge(id)
     end
@@ -115,7 +115,7 @@ module DraftHelper
     return cannot_start_yet_badge(id) unless section_can_be_used?(NANOMATERIALS_SECTION)
 
     if nano_material.completed?
-      completed_badge(id)
+      complete_badge(id)
     elsif nano_material.blocked?
       blocked_badge(id)
     else
@@ -123,8 +123,8 @@ module DraftHelper
     end
   end
 
-  def completed_badge(id)
-    badge("Completed", "", id)
+  def complete_badge(id)
+    badge("Complete", "", id)
   end
 
   def not_started_badge(id)
