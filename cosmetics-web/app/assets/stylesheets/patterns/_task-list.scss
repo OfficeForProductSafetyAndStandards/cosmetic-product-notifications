@@ -57,6 +57,10 @@
   border-top: 1px solid $govuk-border-colour;
 }
 
+.app-task-list__subitem {
+  margin-left: govuk-spacing(4);
+}
+
 .app-task-list__item:first-child {
   border-top: 1px solid $govuk-border-colour;
 }

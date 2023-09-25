@@ -96,7 +96,6 @@ module DraftHelper
     end
   end
 
-  def nanomaterial_link(nano_material, index)
   def product_link(step)
     link_to("Go to question",
             responsible_person_notification_product_path(@notification.responsible_person, @notification, step),
@@ -104,17 +103,31 @@ module DraftHelper
             aria: { describedby: step })
   end
 
-    text = nano_material.name.presence || "Nanomaterial ##{index + 1}"
+  def nanomaterial_link(nano_material, index, step)
+    describedby_text = ["nanomaterial", index, step].join("_")
 
-    if section_can_be_used?(NANOMATERIALS_SECTION) && !nano_material.blocked?
-      link_to(text,
-              new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material),
-              class: "govuk-link govuk-link--no-visited-state",
-              aria: { describedby: html_id_for(nano_material) })
+    link_to("Go to question",
+            new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material, step),
+            class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
+            aria: { describedby: describedby_text })
+  end
+
+  def nanomaterials_overall_badge(notification)
+    id = "nanomaterials-status"
+
+    return cannot_start_yet_badge(id) unless section_can_be_used?(NANOMATERIALS_SECTION)
+
+    if notification.nano_materials.empty?
+      not_started_badge(id)
+    elsif notification.nano_materials.all?(&:completed?)
+      complete_badge(id)
+    elsif notification.nano_materials.any?(&:blocked?)
+      blocked_badge(id)
     else
-      text
+      in_progress_badge(id)
     end
   end
+
 
   def nanomaterial_badge(nano_material)
     id = html_id_for(nano_material)
