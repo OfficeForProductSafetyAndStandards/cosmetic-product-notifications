@@ -46,9 +46,9 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the product ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("section#item-2") do
-          with_tag("dt", text: /Ingredient list/)
-          with_tag("dd", text: /Foo Ingredient/)
+        within("section#item-2") do
+          expect(page).to have_tag("h3", text: /Ingredients/)
+          expect(page).to have_tag("dt", text: /Foo Ingredient/)
         end
       end
 
@@ -178,7 +178,10 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the product ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to include("Foo Ingredient")
+        within("section#item-2") do
+          expect(page).to have_tag("h3", text: /Ingredients/)
+          expect(page).to have_tag("dt", text: /Foo Ingredient/)
+        end
       end
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
@@ -239,7 +242,10 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the product ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to include("Foo Ingredient")
+        within("section#item-2") do
+          expect(page).to have_tag("h3", text: /Ingredients/)
+          expect(page).to have_tag("dt", text: /Foo Ingredient/)
+        end
       end
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
@@ -300,9 +306,9 @@ RSpec.describe "Poison centre page", type: :request do
 
       it "displays the product ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).to have_tag("section#item-2") do
-          with_tag("dt", text: /Ingredient list/)
-          with_tag("dd", text: /Foo Ingredient/)
+        within("section#item-2") do
+          expect(page).to have_tag("h3", text: /Ingredients/)
+          expect(page).to have_tag("dt", text: /Foo Ingredient/)
         end
       end
 
@@ -366,10 +372,12 @@ RSpec.describe "Poison centre page", type: :request do
         expect(response.body).to include(notification_exact.product_name)
       end
 
-      it "does not display the product ingredients" do
+      it "displays the product ingredients" do
         get poison_centre_notification_path(params_exact)
-        expect(response.body).not_to include("Ingredients")
-        expect(response.body).not_to include("Foo Ingredient")
+        within("section#item-2") do
+          expect(page).to have_tag("h3", text: /Ingredients/)
+          expect(page).to have_tag("dt", text: /Foo Ingredient/)
+        end
       end
 
       it "does not display the product frame formulations for a product with only exact or range ingredients" do
