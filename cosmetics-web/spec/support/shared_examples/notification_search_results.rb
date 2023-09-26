@@ -12,7 +12,7 @@ RSpec.shared_examples "a notification search result with ingredients and their e
   end
 
   it "renders ingredients with exact percentages" do
-    expect(response.body).to match("10%&nbsp;w/w")
+    expect(response.body).to match("10.0%&nbsp;<abbr>w/w</abbr>")
   end
 end
 

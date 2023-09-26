@@ -2,8 +2,17 @@ require "rails_helper"
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:notifications) { create_list(:registered_notification, 3, :with_components, :with_nano_materials, responsible_person:) }
+  let!(:notification) { create(:registered_notification, :with_nano_materials, responsible_person:) }
   let(:archived_notification) { create(:archived_notification, responsible_person:) }
+  let(:reference_number) { notification.reference_number }
+
+  subject do
+    get :show, params: { reference_number: }
+  end
+
+  before do
+    create(:component, :with_exact_ingredients, notification:, sub_sub_category: "nonoxidative_hair_colour_products")
+  end
 
   after do
     sign_out(:search_user)
@@ -12,14 +21,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as a Poison Centre user" do
     before do
       sign_in_as_poison_centre_user
+      subject
     end
 
     describe "GET #show" do
-      let(:notification) { notifications.first }
-      let(:reference_number) { notification.reference_number }
-
-      before { get :show, params: { reference_number: } }
-
       it "decorates the correct notification" do
         expect(assigns(:notification).id).to eq(notification.id)
       end
@@ -51,14 +56,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an OPSS General user" do
     before do
       sign_in_as_opss_general_user
+      subject
     end
 
     describe "GET #show" do
-      let(:notification) { notifications.first }
-      let(:reference_number) { notification.reference_number }
-
-      before { get :show, params: { reference_number: } }
-
       it "renders the show template" do
         expect(response).to render_template("notifications/show")
       end
@@ -90,14 +91,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an OPSS Enforcement user" do
     before do
       sign_in_as_opss_enforcement_user
+      subject
     end
 
     describe "GET #show" do
-      let(:notification) { notifications.first }
-      let(:reference_number) { notification.reference_number }
-
-      before { get :show, params: { reference_number: } }
-
       it "renders the show detail template" do
         expect(response).to render_template("notifications/show_detail")
       end
@@ -129,14 +126,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an OPSS IMT user" do
     before do
       sign_in_as_opss_imt_user
+      subject
     end
 
     describe "GET #show" do
-      let(:notification) { notifications.first }
-      let(:reference_number) { notification.reference_number }
-
-      before { get :show, params: { reference_number: } }
-
       it "renders the show detail template" do
         expect(response).to render_template("notifications/show_detail")
       end
@@ -168,14 +161,10 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an Trading Standards user" do
     before do
       sign_in_as_trading_standards_user
+      subject
     end
 
     describe "GET #show" do
-      let(:notification) { notifications.first }
-      let(:reference_number) { notification.reference_number }
-
-      before { get :show, params: { reference_number: } }
-
       it "renders the show detail template" do
         expect(response).to render_template("notifications/show_detail")
       end
@@ -211,7 +200,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
 
     describe "GET #show" do
       it "redirects to invalid account" do
-        expect(get(:show, params: { reference_number: notifications.first.reference_number })).to redirect_to("/invalid-account")
+        expect(get(:show, params: { reference_number: notification.reference_number })).to redirect_to("/invalid-account")
       end
     end
   end
