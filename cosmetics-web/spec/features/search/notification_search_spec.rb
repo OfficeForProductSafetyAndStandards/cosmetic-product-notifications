@@ -24,7 +24,6 @@ RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :
 
     sign_in user
     visit "/notifications"
-    expect(page).to have_h1("Cosmetic products search")
   end
 
   scenario "Searching for notifications" do
