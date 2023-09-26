@@ -76,6 +76,38 @@ RSpec.describe SearchUser, type: :model do
     end
   end
 
+  describe "#can_search_for_ingredients?" do
+    it "is false for OPSS General users" do
+      user.role = :opss_general
+      expect(user).not_to be_can_search_for_ingredients
+    end
+
+    it "is true for OPSS Enforcement users" do
+      user.role = :opss_enforcement
+      expect(user).to be_can_search_for_ingredients
+    end
+
+    it "is true for OPSS IMT users" do
+      user.role = :opss_imt
+      expect(user).to be_can_search_for_ingredients
+    end
+
+    it "is true for Trading Standards users" do
+      user.role = :trading_standards
+      expect(user).to be_can_search_for_ingredients
+    end
+
+    it "is true for Poison Centre users" do
+      user.role = :poison_centre
+      expect(user).to be_can_search_for_ingredients
+    end
+
+    it "is true for OPSS Science users" do
+      user.role = :opss_science
+      expect(user).to be_can_search_for_ingredients
+    end
+  end
+
   describe "#can_view_nanomaterial_notification_files?" do
     it "is false for OPSS General users" do
       user.role = :opss_general

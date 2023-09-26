@@ -10,6 +10,10 @@ module Privileges
       poison_centre_user?
     end
 
+    def can_search_for_ingredients?
+      !opss_general?
+    end
+
     def can_view_nanomaterial_notification_files?
       opss_science_user?
     end
