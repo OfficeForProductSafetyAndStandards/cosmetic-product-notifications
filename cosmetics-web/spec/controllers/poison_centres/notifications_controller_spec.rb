@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
+  subject(:load_page) do
+    get :show, params: { reference_number: }
+  end
+
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let!(:notification) { create(:registered_notification, :with_nano_materials, responsible_person:) }
   let(:archived_notification) { create(:archived_notification, responsible_person:) }
   let(:reference_number) { notification.reference_number }
-
-  subject do
-    get :show, params: { reference_number: }
-  end
 
   before do
     create(:component, :with_exact_ingredients, notification:, sub_sub_category: "nonoxidative_hair_colour_products")
@@ -21,7 +21,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as a Poison Centre user" do
     before do
       sign_in_as_poison_centre_user
-      subject
+      load_page
     end
 
     describe "GET #show" do
@@ -56,7 +56,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an OPSS General user" do
     before do
       sign_in_as_opss_general_user
-      subject
+      load_page
     end
 
     describe "GET #show" do
@@ -91,7 +91,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an OPSS Enforcement user" do
     before do
       sign_in_as_opss_enforcement_user
-      subject
+      load_page
     end
 
     describe "GET #show" do
@@ -126,7 +126,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an OPSS IMT user" do
     before do
       sign_in_as_opss_imt_user
-      subject
+      load_page
     end
 
     describe "GET #show" do
@@ -161,7 +161,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
   describe "When signed in as an Trading Standards user" do
     before do
       sign_in_as_trading_standards_user
-      subject
+      load_page
     end
 
     describe "GET #show" do
