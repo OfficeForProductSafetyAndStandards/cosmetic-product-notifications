@@ -169,7 +169,7 @@ module DraftHelper
   end
 
   def badge(caption, css_classes, id)
-    "<b class=\"govuk-tag app-task-list__tag #{css_classes}\" id=\"#{id}\">#{caption}</b>".html_safe
+    content_tag(:b, caption, class: "govuk-tag app-task-list__tag #{css_classes}", id: id)
   end
 
   def section_number(section)
