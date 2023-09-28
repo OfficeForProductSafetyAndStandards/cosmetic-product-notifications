@@ -24,6 +24,18 @@
     {
       key: { text: "Are the items mixed?" },
       value: { text: @notification.are_these_items_mixed },
-    }
+    },
+    if @notification.ph_min_value.present?
+      {
+        key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+        value: { text: @notification.ph_min_value },
+      }
+    end,
+    if @notification.ph_max_value.present?
+      {
+        key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+        value: { text: @notification.ph_max_value },
+      }
+    end,
   ].compact
 ) %>
