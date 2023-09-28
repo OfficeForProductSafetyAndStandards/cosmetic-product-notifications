@@ -118,7 +118,7 @@ module DraftHelper
             aria: { describedby: describedby_text })
   end
 
-  def nanomaterials_overall_badge(notification)
+  def nanomaterials_summary_badge(notification)
     id = "nanomaterials-status"
 
     return cannot_start_yet_badge(id) unless section_can_be_used?(NANOMATERIALS_SECTION)
