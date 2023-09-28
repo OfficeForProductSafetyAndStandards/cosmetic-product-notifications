@@ -16,16 +16,13 @@
   </div>
 
   <ul class="app-task-list__items">
-    <li class="app-task-list__item_no_border">
-      <span class="app-task-list__task-name govuk-!-font-weight-bold">
-        <% if section_can_be_used?(DraftHelper::PRODUCT_DETAILS_SECTION) %>
-          <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state " aria-describedby="single-item-status">
-            Product details
-          </a>
-        <% else %>
+    <% if section_can_be_used?(DraftHelper::PRODUCT_DETAILS_SECTION) %>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="new">
           Product details
-        <% end %>
-      </span>
-    </li>
+        </span>
+        <%= product_details_link(component) %>
+      </li>
+    <% end %>
   </ul>
 </li>

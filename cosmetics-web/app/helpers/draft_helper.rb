@@ -103,6 +103,12 @@ module DraftHelper
             aria: { describedby: step })
   end
 
+  def product_details_link(component)
+    link_to("Go to question",
+            new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component),
+            class: "govuk-link app-task-list__tag govuk-link--no-visited-state")
+  end
+
   def nanomaterial_link(nano_material, index, step)
     describedby_text = ["nanomaterial", index, step].join("_")
 
