@@ -53,6 +53,7 @@
   padding-bottom: govuk-spacing(2);
   @include govuk-clearfix;
 }
+
 .app-task-list__item_no_border:first-child {
   border-top: 1px solid $govuk-border-colour;
 }
