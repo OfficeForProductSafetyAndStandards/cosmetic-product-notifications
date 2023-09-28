@@ -128,7 +128,6 @@ module DraftHelper
     end
   end
 
-
   def nanomaterial_badge(nano_material)
     id = html_id_for(nano_material)
 
