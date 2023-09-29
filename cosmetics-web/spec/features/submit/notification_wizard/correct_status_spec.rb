@@ -115,7 +115,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_nano_material_wizard("Nano two", purposes: %w[Preservative], from_add: true)
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("li", text: "Nano two is not included in any items")
 

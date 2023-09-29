@@ -50,7 +50,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
 
     return_to_task_list_page
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("dt", text: "Sodium")
     expect(page).to have_css("dd", text: "35.0% w/w")
@@ -107,7 +107,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
 
     return_to_task_list_page
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("dt", text: "Sodium")
     expect(page).to have_css("dd", text: "35.0% w/w")
@@ -140,7 +140,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
 
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
     return_to_task_list_page
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("dt", text: "Sodium carbonate")
     expect(page).to have_css("dd", text: "CAS: 497-19-8")
