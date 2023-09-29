@@ -262,11 +262,11 @@ def expect_product_details_task_completed
 end
 
 def expect_product_details_task_not_started
-  expect_task_not_started("component")
+  expect_task_not_started("Item #1")
 end
 
 def expect_product_details_task_blocked
-  expect_task_blocked("component")
+  expect_task_blocked("Item #1")
 end
 
 def expect_item_task_completed(name)
