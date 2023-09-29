@@ -178,9 +178,11 @@ module DraftHelper
   end
 
   def badge(caption, css_classes, id, hidden_text)
-    text = [hidden_text.to_s.humanize.downcase, caption].join(" ")
+    hidden_text = hidden_text.to_s.humanize + " "
     hidden_text_tag = content_tag(:span, hidden_text, class: "govuk-visually-hidden")
-    content_tag(:b, text, class: "govuk-tag app-task-list__tag #{css_classes}", id: id)
+    content_tag(:b, class: "govuk-tag app-task-list__tag #{css_classes}", id: id) do
+      hidden_text_tag + content_tag(:span, caption)
+    end
   end
 
   def section_number(section)
