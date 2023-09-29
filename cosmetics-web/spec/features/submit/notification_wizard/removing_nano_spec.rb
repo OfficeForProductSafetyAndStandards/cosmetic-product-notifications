@@ -89,7 +89,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_not_started
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     click_link "Continue"
 
