@@ -54,7 +54,7 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
   expect_task_has_been_completed_page
 
   return_to_task_list_page
-  expect_item_task_completed name
+  expect_item_task_completed "component"
 end
 
 def answer_item_name_with(item_name)
@@ -258,15 +258,15 @@ def expect_to_be_on_add_csv_ingredients_page
 end
 
 def expect_product_details_task_completed
-  expect_item_task_completed("Product details")
+  expect_item_task_completed("component")
 end
 
 def expect_product_details_task_not_started
-  expect_task_not_started("Product details")
+  expect_task_not_started("component")
 end
 
 def expect_product_details_task_blocked
-  expect_task_blocked("Product details")
+  expect_task_blocked("component")
 end
 
 def expect_item_task_completed(name)
