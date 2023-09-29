@@ -54,7 +54,7 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
   expect_task_has_been_completed_page
 
   return_to_task_list_page
-  expect_item_task_completed name
+  expect_item_task_completed "Product"
 end
 
 def answer_item_name_with(item_name)
