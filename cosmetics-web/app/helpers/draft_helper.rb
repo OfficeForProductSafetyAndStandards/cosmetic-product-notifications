@@ -116,44 +116,44 @@ module DraftHelper
   end
 
   def nanomaterial_link(nano_material, index, step)
-    describedby_text = ["nanomaterial", index, step].join("_")
-    hidden_text = " - product #{step.humanize.downcase}"
+    hidden_text = ["nanomaterial", "##{index+1}", step.to_s.humanize.downcase]
 
     link_to(
             responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material, step),
             class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
-            aria: { describedby: describedby_text }) do
-              content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
+            aria: { describedby: hidden_text.join("_") }) do
+              content_tag(:span, "Go to question") + content_tag(:span, " - #{hidden_text.join(" ")}", class: "govuk-visually-hidden")
             end
   end
 
   def nanomaterials_summary_badge(notification)
     id = "nanomaterials-status"
 
-    return cannot_start_yet_badge(id) unless section_can_be_used?(NANOMATERIALS_SECTION)
+    return cannot_start_yet_badge(id, :nano_materials) unless section_can_be_used?(NANOMATERIALS_SECTION)
 
     if notification.nano_materials.empty?
-      not_started_badge(id)
+      not_started_badge(id, :nano_materials)
     elsif notification.nano_materials.all?(&:completed?)
-      complete_badge(id)
+      complete_badge(id, :nano_materials)
     elsif notification.nano_materials.any?(&:blocked?)
-      blocked_badge(id)
+      blocked_badge(id, :nano_materials)
     else
-      in_progress_badge(id)
+      in_progress_badge(id, :nano_materials)
     end
   end
 
-  def nanomaterial_badge(nano_material)
+  def nanomaterial_badge(nano_material, index)
     id = html_id_for(nano_material)
+    hidden_text = nano_material&.name.present? ? nano_material.name : "nanomaterial ##{index+1}"
 
-    return cannot_start_yet_badge(id) unless section_can_be_used?(NANOMATERIALS_SECTION)
+    return cannot_start_yet_badge(id, hidden_text) unless section_can_be_used?(NANOMATERIALS_SECTION)
 
     if nano_material.completed?
-      complete_badge(id)
+      complete_badge(id, hidden_text)
     elsif nano_material.blocked?
-      blocked_badge(id)
+      blocked_badge(id, hidden_text)
     else
-      not_started_badge(id)
+      not_started_badge(id, hidden_text)
     end
   end
 
