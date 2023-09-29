@@ -46,9 +46,9 @@ module DraftHelper
     id = "product-status"
 
     if notification.state_lower_than?(NotificationStateConcern::READY_FOR_NANOMATERIALS)
-      in_progress_badge(id)
+      in_progress_badge(id, :product)
     else
-      complete_badge(id)
+      complete_badge(id, :product)
     end
   end
 
@@ -59,27 +59,27 @@ module DraftHelper
 
     case notification.state.to_sym
     when Notification::DETAILS_COMPLETE
-      not_started_badge(id)
+      not_started_badge(id, :multi_item_kit)
     when Notification::READY_FOR_COMPONENTS, Notification::COMPONENTS_COMPLETE, Notification::DRAFT_COMPLETE, Notification::NOTIFICATION_COMPLETE
-      complete_badge(id)
+      complete_badge(id, :multi_item_kit)
     else
-      cannot_start_yet_badge(id)
+      cannot_start_yet_badge(id, :multi_item_kit)
     end
   end
 
   def component_badge(component, override_id: nil)
     id = override_id || html_id_for(component)
-    return cannot_start_yet_badge(id) unless section_can_be_used?(ITEMS_SECTION)
+    return cannot_start_yet_badge(id, :component) unless section_can_be_used?(ITEMS_SECTION)
 
     notification = component.notification
     if notification.empty? || notification.product_name_added? || notification.details_complete?
-      cannot_start_yet_badge(id)
+      cannot_start_yet_badge(id, :component)
     elsif component.empty?
-      not_started_badge(id)
+      not_started_badge(id, :component)
     elsif component.component_complete?
-      complete_badge(id)
+      complete_badge(id, :component)
     else
-      cannot_start_yet_badge(id)
+      cannot_start_yet_badge(id, :component)
     end
   end
 
@@ -97,25 +97,34 @@ module DraftHelper
   end
 
   def product_link(step)
-    link_to("Go to question",
+    hidden_text = " - #{step.to_s.humanize.downcase}"
+    link_to(
             responsible_person_notification_product_path(@notification.responsible_person, @notification, step),
             class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
-            aria: { describedby: step })
+            aria: { describedby: step }) do
+              content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
+            end
   end
 
   def product_details_link(component)
-    link_to("Go to question",
+    hidden_text = " - product details"
+    link_to(
             new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component),
-            class: "govuk-link app-task-list__tag govuk-link--no-visited-state")
+            class: "govuk-link app-task-list__tag govuk-link--no-visited-state") do
+              content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
+            end
   end
 
   def nanomaterial_link(nano_material, index, step)
     describedby_text = ["nanomaterial", index, step].join("_")
+    hidden_text = " - product #{step.humanize.downcase}"
 
-    link_to("Go to question",
+    link_to(
             responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material, step),
             class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
-            aria: { describedby: describedby_text })
+            aria: { describedby: describedby_text }) do
+              content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
+            end
   end
 
   def nanomaterials_summary_badge(notification)
@@ -148,28 +157,30 @@ module DraftHelper
     end
   end
 
-  def complete_badge(id)
-    badge("Complete", "", id)
+  def complete_badge(id, hidden_text)
+    badge("complete", "", id, hidden_text)
   end
 
-  def not_started_badge(id)
-    badge("Not started", "govuk-tag--grey", id)
+  def not_started_badge(id, hidden_text)
+    badge("not started", "govuk-tag--grey", id, hidden_text)
   end
 
-  def in_progress_badge(id)
-    badge("In progress", "govuk-tag--blue", id)
+  def in_progress_badge(id, hidden_text)
+    badge("in progress", "govuk-tag--blue", id, hidden_text)
   end
 
-  def cannot_start_yet_badge(id)
-    badge("Cannot start yet", "govuk-tag--grey", id)
+  def cannot_start_yet_badge(id, hidden_text)
+    badge("cannot start yet", "govuk-tag--grey", id, hidden_text)
   end
 
-  def blocked_badge(id)
-    badge("Blocked", "opss-tag--red", id)
+  def blocked_badge(id, hidden_text)
+    badge("blocked", "opss-tag--red", id, hidden_text)
   end
 
-  def badge(caption, css_classes, id)
-    content_tag(:b, caption, class: "govuk-tag app-task-list__tag #{css_classes}", id: id)
+  def badge(caption, css_classes, id, hidden_text)
+    text = [hidden_text.to_s.humanize.downcase, caption].join(" ")
+    hidden_text_tag = content_tag(:span, hidden_text, class: "govuk-visually-hidden")
+    content_tag(:b, text, class: "govuk-tag app-task-list__tag #{css_classes}", id: id)
   end
 
   def section_number(section)
