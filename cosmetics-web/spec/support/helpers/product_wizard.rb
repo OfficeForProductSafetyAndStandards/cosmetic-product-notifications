@@ -1,7 +1,7 @@
 require "support/matchers/capybara_matchers"
 
 def complete_product_wizard(name: "Product", items_count: 1, nano_materials_count: 0, continue_on_nano: false, continue_on_items: false)
-  click_on "Create the product"
+  click_on "Go to question - add product name"
   expect_to_be_on__what_is_product_name_page
 
   answer_product_name_with name
@@ -90,7 +90,7 @@ def expect_product_task_blocked
 end
 
 def expect_product_task_completed
-  expect_task_completed "Create the product"
+  expect_task_completed "product"
 end
 
 def expect_product_label_images(images)
