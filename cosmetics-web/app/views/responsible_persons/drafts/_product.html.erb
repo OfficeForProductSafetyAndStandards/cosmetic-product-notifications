@@ -54,7 +54,10 @@
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="create_product">
           Product name
         </span>
-        <%= link_to "Go to question", new_responsible_person_notification_path(@responsible_person), class: "app-task-list__tag", "aria-describedby": "create_product" %>
+        <%= link_to new_responsible_person_notification_path(@responsible_person), class: "app-task-list__tag", "aria-describedby": "create_product" do %>
+          Go to question
+          <span class="govuk-visually-hidden"> - add product name</span>
+        <% end %>
       </li>
     <% end %>
     </li>
