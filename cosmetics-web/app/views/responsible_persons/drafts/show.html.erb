@@ -68,7 +68,10 @@
             </span>
 
             <% if section_can_be_used?(DraftHelper::ACCEPT_SECTION) %>
-              <%= link_to "Go to summary", review_responsible_person_notification_draft_path(@notification.responsible_person, @notification), aria: { describedby: "accept-and-submit-status" }, class: "govuk-link app-task-list__tag govuk-link--no-visited-state" %>
+              <%= link_to review_responsible_person_notification_draft_path(@notification.responsible_person, @notification), aria: { describedby: "accept-and-submit-status" }, class: "govuk-link app-task-list__tag govuk-link--no-visited-state" do %>
+                Go to summary
+                <span class="govuk-visually-hidden"> - accept and submit</span>
+              <% end %>
             <% end %>
           </li>
         </ul>

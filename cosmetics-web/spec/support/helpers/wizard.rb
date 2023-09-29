@@ -142,7 +142,7 @@ def expect_successful_submission
 end
 
 def accept_and_submit_flow
-  click_link "Accept and submit"
+  click_link "Go to summary - accept and submit"
   click_link "Continue"
   click_button "Accept and submit"
 end
