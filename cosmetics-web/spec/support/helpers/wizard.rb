@@ -20,8 +20,8 @@ def return_to_task_list_page
   click_on "Go to the task list page"
 end
 
-def expect_accept_and_submit_not_started
-  expect_task_not_started("Accept and submit")
+def expect_accept_and_submit_in_progress
+  expect_task_in_progress("Accept and submit")
 end
 
 def expect_accept_and_submit_blocked
@@ -30,6 +30,10 @@ end
 
 def expect_task_completed(link_text)
   expect_task_status(link_text, "complete")
+end
+
+def expect_task_in_progress(link_text)
+  expect_task_status(link_text, "in progress")
 end
 
 def expect_task_not_started(link_text)
