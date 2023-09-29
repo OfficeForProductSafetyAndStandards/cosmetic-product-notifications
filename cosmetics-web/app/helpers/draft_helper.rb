@@ -55,7 +55,7 @@ module DraftHelper
   def multi_item_kit_badge(notification)
     id = "multi-item-status"
 
-    return cannot_start_yet_badge(id) unless section_can_be_used?(MULTI_ITEMS_KIT_SECTION)
+    return cannot_start_yet_badge(id, :multi_item_kit) unless section_can_be_used?(MULTI_ITEMS_KIT_SECTION)
 
     case notification.state.to_sym
     when Notification::DETAILS_COMPLETE
@@ -67,19 +67,21 @@ module DraftHelper
     end
   end
 
-  def component_badge(component, override_id: nil)
+  def component_badge(component, index, override_id: nil)
     id = override_id || html_id_for(component)
-    return cannot_start_yet_badge(id, :component) unless section_can_be_used?(ITEMS_SECTION)
+    hidden_text = component&.name.present? ? component.name : "Item ##{index + 1}"
+
+    return cannot_start_yet_badge(id, hidden_text) unless section_can_be_used?(ITEMS_SECTION)
 
     notification = component.notification
     if notification.empty? || notification.product_name_added? || notification.details_complete?
-      cannot_start_yet_badge(id, :component)
+      cannot_start_yet_badge(id, hidden_text)
     elsif component.empty?
-      not_started_badge(id, :component)
+      not_started_badge(id, hidden_text)
     elsif component.component_complete?
-      complete_badge(id, :component)
+      complete_badge(id, hidden_text)
     else
-      cannot_start_yet_badge(id, :component)
+      cannot_start_yet_badge(id, hidden_text)
     end
   end
 
