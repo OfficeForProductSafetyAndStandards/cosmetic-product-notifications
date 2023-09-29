@@ -11,7 +11,7 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
     if item_number
       click_on "Item ##{item_number}"
     else
-      click_link name
+      click_link "Go to question - product details"
     end
   end
 

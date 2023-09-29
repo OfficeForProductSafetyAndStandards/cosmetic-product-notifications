@@ -15,7 +15,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
   end
 
   scenario "Adding exact concentration ingredients to a product using a CSV file" do
-    click_link "Product details"
+    click_link "Go to question - product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Liquid"
     answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
@@ -61,7 +61,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
   end
 
   scenario "Adding exact concentration ingredients to a product with multiple shades using a CSV file" do
-    click_link "Product details"
+    click_link "Go to question - product details"
 
     answer_is_item_available_in_shades_with "Yes"
     fill_in "component_shades-0", with: "Blue"
@@ -118,7 +118,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
   end
 
   scenario "Adding range concentration ingredients to a product using a CSV file" do
-    click_link "Product details"
+    click_link "Go to question - product details"
 
     answer_is_item_available_in_shades_with "No"
     click_button "Continue"

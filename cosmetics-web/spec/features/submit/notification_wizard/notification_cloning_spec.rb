@@ -54,7 +54,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect(page).to have_css("h3", text: "You have created the draft notification")
     click_on "task list page"
 
-    click_on "Create the product"
+    click_on "Go to question - add product name"
     2.times { click_button "Continue" }
     choose "No" # children under 3
     click_button "Continue"

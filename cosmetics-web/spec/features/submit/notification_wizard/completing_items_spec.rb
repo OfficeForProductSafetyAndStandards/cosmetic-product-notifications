@@ -48,7 +48,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     complete_product_details
 
     # Check continue button on task completed page
-    click_link "Product details"
+    click_link "Go to question - product details"
     click_button "Continue"
     click_button "Continue"
     click_button "Continue"
