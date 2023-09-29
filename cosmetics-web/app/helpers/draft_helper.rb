@@ -101,31 +101,34 @@ module DraftHelper
   def product_link(step)
     hidden_text = " - #{step.to_s.humanize.downcase}"
     link_to(
-            responsible_person_notification_product_path(@notification.responsible_person, @notification, step),
-            class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
-            aria: { describedby: step }) do
-              content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
-            end
+      responsible_person_notification_product_path(@notification.responsible_person, @notification, step),
+      class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
+      aria: { describedby: step },
+    ) do
+      content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
+    end
   end
 
   def product_details_link(component)
     hidden_text = " - product details"
     link_to(
-            new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component),
-            class: "govuk-link app-task-list__tag govuk-link--no-visited-state") do
-              content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
-            end
+      new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component),
+      class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
+    ) do
+      content_tag(:span, "Go to question") + content_tag(:span, hidden_text, class: "govuk-visually-hidden")
+    end
   end
 
   def nanomaterial_link(nano_material, index, step)
-    hidden_text = ["nanomaterial", "##{index+1}", step.to_s.humanize.downcase]
+    hidden_text = ["nanomaterial", "##{index + 1}", step.to_s.humanize.downcase]
 
     link_to(
-            responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material, step),
-            class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
-            aria: { describedby: hidden_text.join("_") }) do
-              content_tag(:span, "Go to question") + content_tag(:span, " - #{hidden_text.join(" ")}", class: "govuk-visually-hidden")
-            end
+      responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, nano_material, step),
+      class: "govuk-link app-task-list__tag govuk-link--no-visited-state",
+      aria: { describedby: hidden_text.join("_") },
+    ) do
+      content_tag(:span, "Go to question") + content_tag(:span, " - #{hidden_text.join(' ')}", class: "govuk-visually-hidden")
+    end
   end
 
   def nanomaterials_summary_badge(notification)
@@ -146,7 +149,7 @@ module DraftHelper
 
   def nanomaterial_badge(nano_material, index)
     id = html_id_for(nano_material)
-    hidden_text = nano_material&.name.present? ? nano_material.name : "nanomaterial ##{index+1}"
+    hidden_text = nano_material&.name.present? ? nano_material.name : "nanomaterial ##{index + 1}"
 
     return cannot_start_yet_badge(id, hidden_text) unless section_can_be_used?(NANOMATERIALS_SECTION)
 
@@ -180,9 +183,9 @@ module DraftHelper
   end
 
   def badge(caption, css_classes, id, hidden_text)
-    hidden_text = hidden_text.to_s.humanize + " "
+    hidden_text = "#{hidden_text.to_s.humanize} "
     hidden_text_tag = content_tag(:span, hidden_text, class: "govuk-visually-hidden")
-    content_tag(:b, class: "govuk-tag app-task-list__tag #{css_classes}", id: id) do
+    content_tag(:b, class: "govuk-tag app-task-list__tag #{css_classes}", id:) do
       hidden_text_tag + content_tag(:span, caption)
     end
   end
