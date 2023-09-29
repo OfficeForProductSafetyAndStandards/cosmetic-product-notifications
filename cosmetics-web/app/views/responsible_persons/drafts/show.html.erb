@@ -54,9 +54,9 @@
           </div>
           <div class="app-task-list__section-number govuk-grid-column-one-half">
             <% if section_can_be_used?(DraftHelper::ACCEPT_SECTION) %>
-              <%= in_progress_badge("accept-and-submit-status", :accept) %>
+              <%= in_progress_badge("accept-and-submit-status", :accept_and_submit) %>
             <% else %>
-              <%= cannot_start_yet_badge("accept-and-submit-status", :accept) %>
+              <%= cannot_start_yet_badge("accept-and-submit-status", :accept_and_submit) %>
             <% end %>
           </div>
         </div>

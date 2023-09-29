@@ -90,7 +90,7 @@ def expect_product_task_blocked
 end
 
 def expect_product_task_completed
-  expect_task_completed "product"
+  expect_task_completed "Product"
 end
 
 def expect_product_label_images(images)
