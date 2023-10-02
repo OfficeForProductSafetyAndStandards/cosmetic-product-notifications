@@ -263,7 +263,7 @@ def expect_to_be_on_add_csv_ingredients_page
 end
 
 def expect_product_details_task_completed
-  expect_item_task_completed("component")
+  expect_item_task_completed("Item #1")
 end
 
 def expect_product_details_task_not_started
