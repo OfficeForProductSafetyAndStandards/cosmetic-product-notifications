@@ -83,7 +83,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_in_progress
 
-    complete_item_wizard("Cream one", nanos: ["Nano three", "Nano four", "Nano five", "Nano six"])
+    complete_item_wizard("Cream one", existing_product: true, nanos: ["Nano three", "Nano four", "Nano five", "Nano six"])
 
     accept_and_submit_flow
 
