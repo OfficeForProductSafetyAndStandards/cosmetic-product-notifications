@@ -4,18 +4,23 @@ def complete_product_details(nanos: [])
   complete_item_wizard("Product details", single_item: true, nanos:)
 end
 
-def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false, formulation_type: :exact)
+def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false, existing_product: false, formulation_type: :exact)
   label_name = single_item ? nil : name
 
   unless from_add
     if item_number
       click_on "Item ##{item_number}"
+    elsif existing_product
+      click_link "Go to question - add product name"
     else
       click_link "Go to question - product details"
     end
   end
 
-  unless single_item
+  if existing_product
+    click_button "Continue"
+    click_button "Continue"
+  elsif !single_item
     answer_item_name_with(name)
   end
 
