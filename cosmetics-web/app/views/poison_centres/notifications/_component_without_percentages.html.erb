@@ -25,5 +25,5 @@
   ].compact
 ) %>
 <% if component.ingredients.non_poisonous.any? %>
-  <%= render(partial: "ingredients_without_percentages", locals: { ingredients: component.ingredients }) %>
+  <%= render(partial: "ingredients_without_percentages", locals: { ingredients: component.ingredients.by_concentration_desc }) %>
 <% end %>
