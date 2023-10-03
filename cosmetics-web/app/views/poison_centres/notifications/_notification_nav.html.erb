@@ -15,34 +15,5 @@
         </a>
       </li>
     <% end %>
-    <% if can_view_ingredients_list? %>
-      <li <%= active_page_class(:ingredients_list) || active_page_class(:ingredients_list_responsible_persons) || active_page_class(:ingredients_list_responsible_person_notifications) %>>
-        <a href="<%= poison_centre_ingredients_path %>" class="govuk-link govuk-link--no-visited-state" <%= aria_active(:ingredients_list) %>>
-          Ingredients list
-        </a>
-        <% if active_page_class(:ingredients_list_responsible_persons) || active_page_class(:ingredients_list_responsible_person_notifications) %>
-          <ul class="govuk-list">
-            <li>
-              <a href="<%= poison_centre_ingredients_responsible_persons_path(ingredient_inci_name: params[:ingredient_inci_name]) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold opss-link--no-hover" <%= aria_active(:ingredients_list_responsible_persons) %>>
-                Responsible Persons
-              </a>
-              <br>
-              <%= params[:ingredient_inci_name] %>
-              <% if active_page_class(:ingredients_list_responsible_person_notifications) %>
-                <ul class="govuk-list">
-                  <li>
-                    <a href="<%= poison_centre_ingredients_responsible_person_notifications_path(responsible_person_id: params[:responsible_person_id], ingredient_inci_name: params[:ingredient_inci_name]) %>" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold opss-link--no-hover" <%= aria_active(:ingredients_list_responsible_person_notifications) %>>
-                      Notifications
-                    </a>
-                    <br>
-                    <%= @responsible_person.name %>
-                  </li>
-                </ul>
-              <% end %>
-            </li>
-          </ul>
-        <% end %>
-      </li>
-    <% end %>
   </ul>
 </nav>
