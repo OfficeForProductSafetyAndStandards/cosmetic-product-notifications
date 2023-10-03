@@ -5,7 +5,7 @@ module ComponentBuildHelper
   end
 
   def ingredient_errors(component)
-    component.ingredients.each_with_index.flat_map do |ingredient, index|
+    component.ingredients.default_order.each_with_index.flat_map do |ingredient, index|
       ingredient.errors.map do |error|
         ingredient_error(error, index)
       end

@@ -56,14 +56,14 @@
       ) %>
       <% if component.ingredients.non_poisonous.any? %>
         <%= render(partial: "responsible_persons/notifications/ingredients",
-                   locals: { ingredients: component.ingredients.non_poisonous }) %>
+                   locals: { ingredients: component.ingredients.default_order.non_poisonous }) %>
       <% end %>
       <% if component.ingredients.poisonous.any? %>
         <h4 class="govuk-heading-s govuk-!-margin-top-5 govuk-!-margin-bottom-2">
           Ingredients the <abbr title="National Poisons Information Service">NPIS</abbr> needs to know about
         </h4>
         <%= render(partial: "responsible_persons/notifications/ingredients",
-                   locals: { ingredients: component.ingredients.poisonous }) %>
+                   locals: { ingredients: component.ingredients.default_order.poisonous }) %>
       <% end %>
     <% end %>
   </section>
