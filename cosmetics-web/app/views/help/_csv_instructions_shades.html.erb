@@ -9,30 +9,71 @@
     <li>Ingredient name</li>
     <li>Exact concentration (<span title="Percentage weight by weight">% w/w</span>)</li>
     <li><abbr>CAS</abbr> number</li>
-    <li>Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?</li>
+    <li>Does the <abbr>NPIS</abbr> need to be notified about this ingredient?</li>
     <li>Is it used for different shades?</li>
   </ol>
-  <h4 class="govuk-heading-s">Requirements</h4>
+  <h4 class="govuk-heading-s">Formatting requirements</h4>
   <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
-    <li>The file name extension must be <code>.csv</code></li>
     <li>The first (header) row must be kept and not modified</li>
+    <li>The file name extension must be <code>.csv</code></li>
     <li>Each ingredient must be listed on its own row</li>
-    <li>Each ingredient must have 5 comma separated fields</li>
-    <li>Fields must not have any leading or trailing spaces</li>
+    <li>Each ingredient must have 4 comma separated fields</li>
     <li>An ingredient name is always required and there must be no duplication of ingredient names</li>
-    <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (eg. "My ingredient, 1")</li>
+    <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (e.g. "X,Y")</li>
     <li>An exact concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required and it must be a decimal number (no percent sign)</li>
-    <li>A CAS number is optional, but if provided, it must only contain numbers and dashes</li>
-    <li>The fourth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the <abbr>NPIS</abbr> <em>does</em> need to know about it)</li>
+    <li>A CAS number is optional but must always be numbers and dashes only (e.g. 497-19-8)</li>
+    <li>The fourth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if an ingredient needs to be reported to <abbr>NPIS</abbr>)</li>
     <li>The fifth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the ingredient is used across different shades of the product)</li>
   </ul>
-  <h4 class="govuk-heading-s">Example</h4>
+  <h4 class="govuk-heading-s">Examples</h4>
+
+  <p class="govuk-body-s">This is a simple text file example:</p>
   <code>
-    Ingredient name 1,35,497-19-8,false,false<br>
-    Ingredient name 2,55,7732-18-5,false,true<br>
-    Ingredient name 3,10,,true,false<br>
+    Sodium Carbonate,35,497-19-8,false<br>
+    Water,55,7732-18-5,false<br>
+    Eucalyptol,10,,true<br>
   </code>
+
+  <p class="govuk-body-s govuk-!-margin-top-6">This is a spreadsheet example:</p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">Ingredient name</th>
+        <th class="govuk-table__header">Exact % w/w</th>
+        <th class="govuk-table__header"><abbr>CAS</abbr> number</th>
+        <th class="govuk-table__header">Does the <abbr>NPIS</abbr> need to be notified about this ingredient?</th>
+        <th class="govuk-table__header">Is it used for different shades?</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Sodium Carbonate</td>
+        <td class="govuk-table__cell">35</td>
+        <td class="govuk-table__cell">497-19-8</td>
+        <td class="govuk-table__cell">false</td>
+        <td class="govuk-table__cell">false</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Water</td>
+        <td class="govuk-table__cell">55</td>
+        <td class="govuk-table__cell">7732-18-5</td>
+        <td class="govuk-table__cell">false</td>
+        <td class="govuk-table__cell">true</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Eucalyptol</td>
+        <td class="govuk-table__cell">10</td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">true</td>
+        <td class="govuk-table__cell">false</td>
+      </tr>
+    </tbody>
+  </table>
+
   <p class="govuk-body-s govuk-!-margin-top-5">
-    Download an example <abbr>CSV</abbr> file: <a href="/examples/template-2-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Exact concentrations with shades</a>
+    Download our template <abbr>CSV</abbr> file to your machine or device: <a href="/examples/template-2-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Exact concentrations with shades</a>
+  </p>
+  <p class="govuk-body-s">
+    Disclaimer: Please use the guidance and file format provided. Unfortunately, we are unable to provide specific guidance for individual cases. If you are unable to successfully use <abbr>CSV</abbr> uploads, use the manual journey.
   </p>
 </section>
