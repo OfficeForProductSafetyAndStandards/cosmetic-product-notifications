@@ -2,6 +2,7 @@ class PoisonCentres::NotificationsController < SearchApplicationController
   PER_PAGE = 20
 
   before_action :load_notification
+  before_action :load_addresses, only: [:full_address_history]
 
   def show
     @responsible_person = @notification.responsible_person
@@ -20,11 +21,15 @@ class PoisonCentres::NotificationsController < SearchApplicationController
   end
 
   def full_address_history
-    load_addresses
     @responsible_person = @notification.responsible_person
   end
 
 private
+
+  def load_addresses
+    authorize @notification, :full_address_history?, policy_class: PoisonCentreNotificationPolicy
+    @addresses = @notification.responsible_person.address_logs.newest_first
+  end
 
   def load_notification
     notification = Notification.find_by!(reference_number: params[:reference_number])

@@ -194,4 +194,73 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
   end
+
+  describe "#full_address_history" do
+    subject(:load_page) do
+      get :full_address_history, params: { reference_number: }
+    end
+
+    context "When signed in as a Poison Centre user" do
+      before do
+        sign_in_as_poison_centre_user
+      end
+
+      it "raise a pundit error" do
+        expect { load_page }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+
+    context "When signed in as an OPSS General user" do
+      before do
+        sign_in_as_opss_general_user
+      end
+
+      it "raise a pundit error" do
+        expect { load_page }.to raise_error(Pundit::NotAuthorizedError)
+      end
+    end
+
+    context "When signed in as an OPSS Enforcement user" do
+      before do
+        sign_in_as_opss_enforcement_user
+        load_page
+      end
+
+      it "renders the template" do
+        expect(response).to render_template("notifications/full_address_history")
+      end
+    end
+
+    context "When signed in as an OPSS IMT user" do
+      before do
+        sign_in_as_opss_imt_user
+        load_page
+      end
+
+      it "renders the template" do
+        expect(response).to render_template("notifications/full_address_history")
+      end
+    end
+
+    context "When signed in as an Trading Standards user" do
+      before do
+        sign_in_as_trading_standards_user
+        load_page
+      end
+
+      it "renders the template" do
+        expect(response).to render_template("notifications/full_address_history")
+      end
+    end
+
+    context "When signed in as a Responsible Person user" do
+      before do
+        sign_in_as_member_of_responsible_person(responsible_person)
+      end
+
+      it "redirects to invalid account" do
+        expect(get(:show, params: { reference_number: notification.reference_number })).to redirect_to("/invalid-account")
+      end
+    end
+  end
 end
