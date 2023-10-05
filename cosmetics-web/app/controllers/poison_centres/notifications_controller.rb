@@ -19,6 +19,11 @@ class PoisonCentres::NotificationsController < SearchApplicationController
     end
   end
 
+  def full_address_history
+    load_addresses
+    @responsible_person = @notification.responsible_person
+  end
+
 private
 
   def load_notification

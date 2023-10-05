@@ -120,7 +120,12 @@ Rails.application.routes.draw do
     resource :dashboard, controller: "search/dashboard", only: %i[show]
 
     scope module: "poison_centres", as: "poison_centre" do
-      resources :notifications, param: :reference_number, only: %i[show]
+      resources :notifications, param: :reference_number, only: %i[show] do
+        member do
+          get "full-address-history", action: :full_address_history
+        end
+      end
+
       resource :notifications_search, path: "/notifications", controller: "notifications_search", only: %i[show]
       resource :ingredients_search, path: "/ingredients", controller: "ingredients_search", only: %i[show]
     end
