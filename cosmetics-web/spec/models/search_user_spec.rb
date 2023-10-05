@@ -140,38 +140,6 @@ RSpec.describe SearchUser, type: :model do
     end
   end
 
-  describe "#can_view_responsible_person_address_history?" do
-    it "is false for OPSS General users" do
-      user.role = :opss_general
-      expect(user).not_to be_can_view_responsible_person_address_history
-    end
-
-    it "is false for OPSS Enforcement users" do
-      user.role = :opss_enforcement
-      expect(user).not_to be_can_view_responsible_person_address_history
-    end
-
-    it "is false for OPSS IMT users" do
-      user.role = :opss_imt
-      expect(user).not_to be_can_view_responsible_person_address_history
-    end
-
-    it "is true for Trading Standards users" do
-      user.role = :trading_standards
-      expect(user).to be_can_view_responsible_person_address_history
-    end
-
-    it "is false for Poison Centre users" do
-      user.role = :poison_centre
-      expect(user).not_to be_can_view_responsible_person_address_history
-    end
-
-    it "is false for OPSS Science users" do
-      user.role = :opss_science
-      expect(user).not_to be_can_view_responsible_person_address_history
-    end
-  end
-
   describe "#can_view_notification_history?" do
     it "is false for OPSS General users" do
       user.role = :opss_general

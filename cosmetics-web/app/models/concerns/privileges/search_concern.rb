@@ -18,10 +18,6 @@ module Privileges
       opss_user? || trading_standards_user?
     end
 
-    def can_view_responsible_person_address_history?
-      trading_standards_user?
-    end
-
     def can_view_notification_history?
       trading_standards_user? || opss_enforcement_user? || opss_imt_user?
     end

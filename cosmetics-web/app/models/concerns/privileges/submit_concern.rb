@@ -14,10 +14,6 @@ module Privileges
       true
     end
 
-    def can_view_responsible_person_address_history?
-      true
-    end
-
     def can_view_notification_history?
       true
     end
