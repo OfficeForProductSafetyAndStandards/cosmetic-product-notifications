@@ -11,30 +11,82 @@
     <li>Concentration maximum (<span title="Percentage weight by weight">% w/w</span>)</li>
     <li>NPIS Exact concentration (<span title="Percentage weight by weight">% w/w</span>) where an ingredient does need to be reported to NPIS</li>
     <li><abbr>CAS</abbr> number</li>
-    <li>Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?</li>
+    <li>Does the <abbr>NPIS</abbr> need to be notified about this ingredient?</li>
   </ol>
-  <h4 class="govuk-heading-s">Requirements</h4>
+
+  <p class="govuk-body-s">
+    You can use our template or create a <abbr>CSV</abbr> file by using a simple text file editor or spreadsheet software. The <abbr>CSV</abbr> file you create must follow this format:
+  </p>
+
+  <h4 class="govuk-heading-s">Formatting requirements</h4>
   <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
     <li>The first (header) row must be kept and not modified</li>
-    <li>Each ingredient is listed on its own (data) row</li>
-    <li>Each ingredient has 6 delimited (comma separated) fields</li>
     <li>The file name extension must be <code>.csv</code></li>
+    <li>Each ingredient is listed on its own (data) row</li>
+    <li>Each ingredient has 6 delimited comma separated fields</li>
     <li>An ingredient name is always required and there must be no duplication of ingredient names</li>
-    <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (eg. "My ingredient, 1")</li>
-    <li>If the ingredient does not need to be reported to NPIS, a minimum AND maximum concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required</li>
-    <li>If the ingredient needs to be reported to NPIS, you must supply only the exact (<span title="Percentage weight by weight">% w/w</span>). The minimum and maximum fields can be left blank</li>
-    <li>A CAS number value is optional, but must always be numbers and dashes only and without spaces. (Provide only one CAS number per ingredient)</li>
-    <li>The fifth value is always set to <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the <abbr>NPIS</abbr> <em>does</em> need to know about it)</li>
-    <li>Application of header row to upload of csv and header row should be retained</li>
-    <li>Incorporation of a header row will be mandatory</li>
+    <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (eg. "X, Y")</li>
+    <li>If the ingredient does not need to be reported to <abbr>NPIS<</abbr>, a minimum AND maximum concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required</li>
+    <li>If the ingredient needs to be reported to <abbr>NPIS</abbr>, you must supply only the exact (<span title="Percentage weight by weight">% w/w</span>). The minimum and maximum fields must be left blank</li>
+    <li>Provide one Chemical Abstracts Service (CAS) number per ingredient</li>
+    <li><abbr>CAS</abbr> number value is optional but must always be numbers and dashes only (e.g. 497-19-8)</li>
+    <li>The fifth value is always set to <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if an ingredient needs to be reported to <abbr>NPIS</abbr>)</li>
   </ul>
-  <h4 class="govuk-heading-s">For example:</h4>
+
+
+  <h4 class="govuk-heading-s">Examples</h4>
+
+  <p class="govuk-body-s">This is a simple text file example:</p>
   <code>
-    Ingredient name 1,3,10,,497-19-8,false<br/>
-    Ingredient name 2,,,10,7732-18-5,true<br/>
-    Ingredient name 3,,,67,,true<br/>
+    Sodium Carbonate,3,10,,497-19-8,false<br>
+    Water,,,10,7732-18-5,true<br>
+    Eucalyptol,,,67,,true<br>
   </code>
+
+  <p class="govuk-body-s govuk-!-margin-top-6">This is a spreadsheet example:</p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">Ingredient name</th>
+        <th class="govuk-table__header">Minimum % w/w</th>
+        <th class="govuk-table__header">Maximum % w/w</th>
+        <th class="govuk-table__header">NPIS exact w/w %</th>
+        <th class="govuk-table__header"><abbr>CAS</abbr> number</th>
+        <th class="govuk-table__header">Does the <abbr>NPIS</abbr> need to be notified about this ingredient?</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Sodium Carbonate</td>
+        <td class="govuk-table__cell">10</td>
+        <td class="govuk-table__cell">30</td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">497-19-8</td>
+        <td class="govuk-table__cell">false</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Water</td>
+        <td class="govuk-table__cell">35</td>
+        <td class="govuk-table__cell">65</td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">7732-18-5</td>
+        <td class="govuk-table__cell">false</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Eucalyptol</td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">12</td>
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">true</td>
+      </tr>
+    </tbody>
+  </table>
+
   <p class="govuk-body-s govuk-!-margin-top-5">
-    Download an example <abbr>CSV</abbr> file to your machine or device: <a href="/examples/template-3-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Concentration ranges</a>
+    Download our template <abbr>CSV</abbr> file to your machine or device: <a href="/examples/template-3-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Concentration ranges</a>
+  </p>
+  <p class="govuk-body-s">
+    Disclaimer: Please use the guidance and file format provided. Unfortunately, we are unable to provide specific guidance for individual cases. If you are unable to successfully use <abbr>CSV</abbr> uploads, use the manual journey.
   </p>
 </section>
