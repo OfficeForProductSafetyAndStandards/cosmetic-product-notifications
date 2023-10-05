@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe PoisonCentres::NotificationsController, type: :controller do
-  subject(:load_page) do
-    get :show, params: { reference_number: }
-  end
-
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let!(:notification) { create(:registered_notification, :with_nano_materials, responsible_person:) }
   let(:archived_notification) { create(:archived_notification, responsible_person:) }
@@ -18,13 +14,17 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
     sign_out(:search_user)
   end
 
-  describe "When signed in as a Poison Centre user" do
-    before do
-      sign_in_as_poison_centre_user
-      load_page
+  describe "#show" do
+    subject(:load_page) do
+      get :show, params: { reference_number: }
     end
 
-    describe "GET #show" do
+    context "When signed in as a Poison Centre user" do
+      before do
+        sign_in_as_poison_centre_user
+        load_page
+      end
+
       it "decorates the correct notification" do
         expect(assigns(:notification).id).to eq(notification.id)
       end
@@ -51,15 +51,13 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
     end
-  end
 
-  describe "When signed in as an OPSS General user" do
-    before do
-      sign_in_as_opss_general_user
-      load_page
-    end
+    context "When signed in as an OPSS General user" do
+      before do
+        sign_in_as_opss_general_user
+        load_page
+      end
 
-    describe "GET #show" do
       it "renders the show template" do
         expect(response).to render_template("notifications/show")
       end
@@ -86,15 +84,13 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
     end
-  end
 
-  describe "When signed in as an OPSS Enforcement user" do
-    before do
-      sign_in_as_opss_enforcement_user
-      load_page
-    end
+    context "When signed in as an OPSS Enforcement user" do
+      before do
+        sign_in_as_opss_enforcement_user
+        load_page
+      end
 
-    describe "GET #show" do
       it "renders the show detail template" do
         expect(response).to render_template("notifications/show_detail")
       end
@@ -121,15 +117,13 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
     end
-  end
 
-  describe "When signed in as an OPSS IMT user" do
-    before do
-      sign_in_as_opss_imt_user
-      load_page
-    end
+    context "When signed in as an OPSS IMT user" do
+      before do
+        sign_in_as_opss_imt_user
+        load_page
+      end
 
-    describe "GET #show" do
       it "renders the show detail template" do
         expect(response).to render_template("notifications/show_detail")
       end
@@ -156,15 +150,13 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
     end
-  end
 
-  describe "When signed in as an Trading Standards user" do
-    before do
-      sign_in_as_trading_standards_user
-      load_page
-    end
+    context "When signed in as an Trading Standards user" do
+      before do
+        sign_in_as_trading_standards_user
+        load_page
+      end
 
-    describe "GET #show" do
       it "renders the show detail template" do
         expect(response).to render_template("notifications/show_detail")
       end
@@ -191,14 +183,12 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         end
       end
     end
-  end
 
-  describe "When signed in as a Responsible Person user" do
-    before do
-      sign_in_as_member_of_responsible_person(responsible_person)
-    end
+    context "When signed in as a Responsible Person user" do
+      before do
+        sign_in_as_member_of_responsible_person(responsible_person)
+      end
 
-    describe "GET #show" do
       it "redirects to invalid account" do
         expect(get(:show, params: { reference_number: notification.reference_number })).to redirect_to("/invalid-account")
       end
