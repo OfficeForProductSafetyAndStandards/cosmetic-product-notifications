@@ -1,0 +1,38 @@
+<section class="govuk-!-margin-top-7 opss-grouping">
+  <h3 class="govuk-heading-s opss-grouping__heading-s">
+    Template: exact concentrations with shades
+  </h3>
+  <p class="govuk-body-s">
+    There are five fields for each ingredient (in this order):
+  </p>
+  <ol class="govuk-list govuk-list--number govuk-!-font-size-16">
+    <li>Ingredient name</li>
+    <li>Exact concentration (<span title="Percentage weight by weight">% w/w</span>)</li>
+    <li><abbr>CAS</abbr> number</li>
+    <li>Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?</li>
+    <li>Is it used for different shades?</li>
+  </ol>
+  <h4 class="govuk-heading-s">Requirements</h4>
+  <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
+    <li>The file name extension must be <code>.csv</code></li>
+    <li>The first (header) row must be kept and not modified</li>
+    <li>Each ingredient must be listed on its own row</li>
+    <li>Each ingredient must have 5 comma separated fields</li>
+    <li>Fields must not have any leading or trailing spaces</li>
+    <li>An ingredient name is always required and there must be no duplication of ingredient names</li>
+    <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (eg. "My ingredient, 1")</li>
+    <li>An exact concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required and it must be a decimal number (no percent sign)</li>
+    <li>A CAS number is optional, but if provided, it must only contain numbers and dashes</li>
+    <li>The fourth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the <abbr>NPIS</abbr> <em>does</em> need to know about it)</li>
+    <li>The fifth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the ingredient is used across different shades of the product)</li>
+  </ul>
+  <h4 class="govuk-heading-s">Example</h4>
+  <code>
+    Ingredient name 1,35,497-19-8,false,false<br>
+    Ingredient name 2,55,7732-18-5,false,true<br>
+    Ingredient name 3,10,,true,false<br>
+  </code>
+  <p class="govuk-body-s govuk-!-margin-top-5">
+    Download an example <abbr>CSV</abbr> file: <a href="/examples/template-2-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Exact concentrations with shades</a>
+  </p>
+</section>
