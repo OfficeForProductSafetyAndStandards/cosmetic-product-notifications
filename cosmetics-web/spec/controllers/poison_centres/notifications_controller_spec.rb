@@ -19,7 +19,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       get :show, params: { reference_number: }
     end
 
-    context "When signed in as a Poison Centre user" do
+    context "when signed in as a Poison Centre user" do
       before do
         sign_in_as_poison_centre_user
         load_page
@@ -52,7 +52,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an OPSS General user" do
+    context "when signed in as an OPSS General user" do
       before do
         sign_in_as_opss_general_user
         load_page
@@ -85,7 +85,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an OPSS Enforcement user" do
+    context "when signed in as an OPSS Enforcement user" do
       before do
         sign_in_as_opss_enforcement_user
         load_page
@@ -118,7 +118,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an OPSS IMT user" do
+    context "when signed in as an OPSS IMT user" do
       before do
         sign_in_as_opss_imt_user
         load_page
@@ -151,7 +151,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an Trading Standards user" do
+    context "when signed in as an Trading Standards user" do
       before do
         sign_in_as_trading_standards_user
         load_page
@@ -184,7 +184,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as a Responsible Person user" do
+    context "when signed in as a Responsible Person user" do
       before do
         sign_in_as_member_of_responsible_person(responsible_person)
       end
@@ -200,7 +200,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       get :full_address_history, params: { reference_number: }
     end
 
-    context "When signed in as a Poison Centre user" do
+    context "when signed in as a Poison Centre user" do
       before do
         sign_in_as_poison_centre_user
       end
@@ -210,7 +210,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an OPSS General user" do
+    context "when signed in as an OPSS General user" do
       before do
         sign_in_as_opss_general_user
       end
@@ -220,7 +220,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an OPSS Enforcement user" do
+    context "when signed in as an OPSS Enforcement user" do
       before do
         sign_in_as_opss_enforcement_user
         load_page
@@ -231,7 +231,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an OPSS IMT user" do
+    context "when signed in as an OPSS IMT user" do
       before do
         sign_in_as_opss_imt_user
         load_page
@@ -242,7 +242,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as an Trading Standards user" do
+    context "when signed in as an Trading Standards user" do
       before do
         sign_in_as_trading_standards_user
         load_page
@@ -253,7 +253,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
       end
     end
 
-    context "When signed in as a Responsible Person user" do
+    context "when signed in as a Responsible Person user" do
       before do
         sign_in_as_member_of_responsible_person(responsible_person)
       end

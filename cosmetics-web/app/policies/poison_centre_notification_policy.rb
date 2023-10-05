@@ -16,5 +16,4 @@ class PoisonCentreNotificationPolicy < ApplicationPolicy
   def full_address_history?
     user.can_view_notification_history?
   end
-
 end
