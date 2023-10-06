@@ -253,7 +253,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_blocked
 
-    complete_item_wizard("Cream three")
+    complete_item_wizard("Cream three", existing_product: true)
 
     expect_accept_and_submit_in_progress
 
@@ -488,7 +488,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_in_progress
 
-    complete_item_wizard("Cream one", nanos: ["Nano four", "Nano five", "Nano six"])
+    complete_item_wizard("Cream one", nanos: ["Nano four", "Nano five", "Nano six"], existing_product: true)
 
     accept_and_submit_flow
 

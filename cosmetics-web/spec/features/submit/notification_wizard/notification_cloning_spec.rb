@@ -64,7 +64,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_has_been_completed_page
     click_on "task list page"
     expect_progress(1, 3)
-    click_on "Product details"
+    click_on "Go to question - product details"
     3.times { click_button "Continue" }
     choose "No" # contains CMRs
     5.times { click_button "Continue" }
