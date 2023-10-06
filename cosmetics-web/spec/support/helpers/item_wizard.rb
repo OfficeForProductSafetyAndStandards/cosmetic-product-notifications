@@ -11,15 +11,14 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
     if item_number
       click_on "Item ##{item_number}"
     elsif existing_product
-      click_link "Go to question - add product name"
+      click_link name
     else
       click_link "Go to question - product details"
     end
   end
 
   if existing_product
-    click_button "Continue"
-    click_button "Continue"
+    click_button "Save and continue"
   elsif !single_item
     answer_item_name_with(name)
   end
@@ -57,7 +56,6 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
 
   answer_what_is_ph_range_when_ph_is_required
   expect_task_has_been_completed_page
-
   return_to_task_list_page
   expect_item_task_completed "Product"
 end
