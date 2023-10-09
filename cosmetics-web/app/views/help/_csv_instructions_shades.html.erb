@@ -17,7 +17,7 @@
     <li>The first (header) row must be kept and not modified</li>
     <li>The file name extension must be <code>.csv</code></li>
     <li>Each ingredient must be listed on its own row</li>
-    <li>Each ingredient must have 4 comma separated fields</li>
+    <li>Each ingredient must have 5 comma separated fields</li>
     <li>An ingredient name is always required and there must be no duplication of ingredient names</li>
     <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (e.g. "X,Y")</li>
     <li>An exact concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required and it must be a decimal number (no percent sign)</li>
@@ -29,9 +29,9 @@
 
   <p class="govuk-body-s">This is a simple text file example:</p>
   <code>
-    Sodium Carbonate,35,497-19-8,false<br>
-    Water,55,7732-18-5,false<br>
-    Eucalyptol,10,,true<br>
+    Sodium Carbonate,35,497-19-8,false,true<br>
+    Water,55,7732-18-5,false,true<br>
+    Eucalyptol,10,,true,false<br>
   </code>
 
   <p class="govuk-body-s govuk-!-margin-top-6">This is a spreadsheet example:</p>
