@@ -1,4 +1,4 @@
-Ingredient name,Minimum % w/w,Maximum % w/w,Exact % w/w,CAS number,Does the NPIS need to be notified about this ingredient?
+Ingredient name,Minimum % w/w,Maximum % w/w,Exact % w/w,CAS number,Does the NPIS need to be notified about this ingredient?
 Sodium carbonate,10,30,,497-19-8,false
 Water,35,65,,7732-18-5,false
 Eucalyptol,,,12,,true

@@ -1,4 +1,4 @@
-Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?,Is it used for different shades?
+Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?,Is it used for different shades?
 Sodium carbonate,30,497-19-8,false,false
 Water,65,7732-18-5,false,true
 Eucalyptol,5,,true,true
