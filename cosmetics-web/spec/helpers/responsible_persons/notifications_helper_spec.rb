@@ -131,30 +131,30 @@ describe ResponsiblePersons::NotificationsHelper do
     end
 
     it "contains the product name" do
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Product name" }, value: { text: "Product Test" }, actions: { items: [ hash_including({ href: "#{product_href}/add_product_name"})]} }))
+      expect(summary_product_rows).to include(hash_including({ key: { text: "Product name" }, value: { text: "Product Test" }, actions: { items: [hash_including({ href: "#{product_href}/add_product_name" })] } }))
     end
 
     it "contains the industry reference number" do
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Internal reference number" }, value: { text: "CPNP-3874065" }, actions: { items: [ hash_including({ href: "#{product_href}/add_internal_reference"})]} }))
+      expect(summary_product_rows).to include(hash_including({ key: { text: "Internal reference number" }, value: { text: "CPNP-3874065" }, actions: { items: [hash_including({ href: "#{product_href}/add_internal_reference" })] } }))
     end
 
     it "contains the number of components associated with the notification" do
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Number of items" }, value: { text: 0 }, actions: { items: [ hash_including({ href: "#{product_href}/single_or_multi_component"})]} }))
+      expect(summary_product_rows).to include(hash_including({ key: { text: "Number of items" }, value: { text: 0 }, actions: { items: [hash_including({ href: "#{product_href}/single_or_multi_component" })] } }))
     end
 
     it "contains notification shades html" do
       allow(helper).to receive(:display_shades).and_return("Shades info")
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Shades" }, value: { html: "Shades info" }, actions: { items: [ hash_including({ href: "#{product_href}/shades"})]} }))
+      expect(summary_product_rows).to include(hash_including({ key: { text: "Shades" }, value: { html: "Shades info" }, actions: { items: [hash_including({ href: "#{product_href}/shades" })] } }))
     end
 
     it "contains info indicating when the notification components are mixed" do
       notification.components_are_mixed = true
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "Yes" }, actions: { items: [ hash_including({ href: "#{notification_href}/product_kit/new"})]} }))
+      expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "Yes" }, actions: { items: [hash_including({ href: "#{notification_href}/product_kit/new" })] } }))
     end
 
     it "contains info indicating when the notification components are not mixed" do
       notification.components_are_mixed = false
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "No" }, actions: { items: [ hash_including({ href: "#{notification_href}/product_kit/new"})]} }))
+      expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "No" }, actions: { items: [hash_including({ href: "#{notification_href}/product_kit/new" })] } }))
     end
 
     describe "for children under 3" do
@@ -165,12 +165,12 @@ describe ResponsiblePersons::NotificationsHelper do
 
       it "included when notification product is for children under 3" do
         notification.under_three_years = true
-        expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "Yes" }, actions: { items: [ hash_including({ href: "#{product_href}/under_three_years"})]} }))
+        expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "Yes" }, actions: { items: [hash_including({ href: "#{product_href}/under_three_years" })] } }))
       end
 
       it "included when notification product is not for children under 3" do
         notification.under_three_years = false
-        expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "No" }, actions: { items: [ hash_including({ href: "#{product_href}/under_three_years"})]} }))
+        expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "No" }, actions: { items: [hash_including({ href: "#{product_href}/under_three_years" })] } }))
       end
     end
 
@@ -307,7 +307,7 @@ describe ResponsiblePersons::NotificationsHelper do
       context "when there aren't any nano materials present" do
         it "contains a row indication that there are no nanomaterials" do
           allow(helper).to receive(:render).and_return("None")
-          expect(summary_component_rows).to include(hash_including({ key: { text: "Nanomaterials" }, value: { html: "None" }, actions: { items: [ hash_including({href: "#{component_href}/select_nanomaterials"} )]} } ))
+          expect(summary_component_rows).to include(hash_including({ key: { text: "Nanomaterials" }, value: { html: "None" }, actions: { items: [hash_including({ href: "#{component_href}/select_nanomaterials" })] } }))
           expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: []))
         end
 
@@ -332,18 +332,18 @@ describe ResponsiblePersons::NotificationsHelper do
 
         it "contains a row with the nano material names" do
           allow(helper).to receive(:render).and_return("Nano name")
-          expect(summary_component_rows).to include(hash_including({ key: { text: "Nanomaterials" }, value: { html: "Nano name" }, actions: { items: [ hash_including({href: "#{component_href}/select_nanomaterials"} )]} } ))
+          expect(summary_component_rows).to include(hash_including({ key: { text: "Nanomaterials" }, value: { html: "Nano name" }, actions: { items: [hash_including({ href: "#{component_href}/select_nanomaterials" })] } }))
           expect(helper).to have_received(:render).with("application/none_or_bullet_list", hash_including(entities_list: ["Nano name"]))
         end
 
         it "contains a row with the nano material application instruction" do
           allow(helper).to receive(:get_exposure_routes_names).with(%w[Route]).and_return("Route name")
-          expect(summary_component_rows).to include(hash_including({ key: { text: "Application instruction" }, value: { text: "Route name" }, actions: { items: [ hash_including({href: "#{component_href}/add_exposure_routes"} )]} } ))
+          expect(summary_component_rows).to include(hash_including({ key: { text: "Application instruction" }, value: { text: "Route name" }, actions: { items: [hash_including({ href: "#{component_href}/add_exposure_routes" })] } }))
         end
 
         it "contains a row with the nano material application exposure condition" do
           allow(helper).to receive(:get_exposure_condition_name).with("rinse_off").and_return("Condition name")
-          expect(summary_component_rows).to include(hash_including({ key: { text: "Exposure condition" }, value: { text: "Condition name" }, actions: { items: [ hash_including({href: "#{component_href}/add_exposure_condition"} )]} } ))
+          expect(summary_component_rows).to include(hash_including({ key: { text: "Exposure condition" }, value: { text: "Condition name" }, actions: { items: [hash_including({ href: "#{component_href}/add_exposure_condition" })] } }))
         end
 
         context "when there is a nano material notification associated with the component nanomaterial" do
@@ -375,7 +375,7 @@ describe ResponsiblePersons::NotificationsHelper do
       end
 
       it "contains a row with the component category" do
-        expect(summary_component_rows).to include(hash_including({ key: { text: "Category of product" }, value: { text: "Category name" }, actions: { items: [ hash_including({href: "#{component_href}/select_root_category"} )]} } ))
+        expect(summary_component_rows).to include(hash_including({ key: { text: "Category of product" }, value: { text: "Category name" }, actions: { items: [hash_including({ href: "#{component_href}/select_root_category" })] } }))
       end
 
       it "contains a row with the component subcategory" do
@@ -395,14 +395,14 @@ describe ResponsiblePersons::NotificationsHelper do
       it "indicates when the special applicator is used for the component" do
         allow(component).to receive(:special_applicator).and_return("Very special")
         expect(summary_component_rows).to include(
-          hash_including({ key: { text: "Special applicator" }, value: { text: "Yes" }, actions: { items: [ hash_including({href: "#{component_href}/contains_special_applicator"} )]} } )
+          hash_including({ key: { text: "Special applicator" }, value: { text: "Yes" }, actions: { items: [hash_including({ href: "#{component_href}/contains_special_applicator" })] } }),
         )
       end
 
       it "indicates when the special applicator is not used for the component" do
         allow(component).to receive(:special_applicator).and_return(nil)
         expect(summary_component_rows).to include(
-          hash_including({ key: { text: "Special applicator" }, value: { text: "No" }, actions: { items: [ hash_including({href: "#{component_href}/contains_special_applicator"} )]} } )
+          hash_including({ key: { text: "Special applicator" }, value: { text: "No" }, actions: { items: [hash_including({ href: "#{component_href}/contains_special_applicator" })] } }),
         )
       end
 
@@ -414,9 +414,9 @@ describe ResponsiblePersons::NotificationsHelper do
             {
               key: { text: "Applicator type" },
               value: { text: "SuperApplicator" },
-              actions: { items: [ hash_including({href: "#{component_href}/select_special_applicator_type" } ) ] }
-            }
-          )
+              actions: { items: [hash_including({ href: "#{component_href}/select_special_applicator_type" })] },
+            },
+          ),
         )
       end
 
@@ -528,22 +528,22 @@ describe ResponsiblePersons::NotificationsHelper do
         it "includes a row with the pH selection when pH range is not required" do
           allow(component).to receive_messages(ph_range_not_required?: true, ph: :not_given)
           expect(summary_component_rows).to include(hash_including({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr>" },
-                                                      value: { text: "Not given" },
-                                                      actions: { items: [ hash_including({ href: ph_href } )]} }))
+                                                                     value: { text: "Not given" },
+                                                                     actions: { items: [hash_including({ href: ph_href })] } }))
         end
 
         it "includes a row with a single pH value when minimum and maximum pH match" do
           component.minimum_ph = 0.7
           component.maximum_ph = 0.7
           expect(summary_component_rows).to include(hash_including({ key: { html: "Exact <abbr title='Power of hydrogen'>pH</abbr>" },
-                                                      value: { text: 0.7 } }))
+                                                                     value: { text: 0.7 } }))
         end
 
         it "includes a row withboth pH valus when minimum and maximum pH differ" do
           component.minimum_ph = 0.7
           component.maximum_ph = 1.0
           expect(summary_component_rows).to include(hash_including({ key: { html: "<abbr title='Power of hydrogen'>pH</abbr> range" },
-                                                      value: { text: "0.7 to 1.0" } }))
+                                                                     value: { text: "0.7 to 1.0" } }))
         end
       end
 

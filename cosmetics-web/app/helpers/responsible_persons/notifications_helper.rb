@@ -37,10 +37,10 @@ module ResponsiblePersons::NotificationsHelper
               href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_product_name),
               text: "Edit",
               visuallyHiddenText: "product name",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
-        }
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       if notification.industry_reference.present?
         {
@@ -52,10 +52,10 @@ module ResponsiblePersons::NotificationsHelper
                 href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_internal_reference),
                 text: "Edit",
                 visuallyHiddenText: "internal reference",
-                classes: ["govuk-link--no-visited-state"]
-              }
-            ]
-          }
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       unless notification.under_three_years.nil?
@@ -68,10 +68,10 @@ module ResponsiblePersons::NotificationsHelper
                 href: responsible_person_notification_product_path(notification.responsible_person, notification, :under_three_years),
                 text: "Edit",
                 visuallyHiddenText: "under three years",
-                classes: ["govuk-link--no-visited-state"]
-              }
-            ]
-          }
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       {
@@ -83,10 +83,10 @@ module ResponsiblePersons::NotificationsHelper
               href: responsible_person_notification_product_path(notification.responsible_person, notification, :single_or_multi_component),
               text: "Edit",
               visuallyHiddenText: "number of items",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
-        }
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       {
         key: { text: "Shades" },
@@ -97,24 +97,24 @@ module ResponsiblePersons::NotificationsHelper
               href: responsible_person_notification_product_path(notification.responsible_person, notification, :shades),
               text: "Edit",
               visuallyHiddenText: "shades",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
-        }
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       {
         key: { text: "Label" },
         value: { html: render("notifications/product_details_label_images",
-                        notification:) },
+                              notification:) },
         actions: {
           items: [
             {
               href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_product_image),
               text: "Edit",
               visuallyHiddenText: "product image",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
         },
       },
       {
@@ -126,10 +126,10 @@ module ResponsiblePersons::NotificationsHelper
               href: new_responsible_person_notification_product_kit_path(notification.responsible_person, notification),
               text: "Edit",
               visuallyHiddenText: "mixed items",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
-        }
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       if can_view_product_ingredients? && notification.ph_min_value.present?
         {
@@ -208,10 +208,10 @@ module ResponsiblePersons::NotificationsHelper
                 href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :number_of_shades),
                 text: "Edit",
                 visuallyHiddenText: "#{component.name} category",
-                classes: ["govuk-link--no-visited-state"]
-              }
-            ]
-          }
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       {
@@ -239,10 +239,10 @@ module ResponsiblePersons::NotificationsHelper
               href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_nanomaterials),
               text: "Edit",
               visuallyHiddenText: "select nanomaterials",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
-        }
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       if nano_materials.non_standard.any?
         {
@@ -251,7 +251,7 @@ module ResponsiblePersons::NotificationsHelper
                                 entities_list: nano_materials_with_review_period_end_date(nano_materials.non_standard),
                                 list_classes: "",
                                 list_item_classes: "") },
-      }
+        }
       end,
       if nano_materials.present?
         {
@@ -263,10 +263,10 @@ module ResponsiblePersons::NotificationsHelper
                 href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :add_exposure_routes),
                 text: "Edit",
                 visuallyHiddenText: "exposure root",
-                classes: ["govuk-link--no-visited-state"]
-              }
-            ]
-          }
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       if nano_materials.present?
@@ -279,10 +279,10 @@ module ResponsiblePersons::NotificationsHelper
                 href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :add_exposure_condition),
                 text: "Edit",
                 visuallyHiddenText: "exposure condition",
-                classes: ["govuk-link--no-visited-state"]
-              }
-            ]
-          }
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       {
@@ -294,10 +294,10 @@ module ResponsiblePersons::NotificationsHelper
               href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_root_category),
               text: "Edit",
               visuallyHiddenText: "#{component.name} category",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
-        }
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       {
         key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
@@ -316,10 +316,10 @@ module ResponsiblePersons::NotificationsHelper
               href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :add_physical_form),
               text: "Edit",
               visuallyHiddenText: "physical form",
-              classes: ["govuk-link--no-visited-state"]
-            }
-          ]
-        }
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
 
       },
       if can_view_product_ingredients?
@@ -332,10 +332,10 @@ module ResponsiblePersons::NotificationsHelper
                 href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :contains_special_applicator),
                 text: "Edit",
                 visuallyHiddenText: "contains special applicator",
-                classes: ["govuk-link--no-visited-state"]
-              }
-            ]
-          }
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       if can_view_product_ingredients? && component.special_applicator.present?
@@ -348,10 +348,10 @@ module ResponsiblePersons::NotificationsHelper
                 href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_special_applicator_type),
                 text: "Edit",
                 visuallyHiddenText: "select special applicator type",
-                classes: ["govuk-link--no-visited-state"]
-              }
-            ]
-          }
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       if can_view_product_ingredients? && component.acute_poisoning_info.present?
@@ -509,13 +509,13 @@ private
       {
         key: { html: ph_row_key_value(component) },
         value: { text: ph_row_taxt_value(component) },
-        actions: ph_row_actions(component)
-      }
+        actions: ph_row_actions(component),
+      },
     ]
   end
 
   def ph_row_key_value(component)
-    return  "<abbr title='Power of hydrogen'>pH</abbr>".html_safe if component.ph_range_not_required? || !component.ph_required?
+    return "<abbr title='Power of hydrogen'>pH</abbr>".html_safe if component.ph_range_not_required? || !component.ph_required?
 
     return "Exact <abbr title='Power of hydrogen'>pH</abbr>".html_safe if component.minimum_ph == component.maximum_ph
 
@@ -543,9 +543,9 @@ private
           href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_ph_option),
           text: "Edit",
           visuallyHiddenText: "select ph option",
-          classes: ["govuk-link--no-visited-state"]
-        }
-      ]
+          classes: ["govuk-link--no-visited-state"],
+        },
+      ],
     }
   end
 
