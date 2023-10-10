@@ -10,12 +10,21 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Is the product intended to be used on children under 3 years old?</h1>
+
+        <%= govukDetails(summaryText: "Help with children under 3") do %>
+          <p class="govuk-body">
+            The safety assessment should take the form of a Cosmetic Product Safety Report (CPSR) signed by a qualified safety assessor.
+            The CPSR provides evidence of how the product is safe for its intended cosmetic use and takes account of reasonably foreseeable use.
+            In addition, a specific safety assessment is required for cosmetic products intended for use on children under the age of three, and for cosmetic products intended exclusively for use in external intimate hygiene.
+          </p>
+        <% end %>
 
       <%= error_summary_for(@notification, first_values: {under_three_years: "true"}) %>
       <%= govukRadios(
             form: form,
             key: :under_three_years,
-            fieldset: { legend: { text: question, classes: "govuk-fieldset__legend--l", isPageHeading: true } },
+            fieldset: { legend: { html: "<span class='govuk-visually-hidden'>Is the product intended to be used on children under 3 years old?</span>".html_safe } },
             items: [{ text: "Yes", value: "true" },
                     { text: "No", value: "false" }],
           ) %>
