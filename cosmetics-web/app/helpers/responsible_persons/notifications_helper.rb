@@ -146,6 +146,50 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
+  def notification_summary_search_result_rows(notification)
+    [
+      {
+        key: { text: "Product name" },
+        value: { text: notification.product_name },
+      },
+      unless notification.under_three_years.nil?
+        {
+          key: { text: "For children under 3" },
+          value: { text: notification.under_three_years ? "Yes" : "No" },
+        }
+      end,
+      {
+        key: { text: "Number of items" },
+        value: { text: notification.components.length },
+      },
+      {
+        key: { text: "Shades" },
+        value: { html: display_shades(notification) },
+      },
+      {
+        key: { text: "Label image" },
+        value: { html: render("notifications/product_details_label_images",
+                              notification:) },
+      },
+      {
+        key: { text: "Are the items mixed?" },
+        value: { text: notification.components_are_mixed ? "Yes" : "No" },
+      },
+      if can_view_product_ingredients? && notification.ph_min_value.present?
+        {
+          key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+          value: { text: notification.ph_min_value },
+        }
+      end,
+      if can_view_product_ingredients? && notification.ph_max_value.present?
+        {
+          key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+          value: { text: notification.ph_max_value },
+        }
+      end,
+    ].compact
+  end
+
   def notification_summary_component_rows(component, include_shades: true)
     cmrs = component.cmrs
     nano_materials = component.nano_materials
@@ -323,6 +367,110 @@ module ResponsiblePersons::NotificationsHelper
         }
       end,
       if can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
+        {
+          key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
+          value: { html: render("notifications/component_details_poisonous_ingredients",
+                                component:) },
+        }
+      end,
+    ].concat(component_ph_trigger_questions_rows(component))
+     .compact
+  end
+
+  def notification_summary_component_search_result_rows(component, include_shades: true)
+    cmrs = component.cmrs
+    nano_materials = component.nano_materials
+
+    [
+      if include_shades
+        {
+          key: { text: "Shades" },
+          value: { html: render("none_or_bullet_list",
+                                entities_list: component.shades,
+                                list_classes: "",
+                                list_item_classes: "") },
+        }
+      end,
+      {
+        key: { html: "Contains <abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances".html_safe },
+        value: { text: cmrs.any? ? "Yes" : "No" },
+      },
+      if cmrs.any?
+        {
+          key: { html: "<abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances".html_safe },
+          value: { html: render("application/none_or_bullet_list",
+                                entities_list: cmrs.map(&:display_name),
+                                list_classes: "",
+                                list_item_classes: "") },
+        }
+      end,
+      {
+        key: { text: "Nanomaterials" },
+        value: { html: render("application/none_or_bullet_list",
+                              entities_list: nano_materials_details(nano_materials),
+                              list_classes: "",
+                              list_item_classes: "") },
+      },
+      if nano_materials.non_standard.any?
+        {
+          key: { text: "Nanomaterials review period end date" },
+          value: { text: render("application/none_or_bullet_list",
+                                entities_list: nano_materials_with_review_period_end_date(nano_materials.non_standard),
+                                list_classes: "",
+                                list_item_classes: "") },
+        }
+      end,
+      if nano_materials.present?
+        {
+          key: { text: "Application instruction" },
+          value: { text: get_exposure_routes_names(component.exposure_routes) },
+        }
+      end,
+      if nano_materials.present?
+        {
+          key: { text: "Exposure condition" },
+          value: { text: get_exposure_condition_name(component.exposure_condition) },
+        }
+      end,
+      {
+        key: { text: "Category of product" },
+        value: { text: get_category_name(component.root_category) },
+      },
+      {
+        key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
+        value: { text: get_category_name(component.sub_category) },
+      },
+      {
+        key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
+        value: { text: get_category_name(component.sub_sub_category) },
+      },
+      {
+        key: { text: "Physical form" },
+        value: { text: get_physical_form_name(component.physical_form) },
+      },
+      {
+        key: { text: "Special applicator" },
+        value: { text: component.special_applicator.present? ? "Yes" : "No" },
+      },
+      if component.special_applicator.present?
+        {
+          key: { text: "Applicator type" },
+          value: { text: component_special_applicator_name(component) },
+        }
+      end,
+      if component.acute_poisoning_info.present?
+        {
+          key: { text: "Acute poisoning information" },
+          value: { text: component.acute_poisoning_info },
+        }
+      end,
+      if component.predefined?
+        {
+          key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
+          value: { text: component.poisonous_ingredients_answer },
+        }
+      end,
+      if component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
         {
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
