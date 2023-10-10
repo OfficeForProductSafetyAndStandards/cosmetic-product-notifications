@@ -1,7 +1,7 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_stubbed_antivirus, :with_2fa, type: :feature do
+RSpec.feature "Search result", :with_stubbed_notify, :with_stubbed_antivirus, :with_2fa, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:nanomaterial_notification) do
     create(:nanomaterial_notification,
@@ -114,7 +114,7 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
   context "with a poison centre user" do
     let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
-    scenario "user can see the nanomaterial details" do
+    scenario "user can see the nanomaterial details with review period section or link to nanomaterial pdf file" do
       expect(page).to have_h1("Cosmetic products search")
       click_on "Search"
       click_link("View Cream")
