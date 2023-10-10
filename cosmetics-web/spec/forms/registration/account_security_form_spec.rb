@@ -191,12 +191,30 @@ RSpec.describe Registration::AccountSecurityForm do
       end
     end
 
+    context "when password is not given" do
+      let(:password) { "" }
+
+      it "does not validate user" do
+        expect(form).not_to be_valid
+        expect(form.errors[:password]).to match_array(["Enter a password"])
+      end
+    end
+
     context "when password is too common" do
       let(:password) { "password" }
 
       it "does not validate user" do
         expect(form).not_to be_valid
-        expect(form.errors[:password]).to include("Choose a password that is harder to guess")
+        expect(form.errors[:password]).to match_array(["Choose a less frequently used password"])
+      end
+    end
+
+    context "when password is too short and too common" do
+      let(:password) { "pass" }
+
+      it "does not validate user" do
+        expect(form).not_to be_valid
+        expect(form.errors[:password]).to match_array(["Password must be at least 8 characters"])
       end
     end
 
