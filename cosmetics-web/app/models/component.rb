@@ -38,7 +38,7 @@ class Component < ApplicationRecord
 
   belongs_to :notification, touch: true
 
-  has_many :ingredients, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
+  has_many :ingredients, dependent: :destroy, inverse_of: :component
   has_many :trigger_questions, dependent: :destroy
   has_many :cmrs, -> { order(id: :asc) }, dependent: :destroy, inverse_of: :component
   has_many :component_nano_materials
