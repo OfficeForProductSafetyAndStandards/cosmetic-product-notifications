@@ -410,13 +410,7 @@ describe ResponsiblePersons::NotificationsHelper do
         allow(component).to receive(:special_applicator).and_return("Very special")
         allow(helper).to receive(:component_special_applicator_name).and_return("SuperApplicator")
         expect(summary_component_rows).to include(
-          hash_including(
-            {
-              key: { text: "Applicator type" },
-              value: { text: "SuperApplicator" },
-              actions: { items: [hash_including({ href: "#{component_href}/select_special_applicator_type" })] },
-            },
-          ),
+          hash_including({ key: { text: "Applicator type" }, value: { text: "SuperApplicator" }, actions: { items: [hash_including({ href: "#{component_href}/select_special_applicator_type" })] } }),
         )
       end
 
