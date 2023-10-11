@@ -31,35 +31,105 @@ module ResponsiblePersons::NotificationsHelper
       {
         key: { text: "Product name" },
         value: { text: notification.product_name },
+        actions: {
+          items: [
+            {
+              href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_product_name),
+              text: "Edit",
+              visuallyHiddenText: "product name",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       if notification.industry_reference.present?
         {
           key: { text: "Internal reference number" },
           value: { text: notification.industry_reference },
+          actions: {
+            items: [
+              {
+                href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_internal_reference),
+                text: "Edit",
+                visuallyHiddenText: "internal reference",
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       unless notification.under_three_years.nil?
         {
           key: { text: "For children under 3" },
           value: { text: notification.under_three_years ? "Yes" : "No" },
+          actions: {
+            items: [
+              {
+                href: responsible_person_notification_product_path(notification.responsible_person, notification, :under_three_years),
+                text: "Edit",
+                visuallyHiddenText: "under three years",
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       {
         key: { text: "Number of items" },
         value: { text: notification.components.length },
+        actions: {
+          items: [
+            {
+              href: responsible_person_notification_product_path(notification.responsible_person, notification, :single_or_multi_component),
+              text: "Edit",
+              visuallyHiddenText: "number of items",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       {
         key: { text: "Shades" },
         value: { html: display_shades(notification) },
+        actions: {
+          items: [
+            {
+              href: responsible_person_notification_product_path(notification.responsible_person, notification, :shades),
+              text: "Edit",
+              visuallyHiddenText: "shades",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       {
-        key: { text: "Label image" },
+        key: { text: "Label" },
         value: { html: render("notifications/product_details_label_images",
                               notification:) },
+        actions: {
+          items: [
+            {
+              href: responsible_person_notification_product_path(notification.responsible_person, notification, :add_product_image),
+              text: "Edit",
+              visuallyHiddenText: "product image",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       {
         key: { text: "Are the items mixed?" },
         value: { text: notification.components_are_mixed ? "Yes" : "No" },
+        actions: {
+          items: [
+            {
+              href: new_responsible_person_notification_product_kit_path(notification.responsible_person, notification),
+              text: "Edit",
+              visuallyHiddenText: "mixed items",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       if can_view_product_ingredients? && notification.ph_min_value.present?
         {
@@ -132,6 +202,16 @@ module ResponsiblePersons::NotificationsHelper
                                 entities_list: component.shades,
                                 list_classes: "",
                                 list_item_classes: "") },
+          actions: {
+            items: [
+              {
+                href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :number_of_shades),
+                text: "Edit",
+                visuallyHiddenText: "#{component.name} category",
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       {
@@ -153,6 +233,16 @@ module ResponsiblePersons::NotificationsHelper
                               entities_list: nano_materials_details(nano_materials),
                               list_classes: "",
                               list_item_classes: "") },
+        actions: {
+          items: [
+            {
+              href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_nanomaterials),
+              text: "Edit",
+              visuallyHiddenText: "select nanomaterials",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       if nano_materials.non_standard.any?
         {
@@ -167,17 +257,47 @@ module ResponsiblePersons::NotificationsHelper
         {
           key: { text: "Application instruction" },
           value: { text: get_exposure_routes_names(component.exposure_routes) },
+          actions: {
+            items: [
+              {
+                href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :add_exposure_routes),
+                text: "Edit",
+                visuallyHiddenText: "exposure root",
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       if nano_materials.present?
         {
           key: { text: "Exposure condition" },
           value: { text: get_exposure_condition_name(component.exposure_condition) },
+          actions: {
+            items: [
+              {
+                href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :add_exposure_condition),
+                text: "Edit",
+                visuallyHiddenText: "exposure condition",
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       {
         key: { text: "Category of product" },
         value: { text: get_category_name(component.root_category) },
+        actions: {
+          items: [
+            {
+              href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_root_category),
+              text: "Edit",
+              visuallyHiddenText: "#{component.name} category",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
       },
       {
         key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
@@ -190,17 +310,48 @@ module ResponsiblePersons::NotificationsHelper
       {
         key: { text: "Physical form" },
         value: { text: get_physical_form_name(component.physical_form) },
+        actions: {
+          items: [
+            {
+              href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :add_physical_form),
+              text: "Edit",
+              visuallyHiddenText: "physical form",
+              classes: ["govuk-link--no-visited-state"],
+            },
+          ],
+        },
+
       },
       if can_view_product_ingredients?
         {
           key: { text: "Special applicator" },
           value: { text: component.special_applicator.present? ? "Yes" : "No" },
+          actions: {
+            items: [
+              {
+                href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :contains_special_applicator),
+                text: "Edit",
+                visuallyHiddenText: "contains special applicator",
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       if can_view_product_ingredients? && component.special_applicator.present?
         {
           key: { text: "Applicator type" },
           value: { text: component_special_applicator_name(component) },
+          actions: {
+            items: [
+              {
+                href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_special_applicator_type),
+                text: "Edit",
+                visuallyHiddenText: "select special applicator type",
+                classes: ["govuk-link--no-visited-state"],
+              },
+            ],
+          },
         }
       end,
       if can_view_product_ingredients? && component.acute_poisoning_info.present?
@@ -355,28 +506,47 @@ private
 
   def ph_row(component)
     [
-      if component.ph_range_not_required?
-        {
-          key: { html: "<abbr title='Power of hydrogen'>pH</abbr>".html_safe },
-          value: { text: t(component.ph, scope: %i[component_ph check_your_answers]) },
-        }
-      elsif !component.ph_required?
-        {
-          key: { html: "<abbr title='Power of hydrogen'>pH</abbr>".html_safe },
-          value: { text: "N/A" },
-        }
-      elsif component.minimum_ph == component.maximum_ph
-        {
-          key: { html: "Exact <abbr title='Power of hydrogen'>pH</abbr>".html_safe },
-          value: { text: component.minimum_ph },
-        }
-      else
-        {
-          key: { html: "<abbr title='Power of hydrogen'>pH</abbr> range".html_safe },
-          value: { text: "#{component.minimum_ph} to #{component.maximum_ph}" },
-        }
-      end,
+      {
+        key: { html: ph_row_key_value(component) },
+        value: { text: ph_row_text_value(component) },
+        actions: ph_row_actions(component),
+      },
     ]
+  end
+
+  def ph_row_key_value(component)
+    return "<abbr title='Power of hydrogen'>pH</abbr>".html_safe if component.ph_range_not_required? || !component.ph_required?
+
+    return "Exact <abbr title='Power of hydrogen'>pH</abbr>".html_safe if component.minimum_ph == component.maximum_ph
+
+    "<abbr title='Power of hydrogen'>pH</abbr> range".html_safe
+  end
+
+  def ph_row_text_value(component)
+    if component.ph_range_not_required?
+      t(component.ph, scope: %i[component_ph check_your_answers])
+    elsif !component.ph_required?
+      "N/A"
+    elsif component.minimum_ph == component.maximum_ph
+      component.minimum_ph
+    else
+      "#{component.minimum_ph} to #{component.maximum_ph}"
+    end
+  end
+
+  def ph_row_actions(component)
+    return {} unless component.ph_required?
+
+    {
+      items: [
+        {
+          href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_ph_option),
+          text: "Edit",
+          visuallyHiddenText: "select ph option",
+          classes: ["govuk-link--no-visited-state"],
+        },
+      ],
+    }
   end
 
   def trigger_question_element_value(element)

@@ -39,7 +39,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     complete_item_wizard("Cream two", item_number: 2, nanos: [nil])
 
     # Perform steps to block nano
-    click_on "Nano one"
+    click_on "Go to question - nanomaterial #1 select purposes"
     click_on "Continue" # Purpose page
     click_on "Save and continue" # Name page
     answer_is_nanomaterial_listed_in_ec_regulation_with("No", nanomaterial_name: "Nano one")

@@ -52,7 +52,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream two", item_number: 2, nanos: ["Nano two"])
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     accept_and_submit_flow
 

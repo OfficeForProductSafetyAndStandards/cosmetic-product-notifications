@@ -3,7 +3,7 @@ require "support/matchers/capybara_matchers"
 def complete_nano_material_wizard(name, nano_material_number: nil, purposes: %w[Colourant], from_add: false)
   unless from_add
     if nano_material_number
-      click_on "Nanomaterial ##{nano_material_number}"
+      click_on "Go to question - nanomaterial ##{nano_material_number} select purposes"
     else
       click_link name
     end
@@ -68,8 +68,8 @@ def expect_nano_material_task_completed(name)
   expect_task_completed name
 end
 
-def expect_nano_material_task_not_started(name)
-  expect_task_not_started name
+def expect_nano_material_task_not_started(number)
+  expect_task_not_started "Nanomaterial ##{number}"
 end
 
 def select_nano_materials_and_remove(answers)
