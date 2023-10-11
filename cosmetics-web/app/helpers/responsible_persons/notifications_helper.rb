@@ -508,7 +508,7 @@ private
     [
       {
         key: { html: ph_row_key_value(component) },
-        value: { text: ph_row_taxt_value(component) },
+        value: { text: ph_row_text_value(component) },
         actions: ph_row_actions(component),
       },
     ]
@@ -522,7 +522,7 @@ private
     "<abbr title='Power of hydrogen'>pH</abbr> range".html_safe
   end
 
-  def ph_row_taxt_value(component)
+  def ph_row_text_value(component)
     if component.ph_range_not_required?
       t(component.ph, scope: %i[component_ph check_your_answers])
     elsif !component.ph_required?
