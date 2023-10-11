@@ -75,15 +75,15 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream two", item_number: 2, nanos: ["Nano two"])
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     click_on "Add another nanomaterial"
 
     complete_nano_material_wizard("Nano six", purposes: %w[Preservative], from_add: true)
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
-    complete_item_wizard("Cream one", nanos: ["Nano three", "Nano four", "Nano five", "Nano six"])
+    complete_item_wizard("Cream one", existing_product: true, nanos: ["Nano three", "Nano four", "Nano five", "Nano six"])
 
     accept_and_submit_flow
 
@@ -115,7 +115,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_nano_material_wizard("Nano two", purposes: %w[Preservative], from_add: true)
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("li", text: "Nano two is not included in any items")
 
@@ -232,7 +232,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream two", item_number: 2)
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     # Does not create the item until the name is added.
     click_on "Add another item"
@@ -240,7 +240,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect(page).to have_current_path(/\/draft/)
     expect(page).not_to have_link("Item #3")
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     click_on "Add another item"
     answer_item_name_with "Cream three"
@@ -253,9 +253,9 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_accept_and_submit_blocked
 
-    complete_item_wizard("Cream three")
+    complete_item_wizard("Cream three", existing_product: true)
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     accept_and_submit_flow
 
@@ -282,7 +282,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream two", item_number: 2)
     expect_item_task_completed "Cream two"
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     # Go though the already completed item wizard steps
     name = "Cream one"
@@ -327,7 +327,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_product_details_task_completed
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     complete_product_wizard(name: "Some product", nano_materials_count: 1)
 
@@ -345,7 +345,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_product_details_task_completed
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     complete_product_wizard(name: "Some product", items_count: 2, continue_on_nano: true)
 
@@ -379,7 +379,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(4, 5)
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     accept_and_submit_flow
 
@@ -480,15 +480,15 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_on "Add another item"
     complete_item_wizard("Cream three", item_number: 3, nanos: ["Nano three"], from_add: true)
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     click_on "Add another nanomaterial"
 
     complete_nano_material_wizard("Nano six", purposes: %w[Preservative], from_add: true)
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
-    complete_item_wizard("Cream one", nanos: ["Nano four", "Nano five", "Nano six"])
+    complete_item_wizard("Cream one", nanos: ["Nano four", "Nano five", "Nano six"], existing_product: true)
 
     accept_and_submit_flow
 

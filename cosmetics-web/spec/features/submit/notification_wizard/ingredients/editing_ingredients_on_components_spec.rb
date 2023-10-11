@@ -19,7 +19,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
     expect_product_details_task_completed
 
-    click_link "Product details"
+    click_link "Go to question - product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Foam"
     answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
@@ -85,7 +85,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
     expect_product_details_task_completed
 
-    click_link "Product details"
+    click_link "Go to question - product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Foam"
     answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
@@ -163,7 +163,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
     expect_product_details_task_completed
 
-    click_link "Product details"
+    click_link "Go to question - product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Foam"
     answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
@@ -224,7 +224,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
     expect_product_details_task_completed
 
-    click_link "Product details"
+    click_link "Go to question - product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Foam"
     answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
@@ -255,7 +255,7 @@ RSpec.describe "Editing ingredients on components", :with_stubbed_antivirus, typ
 
     expect_product_details_task_completed
 
-    click_link "Product details"
+    click_link "Go to question - product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Foam"
     answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"

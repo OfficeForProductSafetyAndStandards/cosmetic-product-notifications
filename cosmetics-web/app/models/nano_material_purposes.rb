@@ -9,21 +9,21 @@ class NanoMaterialPurposes
     name: "colorant",
     display_name: "colourant",
     annex_number: 4,
-    link: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:32009R1223#d1e32-176-1",
+    link: "https://www.legislation.gov.uk/eur/2009/1223/annex/IV",
   ).freeze
 
   PRESERVATIVE = Purpose.new(
     name: "preservative",
     display_name: "preservative",
     annex_number: 5,
-    link: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:32009R1223#d1e32-192-1",
+    link: "https://www.legislation.gov.uk/eur/2009/1223/annex/V",
   ).freeze
 
   UV_FILTER = Purpose.new(
     name: "uv_filter",
     display_name: "UV filter",
     annex_number: 6,
-    link: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:32009R1223#d1e32-201-1",
+    link: "https://www.legislation.gov.uk/eur/2009/1223/annex/VI",
   ).freeze
 
   OTHER = Purpose.new(
