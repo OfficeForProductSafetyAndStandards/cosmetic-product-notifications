@@ -1,24 +1,65 @@
 <li>
-  <h2 class="app-task-list__section">
-    <span class="app-task-list__section-number">1. </span>
-    Create the product
-  </h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number">1. </span>
+        Create the product
+      </h2>
+    </div>
+    <div class="app-task-list__section-number govuk-grid-column-one-half">
+      <%= product_badge(@notification) %>
+    </div>
+  </div>
 
   <ul class="app-task-list__items">
-    <li class="app-task-list__item">
-      <span class="app-task-list__task-name">
-        <% if @notification.persisted? %>
-          <a href="<%= new_responsible_person_notification_product_path(@notification.responsible_person, @notification) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="product-status">
-            Create the product
-          </a>
-        <% else %>
-          <a href="<%= new_responsible_person_notification_path(@responsible_person) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="product-status">
-            Create the product
-          </a>
+    <% if @notification.persisted? %>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="create_product">
+          Product name
+        </span>
+        <%= product_link(:add_product_name) %>
+      </li>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="internal_reference">
+          Internal reference
+        </span>
+        <%= product_link(:add_internal_reference) %>
+      </li>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="for_children_under_three">
+          Children under 3 years old
+        </span>
+        <%= product_link(:for_children_under_three) %>
+      </li>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="contains_nanomaterials">
+          Nanomaterials
+        </span>
+        <%= product_link(:contains_nanomaterials) %>
+      </li>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="single_or_multi_component">
+          Multi-item kit
+        </span>
+        <%= product_link(:single_or_multi_component) %>
+      </li>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="add_product_image">
+          Image upload
+        </span>
+        <%= product_link(:add_product_image) %>
+    </li>
+    <% else %>
+      <li class="app-task-list__item">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="create_product">
+          Product name
+        </span>
+        <%= link_to new_responsible_person_notification_path(@responsible_person), class: "app-task-list__tag", "aria-describedby": "create_product" do %>
+          Go to question
+          <span class="govuk-visually-hidden"> - add product name</span>
         <% end %>
-      </span>
-
-      <%= product_badge(@notification) %>
+      </li>
+    <% end %>
     </li>
   </ul>
 </li>
