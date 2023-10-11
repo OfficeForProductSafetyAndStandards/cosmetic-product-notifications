@@ -63,7 +63,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream two", item_number: 2)
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
     complete_product_wizard(name: "Product no nano two items", nano_materials_count: 1, continue_on_items: true)
 
@@ -87,9 +87,9 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_task_completed "Cream two"
 
-    expect_accept_and_submit_not_started
+    expect_accept_and_submit_in_progress
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     click_link "Continue"
 

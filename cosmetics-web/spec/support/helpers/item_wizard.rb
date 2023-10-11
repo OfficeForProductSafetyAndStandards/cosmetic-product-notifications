@@ -4,18 +4,22 @@ def complete_product_details(nanos: [])
   complete_item_wizard("Product details", single_item: true, nanos:)
 end
 
-def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false, formulation_type: :exact)
+def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], from_add: false, existing_product: false, formulation_type: :exact)
   label_name = single_item ? nil : name
 
   unless from_add
     if item_number
       click_on "Item ##{item_number}"
-    else
+    elsif existing_product
       click_link name
+    else
+      click_link "Go to question - product details"
     end
   end
 
-  unless single_item
+  if existing_product
+    click_button "Save and continue"
+  elsif !single_item
     answer_item_name_with(name)
   end
 
@@ -52,9 +56,8 @@ def complete_item_wizard(name, item_number: nil, single_item: false, nanos: [], 
 
   answer_what_is_ph_range_when_ph_is_required
   expect_task_has_been_completed_page
-
   return_to_task_list_page
-  expect_item_task_completed name
+  expect_item_task_completed "Product"
 end
 
 def answer_item_name_with(item_name)
@@ -258,15 +261,15 @@ def expect_to_be_on_add_csv_ingredients_page
 end
 
 def expect_product_details_task_completed
-  expect_item_task_completed("Product details")
+  expect_item_task_completed("Item #1")
 end
 
 def expect_product_details_task_not_started
-  expect_task_not_started("Product details")
+  expect_task_not_started("Item #1")
 end
 
 def expect_product_details_task_blocked
-  expect_task_blocked("Product details")
+  expect_task_blocked("Item #1")
 end
 
 def expect_item_task_completed(name)

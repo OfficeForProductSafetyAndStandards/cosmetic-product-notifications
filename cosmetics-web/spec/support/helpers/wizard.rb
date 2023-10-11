@@ -20,8 +20,8 @@ def return_to_task_list_page
   click_on "Go to the task list page"
 end
 
-def expect_accept_and_submit_not_started
-  expect_task_not_started("Accept and submit")
+def expect_accept_and_submit_in_progress
+  expect_task_in_progress("Accept and submit")
 end
 
 def expect_accept_and_submit_blocked
@@ -29,28 +29,29 @@ def expect_accept_and_submit_blocked
 end
 
 def expect_task_completed(link_text)
-  expect_task_status(link_text, "Completed")
+  expect_task_status(link_text, "complete")
+end
+
+def expect_task_in_progress(link_text)
+  expect_task_status(link_text, "in progress")
 end
 
 def expect_task_not_started(link_text)
-  expect_task_status(link_text, "Not started")
+  expect_task_status(link_text, "not started")
 end
 
 def expect_task_blocked(link_text)
-  status = "Cannot start yet"
-  expect {
-    page.find(:xpath, "//span[contains(text(),'#{link_text}')]").find(:xpath, "following-sibling::b[contains(text(), '#{status}')]")
-  }.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
+  expect_task_status(link_text, "cannot start yet")
 end
 
 def expect_task_status(link_text, status)
   expect {
-    page.find(:xpath, "//ancestor::span/a[contains(text(),'#{link_text}')]").find(:xpath, "../following-sibling::b[contains(text(), '#{status}')]")
+    expect(page).to have_css("b", text: "#{link_text} #{status}")
   }.not_to raise_error, "Cannot find '#{link_text}' with status '#{status}'"
 end
 
 def expect_progress(current, total)
-  expect(page).to have_text("Incomplete: #{current} of #{total} tasks have been completed")
+  expect(page).to have_text("You have completed #{current} of #{total} sections")
 end
 
 def expect_check_your_answers_page_to_contain(product_name:, number_of_components:, shades:, nanomaterials:, category:, subcategory:, sub_subcategory:, formulation_given_as:, physical_form:, contains_cmrs: nil, frame_formulation: nil, ph: nil, application_instruction: nil, exposure_condition: nil, eu_notification_date: nil, poisonous_ingredients: nil, ingredients: nil)
@@ -145,7 +146,7 @@ def expect_successful_submission
 end
 
 def accept_and_submit_flow
-  click_link "Accept and submit"
+  click_link "Go to summary - accept and submit"
   click_link "Continue"
   click_button "Accept and submit"
 end
