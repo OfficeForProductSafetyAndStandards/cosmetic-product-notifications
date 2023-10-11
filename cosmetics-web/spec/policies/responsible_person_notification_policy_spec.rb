@@ -35,4 +35,44 @@ RSpec.describe ResponsiblePersonNotificationPolicy, type: :policy do
 
     it { is_expected.to permit(:destroy) }
   end
+
+  describe "#search?" do
+    subject { described_class.new(user, Notification) }
+
+    context "with a OPSS general user" do
+      let(:user) { create(:opss_general_user) }
+
+      it { is_expected.not_to permit(:search) }
+    end
+
+    context "with a poison centre user" do
+      let(:user) { create(:poison_centre_user) }
+
+      it { is_expected.to permit(:search) }
+    end
+
+    context "with a OPSS enforcement user" do
+      let(:user) { create(:opss_enforcement_user) }
+
+      it { is_expected.to permit(:search) }
+    end
+
+    context "with a OPSS IMT user" do
+      let(:user) { create(:opss_imt_user) }
+
+      it { is_expected.to permit(:search) }
+    end
+
+    context "with a OPSS science user" do
+      let(:user) { create(:opss_science_user) }
+
+      it { is_expected.to permit(:search) }
+    end
+
+    context "with a trading standards user" do
+      let(:user) { create(:trading_standards_user) }
+
+      it { is_expected.to permit(:search) }
+    end
+  end
 end
