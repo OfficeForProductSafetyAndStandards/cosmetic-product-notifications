@@ -24,6 +24,7 @@ gem "flipper-ui", "~> 0.28"
 gem "govuk-design-system-rails", "~> 0.10.5", github: "OfficeForProductSafetyAndStandards/govuk-design-system-rails"
 gem "govuk_notify_rails", "~> 2.2"
 gem "hashie", "~> 5.0"
+gem "health_check"
 gem "image_processing", "~> 1.12"
 gem "interactor", "~> 3.1"
 gem "jbuilder", "~> 2.11"
@@ -33,6 +34,7 @@ gem "mini_magick", "~> 4.12"
 gem "net-imap", require: false # Needed for running Rails 6 with ruby 3.1
 gem "net-pop", require: false # Needed for running Rails 6 with ruby 3.1
 gem "net-smtp", require: false # Needed for running Rails 6 with ruby 3.1
+gem "newrelic_rpm"
 gem "okcomputer", "~> 1.18.4"
 gem "paper_trail", "~> 14.0"
 gem "pg", "~> 1.4"
@@ -58,8 +60,6 @@ gem "sprockets-rails", "~> 3.4", require: "sprockets/railtie"
 gem "strong_migrations", "~> 1.4"
 gem "webrick", "~> 1.8"
 gem "wicked", "~> 2.0"
-gem "health_check"
-gem "newrelic_rpm"
 
 # OSU Support Portal engine
 gem "support_portal", path: "support_portal"

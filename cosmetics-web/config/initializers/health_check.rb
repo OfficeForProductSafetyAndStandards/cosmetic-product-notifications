@@ -1,20 +1,19 @@
 HealthCheck.setup do |config|
-
   # uri prefix (no leading slash)
-  config.uri = 'health'
+  config.uri = "health"
 
   # Text output upon success
-  config.success = 'success'
+  config.success = "success"
 
   # Text output upon failure
-  config.failure = 'health_check failed'
+  config.failure = "health_check failed"
 
   # Disable the error message to prevent /health_check from leaking
   # sensitive information
   config.include_error_in_response_body = false
 
   # Log level (success or failure message with error details is sent to rails log unless this is set to nil)
-  config.log_level = 'info'
+  config.log_level = "info"
 
   # Timeout in seconds used when checking smtp server
   config.smtp_timeout = 30.0
@@ -32,16 +31,16 @@ HealthCheck.setup do |config|
   config.http_status_for_error_object = 500
 
   # bucket names to test connectivity - required only if s3 check used, access permissions can be mixed
-  config.buckets = {'bucket_name' => [:R, :W, :D]}
+  config.buckets = { "bucket_name" => %i[R W D] }
 
   # You can customize which checks happen on a standard health check, eg to set an explicit list use:
-  config.standard_checks = [ 'database', 'migrations', 'custom' ]
+  config.standard_checks = %w[database migrations custom]
 
   # Or to exclude one check:
-  config.standard_checks -= [ 'emailconf' ]
+  config.standard_checks -= %w[emailconf]
 
   # You can set what tests are run with the 'full' or 'all' parameter
-  config.full_checks = ['database', 'migrations', 'custom', 'email', 'cache', 'redis', 'resque-redis', 'sidekiq-redis', 's3']
+  config.full_checks = %w[database migrations custom email cache redis resque-redis sidekiq-redis s3]
 
   # Add one or more custom checks that return a blank string if ok, or an error message if there is an error
   config.add_custom_check do
@@ -51,7 +50,7 @@ HealthCheck.setup do |config|
   # Add another custom check with a name, so you can call just specific custom checks. This can also be run using
   # the standard 'custom' check.
   # You can define multiple tests under the same name - they will be run one after the other.
-  config.add_custom_check('sometest') do
+  config.add_custom_check("sometest") do
     CustomHealthCheck.perform_another_check # any code that returns blank on success and non blank string upon failure
   end
 
@@ -63,8 +62,8 @@ HealthCheck.setup do |config|
 
   # Protect health endpoints with basic auth
   # These default to nil and the endpoint is not protected
-  config.basic_auth_username = 'my_username'
-  config.basic_auth_password = 'my_password'
+  config.basic_auth_username = "my_username"
+  config.basic_auth_password = "my_password"
 
   # Whitelist requesting IPs by a list of IP and/or CIDR ranges, either IPv4 or IPv6 (uses IPAddr.include? method to check)
   # Defaults to blank which allows any IP
@@ -95,5 +94,4 @@ HealthCheck.setup do |config|
   config.on_success do |checks|
     # flag that everything is well
   end
-
 end
