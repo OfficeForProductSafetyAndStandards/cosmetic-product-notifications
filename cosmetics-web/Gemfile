@@ -58,6 +58,8 @@ gem "sprockets-rails", "~> 3.4", require: "sprockets/railtie"
 gem "strong_migrations", "~> 1.4"
 gem "webrick", "~> 1.8"
 gem "wicked", "~> 2.0"
+gem "health_check"
+gem "newrelic_rpm"
 
 # OSU Support Portal engine
 gem "support_portal", path: "support_portal"
