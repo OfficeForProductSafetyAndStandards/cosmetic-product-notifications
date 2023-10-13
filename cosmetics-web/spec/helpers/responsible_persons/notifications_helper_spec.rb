@@ -130,7 +130,7 @@ describe ResponsiblePersons::NotificationsHelper do
       allow(helper).to receive_messages(render: "", current_user: user)
     end
 
-    context "for a completed notification" do
+    context "with a completed notification" do
       let(:notification_complete_at) { Time.zone.parse("2021-10-04T17:10Z") }
       let(:trait) { :registered }
 
@@ -245,7 +245,7 @@ describe ResponsiblePersons::NotificationsHelper do
       end
     end
 
-    context "for a draft notification" do
+    context "with a draft notification" do
       let(:notification_complete_at) { nil }
       let(:trait) { :draft_complete }
 
