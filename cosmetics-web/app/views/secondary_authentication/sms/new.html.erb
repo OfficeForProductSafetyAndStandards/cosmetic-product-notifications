@@ -2,19 +2,25 @@
 <% page_title(title, errors: @form.errors.any?) %>
 
 <% content_for(:after_header) do %>
-  <%=
-    if @form.user&.mobile_number_pending_verification? && !request.referer&.end_with?("two-factor/sms/setup")
-      if submit_domain?
-        button_to(registration_reset_account_security_path, method: :delete, class: "button-link govuk-back-link") { "Back" }
-      elsif support_domain?
-        button_to(reset_complete_registration_support_user_path(@form.user), method: :delete, class: "button-link govuk-back-link") { "Back" }
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+    <%=
+      if @form.user&.mobile_number_pending_verification? && !request.referer&.end_with?("two-factor/sms/setup")
+        if submit_domain?
+          button_to(registration_reset_account_security_path, method: :delete, class: "button-link govuk-back-link") { "Back" }
+        elsif support_domain?
+          button_to(reset_complete_registration_support_user_path(@form.user), method: :delete, class: "button-link govuk-back-link") { "Back" }
+        else
+          button_to(reset_complete_registration_user_path(@form.user), method: :delete, class: "button-link govuk-back-link") { "Back" }
+        end
+      elsif !@form.user&.mobile_number_pending_verification? && @form.user&.multiple_secondary_authentication_methods?
+        govuk_back_link(href: new_secondary_authentication_method_path)
       else
-        button_to(reset_complete_registration_user_path(@form.user), method: :delete, class: "button-link govuk-back-link") { "Back" }
+        govuk_back_link(href: request.referer)
       end
-    elsif !@form.user&.mobile_number_pending_verification? && @form.user&.multiple_secondary_authentication_methods?
-      govukBackLink(text: "Back", href: new_secondary_authentication_method_path)
-    end
-  %>
+    %>
+    </div>
+  </div>
 <% end %>
 
 <div class="govuk-grid-row">
