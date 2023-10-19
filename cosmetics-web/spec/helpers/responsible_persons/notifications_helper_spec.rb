@@ -112,13 +112,13 @@ describe ResponsiblePersons::NotificationsHelper do
 
     let(:notification) do
       build_stubbed(:notification,
-                    :registered,
+                    trait,
                     reference_number: "60162968",
                     product_name: "Product Test",
                     industry_reference: "CPNP-3874065",
                     cpnp_reference: "3796528",
                     cpnp_notification_date: Time.zone.parse("2019-10-04T17:10Z"),
-                    notification_complete_at: Time.zone.parse("2021-05-03T12:08Z"))
+                    notification_complete_at:)
     end
     let(:user) { instance_double(SubmitUser, can_view_product_ingredients?: true) }
 
@@ -130,112 +130,232 @@ describe ResponsiblePersons::NotificationsHelper do
       allow(helper).to receive_messages(render: "", current_user: user)
     end
 
-    it "contains the product name" do
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Product name" }, value: { text: "Product Test" }, actions: { items: [hash_including({ href: "#{product_href}/add_product_name" })] } }))
-    end
+    context "with a completed notification" do
+      let(:notification_complete_at) { Time.zone.parse("2021-10-04T17:10Z") }
+      let(:trait) { :registered }
 
-    it "contains the industry reference number" do
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Internal reference number" }, value: { text: "CPNP-3874065" }, actions: { items: [hash_including({ href: "#{product_href}/add_internal_reference" })] } }))
-    end
-
-    it "contains the number of components associated with the notification" do
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Number of items" }, value: { text: 0 }, actions: { items: [hash_including({ href: "#{product_href}/single_or_multi_component" })] } }))
-    end
-
-    it "contains notification shades html" do
-      allow(helper).to receive(:display_shades).and_return("Shades info")
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Shades" }, value: { html: "Shades info" }, actions: { items: [hash_including({ href: "#{product_href}/shades" })] } }))
-    end
-
-    it "contains info indicating when the notification components are mixed" do
-      notification.components_are_mixed = true
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "Yes" }, actions: { items: [hash_including({ href: "#{notification_href}/product_kit/new" })] } }))
-    end
-
-    it "contains info indicating when the notification components are not mixed" do
-      notification.components_are_mixed = false
-      expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "No" }, actions: { items: [hash_including({ href: "#{notification_href}/product_kit/new" })] } }))
-    end
-
-    describe "for children under 3" do
-      it "not included when not available for the notification" do
-        notification.under_three_years = nil
-        expect(summary_product_rows).not_to include(hash_including(key: { text: "For children under 3" }))
+      it "contains the product name" do
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Product name" }, value: { text: "Product Test" } }))
       end
 
-      it "included when notification product is for children under 3" do
-        notification.under_three_years = true
-        expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "Yes" }, actions: { items: [hash_including({ href: "#{product_href}/under_three_years" })] } }))
+      it "contains the industry reference number" do
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Internal reference number" }, value: { text: "CPNP-3874065" } }))
       end
 
-      it "included when notification product is not for children under 3" do
-        notification.under_three_years = false
-        expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "No" }, actions: { items: [hash_including({ href: "#{product_href}/under_three_years" })] } }))
+      it "contains the number of components associated with the notification" do
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Number of items" }, value: { text: 0 } }))
       end
-    end
 
-    describe "PH information" do
-      context "when current user can view the product ingredients" do
-        before { allow(user).to receive(:can_view_product_ingredients?).and_return(true) }
+      it "contains notification shades html" do
+        allow(helper).to receive(:display_shades).and_return("Shades info")
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Shades" }, value: { html: "Shades info" } }))
+      end
 
-        it "contains the product PH minimum value when present" do
-          notification.ph_min_value = 0.3
-          expect(summary_product_rows).to include(
-            { key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.3 } },
-          )
+      it "contains info indicating when the notification components are mixed" do
+        notification.components_are_mixed = true
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "Yes" } }))
+      end
+
+      it "contains info indicating when the notification components are not mixed" do
+        notification.components_are_mixed = false
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "No" } }))
+      end
+
+      describe "for children under 3" do
+        it "not included when not available for the notification" do
+          notification.under_three_years = nil
+          expect(summary_product_rows).not_to include(hash_including(key: { text: "For children under 3" }))
         end
 
-        it "does not contain the product PH minimum value when not present" do
-          notification.ph_min_value = nil
-          expect(summary_product_rows).not_to include(
-            hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
-          )
+        it "included when notification product is for children under 3" do
+          notification.under_three_years = true
+          expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "Yes" } }))
         end
 
-        it "contains the product PH maximum value when present" do
-          notification.ph_max_value = 0.7
-          expect(summary_product_rows).to include(
-            { key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.7 } },
-          )
-        end
-
-        it "does not contain the product PH maximum value when not present" do
-          notification.ph_max_value = nil
-          expect(summary_product_rows).not_to include(
-            hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
-          )
+        it "included when notification product is not for children under 3" do
+          notification.under_three_years = false
+          expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "No" } }))
         end
       end
 
-      context "when the current user cannot view the product ingredients" do
-        before { allow(user).to receive(:can_view_product_ingredients?).and_return(false) }
+      describe "PH information" do
+        context "when current user can view the product ingredients" do
+          before { allow(user).to receive(:can_view_product_ingredients?).and_return(true) }
 
-        it "does not contain the product PH minimum value even when is available" do
-          notification.ph_min_value = 0.3
-          expect(summary_product_rows).not_to include(
-            hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
-          )
+          it "contains the product PH minimum value when present" do
+            notification.ph_min_value = 0.3
+            expect(summary_product_rows).to include(
+              { key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.3 } },
+            )
+          end
+
+          it "does not contain the product PH minimum value when not present" do
+            notification.ph_min_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "contains the product PH maximum value when present" do
+            notification.ph_max_value = 0.7
+            expect(summary_product_rows).to include(
+              { key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.7 } },
+            )
+          end
+
+          it "does not contain the product PH maximum value when not present" do
+            notification.ph_max_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
         end
 
-        it "does not contain the product PH minimum value when not available" do
-          notification.ph_min_value = nil
-          expect(summary_product_rows).not_to include(
-            hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
-          )
+        context "when the current user cannot view the product ingredients" do
+          before { allow(user).to receive(:can_view_product_ingredients?).and_return(false) }
+
+          it "does not contain the product PH minimum value even when is available" do
+            notification.ph_min_value = 0.3
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "does not contain the product PH minimum value when not available" do
+            notification.ph_min_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "does not contain the product PH maximum value even when is available" do
+            notification.ph_max_value = 0.7
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "does not contain the product PH maximum value when not available" do
+            notification.ph_max_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+        end
+      end
+    end
+
+    context "with a draft notification" do
+      let(:notification_complete_at) { nil }
+      let(:trait) { :draft_complete }
+
+      it "contains the product name" do
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Product name" }, value: { text: "Product Test" }, actions: { items: [hash_including({ href: "#{product_href}/add_product_name" })] } }))
+      end
+
+      it "contains the industry reference number" do
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Internal reference number" }, value: { text: "CPNP-3874065" }, actions: { items: [hash_including({ href: "#{product_href}/add_internal_reference" })] } }))
+      end
+
+      it "contains the number of components associated with the notification" do
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Number of items" }, value: { text: 0 }, actions: { items: [hash_including({ href: "#{product_href}/single_or_multi_component" })] } }))
+      end
+
+      it "contains notification shades html" do
+        allow(helper).to receive(:display_shades).and_return("Shades info")
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Shades" }, value: { html: "Shades info" }, actions: { items: [hash_including({ href: "#{product_href}/shades" })] } }))
+      end
+
+      it "contains info indicating when the notification components are mixed" do
+        notification.components_are_mixed = true
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "Yes" }, actions: { items: [hash_including({ href: "#{notification_href}/product_kit/new" })] } }))
+      end
+
+      it "contains info indicating when the notification components are not mixed" do
+        notification.components_are_mixed = false
+        expect(summary_product_rows).to include(hash_including({ key: { text: "Are the items mixed?" }, value: { text: "No" }, actions: { items: [hash_including({ href: "#{notification_href}/product_kit/new" })] } }))
+      end
+
+      describe "for children under 3" do
+        it "not included when not available for the notification" do
+          notification.under_three_years = nil
+          expect(summary_product_rows).not_to include(hash_including(key: { text: "For children under 3" }))
         end
 
-        it "does not contain the product PH maximum value even when is available" do
-          notification.ph_max_value = 0.7
-          expect(summary_product_rows).not_to include(
-            hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
-          )
+        it "included when notification product is for children under 3" do
+          notification.under_three_years = true
+          expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "Yes" }, actions: { items: [hash_including({ href: "#{product_href}/under_three_years" })] } }))
         end
 
-        it "does not contain the product PH maximum value when not available" do
-          notification.ph_max_value = nil
-          expect(summary_product_rows).not_to include(
-            hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
-          )
+        it "included when notification product is not for children under 3" do
+          notification.under_three_years = false
+          expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "No" }, actions: { items: [hash_including({ href: "#{product_href}/under_three_years" })] } }))
+        end
+      end
+
+      describe "PH information" do
+        context "when current user can view the product ingredients" do
+          before { allow(user).to receive(:can_view_product_ingredients?).and_return(true) }
+
+          it "contains the product PH minimum value when present" do
+            notification.ph_min_value = 0.3
+            expect(summary_product_rows).to include(
+              { key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.3 } },
+            )
+          end
+
+          it "does not contain the product PH minimum value when not present" do
+            notification.ph_min_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "contains the product PH maximum value when present" do
+            notification.ph_max_value = 0.7
+            expect(summary_product_rows).to include(
+              { key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }, value: { text: 0.7 } },
+            )
+          end
+
+          it "does not contain the product PH maximum value when not present" do
+            notification.ph_max_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+        end
+
+        context "when the current user cannot view the product ingredients" do
+          before { allow(user).to receive(:can_view_product_ingredients?).and_return(false) }
+
+          it "does not contain the product PH minimum value even when is available" do
+            notification.ph_min_value = 0.3
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "does not contain the product PH minimum value when not available" do
+            notification.ph_min_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "does not contain the product PH maximum value even when is available" do
+            notification.ph_max_value = 0.7
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
+
+          it "does not contain the product PH maximum value when not available" do
+            notification.ph_max_value = nil
+            expect(summary_product_rows).not_to include(
+              hash_including(key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value" }),
+            )
+          end
         end
       end
     end
