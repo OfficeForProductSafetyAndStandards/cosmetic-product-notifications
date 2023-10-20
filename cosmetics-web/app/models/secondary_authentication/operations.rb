@@ -17,7 +17,7 @@ module SecondaryAuthentication
       CHANGE_EMAIL_ADDRESS => 300, # 5 minutes
       INVITE_USER => 300, # 5 minutes
       UNLOCK => 300, # 5 minutes
-      DELETE_NOTIFICATION => 900, # 15 minutes
+      DELETE_NOTIFICATION => 30, # 30 seconds
       SETUP_APP_AUTHENTICATION => 300, # 5 minutes
       SETUP_SMS_AUTHENTICATION => 300, # 5 minutes
     }.freeze
