@@ -1,9 +1,15 @@
 <% title = "Enter the access code" %>
 <% page_title(title, errors: @form.errors.any?) %>
 
-<% if @form.user&.multiple_secondary_authentication_methods? %>
-  <% content_for(:after_header) do %>
-    <%= govukBackLink(text: "Back", href: new_secondary_authentication_method_path) %>
+<% content_for :after_header do %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <% if @form.user&.multiple_secondary_authentication_methods? %>
+        <%= govuk_back_link(href: new_secondary_authentication_method_path) %>
+      <% else %>
+        <%= govuk_back_link(href: request.referer) %>
+      </div>
+    </div>
   <% end %>
 <% end %>
 

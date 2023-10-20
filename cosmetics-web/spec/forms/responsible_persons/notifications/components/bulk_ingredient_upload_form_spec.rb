@@ -11,7 +11,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
   let(:csv) do
     <<~CSV
-      Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+      Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
       Sodium,35,497-19-8,true
       Aqua,65,497-19-8,false
     CSV
@@ -117,7 +117,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when only a header row is present" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
         CSV
       end
 
@@ -144,7 +144,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the file has too many columns in the header row but correct ingredient row values" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?,Foo
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?,Foo
           Aqua,65,497-19-8,false
         CSV
       end
@@ -158,7 +158,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the file has an extra empty column in the header row but correct ingredient row values" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?,
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?,
           Aqua,65,497-19-8,false
         CSV
       end
@@ -172,7 +172,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when there are duplicate ingredients" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Aqua,65,497-19-8,false
           Aqua,50,497-19-8,false
         CSV
@@ -188,7 +188,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
       # rubocop:disable Layout/HeredocIndentation
       let(:csv) do
         <<~CSV
-         Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+         Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Aqua,65,497-19-8,false,
         CSV
       end
@@ -203,7 +203,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when an ingredient row has an extra column" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Aqua,65,497-19-8,false,bar
         CSV
       end
@@ -217,7 +217,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the ingredient name is empty" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           ,35,497-19-8,true
         CSV
       end
@@ -231,7 +231,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the ingredient name is too long" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,32,497-19-8,true
         CSV
       end
@@ -245,7 +245,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the ingredient concentration is empty" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Foo,,497-19-8,true
         CSV
       end
@@ -259,7 +259,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the ingredient concentration value is incorrect" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Sodium,abc,497-19-8,foo
         CSV
       end
@@ -273,7 +273,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the ingredient NPIS column is empty" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Aqua,65,497-19-8,
         CSV
       end
@@ -287,7 +287,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when the ingredient NPIS column is incorrect" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Sodium,32,497-19-8,foo
         CSV
       end
@@ -301,7 +301,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when one ingredient row is invalid" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Sodium,35,497-19-8,true
           Aqua,65,497-19-8,false
           Acid,50-75,497-19-8,false
@@ -317,7 +317,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when multiple ingredient rows are invalid" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Sodium,thirtyfive,497-19-8,true
           Aqua,65,497-19-8,false
           Acid,50-75,497-19-8,false
@@ -336,7 +336,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
 
     let(:csv) do
       <<~CSV
-        Ingredient name,Minimum % w/w,Maximum % w/w,Exact % w/w,CAS number,Does NPIS need to know about it?
+        Ingredient name,Minimum % w/w,Maximum % w/w,Exact % w/w,CAS number,Does the NPIS need to be notified about this ingredient?
         Sodium carbonate,10,30,,497-19-8,false
         Water,35,65,,7732-18-5,false
         Eucalyptol,,,12,,true
@@ -358,7 +358,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
     context "when using upper case for toxicity" do
       let(:csv) do
         <<~CSV
-          Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+          Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
           Foo,12,497-19-8,TRUE
         CSV
       end
@@ -389,7 +389,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
   context "when the fields start or end with extra spaces" do
     let(:csv) do
       <<~CSV
-        Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+        Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
          Foo,12 ,  497-19-8 , TRUE
       CSV
     end
@@ -410,7 +410,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
   context "when the file contains blank rows" do
     let(:csv) do
       <<~CSV
-        Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+        Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
         ,,,
         Foo,12 ,497-19-8,TRUE
       CSV
@@ -447,7 +447,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BulkIngredientUplo
   context "when ingredients are already present in product" do
     let(:csv) do
       <<~CSV
-        Ingredient name,% w/w,CAS number,Does NPIS need to know about it?
+        Ingredient name,% w/w,CAS number,Does the NPIS need to be notified about this ingredient?
         Sodium,35,497-19-8,true
         Aqua,65,497-19-8,false
       CSV
