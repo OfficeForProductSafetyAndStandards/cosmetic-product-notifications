@@ -236,7 +236,6 @@ Rails.application.routes.draw do
       resources :delete_notification, param: :reference_number, controller: "responsible_persons/delete_notification", only: [] do
         member do
           get :delete
-          delete :destroy
         end
       end
     end

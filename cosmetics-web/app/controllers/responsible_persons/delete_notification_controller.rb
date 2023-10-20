@@ -3,14 +3,7 @@ class ResponsiblePersons::DeleteNotificationController < SubmitApplicationContro
   before_action :validate_responsible_person
   before_action :set_notification
 
-  def delete; end
-
-  def destroy
-    unless params.dig(:confirmation, :yes) == "yes"
-      @notification.errors.add(:confirmation, "Select yes if you want to delete this #{@notification.notification_complete? ? 'notification' : 'draft'}")
-      return render(:delete)
-    end
-
+  def delete
     NotificationDeleteService.new(@notification, current_user).call
 
     tab = @notification.notification_complete? ? "notified" : "incomplete"
