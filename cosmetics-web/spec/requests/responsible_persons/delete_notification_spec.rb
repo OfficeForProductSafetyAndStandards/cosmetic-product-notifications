@@ -16,7 +16,6 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
     end
 
     context "when deletion is confirmed" do
-
       it "creates log record with current user" do
         expect(NotificationDeleteLog.count).to eq 0
 
