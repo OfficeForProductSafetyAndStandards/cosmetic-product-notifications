@@ -6,6 +6,10 @@ module Privileges
       poison_centre_user? || opss_enforcement_user? || opss_imt_user? || opss_science_user?
     end
 
+    def can_view_ph?
+      opss_enforcement_user? || opss_imt_user? || opss_science_user? || trading_standards_user?
+    end
+
     def can_search_for_ingredients?
       !opss_general?
     end

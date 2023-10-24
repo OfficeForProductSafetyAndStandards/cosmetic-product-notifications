@@ -180,7 +180,7 @@ describe ResponsiblePersons::NotificationsHelper do
 
       describe "PH information" do
         context "when current user can view the product ingredients" do
-          before { allow(user).to receive(:can_view_product_ingredients?).and_return(true) }
+          before { allow(user).to receive(:can_view_ph?).and_return(true) }
 
           it "contains the product PH minimum value when present" do
             notification.ph_min_value = 0.3
@@ -377,7 +377,7 @@ describe ResponsiblePersons::NotificationsHelper do
     let(:notification) { build_stubbed(:notification, reference_number: "60162968") }
     let(:notification_href) { "/responsible_persons/#{notification.responsible_person.id}/notifications/#{notification.reference_number}" }
     let(:component_href) { "#{notification_href}/components/#{component.id}/build" }
-    let(:user) { instance_double(SubmitUser, can_view_product_ingredients?: true) }
+    let(:user) { instance_double(SubmitUser, can_view_product_ingredients?: true, can_view_ph?: true) }
 
     before do
       allow(helper).to receive_messages(current_user: user, render: "")
@@ -634,9 +634,9 @@ describe ResponsiblePersons::NotificationsHelper do
         allow(component).to receive_messages(ph_range_not_required?: false)
       end
 
-      context "when user can view product ingredients" do
+      context "when user can view ph" do
         before do
-          allow(user).to receive(:can_view_product_ingredients?).and_return(true)
+          allow(user).to receive(:can_view_ph?).and_return(true)
         end
 
         it "includes a row with the pH selection when pH range is not required" do
@@ -661,8 +661,8 @@ describe ResponsiblePersons::NotificationsHelper do
         end
       end
 
-      it "does not include a row with the pH selection or value if user can not view ingredients" do
-        allow(user).to receive(:can_view_product_ingredients?).and_return(false)
+      it "does not include a row with the pH selection or value if user can not view ph" do
+        allow(user).to receive(:can_view_ph?).and_return(false)
         component.minimum_ph = 0.7
         component.maximum_ph = 0.7
         expect(summary_component_rows).to not_include(
