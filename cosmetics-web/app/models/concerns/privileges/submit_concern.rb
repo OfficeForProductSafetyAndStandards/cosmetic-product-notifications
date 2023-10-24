@@ -2,6 +2,10 @@ module Privileges
   module SubmitConcern
     include AbstractConcern
 
+    def can_view_ph?
+      true
+    end
+
     def can_view_product_ingredients?
       true
     end

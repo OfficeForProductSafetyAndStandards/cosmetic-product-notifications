@@ -13,6 +13,10 @@ module Privileges
       raise ArgumentError, "Implement role in each user type roles concern"
     end
 
+    def can_view_ph?
+      raise ArgumentError, "Implement role in each user type roles concern"
+    end
+
     def can_search_for_ingredients?
       raise ArgumentError, "Implement role in each user type roles concern"
     end

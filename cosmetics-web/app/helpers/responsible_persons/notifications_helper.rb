@@ -405,7 +405,7 @@ module ResponsiblePersons::NotificationsHelper
 private
 
   def component_ph_trigger_questions_rows(component)
-    return [] unless can_view_product_ingredients? && component.trigger_questions
+    return [] unless can_view_ph? && component.trigger_questions
 
     trigger_question_rows = component.trigger_questions.map(&method(:trigger_question_row))
     ph_row(component)
