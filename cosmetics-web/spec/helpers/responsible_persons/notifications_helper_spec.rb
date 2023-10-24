@@ -162,9 +162,9 @@ describe ResponsiblePersons::NotificationsHelper do
       end
 
       describe "for children under 3" do
-        it "not included when not available for the notification" do
+        it "included when not available for the notification" do
           notification.under_three_years = nil
-          expect(summary_product_rows).not_to include(hash_including(key: { text: "For children under 3" }))
+          expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "Not answered" } }))
         end
 
         it "included when notification product is for children under 3" do
@@ -277,9 +277,9 @@ describe ResponsiblePersons::NotificationsHelper do
       end
 
       describe "for children under 3" do
-        it "not included when not available for the notification" do
+        it "included when not available for the notification" do
           notification.under_three_years = nil
-          expect(summary_product_rows).not_to include(hash_including(key: { text: "For children under 3" }))
+          expect(summary_product_rows).to include(hash_including({ key: { text: "For children under 3" }, value: { text: "Not answered" }, actions: { items: [hash_including({ href: "#{product_href}/under_three_years" })] } }))
         end
 
         it "included when notification product is for children under 3" do

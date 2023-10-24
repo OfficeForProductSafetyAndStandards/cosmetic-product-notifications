@@ -77,6 +77,13 @@ module ResponsiblePersons::NotificationsHelper
           actions: notification_step_action(notification, :under_three_years),
         }
       end,
+      if notification.under_three_years.nil?
+        {
+          key: { text: "For children under 3" },
+          value: { text: "Not answered" },
+          actions: notification_step_action(notification, :under_three_years),
+        }
+      end,
       {
         key: { text: "Number of items" },
         value: { text: notification.components.length },
