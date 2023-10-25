@@ -47,6 +47,8 @@ module DraftHelper
 
     if notification.state_lower_than?(NotificationStateConcern::READY_FOR_NANOMATERIALS)
       in_progress_badge(id, :product)
+    elsif notification.under_three_years.nil?
+      in_progress_badge(id, :product)
     else
       complete_badge(id, :product)
     end
