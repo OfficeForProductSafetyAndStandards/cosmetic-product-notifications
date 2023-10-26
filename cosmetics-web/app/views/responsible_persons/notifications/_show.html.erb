@@ -46,14 +46,16 @@
   <div class="govuk-grid-column-full govuk-!-margin-top-4">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <% if @notification.archived? %>
-          <%= govukButton(text: "Unarchive this notification", href: responsible_person_notification_unarchive_path(@responsible_person, @notification), classes: "govuk-button--secondary") %>
-        <% else %>
-          <%= govukButton(text: "Archive this notification", href: responsible_person_notification_choose_archive_reason_path(@responsible_person, @notification, back_to: "notification"), classes: "govuk-button--secondary") %>
-        <% end %>
-        <% if @notification.can_be_deleted? %>
-          <%= govukButton(text: "Delete this notification", href: delete_responsible_person_delete_notification_path(@responsible_person, @notification), classes: "govuk-button--warning") %>
-        <% end %>
+        <div class="govuk-button-group">
+          <% if @notification.archived? %>
+            <%= link_to "Unarchive this notification", responsible_person_notification_unarchive_path(@responsible_person, @notification), class: "govuk-button govuk-button--secondary" %>
+          <% else %>
+            <%= link_to "Archive this notification", responsible_person_notification_choose_archive_reason_path(@responsible_person, @notification, back_to: "notification"), class: "govuk-button govuk-button--secondary" %>
+          <% end %>
+          <% if @notification.can_be_deleted? %>
+            <%= link_to "Delete this notification", delete_responsible_person_delete_notification_path(@responsible_person, @notification), class: "govuk-button govuk-button--warning" %>
+          <% end %>
+        </div>
       </div>
     </div>
     <% unless @notification.can_be_deleted? %>

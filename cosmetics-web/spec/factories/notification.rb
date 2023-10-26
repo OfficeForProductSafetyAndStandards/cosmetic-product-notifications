@@ -3,6 +3,7 @@ FactoryBot.define do
     responsible_person
     sequence(:product_name) { |n| "Product #{n}" }
     cpnp_reference { nil }
+    under_three_years { true }
 
     factory :draft_notification do
       state { NotificationStateConcern::COMPONENTS_COMPLETE }
