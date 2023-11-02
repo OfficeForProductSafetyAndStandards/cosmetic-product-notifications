@@ -10,7 +10,7 @@ RSpec.describe "Adding and removing shades", :with_stubbed_antivirus, type: :fea
     visit "/responsible_persons/#{responsible_person.id}/notifications"
     click_on "Create a new product notification"
     complete_product_wizard(name: "FooProduct")
-    click_link "Product details"
+    click_link "Go to question - product details"
   end
 
   scenario "Adding Red, Orange, Yellow, Blue shades, Removing Yellow" do

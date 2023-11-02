@@ -5,18 +5,25 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l govuk-!-margin-bottom-2">How to create an ingredient <abbr>CSV</abbr> file</h1>
     <p class="govuk-body govuk-!-margin-bottom-7 opss-secondary-text">
-      When creating a new product notification you can add the ingredient information using a <abbr title="Comma Separated Values">CSV</abbr> file.
+      When creating a new product notification, you can add the ingredient information using a <abbr title="Comma Separated Values">CSV</abbr> file.
     </p>
   </div>
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="page-content">
     <p class="govuk-body">
-      During the process of creating a product notification, you can choose to enter the ingredient information manually - using the forms provided - or by uploading the ingredients using a <abbr>CSV</abbr>
-      file.
+      During the process of creating a product notification, you can choose to enter the ingredient information manually - using the forms provided - or by uploading the ingredients using a <abbr>CSV</abbr> file which you can find here:
+      <br />
+      <% if params[:csv_file_type] == "exact" %>
+        <a href="/examples/template-1-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Exact concentrations</a>
+      <% elsif params[:csv_file_type] == "exact-with-multiple-shades" %>
+        <a href="/examples/template-2-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Exact concentrations with shades</a>
+      <% elsif params[:csv_file_type] == "range" %>
+        <a href="/examples/template-3-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Concentration ranges</a>
+      <% end %>
     </p>
     <p class="govuk-body">
-      Once the <abbr>CSV</abbr> file has been successfully uploaded and confirmed, in order to amend or change any provided information within the <abbr>CSV</abbr> file; you will need to edit the existing ingredient <abbr>CSV</abbr> file with the relevant updated ingredient information and re-upload or create a new <abbr>CSV</abbr> file with updated ingredient information and upload the file.
+      Once the <abbr>CSV</abbr> file has been successfully uploaded, if you need to change your ingredient information you will need to amend and re upload the <abbr>CSV</abbr>.
     </p>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     <h2 class="govuk-heading-m">
@@ -28,7 +35,7 @@
     <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16 opss-secondary-text">
       <li>If it is shown as an ingredient on the product label, it must be added to the notification as an ingredient</li>
       <li>Use the International Nomenclature of Cosmetic Ingredients (<abbr>INCI</abbr>) name, where available</li>
-      <li>Confirm if the ingredient is listed in the National Poisons Information Service (<abbr>NPIS</abbr>) tables and if it is an ingredient the <abbr>NPIS</abbr> needs to know about</li>
+      <li>Confirm if the ingredient is listed in the National Poisons Information Service (<abbr>NPIS</abbr>) tables and if the <abbr>NPIS</abbr> need to be notified about this ingredient</li>
     </ul>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
@@ -43,126 +50,11 @@
     </p>
 
     <% if params[:csv_file_type] == "exact" %>
-    <section class="govuk-!-margin-top-7 opss-grouping">
-      <h3 class="govuk-heading-s opss-grouping__heading-s">
-        Template: exact concentrations
-      </h3>
-      <p class="govuk-body-s">
-        There are four fields for each ingredient (in this order):
-      </p>
-      <ol class="govuk-list govuk-list--number govuk-!-font-size-16">
-        <li>Ingredient name</li>
-        <li>Exact concentration (<span title="Percentage weight by weight">% w/w</span>)</li>
-        <li><abbr>CAS</abbr> number</li>
-        <li>Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?</li>
-      </ol>
-      <h4 class="govuk-heading-s">Requirements</h4>
-      <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
-        <li>The file name extension must be <code>.csv</code></li>
-        <li>The first (header) row must be kept and not modified</li>
-        <li>Each ingredient must be listed on its own row</li>
-        <li>Each ingredient must have 4 comma separated fields</li>
-        <li>Fields must not have any leading or trailing spaces</li>
-        <li>An ingredient name is always required and there must be no duplication of ingredient names</li>
-        <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (eg. "My ingredient, 1")</li>
-        <li>An exact concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required and it must be a decimal number (no percent sign)</li>
-        <li>A CAS number is optional, but if provided, it must only contain numbers and dashes</li>
-        <li>The fourth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the <abbr>NPIS</abbr> <em>does</em> need to know about it)</li>
-      </ul>
-      <h4 class="govuk-heading-s">Example</h4>
-      <code>
-        Ingredient name 1,35,497-19-8,false<br>
-        Ingredient name 2,55,7732-18-5,false<br>
-        Ingredient name 3,10,,true<br>
-      </code>
-      <p class="govuk-body-s govuk-!-margin-top-5">
-        Download an example <abbr>CSV</abbr> file: <a href="/examples/template-1-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Exact concentrations</a>
-      </p>
-    </section>
-    <% end %>
-
-    <% if params[:csv_file_type] == "exact-with-multiple-shades" %>
-    <section class="govuk-!-margin-top-7 opss-grouping">
-      <h3 class="govuk-heading-s opss-grouping__heading-s">
-        Template: exact concentrations with shades
-      </h3>
-      <p class="govuk-body-s">
-        There are five fields for each ingredient (in this order):
-      </p>
-      <ol class="govuk-list govuk-list--number govuk-!-font-size-16">
-        <li>Ingredient name</li>
-        <li>Exact concentration (<span title="Percentage weight by weight">% w/w</span>)</li>
-        <li><abbr>CAS</abbr> number</li>
-        <li>Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?</li>
-        <li>Is it used for different shades?</li>
-      </ol>
-      <h4 class="govuk-heading-s">Requirements</h4>
-      <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
-        <li>The file name extension must be <code>.csv</code></li>
-        <li>The first (header) row must be kept and not modified</li>
-        <li>Each ingredient must be listed on its own row</li>
-        <li>Each ingredient must have 5 comma separated fields</li>
-        <li>Fields must not have any leading or trailing spaces</li>
-        <li>An ingredient name is always required and there must be no duplication of ingredient names</li>
-        <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (eg. "My ingredient, 1")</li>
-        <li>An exact concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required and it must be a decimal number (no percent sign)</li>
-        <li>A CAS number is optional, but if provided, it must only contain numbers and dashes</li>
-        <li>The fourth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the <abbr>NPIS</abbr> <em>does</em> need to know about it)</li>
-        <li>The fifth value must be either <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the ingredient is used across different shades of the product)</li>
-      </ul>
-      <h4 class="govuk-heading-s">Example</h4>
-      <code>
-        Ingredient name 1,35,497-19-8,false,false<br>
-        Ingredient name 2,55,7732-18-5,false,true<br>
-        Ingredient name 3,10,,true,false<br>
-      </code>
-      <p class="govuk-body-s govuk-!-margin-top-5">
-        Download an example <abbr>CSV</abbr> file: <a href="/examples/template-2-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Exact concentrations with shades</a>
-      </p>
-    </section>
-    <% end %>
-
-    <% if params[:csv_file_type] == "range" %>
-      <section class="govuk-!-margin-top-7 opss-grouping">
-        <h3 class="govuk-heading-s opss-grouping__heading-s">
-          Template: concentration ranges
-        </h3>
-        <p class="govuk-body-s">
-          There are six fields for each ingredient (in this order):
-        </p>
-        <ol class="govuk-list govuk-list--number govuk-!-font-size-16">
-          <li>Ingredient name</li>
-          <li>Concentration minimum (<span title="Percentage weight by weight">% w/w</span>)</li>
-          <li>Concentration maximum (<span title="Percentage weight by weight">% w/w</span>)</li>
-          <li>NPIS Exact concentration (<span title="Percentage weight by weight">% w/w</span>) where an ingredient does need to be reported to NPIS</li>
-          <li><abbr>CAS</abbr> number</li>
-          <li>Is it listed in the <abbr>NPIS</abbr> tables and does the <abbr>NPIS</abbr> need to know about it?</li>
-        </ol>
-        <h4 class="govuk-heading-s">Requirements</h4>
-        <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
-          <li>The first (header) row must be kept and not modified</li>
-          <li>Each ingredient is listed on its own (data) row</li>
-          <li>Each ingredient has 6 delimited (comma separated) fields</li>
-          <li>The file name extension must be <code>.csv</code></li>
-          <li>An ingredient name is always required and there must be no duplication of ingredient names</li>
-          <li>If the ingredient name contains a comma, the whole ingredient name must be surrounded by quote marks (eg. "My ingredient, 1")</li>
-          <li>If the ingredient does not need to be reported to NPIS, a minimum AND maximum concentration (<span title="Percentage weight by weight">% w/w</span>) value is always required</li>
-          <li>If the ingredient needs to be reported to NPIS, you must supply only the exact (<span title="Percentage weight by weight">% w/w</span>). The minimum and maximum fields can be left blank</li>
-          <li>A CAS number value is optional, but must always be numbers and dashes only and without spaces. (Provide only one CAS number per ingredient)</li>
-          <li>The fifth value is always set to <code>true</code> or <code>false</code><span class="govuk-visually-hidden">. </span> <br class="opss-br-desktop">(The value is <code>true</code> if the <abbr>NPIS</abbr> <em>does</em> need to know about it)</li>
-          <li>Application of header row to upload of csv and header row should be retained</li>
-          <li>Incorporation of a header row will be mandatory</li>
-        </ul>
-        <h4 class="govuk-heading-s">For example:</h4>
-        <code>
-          Ingredient name 1,3,10,,497-19-8,false<br/>
-          Ingredient name 2,,,10,7732-18-5,true<br/>
-          Ingredient name 3,,,67,,true<br/>
-        </code>
-        <p class="govuk-body-s govuk-!-margin-top-5">
-          Download an example <abbr>CSV</abbr> file to your machine or device: <a href="/examples/template-3-example.csv" class="govuk-link govuk-link--no-visited-state opss-downloads" download=""><span class="opss-download-link-sm"></span>Concentration ranges</a>
-        </p>
-      </section>
+      <%= render "csv_instructions_exact" %>
+    <% elsif params[:csv_file_type] == "exact-with-multiple-shades" %>
+      <%= render "csv_instructions_shades" %>
+    <% elsif params[:csv_file_type] == "range" %>
+      <%= render "csv_instructions_range" %>
     <% end %>
   </div>
 </div>

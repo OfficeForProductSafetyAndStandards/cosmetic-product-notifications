@@ -12,8 +12,7 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
     complete_product_wizard(name: "FooProduct")
     expect_progress(1, 3)
     expect_product_details_task_not_started
-
-    click_link "Product details"
+    click_link "Go to question - product details"
   end
 
   context "when the item is not available in multiple shades" do

@@ -49,8 +49,31 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
     expect(page).to have_link("Accessibility Statement", href: "/help/accessibility-statement")
 
+    # Attempts to submit security page without choosing a password
+    click_button "Continue"
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_css("p#password-error", text: "Error: Enter a password")
+
+    # Attempts to submit security page with a too short password
+    fill_in "Create your password", with: "@dki£", match: :prefer_exact
+    click_button "Continue"
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_css("p#password-error", text: "Error: Password must be at least 8 characters")
+
+    # Attempts to submit security page with a too common password
+    fill_in "Create your password", with: "password", match: :prefer_exact
+    click_button "Continue"
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_css("p#password-error", text: "Error: Choose a less frequently used password")
+
+    # Attempts to submit security page with a too short and too common a password
+    fill_in "Create your password", with: "pass", match: :prefer_exact
+    click_button "Continue"
+    expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
+    expect(page).to have_css("p#password-error", text: "Error: Password must be at least 8 characters")
+
     # Attempts to submit security page without selecting secondary authentication method
-    fill_in "Create your password", with: "userpassword", match: :prefer_exact
+    fill_in "Create your password", with: "userpassword12345", match: :prefer_exact
     click_button "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")

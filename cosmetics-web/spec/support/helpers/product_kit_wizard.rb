@@ -20,13 +20,13 @@ def answer_does_contain_items_that_need_to_be_mixed_with(answer)
 end
 
 def expect_multi_item_kit_task_completed
-  expect_task_completed "Define the multi-item kit"
+  expect_task_completed "Multi item kit"
 end
 
 def expect_multi_item_kit_task_not_started
-  expect_task_not_started "Define the multi-item kit"
+  expect_task_not_started "Multi item kit"
 end
 
 def expect_multi_item_kit_task_blocked
-  expect_task_blocked "Define the multi-item kit"
+  expect_task_blocked "Multi item kit"
 end

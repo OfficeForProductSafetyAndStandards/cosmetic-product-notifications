@@ -45,6 +45,10 @@ class ResponsiblePersonNotificationPolicy < ApplicationPolicy
     user_member_of_associated_responsible_person?
   end
 
+  def search?
+    user.can_search_for_ingredients?
+  end
+
 private
 
   def pundit_user

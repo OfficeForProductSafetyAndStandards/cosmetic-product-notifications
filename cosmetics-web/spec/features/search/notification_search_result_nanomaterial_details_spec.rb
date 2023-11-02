@@ -50,17 +50,13 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
   context "with an opss general user" do
     let(:user) { create(:opss_general_user, :with_sms_secondary_authentication) }
 
-    scenario "user can see the nanomaterial details with review period section but without link to nanomaterial pdf file" do
+    scenario "user cannot see the nanomaterial details" do
       expect(page).to have_h1("Cosmetic products search")
       click_on "Search"
       click_link("View Cream")
 
       expect(page).to have_h1("Cream")
-      expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
-      expect(page).to have_summary_item(
-        key: "Nanomaterials review period end date",
-        value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
-      )
+      expect(page).not_to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
     end
   end
 
@@ -118,7 +114,7 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
   context "with a poison centre user" do
     let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
-    scenario "user can see the nanomaterial details but without review period section or link to nanomaterial pdf file" do
+    scenario "user can see the nanomaterial details" do
       expect(page).to have_h1("Cosmetic products search")
       click_on "Search"
       click_link("View Cream")
@@ -126,7 +122,7 @@ RSpec.feature "Search result nanomaterial details", :with_stubbed_notify, :with_
       expect(page).to have_h1("Cream")
       within(:css, "#item-1") do
         expect(page).to have_summary_item(key: "Nanomaterials", value: "#{nanomaterial_notification.ukn} - Zinc oxide")
-        expect(page).not_to have_summary_item(
+        expect(page).to have_summary_item(
           key: "Nanomaterials review period end date",
           value: "#{nanomaterial_notification.ukn} - Zinc oxide - 1 July 2022",
         )

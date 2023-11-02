@@ -13,7 +13,7 @@ RSpec.describe "Categories", :with_stubbed_antivirus, type: :feature do
 
     complete_product_wizard
     complete_product_details
-    click_link "Product details"
+    click_link "Go to question - product details"
     click_button "Continue"
     click_button "Continue"
     click_button "Continue"

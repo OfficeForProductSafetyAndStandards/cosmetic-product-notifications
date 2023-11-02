@@ -1,8 +1,13 @@
 class AcceptAndSubmitValidator < ActiveModel::Validator
   def validate(notification)
+    validate_notification(notification)
     validate_nano_materials(notification)
     validate_image_uploads(notification)
     validate_ingredients(notification)
+  end
+
+  def validate_notification(notification)
+    notification.errors.add :under_three_years, "You have not confirmed if the product is intended to be used on children under 3 years old" if notification.under_three_years.nil?
   end
 
   def validate_nano_materials(notification)

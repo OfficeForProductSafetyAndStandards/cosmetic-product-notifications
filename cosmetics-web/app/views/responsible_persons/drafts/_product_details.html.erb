@@ -1,25 +1,28 @@
+<% component = @notification.components.first %>
+
 <li>
-  <h2 class="app-task-list__section">
-    <span class="app-task-list__section-number">
-      <%= section_number(DraftHelper::PRODUCT_DETAILS_SECTION) %>
-    </span>
-    Product details
-  </h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number">
+          <%= section_number(DraftHelper::PRODUCT_DETAILS_SECTION) %>
+        </span>
+        Product details
+      </h2>
+    </div>
+    <div class="app-task-list__section-number govuk-grid-column-one-half">
+      <%= component_badge(component, 0, override_id: "single-item-status") %>
+    </div>
+  </div>
 
-  <% component = @notification.components.first %>
   <ul class="app-task-list__items">
-    <li class="app-task-list__item">
-      <span class="app-task-list__task-name">
-        <% if section_can_be_used?(DraftHelper::PRODUCT_DETAILS_SECTION) %>
-          <a href="<%= new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component) %>" class="govuk-link govuk-link--no-visited-state" aria-describedby="single-item-status">
-            Product details
-          </a>
-        <% else %>
+    <% if section_can_be_used?(DraftHelper::PRODUCT_DETAILS_SECTION) %>
+      <li class="app-task-list__item_no_border">
+        <span class="app-task-list__task-name govuk-!-font-weight-bold" id="new">
           Product details
-        <% end %>
-      </span>
-
-      <%= component_badge(component, override_id: "single-item-status") %>
-    </li>
+        </span>
+        <%= product_details_link(component) %>
+      </li>
+    <% end %>
   </ul>
 </li>

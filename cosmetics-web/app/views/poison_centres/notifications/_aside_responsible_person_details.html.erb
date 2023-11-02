@@ -20,13 +20,13 @@
     ) %>
   </div>
 
-  <% if can_view_responsible_person_address_history? && responsible_person.address_logs.present? %>
+  <% if can_view_notification_history? && responsible_person.address_logs.present? %>
     <div class="opss-border-all govuk-!-padding-top-2 govuk-!-padding-right-2 govuk-!-padding-bottom-2 govuk-!-padding-left-2 govuk-!-margin-top-4 govuk-!-margin-bottom-4">
       <h2 class="govuk-heading-s">Address history</h2>
       <% key_value_classes = "govuk-!-display-block govuk-!-font-size-16" %>
       <%= govukSummaryList(
         classes: "govuk-summary-list--no-border opss-summary-list-vertical",
-        rows: responsible_person.address_logs.newest_first.map do |address|
+        rows: responsible_person.address_logs.newest_first.limit(3).map do |address|
           {
             key: {
               html: "#{display_date(address.start_date)} &mdash; #{display_date(address.end_date)}".html_safe,
@@ -39,6 +39,15 @@
           }
         end
       ) %>
+
+      <% if responsible_person.address_logs.size > 3 %>
+        <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-top-6">
+          <%= link_to full_address_history_poison_centre_notification_path(notification.reference_number) do %>
+            See full history
+            (<%= pluralize responsible_person.address_logs.size, "address" %>)
+          <% end %>
+        </p>
+      <% end %>
     </div>
   <% end %>
 

@@ -145,7 +145,7 @@ en:
               invalid: *invalid_email
             password:
               too_short: "Password must be at least 8 characters"
-              too_common: "Choose a password that is harder to guess"
+              too_common: "Choose a less frequently used password"
             secondary_authentication_methods:
               blank: "Select at least a secondary authentication method"
               invalid: "Invalid method. Secondary authentication methods accepted: 'sms','app' (or both)"
@@ -263,7 +263,7 @@ en:
             password:
               blank: "Enter a password"
               too_short: "Password must be at least 8 characters"
-              too_common: "Choose a password that is harder to guess"
+              too_common: "Choose a less frequently used password"
             secondary_authentication_methods:
               blank: "Select how to get an access code"
         responsible_persons/details_form:

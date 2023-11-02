@@ -16,7 +16,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     complete_product_wizard(name: "Product one nano one item", items_count: 1, nano_materials_count: 1)
     expect_progress(1, 4)
 
-    click_on "Nanomaterial #1"
+    click_on "Go to question - nanomaterial #1 select purposes"
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page
     click_button "Continue"
     expect_form_to_have_errors(purposes_form_purpose_type_standard: { message: "Select the purpose of this nanomaterial",
@@ -75,7 +75,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_completed "Nano material one"
 
     # Check continue button on task completed page
-    click_link "Nano material one"
+    click_link "Go to question - nanomaterial #1 select purposes"
     click_button "Continue"
     click_button "Save and continue"
     click_button "Continue"
@@ -87,7 +87,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
   scenario "Completing a non-standard nanomaterial for a product notification" do
     nanomaterial_notification = create(:nanomaterial_notification,
                                        :submitted,
-                                       name: "Nano Notified one",
+                                       name: "Nano notified one",
                                        responsible_person:)
     visit "/responsible_persons/#{responsible_person.id}/notifications"
 
@@ -96,7 +96,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     complete_product_wizard(name: "Product one nano one item", items_count: 1, nano_materials_count: 1)
     expect_progress(1, 4)
 
-    click_on "Nanomaterial #1"
+    click_on "Go to question - nanomaterial #1 select purposes"
     expect_to_be_on__what_is_the_purpose_of_nanomaterial_page
     click_button "Continue"
     expect_form_to_have_errors(purposes_form_purpose_type_standard: { message: "Select the purpose of this nanomaterial",
@@ -149,6 +149,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_has_been_completed_page
 
     return_to_task_list_page
+    expect_task_completed "Nano materials"
     expect_task_completed nanomaterial_notification.name
   end
 end

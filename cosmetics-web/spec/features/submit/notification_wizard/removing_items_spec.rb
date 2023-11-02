@@ -39,7 +39,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     complete_item_wizard("Cream two", item_number: 2)
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Product no nano two items",
@@ -118,7 +118,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect(page).not_to have_link("Item #3")
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect_check_your_answers_page_for_kit_items_to_contain(
       product_name: "Product no nano two items",

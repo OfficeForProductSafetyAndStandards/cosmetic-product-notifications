@@ -21,7 +21,7 @@ module NotificationHelper
         ["<a href=\"#{url_for(component.formulation_file)}\">#{component.formulation_file.filename}</a>"]
       end
     elsif component.ingredients.any?
-      component.ingredients.pluck(:inci_name, :exact_concentration, :range_concentration, :used_for_multiple_shades, :minimum_concentration, :maximum_concentration).map do |ingredient|
+      component.ingredients.default_order.pluck(:inci_name, :exact_concentration, :range_concentration, :used_for_multiple_shades, :minimum_concentration, :maximum_concentration).map do |ingredient|
         if ingredient[1]
           # Exact concentration
           "#{ingredient[0]} - #{display_concentration(ingredient[1], used_for_multiple_shades: ingredient[3])}"

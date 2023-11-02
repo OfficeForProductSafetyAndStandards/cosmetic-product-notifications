@@ -26,18 +26,106 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
+  def notification_step_action(notification, step)
+    return {} unless notification.editable?
+
+    {
+      items: [
+        {
+          href: responsible_person_notification_product_path(notification.responsible_person, notification, step),
+          text: "Edit",
+          visuallyHiddenText: step&.to_s&.humanize&.downcase,
+          classes: ["govuk-link--no-visited-state"],
+        },
+      ],
+    }
+  end
+
+  def notification_product_kit_step_action(notification)
+    return {} unless notification.editable?
+
+    {
+      items: [
+        {
+          href: new_responsible_person_notification_product_kit_path(notification.responsible_person, notification),
+          text: "Edit",
+          visuallyHiddenText: "mixed items",
+          classes: ["govuk-link--no-visited-state"],
+        },
+      ],
+    }
+  end
+
   def notification_summary_product_rows(notification)
     [
       {
         key: { text: "Product name" },
         value: { text: notification.product_name },
+        actions: notification_step_action(notification, :add_product_name),
       },
       if notification.industry_reference.present?
         {
           key: { text: "Internal reference number" },
           value: { text: notification.industry_reference },
+          actions: notification_step_action(notification, :add_internal_reference),
         }
       end,
+      unless notification.under_three_years.nil?
+        {
+          key: { text: "For children under 3" },
+          value: { text: notification.under_three_years ? "Yes" : "No" },
+          actions: notification_step_action(notification, :under_three_years),
+        }
+      end,
+      if notification.under_three_years.nil?
+        {
+          key: { text: "For children under 3" },
+          value: { text: "Not answered" },
+          actions: notification_step_action(notification, :under_three_years),
+        }
+      end,
+      {
+        key: { text: "Number of items" },
+        value: { text: notification.components.length },
+        actions: notification_step_action(notification, :single_or_multi_component),
+      },
+      {
+        key: { text: "Shades" },
+        value: { html: display_shades(notification) },
+        actions: notification_step_action(notification, :shades),
+      },
+      {
+        key: { text: "Label" },
+        value: { html: render("notifications/product_details_label_images",
+                              notification:) },
+        actions: notification_step_action(notification, :add_product_image),
+      },
+      {
+        key: { text: "Are the items mixed?" },
+        value: { text: notification.components_are_mixed ? "Yes" : "No" },
+        actions: notification_product_kit_step_action(notification),
+      },
+      if can_view_product_ingredients? && notification.ph_min_value.present?
+        {
+          key: { html: "Minimum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+          value: { text: notification.ph_min_value },
+        }
+      end,
+      if can_view_product_ingredients? && notification.ph_max_value.present?
+        {
+          key: { html: "Maximum <abbr title='Power of hydrogen'>pH</abbr> value".html_safe },
+          value: { text: notification.ph_max_value },
+        }
+      end,
+    ].compact
+  end
+
+  def notification_summary_search_result_rows(notification)
+    [
+      {
+        key: { text: "Product name" },
+        value: { text: notification.product_name },
+      },
       unless notification.under_three_years.nil?
         {
           key: { text: "For children under 3" },
@@ -76,7 +164,136 @@ module ResponsiblePersons::NotificationsHelper
     ].compact
   end
 
+  def notification_summary_component_action(component, step)
+    return {} unless component.notification.editable?
+
+    {
+      items: [
+        {
+          href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, step),
+          text: "Edit",
+          visuallyHiddenText: "#{component.name} category",
+          classes: ["govuk-link--no-visited-state"],
+        },
+      ],
+    }
+  end
+
   def notification_summary_component_rows(component, include_shades: true)
+    cmrs = component.cmrs
+    nano_materials = component.nano_materials
+
+    [
+      if include_shades
+        {
+          key: { text: "Shades" },
+          value: { html: render("none_or_bullet_list",
+                                entities_list: component.shades,
+                                list_classes: "",
+                                list_item_classes: "") },
+          actions: notification_summary_component_action(component, :number_of_shades),
+        }
+      end,
+      {
+        key: { html: "Contains <abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances".html_safe },
+        value: { text: cmrs.any? ? "Yes" : "No" },
+      },
+      if cmrs.any?
+        {
+          key: { html: "<abbr title='Carcinogenic, mutagenic, reprotoxic'>CMR</abbr> substances".html_safe },
+          value: { html: render("application/none_or_bullet_list",
+                                entities_list: cmrs.map(&:display_name),
+                                list_classes: "",
+                                list_item_classes: "") },
+        }
+      end,
+      {
+        key: { text: "Nanomaterials" },
+        value: { html: render("application/none_or_bullet_list",
+                              entities_list: nano_materials_details(nano_materials),
+                              list_classes: "",
+                              list_item_classes: "") },
+        actions: notification_summary_component_action(component, :select_nanomaterials),
+      },
+      if nano_materials.non_standard.any?
+        {
+          key: { text: "Nanomaterials review period end date" },
+          value: { text: render("application/none_or_bullet_list",
+                                entities_list: nano_materials_with_review_period_end_date(nano_materials.non_standard),
+                                list_classes: "",
+                                list_item_classes: "") },
+        }
+      end,
+      if nano_materials.present?
+        {
+          key: { text: "Application instruction" },
+          value: { text: get_exposure_routes_names(component.exposure_routes) },
+          actions: notification_summary_component_action(component, :add_exposure_routes),
+        }
+      end,
+      if nano_materials.present?
+        {
+          key: { text: "Exposure condition" },
+          value: { text: get_exposure_condition_name(component.exposure_condition) },
+          actions: notification_summary_component_action(component, :add_exposure_condition),
+        }
+      end,
+      {
+        key: { text: "Category of product" },
+        value: { text: get_category_name(component.root_category) },
+        actions: notification_summary_component_action(component, :select_root_category),
+      },
+      {
+        key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
+        value: { text: get_category_name(component.sub_category) },
+      },
+      {
+        key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
+        value: { text: get_category_name(component.sub_sub_category) },
+      },
+      {
+        key: { text: "Physical form" },
+        value: { text: get_physical_form_name(component.physical_form) },
+        actions: notification_summary_component_action(component, :add_physical_form),
+      },
+      if can_view_product_ingredients?
+        {
+          key: { text: "Special applicator" },
+          value: { text: component.special_applicator.present? ? "Yes" : "No" },
+          actions: notification_summary_component_action(component, :contains_special_applicator),
+        }
+      end,
+      if can_view_product_ingredients? && component.special_applicator.present?
+        {
+          key: { text: "Applicator type" },
+          value: { text: component_special_applicator_name(component) },
+          actions: notification_summary_component_action(component, :select_special_applicator_type),
+        }
+      end,
+      if can_view_product_ingredients? && component.acute_poisoning_info.present?
+        {
+          key: { text: "Acute poisoning information" },
+          value: { text: component.acute_poisoning_info },
+        }
+      end,
+      if can_view_product_ingredients? && component.predefined?
+        {
+          key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
+          value: { text: component.poisonous_ingredients_answer },
+        }
+      end,
+      if can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
+        {
+          key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
+          value: { html: render("notifications/component_details_poisonous_ingredients",
+                                component:) },
+        }
+      end,
+    ].concat(component_ph_trigger_questions_rows(component))
+     .compact
+  end
+
+  def notification_summary_component_search_result_rows(component, include_shades: true)
     cmrs = component.cmrs
     nano_materials = component.nano_materials
 
@@ -147,31 +364,29 @@ module ResponsiblePersons::NotificationsHelper
         key: { text: "Physical form" },
         value: { text: get_physical_form_name(component.physical_form) },
       },
-      if can_view_product_ingredients?
-        {
-          key: { text: "Special applicator" },
-          value: { text: component.special_applicator.present? ? "Yes" : "No" },
-        }
-      end,
-      if can_view_product_ingredients? && component.special_applicator.present?
+      {
+        key: { text: "Special applicator" },
+        value: { text: component.special_applicator.present? ? "Yes" : "No" },
+      },
+      if component.special_applicator.present?
         {
           key: { text: "Applicator type" },
           value: { text: component_special_applicator_name(component) },
         }
       end,
-      if can_view_product_ingredients? && component.acute_poisoning_info.present?
+      if component.acute_poisoning_info.present?
         {
           key: { text: "Acute poisoning information" },
           value: { text: component.acute_poisoning_info },
         }
       end,
-      if can_view_product_ingredients? && component.predefined?
+      if component.predefined?
         {
           key: { html: "Contains ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { text: component.poisonous_ingredients_answer },
         }
       end,
-      if can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
+      if component.predefined? && component.contains_poisonous_ingredients && component.formulation_file.present?
         {
           key: { html: "Ingredients <abbr title='National Poisons Information Service'>NPIS</abbr> needs to know about".html_safe },
           value: { html: render("notifications/component_details_poisonous_ingredients",
@@ -197,7 +412,7 @@ module ResponsiblePersons::NotificationsHelper
 private
 
   def component_ph_trigger_questions_rows(component)
-    return [] unless can_view_product_ingredients? && component.trigger_questions
+    return [] unless can_view_ph? && component.trigger_questions
 
     trigger_question_rows = component.trigger_questions.map(&method(:trigger_question_row))
     ph_row(component)
@@ -207,28 +422,47 @@ private
 
   def ph_row(component)
     [
-      if component.ph_range_not_required?
-        {
-          key: { html: "<abbr title='Power of hydrogen'>pH</abbr>".html_safe },
-          value: { text: t(component.ph, scope: %i[component_ph check_your_answers]) },
-        }
-      elsif !component.ph_required?
-        {
-          key: { html: "<abbr title='Power of hydrogen'>pH</abbr>".html_safe },
-          value: { text: "N/A" },
-        }
-      elsif component.minimum_ph == component.maximum_ph
-        {
-          key: { html: "Exact <abbr title='Power of hydrogen'>pH</abbr>".html_safe },
-          value: { text: component.minimum_ph },
-        }
-      else
-        {
-          key: { html: "<abbr title='Power of hydrogen'>pH</abbr> range".html_safe },
-          value: { text: "#{component.minimum_ph} to #{component.maximum_ph}" },
-        }
-      end,
+      {
+        key: { html: ph_row_key_value(component) },
+        value: { text: ph_row_text_value(component) },
+        actions: ph_row_actions(component),
+      },
     ]
+  end
+
+  def ph_row_key_value(component)
+    return "<abbr title='Power of hydrogen'>pH</abbr>".html_safe if component.ph_range_not_required? || !component.ph_required?
+
+    return "Exact <abbr title='Power of hydrogen'>pH</abbr>".html_safe if component.minimum_ph == component.maximum_ph
+
+    "<abbr title='Power of hydrogen'>pH</abbr> range".html_safe
+  end
+
+  def ph_row_text_value(component)
+    if component.ph_range_not_required?
+      t(component.ph, scope: %i[component_ph check_your_answers])
+    elsif !component.ph_required?
+      "N/A"
+    elsif component.minimum_ph == component.maximum_ph
+      component.minimum_ph
+    else
+      "#{component.minimum_ph} to #{component.maximum_ph}"
+    end
+  end
+
+  def ph_row_actions(component)
+    return {} if !component.ph_required? || !component.notification.editable?
+
+    {
+      items: [
+        {
+          href: responsible_person_notification_component_build_path(component.notification.responsible_person, component.notification, component, :select_ph_option),
+          text: "Edit",
+          visuallyHiddenText: "select ph option",
+          classes: ["govuk-link--no-visited-state"],
+        },
+      ],
+    }
   end
 
   def trigger_question_element_value(element)

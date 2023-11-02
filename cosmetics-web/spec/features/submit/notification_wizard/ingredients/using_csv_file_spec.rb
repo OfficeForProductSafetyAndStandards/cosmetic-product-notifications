@@ -15,7 +15,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
   end
 
   scenario "Adding exact concentration ingredients to a product using a CSV file" do
-    click_link "Product details"
+    click_link "Go to question - product details"
     answer_is_item_available_in_shades_with "No"
     answer_what_is_physical_form_of_item_with "Liquid"
     answer_what_is_product_contained_in_with "A typical non-pressurised bottle, jar, sachet or other package"
@@ -50,7 +50,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
 
     return_to_task_list_page
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("dt", text: "Sodium")
     expect(page).to have_css("dd", text: "35.0% w/w")
@@ -61,7 +61,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
   end
 
   scenario "Adding exact concentration ingredients to a product with multiple shades using a CSV file" do
-    click_link "Product details"
+    click_link "Go to question - product details"
 
     answer_is_item_available_in_shades_with "Yes"
     fill_in "component_shades-0", with: "Blue"
@@ -107,7 +107,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
 
     return_to_task_list_page
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("dt", text: "Sodium")
     expect(page).to have_css("dd", text: "35.0% w/w")
@@ -118,7 +118,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
   end
 
   scenario "Adding range concentration ingredients to a product using a CSV file" do
-    click_link "Product details"
+    click_link "Go to question - product details"
 
     answer_is_item_available_in_shades_with "No"
     click_button "Continue"
@@ -140,7 +140,7 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
 
     answer_what_is_ph_range_of_product_with "The minimum pH is 3 or higher, and the maximum pH is 10 or lower"
     return_to_task_list_page
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect(page).to have_css("dt", text: "Sodium carbonate")
     expect(page).to have_css("dd", text: "CAS: 497-19-8")

@@ -13,7 +13,11 @@ module Privileges
       raise ArgumentError, "Implement role in each user type roles concern"
     end
 
-    def can_view_ingredients_list?
+    def can_view_ph?
+      raise ArgumentError, "Implement role in each user type roles concern"
+    end
+
+    def can_search_for_ingredients?
       raise ArgumentError, "Implement role in each user type roles concern"
     end
 
@@ -22,10 +26,6 @@ module Privileges
     end
 
     def can_view_nanomaterial_review_period_end_date?
-      raise ArgumentError, "Implement role in each user type roles concern"
-    end
-
-    def can_view_responsible_person_address_history?
       raise ArgumentError, "Implement role in each user type roles concern"
     end
 

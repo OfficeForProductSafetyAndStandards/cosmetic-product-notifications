@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body opss-secondary-text">Add each ingredient individually. For every ingredient:</p>
-    <ul class="govuk-list govuk-list--bullet opss-secondary-text">
+    <p class="govuk-body">Add each ingredient individually. For every ingredient:</p>
+    <ul class="govuk-list govuk-list--bullet">
       <% unless local_assigns[:poisonous] == true %>
         <li>If it is shown as an ingredient on the product label it must to be added to the notification as an ingredient</li>
       <% end %>
@@ -14,10 +14,10 @@
     <%= govukDetails(
           summaryText: "Help with notifying the NPIS about your ingredient",
           classes: "govuk-!-margin-left-0") do %>
-          <p class="govuk-body opss-secondary-text">
+          <p class="govuk-body">
             The NPIS tables show a list of ingredients categorised by type. These have the CAS numbers included to help fill out the form below.
           </p>
-          <p class="govuk-body opss-secondary-text">
+          <p class="govuk-body">
             Clicking on the NPIS tables link will open the tables in a new tab for you to use as a reference when entering the ingredient details.
           </p>
           <p class="govuk-body">
@@ -28,7 +28,7 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-body opss-secondary-text">
+    <p class="govuk-body">
       <a href="/help/npis_tables" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">NPIS tables (opens in a new tab)</a>
     </p>
   </div>

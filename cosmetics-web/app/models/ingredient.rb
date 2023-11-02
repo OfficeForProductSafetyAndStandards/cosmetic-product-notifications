@@ -20,16 +20,9 @@ class Ingredient < ApplicationRecord
   scope :range, -> { where(exact_concentration: nil) }
   scope :exact, -> { where.not(exact_concentration: nil) }
   scope :unique_names, -> { unscoped.select(:inci_name).distinct }
-  scope :by_name_asc, -> { order(inci_name: :asc) }
-  scope :by_name_desc, -> { order(inci_name: :desc) }
-  scope :unique_names_by_created_last, lambda {
-    unscoped.select("ingredients.*")
-            .joins("LEFT JOIN ingredients f2 on ingredients.inci_name = f2.inci_name AND ingredients.created_at > f2.created_at")
-            .where("f2.id IS NULL")
-            .order("ingredients.created_at DESC")
-  }
 
-  default_scope { order(created_at: :asc) }
+  scope :default_order, -> { order(id: :asc) }
+  scope :by_concentration_desc, -> { order(exact_concentration: :desc, maximum_concentration: :desc, minimum_concentration: :desc) }
 
   validates :inci_name, presence: true, ingredient_name_format: { message: :invalid }
   validates :inci_name, uniqueness: { scope: :component_id }, if: :validate_inci_name_uniqueness?

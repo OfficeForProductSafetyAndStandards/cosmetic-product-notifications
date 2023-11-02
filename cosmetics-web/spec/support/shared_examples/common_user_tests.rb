@@ -6,7 +6,7 @@ RSpec.shared_examples "common user tests" do
       it "does not validate user" do
         user.password = "password"
         expect(user).not_to be_valid
-        expect(user.errors[:password]).to include("Choose a password that is harder to guess")
+        expect(user.errors[:password]).to include("Choose a less frequently used password")
       end
     end
 

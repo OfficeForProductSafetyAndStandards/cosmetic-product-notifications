@@ -21,7 +21,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
 
     expect_progress(2, 3)
 
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect_check_your_answers_page_to_contain(
       product_name: "Product no nano no items",
@@ -54,7 +54,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect(page).to have_css("h3", text: "You have created the draft notification")
     click_on "task list page"
 
-    click_on "Create the product"
+    click_on "Go to question - add product name"
     2.times { click_button "Continue" }
     choose "No" # children under 3
     click_button "Continue"
@@ -64,7 +64,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     expect_task_has_been_completed_page
     click_on "task list page"
     expect_progress(1, 3)
-    click_on "Product details"
+    click_on "Go to question - product details"
     3.times { click_button "Continue" }
     choose "No" # contains CMRs
     5.times { click_button "Continue" }
@@ -75,7 +75,7 @@ RSpec.describe "Submit notifications", :with_stubbed_antivirus, type: :feature d
     click_on "task list page"
 
     expect_progress(2, 3)
-    click_link "Accept and submit"
+    click_link "Go to summary - accept and submit"
 
     expect_check_your_answers_page_to_contain(
       product_name: "Product no nano no items copy",

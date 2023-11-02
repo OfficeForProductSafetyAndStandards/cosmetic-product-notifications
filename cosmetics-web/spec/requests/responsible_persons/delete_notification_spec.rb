@@ -16,16 +16,10 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
     end
 
     context "when deletion is confirmed" do
-      it "redirects" do
-        delete responsible_person_delete_notification_path(responsible_person, draft_notification, confirmation: { yes: "yes" })
-
-        expect(response.status).to eq 302
-      end
-
       it "creates log record with current user" do
         expect(NotificationDeleteLog.count).to eq 0
 
-        delete responsible_person_delete_notification_path(responsible_person, notification, confirmation: { yes: "yes" })
+        get delete_responsible_person_delete_notification_path(responsible_person, notification)
 
         expect(NotificationDeleteLog.first.submit_user).to eq user
       end
@@ -33,36 +27,14 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
       it "removes record" do
         draft_notification
         expect {
-          delete responsible_person_delete_notification_url(responsible_person, draft_notification, confirmation: { yes: "yes" })
+          get delete_responsible_person_delete_notification_path(responsible_person, notification)
         }.to change(Notification.deleted, :count).from(0).to(1)
-      end
-    end
-
-    context "when deletion is not confirmed" do
-      it "renders the deletion page" do
-        delete responsible_person_delete_notification_path(responsible_person, draft_notification, confirmation: { yes: "0" })
-
-        expect(response.status).to eq 200
-        expect(response).to render_template("responsible_persons/delete_notification/delete")
-      end
-
-      it "does not create a notification delete log" do
-        expect {
-          delete responsible_person_delete_notification_path(responsible_person, notification, confirmation: { yes: "0" })
-        }.not_to change(NotificationDeleteLog, :count)
-      end
-
-      it "does not remove record" do
-        notification
-        expect {
-          delete responsible_person_delete_notification_url(responsible_person, notification, confirmation: { yes: "0" })
-        }.not_to change(Notification, :count)
       end
     end
 
     context "when 2FA time passed", :with_2fa do
       before do
-        get delete_responsible_person_delete_notification_url(responsible_person, draft_notification, confirmation: { yes: "yes" })
+        get delete_responsible_person_delete_notification_url(responsible_person, draft_notification)
         post secondary_authentication_sms_url,
              params: {
                secondary_authentication_form: {
@@ -76,18 +48,18 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
 
       it "does not remove record" do
         expect {
-          delete responsible_person_delete_notification_url(responsible_person, draft_notification, confirmation: { yes: "yes" })
+          get delete_responsible_person_delete_notification_url(responsible_person, draft_notification)
         }.not_to change(Notification, :count)
       end
 
       it "redirects to 2FA" do
         draft_notification
-        delete responsible_person_delete_notification_path(responsible_person, draft_notification, confirmation: { yes: "yes" })
+        get delete_responsible_person_delete_notification_path(responsible_person, draft_notification)
         expect(response).to redirect_to("/two-factor/sms")
       end
 
       it "redirects info page to 2FA" do
-        get delete_responsible_person_delete_notification_path(responsible_person, draft_notification, confirmation: { yes: "yes" })
+        get delete_responsible_person_delete_notification_path(responsible_person, draft_notification)
 
         expect(response.status).to be(302)
       end
@@ -101,7 +73,7 @@ RSpec.describe "Delete Notifications page", :with_stubbed_antivirus, :with_stubb
 
     it "does not succeed" do
       expect {
-        delete responsible_person_delete_notification_path(other_responsible_person, draft_notification)
+        get delete_responsible_person_delete_notification_path(other_responsible_person, draft_notification)
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end

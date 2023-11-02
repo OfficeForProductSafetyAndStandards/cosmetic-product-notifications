@@ -42,12 +42,6 @@ module PoisonCentres::NotificationsHelper
       params[:controller] == "poison_centres/notifications_search"
     when :ingredients_search
       params[:controller] == "poison_centres/ingredients_search"
-    when :ingredients_list
-      params[:controller] == "poison_centres/ingredients" && params[:action] == "index"
-    when :ingredients_list_responsible_persons
-      params[:controller] == "poison_centres/ingredients" && params[:action] == "responsible_persons"
-    when :ingredients_list_responsible_person_notifications
-      params[:controller] == "poison_centres/ingredients" && params[:action] == "responsible_person_notifications"
     end
   end
 

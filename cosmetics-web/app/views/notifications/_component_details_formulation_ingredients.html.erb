@@ -1,9 +1,9 @@
 <% if component.ingredients.exact.any? %>
-  <%= render "application/none_or_bullet_list", entities_list: format_exact_ingredients(component.ingredients.exact),
+  <%= render "application/none_or_bullet_list", entities_list: format_exact_ingredients(component.ingredients.default_order.exact),
           key_name: :inci_name, value_name: :exact_concentration %>
 <% end %>
 <% if component.ingredients.range.any? %>
-  <%= render "application/none_or_bullet_list", entities_list: format_range_ingredients(component.ingredients.range),
+  <%= render "application/none_or_bullet_list", entities_list: format_range_ingredients(component.ingredients.default_order.range),
           key_name: :inci_name, value_name: :range_concentration %>
 <% end %>
 <% if component.formulation_file.attached? %>

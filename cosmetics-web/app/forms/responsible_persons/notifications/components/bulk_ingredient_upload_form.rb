@@ -196,9 +196,9 @@ module ResponsiblePersons::Notifications::Components
 
     def csv_header_template
       if component.range?
-        headers = ["Ingredient name", "Minimum % w/w", "Maximum % w/w", "Exact % w/w", "CAS number", "Does NPIS need to know about it?"]
+        headers = ["Ingredient name", "Minimum % w/w", "Maximum % w/w", "Exact % w/w", "CAS number", "Does the NPIS need to be notified about this ingredient?"]
       else
-        headers = ["Ingredient name", "% w/w", "CAS number", "Does NPIS need to know about it?"]
+        headers = ["Ingredient name", "% w/w", "CAS number", "Does the NPIS need to be notified about this ingredient?"]
         headers << "Is it used for different shades?" if multiple_shades?
       end
 

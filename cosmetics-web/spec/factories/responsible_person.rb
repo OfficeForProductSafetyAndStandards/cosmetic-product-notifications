@@ -22,7 +22,7 @@ FactoryBot.define do
 
     trait :with_previous_addresses do
       after(:create) do |responsible_person|
-        build_list(:responsible_person_address_log, 2, responsible_person:) do |record, i|
+        build_list(:responsible_person_address_log, 5, responsible_person:) do |record, i|
           record.start_date = (i + 1).days.ago.beginning_of_day
           record.end_date = i.days.ago.end_of_day
           record.save!
