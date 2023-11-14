@@ -1,9 +1,9 @@
-name: Deploy Production
+name: Deploy to Production
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - released
 
 jobs:
   deploy:
@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.ref_name }}
     - name: Install cf client
       env:
         CF_CLI_VERSION: v7
@@ -131,6 +133,8 @@ jobs:
         gh_deploy_failure production $LOG_URL
 
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.ref_name }}
     - name: Create Sentry release
       if: success()
       uses: getsentry/action-release@v1

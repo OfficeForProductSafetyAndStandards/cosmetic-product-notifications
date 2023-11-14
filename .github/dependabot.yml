@@ -5,12 +5,15 @@ updates:
     schedule:
       interval: daily
     versioning-strategy: lockfile-only
+    open-pull-requests-limit: 5
   - package-ecosystem: npm
     directory: "/cosmetics-web"
     schedule:
       interval: daily
     versioning-strategy: lockfile-only
+    open-pull-requests-limit: 5
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: daily
+    open-pull-requests-limit: 5
