@@ -13,10 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     # Skip if it is a Dependabot created PR. They do not have Review Apps to delete.
     if: ${{ github.actor != 'dependabot[bot]' }}
+
     env:
       SPACE: int
       CF_USERNAME: ${{ secrets.PaaSUsernameInt }}
       CF_PASSWORD: ${{ secrets.PaaSPasswordInt }}
+
     steps:
     - name: Install cf client
       env:

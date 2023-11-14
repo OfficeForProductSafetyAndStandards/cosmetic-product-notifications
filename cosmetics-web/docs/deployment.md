@@ -1,9 +1,9 @@
 # Deployment
 
-Anything which is merged to `develop` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy-staging.yml)
+Anything which is merged to `main` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy-staging.yml)
 and deploy the various components to the `staging` space on GOV.UK PaaS.
 
-Anything which is merged to `main` will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy-production.yml)
+A GitHub Release with associated tag will trigger a [GitHub Action](https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/actions/workflows/deploy-production.yml)
 and deploy the various components to the `pre-prod` and `prod` spaces on GOV.UK PaaS.
 
 ## Deployment from scratch

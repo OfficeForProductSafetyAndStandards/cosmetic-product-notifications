@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications"
-  spec.metadata["changelog_uri"] = "https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/blob/develop/support_portal/CHANGELOG.md"
+  spec.metadata["changelog_uri"] = "https://github.com/OfficeForProductSafetyAndStandards/cosmetic-product-notifications/blob/main/support_portal/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,db,lib}/**/*", "CHANGELOG.md", "Rakefile", "README.md"]
