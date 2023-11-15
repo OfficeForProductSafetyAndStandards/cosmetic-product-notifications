@@ -93,7 +93,7 @@ class User < ApplicationRecord
            secondary_authentication_recovery_codes: [],
            secondary_authentication_recovery_codes_used: [],
            account_security_completed: false)
-    send_reset_password_instructions
+    send_reset_account_instructions unless is_a?(SupportUser)
   end
 
   def uses_email_address?(email_address)
@@ -147,6 +147,11 @@ private
   # Overwrites Devise::Models::Recoverable#send_reset_password_instructions_notification
   def send_reset_password_instructions_notification(token)
     mailer.reset_password_instructions(self, token).deliver_later
+  end
+
+  def send_reset_account_instructions
+    reset_password_token = set_reset_password_token
+    mailer.reset_account_instructions(self, reset_password_token).deliver_later
   end
 
   def secondary_authentication_set?

@@ -27,6 +27,26 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 
+  def reset_account_instructions(user, token)
+    return if user.is_a?(SupportUser)
+
+    set_host(user)
+    set_template(self.class::TEMPLATES[:reset_account_instruction])
+    set_reference("Account reset")
+    reset_url = case user
+                when SubmitUser
+                  edit_submit_user_password_url(reset_password_token: token, host: @host)
+                when SearchUser
+                  edit_search_user_password_url(reset_password_token: token, host: @host)
+                end
+    set_personalisation(
+      name: user.name,
+      edit_user_password_url_token: reset_url,
+    )
+
+    mail(to: user.email)
+  end
+
   def account_locked(user, tokens)
     set_host(user)
     set_template(self.class::TEMPLATES[:account_locked])
