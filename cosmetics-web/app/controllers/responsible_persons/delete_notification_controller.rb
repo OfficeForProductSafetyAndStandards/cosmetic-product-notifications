@@ -2,6 +2,7 @@ class ResponsiblePersons::DeleteNotificationController < SubmitApplicationContro
   before_action :set_responsible_person
   before_action :validate_responsible_person
   before_action :set_notification
+  before_action :set_paper_trail_whodunnit
 
   def delete
     NotificationDeleteService.new(@notification, current_user).call
