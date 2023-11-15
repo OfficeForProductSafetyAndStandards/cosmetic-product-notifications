@@ -9,6 +9,7 @@
 
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="opss-visibility-hidden">
+    <!-- Hidden button to prevent keyboard "Enter" from triggering the first remove button unexpectedly - it will trigger this which is a submit button -->
     <%= govukButton text: ".", attributes: { "aria-hidden" => "true", "tabindex" => "-1" } %>
   </div>
   <div class="govuk-grid-row">

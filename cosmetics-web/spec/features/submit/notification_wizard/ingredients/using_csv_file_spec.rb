@@ -64,8 +64,8 @@ RSpec.describe "Adding ingredients to components using a CSV file", :with_stubbe
     click_link "Go to question - product details"
 
     answer_is_item_available_in_shades_with "Yes"
-    fill_in "component_shades-0", with: "Blue"
-    fill_in "component_shades-1", with: "Blue"
+    fill_in "component_shades_0", with: "Blue"
+    fill_in "component_shades_1", with: "Blue"
     click_button "Continue"
 
     answer_what_is_physical_form_of_item_with "Liquid"
