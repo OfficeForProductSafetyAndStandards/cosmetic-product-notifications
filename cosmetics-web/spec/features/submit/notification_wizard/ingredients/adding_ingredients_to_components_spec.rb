@@ -175,8 +175,8 @@ RSpec.describe "Adding ingredients to components", :with_stubbed_antivirus, type
   context "when the item is available in multiple shades" do
     before do
       answer_is_item_available_in_shades_with "Yes"
-      fill_in "component_shades-0", with: "Blue"
-      fill_in "component_shades-1", with: "Red"
+      fill_in "component_shades_0", with: "Blue"
+      fill_in "component_shades_1", with: "Red"
       click_button "Continue"
 
       answer_what_is_physical_form_of_item_with "Liquid"

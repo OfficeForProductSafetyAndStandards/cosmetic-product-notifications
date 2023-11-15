@@ -8,7 +8,7 @@
 <%= form_with model: @component, url: wizard_path, method: :put do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= error_summary_for(@component) %>
+      <%= error_summary_for(@component, first_values: { shades: "0" }) %>
     </div>
   </div>
   <div class="govuk-grid-row">
@@ -18,20 +18,21 @@
   </div>
 
   <div class="opss-visibility-hidden">
+    <!-- Hidden button to prevent keyboard "Enter" from triggering the first remove button unexpectedly - it will trigger this which is a submit button -->
     <%= govukButton text: ".", attributes: { "aria-hidden" => "true", "tabindex" => "-1" } %>
   </div>
 
   <% @component.shades.each_with_index do |shade, index| %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half" id="shade-<%= index %>">
-        <label class="govuk-label" for="component_shades-<%= index %>">
+        <label class="govuk-label" for="component_shades_<%= index %>">
           Shade name
         </label>
-        <div class="govuk-hint" id="component_shades-<%= index %>-hint">
+        <div class="govuk-hint" id="component_shades_<%= index %>-hint">
           For example: Blue 01
         </div>
         <%= form.text_field :shades, multiple: true, value: shade,
-                id: "component_shades-#{index}",
+                id: "component_shades_#{index}",
                 class: "govuk-input shade-input" %>
         <div class="opss-text-align-right">
           <% if index == (@component.shades.size - 1) %>
