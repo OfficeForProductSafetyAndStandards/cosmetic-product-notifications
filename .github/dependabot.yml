@@ -1,19 +1,27 @@
 version: 2
 updates:
-  - package-ecosystem: bundler
+  - package-ecosystem: "bundler"
     directory: "/cosmetics-web"
     schedule:
-      interval: daily
-    versioning-strategy: lockfile-only
+      interval: "weekly"
+    groups:
+      dependencies:
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 5
-  - package-ecosystem: npm
+  - package-ecosystem: "npm"
     directory: "/cosmetics-web"
     schedule:
-      interval: daily
-    versioning-strategy: lockfile-only
+      interval: "weekly"
+    groups:
+      dependencies:
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 5
-  - package-ecosystem: github-actions
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: daily
+      interval: "weekly"
     open-pull-requests-limit: 5
