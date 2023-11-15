@@ -319,7 +319,7 @@ class Notification < ApplicationRecord
       .joins("LEFT JOIN users ON users.id::text = versions.whodunnit")
       .order(created_at: :asc)
       .order(id: :asc)
-      .select("versions.*, COALESCE(users.name, 'Unknown') AS whodunnit")
+      .select("versions.*, COALESCE(users.name, 'Unknown') AS whodunnit, users.type as user_type")
   end
 
 private

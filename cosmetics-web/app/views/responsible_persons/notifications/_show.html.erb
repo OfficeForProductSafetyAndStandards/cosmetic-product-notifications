@@ -95,7 +95,7 @@
             <% elsif entry.event == "undelete" %>
               <strong>Recovered</strong>
             <% end %>
-          <td class="govuk-table__cell"><%= %w[delete undelete].include?(entry.event) ? "OPSS" : entry.whodunnit %></td>
+          <td class="govuk-table__cell"><%= entry.user_type == "SubmitUser" ? entry.whodunnit : "OPSS" %></td>
         </tr>
       <% end %>
       </tbody>
