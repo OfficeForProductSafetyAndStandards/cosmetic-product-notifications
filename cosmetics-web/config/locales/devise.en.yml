@@ -21,6 +21,8 @@ en:
         subject: "Confirmation instructions"
       reset_password_instructions:
         subject: "Reset password instructions"
+      reset_account_instructions:
+        subject: "Reset account instructions"
       unlock_instructions:
         subject: "Unlock instructions"
       email_changed:

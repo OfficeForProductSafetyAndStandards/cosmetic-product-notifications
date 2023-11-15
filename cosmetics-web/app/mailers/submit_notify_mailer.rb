@@ -9,7 +9,8 @@ class SubmitNotifyMailer < NotifyMailer
       responsible_person_invitation_for_existing_user: "3c677e3c-0e49-49f6-b6fa-b0c11595f439", # Invitation to join Responsible Person for existing user
       responsible_person_address_change_for_author: "f56a1045-f6c3-417a-8c08-9c5c6da17c25", # Responsible Person address change - email notification to author
       responsible_person_address_change_for_others: "68d707a6-2636-4313-8735-649e29263f8e", # Responsible Person address change - email notification to others
-      reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", #  Reset password
+      reset_password_instruction: "aaa945b4-d848-4b11-b22c-8bbc95d97df4", # Reset password
+      reset_account_instruction: "7071a89f-6cdf-42c5-9fe2-65550b9e64a7", # Account reset
       account_locked: "26d6fb70-1c5d-49ff-a3ee-dc30e94a305e", # Unlock account / reset password after too many incorrect password attempts
       verify_new_account: "616e1eb9-4071-4343-8f18-3d2fcd7b9b47", # Verify email address
       verify_new_email: "68edf46c-627d-4609-ae2e-ba9d4b32e3d6", # Confirm new email address
