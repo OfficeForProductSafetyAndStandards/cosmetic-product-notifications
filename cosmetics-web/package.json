@@ -23,7 +23,7 @@
     "sass-loader": "^13.2.2",
     "standard": "17.1.0",
     "stylelint": "^14.16.1",
-    "stylelint-config-gds": "^0.2.0"
+    "stylelint-config-gds": "^0.3.0"
   },
   "scripts": {
     "lint:css": "yarn stylelint 'app/assets/stylesheets/**/*.(s)?css'",
