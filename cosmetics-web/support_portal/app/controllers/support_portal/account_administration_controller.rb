@@ -93,7 +93,7 @@ module SupportPortal
     def reactivate
       return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && @user.deactivated?
 
-      if @user.update(deactivated_at: nil) && @user.reset_secondary_authentication!
+      if @user.update(deactivated_at: nil) && @user.reset_secondary_authentication!(reactivated: true)
         redirect_to account_administration_path, notice: "The account has been reactivated<br>An email was sent to #{@user.email} to inform #{@user.name}."
       else
         redirect_to account_administration_path
