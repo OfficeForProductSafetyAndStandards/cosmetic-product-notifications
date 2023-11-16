@@ -15,7 +15,7 @@ gem "devise-security", "~> 0.18"
 # TODO: Move to OpenSearch gems
 # ES gems won't work with OpenSearch once ES and OS codebases start diverging:
 # https://github.com/elastic/elasticsearch-rails/issues/1010
-gem "elasticsearch", "7.17.7"
+gem "elasticsearch", "7.17.10"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 gem "flipper", "~> 1.0"
