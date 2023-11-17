@@ -65,8 +65,11 @@ module SupportPortal
     end
 
     def display_responsible_person_action_details(object_changes)
-      account_type_change = object_changes.except("updated_at").keys.first == "account_type"
-      changes = object_changes.except("updated_at").values
+      object_changes = object_changes.except("updated_at")
+      account_type_change = object_changes.keys.first == "account_type"
+      address_change = %w[address_line_1 address_line_2 city county postal_code].include?(object_changes.keys.first)
+      # Display address changes in a logical order
+      changes = address_change ? object_changes.values_at("address_line_1", "address_line_2", "city", "county", "postal_code") : object_changes.values
 
       if account_type_change
         changes.map { |change|
