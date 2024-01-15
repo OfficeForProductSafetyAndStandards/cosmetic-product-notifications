@@ -303,7 +303,7 @@ GEM
     net-smtp (0.4.0)
       net-protocol
     netrc (0.11.0)
-    nio4r (2.5.9)
+    nio4r (2.7.0)
     nokogiri (1.15.4-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-darwin)
@@ -331,7 +331,7 @@ GEM
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
     public_suffix (5.0.3)
-    puma (6.4.0)
+    puma (6.4.2)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
@@ -634,7 +634,7 @@ DEPENDENCIES
   pg (~> 1.4)
   pry
   pry-byebug
-  puma (~> 6.2)
+  puma (~> 6.4)
   pundit (~> 2.3)
   rails (~> 7.0.4)
   rails-controller-testing
