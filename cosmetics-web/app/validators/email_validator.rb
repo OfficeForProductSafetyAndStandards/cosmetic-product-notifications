@@ -15,8 +15,8 @@ private
     parsed_email.address == value && # Parsed address corresponds to introduced value
       URI::MailTo::EMAIL_REGEXP.match?(value) && # Valid email format
       parsed_email.domain.split(".").length > 1 && # Exclude local domains (eg: user@example)
-      /[a-zA-Z]/.match?(value[-1])# && # Last character of the Top Level Domain is a letter
-      #gov_uk_email_required?(record, value) # Only accept gov.uk email addresses for SupportUser
+      /[a-zA-Z]/.match?(value[-1]) && # Last character of the Top Level Domain is a letter
+      gov_uk_email_required?(record, value) # Only accept gov.uk email addresses for SupportUser
   end
 
   def gov_uk_email_required?(record, value)
