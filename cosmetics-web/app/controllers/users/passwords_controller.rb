@@ -9,7 +9,7 @@ module Users
       return render :invalid_link, status: :not_found if reset_token_invalid?
       return render :expired, status: :gone if reset_token_expired?
 
-      require_secondary_authentication
+      require_secondary_authentication(password_reset: true)
 
       @email = user_with_reset_token.email
 

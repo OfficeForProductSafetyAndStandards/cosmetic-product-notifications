@@ -33,6 +33,8 @@ module SecondaryAuthentication
           root_path
         elsif current_user.is_a?(SearchUser)
           declaration_path
+        elsif current_user.is_a?(SubmitUser) && current_user.responsible_persons.present?
+          root_path
         else
           account_path(:overview)
         end
