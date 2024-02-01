@@ -7,9 +7,9 @@
 module SecondaryAuthenticationConcern
   extend ActiveSupport::Concern
 
-  def require_secondary_authentication(redirect_to: request.fullpath, password_reset: false)
+  def require_secondary_authentication(redirect_to: request.fullpath)
     user = secondary_authentication_user
-    return unless user && Rails.configuration.secondary_authentication_enabled && !password_reset
+    return unless user && Rails.configuration.secondary_authentication_enabled
 
     if !user.account_security_completed?
       if submit_domain?
