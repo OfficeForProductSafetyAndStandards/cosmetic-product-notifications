@@ -92,12 +92,16 @@ class User < ApplicationRecord
            secondary_authentication_recovery_codes_generated_at: nil,
            secondary_authentication_recovery_codes: [],
            secondary_authentication_recovery_codes_used: [],
-           account_security_completed: false)
+           account_security_completed: false,
+           confirmed_at: nil)
 
+    # Support users don't get an email
     if reactivated && is_a?(SearchUser)
       send_reactivate_account_instructions
-    elsif !is_a?(SupportUser)
+    elsif is_a?(SearchUser)
       send_reset_account_instructions
+    elsif is_a?(SubmitUser)
+      resend_confirmation_instructions
     end
   end
 

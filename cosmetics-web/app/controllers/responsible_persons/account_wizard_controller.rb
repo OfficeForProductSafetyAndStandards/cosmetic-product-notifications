@@ -3,7 +3,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
 
   steps :pending_invitations, :overview, :create_or_join_existing, :join_existing, :enter_details
 
-  # Using directly the id parameter as'step' is set to nil at this point and 'if' condition gets ignored. Wicked Wizard magic...
+  # Using directly the id parameter as 'step' is set to nil at this point and 'if' condition gets ignored. Wicked Wizard magic...
   skip_before_action :has_accepted_declaration, if: -> { %w[pending_invitations overview].include?(params[:id]) }
   skip_before_action :create_or_join_responsible_person
   before_action :pending_invitations, if: -> { step == :pending_invitations }
@@ -25,7 +25,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
     when :enter_details
       if responsible_person_saved?
         # When we are creating responsible person, we don't want to change it. However,
-        # in order to create contact person, we need to switch temporairly so
+        # in order to create contact person, we need to switch temporarily so
         # we want to remember what was the previous RP
         set_previous_responsible_person
         clear_session
