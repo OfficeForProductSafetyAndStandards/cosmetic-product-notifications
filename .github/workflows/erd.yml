@@ -67,7 +67,7 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: cosmetics-web/vendor/bundle
         key: ${{ runner.OS }}-gems
@@ -76,7 +76,7 @@ jobs:
           ${{ runner.OS }}-gems-
           ${{ runner.OS }}-
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: cosmetics-web/node_modules
         key: ${{ runner.OS }}-node

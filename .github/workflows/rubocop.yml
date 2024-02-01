@@ -12,7 +12,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2.0
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: cosmetics-web/vendor/bundle
         key: ${{ runner.OS }}-gems-${{ hashFiles('**/Gemfile.lock') }}
@@ -41,7 +41,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 18.13.x
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: cosmetics-web/node_modules
         key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/yarn.lock') }}
