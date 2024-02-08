@@ -30,10 +30,10 @@ RSpec.describe PhoneValidator do
       def initialize(phone, allow_int, allow_landline: false)
         @phone = phone
 
-        @allow_int_but_no_uk_landlines = (allow_int && !allow_landline)
-        @do_not_allow_int_or_uk_landlines = (!allow_int && !allow_landline)
-        @allow_int_and_uk_landlines = (allow_int && allow_landline)
-        @allow_uk_landlines_but_not_int = (!allow_int && allow_landline)
+        @allow_int_but_no_uk_landlines = allow_int && !allow_landline
+        @do_not_allow_int_or_uk_landlines = !allow_int && !allow_landline
+        @allow_int_and_uk_landlines = allow_int && allow_landline
+        @allow_uk_landlines_but_not_int = !allow_int && allow_landline
       end
 
       def self.name

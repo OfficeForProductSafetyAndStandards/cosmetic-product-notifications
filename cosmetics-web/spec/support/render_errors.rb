@@ -14,7 +14,7 @@ RSpec.shared_context "with errors rendered" do
   let!(:original_show_detailed_exceptions) { env_config["action_dispatch.show_detailed_exceptions"] }
 
   before do
-    env_config["action_dispatch.show_exceptions"] = true
+    env_config["action_dispatch.show_exceptions"] = :all
     env_config["action_dispatch.show_detailed_exceptions"] = false
   end
 

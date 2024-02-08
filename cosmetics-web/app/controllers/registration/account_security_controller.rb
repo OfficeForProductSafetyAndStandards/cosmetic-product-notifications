@@ -60,7 +60,7 @@ module Registration
     end
 
     def check_user
-      return (redirect_to root_path) if current_user.account_security_completed
+      (redirect_to root_path) if current_user.account_security_completed
     end
   end
 end

@@ -18,7 +18,7 @@ module SecondaryAuthentication
       # If not the user would need to re-add the QR code into their authenticator
       # app with each failed submission attempt.
       def secret_key
-        @secret_key ||= (super || SecondaryAuthentication::TimeOtp.generate_secret_key)
+        @secret_key ||= super || SecondaryAuthentication::TimeOtp.generate_secret_key
       end
 
       def decorated_secret_key

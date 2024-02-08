@@ -56,7 +56,7 @@ module SecondaryAuthenticationConcern
   end
 
   def set_secondary_authentication_cookie(timestamp)
-    user_id = (session[:secondary_authentication_user_id] || user_id_for_secondary_authentication)
+    user_id = session[:secondary_authentication_user_id] || user_id_for_secondary_authentication
     return if user_id.blank?
 
     cookies.signed["two-factor-#{user_id}"] = { value: timestamp, secure: Rails.env.production?, httponly: true }

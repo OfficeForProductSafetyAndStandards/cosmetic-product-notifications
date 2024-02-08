@@ -14,7 +14,7 @@ class CommonPasswordValidator < ActiveModel::EachValidator
 
   def validate_each(record, attribute, value)
     if COMMON_PASSWORDS[value]
-      record.errors.add(attribute, :invalid, message: (options[:message] || DEFAULT_ERROR))
+      record.errors.add(attribute, :invalid, message: options[:message] || DEFAULT_ERROR)
     end
   end
 end

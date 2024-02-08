@@ -47,7 +47,7 @@ module SupportPortal
       if notification_complete_at_sort_order.present?
         notifications.order(notification_complete_at: notification_complete_at_sort_order.to_sym)
       else
-        notifications.order(product_name: (product_name_sort_order&.to_sym || :asc))
+        notifications.order(product_name: product_name_sort_order&.to_sym || :asc)
       end
     end
 

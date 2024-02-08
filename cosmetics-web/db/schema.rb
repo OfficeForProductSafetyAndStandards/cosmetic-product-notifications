@@ -10,18 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_17_141240) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_08_140501) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  # Custom types defined in this database.
-  # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "ingredient_range_concentration", ["less_than_01_percent", "greater_than_01_less_than_1_percent", "greater_than_1_less_than_5_percent", "greater_than_5_less_than_10_percent", "greater_than_10_less_than_25_percent", "greater_than_25_less_than_50_percent", "greater_than_50_less_than_75_percent", "greater_than_75_less_than_100_percent"]
-  create_enum "user_roles", ["poison_centre", "market_surveilance_authority", "opss_science", "opss_general", "opss_enforcement", "trading_standards", "opss_imt"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -164,7 +159,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_141240) do
     t.citext "inci_name", null: false
     t.string "cas_number"
     t.decimal "exact_concentration"
-    t.enum "range_concentration", enum_type: "ingredient_range_concentration"
+    t.string "range_concentration"
     t.boolean "poisonous", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -369,7 +364,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_141240) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "invitation_token"
     t.datetime "invited_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.enum "role", enum_type: "user_roles"
+    t.string "role"
     t.citext "new_email"
     t.string "new_email_confirmation_token"
     t.datetime "new_email_confirmation_token_expires_at", precision: nil

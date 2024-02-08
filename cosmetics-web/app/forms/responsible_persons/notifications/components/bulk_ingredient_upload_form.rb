@@ -2,6 +2,7 @@ require "csv"
 
 module ResponsiblePersons::Notifications::Components
   class BulkIngredientUploadForm < Form
+    class IngredientInvalidError < ArgumentError; end
     class IngredientCanNotBeSavedError < ArgumentError; end
 
     class IngredientContainsExtraColumnsError < ArgumentError
@@ -33,7 +34,7 @@ module ResponsiblePersons::Notifications::Components
       ActiveRecord::Base.transaction do
         component.ingredients.delete_all
 
-        return false unless valid?
+        raise IngredientInvalidError unless valid?
 
         @ingredients.each do |ingredient|
           raise IngredientCanNotBeSavedError unless ingredient.save
@@ -41,6 +42,8 @@ module ResponsiblePersons::Notifications::Components
       end
     rescue ActiveRecord::StatementInvalid
       errors.add(:file, "The selected file must be a valid CSV")
+      false
+    rescue IngredientInvalidError
       false
     rescue IngredientCanNotBeSavedError
       errors.add(:file, "The selected file could not be uploaded - try again")

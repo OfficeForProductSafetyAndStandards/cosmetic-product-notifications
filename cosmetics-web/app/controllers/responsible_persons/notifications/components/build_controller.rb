@@ -198,7 +198,7 @@ private
 
   def update_select_nanomaterials
     ids = params.dig(:component, :nano_material_ids)
-    if @component.update(nano_material_ids: (ids || []))
+    if @component.update(nano_material_ids: ids || [])
       render_next_step @component
     else
       rerender_current_step

@@ -11,7 +11,7 @@ require "action_mailer/railtie"
 # require "action_mailbox/engine"
 require "action_text/engine"
 require "action_view/railtie"
-# require "action_cable/engine"
+require "action_cable/engine"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
 
@@ -24,10 +24,7 @@ module Cosmetics
     config.time_zone = "Europe/London"
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
-
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    # config.active_record.raise_in_transactional_callbacks = true
+    config.load_defaults 7.1
 
     # vips 8.6+ is the minimum required version to use vips as an variant
     # processor

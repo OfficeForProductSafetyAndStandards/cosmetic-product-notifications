@@ -22,7 +22,7 @@ module SupportPortal
       responsible_persons = if params[:assigned_contact_sort_order].present?
                               responsible_persons.order("contact_persons.name": params[:assigned_contact_sort_order].to_sym)
                             else
-                              responsible_persons.order(name: (params[:company_name_sort_order]&.to_sym || :asc))
+                              responsible_persons.order(name: params[:company_name_sort_order]&.to_sym || :asc)
                             end
 
       @records_count = responsible_persons.size

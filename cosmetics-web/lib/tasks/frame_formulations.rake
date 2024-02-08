@@ -8,9 +8,9 @@ namespace :frame_formulations do
     view_only = Set.new
 
     # Get all frame formulations in the category hierarchy and deduplicate
-    FrameFormulations::CATEGORIES.each do |_, sub_categories|
-      sub_categories.each do |_, sub_sub_categories|
-        sub_sub_categories.each do |_, frame_formulations|
+    FrameFormulations::CATEGORIES.each_value do |sub_categories|
+      sub_categories.each_value do |sub_sub_categories|
+        sub_sub_categories.each_value do |frame_formulations|
           hierarchy.merge(frame_formulations)
         end
       end

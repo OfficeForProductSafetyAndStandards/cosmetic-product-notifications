@@ -63,14 +63,16 @@ class NotificationSearchForm < Form
     return unless valid?
 
     return date_exact if date_exact_selected?
-    return date_from if date_range_selected?
+
+    date_from if date_range_selected?
   end
 
   def date_to_for_search
     return unless valid?
 
     return date_exact if date_exact_selected?
-    return date_to if date_range_selected?
+
+    date_to if date_range_selected?
   end
 
   def date_exact_selected?

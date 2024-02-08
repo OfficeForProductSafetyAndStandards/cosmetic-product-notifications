@@ -20,6 +20,15 @@ class User < ApplicationRecord
 
   attr_encrypted :totp_secret_key
 
+  enum role: {
+    poison_centre: "poison_centre",
+    opss_science: "opss_science",
+    opss_general: "opss_general",
+    opss_enforcement: "opss_enforcement",
+    trading_standards: "trading_standards",
+    opss_imt: "opss_imt",
+  }
+
   validates :email, presence: true
   validate  :email_not_pending_change_for_other_user
   validates :new_email, email: { message: :invalid, allow_nil: true }
