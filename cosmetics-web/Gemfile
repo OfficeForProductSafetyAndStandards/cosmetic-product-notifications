@@ -5,7 +5,6 @@ ruby "~> 3.2.0"
 gem "kaminari" # Must be loaded before ElasticSearch gems
 
 gem "aasm", "~> 5.5"
-gem "activerecord-pg_enum", "~> 2.0"
 gem "after_commit_everywhere", "~> 1.4"
 gem "aws-sdk-s3", "~> 1.143"
 gem "cf-app-utils", "~> 0.6"
