@@ -34,7 +34,9 @@ class Component < ApplicationRecord
   include Clonable
   include RoutingQuestionCacheConcern
 
-  attr_writer :skip_name_uniqueness_on_import
+  # To match the `category` enum from `NotificationCategories`
+  attribute :category, :string
+  attribute :skip_name_uniqueness_on_import
 
   belongs_to :notification, touch: true
 
