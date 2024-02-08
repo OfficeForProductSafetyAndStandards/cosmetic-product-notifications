@@ -33,7 +33,7 @@ module ResponsiblePersons::Notifications::Components
       ActiveRecord::Base.transaction do
         component.ingredients.delete_all
 
-        return false unless valid?
+        raise IngredientCanNotBeSavedError unless valid?
 
         @ingredients.each do |ingredient|
           raise IngredientCanNotBeSavedError unless ingredient.save
