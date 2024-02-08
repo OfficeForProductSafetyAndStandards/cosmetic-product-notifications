@@ -75,7 +75,7 @@ module SupportPortal
 
     # GET /:id/deactivate-account
     def deactivate_account
-      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated?
+      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated? # rubocop:disable Style/RedundantReturn
     end
 
     # PATCH/PUT /:id/deactivate

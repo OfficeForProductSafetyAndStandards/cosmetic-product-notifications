@@ -8,7 +8,7 @@ module SecondaryAuthentication
 
       def new
         @user = user_with_secondary_authentication_request
-        return redirect_to(root_path) unless @user
+        return redirect_to(root_path) unless @user # rubocop:disable Style/RedundantReturn
       end
 
       def create

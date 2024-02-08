@@ -89,7 +89,7 @@ module Searchable
       # It fixes the issue of getting no results the first time product list page is loaded
       # It's only used in dev because it lowers performance and the issue it fixes should be an edge case in production
       if Rails.env.development? || Rails.env.test?
-        index = (current_index.presence || create_aliased_index!)
+        index = current_index.presence || create_aliased_index!
         __elasticsearch__.refresh_index! index:
       end
       __elasticsearch__.search(query.build_query, track_total_hits: "true")

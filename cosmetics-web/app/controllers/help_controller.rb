@@ -10,7 +10,7 @@ class HelpController < PubliclyAccessibleController
   def cookies_policy; end
 
   def csv
-    return redirect_to "/404" unless %w[exact exact-with-multiple-shades range].include?(params[:csv_file_type])
+    return redirect_to "/404" unless %w[exact exact-with-multiple-shades range].include?(params[:csv_file_type]) # rubocop:disable Style/RedundantReturn
   end
 
   def npis_tables; end

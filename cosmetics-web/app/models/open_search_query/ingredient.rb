@@ -53,7 +53,7 @@ module OpenSearchQuery
     def any_match_query
       {
         multi_match: {
-          query: (@keyword || ""),
+          query: @keyword || "",
           fuzziness: 1,
           operator: "AND",
           fields: FIELDS,
@@ -65,7 +65,7 @@ module OpenSearchQuery
       {
         match_phrase: {
           searchable_ingredients: {
-            query: (@keyword || ""),
+            query: @keyword || "",
           },
         },
       }

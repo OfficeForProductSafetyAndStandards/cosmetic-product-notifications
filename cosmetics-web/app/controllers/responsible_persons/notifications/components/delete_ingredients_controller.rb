@@ -57,7 +57,7 @@ private
   def set_ingredient
     @ingredient_number = params[:id]&.to_i
     @ingredient = @component.ingredients[@ingredient_number] if @ingredient_number
-    return redirect_to "/404" if @ingredient.nil?
+    redirect_to "/404" if @ingredient.nil?
   end
 
   def set_component

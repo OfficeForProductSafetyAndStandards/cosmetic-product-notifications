@@ -8,6 +8,6 @@ class FrameFormulationsController < PubliclyAccessibleController
     return redirect_to "/404" if @formulation.blank?
 
     @subformulation = @formulation["data"].find { |formulation| formulation["childNumber"] == params[:sub_id].to_i }
-    return redirect_to "/404" if @subformulation.blank?
+    return redirect_to "/404" if @subformulation.blank? # rubocop:disable Style/RedundantReturn
   end
 end
