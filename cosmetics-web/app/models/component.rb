@@ -34,8 +34,9 @@ class Component < ApplicationRecord
   include Clonable
   include RoutingQuestionCacheConcern
 
-  # To match the `category` enum from `NotificationCategories`
+  # To match the enums from `NotificationProperties`
   attribute :category, :string
+  attribute :unit, :string
   attribute :skip_name_uniqueness_on_import
 
   belongs_to :notification, touch: true
