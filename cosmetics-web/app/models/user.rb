@@ -26,7 +26,7 @@ class User < ApplicationRecord
     opss_general: "opss_general",
     opss_enforcement: "opss_enforcement",
     trading_standards: "trading_standards",
-    opss_imt: "opss_imt"
+    opss_imt: "opss_imt",
   }
 
   validates :email, presence: true
