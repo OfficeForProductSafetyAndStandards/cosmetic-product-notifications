@@ -1,5 +1,17 @@
 <head>
-  <% # Google Analytics %>
+  <meta charset="utf-8">
+  <title><%= yield :page_title %><% if content_for?(:page_title) %> - <% end %><%= @service_name %> - GOV.UK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="blue">
+  <link rel="icon" sizes="48x48" href="<%= image_path("favicon.ico") %>">
+  <link rel="icon" sizes="any" href="<%= image_path("favicon.svg") %>" type="image/svg+xml">
+  <link rel="mask-icon" href="<%= image_path("govuk-icon-mask.svg") %>" color="blue">
+  <link rel="apple-touch-icon" href="<%= image_path("govuk-icon-180.png") %>">
+  <link rel="manifest" href="<%= image_path("manifest.json") %>">
+  <meta property="og:image" content="<%= image_path("govuk-opengraph-image.png") %>">
+  <%= javascript_include_tag "application", type: "module", nonce: true %>
+  <%= stylesheet_link_tag "application" %>
+  <%= csrf_meta_tags %>
   <% if true || Rails.env.production? %>
     <% if analytics_cookies_accepted? %>
       <%= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=UA-126364208-2", async: true, nonce: true %>
@@ -13,18 +25,4 @@
       <% end %>
     <% end %>
   <% end %>
-  <meta charset="utf-8" />
-  <title><%= yield :page_title %><%= " - #{@service_name}" %></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="blue" />
-  <link rel="shortcut icon" type="image/x-icon" href="<%= image_path("favicon.ico") %>" />
-  <link rel="mask-icon" color="#0b0c0c" href="<%= image_path("govuk-mask-icon.svg") %>">
-  <link rel="apple-touch-icon" sizes="180x180" href="<%= image_path("govuk-apple-touch-icon-180x180.png") %>">
-  <link rel="apple-touch-icon" sizes="167x167" href="<%= image_path("govuk-apple-touch-icon-167x167.png") %>">
-  <link rel="apple-touch-icon" sizes="152x152" href="<%= image_path("govuk-apple-touch-icon-152x152.png") %>">
-  <link rel="apple-touch-icon" href="<%= image_path("govuk-apple-touch-icon.png") %>">
-  <%= javascript_include_tag "application", nonce: true %>
-  <%= stylesheet_link_tag "application" %>
-  <%= csrf_meta_tags %>
-  <meta property="og:image" content="<%= image_path("govuk-opengraph-image.png") %>">
 </head>

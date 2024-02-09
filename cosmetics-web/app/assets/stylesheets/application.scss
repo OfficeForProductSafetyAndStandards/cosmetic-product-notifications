@@ -3,7 +3,7 @@ $govuk-fonts-path: "";
 
 $govuk-global-styles: true;
 
-@import "govuk-frontend/govuk/all";
+@import "govuk-frontend/dist/govuk/all";
 @import "accessible-autocomplete/src/autocomplete";
 
 @import "remove-default-button-styling";
@@ -12,7 +12,6 @@ $govuk-global-styles: true;
 @import "banner";
 @import "button";
 @import "header";
-@import "text";
 @import "cookie-banner";
 
 @import "component_build";

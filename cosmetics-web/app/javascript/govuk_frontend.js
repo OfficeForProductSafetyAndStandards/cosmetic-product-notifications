@@ -1,5 +1,7 @@
 'use strict'
 
-window.onload = function () {
-  window.GOVUKFrontend.initAll()
-}
+import { initAll } from 'govuk-frontend'
+
+document.addEventListener('DOMContentLoaded', () => {
+  initAll()
+})

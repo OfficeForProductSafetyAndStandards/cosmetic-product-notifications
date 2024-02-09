@@ -47,7 +47,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("How to prepare images for notification", href: "/guidance/how-to-prepare-images-for-notification")
     expect(page).to have_link("Privacy policy", href: "/help/privacy-notice")
     expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
-    expect(page).to have_link("Accessibility Statement", href: "/help/accessibility-statement")
+    expect(page).to have_link("Accessibility statement", href: "/help/accessibility-statement")
 
     # Attempts to submit security page without choosing a password
     click_button "Continue"
