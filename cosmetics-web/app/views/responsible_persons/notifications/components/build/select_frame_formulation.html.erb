@@ -16,7 +16,7 @@
       <h1 class="govuk-fieldset__heading govuk-label--l"><%= title %></h1>
 
       <%= govukWarningText(
-        iconFallbackText: "Warning",
+        iconFallbackText: "",
         classes: "govuk-!-margin-top-6 govuk-!-margin-bottom-5",
         html: "You are required to include ingredients accurately.<br>#{link_to "Find a frame formulation", frame_formulations_path, target: :_blank} to see all ingredients.".html_safe
       ) %>

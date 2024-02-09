@@ -121,24 +121,6 @@ main a.govuk-link:hover {
   }
 }
 
-.opss-font-size-14,
-.govuk-\!-font-size-14 {
-  // future proof the 14px which is required for legacy dashboard designs
-  font-size: 12px !important;
-  font-size: .75rem !important;
-  line-height: 1.25 !important;
-}
-
-@media (min-width: 40.0625em) {
-  // future proof the 14px which is required for legacy dashboard designs
-  .opss-font-size-14,
-  .govuk-\!-font-size-14 {
-    font-size: 14px !important;
-    font-size: .875rem !important;
-    line-height: 1.4286 !important;
-  }
-}
-
 .opss-nojs-hide {
   display: none;
 }
@@ -305,7 +287,7 @@ body.js-enabled .opss-nojs-hide {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       font-weight: 700;
-      @include opss-font-size($s: 14px, $l: 1.2);
+      @include opss-font-size($s: 16px, $l: 1.2);
       text-align: center;
     }
   }
@@ -714,7 +696,7 @@ section.govuk-grid-column-three-quarters div.govuk-grid-column-one-third > figur
 
 .opss-img-caption {
   font-family: $std-font-family;
-  @include opss-font-size($s: 14px, $l: 1.25);
+  @include opss-font-size($s: 16px, $l: 1.25);
 }
 
 dl.opss-summary-list-aside {

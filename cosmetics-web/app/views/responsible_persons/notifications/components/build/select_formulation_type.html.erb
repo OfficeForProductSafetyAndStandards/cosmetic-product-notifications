@@ -27,7 +27,7 @@
   warning_text += "<br><br>" if frame_formulations.nil? && @component.notification_type.present?
   warning_text += "Changing this selection will remove all previously added ingredients." if @component.notification_type.present?
   warning_html = if warning_text.present?
-    govukWarningText(iconFallbackText: "Warning",
+    govukWarningText(iconFallbackText: "",
                      classes: "govuk-!-width-three-quarters govuk-!-margin-top-3 opss-warning-text--m",
                      html: warning_text.html_safe)
   end

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="govuk-template app-html-class" lang="en">
+<html lang="en" class="govuk-template app-html-class">
 
   <%= render "layouts/head" %>
 
@@ -33,7 +33,7 @@
         <%= govukNotificationBanner(text: confirmation, type: "success") %>
       <% end %>
 
-      <main id="main-content" class="govuk-main-wrapper app-main-class" role="main">
+      <main class="govuk-main-wrapper app-main-class" id="main-content" role="main">
         <%= yield %>
       </main>
     </div>
