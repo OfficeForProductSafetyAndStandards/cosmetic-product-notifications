@@ -164,7 +164,7 @@ RSpec.feature "Resetting your password", :with_test_queue_adapter, :with_stubbed
       scenario "does not allow you to reset your password" do
         request_password_reset
 
-        travel_to 66.minutes.from_now do
+        travel_to 73.hours.from_now do
           visit edit_user_password_url_with_token
 
           expect(page).to have_css("h1", text: "This link has expired")
