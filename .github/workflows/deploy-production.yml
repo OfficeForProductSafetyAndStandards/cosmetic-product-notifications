@@ -140,7 +140,7 @@ jobs:
       uses: getsentry/action-release@v1
       env:
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        SENTRY_ORG: beis
+        SENTRY_ORG: opss
         SENTRY_PROJECT: beis-cosmetics
       with:
         environment: prod
