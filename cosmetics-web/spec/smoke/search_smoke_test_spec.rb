@@ -38,7 +38,7 @@ RSpec.feature "Search smoke test" do
       # Poison Centre or OPSS user role view
       expect(session).to have_css("h1", text: product_name)
       expect(session).to have_css("h3", text: "Details")
-      expect(session).to have_css("dt", text: "Ingredient list")
+      expect(session).to have_css("dt", text: "Formulation given as")
     end
   end
 end
