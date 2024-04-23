@@ -380,7 +380,7 @@ en:
           attributes:
             password:
               blank: "Enter your password"
-  enquiries_email: "opss.enquiries@beis.gov.uk"
+  enquiries_email: "opss.enquiries@businessandtrade.gov.uk"
   errors:
     format: "%{message}"
     messages:
