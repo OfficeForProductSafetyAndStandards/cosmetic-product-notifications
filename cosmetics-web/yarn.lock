@@ -2601,7 +2601,7 @@ postcss-value-parser@^4.1.0, postcss-value-parser@^4.2.0:
 
 postcss@^5.0.0, postcss@^5.0.10, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.9:
   version "5.2.18"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-5.2.18.tgz"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.18.tgz#badfa1497d46244f6390f58b319830d9107853c5"
   integrity sha512-zrUjRRe1bpXKsX1qAJNJjqZViErVuyEkMTRrwu4ud4sbTtIBRmtaYDrHmcGgmrbsW3MHfmtIf+vJumgQn+PrXg==
   dependencies:
     chalk "^1.1.3"
