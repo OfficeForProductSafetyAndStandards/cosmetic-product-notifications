@@ -4,7 +4,7 @@ The OSU Support Portal is used by the OSU support teams to administer SCPN.
 
 Built by the [Office for Product Safety and Standards](https://www.gov.uk/government/organisations/office-for-product-safety-and-standards).
 
-For enquiries, contact [opss.enquiries@beis.gov.uk](mailto:opss.enquiries@beis.gov.uk).
+For enquiries, contact [opss.enquiries@businessandtrade.gov.uk](mailto:opss.enquiries@businessandtrade.gov.uk).
 
 ## Getting started
 
