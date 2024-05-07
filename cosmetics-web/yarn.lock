@@ -257,7 +257,12 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-accessible-autocomplete@2.0.4, accessible-autocomplete@^2.0.4:
+accessible-autocomplete@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/accessible-autocomplete/-/accessible-autocomplete-3.0.0.tgz#f66ed03fb22d78f721326d187ee491dddbadec75"
+  integrity sha512-Kpm6EX+jjD0AurWfzSP4EVLEKsLUWCazZwidjum+8FCRtSINeaPzVa3ElKVGWvSqVZN9zjeSBF8cirhYEZjW1A==
+
+accessible-autocomplete@^2.0.4:
   version "2.0.4"
   resolved "https://registry.npmjs.org/accessible-autocomplete/-/accessible-autocomplete-2.0.4.tgz"
   integrity sha512-2p0txrSpvs5wXFUeQJHMheDPTZVSEmiUHWlEPb7vJnv2Dd1xPfoLnBQQMfNbTSit2pL/9sSQYESuD2Yyohd4Yw==
