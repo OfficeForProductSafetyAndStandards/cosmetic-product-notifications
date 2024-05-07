@@ -11,6 +11,7 @@ RSpec.describe "Notifications Dashboard", type: :feature do
     visit responsible_person_notifications_path(responsible_person)
 
     expect(body).to have_css("#main-content")
+    expect(page).to have_css("#nav-label", text: responsible_person.name)
   end
 
   context "when the user has an incomplete notification" do
