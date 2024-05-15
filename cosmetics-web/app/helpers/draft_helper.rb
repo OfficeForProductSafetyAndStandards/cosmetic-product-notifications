@@ -75,7 +75,7 @@ module DraftHelper
 
     return cannot_start_yet_badge(id, hidden_text) unless section_can_be_used?(ITEMS_SECTION)
 
-    notification = component.notification
+    notification = component&.notification
     if notification.empty? || notification.product_name_added? || notification.details_complete?
       cannot_start_yet_badge(id, hidden_text)
     elsif component.empty?
