@@ -39,8 +39,8 @@ module SecondaryAuthentication
     end
 
     def interstitial
-      @recovery_codes_used = current_user.secondary_authentication_recovery_codes_used.length
-      @recovery_codes_remaining = current_user.secondary_authentication_recovery_codes.length
+      @recovery_codes_used = current_user&.secondary_authentication_recovery_codes_used&.length
+      @recovery_codes_remaining = current_user&.secondary_authentication_recovery_codes&.length
     end
 
     def redirect_to_saved_path
