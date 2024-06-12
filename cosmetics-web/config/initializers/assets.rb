@@ -16,4 +16,5 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-fro
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join("node_modules")
 
-Rails.application.config.assets.precompile += %w[application.css application.js]
+Rails.application.config.assets.precompile += %w[application.css application.js graphiql/rails/application.js graphiql/rails/application.css]
+

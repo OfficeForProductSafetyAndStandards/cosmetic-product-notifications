@@ -1,0 +1,61 @@
+# frozen_string_literal: true
+
+class GraphqlController < ApplicationController
+  protect_from_forgery with: :null_session
+
+  # Skip authentication and secondary authentication for introspection queries
+  skip_before_action :authenticate_user!, if: -> { introspection_query? }
+  skip_before_action :require_secondary_authentication, if: -> { introspection_query? }
+
+  # Ensure authentication for non-introspection queries
+  before_action :authenticate_user!, unless: -> { introspection_query? }
+  before_action :require_secondary_authentication, unless: -> { introspection_query? }
+
+  def execute
+    Rails.logger.debug "GraphQL request parameters: #{params.to_json}"
+    variables = prepare_variables(params[:variables])
+    query = params[:query]
+    operation_name = params[:operationName]
+    context = {
+      current_user: current_user,
+    }
+    result = CosmeticsSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    Rails.logger.debug "GraphQL response result: #{result.to_json}"
+    render json: result
+  rescue StandardError => e
+    handle_error_in_development(e)
+  end
+
+  private
+
+  def introspection_query?
+    query_string = params[:query] || request.raw_post
+    query_string.include?("__schema") || query_string.include?("__type")
+  end
+
+  def prepare_variables(variables_param)
+    case variables_param
+    when String
+      variables_param.present? ? JSON.parse(variables_param) : {}
+    when Hash
+      variables_param
+    when ActionController::Parameters
+      variables_param.to_unsafe_hash
+    when nil
+      {}
+    else
+      raise ArgumentError, "Unexpected parameter: #{variables_param}"
+    end
+  end
+
+  def handle_error_in_development(e)
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    render json: { errors: [{ message: e.message, backtrace: e.backtrace }] }, status: 500
+  end
+
+  def secondary_authentication_user
+    return nil if introspection_query?
+    @secondary_authentication_user ||= User.find_by(id: session[:secondary_authentication_user_id] || user_id_for_secondary_authentication)
+  end
+end
