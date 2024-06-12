@@ -16,6 +16,6 @@ class CookieFormsController < PubliclyAccessibleController
 private
 
   def cookie_form_params
-    params.fetch(:cookie_form, {}).permit(:accept_analytics_cookies, :referrer_is_cookie_policy_page)
+    params.fetch(:cookie_form, {})&.permit(:accept_analytics_cookies, :referrer_is_cookie_policy_page)
   end
 end

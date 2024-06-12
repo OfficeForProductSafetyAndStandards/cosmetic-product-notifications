@@ -38,6 +38,9 @@ RSpec.describe "Removing ingredients from components", :with_stubbed_antivirus, 
       click_on "Remove ingredient"
     end
 
+    # Adding a wait to ensure the page updates
+    expect(page).to have_no_field("What is the name?", with: "Ingredient A")
+
     expect_to_be_on_add_ingredients_page(ingredient_number: 1, already_added: ["Ingredient B"])
     expect(page).to have_field("What is the name?", with: "Ingredient B")
     expect(page).not_to have_button("Remove ingredient")
