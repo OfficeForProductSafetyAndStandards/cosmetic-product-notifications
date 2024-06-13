@@ -8,7 +8,11 @@ class MyAccountController < ApplicationController
 
   before_action :set_responsible_person, except: :show, if: -> { submit_domain? }
 
-  def show; end
+  def show
+    if @responsible_person == nil
+        set_responsible_person
+    end
+  end
 
 private
 
