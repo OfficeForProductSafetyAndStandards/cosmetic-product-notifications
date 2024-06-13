@@ -6,7 +6,7 @@ class MyAccountController < ApplicationController
   include ActiveStorage::SetCurrent
   include ResponsiblePersonConcern
 
-  before_action :set_responsible_person, if: -> { submit_domain? }
+  before_action :set_responsible_person, except: :show, if: -> { submit_domain? }
 
   def show; end
 
