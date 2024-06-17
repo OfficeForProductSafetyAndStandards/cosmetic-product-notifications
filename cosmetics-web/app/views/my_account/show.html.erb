@@ -1,11 +1,7 @@
 <% title = "Your account" %>
 <% page_title title %>
 <% content_for :after_header do %>
-  <%=
-    if @responsible_person == nil
-      @responsible_person = rp
-    end
-    render "layouts/navbar" if submit_domain? %>
+  <%= render "layouts/navbar" if submit_domain? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <%= govuk_back_link(href: request.referer) %>
