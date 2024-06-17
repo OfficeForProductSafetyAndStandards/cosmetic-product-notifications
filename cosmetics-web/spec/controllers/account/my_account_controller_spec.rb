@@ -14,7 +14,7 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
   scenario "Sign-in and create a responsible person" do
     sign_in_user_visit_landing_page
     create_responsible_person
-    sign_out_user_sign_back_in_choose_rp
+    sign_out_user_sign_back_in_view_your_account
   end
 
   def sign_in_user_visit_landing_page
@@ -29,7 +29,7 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
     click_button("Sign out")
   end
 
-  def sign_out_user_sign_back_in_choose_rp
+  def sign_out_user_sign_back_in_view_your_account
     sign_out_from_page
     sign_in(user)
     visit "/my_account"
