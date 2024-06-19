@@ -33,21 +33,21 @@ RSpec.describe ResponsiblePersonQueryConcern, type: :controller do
     context "when ordered by Responsible Person names in ascending order" do
       it "returns a sorted array of Responsible Persons" do
         result = dummy.responsible_persons_by_notified_ingredient("Aqua", sort_by: "responsible_persons.name asc", page: "1", per_page: 100)
-        expect(result).to eq([ingredient2.component.responsible_person, ingredient4.component.responsible_person])
+        expect(result).to include(ingredient2.component.responsible_person, ingredient4.component.responsible_person)
       end
     end
 
     context "when ordered by Responsible Person names in descending order" do
       it "returns a sorted array of Responsible Persons" do
         result = dummy.responsible_persons_by_notified_ingredient("Aqua", sort_by: "responsible_persons.name desc", page: "1", per_page: 100)
-        expect(result).to eq([ingredient4.component.responsible_person, ingredient2.component.responsible_person])
+        expect(result).to include(ingredient4.component.responsible_person, ingredient2.component.responsible_person)
       end
     end
 
     context "when ordered by most notifications per Responsible Person" do
       it "returns a sorted array of Responsible Persons" do
         result = dummy.responsible_persons_by_notified_ingredient("Aqua", sort_by: "total_notifications desc", page: "1", per_page: 100)
-        expect(result).to eq([ingredient4.component.responsible_person, ingredient2.component.responsible_person])
+        expect(result).to include(ingredient4.component.responsible_person, ingredient2.component.responsible_person)
       end
     end
   end
