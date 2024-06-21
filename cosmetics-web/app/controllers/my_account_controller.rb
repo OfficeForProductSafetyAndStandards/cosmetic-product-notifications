@@ -10,8 +10,8 @@ class MyAccountController < ApplicationController
 
   def show
     if current_user.type == "SubmitUser"
-        set_responsible_person if @responsible_person.nil?
-        redirect_to select_responsible_persons_path if @responsible_person.nil?
+      set_responsible_person if @responsible_person.nil?
+      redirect_to select_responsible_persons_path if @responsible_person.nil?
     end
   end
 
