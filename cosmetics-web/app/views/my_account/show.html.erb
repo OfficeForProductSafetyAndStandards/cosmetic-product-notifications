@@ -15,217 +15,217 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
     <% if submit_domain? %>
       <%= govukSummaryList(
-        classes: "govuk-!-margin-bottom-9",
-        rows: [
-          {
-            key: { text: "Full name" },
-            value: { text: current_user.name },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_name_path,
-                  text: "Change",
-                  visuallyHiddenText: "name"
+            classes: "govuk-!-margin-bottom-9",
+            rows: [
+              {
+                key: { text: "Full name" },
+                value: { text: current_user.name },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_name_path,
+                      text: "Change",
+                      visuallyHiddenText: "name"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          {
-            key: { text: "Email address" },
-            value: { text: current_user.email },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_email_path,
-                  text: "Change",
-                  visuallyHiddenText: "email address"
+              },
+              {
+                key: { text: "Email address" },
+                value: { text: current_user.email },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_email_path,
+                      text: "Change",
+                      visuallyHiddenText: "email address"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          {
-            key: { text: "Password" },
-            value: { text: "********" },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_password_path,
-                  text: "Change",
-                  visuallyHiddenText: "password"
+              },
+              {
+                key: { text: "Password" },
+                value: { text: "********" },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_password_path,
+                      text: "Change",
+                      visuallyHiddenText: "password"
+                    }
+                  ]
                 }
-              ]
-            }
-          }
-        ]
-      ) %>
+              }
+            ]
+          ) %>
     <% end %>
 
-  <% if support_domain? %>
+    <% if support_domain? %>
       <%= govukSummaryList(
-        classes: "govuk-!-margin-bottom-9",
-        rows: [
-          {
-            key: { text: "Full name" },
-            value: { text: current_user.name },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_name_path,
-                  text: "Change",
-                  visuallyHiddenText: "name"
+            classes: "govuk-!-margin-bottom-9",
+            rows: [
+              {
+                key: { text: "Full name" },
+                value: { text: current_user.name },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_name_path,
+                      text: "Change",
+                      visuallyHiddenText: "name"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          {
-            key: { text: "Email address" },
-            value: { text: current_user.email },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_email_path,
-                  text: "Change",
-                  visuallyHiddenText: "email address"
+              },
+              {
+                key: { text: "Email address" },
+                value: { text: current_user.email },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_email_path,
+                      text: "Change",
+                      visuallyHiddenText: "email address"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          {
-            key: { text: "Password" },
-            value: { text: "********" },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_password_path,
-                  text: "Change",
-                  visuallyHiddenText: "password"
+              },
+              {
+                key: { text: "Password" },
+                value: { text: "********" },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_password_path,
+                      text: "Change",
+                      visuallyHiddenText: "password"
+                    }
+                  ]
                 }
-              ]
-            }
-          }
-        ]
-      ) %>
+              }
+            ]
+          ) %>
     <% end %>
 
     <% if search_domain? %>
       <%= govukSummaryList(
-        classes: "govuk-!-margin-bottom-9",
-        rows: [
-          {
-            key: { text: "Full name" },
-            value: { text: current_user.name },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_name_path,
-                  text: "Change",
-                  visuallyHiddenText: "name"
+            classes: "govuk-!-margin-bottom-9",
+            rows: [
+              {
+                key: { text: "Full name" },
+                value: { text: current_user.name },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_name_path,
+                      text: "Change",
+                      visuallyHiddenText: "name"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          {
-            key: { text: "Email address" },
-            value: { text: current_user.email },
-          },
-          {
-            key: { text: "Mobile number" },
-            value: { text: current_user.mobile_number },
-          },
-          {
-            key: { text: "Password" },
-            value: { text: "********" },
-            actions: {
-              items: [
-                {
-                  href: edit_my_account_password_path,
-                  text: "Change",
-                  visuallyHiddenText: "password"
+              },
+              {
+                key: { text: "Email address" },
+                value: { text: current_user.email },
+              },
+              {
+                key: { text: "Mobile number" },
+                value: { text: current_user.mobile_number },
+              },
+              {
+                key: { text: "Password" },
+                value: { text: "********" },
+                actions: {
+                  items: [
+                    {
+                      href: edit_my_account_password_path,
+                      text: "Change",
+                      visuallyHiddenText: "password"
+                    }
+                  ]
                 }
-              ]
-            }
-          }
-        ]
-      ) %>
+              }
+            ]
+          ) %>
     <% end %>
 
     <h2 class="govuk-heading-l">Your security preferences</h2>
     <p class="govuk-body opss-secondary-text">This is how you get access codes</p>
-      <%= govukSummaryList(
-        classes: "govuk-!-margin-bottom-9",
-        rows: [
-          {
-            key: { text: "Text message" },
-            value: { text: current_user.mobile_number },
-            actions: {
-              items: [
-                {
-                  href: new_secondary_authentication_sms_setup_path,
-                  text: current_user.sms_authentication_set? ? "Change" : "Add",
-                  visuallyHiddenText: "text message"
-                }
-              ]
-            }
-          },
-          {
-            key: { text: "Authenticator app" },
-            value: { text: ("Authenticator app is set" if current_user.app_authentication_set?) },
-            actions: {
-              items: [
-                {
-                  href: new_secondary_authentication_app_setup_path,
-                  text: current_user.app_authentication_set? ? "Change" : "Add",
-                  visuallyHiddenText: "authenticator app"
-                }
-              ]
-            }
-          },
-          {
-            key: { text: "Recovery codes" },
-            actions: {
-              items: [
-                {
-                  href: new_secondary_authentication_recovery_codes_setup_path(back_to: "my_account"),
-                  text: "View",
-                  visuallyHiddenText: "recovery codes"
-                }
-              ]
-            }
-          },
-        ]
-      ) %>
-
-    <% if support_domain? %>
-      <h2 class="govuk-heading-l">User management</h2>
-        <%= govukSummaryList(
+    <%= govukSummaryList(
           classes: "govuk-!-margin-bottom-9",
           rows: [
             {
-              key: { text: "Add a team member" },
+              key: { text: "Text message" },
+              value: { text: current_user.mobile_number },
               actions: {
                 items: [
                   {
-                    href: support_portal.new_invite_support_user_path,
-                    text: "Invite",
-                    visuallyHiddenText: "invite team member"
+                    href: new_secondary_authentication_sms_setup_path,
+                    text: current_user.sms_authentication_set? ? "Change" : "Add",
+                    visuallyHiddenText: "text message"
                   }
                 ]
               }
             },
             {
-              key: { text: "Remove team member" },
+              key: { text: "Authenticator app" },
+              value: { text: ("Authenticator app is set" if current_user.app_authentication_set?) },
               actions: {
                 items: [
                   {
-                    href: support_portal.support_users_path,
-                    text: "View team members",
-                    visuallyHiddenText: "View team members"
+                    href: new_secondary_authentication_app_setup_path,
+                    text: current_user.app_authentication_set? ? "Change" : "Add",
+                    visuallyHiddenText: "authenticator app"
+                  }
+                ]
+              }
+            },
+            {
+              key: { text: "Recovery codes" },
+              actions: {
+                items: [
+                  {
+                    href: new_secondary_authentication_recovery_codes_setup_path(back_to: "my_account"),
+                    text: "View",
+                    visuallyHiddenText: "recovery codes"
                   }
                 ]
               }
             },
           ]
         ) %>
+
+    <% if support_domain? %>
+      <h2 class="govuk-heading-l">User management</h2>
+      <%= govukSummaryList(
+            classes: "govuk-!-margin-bottom-9",
+            rows: [
+              {
+                key: { text: "Add a team member" },
+                actions: {
+                  items: [
+                    {
+                      href: support_portal.new_invite_support_user_path,
+                      text: "Invite",
+                      visuallyHiddenText: "invite team member"
+                    }
+                  ]
+                }
+              },
+              {
+                key: { text: "Remove team member" },
+                actions: {
+                  items: [
+                    {
+                      href: support_portal.support_users_path,
+                      text: "View team members",
+                      visuallyHiddenText: "View team members"
+                    }
+                  ]
+                }
+              },
+            ]
+          ) %>
       <%= govukButton(text: "Go to Cosmetic products search", href: main_app.new_support_on_search_user_session_url(host: ENV['SEARCH_HOST']), classes: "govuk-button--secondary", attributes: { target: "_blank" }) %>
     <% end %>
 

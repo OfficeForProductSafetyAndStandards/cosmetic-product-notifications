@@ -6,9 +6,14 @@ class MyAccountController < ApplicationController
   include ActiveStorage::SetCurrent
   include ResponsiblePersonConcern
 
-  before_action :set_responsible_person, if: -> { submit_domain? }
+  before_action :set_responsible_person, except: :show, if: -> { submit_domain? }
 
-  def show; end
+  def show
+    if current_user.type == "SubmitUser"
+      set_responsible_person if @responsible_person.nil?
+      redirect_to select_responsible_persons_path if @responsible_person.nil?
+    end
+  end
 
 private
 
