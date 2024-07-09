@@ -54,7 +54,7 @@ gem "sidekiq-cron", "~> 1.12"
 gem "sidekiq-status", "~> 3.0"
 gem "sprockets", "~> 4.2"
 gem "sprockets-rails", "~> 3.4", require: "sprockets/railtie"
-gem "strong_migrations", "~> 1.8"
+gem "strong_migrations", "~> 2.0"
 gem "webrick", "~> 1.8"
 gem "wicked", "~> 2.0"
 
