@@ -108,27 +108,27 @@ RSpec.describe ResponsiblePerson, type: :model do
     end
 
     it "is false when no email is given" do
-      expect(responsible_person.has_user_with_email?(nil)).to eq false
+      expect(responsible_person.has_user_with_email?(nil)).to be false
     end
 
     it "is false when there an empty email is given" do
-      expect(responsible_person.has_user_with_email?("")).to eq false
+      expect(responsible_person.has_user_with_email?("")).to be false
     end
 
     it "is false when given email is not a string" do
-      expect(responsible_person.has_user_with_email?(123)).to eq false
+      expect(responsible_person.has_user_with_email?(123)).to be false
     end
 
     it "is false when given an email not matching any responsible person user" do
-      expect(responsible_person.has_user_with_email?("not.member@example.org")).to eq false
+      expect(responsible_person.has_user_with_email?("not.member@example.org")).to be false
     end
 
     it "is true when given an email matching a user of the responsible person" do
-      expect(responsible_person.has_user_with_email?("member@example.org")).to eq true
+      expect(responsible_person.has_user_with_email?("member@example.org")).to be true
     end
 
     it "is true when given an email matching a user of the responsible person with different capitalisation" do
-      expect(responsible_person.has_user_with_email?("MeMbEr@EXAMPLE.org")).to eq true
+      expect(responsible_person.has_user_with_email?("MeMbEr@EXAMPLE.org")).to be true
     end
   end
 

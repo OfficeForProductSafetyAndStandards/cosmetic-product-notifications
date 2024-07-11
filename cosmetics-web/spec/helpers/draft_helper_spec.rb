@@ -40,8 +40,7 @@ RSpec.describe DraftHelper, type: :helper do
 
       context "when component is completed" do
         before do
-          allow(component).to receive(:empty?).and_return(false)
-          allow(component).to receive(:component_complete?).and_return(true)
+          allow(component).to receive_messages(empty?: false, component_complete?: true)
         end
 
         it "displays 'Complete' badge" do

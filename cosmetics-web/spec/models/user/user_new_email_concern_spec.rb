@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe User, type: :model do # rubocop:todo RSpec/FilePath
+RSpec.describe User, type: :model do
   describe "change email" do
     let(:old_email) { "old@example.com" }
     let(:expected_token) { "foobar" }

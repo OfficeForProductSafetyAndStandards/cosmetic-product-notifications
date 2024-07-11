@@ -121,7 +121,7 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
     end
 
     it "marks the result as unchanged" do
-      expect(result.changed).to eq false
+      expect(result.changed).to be false
     end
 
     it "does not change the responsible person address values" do
@@ -149,7 +149,7 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
     end
 
     it "marks the result as changed" do
-      expect(result.changed).to eq true
+      expect(result.changed).to be true
     end
 
     it "changes the responsible person business type in DB but not the address" do
@@ -176,7 +176,7 @@ RSpec.describe UpdateResponsiblePersonDetails, :with_stubbed_mailer do
       end
 
       it "marks the result as changed" do
-        expect(result.changed).to eq true
+        expect(result.changed).to be true
       end
 
       it "update the responsible person address values" do

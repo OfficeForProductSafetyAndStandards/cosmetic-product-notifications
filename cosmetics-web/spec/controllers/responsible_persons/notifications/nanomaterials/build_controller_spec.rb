@@ -5,14 +5,14 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
   let(:notification) { create(:notification, responsible_person:) }
   let(:component) { create(:component, notification:) }
 
-  let(:nano_material1) { create(:nano_material, notification:, inci_name: "nanomaterial1") }
-  let(:nano_material2) { create(:nano_material, :non_standard, notification:) }
+  let(:nano_material_a) { create(:nano_material, notification:, inci_name: "nanomaterial1") }
+  let(:nano_material_b) { create(:nano_material, :non_standard, notification:) }
 
   let(:params) do
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
-      nanomaterial_id: nano_material1,
+      nanomaterial_id: nano_material_a,
     }
   end
 
@@ -20,7 +20,7 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
     {
       responsible_person_id: responsible_person.id,
       notification_reference_number: notification.reference_number,
-      nanomaterial_id: nano_material2,
+      nanomaterial_id: nano_material_b,
     }
   end
 
@@ -36,7 +36,7 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
     it "redirects to the first step of the wizard" do
       get(:new, params:)
       expect(response).to redirect_to(
-        responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :select_purposes),
+        responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material_a, :select_purposes),
       )
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
 
     it "assigns the correct nanomaterial" do
       get(:show, params: params.merge(id: :select_purposes))
-      expect(assigns(:nano_material)).to eq(nano_material1)
+      expect(assigns(:nano_material)).to eq(nano_material_a)
     end
 
     it "renders the step template" do
@@ -69,10 +69,10 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
 
     describe "at confirm_restrictions" do
       it "redirects to the non-standard nanomaterial path when nanomaterial purposes include 'other'" do
-        nano_material1.update(purposes: %w[other])
+        nano_material_a.update(purposes: %w[other])
         get(:show, params: params.merge(id: :after_select_purposes_routing))
         expect(response).to redirect_to(
-          responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :non_standard_nanomaterial_notified),
+          responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material_a, :non_standard_nanomaterial_notified),
         )
       end
     end
@@ -86,18 +86,18 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
       context "with a standard nanomaterial" do
         it "updates the nanomaterial with the selected purposes" do
           post(:update, params: select_purposes_params.merge(purposes_form: { "colorant": "0", "preservative": "1", "uv_filter": "1", "purpose_type": "standard" }))
-          expect(nano_material1.reload.purposes).to eq(%w[preservative uv_filter])
+          expect(nano_material_a.reload.purposes).to eq(%w[preservative uv_filter])
         end
 
         it "ignores invalid purpose values" do
           post(:update, params: select_purposes_params.merge(purposes_form: { "colorant": "1", "invalid_purpose": "1", "purpose_type": "standard" }))
-          expect(nano_material1.reload.purposes).to eq(%w[colorant])
+          expect(nano_material_a.reload.purposes).to eq(%w[colorant])
         end
 
         it "redirects to the next page when purposes are selected" do
           post(:update, params: select_purposes_params.merge(purposes_form: { "preservative": "1", "purpose_type": "standard" }))
           expect(response).to redirect_to(
-            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :after_select_purposes_routing),
+            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material_a, :after_select_purposes_routing),
           )
         end
 
@@ -113,9 +113,9 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
 
         it "correctly switches from a standard to a non-standard nanomaterial" do
           post(:update, params: select_purposes_params.merge(purposes_form: { "purpose_type": "other" }))
-          expect(nano_material1.reload.purposes).to eq(%w[other])
+          expect(nano_material_a.reload.purposes).to eq(%w[other])
           expect(response).to redirect_to(
-            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :after_select_purposes_routing),
+            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material_a, :after_select_purposes_routing),
           )
         end
       end
@@ -128,9 +128,9 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
 
         it "correctly switches from a non-standard to a standard nanomaterial" do
           post(:update, params: select_purposes_params_non_standard.merge(purposes_form: { "colorant": "0", "preservative": "1", "uv_filter": "1", "purpose_type": "standard" }))
-          expect(nano_material2.reload).to have_attributes(purposes: %w[preservative uv_filter], nanomaterial_notification_id: nil)
+          expect(nano_material_b.reload).to have_attributes(purposes: %w[preservative uv_filter], nanomaterial_notification_id: nil)
           expect(response).to redirect_to(
-            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material2, :after_select_purposes_routing),
+            responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material_b, :after_select_purposes_routing),
           )
         end
       end
@@ -142,14 +142,14 @@ RSpec.describe ResponsiblePersons::Notifications::Nanomaterials::BuildController
       it "redirects to the next page when confirm_restrictions is 'yes'" do
         post(:update, params: confirm_restrictions_params.merge(nano_material: { confirm_restrictions: "yes" }))
         expect(response).to redirect_to(
-          responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :confirm_usage),
+          responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material_a, :confirm_usage),
         )
       end
 
       it "redirects to the 'nanomaterial must be listed' error page when confirm_restrictions is 'no'" do
         post(:update, params: confirm_restrictions_params.merge(nano_material: { confirm_restrictions: "no" }))
         expect(response).to redirect_to(
-          responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material1, :must_be_listed),
+          responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material_a, :must_be_listed),
         )
       end
 

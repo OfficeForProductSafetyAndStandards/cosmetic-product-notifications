@@ -133,7 +133,7 @@ RSpec.describe ResponsiblePersons::Notifications::Components::BuildController, t
       end
       # rubocop:enable RSpec/MultipleExpectations
 
-      it " contains a back link to the 'ingredients the NPIS needs to know about' page" do
+      it "contains a back link to the 'ingredients the NPIS needs to know about' page" do
         expect(response.body).to have_back_link_to(
           responsible_person_notification_component_build_path(
             responsible_person, notification, component, :contains_ingredients_npis_needs_to_know

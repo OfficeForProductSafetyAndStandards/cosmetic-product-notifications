@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Team members management", type: :request, with_stubbed_notify: true do
+RSpec.describe "Team members management", :with_stubbed_notify, type: :request do
   let(:responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
   let(:other_responsible_person) { create(:responsible_person_with_user, :with_a_contact_person) }
 

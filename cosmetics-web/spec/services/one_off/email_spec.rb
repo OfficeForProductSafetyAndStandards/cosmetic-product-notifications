@@ -20,7 +20,7 @@ RSpec.describe OneOff::Email do
 
   it "extracts one nothing if email has no @" do
     ne = described_class.new("foobarbazexample.com")
-    expect(ne.name).to eq nil
-    expect(ne.email).to eq nil
+    expect(ne.name).to be_nil
+    expect(ne.email).to be_nil
   end
 end

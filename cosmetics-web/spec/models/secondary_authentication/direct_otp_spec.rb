@@ -60,7 +60,7 @@ RSpec.describe SecondaryAuthentication::DirectOtp do
         travel_to(Time.zone.now + (SecondaryAuthentication::DirectOtp::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
           secondary_authentication.valid_otp? "123"
 
-          expect(user.reload.second_factor_attempts_locked_at).to eq(nil)
+          expect(user.reload.second_factor_attempts_locked_at).to be_nil
         end
       end
     end
@@ -68,19 +68,19 @@ RSpec.describe SecondaryAuthentication::DirectOtp do
 
   describe "#otp_locked?" do
     it "returns false when second_factor_attempts_locked_at is empty" do
-      expect(secondary_authentication.otp_locked?).to eq(false)
+      expect(secondary_authentication.otp_locked?).to be(false)
     end
 
     context "when second_factor_attempts_locked_at is not empty" do
       let(:second_factor_attempts_locked_at) { Time.zone.now }
 
       it "returns true" do
-        expect(secondary_authentication.otp_locked?).to eq(true)
+        expect(secondary_authentication.otp_locked?).to be(true)
       end
 
       it "returns false when cooldown passed" do
         travel_to(second_factor_attempts_locked_at + (SecondaryAuthentication::DirectOtp::MAX_ATTEMPTS_COOLDOWN + 1).seconds) do
-          expect(secondary_authentication.otp_locked?).to eq(false)
+          expect(secondary_authentication.otp_locked?).to be(false)
         end
       end
     end

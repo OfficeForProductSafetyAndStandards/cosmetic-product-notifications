@@ -1,7 +1,7 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Dashboard", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Dashboard", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:user) { create(:support_user, :with_sms_secondary_authentication) }
 
   before do

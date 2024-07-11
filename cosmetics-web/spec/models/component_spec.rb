@@ -502,7 +502,7 @@ RSpec.describe Component, type: :model do
     let(:component) { build(:component) }
 
     it "returns nil if contains_poisonous_ingredients is nil" do
-      expect(component.poisonous_ingredients_answer).to eq nil
+      expect(component.poisonous_ingredients_answer).to be_nil
     end
 
     it "returns 'Yes' if contains_poisonous_ingredients is true" do
@@ -551,7 +551,7 @@ RSpec.describe Component, type: :model do
       it "removes information about poisonus ingredients" do
         component.update_formulation_type("range")
 
-        expect(component.reload.contains_poisonous_ingredients).to eq nil
+        expect(component.reload.contains_poisonous_ingredients).to be_nil
       end
     end
 
@@ -665,38 +665,38 @@ RSpec.describe Component, type: :model do
   describe "#missing_ingredients?" do
     it "returns true for a range component with no ingredients" do
       component = create(:component, :using_range)
-      expect(component.missing_ingredients?).to eq(true)
+      expect(component.missing_ingredients?).to be(true)
     end
 
     it "returns falsefor a range component with ingredients" do
       component = create(:component, :with_range_ingredients)
-      expect(component.missing_ingredients?).to eq(false)
+      expect(component.missing_ingredients?).to be(false)
     end
 
     it "returns true for an exact component with no ingredients" do
       component = create(:component, :using_exact)
-      expect(component.missing_ingredients?).to eq(true)
+      expect(component.missing_ingredients?).to be(true)
     end
 
     it "returns false for an exact component with ingredients" do
       component = create(:component, :with_exact_ingredient)
-      expect(component.missing_ingredients?).to eq(false)
+      expect(component.missing_ingredients?).to be(false)
     end
 
     it "returns true for a predefined component that needs poisonous ingredients but has no ingredients" do
       component = create(:component, :using_frame_formulation, :with_poisonous_ingredients)
-      expect(component.missing_ingredients?).to eq(true)
+      expect(component.missing_ingredients?).to be(true)
     end
 
     it "returns false for a predefined component that needs poisonous ingredients and has a poisonous ingredients" do
       component = create(:component, :using_frame_formulation, :with_poisonous_ingredients)
       create(:poisonous_ingredient, component:)
-      expect(component.missing_ingredients?).to eq(false)
+      expect(component.missing_ingredients?).to be(false)
     end
 
     it "returns false for a predefined component that does not need poisonous ingredients" do
       component = create(:component, :using_frame_formulation)
-      expect(component.missing_ingredients?).to eq(false)
+      expect(component.missing_ingredients?).to be(false)
     end
   end
 
@@ -705,7 +705,7 @@ RSpec.describe Component, type: :model do
 
     it "returns false when the ingredient does not belong to the component" do
       ingredient = create(:range_ingredient)
-      expect(component.delete_ingredient!(ingredient)).to eq(false)
+      expect(component.delete_ingredient!(ingredient)).to be(false)
     end
 
     it "deletes the given ingredient from the component" do
@@ -733,54 +733,54 @@ RSpec.describe Component, type: :model do
   describe "#multi_shade?" do
     it "returns false for a component without shades" do
       component = build_stubbed(:component, shades: nil)
-      expect(component.multi_shade?).to eq(false)
+      expect(component.multi_shade?).to be(false)
     end
 
     it "returns false for a component with an empty array of shades" do
       component = build_stubbed(:component, shades: [])
-      expect(component.multi_shade?).to eq(false)
+      expect(component.multi_shade?).to be(false)
     end
 
     it "returns false for a component with an array with blank shades" do
       component = build_stubbed(:component, shades: [" ", ""])
-      expect(component.multi_shade?).to eq(false)
+      expect(component.multi_shade?).to be(false)
     end
 
     it "returns true for a component with one shade" do
       component = build_stubbed(:component, shades: %w[blue])
-      expect(component.multi_shade?).to eq(true)
+      expect(component.multi_shade?).to be(true)
     end
 
     it "returns true for a component with multiple shades" do
       component = build_stubbed(:component, shades: %w[blue yellow])
-      expect(component.multi_shade?).to eq(true)
+      expect(component.multi_shade?).to be(true)
     end
 
     it "returns true for a component with multiple shades and blank shades" do
       component = build_stubbed(:component, shades: %w[blue yellow ""])
-      expect(component.multi_shade?).to eq(true)
+      expect(component.multi_shade?).to be(true)
     end
   end
 
   describe "#range?" do
     it "is false for component without notification type" do
       component = build_stubbed(:component, notification_type: nil)
-      expect(component.range?).to eq(false)
+      expect(component.range?).to be(false)
     end
 
     it "is false for component with exact notification type" do
       component = build_stubbed(:component, notification_type: "exact")
-      expect(component.range?).to eq(false)
+      expect(component.range?).to be(false)
     end
 
     it "is false for component with predefined notification type" do
       component = build_stubbed(:component, notification_type: "predefined")
-      expect(component.range?).to eq(false)
+      expect(component.range?).to be(false)
     end
 
     it "is true for component with range notification type" do
       component = build_stubbed(:component, notification_type: "range")
-      expect(component.range?).to eq(true)
+      expect(component.range?).to be(true)
     end
   end
 

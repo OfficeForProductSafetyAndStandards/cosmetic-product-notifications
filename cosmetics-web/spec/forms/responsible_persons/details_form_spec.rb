@@ -5,8 +5,8 @@ RSpec.describe ResponsiblePersons::DetailsForm do
     described_class.new(user:,
                         account_type:,
                         name:,
-                        address_line_1:,
-                        address_line_2:,
+                        address_line_1: address_line_one,
+                        address_line_2: address_line_two,
                         city:,
                         county:,
                         postal_code:)
@@ -15,8 +15,8 @@ RSpec.describe ResponsiblePersons::DetailsForm do
   let(:user) { build_stubbed(:submit_user) }
   let(:account_type) { "business" }
   let(:name) { "Resp person name" }
-  let(:address_line_1) { "Random street" }
-  let(:address_line_2) { "Random street second line" }
+  let(:address_line_one) { "Random street" }
+  let(:address_line_two) { "Random street second line" }
   let(:city) { "London" }
   let(:county) { "London" }
   let(:postal_code) { "EC1 2PE" }
@@ -185,7 +185,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
     end
 
     context "when the first address line is blank" do
-      let(:address_line_1) { "" }
+      let(:address_line_one) { "" }
 
       before { form.validate }
 
@@ -199,7 +199,7 @@ RSpec.describe ResponsiblePersons::DetailsForm do
     end
 
     context "when the second address line is blank" do
-      let(:address_line_2) { "" }
+      let(:address_line_two) { "" }
 
       before { form.validate }
 

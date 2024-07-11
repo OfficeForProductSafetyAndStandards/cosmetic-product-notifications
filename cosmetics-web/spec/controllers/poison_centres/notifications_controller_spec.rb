@@ -33,7 +33,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         expect(response).to render_template("notifications/show_detail")
       end
 
-      describe "displayed information for archived notifications", versioning: true do
+      describe "displayed information for archived notifications", :versioning do
         let(:reference_number) { archived_notification.reference_number }
 
         render_views
@@ -74,7 +74,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         it_behaves_like "a notification search result without any component technical details"
       end
 
-      describe "displayed information for archived notifications", versioning: true do
+      describe "displayed information for archived notifications", :versioning do
         let(:reference_number) { archived_notification.reference_number }
 
         render_views
@@ -107,7 +107,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         it_behaves_like "a notification search result with ingredients and their exact percentages"
       end
 
-      describe "displayed information for archived notifications", versioning: true do
+      describe "displayed information for archived notifications", :versioning do
         let(:reference_number) { archived_notification.reference_number }
 
         render_views
@@ -140,7 +140,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         it_behaves_like "a notification search result with ingredients and their exact percentages"
       end
 
-      describe "displayed information for archived notifications", versioning: true do
+      describe "displayed information for archived notifications", :versioning do
         let(:reference_number) { archived_notification.reference_number }
 
         render_views
@@ -173,7 +173,7 @@ RSpec.describe PoisonCentres::NotificationsController, type: :controller do
         it_behaves_like "a notification search result with general component technical details"
       end
 
-      describe "displayed information for archived notifications", versioning: true do
+      describe "displayed information for archived notifications", :versioning do
         let(:reference_number) { archived_notification.reference_number }
 
         render_views

@@ -1,19 +1,19 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Responsible Person administration", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:user) { create(:support_user, :with_sms_secondary_authentication) }
-  let(:responsible_person1) { create(:responsible_person) }
-  let(:responsible_person2) { create(:responsible_person) }
-  let(:responsible_person3) { create(:responsible_person, name: "#{responsible_person2.name} 2") }
-  let(:assigned_contact) { create(:contact_person, responsible_person: responsible_person2) }
+  let(:responsible_person_a) { create(:responsible_person) }
+  let(:responsible_person_b) { create(:responsible_person) }
+  let(:responsible_person_c) { create(:responsible_person, name: "#{responsible_person_b.name} 2") }
+  let(:assigned_contact) { create(:contact_person, responsible_person: responsible_person_b) }
 
   before do
     configure_requests_for_support_domain
 
-    responsible_person1
-    responsible_person2
-    responsible_person3
+    responsible_person_a
+    responsible_person_b
+    responsible_person_c
     assigned_contact
 
     sign_in user
@@ -26,12 +26,12 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
 
     expect(page).to have_h1("Search for a Responsible Person account")
 
-    fill_in "Enter a search term", with: responsible_person1.name
+    fill_in "Enter a search term", with: responsible_person_a.name
     click_on "Search", match: :first
 
-    expect(page).to have_text(responsible_person1.name)
-    expect(page).not_to have_text(responsible_person2.name)
-    expect(page).not_to have_text(responsible_person3.name)
+    expect(page).to have_text(responsible_person_a.name)
+    expect(page).not_to have_text(responsible_person_b.name)
+    expect(page).not_to have_text(responsible_person_c.name)
   end
 
   scenario "Searching for a Responsible Person that exists with multiple results" do
@@ -41,12 +41,12 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
 
     expect(page).to have_h1("Search for a Responsible Person account")
 
-    fill_in "Enter a search term", with: responsible_person2.name
+    fill_in "Enter a search term", with: responsible_person_b.name
     click_on "Search", match: :first
 
-    expect(page).to have_text(responsible_person2.name)
-    expect(page).to have_text(responsible_person3.name)
-    expect(page).not_to have_text(responsible_person1.name)
+    expect(page).to have_text(responsible_person_b.name)
+    expect(page).to have_text(responsible_person_c.name)
+    expect(page).not_to have_text(responsible_person_a.name)
   end
 
   scenario "Searching for a Responsible Person that doesn't exist" do
@@ -75,25 +75,25 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
 
     click_on "Search", match: :first
 
-    expect(page).to have_text(responsible_person1.name)
-    expect(page).to have_text(responsible_person2.name)
-    expect(page).to have_text(responsible_person3.name)
+    expect(page).to have_text(responsible_person_a.name)
+    expect(page).to have_text(responsible_person_b.name)
+    expect(page).to have_text(responsible_person_c.name)
   end
 
   scenario "Viewing Responsible Person account details" do
-    visit "/responsible-persons/#{responsible_person1.id}"
+    visit "/responsible-persons/#{responsible_person_a.id}"
 
-    expect(page).to have_text(responsible_person1.name)
-    expect(page).to have_text(responsible_person1.address_line_1)
-    expect(page).to have_text(responsible_person1.address_line_2) unless responsible_person1.address_line_2.nil?
-    expect(page).to have_text(responsible_person1.city)
-    expect(page).to have_text(responsible_person1.county) unless responsible_person1.county.nil?
-    expect(page).to have_text(responsible_person1.postal_code)
-    expect(page).to have_text(responsible_person1.account_type == "individual" ? /Individual/ : /Limited company/)
+    expect(page).to have_text(responsible_person_a.name)
+    expect(page).to have_text(responsible_person_a.address_line_1)
+    expect(page).to have_text(responsible_person_a.address_line_2) unless responsible_person_a.address_line_2.nil?
+    expect(page).to have_text(responsible_person_a.city)
+    expect(page).to have_text(responsible_person_a.county) unless responsible_person_a.county.nil?
+    expect(page).to have_text(responsible_person_a.postal_code)
+    expect(page).to have_text(responsible_person_a.account_type == "individual" ? /Individual/ : /Limited company/)
   end
 
   scenario "Viewing Responsible Person account details with an assigned contact" do
-    visit "/responsible-persons/#{responsible_person2.id}"
+    visit "/responsible-persons/#{responsible_person_b.id}"
 
     expect(page).to have_text(assigned_contact.name)
     expect(page).to have_text(assigned_contact.email_address)
@@ -101,9 +101,9 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
   end
 
   scenario "Changing the name on a Responsible Person account" do
-    existing_name = responsible_person1.name
+    existing_name = responsible_person_a.name
 
-    visit "/responsible-persons/#{responsible_person1.id}"
+    visit "/responsible-persons/#{responsible_person_a.id}"
 
     click_link "Change Responsible Person name"
 
@@ -122,14 +122,14 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
 
   scenario "Changing the address on a Responsible Person account" do
     existing_address = [
-      responsible_person1.address_line_1,
-      responsible_person1.address_line_2,
-      responsible_person1.city,
-      responsible_person1.county,
-      responsible_person1.postal_code,
+      responsible_person_a.address_line_1,
+      responsible_person_a.address_line_2,
+      responsible_person_a.city,
+      responsible_person_a.county,
+      responsible_person_a.postal_code,
     ].reject(&:blank?).compact.join(", ")
 
-    visit "/responsible-persons/#{responsible_person1.id}"
+    visit "/responsible-persons/#{responsible_person_a.id}"
 
     click_link "Change Responsible Person address"
 
@@ -151,10 +151,10 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
   end
 
   scenario "Changing the business type on a Responsible Person account" do
-    existing_business_type = responsible_person1.account_type == "individual" ? "Individual or sole trader" : "Limited company or Limited Liability Partnership (LLP)"
-    new_business_type = responsible_person1.account_type == "individual" ? "Limited company or Limited Liability Partnership (LLP)" : "Individual or sole trader"
+    existing_business_type = responsible_person_a.account_type == "individual" ? "Individual or sole trader" : "Limited company or Limited Liability Partnership (LLP)"
+    new_business_type = responsible_person_a.account_type == "individual" ? "Limited company or Limited Liability Partnership (LLP)" : "Individual or sole trader"
 
-    visit "/responsible-persons/#{responsible_person1.id}"
+    visit "/responsible-persons/#{responsible_person_a.id}"
 
     click_link "Change Responsible Person business type"
 
@@ -170,7 +170,7 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
   scenario "Changing the name on an assigned contact" do
     existing_name = assigned_contact.name
 
-    visit "/responsible-persons/#{responsible_person2.id}"
+    visit "/responsible-persons/#{responsible_person_b.id}"
 
     click_link "Change assigned contact name"
 
@@ -190,7 +190,7 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
   scenario "Changing the email on an assigned contact" do
     existing_email = assigned_contact.email_address
 
-    visit "/responsible-persons/#{responsible_person2.id}"
+    visit "/responsible-persons/#{responsible_person_b.id}"
 
     click_link "Change assigned contact email"
 
@@ -215,7 +215,7 @@ RSpec.feature "Responsible Person administration", :with_stubbed_mailer, :with_s
   scenario "Changing the contact number on an assigned contact" do
     existing_contact_number = assigned_contact.phone_number
 
-    visit "/responsible-persons/#{responsible_person2.id}"
+    visit "/responsible-persons/#{responsible_person_b.id}"
 
     click_link "Change assigned contact contact number"
 

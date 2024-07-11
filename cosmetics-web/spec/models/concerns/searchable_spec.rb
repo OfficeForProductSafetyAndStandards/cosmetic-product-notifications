@@ -385,7 +385,7 @@ RSpec.describe Searchable, type: :model do
         .with("[Opensearch] [DummyClassIndex] Deleted Opensearch indices #{indices} for DummyClass")
     end
 
-    it { expect(dummy_class.delete_indices!(indices)).to eq true }
+    it { expect(dummy_class.delete_indices!(indices)).to be true }
   end
 
   describe ".alias_index!" do
@@ -408,7 +408,7 @@ RSpec.describe Searchable, type: :model do
           .with("[Opensearch] [DummyClassIndex] Pointed Opensearch DummyClass index alias to index dummies_version")
       end
 
-      it { expect(dummy_class.alias_index!("dummies_version")).to eq true }
+      it { expect(dummy_class.alias_index!("dummies_version")).to be true }
     end
 
     context "when given a non existing index" do
@@ -441,7 +441,7 @@ RSpec.describe Searchable, type: :model do
 
       it "returns nil if there is no index associated with the model" do
         allow(dummy_class).to receive(:current_index).and_return(nil)
-        expect(dummy_class.index_docs_count).to eq nil
+        expect(dummy_class.index_docs_count).to be_nil
         expect(client).not_to have_received(:count)
       end
     end
@@ -480,7 +480,7 @@ RSpec.describe Searchable, type: :model do
           .with("[Opensearch] [DummyClassIndex] Swapped Opensearch DummyClass index alias dummies from index #{current_index} to index #{new_index}")
       end
 
-      it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to eq true }
+      it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to be true }
     end
 
     context "when there is no existing alias pointing to the current index" do
@@ -502,7 +502,7 @@ RSpec.describe Searchable, type: :model do
           .with("[Opensearch] [DummyClassIndex] Pointed Opensearch DummyClass index alias to index #{new_index}")
       end
 
-      it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to eq true }
+      it { expect(dummy_class.swap_index_alias!(from: current_index, to: new_index)).to be true }
     end
 
     context "when there is no other index or alias" do
@@ -512,7 +512,7 @@ RSpec.describe Searchable, type: :model do
           .to eq({ new_index => { "aliases" => { "dummies" => {} } } })
       end
 
-      it { expect(dummy_class.swap_index_alias!(from: nil, to: new_index)).to eq true }
+      it { expect(dummy_class.swap_index_alias!(from: nil, to: new_index)).to be true }
     end
   end
 

@@ -295,12 +295,12 @@ RSpec.shared_examples "common user tests" do
 
       it "returns true for users with the mobile number verified" do
         user.mobile_number_verified = true
-        expect(user.mobile_number_verified?).to eq true
+        expect(user.mobile_number_verified?).to be true
       end
 
       it "returns false for users without the mobile number verified" do
         user.mobile_number_verified = false
-        expect(user.mobile_number_verified?).to eq false
+        expect(user.mobile_number_verified?).to be false
       end
     end
 
@@ -311,12 +311,12 @@ RSpec.shared_examples "common user tests" do
 
       it "returns true for users with the mobile number verified" do
         user.mobile_number_verified = true
-        expect(user.mobile_number_verified?).to eq true
+        expect(user.mobile_number_verified?).to be true
       end
 
       it "returns true for users without the mobile number verified" do
         user.mobile_number_verified = false
-        expect(user.mobile_number_verified?).to eq true
+        expect(user.mobile_number_verified?).to be true
       end
     end
   end
@@ -329,12 +329,12 @@ RSpec.shared_examples "common user tests" do
 
       it "users with verified mobile number are not allowed to change their mobile number" do
         user.mobile_number_verified = true
-        expect(user.mobile_number_change_allowed?).to eq false
+        expect(user.mobile_number_change_allowed?).to be false
       end
 
       it "users without verified mobile number are allowed to change their mobile number" do
         user.mobile_number_verified = false
-        expect(user.mobile_number_change_allowed?).to eq true
+        expect(user.mobile_number_change_allowed?).to be true
       end
     end
 
@@ -345,12 +345,12 @@ RSpec.shared_examples "common user tests" do
 
       it "users with verified mobile number are not allowed to change their mobile number" do
         user.mobile_number_verified = true
-        expect(user.mobile_number_change_allowed?).to eq false
+        expect(user.mobile_number_change_allowed?).to be false
       end
 
       it "users without verified mobile number are not allowed to change their mobile number" do
         user.mobile_number_verified = false
-        expect(user.mobile_number_change_allowed?).to eq false
+        expect(user.mobile_number_change_allowed?).to be false
       end
     end
   end
@@ -366,7 +366,7 @@ RSpec.shared_examples "common user tests" do
 
     it "registration is not completed when account security has not been completed" do
       user.account_security_completed = false
-      expect(user.has_completed_registration?).to eq false
+      expect(user.has_completed_registration?).to be false
     end
 
     context "when account security has been completed" do
@@ -374,29 +374,29 @@ RSpec.shared_examples "common user tests" do
 
       it "user has not completed registration when missing mobile number" do
         user.mobile_number = nil
-        expect(user.has_completed_registration?).to eq false
+        expect(user.has_completed_registration?).to be false
       end
 
       it "user has not completed registration when blank mobile number" do
         user.mobile_number = ""
-        expect(user.has_completed_registration?).to eq false
+        expect(user.has_completed_registration?).to be false
       end
 
       it "user has not completed registration when mobile number is not verified" do
         user.mobile_number_verified = false
-        expect(user.has_completed_registration?).to eq false
+        expect(user.has_completed_registration?).to be false
       end
 
       it "user has completed registration when having a mobile number that is verified" do
         user.mobile_number = "07123456789"
         user.mobile_number_verified = false
-        expect(user.has_completed_registration?).to eq true
+        expect(user.has_completed_registration?).to be true
       end
 
       it "user has completed registration when having set the app secondary authentication" do
         user.encrypted_totp_secret_key = "foobarencrypted"
         user.last_totp_at = 1_123_456_789
-        expect(user.has_completed_registration?).to eq true
+        expect(user.has_completed_registration?).to be true
       end
     end
   end
@@ -408,37 +408,37 @@ RSpec.shared_examples "common user tests" do
     end
 
     it "is false for blank email address" do
-      expect(user.uses_email_address?("")).to eq false
+      expect(user.uses_email_address?("")).to be false
     end
 
     it "is false for no email address" do
-      expect(user.uses_email_address?(nil)).to eq false
+      expect(user.uses_email_address?(nil)).to be false
     end
 
     it "is false when the email address is neither the user email or new email" do
-      expect(user.uses_email_address?("userdifferent@example.com")).to eq false
+      expect(user.uses_email_address?("userdifferent@example.com")).to be false
     end
 
     it "is false when the email address is not the user email and user has no new email" do
       user.new_email = nil
 
-      expect(user.uses_email_address?("userdifferent@example.com")).to eq false
+      expect(user.uses_email_address?("userdifferent@example.com")).to be false
     end
 
     it "is true when the email address matches the user email" do
-      expect(user.uses_email_address?("user@example.com")).to eq true
+      expect(user.uses_email_address?("user@example.com")).to be true
     end
 
     it "is true when the email address matches the new user email" do
-      expect(user.uses_email_address?("usernew@example.com")).to eq true
+      expect(user.uses_email_address?("usernew@example.com")).to be true
     end
 
     it "is true when the email address matches the user email with different capitalisation" do
-      expect(user.uses_email_address?("User@EXAMPLE.com")).to eq true
+      expect(user.uses_email_address?("User@EXAMPLE.com")).to be true
     end
 
     it "is true when the email address matches the user new email with different capitalisation" do
-      expect(user.uses_email_address?("userNEW@example.com")).to eq true
+      expect(user.uses_email_address?("userNEW@example.com")).to be true
     end
   end
 end

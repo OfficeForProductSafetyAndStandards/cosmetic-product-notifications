@@ -1,7 +1,7 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "History", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:user) { create(:support_user, :with_sms_secondary_authentication) }
   let(:other_support_user) { create(:support_user, name: "Max Mustermann") }
   let(:responsible_person) { create(:responsible_person) }
@@ -26,7 +26,7 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
            created_at: Time.zone.local(2023, 3, 1))
   end
 
-  let(:search_user_version_1) do
+  let(:search_user_version_a) do
     create(:version,
            event: "update",
            item: search_user,
@@ -36,7 +36,7 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
            created_at: Time.zone.local(2023, 3, 1))
   end
 
-  let(:search_user_version_2) do
+  let(:search_user_version_b) do
     create(:version,
            event: "update",
            item: search_user,
@@ -46,7 +46,7 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
            created_at: Time.zone.local(2023, 3, 2))
   end
 
-  let(:search_user_version_3) do
+  let(:search_user_version_c) do
     create(:version,
            event: "update",
            item: search_user,
@@ -60,9 +60,9 @@ RSpec.feature "History", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, 
     configure_requests_for_support_domain
     notification_version
     responsible_person_version
-    search_user_version_1
-    search_user_version_2
-    search_user_version_3
+    search_user_version_a
+    search_user_version_b
+    search_user_version_c
     sign_in user
   end
 

@@ -1,17 +1,17 @@
 require "rails_helper"
 
 RSpec.describe PoisonCentres::NotificationsSearchController, type: :controller do
-  let(:responsible_person_1) { create(:responsible_person, :with_a_contact_person) }
-  let(:responsible_person_2) { create(:responsible_person, :with_a_contact_person) }
+  let(:responsible_person_a) { create(:responsible_person, :with_a_contact_person) }
+  let(:responsible_person_b) { create(:responsible_person, :with_a_contact_person) }
 
-  let(:rp_1_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_1) }
-  let(:rp_2_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_2) }
+  let(:rp_a_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_a) }
+  let(:rp_b_notifications) { create_list(:registered_notification, 3, responsible_person: responsible_person_b) }
 
-  let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_1) }
+  let(:draft_notification) { create(:draft_notification, responsible_person: responsible_person_a) }
 
-  let(:distinct_notification) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "bbbb") }
-  let(:similar_notification_one) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaaa") }
-  let(:similar_notification_two) { create(:registered_notification, responsible_person: responsible_person_1, product_name: "aaab") }
+  let(:distinct_notification) { create(:registered_notification, responsible_person: responsible_person_a, product_name: "bbbb") }
+  let(:similar_notification_one) { create(:registered_notification, responsible_person: responsible_person_a, product_name: "aaaa") }
+  let(:similar_notification_two) { create(:registered_notification, responsible_person: responsible_person_a, product_name: "aaab") }
 
   after do
     sign_out(:search_user)
@@ -24,15 +24,15 @@ RSpec.describe PoisonCentres::NotificationsSearchController, type: :controller d
 
     describe "GET #show" do
       before do
-        rp_1_notifications
-        rp_2_notifications
+        rp_a_notifications
+        rp_b_notifications
         draft_notification
         Notification.import_to_opensearch(force: true)
         get :show, params: { notification_search_form: { q: "" } }
       end
 
       it "gets all submitted notifications" do
-        expect(assigns(:notifications).records.to_a.sort).to eq((rp_1_notifications + rp_2_notifications).sort)
+        expect(assigns(:notifications).records.to_a.sort).to eq((rp_a_notifications + rp_b_notifications).sort)
       end
 
       it "excludes draft notifications" do
@@ -113,7 +113,7 @@ RSpec.describe PoisonCentres::NotificationsSearchController, type: :controller d
 
   describe "When signed in as a Responsible Person user" do
     before do
-      sign_in_as_member_of_responsible_person(responsible_person_1)
+      sign_in_as_member_of_responsible_person(responsible_person_a)
     end
 
     describe "GET #show" do

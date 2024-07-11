@@ -43,7 +43,7 @@ RSpec.describe NotificationSearchResultDecorator do
 
     context "when notification has no shades" do
       it "returns false" do
-        expect(has_shades).to eq false
+        expect(has_shades).to be false
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe NotificationSearchResultDecorator do
       let(:notification) { create(:notification, shades: %w[green]) }
 
       it "returns true" do
-        expect(has_shades).to eq true
+        expect(has_shades).to be true
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe NotificationSearchResultDecorator do
       end
 
       it "returns true" do
-        expect(has_shades).to eq true
+        expect(has_shades).to be true
       end
     end
   end

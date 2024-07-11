@@ -1,7 +1,7 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Invite support user", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Invite support user", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:user) { create(:support_user, :with_sms_secondary_authentication) }
   let(:new_user_email) { "new-support-user@example.gov.uk" }
   let(:support_user) { create(:support_user) }

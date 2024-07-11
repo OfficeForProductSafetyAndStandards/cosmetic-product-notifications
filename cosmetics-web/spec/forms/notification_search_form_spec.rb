@@ -75,7 +75,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_to_month) { nil }
 
         it "is nil" do
-          expect(form.date_to_for_search).to eq nil
+          expect(form.date_to_for_search).to be_nil
         end
       end
 
@@ -83,7 +83,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_to) { nil }
 
         it "is nil" do
-          expect(form.date_to_for_search).to eq nil
+          expect(form.date_to_for_search).to be_nil
         end
       end
 
@@ -105,7 +105,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_exact_month) { nil }
 
         it "is nil" do
-          expect(form.date_to_for_search).to eq nil
+          expect(form.date_to_for_search).to be_nil
         end
       end
 
@@ -113,7 +113,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_exact) { nil }
 
         it "is nil" do
-          expect(form.date_to_for_search).to eq nil
+          expect(form.date_to_for_search).to be_nil
         end
       end
     end
@@ -127,7 +127,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_from_month) { nil }
 
         it "is nil" do
-          expect(form.date_from_for_search).to eq nil
+          expect(form.date_from_for_search).to be_nil
         end
       end
 
@@ -135,7 +135,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_from) { nil }
 
         it "is nil" do
-          expect(form.date_from_for_search).to eq nil
+          expect(form.date_from_for_search).to be_nil
         end
       end
 
@@ -157,7 +157,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_exact_month) { nil }
 
         it "is nil" do
-          expect(form.date_from_for_search).to eq nil
+          expect(form.date_from_for_search).to be_nil
         end
       end
 
@@ -165,7 +165,7 @@ RSpec.describe NotificationSearchForm do
         let(:date_exact) { nil }
 
         it "is nil" do
-          expect(form.date_from_for_search).to eq nil
+          expect(form.date_from_for_search).to be_nil
         end
       end
     end

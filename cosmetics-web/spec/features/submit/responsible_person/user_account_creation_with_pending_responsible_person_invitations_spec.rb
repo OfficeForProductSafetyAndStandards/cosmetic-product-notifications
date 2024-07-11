@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe "Creating an account when having pending responsible person invitations", :with_2fa, :with_stubbed_notify, :with_stubbed_mailer, type: :feature do
+RSpec.describe "Creating an account when having pending responsible person invitations", :with_2fa, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:responsible_person2) { create(:responsible_person, :with_a_contact_person) }
+  let(:another_responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:invited_user_email) { "invited_user@example.com" }
   let(:user) { User.find_by(email: invited_user_email) }
   let(:inviting_user) { create(:submit_user, name: "First John Doe") }
-  let(:inviting_user2) { create(:submit_user, name: "Second John Doe") }
-  let(:inviting_user3) { create(:submit_user, name: "Third John Doe") }
+  let(:inviting_user_b) { create(:submit_user, name: "Second John Doe") }
+  let(:inviting_user_c) { create(:submit_user, name: "Third John Doe") }
 
   before do
     configure_requests_for_submit_domain
@@ -28,7 +28,7 @@ RSpec.describe "Creating an account when having pending responsible person invit
     create(:pending_responsible_person_user,
            email_address: invited_user_email,
            inviting_user:,
-           responsible_person: responsible_person2)
+           responsible_person: another_responsible_person)
 
     user_creates_an_account_with_invitation_email
 
@@ -38,10 +38,10 @@ RSpec.describe "Creating an account when having pending responsible person invit
     # Shows invitation date for active invitations
     expect(page).to have_text("Check your email inbox for your invite, sent 24 November 2020.")
     # Expired invitations show the name of the user who sent the invitation
-    expect(page).to have_text(responsible_person2.name)
+    expect(page).to have_text(another_responsible_person.name)
     expect(page).to have_text("Your invite has expired and needs to be resent. You were invited by #{inviting_user.name}.")
     # Invitations are displayed in order of most recent to oldest invite
-    expect(page.body.index(responsible_person2.name)).to be < page.body.index(responsible_person.name)
+    expect(page.body.index(another_responsible_person.name)).to be < page.body.index(responsible_person.name)
     # User gets the option to create a new responsible person
     expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
   end
