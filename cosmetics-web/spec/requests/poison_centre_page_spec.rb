@@ -400,7 +400,7 @@ RSpec.describe "Poison centre page", type: :request do
           get poison_centre_notification_path(params_exact)
         end
 
-        it "displays the cosmetics product name " do
+        it "displays the cosmetics product name" do
           expect(response.body).to include(notification_exact.product_name)
         end
 

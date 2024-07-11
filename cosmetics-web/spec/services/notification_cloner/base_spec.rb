@@ -5,8 +5,8 @@ RSpec.describe NotificationCloner::Base do
   let(:product_name) { "Cloned notification" }
   let(:new_notification_with_name_only) { Notification.create!(product_name:, responsible_person: notification.responsible_person) }
 
-  let(:nanomaterial1) { create(:nano_material, notification:) }
-  let(:nanomaterial2) { create(:nano_material_non_standard, :toxicology_notified, notification:) }
+  let(:nanomaterial_a) { create(:nano_material, notification:) }
+  let(:nanomaterial_b) { create(:nano_material_non_standard, :toxicology_notified, notification:) }
 
   let(:component1) { create(:ranges_component, :completed, :with_range_ingredients, notification:) }
 
@@ -14,8 +14,8 @@ RSpec.describe NotificationCloner::Base do
     create(:exact_component, :completed, :with_exact_ingredient, notification:)
     create(:cmr, component: component1)
 
-    component1.nano_materials << nanomaterial1
-    component1.nano_materials << nanomaterial2
+    component1.nano_materials << nanomaterial_a
+    component1.nano_materials << nanomaterial_b
   end
 
   describe "Notification cloning" do

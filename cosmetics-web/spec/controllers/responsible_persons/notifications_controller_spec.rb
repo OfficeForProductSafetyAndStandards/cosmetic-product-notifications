@@ -102,7 +102,7 @@ RSpec.describe ResponsiblePersons::NotificationsController, :with_stubbed_antivi
   describe "GET /new" do
     it "creates a new notification" do
       get :new, params: { responsible_person_id: responsible_person.id }
-      expect(assigns(:notification)).to be_kind_of(Notification)
+      expect(assigns(:notification)).to be_a(Notification)
     end
 
     it "associates the new notification with current Responsible Person" do

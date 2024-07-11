@@ -6,13 +6,13 @@ RSpec.describe "Viewing a notification", type: :feature do
   let(:single_shade_component) { create(:exact_component, :completed, :with_exact_ingredients, notification: single_shade_notification) }
   let(:multi_shade_notification) { create(:notification, responsible_person:) }
   let(:multi_shade_component) { create(:exact_component, :completed, :with_multiple_shades, notification: multi_shade_notification) }
-  let(:multi_shade_ingredient1) { create(:exact_ingredient, used_for_multiple_shades: true, component: multi_shade_component) }
-  let(:multi_shade_ingredient2) { create(:exact_ingredient, exact_concentration: 20, used_for_multiple_shades: false, component: multi_shade_component) }
+  let(:multi_shade_ingredient_a) { create(:exact_ingredient, used_for_multiple_shades: true, component: multi_shade_component) }
+  let(:multi_shade_ingredient_b) { create(:exact_ingredient, exact_concentration: 20, used_for_multiple_shades: false, component: multi_shade_component) }
 
   before do
     single_shade_component
-    multi_shade_ingredient1
-    multi_shade_ingredient2
+    multi_shade_ingredient_a
+    multi_shade_ingredient_b
     sign_in_as_member_of_responsible_person(responsible_person)
   end
 

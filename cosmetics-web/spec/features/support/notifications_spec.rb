@@ -1,19 +1,19 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Manage cosmetic notifications", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Manage cosmetic notifications", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:user) { create(:support_user, :with_sms_secondary_authentication) }
-  let(:notification1) { create(:registered_notification, product_name: "Calendula") }
-  let(:notification2) { create(:registered_notification, product_name: "Calendula soap") }
-  let(:notification3) { create(:registered_notification, product_name: "Tea tree oil") }
+  let(:notification_a) { create(:registered_notification, product_name: "Calendula") }
+  let(:notification_b) { create(:registered_notification, product_name: "Calendula soap") }
+  let(:notification_c) { create(:registered_notification, product_name: "Tea tree oil") }
   let(:archived_notification) { create(:archived_notification, product_name: "Apple and calendula hand wash") }
 
   before do
     configure_requests_for_support_domain
 
-    notification1
-    notification2
-    notification3
+    notification_a
+    notification_b
+    notification_c
     archived_notification
 
     sign_in user
@@ -29,10 +29,10 @@ RSpec.feature "Manage cosmetic notifications", :with_stubbed_mailer, :with_stubb
     fill_in "Enter a search term", with: "calendula"
     click_on "Search", match: :first
 
-    expect(page).to have_text(notification1.product_name)
-    expect(page).to have_text(notification2.product_name)
+    expect(page).to have_text(notification_a.product_name)
+    expect(page).to have_text(notification_b.product_name)
     expect(page).to have_text(archived_notification.product_name)
-    expect(page).not_to have_text(notification3.product_name)
+    expect(page).not_to have_text(notification_c.product_name)
   end
 
   scenario "Searching for notifications using a search term with no results" do
@@ -64,9 +64,9 @@ RSpec.feature "Manage cosmetic notifications", :with_stubbed_mailer, :with_stubb
     click_on "Search", match: :first
 
     expect(page).to have_text(archived_notification.product_name)
-    expect(page).not_to have_text(notification1.product_name)
-    expect(page).not_to have_text(notification2.product_name)
-    expect(page).not_to have_text(notification3.product_name)
+    expect(page).not_to have_text(notification_a.product_name)
+    expect(page).not_to have_text(notification_b.product_name)
+    expect(page).not_to have_text(notification_c.product_name)
   end
 
   scenario "Searching for notifications using a search term and filtering by date" do
@@ -111,12 +111,12 @@ RSpec.feature "Manage cosmetic notifications", :with_stubbed_mailer, :with_stubb
 
     expect(page).to have_h1("Search for cosmetic product notifications")
 
-    fill_in "Enter a search term", with: notification2.reference_number
+    fill_in "Enter a search term", with: notification_b.reference_number
     click_on "Search", match: :first
 
-    expect(page).to have_text(notification2.reference_number)
-    expect(page).not_to have_text(notification1.reference_number)
-    expect(page).not_to have_text(notification3.reference_number)
+    expect(page).to have_text(notification_b.reference_number)
+    expect(page).not_to have_text(notification_a.reference_number)
+    expect(page).not_to have_text(notification_c.reference_number)
     expect(page).not_to have_text(archived_notification.reference_number)
   end
 
@@ -129,18 +129,18 @@ RSpec.feature "Manage cosmetic notifications", :with_stubbed_mailer, :with_stubb
 
     click_on "Search", match: :first
 
-    expect(page).to have_text(notification1.reference_number)
-    expect(page).to have_text(notification2.reference_number)
-    expect(page).to have_text(notification3.reference_number)
+    expect(page).to have_text(notification_a.reference_number)
+    expect(page).to have_text(notification_b.reference_number)
+    expect(page).to have_text(notification_c.reference_number)
     expect(page).to have_text(archived_notification.reference_number)
   end
 
   scenario "Viewing a notification" do
-    visit "/notifications/#{notification2.reference_number}"
+    visit "/notifications/#{notification_b.reference_number}"
 
-    expect(page).to have_h1(notification2.product_name)
+    expect(page).to have_h1(notification_b.product_name)
 
-    expect(page).to have_text(notification2.reference_number)
+    expect(page).to have_text(notification_b.reference_number)
   end
 
   scenario "Viewing an archived notification" do
@@ -152,16 +152,16 @@ RSpec.feature "Manage cosmetic notifications", :with_stubbed_mailer, :with_stubb
   end
 
   scenario "Deleting and recovering a notification" do
-    visit "/notifications/#{notification1.reference_number}"
+    visit "/notifications/#{notification_a.reference_number}"
 
-    expect(page).to have_h1(notification1.product_name)
+    expect(page).to have_h1(notification_a.product_name)
 
     click_button "Delete this notification"
 
-    expect(page).to have_h1("#{notification1.product_name} Deleted")
+    expect(page).to have_h1("#{notification_a.product_name} Deleted")
 
     click_button "Recover this notification"
 
-    expect(page).to have_h1(notification1.product_name)
+    expect(page).to have_h1(notification_a.product_name)
   end
 end

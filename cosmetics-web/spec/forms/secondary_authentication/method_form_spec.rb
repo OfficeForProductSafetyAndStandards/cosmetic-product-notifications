@@ -4,12 +4,12 @@ RSpec.describe SecondaryAuthentication::MethodForm do
   describe "#partially_hidden_mobile_number" do
     it "is null for forms where there is no mobile number" do
       form = described_class.new(mobile_number: nil)
-      expect(form.partially_hidden_mobile_number).to eq nil
+      expect(form.partially_hidden_mobile_number).to be_nil
     end
 
     it "is null for forms where the mobile number is empty" do
       form = described_class.new(mobile_number: "")
-      expect(form.partially_hidden_mobile_number).to eq nil
+      expect(form.partially_hidden_mobile_number).to be_nil
     end
 
     it "replaces all the mobile number digits but the last 4 with asterisks" do

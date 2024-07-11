@@ -211,7 +211,7 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       it "sets the date as nil" do
-        expect(nanomaterial_notification.notified_to_eu_on).to be nil
+        expect(nanomaterial_notification.notified_to_eu_on).to be_nil
       end
     end
 
@@ -241,7 +241,7 @@ RSpec.describe NanomaterialNotification, type: :model do
       end
 
       it "sets an nil date" do
-        expect(nanomaterial_notification.notified_to_eu_on).to be nil
+        expect(nanomaterial_notification.notified_to_eu_on).to be_nil
       end
     end
   end
@@ -309,7 +309,7 @@ RSpec.describe NanomaterialNotification, type: :model do
       let(:nanomaterial_notification) { create(:nanomaterial_notification, submitted_at: nil) }
 
       it "is nil" do
-        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to be nil
+        expect(nanomaterial_notification.can_be_made_available_on_uk_market_from).to be_nil
       end
     end
 

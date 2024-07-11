@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "User requests new secondary authentication sms code", type: :request, with_stubbed_notify: true, with_2fa: true do
+RSpec.describe "User requests new secondary authentication sms code", :with_2fa, :with_stubbed_notify, type: :request do
   let(:user_session) { {} }
 
   before do

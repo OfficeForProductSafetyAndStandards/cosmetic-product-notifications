@@ -1,13 +1,13 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
-  let(:notification1) { create(:notification) }
-  let(:component1) { create(:component, notification: notification1) }
-  let(:component1_2) { create(:component, notification: notification1) }
-  let(:component1_3) { create(:component, notification: notification1) }
+  let(:notification_a) { create(:notification) }
+  let(:component_a) { create(:component, notification: notification_a) }
+  let(:component_b) { create(:component, notification: notification_a) }
+  let(:component_c) { create(:component, notification: notification_a) }
 
-  let(:notification2) { create(:notification) }
-  let(:component2) { create(:component, notification: notification2) }
+  let(:notification_b) { create(:notification) }
+  let(:component_d) { create(:component, notification: notification_b) }
 
   describe "validation" do
     it "is invalid without component_id attribute present" do
@@ -17,22 +17,22 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
 
   describe "#delete" do
     before do
-      component1
-      component1_2
-      component1_3
+      component_a
+      component_b
+      component_c
     end
 
     context "when form is invalid" do
-      let(:form) { described_class.new(notification: notification1) }
+      let(:form) { described_class.new(notification: notification_a) }
 
       it "returns false if form is invalid" do
-        expect(form.delete).to eq false
+        expect(form.delete).to be false
       end
     end
 
     context "when component can not be found" do
       let(:non_existent_id) { Component.pluck(:id).max + 1 }
-      let(:form) { described_class.new(notification: notification1, component_id: non_existent_id) }
+      let(:form) { described_class.new(notification: notification_a, component_id: non_existent_id) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect { form.delete }.to raise_error(ActiveRecord::RecordNotFound)
@@ -40,7 +40,7 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
     end
 
     context "when component does not belong to notification" do
-      let(:form) { described_class.new(notification: notification1, component_id: component2.id) }
+      let(:form) { described_class.new(notification: notification_a, component_id: component_d.id) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect { form.delete }.to raise_error(ActiveRecord::RecordNotFound)
@@ -48,7 +48,7 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
     end
 
     context "when ok" do
-      let(:form) { described_class.new(notification: notification1, component_id: component1.id) }
+      let(:form) { described_class.new(notification: notification_a, component_id: component_a.id) }
 
       it "removes the component" do
         expect {
@@ -62,9 +62,9 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
     end
 
     context "when notification is completed" do
-      let(:notification1) { create(:registered_notification) }
+      let(:notification_a) { create(:registered_notification) }
 
-      let(:form) { described_class.new(notification: notification1, component_id: component1.id) }
+      let(:form) { described_class.new(notification: notification_a, component_id: component_a.id) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect { form.delete }.to raise_error(ActiveRecord::RecordNotFound)
@@ -72,9 +72,9 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
     end
 
     context "when notification is deleted" do
-      let(:notification1) { create(:notification, :deleted) }
+      let(:notification_a) { create(:notification, :deleted) }
 
-      let(:form) { described_class.new(notification: notification1, component_id: component1.id) }
+      let(:form) { described_class.new(notification: notification_a, component_id: component_a.id) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect { form.delete }.to raise_error(ActiveRecord::RecordNotFound)
@@ -83,10 +83,10 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteComponentForm do
   end
 
   context "when notification has only 2 components" do
-    let(:form) { described_class.new(notification: notification1, component_id: component1.id) }
+    let(:form) { described_class.new(notification: notification_a, component_id: component_a.id) }
 
     before do
-      component1_2
+      component_b
       form
     end
 

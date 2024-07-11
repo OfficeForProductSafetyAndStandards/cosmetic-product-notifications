@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stubbed_notify, :with_stubbed_mailer, type: :feature do
+RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   before do
     configure_requests_for_submit_domain
   end

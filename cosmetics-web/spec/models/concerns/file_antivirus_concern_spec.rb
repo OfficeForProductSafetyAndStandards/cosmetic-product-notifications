@@ -29,12 +29,12 @@ RSpec.describe FileAntivirusConcern, type: :model do
   describe "#file_exists?" do
     it "returns true when image upload contains an attachment" do
       allow(file_stub).to receive(:attachment).and_return(attachment_stub)
-      expect(dummy.file_exists?).to eq true
+      expect(dummy.file_exists?).to be true
     end
 
     it "returns false when image upload does not contain an attachment" do
       allow(file_stub).to receive(:attachment).and_return(nil)
-      expect(dummy.file_exists?).to eq false
+      expect(dummy.file_exists?).to be false
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe FileAntivirusConcern, type: :model do
       context "when the antivirus is disabled" do
         before { stub_const("ENV", { "ANTIVIRUS_ENABLED" => "false" }) }
 
-        it { expect(dummy.passed_antivirus_check?).to eq true }
+        it { expect(dummy.passed_antivirus_check?).to be true }
       end
 
       context "with the antivirus enabled" do
@@ -52,19 +52,19 @@ RSpec.describe FileAntivirusConcern, type: :model do
         context "with the file metadata marked as safe" do
           let(:file_metadata) { { "safe" => true } }
 
-          it { expect(dummy.passed_antivirus_check?).to eq true }
+          it { expect(dummy.passed_antivirus_check?).to be true }
         end
 
         context "with the file metadata marked as not safe" do
           let(:file_metadata) { { "safe" => false } }
 
-          it { expect(dummy.passed_antivirus_check?).to eq false }
+          it { expect(dummy.passed_antivirus_check?).to be false }
         end
 
         context "without safety information in the file metadata" do
           let(:file_metadata) { {} }
 
-          it { expect(dummy.passed_antivirus_check?).to eq false }
+          it { expect(dummy.passed_antivirus_check?).to be false }
         end
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe FileAntivirusConcern, type: :model do
     context "when the instance does not contain a file" do
       let(:attachment) {}
 
-      it { expect(dummy.passed_antivirus_check?).to eq false }
+      it { expect(dummy.passed_antivirus_check?).to be false }
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.describe FileAntivirusConcern, type: :model do
       context "when the antivirus is disabled" do
         before { stub_const("ENV", { "ANTIVIRUS_ENABLED" => "false" }) }
 
-        it { expect(dummy.pending_antivirus_check?).to eq false }
+        it { expect(dummy.pending_antivirus_check?).to be false }
       end
 
       context "with the antivirus enabled" do
@@ -94,19 +94,19 @@ RSpec.describe FileAntivirusConcern, type: :model do
         context "with the file metadata marked as safe" do
           let(:file_metadata) { { "safe" => true } }
 
-          it { expect(dummy.pending_antivirus_check?).to eq false }
+          it { expect(dummy.pending_antivirus_check?).to be false }
         end
 
         context "with the file metadata marked as not safe" do
           let(:file_metadata) { { "safe" => false } }
 
-          it { expect(dummy.pending_antivirus_check?).to eq false }
+          it { expect(dummy.pending_antivirus_check?).to be false }
         end
 
         context "without safety information in the file metadata" do
           let(:file_metadata) { {} }
 
-          it { expect(dummy.pending_antivirus_check?).to eq true }
+          it { expect(dummy.pending_antivirus_check?).to be true }
         end
       end
     end
@@ -114,7 +114,7 @@ RSpec.describe FileAntivirusConcern, type: :model do
     context "when instance does not contain a file" do
       let(:attachment) {}
 
-      it { expect(dummy.passed_antivirus_check?).to eq false }
+      it { expect(dummy.passed_antivirus_check?).to be false }
     end
   end
 
@@ -123,7 +123,7 @@ RSpec.describe FileAntivirusConcern, type: :model do
       context "when the antivirus is disabled" do
         before { stub_const("ENV", { "ANTIVIRUS_ENABLED" => "false" }) }
 
-        it { expect(dummy.failed_antivirus_check?).to eq false }
+        it { expect(dummy.failed_antivirus_check?).to be false }
       end
 
       context "with the antivirus enabled" do
@@ -132,19 +132,19 @@ RSpec.describe FileAntivirusConcern, type: :model do
         context "with the file metadata marked as safe" do
           let(:file_metadata) { { "safe" => true } }
 
-          it { expect(dummy.failed_antivirus_check?).to eq false }
+          it { expect(dummy.failed_antivirus_check?).to be false }
         end
 
         context "with the file metadata marked as not safe" do
           let(:file_metadata) { { "safe" => false } }
 
-          it { expect(dummy.failed_antivirus_check?).to eq true }
+          it { expect(dummy.failed_antivirus_check?).to be true }
         end
 
         context "without safety information in the file metadata" do
           let(:file_metadata) { {} }
 
-          it { expect(dummy.failed_antivirus_check?).to eq false }
+          it { expect(dummy.failed_antivirus_check?).to be false }
         end
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe FileAntivirusConcern, type: :model do
     context "when the instance does not contain a file" do
       let(:attachment) {}
 
-      it { expect(dummy.failed_antivirus_check?).to eq false }
+      it { expect(dummy.failed_antivirus_check?).to be false }
     end
   end
 end

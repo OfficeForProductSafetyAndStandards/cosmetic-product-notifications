@@ -1,17 +1,17 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Search", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 
-  let(:component1) { create(:component, :using_exact, with_ingredients: %w[aqua tin sodium]) }
-  let(:component2) { create(:component, :using_exact, with_ingredients: %w[aqua tin]) }
+  let(:component_a) { create(:component, :using_exact, with_ingredients: %w[aqua tin sodium]) }
+  let(:component_b) { create(:component, :using_exact, with_ingredients: %w[aqua tin]) }
 
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
-  let(:responsible_person2) { create(:responsible_person, :with_a_contact_person) }
+  let(:another_responsible_person) { create(:responsible_person, :with_a_contact_person) }
 
-  let(:cream) { create(:notification, :registered, components: [component1], notification_complete_at: 1.day.ago, product_name: "Cream") }
-  let(:shower_bubbles) { create(:notification, :registered, responsible_person:, components: [component2], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
+  let(:cream) { create(:notification, :registered, components: [component_a], notification_complete_at: 1.day.ago, product_name: "Cream") }
+  let(:shower_bubbles) { create(:notification, :registered, responsible_person:, components: [component_b], notification_complete_at: 3.days.ago, product_name: "Shower Bubbles") }
 
   before do
     configure_requests_for_search_domain

@@ -9,11 +9,43 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
 
   scenario "Sign-in and view landing page" do
     sign_in_user_visit_landing_page
+    expect(page).to have_content("Select the Responsible Person")
   end
 
-  scenario "Sign-in and create a responsible person" do
+  context "when signed in and creating a responsible person" do
+    before do
+      sign_in_and_create_responsible_person
+    end
+
+    it "successfully creates a responsible person" do
+      expect(page).to have_content("The Responsible Person was created")
+    end
+
+    context "when signed out and signed back in" do
+      before do
+        sign_out_and_sign_back_in
+      end
+
+      it "displays the account information" do
+        within("main.govuk-main-wrapper") do
+          expect(page).to have_content("Your account")
+        end
+      end
+
+      it "displays the full name of the responsible person" do
+        within("main.govuk-main-wrapper") do
+          expect(page).to have_content("Full name #{user.name}")
+        end
+      end
+    end
+  end
+
+  def sign_in_and_create_responsible_person
     sign_in_user_visit_landing_page
     create_responsible_person
+  end
+
+  def sign_out_and_sign_back_in
     sign_out_user_sign_back_in_view_your_account
   end
 
@@ -51,7 +83,7 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
     fill_in "Postcode", with: "AB12 3DE"
     click_button("Save and continue")
 
-    # # add contact person for the rp that was created
+    # add contact person for the rp that was created
     expect(page).to have_h1("Contact person for Test person one")
     fill_in "Full name", with: "Test contact person one"
     fill_in "Email", with: "ct_test@testing.one"

@@ -11,7 +11,7 @@ RSpec.describe "Notifications archiving", type: :feature do
     sign_in user
   end
 
-  scenario "archiving a notification from the notifications dashboard", versioning: true do
+  scenario "archiving a notification from the notifications dashboard", :versioning do
     notification
     Notification.import_to_opensearch(force: true)
 
@@ -29,7 +29,7 @@ RSpec.describe "Notifications archiving", type: :feature do
     expect(page).not_to have_link("View #{notification.product_name}")
   end
 
-  scenario "archiving a notification from the notification page", versioning: true do
+  scenario "archiving a notification from the notification page", :versioning do
     notification
     Notification.import_to_opensearch(force: true)
 
@@ -54,7 +54,7 @@ RSpec.describe "Notifications archiving", type: :feature do
     expect(page).to have_css("td.govuk-table__cell", text: "Archived: Significant change to the formulation")
   end
 
-  scenario "unarchiving a notification from the notifications archive dashboard", versioning: true do
+  scenario "unarchiving a notification from the notifications archive dashboard", :versioning do
     travel_to Time.zone.local(2020, 1, 1, 12, 0, 0) do
       archived_notification
     end
@@ -77,7 +77,7 @@ RSpec.describe "Notifications archiving", type: :feature do
     expect(title).to have_sibling("td", text: "1 January 2020", exact_text: true)
   end
 
-  scenario "unarchiving a notification from the notification page", versioning: true do
+  scenario "unarchiving a notification from the notification page", :versioning do
     travel_to Time.zone.local(2020, 1, 1, 12, 0, 0) do
       archived_notification
     end

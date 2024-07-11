@@ -13,14 +13,14 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     context "when nanomaterial notications are present", :with_stubbed_antivirus do
       let(:user_id) { submit_user.id }
       let(:rp) { responsible_person }
-      let(:nanomaterial_notification1) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp) }
-      let(:nanomaterial_notification2) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
-      let(:nanomaterial_notification3) { create(:nanomaterial_notification, user_id:, responsible_person: rp) }
+      let(:nanomaterial_notification_a) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp) }
+      let(:nanomaterial_notification_b) { create(:nanomaterial_notification, :submittable, :submitted, user_id:, responsible_person: rp, notified_to_eu_on: 3.days.ago.to_date) }
+      let(:nanomaterial_notification_c) { create(:nanomaterial_notification, user_id:, responsible_person: rp) }
 
       before do
-        nanomaterial_notification1
-        nanomaterial_notification2
-        nanomaterial_notification3
+        nanomaterial_notification_a
+        nanomaterial_notification_b
+        nanomaterial_notification_c
       end
 
       scenario "CSV download link" do

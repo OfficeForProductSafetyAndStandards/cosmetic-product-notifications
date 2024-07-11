@@ -109,7 +109,7 @@ RSpec.describe Registration::AccountSecurityForm do
       before { form.password = "" }
 
       it "returns false" do
-        expect(form.update!).to eq false
+        expect(form.update!).to be false
       end
 
       it "does not change any user attribute" do
@@ -196,7 +196,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
       it "does not validate user" do
         expect(form).not_to be_valid
-        expect(form.errors[:password]).to match_array(["Enter a password"])
+        expect(form.errors[:password]).to contain_exactly("Enter a password")
       end
     end
 
@@ -205,7 +205,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
       it "does not validate user" do
         expect(form).not_to be_valid
-        expect(form.errors[:password]).to match_array(["Choose a less frequently used password"])
+        expect(form.errors[:password]).to contain_exactly("Choose a less frequently used password")
       end
     end
 
@@ -214,7 +214,7 @@ RSpec.describe Registration::AccountSecurityForm do
 
       it "does not validate user" do
         expect(form).not_to be_valid
-        expect(form.errors[:password]).to match_array(["Password must be at least 8 characters"])
+        expect(form.errors[:password]).to contain_exactly("Password must be at least 8 characters")
       end
     end
 

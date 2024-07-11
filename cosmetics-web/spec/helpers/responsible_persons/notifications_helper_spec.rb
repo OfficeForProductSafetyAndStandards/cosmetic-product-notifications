@@ -35,7 +35,7 @@ describe ResponsiblePersons::NotificationsHelper do
 
     it "returns nil if image is waiting for antivirus check" do
       allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: true)
-      expect(label_image_link).to eq(nil)
+      expect(label_image_link).to be_nil
     end
 
     context "when edits are allowed" do
@@ -52,7 +52,7 @@ describe ResponsiblePersons::NotificationsHelper do
 
     it "returns nil when the image file does not exist" do
       allow(image).to receive_messages(passed_antivirus_check?: false, file_exists?: false)
-      expect(label_image_link).to eq(nil)
+      expect(label_image_link).to be_nil
     end
   end
 

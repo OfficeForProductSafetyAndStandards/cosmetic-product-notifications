@@ -19,7 +19,7 @@ RSpec.describe SecondaryAuthentication::TimeOtp do
     end
 
     it "is false when no code is provided" do
-      expect(secondary_authentication.valid_otp?("")).to eq false
+      expect(secondary_authentication.valid_otp?("")).to be false
     end
   end
 

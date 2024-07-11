@@ -1,7 +1,7 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Creating a Search account from an invitation", :with_stubbed_mailer, :with_stubbed_notify, :with_2fa, :with_2fa_app, type: :feature do
+RSpec.feature "Creating a Search account from an invitation", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let!(:invited_user) { InviteSearchUser.call(email: "john.doe@example.com", name: "John Doe", role: :poison_centre).user }
   let(:existing_user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
 

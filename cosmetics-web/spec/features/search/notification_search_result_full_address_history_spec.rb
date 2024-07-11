@@ -1,7 +1,7 @@
 require "rails_helper"
 require "support/feature_helpers"
 
-RSpec.feature "Search result full address history", :with_stubbed_notify, :with_stubbed_antivirus, :with_2fa, type: :feature do
+RSpec.feature "Search result full address history", :with_2fa, :with_stubbed_antivirus, :with_stubbed_notify, type: :feature do
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person, :with_previous_addresses) }
   let(:nanomaterial_notification) do
     create(:nanomaterial_notification,

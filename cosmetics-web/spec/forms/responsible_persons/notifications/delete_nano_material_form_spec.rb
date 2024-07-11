@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
-  let(:notification1) { create(:notification) }
-  let(:nano_material1) { create(:nano_material, notification: notification1) }
+  let(:notification_a) { create(:notification) }
+  let(:nano_material_a) { create(:nano_material, notification: notification_a) }
 
-  let(:notification2) { create(:notification) }
-  let(:nano_material2) { create(:nano_material, notification: notification2) }
+  let(:notification_b) { create(:notification) }
+  let(:nano_material_b) { create(:nano_material, notification: notification_b) }
 
   describe "validation" do
     context "when nano_material_ids attribute is missing" do
@@ -15,7 +15,7 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
     end
 
     context "when nano_material_ids attribute is blank" do
-      let(:form) { described_class.new(notification: notification1, nano_material_ids: []) }
+      let(:form) { described_class.new(notification: notification_a, nano_material_ids: []) }
 
       it "is invalid" do
         expect(form).not_to be_valid
@@ -23,7 +23,7 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
     end
 
     context "when nano_material_ids attribute has blank elements" do
-      let(:form) { described_class.new(notification: notification1, nano_material_ids: [""]) }
+      let(:form) { described_class.new(notification: notification_a, nano_material_ids: [""]) }
 
       it "is invalid" do
         expect(form).not_to be_valid
@@ -33,15 +33,15 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
 
   describe "#delete" do
     context "when form is invalid" do
-      let(:form) { described_class.new(notification: notification1) }
+      let(:form) { described_class.new(notification: notification_a) }
 
       it "returns false if form is invalid" do
-        expect(form.delete).to eq false
+        expect(form.delete).to be false
       end
     end
 
     context "when nano_material can not be found" do
-      let(:form) { described_class.new(notification: notification1, nano_material_ids: [1]) }
+      let(:form) { described_class.new(notification: notification_a, nano_material_ids: [1]) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect(NanoMaterial.count).to eq 0 # to make sure no nano_materials are present
@@ -51,7 +51,7 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
     end
 
     context "when nano_material does not belong to notification" do
-      let(:form) { described_class.new(notification: notification1, nano_material_ids: [nano_material2.id]) }
+      let(:form) { described_class.new(notification: notification_a, nano_material_ids: [nano_material_b.id]) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect { form.delete }.to raise_error(ActiveRecord::RecordNotFound)
@@ -59,7 +59,7 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
     end
 
     context "when ok" do
-      let(:form) { described_class.new(notification: notification1, nano_material_ids: [nano_material1.id]) }
+      let(:form) { described_class.new(notification: notification_a, nano_material_ids: [nano_material_a.id]) }
 
       before do
         form
@@ -75,9 +75,9 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
     end
 
     context "when notification is completed" do
-      let(:notification1) { create(:registered_notification) }
+      let(:notification_a) { create(:registered_notification) }
 
-      let(:form) { described_class.new(notification: notification1, nano_material_ids: [nano_material1.id]) }
+      let(:form) { described_class.new(notification: notification_a, nano_material_ids: [nano_material_a.id]) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect { form.delete }.to raise_error(ActiveRecord::RecordNotFound)
@@ -85,9 +85,9 @@ RSpec.describe ResponsiblePersons::Notifications::DeleteNanoMaterialForm do
     end
 
     context "when notification is deleted" do
-      let(:notification1) { create(:notification, :deleted) }
+      let(:notification_a) { create(:notification, :deleted) }
 
-      let(:form) { described_class.new(notification: notification1, nano_material_ids: [nano_material1.id]) }
+      let(:form) { described_class.new(notification: notification_a, nano_material_ids: [nano_material_a.id]) }
 
       it "raises ActiveRecord::ElementNotFound" do
         expect { form.delete }.to raise_error(ActiveRecord::RecordNotFound)

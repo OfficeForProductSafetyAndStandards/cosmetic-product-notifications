@@ -43,7 +43,7 @@ RSpec.describe NanoMaterial, type: :model do
           expect(new_nano_material).to be_valid
         end
 
-        it " does not accept same name as existing one" do
+        it "does not accept same name as existing one" do
           new_nano_material.inci_name = existing_name
           expect(new_nano_material).not_to be_valid(:add_nanomaterial_name)
           expect(new_nano_material.errors[:inci_name]).to eq [unique_error]
@@ -446,7 +446,7 @@ RSpec.describe NanoMaterial, type: :model do
         expect(nano_material).to be_conforms_to_restrictions
       end
 
-      it " does not conform to restrictions when the toxicology notification confirmation is unset" do
+      it "does not conform to restrictions when the toxicology notification confirmation is unset" do
         nano_material.confirm_toxicology_notified = ""
         expect(nano_material).not_to be_conforms_to_restrictions
       end

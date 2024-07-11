@@ -62,7 +62,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
   describe "#can_be_deleted?" do
     it "can be deleted if the notification is not complete" do
       notification = build_stubbed(:draft_notification)
-      expect(notification.can_be_deleted?).to eq true
+      expect(notification.can_be_deleted?).to be true
     end
 
     context "when the notification is complete" do
@@ -70,12 +70,12 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
       it "can be deleted if the notification was completed within the allowed deletion window" do
         notification.notification_complete_at = Time.zone.now
-        expect(notification.can_be_deleted?).to eq true
+        expect(notification.can_be_deleted?).to be true
       end
 
       it "can't be deleted if the notification was completed outside the allowed deletion window" do
         notification.notification_complete_at = (described_class::DELETION_PERIOD_DAYS + 1).days.ago
-        expect(notification.can_be_deleted?).to eq false
+        expect(notification.can_be_deleted?).to be false
       end
     end
   end
@@ -150,7 +150,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           notification.reload
 
           described_class::DELETABLE_ATTRIBUTES.each do |attribute|
-            expect(notification[attribute]).to eq(nil), "'#{attribute}' attribute should be empty"
+            expect(notification[attribute]).to be_nil, "'#{attribute}' attribute should be empty"
           end
         end
 
@@ -296,25 +296,25 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     context "when fewer than 10 images are attached" do
       let(:image_uploads) { create_list(:image_upload, 8, :uploaded_and_virus_scanned) }
       let(:notification) { create(:notification, image_uploads:) }
-      let(:attachment1) { fixture_file_upload("/testImage.png", "image/png") }
-      let(:attachment2) { fixture_file_upload("/testImage.png", "image/png") }
-      let(:attachment3) { fixture_file_upload("/testImage.png", "image/png") }
+      let(:attachment_a) { fixture_file_upload("/testImage.png", "image/png") }
+      let(:attachment_b) { fixture_file_upload("/testImage.png", "image/png") }
+      let(:attachment_c) { fixture_file_upload("/testImage.png", "image/png") }
 
       it "allows another image to be attached" do
-        notification.add_image(attachment1)
+        notification.add_image(attachment_a)
         expect { notification.save }.to(change { notification.image_uploads.count }.by(1))
       end
 
       it "allows two more images to be attached" do
-        notification.add_image(attachment1)
-        notification.add_image(attachment2)
+        notification.add_image(attachment_a)
+        notification.add_image(attachment_b)
         expect { notification.save }.to(change { notification.image_uploads.count }.by(2))
       end
 
       it "allows two more images to be attached but rejects the third" do
-        notification.add_image(attachment1)
-        notification.add_image(attachment2)
-        notification.add_image(attachment3)
+        notification.add_image(attachment_a)
+        notification.add_image(attachment_b)
+        notification.add_image(attachment_c)
         expect { notification.save }.to(change { notification.image_uploads.count }.by(2))
       end
     end
@@ -326,7 +326,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
 
       it "does not allow another image to be attached" do
         notification.add_image(attachment)
-        expect { notification.save }.to(change { notification.image_uploads.count }.by(0))
+        expect { notification.save }.not_to(change { notification.image_uploads.count })
       end
 
       it "sets an error message" do
@@ -582,7 +582,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
           expect { make_ready }.not_to change(notification, :state)
         end
 
-        it " does not reset the notification previous state" do
+        it "does not reset the notification previous state" do
           expect { make_ready }.not_to change(notification, :previous_state)
         end
       end
@@ -601,7 +601,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
       end
 
       it "allows a duplicate name" do
-        expect(new_notification.valid?(:cloning)).to eq true
+        expect(new_notification.valid?(:cloning)).to be true
       end
     end
 
@@ -645,7 +645,7 @@ RSpec.describe Notification, :with_stubbed_antivirus, type: :model do
     end
   end
 
-  describe "versioning", versioning: true do
+  describe "versioning", :versioning do
     context "when transitioning state from draft to complete" do
       let(:notification) { create(:draft_notification) }
 
