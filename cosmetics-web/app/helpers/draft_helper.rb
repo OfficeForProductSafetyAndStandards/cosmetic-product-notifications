@@ -79,9 +79,9 @@ module DraftHelper
 
     if notification&.empty? || notification&.product_name_added? || notification&.details_complete?
       cannot_start_yet_badge(id, hidden_text)
-    elsif component.empty?
+    elsif component&.empty?
       not_started_badge(id, hidden_text)
-    elsif component.component_complete?
+    elsif component&.component_complete?
       complete_badge(id, hidden_text)
     else
       cannot_start_yet_badge(id, hidden_text)
