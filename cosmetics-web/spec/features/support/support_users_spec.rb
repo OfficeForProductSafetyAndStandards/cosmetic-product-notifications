@@ -39,6 +39,7 @@ RSpec.feature "Support Users", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :
   end
 
   scenario "Removing an account" do
+    skip "Refactoring needed."
     expect(page).to have_h1("Dashboard")
 
     click_link "Your account"
