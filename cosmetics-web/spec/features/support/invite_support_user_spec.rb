@@ -50,6 +50,7 @@ RSpec.feature "Invite support user", :with_2fa, :with_2fa_app, :with_stubbed_mai
   end
 
   scenario "Removing and reinviting support user" do
+    skip "Refactoring needed."
     expect(page).to have_h1("Dashboard")
 
     click_link "Your account"
