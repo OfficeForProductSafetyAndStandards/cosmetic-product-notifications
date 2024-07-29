@@ -20,7 +20,7 @@
     "postcss": "^8.4.39",
     "resolve-url-loader": "5.0.0",
     "sass": "^1.77.8",
-    "sass-loader": "^14.2.1",
+    "sass-loader": "^16.0.0",
     "standard": "17.1.0",
     "stylelint": "^14.16.1",
     "stylelint-config-gds": "^0.3.0"
