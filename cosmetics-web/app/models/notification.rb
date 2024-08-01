@@ -39,7 +39,6 @@ class Notification < ApplicationRecord
   include Clonable
   include NotificationStateConcern
 
-  # Don't install callbacks for paper_trail since we save versions manually on some AASM state changes
   has_paper_trail on: []
 
   belongs_to :responsible_person
@@ -53,45 +52,26 @@ class Notification < ApplicationRecord
 
   accepts_nested_attributes_for :image_uploads
 
-  # This is an ElasticSearch alias, not the actual index name.
-  # Current version of the index name is accessible through Notification.current_index.
   index_name [ENV.fetch("OS_NAMESPACE", "default_namespace"), Rails.env, "notifications"].join("_")
 
   scope :opensearch, -> { where(state: %i[notification_complete archived]) }
   scope :completed, -> { where(state: :notification_complete) }
   scope :archived, -> { where(state: :archived) }
 
-  before_create do
-    new_reference_number = nil
-    loop do
-      new_reference_number = SecureRandom.rand(100_000_000)
-      break unless Notification.where(reference_number: new_reference_number).exists?
-    end
-    self.reference_number = new_reference_number if reference_number.nil?
-  end
-
+  before_create :generate_reference_number
   before_save :add_product_name, if: :will_save_change_to_product_name?
-
   after_destroy :delete_document_from_index, unless: :deleted?
 
-  def self.duplicate_notification_message
-    "Notification duplicated"
-  end
-
   validate :all_required_attributes_must_be_set
-  validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message },
-                             allow_nil: true
+  validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message }, allow_nil: true
   validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference" }
   validates :under_three_years, inclusion: { in: [true, false] }, on: :for_children_under_three
   validates :components_are_mixed, inclusion: { in: [true, false] }, on: :is_mixed
   validates :ph_min_value, :ph_max_value, presence: true, on: :ph_range
   validates :ph_min_value, :ph_max_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 14 }, allow_nil: true
-
   validate :max_ph_is_greater_than_min_ph
   validate :difference_between_maximum_and_minimum_ph, on: :ph_range
-
   validates_with AcceptAndSubmitValidator, on: :accept_and_submit
-
   validates :archive_reason, presence: { on: :archive, message: "A reason for archiving must be selected" }
 
   delegate :count, to: :components, prefix: true
@@ -151,12 +131,7 @@ class Notification < ApplicationRecord
   end
 
   def searchable_ingredients
-    ingredients = []
-    components.each do |c|
-      ingredients << c.ingredients.pluck(:inci_name)
-    end
-
-    ingredients.flatten.join(",")
+    components.includes(:ingredients).flat_map { |c| c.ingredients.pluck(:inci_name) }.join(",")
   end
 
   def reference_number_for_display
@@ -184,9 +159,8 @@ class Notification < ApplicationRecord
   end
 
   def missing_nano_materials
-    # return nano_material that is in the notification, but not in the component
     notification_nano_ids = nano_materials.pluck(:id).sort
-    components_nano_ids = components.map(&:nano_materials).flatten.map(&:id).sort
+    components_nano_ids = components.includes(:nano_materials).map(&:nano_materials).flatten.map(&:id).sort
     ids = notification_nano_ids - components_nano_ids
     ids.map { |id| nano_materials.find(id) }
   end
@@ -199,15 +173,10 @@ class Notification < ApplicationRecord
     is_multicomponent?
   end
 
-  # Returns true if the notification was notified via uploading
-  # a ZIP file (eg from CPNP).
   def via_zip_file?
     cpnp_reference.present?
   end
 
-  # Sets up a given count of nanomaterials for the notification.
-  # Nothing to do if notification already contains nanomaterials.
-  # Returns number of nano materials added to the notification
   def make_ready_for_nanomaterials!(count)
     count = count.to_i
     return 0 unless count.positive? && nano_materials.none?
@@ -219,69 +188,35 @@ class Notification < ApplicationRecord
     count
   end
 
-  # Sets up a single component notification or prepares it for the upgrade to multicomponent notification.
-  # Nothing to do if notification is already multicomponent.
-  # Returns number of components added to the notification.
   def make_single_ready_for_components!(count)
     return 0 if multi_component? || count.negative?
 
     transaction do
-      if count > 1 # Turning into a multi component notification
-        reset_previous_state! # Previous state was set to prevent messing state when nanos are added
+      if count > 1
+        reset_previous_state!
         revert_to_details_complete
       end
 
-      count += 1 if count.zero? # Single component notification
-      count -= 1 if components.one? # Don't create the already existing component
+      count += 1 if count.zero?
+      count -= 1 if components.one?
       count.times { components.create! }
     end
     count
   end
 
-  # =========================================
-  # DELETING NOTIFICATIONS
-  # =========================================
-  #
-  # Notifications will be soft deleted by default. We want to avoid hard deletes unless
-  # particular cases arise, eg. we need to completely remove a Responsible Person and
-  # its associated notifications.
-  #
-  # The following code overwrites ActiveRecord methods to default to soft deletion.
-  # - Notification will be soft deleted when calling:
-  #   - soft_delete!
-  #   - destroy
-  #   - destroy!
-  # - Notification will be hard deleted when calling:
-  #   - hard_delete!
-  # - Disabled methods:
-  #   - delete
-  #   - delete!
-  #
-  # A deleted notification can be recovered by calling `recover!` on `DeletedNotification`.
-
-  # Keeps the original "ActiveRecord::Persistence#destroy" behaviour as "#hard_delete!"
-  # This allows to still hard delete notifications after "#destroy" is overwritten
-  # to do a soft deletion.
   alias_method :hard_delete!, :destroy
 
-  # Soft deletion of a notification implies:
-  # - Sets notification state as "deleted"
-  # - Creates an associated "deleted_notification" object containing the notification information.
-  # - Removes information from original notification object that has been "deleted".
-  # - Removes document from OpenSearch index if it was previously added.
   def soft_delete!
     return if deleted?
 
     needs_index_deletion = notification_complete?
     transaction do
       DeletedNotification.create!(attributes.slice(*DELETABLE_ATTRIBUTES).merge(notification: self, state:))
-      DELETABLE_ATTRIBUTES.each do |field|
-        self[field] = nil
-      end
+      DELETABLE_ATTRIBUTES.each { |field| self[field] = nil }
       self.deleted_at = Time.zone.now
       self.state = DELETED
       self.paper_trail_event = "delete"
-      self.paper_trail.save_with_version(validate: false) # rubocop:disable Style/RedundantSelf
+      self.paper_trail.save_with_version(validate: false)
 
       delete_document_from_index if needs_index_deletion
     end
@@ -323,6 +258,13 @@ class Notification < ApplicationRecord
   end
 
 private
+
+  def generate_reference_number
+    self.reference_number ||= loop do
+      new_reference_number = SecureRandom.rand(100_000_000)
+      break new_reference_number unless Notification.exists?(reference_number: new_reference_number)
+    end
+  end
 
   def all_required_attributes_must_be_set
     mandatory_attributes = mandatory_attributes(state)
@@ -372,24 +314,18 @@ private
   end
 
   def difference_between_maximum_and_minimum_ph
-    return unless ph_min_value.present? && ph_max_value.present?
-
-    if (ph_max_value - ph_min_value).round(2) > 1.0
+    if ph_min_value.present? && ph_max_value.present? && (ph_max_value - ph_min_value).round(2) > 1.0
       errors.add(:ph_max_value, "The maximum pH cannot be greater than 1 above the minimum pH")
     end
   end
 
   def validate_image(image)
-    # We need to use `length` here rather than `count` since we're potentially adding multiple
-    # image uploads before saving the notification, and `count` will only tell us what's already
-    # in the database.
     errors.add(:image_uploads, :too_long, message: "You can only upload up to #{MAXIMUM_IMAGE_UPLOADS} images") unless image_uploads.length < MAXIMUM_IMAGE_UPLOADS
     errors.add(:image_uploads, :bad_file_extension, message: "The selected file must be a JPG, PNG or PDF") unless ImageUpload.allowed_types.include?(image.content_type)
     errors.add(:image_uploads, :too_large, message: "The selected file must be smaller than 30MB") unless image.tempfile.size <= ImageUpload.max_file_size
   end
 end
 
-# for auto sync model with Opensearch
 if Rails.env.development? && ENV["DISABLE_LOCAL_AUTOINDEX"].blank?
   Notification.import_to_opensearch force: true
 end
