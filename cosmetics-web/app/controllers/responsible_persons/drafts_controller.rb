@@ -33,19 +33,16 @@ private
   end
 
   def set_notification
-    @notification = Notification.find_by reference_number: params[:notification_reference_number]
-
+    @notification = Notification.includes(components: :associated_records).find_by(reference_number: params[:notification_reference_number])
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete? || @notification&.archived?
-
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
   end
 
   def get_unfinished_notifications(page_size)
     @responsible_person.notifications
-                       .where("state IN (?)", NotificationStateConcern::DISPLAYABLE_INCOMPLETE_STATES)
-                       .where("reference_number IS NOT NULL")
-                       .where("product_name IS NOT NULL")
-                       .order("updated_at DESC")
+                       .where(state: NotificationStateConcern::DISPLAYABLE_INCOMPLETE_STATES)
+                       .where.not(reference_number: nil, product_name: nil)
+                       .order(updated_at: :desc)
                        .page(params[:page]).per(page_size)
   end
 end
