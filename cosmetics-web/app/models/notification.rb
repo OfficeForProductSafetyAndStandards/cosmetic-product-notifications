@@ -62,6 +62,10 @@ class Notification < ApplicationRecord
   before_save :add_product_name, if: :will_save_change_to_product_name?
   after_destroy :delete_document_from_index, unless: :deleted?
 
+  def self.duplicate_notification_message
+    "Notification duplicated"
+  end
+
   validate :all_required_attributes_must_be_set
   validates :cpnp_reference, uniqueness: { scope: :responsible_person, message: duplicate_notification_message }, allow_nil: true
   validates :industry_reference, presence: { on: :add_internal_reference, message: "Enter an internal reference" }
@@ -216,7 +220,7 @@ class Notification < ApplicationRecord
       self.deleted_at = Time.zone.now
       self.state = DELETED
       self.paper_trail_event = "delete"
-      self.paper_trail.save_with_version(validate: false)
+      self.paper_trail.save_with_version(validate: false) # rubocop:disable Style/RedundantSelf
 
       delete_document_from_index if needs_index_deletion
     end
