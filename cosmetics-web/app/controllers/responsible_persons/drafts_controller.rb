@@ -33,7 +33,7 @@ private
   end
 
   def set_notification
-    @notification = Notification.includes(components: :associated_records).find_by(reference_number: params[:notification_reference_number])
+    @notification = Notification.find_by(reference_number: params[:notification_reference_number])
     return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete? || @notification&.archived?
 
     authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
