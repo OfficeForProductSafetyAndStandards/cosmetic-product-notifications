@@ -50,6 +50,45 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  # Ensure that any test data or database changes are cleaned up properly between tests
+  require "database_cleaner/active_record"
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before do
+    DatabaseCleaner.start
+  end
+
+  config.after do
+    DatabaseCleaner.clean
+  end
+
+  config.before(:each, :js) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  # Include additional helpers and modules
+  config.include ActiveSupport::Testing::TimeHelpers
+  config.include Capybara::DSL, type: :feature
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include FactoryBot::Syntax::Methods
+  config.include DomainHelpers
+  config.include FileHelpers
+  config.include LoginHelpers
+  config.include Matchers
+  config.include ResponsiblePersonHelpers
+  config.include ActionDispatch::TestProcess::FixtureFile
+
+  # Reset search indexes before each test if using a search service like Elasticsearch
+  config.before do
+    Notification.delete_all
+    ResponsiblePerson.delete_all
+    Notification.import_to_opensearch(force: true) if defined?(Notification.import_to_opensearch)
+  end
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
@@ -69,15 +108,4 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
-  config.include ActiveSupport::Testing::TimeHelpers
-  config.include Capybara::DSL, type: :feature
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include FactoryBot::Syntax::Methods
-  config.include DomainHelpers
-  config.include FileHelpers
-  config.include LoginHelpers
-  config.include Matchers
-  config.include ResponsiblePersonHelpers
-  config.include ActionDispatch::TestProcess::FixtureFile
 end

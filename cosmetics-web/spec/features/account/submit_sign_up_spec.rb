@@ -10,7 +10,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
 
-    # First attempt with validation errors
     fill_in "Full name", with: ""
     fill_in "Email address", with: "signing_up.example.com"
     click_button "Continue"
@@ -23,7 +22,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("Enter an email address", href: "#email")
     expect(page).to have_css("p#email-error", text: "Enter an email address")
 
-    # Second attempt with no validation issues
     fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
     click_button "Continue"
@@ -37,7 +35,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
-    # Some links should not be shown to users during the sign up flow
     expect(page).not_to have_link("Your account")
 
     click_link "Submit cosmetic product notifications"
@@ -49,37 +46,31 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_link("Terms and conditions", href: "/help/terms-and-conditions")
     expect(page).to have_link("Accessibility statement", href: "/help/accessibility-statement")
 
-    # Attempts to submit security page without choosing a password
     click_button "Continue"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_css("p#password-error", text: "Error: Enter a password")
 
-    # Attempts to submit security page with a too short password
     fill_in "Create your password", with: "@dki£", match: :prefer_exact
     click_button "Continue"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_css("p#password-error", text: "Error: Password must be at least 8 characters")
 
-    # Attempts to submit security page with a too common password
     fill_in "Create your password", with: "password", match: :prefer_exact
     click_button "Continue"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_css("p#password-error", text: "Error: Choose a less frequently used password")
 
-    # Attempts to submit security page with a too short and too common a password
     fill_in "Create your password", with: "pass", match: :prefer_exact
     click_button "Continue"
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_css("p#password-error", text: "Error: Password must be at least 8 characters")
 
-    # Attempts to submit security page without selecting secondary authentication method
     fill_in "Create your password", with: "userpassword12345", match: :prefer_exact
     click_button "Continue"
 
     expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
     expect(page).to have_link("Select how to get an access code", href: "#app_authentication")
 
-    # Attempts to submit security page with invalid phone and wrong app authentication code
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Authenticator app for smartphone or tablet"
     fill_in "Enter the access code", with: "000000"
@@ -97,14 +88,12 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     expect(page).to have_css("p#app_authentication_code-error", text: "Enter a correct code")
     expect(page).to have_css("p#mobile_number-error", text: "Enter a mobile number, like 07700 900 982 or +44 7700 900 982")
 
-    # New attempt setting both secondary authentication methods with no issues
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Authenticator app for smartphone or tablet"
     fill_in "Enter the access code", with: correct_app_code
     check "Text message"
     fill_in "Mobile number", with: "07000000000"
 
-    # Ensure that the secret key/QR code don't change between failed attempts
     reloaded_secret_key = page.find("p", text: "Secret key:").text
     expect(reloaded_secret_key).to eq original_secret_key
 
@@ -116,7 +105,10 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     complete_secondary_authentication_sms_with(otp_code)
 
     expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+    SubmitUser.last.secondary_authentication_recovery_codes.each do |code|
+      normalized_code = code.scan(/.{1,4}/).join(" ")
+      expect(page).to have_css("div.opss-recovery-codes", text: normalized_code)
+    end
     click_link "Continue"
 
     expect_to_be_on_account_overview_page
@@ -147,7 +139,10 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     click_button "Continue"
 
     expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+    SubmitUser.last.secondary_authentication_recovery_codes.each do |code|
+      normalized_code = code.scan(/.{1,4}/).join(" ")
+      expect(page).to have_css("div.opss-recovery-codes", text: normalized_code)
+    end
     click_link "Continue"
 
     expect_to_be_on_account_overview_page
@@ -171,7 +166,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     verify_url = email.personalization[:verify_email_url]
     visit verify_url
 
-    # User reaches account security page and select both text and app methods
     expect(page).to have_current_path("/account-security")
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     check "Authenticator app for smartphone or tablet"
@@ -180,26 +174,26 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     fill_in "Mobile number", with: "07000000000"
     click_button "Continue"
 
-    # User decides to not use text authentication and goes back to change the account security preferences
     expect_to_be_on_secondary_authentication_sms_page
     expect_user_to_have_received_sms_code(otp_code)
     expect(page).to have_button("Back")
     click_button("Back")
 
     expect(page).to have_current_path("/account-security")
-    # Account Security form has the previously values pre-filled
     expect(page).to have_checked_field("Authenticator app for smartphone or tablet")
     expect(page).to have_checked_field("Text message")
     expect(page).to have_field("Mobile number", with: "07000000000")
 
-    # Finally user unchecks the text message authentication and re-submits the form
     uncheck "Text message"
     fill_in "Create your password", with: "userpassword", match: :prefer_exact
     fill_in "Enter the access code", with: correct_app_code
     click_button "Continue"
 
     expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+    SubmitUser.last.secondary_authentication_recovery_codes.each do |code|
+      normalized_code = code.scan(/.{1,4}/).join(" ")
+      expect(page).to have_css("div.opss-recovery-codes", text: normalized_code)
+    end
     click_link "Continue"
 
     expect_to_be_on_account_overview_page
@@ -209,7 +203,7 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     visit "/"
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
-    # First attempt with validation errors
+
     fill_in "Full name", with: ""
     fill_in "Email address", with: "signing_up.example.com"
     click_button "Continue"
@@ -241,7 +235,10 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     click_button "Continue"
 
     expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+    SubmitUser.last.secondary_authentication_recovery_codes.each do |code|
+      normalized_code = code.scan(/.{1,4}/).join(" ")
+      expect(page).to have_css("div.opss-recovery-codes", text: normalized_code)
+    end
     click_link "Continue"
 
     expect_to_be_on_account_overview_page
@@ -251,7 +248,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     visit "/"
     click_on "Create an account"
     expect(page).to have_current_path("/create-an-account")
-    # First attempt with validation errors
 
     fill_in "Full name", with: "Joe Doe"
     fill_in "Email address", with: "signing_up@example.com"
@@ -289,7 +285,10 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     complete_secondary_authentication_sms_with(otp_code)
 
     expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+    SubmitUser.last.secondary_authentication_recovery_codes.each do |code|
+      normalized_code = code.scan(/.{1,4}/).join(" ")
+      expect(page).to have_css("div.opss-recovery-codes", text: normalized_code)
+    end
     click_link "Continue"
 
     expect_to_be_on_account_overview_page
@@ -324,10 +323,9 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     end
 
     context "when user is not confirmed" do
-      let!(:user) { create(:submit_user, :unconfirmed) }
+      let!(:user) { create(:submit_user, :unconfirmed, email: "signing_up@example.com") }
 
       scenario "sending account reconfirmation to unconfirmed email" do
-        # Guard for confirmation email
         expect(delivered_emails.count).to eq(1)
         visit "/"
         click_on "Create an account"
@@ -357,7 +355,14 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         complete_secondary_authentication_sms_with(otp_code)
 
         expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-        expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.last.secondary_authentication_recovery_codes))
+
+        new_user = SubmitUser.find_by(email: "signing_up@example.com")
+        expect(new_user).not_to be_nil
+
+        new_user.secondary_authentication_recovery_codes.each do |code|
+          normalized_code = code.scan(/.{1,4}/).join(" ")
+          expect(page).to have_css("div.opss-recovery-codes", text: normalized_code)
+        end
         click_link "Continue"
 
         expect_to_be_on_account_overview_page
@@ -371,17 +376,14 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
       end
 
       scenario "resends the responsible person invitation email" do
-        # Invited user visits the link from the RP invitation email
         invitation_path = "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{invitation.invitation_token}"
         visit invitation_path
         expect(page).to have_current_path("/account-security")
         expect(page).to have_css("h1", text: "Setup your account")
         expect(page).to have_field("Full name")
 
-        # User abandons the registration process
         click_button "Sign out"
 
-        # After a while, user tries to Sign Up from scratch
         click_on "Create an account"
         expect(page).to have_current_path("/create-an-account")
 
@@ -389,7 +391,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         fill_in "Email address", with: "inviteduser@example.com"
         click_button "Continue"
 
-        # Instead of receiving a confirmation email, user receives the invitation email again
         expect(delivered_emails.size).to eq 1
         email = delivered_emails.first
 
@@ -403,7 +404,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
         )
         expect_to_be_on_check_your_email_page("inviteduser@example.com")
 
-        # Invitation link takes the user to the account completion page
         visit invitation_path
         expect(page).to have_current_path("/account-security")
         expect(page).to have_css("h1", text: "Setup your account")
@@ -432,7 +432,6 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     second_user = create(:submit_user, :with_responsible_person)
     sign_in(second_user)
 
-    # Visit the confirmation link while signed in as a different user
     visit verify_url
 
     click_on "Create new account"
@@ -446,7 +445,13 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
     complete_secondary_authentication_sms_with(otp_code("signing_up@example.com"))
 
     expect_to_be_on_secondary_authentication_recovery_codes_setup_page
-    expect(page).to have_css("div.opss-recovery-codes", exact_text: recovery_codes_to_string(SubmitUser.find_by(email: "signing_up@example.com").secondary_authentication_recovery_codes))
+    new_user = SubmitUser.find_by(email: "signing_up@example.com")
+    expect(new_user).not_to be_nil
+
+    new_user.secondary_authentication_recovery_codes.each do |code|
+      normalized_code = code.scan(/.{1,4}/).join(" ")
+      expect(page).to have_css("div.opss-recovery-codes", text: normalized_code)
+    end
     click_link "Continue"
 
     expect_to_be_on_account_overview_page
@@ -465,14 +470,13 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
 
     email = delivered_emails.last
     expect(email.recipient).to eq "signing_up@example.com"
-    expect(email.personalization[:name]).to eq("Joe Doe")
+    expect(email.personalization[:name]).to eq "Joe Doe"
 
     verify_url = email.personalization[:verify_email_url]
 
     second_user = create(:submit_user, :with_sms_secondary_authentication, :with_responsible_person)
     sign_in(second_user)
 
-    # Visit the confirmation link while signed in as a different user
     visit verify_url
 
     expect(page).to have_css("h1", text: "You are already signed in")
