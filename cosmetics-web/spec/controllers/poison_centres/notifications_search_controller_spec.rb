@@ -24,15 +24,23 @@ RSpec.describe PoisonCentres::NotificationsSearchController, type: :controller d
 
     describe "GET #show" do
       before do
+        Ingredient.delete_all
+        Component.delete_all
+        Notification.delete_all
+
         rp_a_notifications
         rp_b_notifications
         draft_notification
+
         Notification.import_to_opensearch(force: true)
+
         get :show, params: { notification_search_form: { q: "" } }
       end
 
       it "gets all submitted notifications" do
-        expect(assigns(:notifications).records.to_a.sort).to eq((rp_a_notifications + rp_b_notifications).sort)
+        actual_notifications = assigns(:notifications).records.to_a.sort_by(&:id)
+        expected_notifications = (rp_a_notifications + rp_b_notifications).sort_by(&:id)
+        expect(actual_notifications).to eq(expected_notifications)
       end
 
       it "excludes draft notifications" do

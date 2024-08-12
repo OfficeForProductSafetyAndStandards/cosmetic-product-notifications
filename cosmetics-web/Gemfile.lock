@@ -157,6 +157,10 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
+    database_cleaner-active_record (2.2.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.4)
     devise (4.9.4)
       bcrypt (~> 3.0)
@@ -638,6 +642,7 @@ DEPENDENCIES
   capybara-screenshot
   cf-app-utils (~> 0.6)
   cssbundling-rails (~> 1.4)
+  database_cleaner-active_record
   devise (~> 4.9)
   devise-security (~> 0.18)
   dotenv-rails
@@ -659,7 +664,7 @@ DEPENDENCIES
   kaminari
   listen
   lograge (~> 0.12)
-  mini_magick (~> 4.13)
+  mini_magick (< 5)
   net-imap
   net-pop
   net-smtp
