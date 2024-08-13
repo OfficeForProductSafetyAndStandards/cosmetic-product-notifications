@@ -17,9 +17,6 @@ jobs:
   rspec:
     name: "RSpec"
     runs-on: ubuntu-latest
-
-    # Example for can be found here:
-    # https://github.com/actions/example-services/tree/master/.github/workflows
     services:
       postgres:
         image: postgres:13.6
@@ -36,7 +33,6 @@ jobs:
           DISABLE_SECURITY_PLUGIN: true
         ports: ["9200:9200"]
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
-
       redis:
         image: redis
         ports: ["6379:6379"]
@@ -54,10 +50,12 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2.0
+
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
         node-version: 18.13.x
+
     - uses: actions/cache@v4
       with:
         path: cosmetics-web/vendor/bundle
@@ -66,6 +64,7 @@ jobs:
           ${{ runner.OS }}-gems
           ${{ runner.OS }}-gems-
           ${{ runner.OS }}-
+
     - uses: actions/cache@v4
       with:
         path: cosmetics-web/node_modules
@@ -74,24 +73,32 @@ jobs:
           ${{ runner.OS }}-node
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
+
     - name: Install Ruby Gems
       run: |
         cd cosmetics-web
         gem install bundler -v 2.4.4
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+
     - name: Install JavaScript dependencies
       run: |
         cd cosmetics-web
         npm install yarn -g
         yarn install
+
     - name: Prepare application database
       run: |
         cd cosmetics-web
         bin/rails db:create db:schema:load
+
+    - name: Set up Rails test key
+      run: echo "${{ secrets.TEST_MASTER_KEY }}" > cosmetics-web/config/credentials/test.key
+
     - name: Prepare assets for tests
       run: |
         cd cosmetics-web
         bin/rails test:prepare
+
     - name: Run Tests
       env:
         TWO_FACTOR_AUTHENTICATION_ENABLED: false
@@ -99,9 +106,9 @@ jobs:
       run: |
         cd cosmetics-web
         bundle exec rspec ${{ matrix.rspec-group }}
+
     - name: Dump docker logs
       uses: jwalton/gh-docker-logs@v2
       if: always()
       with:
         images: 'opensearchproject/opensearch'
-
