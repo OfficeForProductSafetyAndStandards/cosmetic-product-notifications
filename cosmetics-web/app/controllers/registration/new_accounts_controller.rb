@@ -20,7 +20,12 @@ module Registration
     def confirm
       return render "signed_as_another_user" if current_submit_user
 
-      @new_user = SubmitUser.find_user_by_confirmation_token!(params[:confirmation_token])
+      token = params[:confirmation_token]
+      return render "confirmation_token_is_invalid" if token.blank?
+
+      @new_user = SubmitUser.confirm_by_token(token)
+      return render "confirmation_token_is_invalid" unless @new_user
+
       sign_in(@new_user)
       redirect_to registration_new_account_security_path
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
