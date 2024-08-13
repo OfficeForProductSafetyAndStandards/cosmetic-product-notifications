@@ -22,7 +22,7 @@ module Encryptable
     # to the Rails upgrade.
     CIPHER = "aes-256-gcm".freeze
     LEN = ActiveSupport::MessageEncryptor.key_len(CIPHER)
-    SECRET = Rails.application.secrets.secret_key_base
+    SECRET = Rails.application.credentials.secret_key_base
 
     def self.encrypt(value)
       salt = SecureRandom.hex(LEN)
