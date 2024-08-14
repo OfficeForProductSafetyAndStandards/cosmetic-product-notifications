@@ -3,6 +3,7 @@ require "support/feature_helpers"
 
 RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_stubbed_notify, type: :feature do
   let(:user) { create(:poison_centre_user, :with_sms_secondary_authentication) }
+  let(:search_user) { create(:search_user, :with_sms_secondary_authentication) }
 
   let(:component_a) { create(:component, :using_exact, with_ingredients: %w[aqua tin sodium]) }
   let(:component_b) { create(:component, :using_exact, with_ingredients: %w[aqua tin]) }
@@ -15,23 +16,22 @@ RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_st
 
   before do
     configure_requests_for_search_domain
-
     cream
     shower_bubbles
-
     Notification.import_to_opensearch(force: true)
+  end
 
-    sign_in user
+  scenario "User without permission is redirected to the poison centre notifications search path" do
+    sign_in search_user
+    visit poison_centre_ingredients_search_path
+    expect(page).to have_current_path(poison_centre_ingredients_search_path)
   end
 
   scenario "Searching for notifications with specific ingredients" do
-    expect(page).to have_h1("Cosmetic products search")
+    sign_in user
+    visit poison_centre_ingredients_search_path
 
-    click_link "Ingredients search"
-
-    expect(page).not_to have_link("Cream")
-    expect(page).not_to have_link("Shower Bubbles")
-
+    expect(page).to have_h1("Ingredients search")
     fill_in "ingredient_search_form_q", with: "sodium"
     click_on "Search"
 
@@ -41,12 +41,11 @@ RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_st
   end
 
   scenario "Searching for notifications with specific ingredients - exact match" do
-    expect(page).to have_h1("Cosmetic products search")
+    sign_in user
+    visit poison_centre_ingredients_search_path
 
-    click_link "Ingredients search"
-
+    expect(page).to have_h1("Ingredients search")
     fill_in "ingredient_search_form_q", with: "tin sodium"
-
     choose "Exact match only"
     click_on "Search"
 
@@ -55,13 +54,10 @@ RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_st
   end
 
   scenario "Searching for notifications with specific ingredients with date filter" do
-    expect(page).to have_h1("Cosmetic products search")
+    sign_in user
+    visit poison_centre_ingredients_search_path
 
-    click_link "Ingredients search"
-
-    expect(page).not_to have_link("Cream")
-    expect(page).not_to have_link("Shower Bubbles")
-
+    expect(page).to have_h1("Ingredients search")
     fill_in "ingredient_search_form_q", with: "aqua"
 
     fill_in "date_from_day",   with: shower_bubbles.notification_complete_at.day
@@ -79,10 +75,10 @@ RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_st
   end
 
   scenario "Sorting search results" do
-    expect(page).to have_h1("Cosmetic products search")
+    sign_in user
+    visit poison_centre_ingredients_search_path
 
-    click_link "Ingredients search"
-
+    expect(page).to have_h1("Ingredients search")
     fill_in "ingredient_search_form_q", with: "tin"
     click_on "Search"
 
@@ -90,20 +86,18 @@ RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_st
     expect(links).to eq ["View Shower Bubbles", "View Cream"]
 
     click_on "Edit your search"
-
     choose "Newest"
     click_on "Search"
 
     links = page.all("table#table-items .govuk-link").map(&:text)
-
     expect(links).to eq ["View Cream", "View Shower Bubbles"]
   end
 
   scenario "Grouping search results" do
-    expect(page).to have_h1("Cosmetic products search")
+    sign_in user
+    visit poison_centre_ingredients_search_path
 
-    click_link "Ingredients search"
-
+    expect(page).to have_h1("Ingredients search")
     fill_in "ingredient_search_form_q", with: "tin"
     click_on "Search"
 
@@ -118,14 +112,15 @@ RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_st
     expect(links).to eq ["View Cream", "View Shower Bubbles"]
   end
 
-  scenario "show the total number of results" do
+  scenario "Show the total number of results" do
+    sign_in user
     21.times do |i|
       component = create(:component, :using_exact, with_ingredients: %w[stuff])
       create(:notification, :registered, responsible_person:, components: [component], notification_complete_at: 5.days.ago, product_name: "Shower Bubbles #{i}")
     end
     Notification.import_to_opensearch(force: true)
 
-    click_link "Ingredients search"
+    visit poison_centre_ingredients_search_path
     expect(page).to have_h1("Ingredients search")
     fill_in "ingredient_search_form_q", with: "stuff"
     click_on "Search"
@@ -141,15 +136,13 @@ RSpec.feature "Search", :with_2fa, :with_2fa_app, :with_stubbed_mailer, :with_st
   end
 
   scenario "Back link" do
-    expect(page).to have_h1("Cosmetic products search")
+    sign_in user
+    visit poison_centre_ingredients_search_path
 
-    click_link "Ingredients search"
-
+    expect(page).to have_h1("Ingredients search")
     fill_in "ingredient_search_form_q", with: "aqua"
     click_on "Search"
-
     click_link "Shower Bubbles"
-
     click_link "Back"
 
     expect(page).to have_h1("Ingredient – search results")

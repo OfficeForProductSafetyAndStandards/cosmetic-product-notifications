@@ -2,6 +2,10 @@ class PoisonCentres::IngredientsSearchController < SearchApplicationController
   PER_PAGE = 20
 
   def show
+    unless current_user.can_search_for_ingredients?
+      redirect_to poison_centre_notifications_search_path and return
+    end
+
     @search_form = IngredientSearchForm.new(search_params)
     @search_params = search_params
 
