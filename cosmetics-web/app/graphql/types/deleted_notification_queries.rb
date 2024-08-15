@@ -78,6 +78,8 @@ module Types
 
     def deleted_notification(id:)
       DeletedNotification.find(id)
+    rescue ActiveRecord::RecordNotFound
+      raise Errors::SimpleError, "Couldn't find deleted_notification with 'id'=#{id}"
     end
   end
 end

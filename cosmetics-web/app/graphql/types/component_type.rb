@@ -6,6 +6,7 @@ module Types
     field :created_at, Types::CustomDateTimeType, null: true, camelize: false
     field :updated_at, Types::CustomDateTimeType, null: true, camelize: false
     field :notification_id, ID, null: true, camelize: false
+    field :notification, NotificationType, null: false, description: "The associated notification, including its details"
     field :notification_type, String, null: true, camelize: false
     field :frame_formulation, String, null: true, camelize: false
     field :sub_sub_category, String, null: true, camelize: false
