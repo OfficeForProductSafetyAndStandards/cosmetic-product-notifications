@@ -21,7 +21,11 @@
         <p class="govuk-body-s">Email <a href="mailto:opss.enquiries@businessandtrade.gov.uk?subject=Help requested on Submit Cosmetic Product Notifications" class="govuk-footer__link">opss.enquiries@businessandtrade.gov.uk</a> for help using this service.</p>
         <ul class="govuk-footer__inline-list">
           <li class="govuk-footer__inline-list-item">
-            <a href="<%= accessibility_statement_path %>" class="govuk-footer__link" target="_blank" rel="noreferrer noopener">Accessibility statement<span class="govuk-visually-hidden"> (opens in new tab)</span></a>
+            <% if request.original_url.include?("submit") %>
+              <a href="<%= accessibility_statement_path %>" class="govuk-footer__link" target="_blank" rel="noreferrer noopener">Accessibility statement<span class="govuk-visually-hidden"> (opens in new tab)</span></a>
+            <% else %>
+              <a href="<%= accessibility_statement_search_path %>" class="govuk-footer__link" target="_blank" rel="noreferrer noopener">Accessibility statement<span class="govuk-visually-hidden"> (opens in new tab)</span></a>
+            <% end %>
           </li>
           <li class="govuk-footer__inline-list-item">
             <a href="<%= privacy_notice_path %>" class="govuk-footer__link" target="_blank" rel="noreferrer noopener">Privacy policy<span class="govuk-visually-hidden"> (opens in new tab)</span></a>
