@@ -1,5 +1,5 @@
 <nav class="app-navigation govuk-clearfix" aria-labelledby="nav-label">
-  <h2 class="responsible-person-name govuk-heading-s" id="nav-label"><%= @responsible_person&.name %></h2>
+  <h2 class="responsible-person-name govuk-heading-s" id="nav-label"><%= @responsible_person&.name || 'No responsible person' %></h2>
   <ul class="app-navigation__list">
     <li class="<%= "app-navigation--current-page" if params[:controller] == "submit/landing_page" %>">
       <%= link_to "Home", submit_root_path, "data-topnav": "submit/landing_page", class: "govuk-link--no-visited-state" %>
