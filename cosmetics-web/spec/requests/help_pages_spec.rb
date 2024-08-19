@@ -71,7 +71,9 @@ RSpec.describe "Help pages", type: :request do
     end
 
     it "has a page heading" do
-      expect(response.body).to have_tag("h1", text: "Accessibility statement for Submit cosmetic product notifications")
+      # It is not going to any domain of SCPN it is going to www.example.com
+      # Because of this it shows the search portal accessibility statement
+      expect(response.body).to have_tag("h1", text: "Accessibility statement for Search Cosmetic Product Notifications")
     end
   end
 
