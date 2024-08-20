@@ -23,12 +23,21 @@ private
   end
 
   def set_responsible_person
-    @responsible_person = if current_responsible_person.present?
-                            current_responsible_person
-                          elsif current_user.responsible_persons.size == 1
-                            current_user.responsible_persons.first
-                          end
+    if session[:current_responsible_person].nil?
+      @responsible_person = if current_responsible_person.present?
+                              current_responsible_person
+                            elsif current_user.responsible_persons.size == 1
+                              current_user.responsible_persons.first
+                            end
+    elsif @responsible_person.nil?
+      @responsible_person = session[:current_responsible_person]
+      validate_responsible_person
+    end
 
-    session[:current_responsible_person] = @responsible_person
+    if @responsible_person.present?
+      set_current_responsible_person(@responsible_person)
+    else
+      redirect_to select_responsible_persons_path
+    end
   end
 end
