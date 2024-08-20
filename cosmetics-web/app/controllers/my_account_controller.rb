@@ -35,7 +35,6 @@ private
     end
 
     if @responsible_person.present?
-      byebug
       set_current_responsible_person(@responsible_person)
     else
       redirect_to select_responsible_persons_path
