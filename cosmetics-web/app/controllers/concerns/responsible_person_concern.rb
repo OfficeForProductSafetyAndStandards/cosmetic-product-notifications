@@ -26,10 +26,12 @@ module ResponsiblePersonConcern
     else
       rp
     end
+    session[:current_responsible_person] = rp
   end
 
   def set_current_responsible_person(responsible_person)
     session[:current_responsible_person_id] = responsible_person.id
+    session[:current_responsible_person] = responsible_person
   end
 
   def validate_responsible_person

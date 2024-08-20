@@ -6,16 +6,21 @@ class MyAccountController < ApplicationController
   include ActiveStorage::SetCurrent
   include ResponsiblePersonConcern
 
-  before_action :set_responsible_person, except: :show, if: -> { submit_domain? }
+  before_action :set_responsible_person, :validate_responsible_person, except: :show, if: -> { submit_domain? }
 
   def show
-    if current_user.type == "SubmitUser"
-      set_responsible_person if @responsible_person.nil?
-      redirect_to select_responsible_persons_path if @responsible_person.nil?
+    if should_redirect?
+      redirect_to select_responsible_persons_path
+    else
+      set_responsible_person
     end
   end
 
 private
+
+  def should_redirect?
+    current_user.type == "SubmitUser" && session[:current_responsible_person].nil? && session[:current_responsible_person_id].nil? && @responsible_person.nil?
+  end
 
   def set_responsible_person
     @responsible_person = if current_responsible_person.present?
@@ -23,5 +28,7 @@ private
                           elsif current_user.responsible_persons.size == 1
                             current_user.responsible_persons.first
                           end
+
+    session[:current_responsible_person] = @responsible_person
   end
 end
