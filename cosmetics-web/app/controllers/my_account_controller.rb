@@ -25,16 +25,17 @@ private
   def set_responsible_person
     if session[:current_responsible_person].nil?
       @responsible_person = if current_responsible_person.present?
-                              current_responsible_person
+                              ResponsiblePerson.new(current_responsible_person)
                             elsif current_user.responsible_persons.size == 1
-                              current_user.responsible_persons.first
+                              ResponsiblePerson.new(current_user.responsible_persons.first)
                             end
     elsif @responsible_person.nil?
-      @responsible_person = session[:current_responsible_person]
+      @responsible_person = ResponsiblePerson.new(session[:current_responsible_person])
       validate_responsible_person
     end
 
     if @responsible_person.present?
+      byebug
       set_current_responsible_person(@responsible_person)
     else
       redirect_to select_responsible_persons_path
