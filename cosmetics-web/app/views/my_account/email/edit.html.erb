@@ -7,34 +7,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= error_summary(@user.errors) %>
-
-    <h1 class="govuk-heading-l"><%= title %></h1>
-
-    <%= form_with model: @user, url: my_account_email_path, method: :patch do |form| %>
-      <%= govukInput(
-        key: :password,
-        type: :password,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "Password"
-        },
-        value: nil,
-        id: "old_password"
-      ) %>
-      <%= govukInput(
-        key: :new_email,
-        type: :text,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "New email address"
-        },
-        value: nil,
-        id: "new_email"
-      ) %>
-      <%= govukButton(text: "Continue") %>
+    <%= form_with model: @user, url: my_account_email_path, method: :patch, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+      <%= form.govuk_error_summary %>
+      <h1 class="govuk-heading-l"><%= title %></h1>
+      <%= form.govuk_text_field :password, label: { text: "Password" }, type: "password" %>
+      <%= form.govuk_text_field :new_email, label: { text: "New email address" } %>
+      <%= form.govuk_submit "Continue" %>
     <% end %>
   </div>
 </div>
