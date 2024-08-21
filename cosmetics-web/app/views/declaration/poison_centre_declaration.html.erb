@@ -1,5 +1,5 @@
 <% content_for :page_title, "Declaration" %>
-<%= form_with url: accept_declaration_path, local: true do |form| %>
+<%= form_with url: accept_declaration_path, local: true, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">Declaration</h1>
@@ -15,7 +15,7 @@
       </ul>
 
       <div class="form-group">
-        <%= govukButton text: "I accept" %>
+        <%= form.govuk_submit "I accept" %>
       </div>
     </div>
   </div>
