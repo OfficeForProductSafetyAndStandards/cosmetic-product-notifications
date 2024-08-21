@@ -2,39 +2,17 @@
 <% page_title title, errors: @user.errors.any? %>
 
 <% content_for(:after_header) do %>
-  <%= govukBackLink(text: "Back", href: my_account_path) %>
+  <%= govuk_back_link(href: my_account_path, text: "Back") %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= error_summary(@user.errors) %>
-
-    <h1 class="govuk-heading-l"><%= title %></h1>
-
-    <%= form_with model: @user, url: my_account_password_path, method: :patch do |form| %>
-      <%= govukInput(
-        key: :old_password,
-        type: :password,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "Current password"
-        },
-        value: nil,
-        id: "old_password"
-      ) %>
-      <%= govukInput(
-        key: :password,
-        type: :password,
-        form: form,
-        classes: "app-!-max-width-two-thirds",
-        label: {
-          text: "New password"
-        },
-        value: nil,
-        id: "new_password"
-      ) %>
-      <%= govukButton(text: "Save") %>
+    <%= form_with model: @user, url: my_account_password_path, method: :patch, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+      <%= form.govuk_error_summary %>
+      <h1 class="govuk-heading-l"><%= title %></h1>
+      <%= form.govuk_text_field :old_password, label: { text: "Current password" }, type: "password" %>
+      <%= form.govuk_text_field :password, label: { text: "New password" }, type: "password" %>
+      <%= form.govuk_submit "Save" %>
     <% end %>
   </div>
 </div>
