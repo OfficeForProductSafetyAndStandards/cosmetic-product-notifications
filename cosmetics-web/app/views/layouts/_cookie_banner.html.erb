@@ -14,19 +14,15 @@
       </div>
 
       <div class="govuk-button-group">
-        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-accept-cookies', class: 'opss-cookie-form' } do |f| %>
+        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-accept-cookies', class: 'opss-cookie-form' }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
           <%= f.hidden_field :accept_analytics_cookies, value: true %>
-          <button value="accept" type="submit" name="cookies" class="govuk-button" data-module="govuk-button">
-            Accept analytics cookies
-          </button>
+          <%= f.govuk_submit "Accept analytics cookies" %>
         <% end %>
-        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-reject-cookies', class: 'opss-cookie-form' } do |f| %>
+        <%= form_for @cookie_form, url: cookie_form_path, html: { id: 'form-reject-cookies', class: 'opss-cookie-form' }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
           <%= f.hidden_field :accept_analytics_cookies, value: false %>
-          <button value="reject" type="submit" name="cookies" class="govuk-button" data-module="govuk-button">
-            Reject analytics cookies
-          </button>
+          <%= f.govuk_submit "Reject analytics cookies" %>
         <% end %>
-        <a class="govuk-link" href="<%= cookies_policy_path %>">View cookies</a>
+        <%= govuk_link_to 'View cookies', cookies_policy_path %>
       </div>
     </div>
   </div>
