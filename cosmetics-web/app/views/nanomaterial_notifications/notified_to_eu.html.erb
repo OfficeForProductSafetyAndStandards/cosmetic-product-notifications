@@ -18,7 +18,7 @@
 
       <% date_notified_to_eu_html = form.govuk_date_field :notified_to_eu_on, legend: { text: "Date EU notified on" }, hint: { text: "For example, 31 3 2019" } %>
 
-      <%= form.govuk_radio_buttons_fieldset(:eu_notified, legend: { size: 'xl', text: 'Was the EU notified about test nano 200 on CPNP before 1 January 2021?' }) do %>
+      <%= form.govuk_radio_buttons_fieldset(:eu_notified, legend: { size: 'xl', text: "Was the EU notified about #{@nanomaterial_notification.name} on CPNP before #{brexit_date}?" }) do %>
         <%= form.govuk_radio_button :eu_notified, true, label: { text: "Yes, the EU was notified about the nanomaterial on CPNP before #{brexit_date}" }, link_errors: true do %>
           <%= date_notified_to_eu_html %>
         <% end %>
