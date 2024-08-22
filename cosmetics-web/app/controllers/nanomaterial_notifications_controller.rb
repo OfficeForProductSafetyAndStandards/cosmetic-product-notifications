@@ -83,8 +83,8 @@ class NanomaterialNotificationsController < SubmitApplicationController
   end
 
   def update_notified_to_eu
-    @nanomaterial_notification.eu_notified = params[:eu_notified]
-    @nanomaterial_notification.notified_to_eu_on = params[:notified_to_eu_on]
+    @nanomaterial_notification.eu_notified = params[:nanomaterial_notification][:eu_notified]
+    @nanomaterial_notification.notified_to_eu_on = { year: params[:nanomaterial_notification]["notified_to_eu_on(1i)"], month: params[:nanomaterial_notification]["notified_to_eu_on(2i)"], day: params[:nanomaterial_notification]["notified_to_eu_on(3i)"] }
     @previous_page_path = back_link_path_for(:notified_to_eu)
 
     if @nanomaterial_notification.save(context: :eu_notification)

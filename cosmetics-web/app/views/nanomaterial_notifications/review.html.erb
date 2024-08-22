@@ -43,56 +43,28 @@
       <% end %>
     <% end %>
 
-    <%= govukSummaryList(rows: [
-      {
-        key: { text: "Name" },
-        value: { text: @nanomaterial_notification.name },
-        actions: {
-          items: [
-            {
-              href: name_nanomaterial_path(@nanomaterial_notification),
-              text: "Change",
-              visuallyHiddenText: "name"
-            }
-          ]
-        }
-      },
-      {
-        key: { text: "Notified in EU" },
-        value: {
-          text: @notified_in_eu_text
-        },
-        actions: {
-          items: [
-            {
-              href: notified_to_eu_nanomaterial_path(@nanomaterial_notification),
-              text: "Change",
-              visuallyHiddenText: "EU notification"
-            }
-          ]
-        }
-      },
-      {
-        key: { text: "PDF file" },
-        value: {
-          html: pdf_file_details
-        },
-        actions: {
-          items: [
-            {
-              href: upload_file_nanomaterial_path(@nanomaterial_notification),
-              text: "Change",
-              visuallyHiddenText: "file"
-            }
-          ]
-        }
-      }
-    ]) %>
+    <%= govuk_summary_list do |summary_list|
+      summary_list.with_row do |row|
+        row.with_key { "Name" }
+        row.with_value { @nanomaterial_notification.name }
+        row.with_action(text: "Change", href: name_nanomaterial_path(@nanomaterial_notification), visually_hidden_text: "name")
+
+      end; summary_list.with_row do |row|
+        row.with_key(text: "Notified in EU")
+        row.with_value(text: @notified_in_eu_text)
+        row.with_action(text: "Change", href: notified_to_eu_nanomaterial_path(@nanomaterial_notification), visually_hidden_text: "Eu notification")
+
+      end; summary_list.with_row do |row|
+        row.with_key(text: "PDF file")
+        row.with_value(text: pdf_file_details)
+        row.with_action(text: 'Change', href: upload_file_nanomaterial_path(@nanomaterial_notification), visually_hidden_text: "file")
+
+      end; end %>
 
       <h2 class="govuk-heading-m">Now send your nanomaterial notification</h2>
       <p class="govuk-body">Your submission will be reviewed by the Office for Product Safety and Standards.</p>
-      <%= form_for @nanomaterial_notification, url: submission_nanomaterial_path(@nanomaterial_notification) do |form| %>
-        <%= govukButton text: "Accept and send" %>
+      <%= form_for @nanomaterial_notification, url: submission_nanomaterial_path(@nanomaterial_notification), builder: GOVUKDesignSystemFormBuilder::FormBuilder do |form| %>
+        <%= form.govuk_submit "Accept and send" %>
       <% end %>
       <p class="govuk-body"><%= link_to "Cancel and return to Nanomaterials", responsible_person_nanomaterials_path(@responsible_person), class: "govuk-link" %></p>
   </div>
