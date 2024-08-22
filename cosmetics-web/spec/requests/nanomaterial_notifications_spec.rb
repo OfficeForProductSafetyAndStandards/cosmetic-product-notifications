@@ -135,7 +135,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
     end
 
     it "has a page heading" do
-      expect(response.body).to have_h1_with_text("What is the name of the nanomaterial?")
+      expect(response.body).to include('<label for="nanomaterial-notification-name-field" class="govuk-label govuk-label--xl">What is the name of the nanomaterial?</label>')
     end
 
     it "has a page title" do
@@ -205,7 +205,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       it "has a page heading" do
-        expect(response.body).to have_h1_with_text("What is the name of the nanomaterial?")
+        expect(response.body).to include('<label for="nanomaterial-notification-name-field" class="govuk-label govuk-label--xl">What is the name of the nanomaterial?</label>')
       end
 
       it "has a page title" do
@@ -309,7 +309,7 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       it "has a page heading" do
-        expect(response.body).to have_h1_with_text("Was the EU notified about Zinc oxide on CPNP before 1 January 2021?")
+        expect(response.body).to include("Was the EU notified about Zinc oxide on CPNP before 1 January 2021?")
       end
 
       it "has a page title" do
@@ -365,11 +365,11 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       context "when a valid pre-Brexit date is entered" do
         let(:nanomaterial_params) do
           {
-            eu_notified: "true",
-            notified_to_eu_on: {
-              day: "01",
-              month: "01",
-              year: "2020",
+            nanomaterial_notification: {
+              eu_notified: "true",
+              "notified_to_eu_on(1i)" => "2020",
+              "notified_to_eu_on(2i)" => "01",
+              "notified_to_eu_on(3i)" => "01",
             },
           }
         end
@@ -382,7 +382,9 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       context "when the EU wasn’t notified" do
         let(:nanomaterial_params) do
           {
-            eu_notified: "false",
+            nanomaterial_notification: {
+              eu_notified: "false",
+            },
           }
         end
 
@@ -392,7 +394,13 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       context "when no answer was selected" do
-        let(:nanomaterial_params) { {} }
+        let(:nanomaterial_params) do
+          {
+            nanomaterial_notification: {
+              eu_notified: "",
+            },
+          }
+        end
 
         it "renders an error page" do
           expect(response.code).to eql("200")
@@ -402,11 +410,11 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       context "when a an invalid date is entered" do
         let(:nanomaterial_params) do
           {
-            eu_notified: "true",
-            notified_to_eu_on: {
-              day: "12",
-              month: "30",
-              year: "2020",
+            nanomaterial_notification: {
+              eu_notified: "true",
+              "notified_to_eu_on(1i)" => "2020",
+              "notified_to_eu_on(2i)" => "30",
+              "notified_to_eu_on(3i)" => "12",
             },
           }
         end
@@ -429,7 +437,13 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
       end
 
       context "when a valid answer is given" do
-        let(:nanomaterial_params) { { eu_notified: "false" } }
+        let(:nanomaterial_params) do
+          {
+            nanomaterial_notification: {
+              eu_notified: "false",
+            },
+          }
+        end
 
         it "redirects to the Check your answers page" do
           expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/review")

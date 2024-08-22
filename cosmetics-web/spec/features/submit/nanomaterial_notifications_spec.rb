@@ -45,7 +45,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     fill_in "What is the name of the nanomaterial?", with: "My nanomaterial"
     click_button "Continue"
 
-    expect(page).to have_selector("h1", text: "Was the EU notified about My nanomaterial on CPNP before 1 January 2021?")
+    expect(page).to have_selector("legend", text: "Was the EU notified about My nanomaterial on CPNP before 1 January 2021?")
     choose "No"
     click_button "Continue"
 
@@ -73,7 +73,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_summary_item(key: "Notified in the EU", value: "No")
     expect(page).to have_summary_item(key: "Review period end", value: "10 December 2021")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: last_notification.ukn)
-    expect(page).to have_selector("dd.govuk-summary-list__value", text: "testPdf.pdf (PDF, 11.6 KB)")
+    expect(page).to have_selector("dd.govuk-summary-list__value", text: "testPdf.pdf")
   end
 
   scenario "submitting a nanomaterial which was previously notified to the EU", :with_stubbed_antivirus do
@@ -84,7 +84,7 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     fill_in "What is the name of the nanomaterial?", with: "My EU nanomaterial"
     click_button "Continue"
 
-    expect(page).to have_selector("h1", text: "Was the EU notified about My EU nanomaterial on CPNP before 1 January 2021?")
+    expect(page).to have_selector("legend", text: "Was the EU notified about My EU nanomaterial on CPNP before 1 January 2021?")
     choose "Yes, the EU was notified about the nanomaterial on CPNP before 1 January 2021"
     fill_in "Day", with: "01"
     fill_in "Month", with: "02"
@@ -115,6 +115,6 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_summary_item(key: "Notified in the EU", value: "1 February 2017")
     expect(page).to have_summary_item(key: "Review period end", value: "1 August 2017")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: last_notification.ukn)
-    expect(page).to have_selector("dd.govuk-summary-list__value", text: "testPdf.pdf (PDF, 11.6 KB)")
+    expect(page).to have_selector("dd.govuk-summary-list__value", text: "testPdf.pdf")
   end
 end
