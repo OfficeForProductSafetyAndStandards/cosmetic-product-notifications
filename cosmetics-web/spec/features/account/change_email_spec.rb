@@ -64,8 +64,8 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         fill_in "New email", with: "new@example.org"
         click_on "Continue"
 
-        expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-        expect(page).to have_link("Password is incorrect", href: "#password")
+        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
+        expect(page).to have_link("Password is incorrect", href: "#submit-user-password-field-error")
       end
 
       it "does not get updated when new email is incorrect" do
@@ -73,8 +73,8 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         fill_in "New email", with: "new@example"
         click_on "Continue"
 
-        expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-        expect(page).to have_link("", href: "#new_email")
+        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
+        expect(page).to have_link("", href: "#submit-user-new-email-field-error")
       end
 
       it "does not send the email to update email address when given email belongs to another user" do
@@ -198,8 +198,8 @@ RSpec.describe "Changing email address", :with_2fa, :with_stubbed_mailer, :with_
         fill_in "New email", with: "new@example.com"
         click_on "Continue"
 
-        expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-        expect(page).to have_link("", href: "#new_email")
+        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
+        expect(page).to have_link("", href: "#support-user-new-email-field-error")
       end
     end
   end
