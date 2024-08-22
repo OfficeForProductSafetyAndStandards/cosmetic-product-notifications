@@ -21,12 +21,19 @@ RSpec.describe "Changing name", :with_2fa, :with_stubbed_mailer, :with_stubbed_n
       # Attempts failing validations
       fill_in "Full name", with: ""
       click_button "Continue"
-      expect(page).to have_link("Name cannot be blank", href: "#name")
+      if user.instance_of?(SubmitUser)
+        expect(page).to have_link("Name cannot be blank", href: "#submit-user-name-field-error")
+      else
+        expect(page).to have_link("Name cannot be blank", href: "#search-user-name-field-error")
+      end
 
       fill_in "Full name", with: "Julia www.example.com"
       click_button "Continue"
-      expect(page).to have_link("Enter a valid name", href: "#name")
-
+      if user.instance_of?(SubmitUser)
+        expect(page).to have_link("Enter a valid name", href: "#submit-user-name-field-error")
+      else
+        expect(page).to have_link("Enter a valid name", href: "#search-user-name-field-error")
+      end
       # Finally introducing an accepted name
       fill_in "Full name", with: "Joe Smith"
       click_button "Continue"

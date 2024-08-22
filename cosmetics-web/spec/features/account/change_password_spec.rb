@@ -40,8 +40,12 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
         fill_in "New password", with: "user.password"
         click_on "Save"
 
-        expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-        expect(page).to have_link("Old password is incorrect", href: "#old_password")
+        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
+        if user.instance_of?(SubmitUser)
+          expect(page).to have_link("Old password is incorrect", href: "#submit-user-old-password-field-error")
+        else
+          expect(page).to have_link("Old password is incorrect", href: "#search-user-old-password-field-error")
+        end
       end
 
       it "does not get updated when new password does not fit to requirement" do
@@ -49,8 +53,12 @@ RSpec.describe "Changing password", :with_2fa, :with_stubbed_mailer, :with_stubb
         fill_in "New password", with: "user"
         click_on "Save"
 
-        expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
-        expect(page).to have_link("Password must be at least 8 characters", href: "#password")
+        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
+        if user.instance_of?(SubmitUser)
+          expect(page).to have_link("Password must be at least 8 characters", href: "#submit-user-password-field-error")
+        else
+          expect(page).to have_link("Password must be at least 8 characters", href: "#search-user-password-field-error")
+        end
       end
     end
   end

@@ -42,7 +42,8 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
 
       it "displays the full name of the responsible person" do
         within("main.govuk-main-wrapper") do
-          expect(page).to have_content("Full name #{user.name}")
+          expect(page).to have_css("dt", text: "Full name")
+          expect(page).to have_css("dd", text: user.name)
         end
       end
     end

@@ -107,7 +107,7 @@
         end; summary_list.with_row do |row|
           row.with_key(text: "Remove team member")
           row.with_value(text: "")
-          row.with_action(text: "View team members", href: new_secondary_authentication_app_setup_path, visually_hidden_text: "View team members")
+          row.with_action(text: "View team members", href: support_portal.support_users_path, visually_hidden_text: "View team members")
 
         end; end %>
       <%= govuk_button_link_to("Go to Cosmetic products search", main_app.new_support_on_search_user_session_url(host: ENV['SEARCH_HOST']), secondary: true, target: "_blank") %>
