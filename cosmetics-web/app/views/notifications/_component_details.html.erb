@@ -1,129 +1,136 @@
-<%= govukSummaryList(
-  classes: "opss-summary-list-mixed",
-  rows: [
-    if component.cmrs.any?
-      {
-        key: { text: "Contains CMR substances" },
-        value: { text: "Yes" },
-      }
-    end,
-    if component.cmrs.any?
-      {
-        key: { text: "CMR substances" },
-        value: { html: render("application/none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)) },
-      }
-    end,
-    {
-      key: { text: "Nanomaterials" },
-      value: { html: render("application/none_or_bullet_list",
-                            entities_list: nano_materials_details(component.nano_materials)) },
-    },
-    if component.nano_materials.non_standard.any? && can_view_nanomaterial_review_period_end_date?
-      {
-        key: { text: "Nanomaterials review period end date" },
-        value: { text: render("application/none_or_bullet_list",
+<%= govuk_summary_list do |summary_list|
+  if component.cmrs.any?
+    summary_list.with_row do |row|
+      row.with_key { 'Contains CMR substances' }
+      row.with_value { "Yes" }
+    end;
+  end
+
+  if component.cmrs.any?
+    summary_list.with_row do |row|
+      row.with_key { "CMR substances" }
+      row.with_value { render("application/none_or_bullet_list", entities_list: component.cmrs.map(&:display_name)) }
+    end;
+  end
+
+  summary_list.with_row do |row|
+    row.with_key { "Nanomaterials" }
+    row.with_value { render("application/none_or_bullet_list", entities_list: nano_materials_details(component.nano_materials)) }
+  end;
+
+  if component.nano_materials.non_standard.any? && can_view_nanomaterial_review_period_end_date?
+    summary_list.with_row do |row|
+      row.with_key { "Nanomaterials review period end date" }
+      row.with_value { render("application/none_or_bullet_list",
                               entities_list: nano_materials_with_review_period_end_date(component.nano_materials.non_standard),
                               list_classes: "",
-                              list_item_classes: "") },
-      }
-    end,
-    if component.nano_materials.present?
-      {
-        key: { text: "Application instruction" },
-        value: { text: get_exposure_routes_names(component.exposure_routes) },
-      }
-    end,
-    if component.nano_materials.present?
-      {
-        key: { text: "Exposure condition" },
-        value: { text: get_exposure_condition_name(component.exposure_condition) },
-      }
-    end,
-    {
-      key: { text: "Category of product" },
-      value: { text: get_category_name(component.root_category) },
-    },
-    {
-      key: { text: "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" },
-      value: { text: get_category_name(component.sub_category) },
-    },
-    {
-      key: { text: "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" },
-      value: { text: get_category_name(component.sub_sub_category) },
-    },
-    if can_view_product_ingredients?
-      {
-        key: { text: "Formulation given as" },
-        value: { text: get_notification_type_name(component.notification_type) },
-      }
-    end,
-    if can_view_product_ingredients? && component.predefined?
-      {
-        key: { text: "Frame formulation" },
-        value: { text: get_frame_formulation_name(component.frame_formulation) },
-      }
-    end,
-    if can_view_product_ingredients? && !component.predefined?
-      {
-        key: { text: "Formulation" },
-        value: { html: render("notifications/component_details_formulation_ingredients",
-                 component: component) },
-        actions: {
-          items: if component.formulation_file.attached? && component.notification.editable?
-                   [
-                     {
-                       href: edit_responsible_person_notification_component_formulation_path(
-                               component.notification.responsible_person,
-                               component.notification,
-                               component
-                             ),
-                       text: "Change",
-                       visuallyHiddenText: "formulation file"
-                     }
-                   ]
-                 else
-                   []
-                 end
-        }
-      }
-    end,
-    {
-      key: { text: "Physical form" },
-      value: { text: get_physical_form_name(component.physical_form) },
-    },
-    if can_view_product_ingredients?
-      {
-        key: { text: "Special applicator" },
-        value: { text: component.special_applicator.present? ? "Yes" : "No" },
-      }
-    end,
-    if can_view_product_ingredients? && component.special_applicator.present?
-      {
-        key: { text: "Applicator type" },
-        value: { text: component_special_applicator_name(component) },
-      }
-    end,
-    if can_view_product_ingredients? && component.acute_poisoning_info.present?
-      {
-        key: { text: "Acute poisoning information" },
-        value: { text: component.acute_poisoning_info },
-      }
-    end,
-    if can_view_product_ingredients? && component.predefined?
-      {
-        key: { text: "Contains ingredients NPIS needs to know about" },
-        value: { text: component.poisonous_ingredients_answer },
-      }
-    end,
-    if can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
-      {
-        key: { text: "Ingredients NPIS needs to know about" },
-        value: { html: render("notifications/component_details_poisonous_ingredients",
-                 component: component) },
-      }
-    end,
-  ].compact
-) %>
+                              list_item_classes: "") }
+    end;
+  end
+
+  if component.nano_materials.present?
+    summary_list.with_row do |row|
+      row.with_key { "Application instruction" }
+      row.with_value { get_exposure_routes_names(component.exposure_routes) }
+    end;
+  end
+
+  if component.nano_materials.present?
+    summary_list.with_row do |row|
+      row.with_key { "Exposure condition" }
+      row.with_value { get_exposure_condition_name(component.exposure_condition) }
+    end;
+  end
+
+  summary_list.with_row do |row|
+    row.with_key { "Category of product" }
+    row.with_value { get_category_name(component.root_category) }
+  end;
+
+  summary_list.with_row do |row|
+    row.with_key { "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" }
+    row.with_value { get_category_name(component.sub_category) }
+  end;
+
+  summary_list.with_row do |row|
+    row.with_key { "Category of #{get_category_name(component.root_category)&.downcase&.singularize}" }
+    row.with_value { get_category_name(component.sub_category) }
+  end;
+
+  summary_list.with_row do |row|
+    row.with_key { "Category of #{get_category_name(component.sub_category)&.downcase&.singularize}" }
+    row.with_value { get_category_name(component.sub_sub_category) }
+  end;
+
+  if can_view_product_ingredients?
+    summary_list.with_row do |row|
+      row.with_key { "Formulation given as" }
+      row.with_value { get_notification_type_name(component.notification_type) }
+    end;
+  end
+
+  if can_view_product_ingredients? && component.predefined?
+    summary_list.with_row do |row|
+      row.with_key { "Frame formulation" }
+      row.with_value { get_frame_formulation_name(component.frame_formulation) }
+    end;
+  end
+
+  if can_view_product_ingredients? && !component.predefined?
+    summary_list.with_row do |row|
+      row.with_key { "Formulation" }
+      row.with_value { render("notifications/component_details_formulation_ingredients", component: component) }
+      if component.formulation_file.attached? && component.notification.editable?
+        row.with_action(text: "Change", href: edit_responsible_person_notification_component_formulation_path(
+          component.notification.responsible_person,
+          component.notification,
+          component
+        ), visually_hidden_text: "formulation file")
+      end
+    end;
+  end
+
+  summary_list.with_row do |row|
+    row.with_key { "Physical form" }
+    row.with_value { get_physical_form_name(component.physical_form) }
+  end;
+
+  if can_view_product_ingredients?
+    summary_list.with_row do |row|
+      row.with_key { "Special applicator" }
+      row.with_value { component.special_applicator.present? ? "Yes" : "No" }
+    end;
+  end
+
+  if can_view_product_ingredients? && component.special_applicator.present?
+    summary_list.with_row do |row|
+      row.with_key { "Applicator type" }
+      row.with_value { component_special_applicator_name(component) }
+    end;
+  end
+
+  if can_view_product_ingredients? && component.acute_poisoning_info.present?
+    summary_list.with_row do |row|
+      row.with_key { "Acute poisoning information" }
+      row.with_value { component.acute_poisoning_info }
+    end;
+  end
+
+  if can_view_product_ingredients? && component.predefined?
+    summary_list.with_row do |row|
+      row.with_key { "Contains ingredients NPIS needs to know about" }
+      row.with_value { component.poisonous_ingredients_answer }
+    end;
+  end
+
+  if can_view_product_ingredients? && component.predefined? && component.contains_poisonous_ingredients
+    summary_list.with_row do |row|
+      row.with_key { "Ingredients NPIS needs to know about" }
+      row.with_value { render("notifications/component_details_poisonous_ingredients",
+                              component: component) }
+    end;
+  end
+  end %>
 
 <% if can_view_product_ingredients? && component.trigger_questions %>
   <%= render "notifications/ph", component: component %>

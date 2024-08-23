@@ -1,47 +1,20 @@
-<%= govukSummaryList(
-  classes: "govuk-!-margin-bottom-8",
-  rows: [
-    {
-      key: { text: "Name" },
-      value: { text: contact_person.name },
-      actions: {
-        items: [
-          {
-            href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "name"),
-            text: "Edit",
-            classes: "govuk-link--no-visited-state",
-            visuallyHiddenText: "the name"
-          }
-        ]
-      }
-    },
-    {
-      key: { text: "Email" },
-      value: { text: contact_person.email_address },
-      actions: {
-        items: [
-          {
-            href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "email_address"),
-            text: "Edit",
-            classes: "govuk-link--no-visited-state",
-            visuallyHiddenText: "email address"
-          }
-        ]
-      }
-    },
-    {
-      key: { text: "Telephone" },
-      value: { text: contact_person.phone_number },
-      actions: {
-        items: [
-          {
-            href: edit_responsible_person_contact_person_path(contact_person.responsible_person,  contact_person, field: "phone_number"),
-            text: "Edit",
-            classes: "govuk-link--no-visited-state",
-            visuallyHiddenText: "the telephone number"
-          }
-        ]
-      }
-    },
-  ]
-) %>
+<%= govuk_summary_list do |summary_list|
+  summary_list.with_row do |row|
+    row.with_key { "Name" }
+    row.with_value { contact_person.name }
+    row.with_action(text: "Edit", href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "name"), visually_hidden_text: "the name")
+  end;
+
+  summary_list.with_row do |row|
+    row.with_key { "Email" }
+    row.with_value { contact_person.email_address }
+    row.with_action(text: "Edit", href: edit_responsible_person_contact_person_path(contact_person.responsible_person, contact_person, field: "email_address"), visually_hidden_text: "email address")
+  end;
+
+  summary_list.with_row do |row|
+    row.with_key { "Telephone" }
+    row.with_value { contact_person.phone_number }
+    row.with_action(text: "Edit", href: edit_responsible_person_contact_person_path(contact_person.responsible_person,  contact_person, field: "phone_number"), visually_hidden_text: "the telephone number")
+  end;
+
+end %>

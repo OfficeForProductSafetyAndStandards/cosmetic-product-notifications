@@ -14,13 +14,10 @@
                       value_name: :exact_concentration)
             end
   %>
-  <%= govukSummaryList(
-    classes: "opss-summary-list-mixed",
-    rows: [
-      {
-        key: { text: get_trigger_rules_short_question_name(trigger_question.question) },
-        value: { html: value },
-      }
-    ]
-  ) %>
+  <%= govuk_summary_list do |summary_list|
+      summary_list.with_row do |row|
+        row.with_key { get_trigger_rules_short_question_name(trigger_question.question) }
+        row.with_value { value }
+      end;
+  end %>
 <% end %>
