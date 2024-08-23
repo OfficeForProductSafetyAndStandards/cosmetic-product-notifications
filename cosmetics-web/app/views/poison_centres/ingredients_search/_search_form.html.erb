@@ -1,4 +1,4 @@
-<%= form_for(@search_form, url: poison_centre_ingredients_search_path, method: :get, html: { 'novalidate' => true }) do |form| %>
+<%= form_for(@search_form, url: poison_centre_ingredients_search_path, method: :get, builder: GOVUKDesignSystemFormBuilder::FormBuilder, html: { 'novalidate' => true }) do |form| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
@@ -15,26 +15,15 @@
         </div>
       </div>
 
-      <%= govukRadios(
-            form: form,
-            key: :group_by,
-            idPrefix: "group-by",
-            hint: { text: "You can display the results grouped by notifications which share the same Responsible Person.", classes: "govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" },
-            fieldset: { classes: "govuk-fieldset opss-grouping", legend: { text: "Group by", classes: "govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" } },
-            classes: "govuk-radios--inline govuk-radios--small",
-            items: [
-              {
-                value: OpenSearchQuery::Ingredient::GROUP_BY_NONE,
-                text: 'None',
-                label: { classes: 'govuk-label govuk-radios__label' }
-              },
-              {
-                value: OpenSearchQuery::Ingredient::GROUP_BY_RESPONSIBLE_PERSON_ASC,
-                text: "Responsible Person",
-                label: { classes: 'govuk-label govuk-radios__label' }
-              }
-            ],
-            ) %>
+      <fieldset class="govuk-fieldset opss-grouping" aria-describedby="group-by-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" style="margin-bottom: 8px">
+          Group by
+        </legend>
+        <%= form.govuk_radio_buttons_fieldset(:group_by,inline: true, legend: { text: "Group by", hidden: true }, hint: { text: "You can display the results grouped by notifications which share the same Responsible Person.", style: "font-size: 1rem !important;" }) do %>
+            <%= form.govuk_radio_button :group_by, OpenSearchQuery::Ingredient::GROUP_BY_NONE, label: { text: 'None', style: 'font-size: 1.1875rem; line-height: 1.3157894737;' }, link_errors: true %>
+            <%= form.govuk_radio_button :group_by, OpenSearchQuery::Ingredient::GROUP_BY_RESPONSIBLE_PERSON_ASC, label: { text: 'Responsible Person', style: 'font-size: 1.1875rem; line-height: 1.3157894737;' } %>
+        <% end %>
+      </fieldset>
 
 
       <div class="govuk-form-group">
@@ -73,59 +62,31 @@
         </fieldset>
       </div>
 
-      <%= govukRadios(
-            form: form,
-            key: :exact_or_any_match,
-            idPrefix: "exact-or-any-match",
-            hint: { text: "You can filter the results to match against any of its words or the ingredient name exactly.", classes: "govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" },
-            fieldset: { classes: "govuk-fieldset opss-grouping", legend: { text: "Match type", classes: "govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" } },
-            classes: "govuk-radios--inline govuk-radios--small",
-            items: [
-              {
-                value: OpenSearchQuery::Ingredient::ANY_MATCH,
-                text: 'Match any words',
-                label: { classes: 'govuk-label govuk-radios__label' }
-              },
-              {
-                value: OpenSearchQuery::Ingredient::EXACT_MATCH,
-                text: "Exact match only",
-                label: { classes: 'govuk-label govuk-radios__label' }
-              }
-            ],
-            ) %>
+      <fieldset class="govuk-fieldset opss-grouping" aria-describedby="group-by-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" style="margin-bottom: 8px">
+          Match type
+        </legend>
+        <%= form.govuk_radio_buttons_fieldset(:exact_or_any_match,inline: true, legend: { text: "Group by", hidden: true }, hint: { text: "You can filter the results to match against any of its words or the ingredient name exactly.", style: "font-size: 1rem !important;" }) do %>
+          <%= form.govuk_radio_button :exact_or_any_match, OpenSearchQuery::Ingredient::ANY_MATCH, label: { text: 'Match any words', style: 'font-size: 1.1875rem; line-height: 1.3157894737;' }, link_errors: true %>
+          <%= form.govuk_radio_button :exact_or_any_match, OpenSearchQuery::Ingredient::EXACT_MATCH, label: { text: 'Exact match only', style: 'font-size: 1.1875rem; line-height: 1.3157894737;' } %>
+        <% end %>
+      </fieldset>
 
-      <%= govukRadios(
-            form: form,
-            key: :sort_by,
-            idPrefix: "sort-by",
-            hint: { text: "You can sort the ordering of how the notifications will be displayed.", classes: "govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1" },
-            fieldset: { classes: "govuk-fieldset opss-grouping", legend: { text: "Sorting order", classes: "govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" } },
-            classes: "govuk-radios--inline govuk-radios--small",
-            items: [
-              {
-                value: OpenSearchQuery::Ingredient::SCORE_SORTING,
-                text: 'Relevance',
-                label: { classes: 'govuk-label govuk-radios__label' }
-              },
-              {
-                value: OpenSearchQuery::Ingredient::DATE_DESCENDING_SORTING,
-                text: "Newest",
-                label: { classes: 'govuk-label govuk-radios__label' }
-              },
-              {
-                value: OpenSearchQuery::Ingredient::DATE_ASCENDING_SORTING,
-                text: 'Oldest',
-                label: { classes: 'govuk-label govuk-radios__label' }
-              },
-            ],
-            ) %>
+      <fieldset class="govuk-fieldset opss-grouping" aria-describedby="group-by-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--s opss-grouping__legend--s opss-grouping__heading--norm" style="margin-bottom: 8px">
+          Sorting order
+        </legend>
+        <%= form.govuk_radio_buttons_fieldset(:sort_by,inline: true, legend: { text: "Group by", hidden: true }, hint: { text: "You can sort the ordering of how the notifications will be displayed.", style: "font-size: 1rem !important;" }) do %>
+          <%= form.govuk_radio_button :sort_by, OpenSearchQuery::Ingredient::SCORE_SORTING, label: { text: 'Relevance', style: 'font-size: 1.1875rem; line-height: 1.3157894737;' }, link_errors: true %>
+          <%= form.govuk_radio_button :sort_by, OpenSearchQuery::Ingredient::DATE_DESCENDING_SORTING, label: { text: "Newest", style: 'font-size: 1.1875rem; line-height: 1.3157894737;' } %>
+          <%= form.govuk_radio_button :sort_by, OpenSearchQuery::Ingredient::DATE_ASCENDING_SORTING, label: { text: "Oldest", style: 'font-size: 1.1875rem; line-height: 1.3157894737;' } %>
+        <% end %>
+      </fieldset>
     </div>
   </div>
 
   <div class="govuk-button-group">
-    <button type="submit" class="govuk-button" data-module="govuk-button">
-      Search
-    </button>
+    <%= form.govuk_submit "Search" %>
     <button type="reset" class="govuk-button opss-button-link opss-nojs-hide" data-reset-form="new_ingredient_search_form" data-form-defaults="<%= { 'sort-by_score' => OpenSearchQuery::Ingredient::SCORE_SORTING, 'exact-or-any-match_any_match' => OpenSearchQuery::Ingredient::ANY_MATCH }.to_json %>">
       Reset
     </button>
