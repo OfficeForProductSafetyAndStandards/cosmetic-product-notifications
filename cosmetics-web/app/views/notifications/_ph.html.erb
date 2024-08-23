@@ -1,21 +1,20 @@
-<%= govukSummaryList(
-  classes: "opss-summary-list-mixed",
-  rows: [
+<%= govuk_summary_list do |summary_list|
+
     if component.ph_range_not_required?
-      {
-        key: { text: "pH" },
-        value: { text: t(component.ph, scope: [:component_ph, :check_your_answers]) },
-      }
+      summary_list.with_row do |row|
+        row.with_key { "pH" }
+        row.with_value { t(component.ph, scope: [:component_ph, :check_your_answers]) }
+      end;
     elsif component.minimum_ph == component.maximum_ph
-      {
-        key: { text: "Exact pH" },
-        value: { text: component.minimum_ph },
-      }
+      summary_list.with_row do |row|
+        row.with_key { "Exact pH" }
+        row.with_value { component.minimum_ph }
+      end;
     else
-      {
-        key: { text: "pH range" },
-        value: { text: "#{component.minimum_ph} to #{component.maximum_ph}" },
-      }
+      summary_list.with_row do |row|
+        row.with_key { "pH range" }
+        row.with_value { "#{component.minimum_ph} to #{component.maximum_ph}" }
+      end;
     end
-  ]
-) %>
+
+end %>

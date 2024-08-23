@@ -1,56 +1,60 @@
 <section id="product-table" class="govuk-!-margin-top-7">
   <h2 class="govuk-visually-hidden">The product</h2>
-  <%= govukSummaryList(
-    classes: "opss-summary-list-mixed",
-    rows: [
-      {
-        key: { text: "Label" },
-        value: { html: render("notifications/product_details_label_images", notification:) },
-      },
+  <%= govuk_summary_list do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Label" }
+      row.with_value { render("notifications/product_details_label_images", notification:) }
+    end;
       if notification.industry_reference.present?
-        {
-          key: { text: "Internal reference number" },
-          value: { text: notification.industry_reference },
-        }
-      end,
+        summary_list.with_row do |row|
+          row.with_key { "Internal reference number" }
+          row.with_value { notification.industry_reference }
+        end;
+      end
       unless notification.under_three_years.nil?
-        {
-          key: { text: "For children under 3" },
-          value: { text: notification.under_three_years ? "Yes" : "No" },
-        }
-      end,
-      {
-        key: { text: "Number of components" },
-        value: { text: notification.components.length },
-      },
-      {
-        key: { text: "Shades" },
-        value: { html: display_shades(notification) },
-      },
+        summary_list.with_row do |row|
+          row.with_key { "For children under 3" }
+          row.with_value { notification.under_three_years ? "Yes" : "No" }
+        end;
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Number of components" }
+        row.with_value { notification.components.length }
+      end;
+
+      summary_list.with_row do |row|
+        row.with_key { "Shades" }
+        row.with_value { display_shades(notification) }
+      end;
+
       if notification.cpnp_notification_date.present?
-        {
-          key: { text: "EU notification date" },
-          value: { text: display_full_month_date(notification.cpnp_notification_date) },
-        }
-      end,
-      {
-        key: { text: "Are the components mixed?" },
-        value: { text: notification.components_are_mixed ? "Yes" : "No" },
-      },
+        summary_list.with_row do |row|
+          row.with_key { "EU notification date" }
+          row.with_value { display_full_month_date(notification.cpnp_notification_date) }
+        end;
+      end
+
+      summary_list.with_row do |row|
+        row.with_key { "Are the components mixed?" }
+        row.with_value { notification.components_are_mixed ? "Yes" : "No" }
+      end;
+
       if can_view_product_ingredients? && notification.ph_min_value.present?
-        {
-          key: { text: "Minimum pH value" },
-          value: { text: notification.ph_min_value },
-        }
-      end,
+        summary_list.with_row do |row|
+          row.with_key { "Minimum pH value" }
+          row.with_value { notification.ph_min_value }
+        end;
+      end
+
       if can_view_product_ingredients? && notification.ph_max_value.present?
-        {
-          key: { text: "Maximum pH value" },
-          value: { text: notification.ph_max_value },
-        }
-      end,
-    ].compact
-  ) %>
+        summary_list.with_row do |row|
+          row.with_key { "Maximum pH value" }
+          row.with_value { notification.ph_max_value }
+        end;
+      end
+
+  end %>
 </section>
 
 <% notification.components.order(:id).each_with_index do |component, i| %>
@@ -64,15 +68,12 @@
   %>
   <section id="<%= component.name&.parameterize.presence || item_count.parameterize %>" class="govuk-!-margin-top-9 opss-grouping">
     <h3 class="govuk-heading-m opss-grouping__heading-m"><%= component_title %></h3>
-      <%= govukSummaryList(
-        classes: "opss-summary-list-mixed",
-        rows: [
-          {
-            key: { text: "Shades" },
-            value: { html: render("none_or_bullet_list", entities_list: component.shades, list_item_classes: "", list_classes: "") },
-          },
-        ].compact
-      ) %>
+    <%= govuk_summary_list do |summary_list|
+          summary_list.with_row do |row|
+            row.with_key { "Shades" }
+            row.with_value { render("none_or_bullet_list", entities_list: component.shades, list_item_classes: "", list_classes: "") }
+          end;
+    end %>
       <%= render "notifications/component_details", component: component %>
   </section>
 <% end %>
