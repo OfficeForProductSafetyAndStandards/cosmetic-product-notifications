@@ -232,7 +232,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.9, < 3.14)
-    govuk_design_system_formbuilder (5.4.1)
+    govuk_design_system_formbuilder (5.5.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -604,7 +604,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.5.0)
-    view_component (3.12.1)
+    view_component (3.13.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
