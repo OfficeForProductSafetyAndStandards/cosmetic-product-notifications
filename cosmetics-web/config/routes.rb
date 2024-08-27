@@ -271,6 +271,7 @@ Rails.application.routes.draw do
     get :cookies_policy, path: "cookies"
     get :csv, path: "csv"
     get :npis_tables, path: "npis_tables"
+    get :accessibility_statement_search, path: "accessibility-statement-search"
   end
 
   resource :cookie_form, only: [:create]
