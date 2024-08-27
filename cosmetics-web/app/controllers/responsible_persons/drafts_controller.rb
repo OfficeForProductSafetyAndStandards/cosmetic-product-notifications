@@ -27,7 +27,7 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
     end
   end
 
-  private
+private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
