@@ -1,9 +1,9 @@
 class ResponsiblePersons::DraftsController < SubmitApplicationController
-  before_action :set_notification, except: %i[index new]
   before_action :set_responsible_person
+  before_action :set_notification, except: %i[index new]
 
   def index
-    @unfinished_notifications = get_unfinished_notifications(20)
+    @unfinished_notifications = @responsible_person.notifications.unfinished.page(params[:page]).per(20)
   end
 
   def show; end
@@ -20,32 +20,26 @@ class ResponsiblePersons::DraftsController < SubmitApplicationController
   def declaration; end
 
   def accept
-    unless @notification.submit_notification!
-      flash[:alert] = "Notification could not be submitted"
-      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification)
+    if @notification.submit_notification!
+      redirect_to responsible_person_notification_path(@responsible_person, @notification), notice: "Notification submitted successfully"
+    else
+      redirect_to edit_responsible_person_notification_path(@responsible_person, @notification), alert: "Notification could not be submitted"
     end
   end
 
-private
+  private
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
 
   def set_notification
-    @notification = Notification.find_by reference_number: params[:notification_reference_number]
+    @notification = @responsible_person.notifications.find_by!(reference_number: params[:notification_reference_number])
 
-    return redirect_to responsible_person_notification_path(@notification.responsible_person, @notification) if @notification&.notification_complete? || @notification&.archived?
-
-    authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
-  end
-
-  def get_unfinished_notifications(page_size)
-    @responsible_person.notifications
-                       .where("state IN (?)", NotificationStateConcern::DISPLAYABLE_INCOMPLETE_STATES)
-                       .where("reference_number IS NOT NULL")
-                       .where("product_name IS NOT NULL")
-                       .order("updated_at DESC")
-                       .page(params[:page]).per(page_size)
+    if @notification.notification_complete? || @notification.archived?
+      redirect_to responsible_person_notification_path(@notification.responsible_person, @notification)
+    else
+      authorize @notification, :update?, policy_class: ResponsiblePersonNotificationPolicy
+    end
   end
 end
