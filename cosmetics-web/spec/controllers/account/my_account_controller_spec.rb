@@ -27,14 +27,12 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
       end
 
       it "displays the account information" do
-        within("main.govuk-main-wrapper") do
-          expect(page).to have_content("Your account")
-        end
+        visit_my_account
       end
 
       it "displays the full name of the responsible person" do
         within("main.govuk-main-wrapper") do
-          expect(page).to have_content("Full name #{user.name}")
+          expect(page).to have_content("Test contact person one")
         end
       end
     end
@@ -46,7 +44,9 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
   end
 
   def sign_out_and_sign_back_in
-    sign_out_user_sign_back_in_view_your_account
+    sign_out_from_page
+    sign_in(user)
+    select_rp
   end
 
   def sign_in_user_visit_landing_page
@@ -61,12 +61,16 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
     click_button("Sign out")
   end
 
-  def sign_out_user_sign_back_in_view_your_account
-    sign_out_from_page
-    sign_in(user)
-    visit "/my_account"
+  def select_rp
     expect(page).to have_text("Test person one")
-    expect(page).to have_h2("Your security preferences")
+    choose("Test person one")
+    click_button("Save and continue")
+  end
+
+  def visit_my_account
+    expect(page).to have_text("Responsible Person")
+    expect(page).to have_text("Test person one")
+    expect(page).to have_text("ct_test@testing.one")
   end
 
   def create_responsible_person
