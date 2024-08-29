@@ -28,6 +28,8 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
 
       it "displays the account information" do
         visit_my_account
+        expect(page).to have_text("Test person one")
+        expect(page).to have_text("ct_test@testing.one")
       end
 
       it "displays the full name of the responsible person" do
@@ -70,7 +72,12 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
   def visit_my_account
     expect(page).to have_text("Responsible Person")
     expect(page).to have_text("Test person one")
-    expect(page).to have_text("ct_test@testing.one")
+    choose("Test person one")
+    click_button("Save and continue")
+  end
+
+  def visit_my_account
+    expect(page).to have_text("Responsible Person")
   end
 
   def create_responsible_person
