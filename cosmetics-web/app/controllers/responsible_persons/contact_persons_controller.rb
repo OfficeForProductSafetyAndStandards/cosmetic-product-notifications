@@ -17,6 +17,10 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
       # we don't want to switch to new RP
       # See also ResponsiblePerspon::AccountWizardController
       set_current_responsible_person_from_previous
+      if current_responsible_person.nil?
+        current_responsible_person
+      end
+
       redirect_to responsible_person_path(current_responsible_person), confirmation: create_successful_message
     else
       render :new
@@ -47,7 +51,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
 private
 
   def set_responsible_person
-    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
+    @responsible_person = helpers.set_responsible_person
     authorize @responsible_person, :update?
   end
 

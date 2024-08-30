@@ -409,6 +409,15 @@ module ResponsiblePersons::NotificationsHelper
     end
   end
 
+  def set_responsible_person
+    @responsible_person =
+      if session[:current_responsible_person] && session[:current_responsible_person][:id] == params[:responsible_person_id]
+        ResponsiblePerson.new(session[:current_responsible_person])
+      else
+        ResponsiblePerson.find(params[:responsible_person_id] || session[:current_responsible_person_id])
+      end
+  end
+
 private
 
   def component_ph_trigger_questions_rows(component)
