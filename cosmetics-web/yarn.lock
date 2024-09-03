@@ -1480,10 +1480,10 @@ govuk-country-and-territory-autocomplete@1.0.2:
     core-js "3.2.1"
     openregister-picker-engine "^1.2.1"
 
-govuk-frontend@5.5.0:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.5.0.tgz#dfb2426788dbf570ef7d2742983bc54e68f17f34"
-  integrity sha512-lNSHCOzgk6LfgelcdtJxTLK1BX/cpjCUyEB3LnzliD9o9YQckNMsbj5+jSOs2RFy6XBJ/DJqxj2TKfjBCuzpyA==
+govuk-frontend@5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.6.0.tgz#8c0975f0d825ec7192bcfe64e3e97ef3dfa7dea1"
+  integrity sha512-yNA4bL7i7mNrg36wPNZ3RctHo9mjl82Phs8MWs1lwovxJuQ4ogEo/XWn2uB1HxkXNqgMlW4wnd0iiKgRMfxYfw==
 
 graceful-fs@^4.1.15:
   version "4.2.10"
@@ -2620,10 +2620,10 @@ postcss@^5.0.0, postcss@^5.0.10, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.9:
     source-map "^0.5.6"
     supports-color "^3.2.3"
 
-postcss@^8.2.14, postcss@^8.4.19, postcss@^8.4.33, postcss@^8.4.41:
-  version "8.4.41"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.41.tgz#d6104d3ba272d882fe18fc07d15dc2da62fa2681"
-  integrity sha512-TesUflQ0WKZqAvg52PWL6kHgLKP6xB6heTOdoYM0Wt2UHyxNa4K25EZZMgKns3BH1RLVbZCREPpLY0rhnNoHVQ==
+postcss@^8.2.14, postcss@^8.4.19, postcss@^8.4.33, postcss@^8.4.44:
+  version "8.4.44"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.44.tgz#d56834ef6508610ba224bb22b2457b2169ed0480"
+  integrity sha512-Aweb9unOEpQ3ezu4Q00DPvvM2ZTUitJdNKeP/+uQgr1IBIqu574IaZoURId7BKtWMREwzKa9OgzPzezWGPWFQw==
   dependencies:
     nanoid "^3.3.7"
     picocolors "^1.0.1"
