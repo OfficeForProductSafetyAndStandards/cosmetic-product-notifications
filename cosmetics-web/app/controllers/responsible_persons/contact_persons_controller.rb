@@ -6,7 +6,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
   }.freeze
 
   skip_before_action :create_or_join_responsible_person
-  before_action :set_responsible_person
+  before_action :get_responsible_person
   before_action :set_contact_person
 
   def new; end
@@ -51,7 +51,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
 private
 
   def set_responsible_person
-    @responsible_person = helpers.set_responsible_person
+    @responsible_person = helpers.get_responsible_person
     authorize @responsible_person, :update?
   end
 

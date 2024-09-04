@@ -94,7 +94,7 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
 private
 
   def set_responsible_person_and_authorize
-    @responsible_person = helpers.set_responsible_person
+    @responsible_person = helpers.get_responsible_person
     authorize @responsible_person, :show?
   end
 

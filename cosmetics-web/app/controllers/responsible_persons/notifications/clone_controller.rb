@@ -1,5 +1,5 @@
 class ResponsiblePersons::Notifications::CloneController < SubmitApplicationController
-  before_action :set_responsible_person
+  before_action :get_responsible_person
   before_action :set_notification
 
   def new

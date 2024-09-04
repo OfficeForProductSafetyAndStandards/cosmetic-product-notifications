@@ -1,5 +1,5 @@
 class ResponsiblePersons::TeamMembersController < SubmitApplicationController
-  before_action :set_responsible_person
+  before_action :get_responsible_person
   before_action :authorize_responsible_person, only: :index
   before_action :validate_responsible_person, only: :index
 

@@ -1,7 +1,7 @@
 class ResponsiblePersons::SearchNotificationsController < SubmitApplicationController
   PER_PAGE = 20
 
-  before_action :set_responsible_person
+  before_action :get_responsible_person
 
   def show
     @search_form = NotificationSearchForm.new(search_params)

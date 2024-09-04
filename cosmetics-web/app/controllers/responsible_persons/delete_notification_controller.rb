@@ -1,5 +1,5 @@
 class ResponsiblePersons::DeleteNotificationController < SubmitApplicationController
-  before_action :set_responsible_person
+  before_action :get_responsible_person
   before_action :validate_responsible_person
   before_action :set_notification
   before_action :set_paper_trail_whodunnit

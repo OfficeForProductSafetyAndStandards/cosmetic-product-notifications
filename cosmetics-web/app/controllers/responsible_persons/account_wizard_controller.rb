@@ -8,7 +8,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
   skip_before_action :create_or_join_responsible_person
   before_action :pending_invitations, if: -> { step == :pending_invitations }
   before_action :clear_session, if: -> { step == :overview }
-  before_action :set_responsible_person, only: %i[show update]
+  before_action :get_responsible_person, only: %i[show update]
   before_action :responsible_persons_details_form, if: -> { step == :enter_details }
   before_action :store_responsible_person, only: %i[update]
 

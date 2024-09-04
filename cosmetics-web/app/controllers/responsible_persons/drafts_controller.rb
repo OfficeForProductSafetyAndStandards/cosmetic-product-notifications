@@ -1,6 +1,6 @@
 class ResponsiblePersons::DraftsController < SubmitApplicationController
   before_action :set_notification, except: %i[index new]
-  before_action :set_responsible_person
+  before_action :get_responsible_person
 
   def index
     @unfinished_notifications = get_unfinished_notifications(20)

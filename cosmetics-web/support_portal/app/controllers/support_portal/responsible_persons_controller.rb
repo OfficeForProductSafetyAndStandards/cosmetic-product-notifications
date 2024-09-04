@@ -1,6 +1,6 @@
 module SupportPortal
   class ResponsiblePersonsController < ApplicationController
-    before_action :set_responsible_person, except: %i[index search_results]
+    before_action :get_responsible_person, except: %i[index search_results]
     before_action :set_assigned_contact, except: %i[index search_results edit_name update_name edit_address update_address edit_business_type update_business_type]
 
     # GET /

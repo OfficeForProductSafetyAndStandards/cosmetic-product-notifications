@@ -2,7 +2,7 @@ module SupportPortal
   class AccountAdministrationController < ApplicationController
     before_action :set_user, except: %i[index search search_results invite_search_user create_search_user]
     before_action :set_responsible_persons, only: %i[show edit_responsible_persons]
-    before_action :set_responsible_person, only: %i[delete_responsible_person_user_confirm delete_responsible_person_user]
+    before_action :get_responsible_person, only: %i[delete_responsible_person_user_confirm delete_responsible_person_user]
     before_action :reenforce_secondary_authentication, only: %i[reset_account deactivate_account]
 
     # GET /

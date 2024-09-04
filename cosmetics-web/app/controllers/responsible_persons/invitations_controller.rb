@@ -1,5 +1,5 @@
 class ResponsiblePersons::InvitationsController < SubmitApplicationController
-  before_action :set_responsible_person
+  before_action :get_responsible_person
   before_action :authorize_responsible_person
   before_action :validate_responsible_person
   before_action :set_invitation, only: %i[cancel destroy resend]
