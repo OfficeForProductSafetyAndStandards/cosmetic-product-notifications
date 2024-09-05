@@ -411,8 +411,7 @@ module ResponsiblePersons::NotificationsHelper
 
   def get_current_responsible_person
     @responsible_person =
-        ResponsiblePerson.find(params[:responsible_person_id] || 
-          session[:current_responsible_person_id])
+      ResponsiblePerson.find(params[:responsible_person_id] || session[:current_responsible_person_id])
   end
 
 private
