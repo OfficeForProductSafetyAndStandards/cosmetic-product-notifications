@@ -18,67 +18,68 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
       # See also ResponsiblePerspon::AccountWizardController
       set_current_responsible_person_from_previous
       if current_responsible_person.nil?
-      redirect_to responsible_person_path(current_responsible_person), confirmation: create_successful_message
-    else
-      render :new
+        redirect_to responsible_person_path(current_responsible_person), confirmation: create_successful_message
+      else
+        render :new
+      end
     end
-  end
 
-  def edit
-    view = EDIT_FIELD_VIEW[params[:field]]
-    return redirect_to responsible_person_path(@responsible_person) unless view
+    def edit
+      view = EDIT_FIELD_VIEW[params[:field]]
+      return redirect_to responsible_person_path(@responsible_person) unless view
 
-    render view
-  end
-
-  def update
-    # As the edit pages have only one field per page, updates will come with a single field being updated.
-    # Possible field values: "name", "email_address", "phone_number"
-    field = contact_person_params.keys.first
-    @contact_person.public_send("#{field}=", contact_person_params[field])
-
-    changed = @contact_person.changed?
-    if @contact_person.save
-      redirect_to(responsible_person_path(@responsible_person), confirmation: confirmation_message(field, changed))
-    else
-      render EDIT_FIELD_VIEW[field]
+      render view
     end
-  end
 
-private
+    def update
+      # As the edit pages have only one field per page, updates will come with a single field being updated.
+      # Possible field values: "name", "email_address", "phone_number"
+      field = contact_person_params.keys.first
+      @contact_person.public_send("#{field}=", contact_person_params[field])
 
-  def set_responsible_person
-    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
-    authorize @responsible_person, :update?
-  end
+      changed = @contact_person.changed?
+      if @contact_person.save
+        redirect_to(responsible_person_path(@responsible_person), confirmation: confirmation_message(field, changed))
+      else
+        render EDIT_FIELD_VIEW[field]
+      end
+    end
 
-  def set_contact_person
-    @contact_person = if params[:id]
-                        @responsible_person.contact_persons.find(params[:id])
-                      else
-                        @responsible_person.contact_persons.build(contact_person_params)
-                      end
-  end
+    private
 
-  def contact_person_params
-    params.fetch(:contact_person, {}).permit(
-      :email_address,
-      :phone_number,
-      :name,
-    )
-  end
+    def set_responsible_person
+      @responsible_person = helpers.get_current_responsible_persons
+      authorize @responsible_person, :update?
+    end
 
-  def confirmation_message(field, changed)
-    return unless changed # Don't set confirmation message when submitted value does not change the current value
+    def set_contact_person
+      @contact_person = if params[:id]
+                          @responsible_person.contact_persons.find(params[:id])
+                        else
+                          @responsible_person.contact_persons.build(contact_person_params)
+                        end
+    end
 
-    "The assigned contact #{ContactPerson.human_attribute_name(field).downcase} was changed"
-  end
+    def contact_person_params
+      params.fetch(:contact_person, {}).permit(
+        :email_address,
+        :phone_number,
+        :name,
+      )
+    end
 
-  def create_successful_message
-    if current_user.responsible_persons.count > 1
-      "The new Responsible Person has been added to your list of Responsible Persons and can be selected as the Responsible Person"
-    else
-      "The Responsible Person was created"
+    def confirmation_message(field, changed)
+      return unless changed # Don't set confirmation message when submitted value does not change the current value
+
+      "The assigned contact #{ContactPerson.human_attribute_name(field).downcase} was changed"
+    end
+
+    def create_successful_message
+      if current_user.responsible_persons.count > 1
+        "The new Responsible Person has been added to your list of Responsible Persons and can be selected as the Responsible Person"
+      else
+        "The Responsible Person was created"
+      end
     end
   end
 end

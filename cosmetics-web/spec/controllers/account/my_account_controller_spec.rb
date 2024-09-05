@@ -69,6 +69,7 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
 
   def create_responsible_person
     choose("Add a new Responsible Person")
+    byebug
     click_button("Save and continue")
 
     # add business details
@@ -79,6 +80,7 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
     fill_in "address_line_1", with: "Test building one, street two"
     fill_in "Town or city", with: "Test town one"
     fill_in "Postcode", with: "AB12 3DE"
+    byebug
     click_button("Save and continue")
 
     # add contact person for the rp that was created

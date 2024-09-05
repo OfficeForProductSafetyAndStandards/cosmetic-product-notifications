@@ -14,11 +14,11 @@ class ResponsiblePersonsController < SubmitApplicationController
     elsif @responsible_persons_selection_form.add_new?
       redirect_to account_path(:enter_details)
     else
-      message = current_responsible_person ? "Responsible Person was changed" : nil
+      current_responsible_person ? "Responsible Person was changed" : nil
       set_current_responsible_person(
         current_user.responsible_persons.find(@responsible_persons_selection_form.selection),
       )
-      redirect_to responsible_person_path(find(current_responsible_person || session[:current_responsible_person_id])), confirmation: message
+      redirect_to responsible_person_path(find(current_responsible_person || session[:current_responsible_person_id])), confirmation: messagegit
     end
   end
 
