@@ -22,16 +22,13 @@ module ResponsiblePersonConcern
   def current_responsible_person
     rp = find_responsible_person(session[:current_responsible_person_id])
     if rp.nil? && current_user.responsible_persons.count == 1
-      session[:current_responsible_person] = current_user.responsible_persons.first
       current_user.responsible_persons.first
     else
-      session[:current_responsible_person] = rp
       rp
     end
   end
 
   def set_current_responsible_person(responsible_person)
-    session[:current_responsible_person] = responsible_person
     session[:current_responsible_person_id] = responsible_person.id
   end
 

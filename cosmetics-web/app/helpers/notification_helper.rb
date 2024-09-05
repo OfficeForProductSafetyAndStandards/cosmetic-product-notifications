@@ -410,12 +410,7 @@ module ResponsiblePersons::NotificationsHelper
   end
 
   def get_current_responsible_person
-    @responsible_person =
-      if session[:current_responsible_person] && session[:current_responsible_person][:id] == params[:responsible_person_id]
-        ResponsiblePerson.new(session[:current_responsible_person])
-      else
-        ResponsiblePerson.find(params[:responsible_person_id] || session[:current_responsible_person_id])
-      end
+    @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
   end
 
 private
