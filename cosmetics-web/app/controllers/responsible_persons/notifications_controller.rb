@@ -1,5 +1,5 @@
 class ResponsiblePersons::NotificationsController < SubmitApplicationController
-  before_action :set_responsible_person
+  before_action :set_responsible_person_and_authorize
   before_action :validate_responsible_person
   before_action :set_paper_trail_whodunnit
 
@@ -92,6 +92,11 @@ class ResponsiblePersons::NotificationsController < SubmitApplicationController
   end
 
 private
+
+  def set_responsible_person_and_authorize
+    @responsible_person = helpers.get_current_responsible_person
+    authorize @responsible_person, :show?
+  end
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:responsible_person_id])
