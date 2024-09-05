@@ -18,7 +18,7 @@ class ResponsiblePersonsController < SubmitApplicationController
       set_current_responsible_person(
         current_user.responsible_persons.find(@responsible_persons_selection_form.selection),
       )
-      redirect_to responsible_person_path(find(current_responsible_person || session[:current_responsible_person_id]), confirmation: message
+      redirect_to responsible_person_path(find(current_responsible_person || session[:current_responsible_person_id])), confirmation: message
     end
   end
 
