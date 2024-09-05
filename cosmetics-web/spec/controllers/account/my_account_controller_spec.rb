@@ -9,6 +9,7 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
 
   scenario "Sign-in and view landing page" do
     sign_in_user_visit_landing_page
+    byebug
     expect(page).to have_css("h1", text: "Select the Responsible Person")
     expect(page).to have_selector("label", text: "Add a new Responsible Person")
   end

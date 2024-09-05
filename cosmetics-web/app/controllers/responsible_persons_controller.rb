@@ -1,5 +1,5 @@
 class ResponsiblePersonsController < SubmitApplicationController
-  before_action :set_responsible_person, only: %i[show edit update]
+  before_action :get_current_responsible_person, only: %i[show edit update]
   skip_before_action :create_or_join_responsible_person, only: %i[select change]
   before_action :validate_responsible_person
   before_action :responsible_persons_selection_form, only: %i[select change]
