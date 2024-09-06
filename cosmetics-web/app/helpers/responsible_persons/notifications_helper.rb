@@ -409,11 +409,6 @@ module ResponsiblePersons::NotificationsHelper
     end
   end
 
-  def get_current_responsible_person
-    @responsible_person =
-      ResponsiblePerson.find(params[:responsible_person_id] || session[:current_responsible_person_id])
-  end
-
 private
 
   def component_ph_trigger_questions_rows(component)

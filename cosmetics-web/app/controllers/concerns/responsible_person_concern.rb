@@ -29,7 +29,7 @@ module ResponsiblePersonConcern
   end
 
   def set_current_responsible_person(responsible_person)
-    session[:current_responsible_person_id] = responsible_person.id
+    session[:current_responsible_person_id] = responsible_person&.id
   end
 
   def validate_responsible_person
@@ -44,6 +44,8 @@ module ResponsiblePersonConcern
     if session[:previous_responsible_person_id].present?
       set_current_responsible_person(find_responsible_person(session[:previous_responsible_person_id]))
       session[:previous_responsible_person_id] = nil
+    else
+      redirect_to select_responsible_persons_path
     end
   end
 

@@ -1,5 +1,5 @@
 class ResponsiblePersonsController < SubmitApplicationController
-  before_action :get_current_responsible_person, only: %i[show edit update]
+  before_action :set_responsible_person, only: %i[show edit update]
   skip_before_action :create_or_join_responsible_person, only: %i[select change]
   before_action :validate_responsible_person
   before_action :responsible_persons_selection_form, only: %i[select change]
@@ -18,7 +18,7 @@ class ResponsiblePersonsController < SubmitApplicationController
       set_current_responsible_person(
         current_user.responsible_persons.find(@responsible_persons_selection_form.selection),
       )
-      redirect_to responsible_person_path(find(current_responsible_person || session[:current_responsible_person_id])), confirmation: messagegit
+      redirect_to responsible_person_path(current_responsible_person || find(session[:current_responsible_person_id])), confirmation: message
     end
   end
 

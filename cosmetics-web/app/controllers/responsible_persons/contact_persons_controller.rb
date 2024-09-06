@@ -6,7 +6,7 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
   }.freeze
 
   skip_before_action :create_or_join_responsible_person
-  before_action :set_responsible_person
+  before_action :set_responsible_person_and_authorize
   before_action :set_contact_person
 
   def new; end
@@ -47,8 +47,9 @@ class ResponsiblePersons::ContactPersonsController < SubmitApplicationController
 
     private
 
-    def set_responsible_person
-      @responsible_person = helpers.get_current_responsible_persons
+    def set_responsible_person_and_authorize
+      @responsible_person =
+        ResponsiblePerson.find(params[:responsible_person_id] || session[:current_responsible_person_id])
       authorize @responsible_person, :update?
     end
 
