@@ -22,22 +22,19 @@ module ActiveStorageAccessProtectionConcern
         flash[:alert] = "You do not have permission to access this resource."
         redirect_to submit_root_path and return
       end
-    else
-      allowed_roles = %w[opss_science]
-      if search_user_signed_in?
-        unless current_search_user && allowed_roles.include?(current_search_user.role)
-          flash[:alert] = "You do not have permission to access this resource."
-          redirect_to poison_centre_notifications_search_path and return
-        end
-      elsif support_user_signed_in?
-        unless current_support_user && allowed_roles.include?(current_support_user.role)
-          flash[:alert] = "You do not have permission to access this resource."
-          redirect_to poison_centre_notifications_search_path and return
-        end
-      else
-        flash[:alert] = "You must be signed in to access this resource."
+    elsif search_user_signed_in?
+      unless current_search_user
+        flash[:alert] = "You do not have permission to access this resource."
         redirect_to poison_centre_notifications_search_path and return
       end
+    elsif support_user_signed_in?
+      unless current_support_user
+        flash[:alert] = "You do not have permission to access this resource."
+        redirect_to poison_centre_notifications_search_path and return
+      end
+    else
+      flash[:alert] = "You must be signed in to access this resource."
+      redirect_to poison_centre_notifications_search_path and return
     end
 
     # Serve the blob data directly using send_data
