@@ -1,6 +1,6 @@
 module Types
   class QueryType < Types::BaseObject
-    include Types::CmrQueries
+    include CmrQueries
     include ComponentNanoMaterialQueries
     include ComponentQueries
     include ContactPersonQueries
