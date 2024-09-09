@@ -27,7 +27,6 @@ RSpec.describe "Submit user belongs to multiple responsible persons", :with_2fa,
     visit "/"
 
     click_on "cosmetic products page"
-
     expect_to_be_on_responsible_person_notifications_page(responsible_person_a)
     click_on "Responsible Person"
     expect(page).to have_css("dd", text: name_a)

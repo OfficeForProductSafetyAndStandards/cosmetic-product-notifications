@@ -12,6 +12,14 @@ RSpec.describe "Sign-in and select responsible person", type: :feature do
     expect(page).to have_content("Select the Responsible Person")
   end
 
+  scenario "successfully sign in visit my account with no responsible person" do
+    sign_in(user)
+    visit "/my_account"
+    expect(page).to have_content("Select the Responsible Person")
+    choose "Add a new Responsible Person"
+    click_on "Save and continue"
+  end
+
   context "when signed in and creating a responsible person" do
     before do
       sign_in_and_create_responsible_person
