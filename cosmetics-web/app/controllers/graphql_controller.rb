@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  protect_from_forgery with: :null_session
+  # Skip CSRF protection for GraphQL requests
+  skip_before_action :verify_authenticity_token
+  
+  skip_before_action :authenticate_user!
+  skip_before_action :require_secondary_authentication
+  skip_before_action :authorize_user!
 
-  # Skip authentication and secondary authentication for introspection queries
-  skip_before_action :authenticate_user!, if: -> { introspection_query? }
-  skip_before_action :require_secondary_authentication, if: -> { introspection_query? }
-
-  # Ensure authentication for non-introspection queries
-  before_action :authenticate_user!, unless: -> { introspection_query? }
-  before_action :require_secondary_authentication, unless: -> { introspection_query? }
+  before_action :auth_api_key!
 
   def execute
     Rails.logger.debug "GraphQL request parameters: #{params.to_json}"
@@ -26,7 +25,7 @@ class GraphqlController < ApplicationController
     handle_error_in_development(e)
   end
 
-private
+  private
 
   def introspection_query?
     query_string = params[:query] || request.raw_post
@@ -58,5 +57,14 @@ private
     return nil if introspection_query?
 
     @secondary_authentication_user ||= User.find_by(id: session[:secondary_authentication_user_id] || user_id_for_secondary_authentication)
+  end
+
+  def auth_api_key!
+    api_key = request.headers['X-API-KEY']
+    @current_api_key = ApiKey.find_by(key: api_key)
+
+    unless @current_api_key
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
 end
