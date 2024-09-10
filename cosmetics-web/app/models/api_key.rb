@@ -3,7 +3,7 @@ class ApiKey < ApplicationRecord
   validates :team, presence: true
 
   def self.create_with_generated_key(team:)
-    api_key = new(team: team)
+    api_key = new(team:)
     api_key.key = SecureRandom.hex(32)
     api_key.save!
     api_key

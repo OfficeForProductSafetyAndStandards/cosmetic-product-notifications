@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_09_140856) do
     t.string "team"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_api_keys_on_key", unique: true
   end
 
   create_table "cmrs", force: :cascade do |t|

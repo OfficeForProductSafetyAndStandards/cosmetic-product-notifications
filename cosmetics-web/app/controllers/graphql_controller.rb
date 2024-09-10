@@ -3,7 +3,7 @@
 class GraphqlController < ApplicationController
   # Skip CSRF protection for GraphQL requests
   skip_before_action :verify_authenticity_token
-  
+
   skip_before_action :authenticate_user!
   skip_before_action :require_secondary_authentication
   skip_before_action :authorize_user!
@@ -25,7 +25,7 @@ class GraphqlController < ApplicationController
     handle_error_in_development(e)
   end
 
-  private
+private
 
   def introspection_query?
     query_string = params[:query] || request.raw_post
@@ -60,11 +60,11 @@ class GraphqlController < ApplicationController
   end
 
   def auth_api_key!
-    api_key = request.headers['X-API-KEY']
+    api_key = request.headers["X-API-KEY"]
     @current_api_key = ApiKey.find_by(key: api_key)
 
     unless @current_api_key
-      render json: { error: 'Unauthorized' }, status: :unauthorized
+      render json: { error: "Unauthorized" }, status: :unauthorized
     end
   end
 end
