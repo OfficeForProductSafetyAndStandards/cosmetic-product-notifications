@@ -1,9 +1,9 @@
-# app/graphql/types/pending_responsible_person_user_queries.rb
 module Types
   module PendingResponsiblePersonUserQueries
     extend ActiveSupport::Concern
 
     included do
+      # Query for retrieving a specific pending responsible person user by its ID
       field :pending_responsible_person_user, PendingResponsiblePersonUserType, null: false, camelize: false, description: <<~DESC do
         Retrieve a specific pending responsible person user by its ID.
 
@@ -34,43 +34,64 @@ module Types
         argument :id, GraphQL::Types::ID, required: true, description: "The ID of the pending responsible person user to retrieve"
       end
 
-      field :pending_responsible_person_users, [PendingResponsiblePersonUserType], null: false, camelize: false, description: <<~DESC
-        Retrieve a list of all pending responsible person users.
+      # Add cursor-based pagination for pending_responsible_person_users
+      field :pending_responsible_person_users, PendingResponsiblePersonUserType.connection_type, null: false, camelize: false, description: <<~DESC
+        Retrieve a paginated list of pending responsible person users.
 
         Example Query:
         ```
         query {
-          pending_responsible_person_users {
-            id
-            email_address
-            created_at
-            updated_at
-            responsible_person {
-              id
-              name
+          pending_responsible_person_users(first: 10, after: "<cursor>") {
+            edges {
+              node {
+                id
+                email_address
+                created_at
+                updated_at
+                responsible_person {
+                  id
+                  name
+                }
+                invitation_token
+                invitation_token_expires_at
+                inviting_user {
+                  id
+                  email
+                  name
+                }
+                name
+              }
+              cursor
             }
-            invitation_token
-            invitation_token_expires_at
-            inviting_user {
-              id
-              email
-              name
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
             }
-            name
           }
         }
         ```
       DESC
     end
 
+    # Method to return a specific pending responsible person user by ID
     def pending_responsible_person_user(id:)
       PendingResponsiblePersonUser.find(id)
     rescue ActiveRecord::RecordNotFound
-      raise Errors::SimpleError, "Couldn't find PendingResponsiblePersonUser with 'id'=#{id}"
+      raise Errors::SimpleError, "Couldn't find pending_responsible_person_user with 'id'=#{id}"
     end
 
-    def pending_responsible_person_users
-      PendingResponsiblePersonUser.all
+    # Method to return all pending responsible person users with pagination support and a max limit of 100 records
+    def pending_responsible_person_users(first: nil, last: nil, after: nil, before: nil)
+      max_limit = 100
+      _after = after
+      _before = before
+
+      first = first ? [first, max_limit].min : nil
+      last = last ? [last, max_limit].min : nil
+
+      PendingResponsiblePersonUser.limit(first || last)
     end
   end
 end

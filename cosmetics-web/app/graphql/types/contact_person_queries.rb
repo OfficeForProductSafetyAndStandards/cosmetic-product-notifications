@@ -3,6 +3,7 @@ module Types
     extend ActiveSupport::Concern
 
     included do
+      # Query for retrieving a specific contact person by its ID
       field :contact_person, ContactPersonType, null: false, camelize: false, description: <<~DESC do
         Retrieve a specific contact person by its ID.
 
@@ -24,34 +25,55 @@ module Types
         argument :id, GraphQL::Types::ID, required: true, description: "The ID of the contact person to retrieve"
       end
 
-      field :contact_persons, [ContactPersonType], null: false, camelize: false, description: <<~DESC
-        Retrieve a list of all contact persons.
+      # Add cursor-based pagination for contact_persons
+      field :contact_persons, ContactPersonType.connection_type, null: false, camelize: false, description: <<~DESC
+        Retrieve a paginated list of contact persons.
 
         Example Query:
         ```
         query {
-          contact_persons {
-            id
-            name
-            email_address
-            phone_number
-            responsible_person_id
-            created_at
-            updated_at
+          contact_persons(first: 10, after: "<cursor>") {
+            edges {
+              node {
+                id
+                name
+                email_address
+                phone_number
+                responsible_person_id
+                created_at
+                updated_at
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
           }
         }
         ```
       DESC
     end
 
+    # Method to return a specific contact person by ID
     def contact_person(id:)
       ContactPerson.find(id)
     rescue ActiveRecord::RecordNotFound
       raise Errors::SimpleError, "Couldn't find contact_person with 'id'=#{id}"
     end
 
-    def contact_persons
-      ContactPerson.all
+    # Method to return all contact persons with pagination support and a max limit of 100 records
+    def contact_persons(first: nil, last: nil, after: nil, before: nil)
+      max_limit = 100
+      _after = after
+      _before = before
+
+      first = first ? [first, max_limit].min : nil
+      last = last ? [last, max_limit].min : nil
+
+      ContactPerson.limit(first || last)
     end
   end
 end
