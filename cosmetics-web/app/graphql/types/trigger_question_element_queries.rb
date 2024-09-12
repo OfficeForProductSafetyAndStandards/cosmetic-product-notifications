@@ -63,6 +63,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_trigger_question_elements_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of trigger_question_elements available.
+
+        Example Query:
+        ```
+        query {
+          total_trigger_question_elements_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific trigger question element by ID
@@ -82,6 +93,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       TriggerQuestionElement.limit(first || last)
+    end
+
+    def total_trigger_question_elements_count
+      TriggerQuestionElement.count
     end
   end
 end

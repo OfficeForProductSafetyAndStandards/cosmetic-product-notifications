@@ -59,6 +59,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_image_uploads_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of image_uploads available.
+
+        Example Query:
+        ```
+        query {
+          total_image_uploads_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific image upload by ID
@@ -78,6 +89,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       ImageUpload.limit(first || last)
+    end
+
+    def total_image_uploads_count
+      ImageUpload.count
     end
   end
 end

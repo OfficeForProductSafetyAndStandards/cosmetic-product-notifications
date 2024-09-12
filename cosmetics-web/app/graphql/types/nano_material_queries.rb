@@ -75,6 +75,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_nano_materials_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of nano_materials available.
+
+        Example Query:
+        ```
+        query {
+          total_nano_materials_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific nano material by ID
@@ -94,6 +105,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       NanoMaterial.limit(first || last)
+    end
+
+    def total_nano_materials_count
+      NanoMaterial.count
     end
   end
 end

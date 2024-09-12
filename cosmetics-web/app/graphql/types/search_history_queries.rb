@@ -53,6 +53,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_search_histories_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of search_histories available.
+
+        Example Query:
+        ```
+        query {
+          total_search_histories_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific search history by ID
@@ -72,6 +83,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       SearchHistory.limit(first || last)
+    end
+
+    def total_search_histories_count
+      SearchHistory.count
     end
   end
 end

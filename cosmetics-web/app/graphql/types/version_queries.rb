@@ -57,6 +57,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_versions_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of versions available.
+
+        Example Query:
+        ```
+        query {
+          total_versions_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific version by ID
@@ -76,6 +87,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       PaperTrail::Version.limit(first || last)
+    end
+
+    def total_versions_count
+      PaperTrail::Version.count
     end
   end
 end

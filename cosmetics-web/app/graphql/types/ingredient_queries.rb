@@ -63,6 +63,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_ingredients_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of ingredients available.
+
+        Example Query:
+        ```
+        query {
+          total_ingredients_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific ingredient by ID
@@ -82,6 +93,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       Ingredient.limit(first || last)
+    end
+
+    def total_ingredients_count
+      Ingredient.count
     end
   end
 end

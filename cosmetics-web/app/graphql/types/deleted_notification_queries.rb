@@ -83,6 +83,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_deleted_notifications_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of deleted_notifications available.
+
+        Example Query:
+        ```
+        query {
+          total_deleted_notifications_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific deleted notification by ID
@@ -102,6 +113,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       DeletedNotification.limit(first || last)
+    end
+
+    def total_deleted_notifications_count
+      DeletedNotification.count
     end
   end
 end

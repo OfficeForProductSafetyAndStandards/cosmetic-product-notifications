@@ -61,6 +61,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_notification_delete_logs_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of notification_delete_logs available.
+
+        Example Query:
+        ```
+        query {
+          total_notification_delete_logs_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific notification delete log by ID
@@ -80,6 +91,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       NotificationDeleteLog.limit(first || last)
+    end
+
+    def total_notification_delete_logs_count
+      NotificationDeleteLog.count
     end
   end
 end

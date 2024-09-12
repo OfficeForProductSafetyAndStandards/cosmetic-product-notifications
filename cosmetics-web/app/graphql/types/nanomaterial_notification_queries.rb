@@ -59,6 +59,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_nanomaterial_notifications_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of nanomaterial_notifications available.
+
+        Example Query:
+        ```
+        query {
+          total_nanomaterial_notifications_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific nanomaterial notification by ID
@@ -78,6 +89,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       NanomaterialNotification.limit(first || last)
+    end
+
+    def total_nanomaterial_notifications_count
+      NanomaterialNotification.count
     end
   end
 end

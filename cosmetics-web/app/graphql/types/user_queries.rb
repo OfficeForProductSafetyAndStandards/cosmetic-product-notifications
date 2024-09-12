@@ -53,6 +53,17 @@ module Types
         }
 
       DESC
+
+      field :total_users_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of users available.
+
+        Example Query:
+        ```
+        query {
+          total_users_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific user by ID
@@ -72,6 +83,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       User.limit(first || last)
+    end
+
+    def total_users_count
+      User.count
     end
   end
 end

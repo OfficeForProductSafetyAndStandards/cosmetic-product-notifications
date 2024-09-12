@@ -71,6 +71,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_responsible_persons_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of responsible_persons available.
+
+        Example Query:
+        ```
+        query {
+          total_responsible_persons_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific responsible person by ID
@@ -90,6 +101,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       ResponsiblePerson.limit(first || last)
+    end
+
+    def total_responsible_persons_count
+      ResponsiblePerson.count
     end
   end
 end

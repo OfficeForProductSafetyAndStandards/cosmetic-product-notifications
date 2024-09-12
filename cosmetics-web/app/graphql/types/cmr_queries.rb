@@ -55,6 +55,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_cmr_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of CMRs available.
+
+        Example Query:
+        ```
+        query {
+          total_cmr_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific CMR by ID
@@ -74,6 +85,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       Cmr.limit(first || last)
+    end
+
+    def total_cmr_count
+      Cmr.count
     end
   end
 end

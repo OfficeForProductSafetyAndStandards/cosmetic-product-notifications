@@ -85,6 +85,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_components_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of components available.
+
+        Example Query:
+        ```
+        query {
+          total_components_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific component by ID
@@ -104,6 +115,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       Component.limit(first || last)
+    end
+
+    def total_components_count
+      Component.count
     end
   end
 end

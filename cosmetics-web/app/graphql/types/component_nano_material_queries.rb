@@ -79,6 +79,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_component_nano_materials_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of component_nano_materials available.
+
+        Example Query:
+        ```
+        query {
+          total_component_nano_materials_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific ComponentNanoMaterial by ID
@@ -98,6 +109,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       ComponentNanoMaterial.limit(first || last)
+    end
+
+    def total_component_nano_materials_count
+      ComponentNanoMaterial.count
     end
   end
 end

@@ -81,6 +81,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_notification_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of notifications available.
+
+        Example Query:
+        ```
+        query {
+          total_notification_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific notification by ID
@@ -100,6 +111,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       Notification.limit(first || last)
+    end
+
+    def total_notification_count
+      Notification.count
     end
   end
 end

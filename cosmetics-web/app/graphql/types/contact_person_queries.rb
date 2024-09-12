@@ -55,6 +55,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_contact_persons_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of contact_person available.
+
+        Example Query:
+        ```
+        query {
+          total_contact_persons_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific contact person by ID
@@ -74,6 +85,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       ContactPerson.limit(first || last)
+    end
+
+    def total_contact_persons_count
+      ContactPerson.count
     end
   end
 end

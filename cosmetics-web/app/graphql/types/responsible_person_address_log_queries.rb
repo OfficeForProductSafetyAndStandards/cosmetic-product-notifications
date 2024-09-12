@@ -69,6 +69,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_responsible_person_address_logs_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of responsible_person_address_logs available.
+
+        Example Query:
+        ```
+        query {
+          total_responsible_person_address_logs_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific responsible person address log by ID
@@ -88,6 +99,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       ResponsiblePersonAddressLog.limit(first || last)
+    end
+
+    def total_responsible_person_address_logs_count
+      ResponsiblePersonAddressLog.count
     end
   end
 end

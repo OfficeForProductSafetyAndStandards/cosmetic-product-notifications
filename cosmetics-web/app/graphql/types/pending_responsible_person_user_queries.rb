@@ -73,6 +73,17 @@ module Types
         }
         ```
       DESC
+
+      field :total_pending_responsible_person_users_count, Integer, null: false, camelize: false, description: <<~DESC
+        Retrieve the total number of pending_responsible_person_users available.
+
+        Example Query:
+        ```
+        query {
+          total_pending_responsible_person_users_count
+        }
+        ```
+      DESC
     end
 
     # Method to return a specific pending responsible person user by ID
@@ -92,6 +103,10 @@ module Types
       last = last ? [last, max_limit].min : nil
 
       PendingResponsiblePersonUser.limit(first || last)
+    end
+
+    def total_pending_responsible_person_users_count
+      PendingResponsiblePersonUser.count
     end
   end
 end
