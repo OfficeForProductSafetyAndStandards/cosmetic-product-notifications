@@ -117,7 +117,7 @@ RSpec.describe "Asset security", type: :request do
       context "when user is not logged in" do
         it "redirects to the poison centre notifications search path with an alert" do
           get asset_url
-          expect(response).to redirect_to(poison_centre_notifications_search_path)
+          expect(response).to redirect_to(search_root_path)
           expect(flash[:alert]).to match(/You must be signed in to access this resource/)
         end
       end
@@ -207,7 +207,7 @@ RSpec.describe "Asset security", type: :request do
       context "when user is not logged in" do
         it "redirects to the poison centre notifications search path with an alert" do
           get asset_url
-          expect(response).to redirect_to(poison_centre_notifications_search_path)
+          expect(response).to redirect_to(search_root_path)
           expect(flash[:alert]).to match(/You must be signed in to access this resource/)
         end
       end
