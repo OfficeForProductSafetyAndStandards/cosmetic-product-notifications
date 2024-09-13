@@ -14,11 +14,15 @@ class ResponsiblePersonsController < SubmitApplicationController
     elsif @responsible_persons_selection_form.add_new?
       redirect_to account_path(:enter_details)
     else
-      message = current_responsible_person ? "Responsible Person was changed" : nil
-      set_current_responsible_person(
-        current_user.responsible_persons.find(@responsible_persons_selection_form.selection),
-      )
-      redirect_to responsible_person_path(current_responsible_person), confirmation: message
+      new_responsible_person = current_user.responsible_persons.find_by(id: responsible_person_id)
+      if new_responsible_person
+        set_current_responsible_person(new_responsible_person)
+        message = current_responsible_person ? "Responsible Person was changed" : nil
+        redirect_to responsible_person_path(new_responsible_person), confirmation: message
+      else
+        flash[:error] = "Responsible Person not found"
+        render :select
+      end
     end
   end
 
@@ -41,6 +45,14 @@ class ResponsiblePersonsController < SubmitApplicationController
   end
 
 private
+
+  def responsible_person_id
+    @responsible_persons_selection_form.selection || session[:current_responsible_person_id]
+  end
+
+  def set_current_responsible_person(responsible_person)
+    session[:current_responsible_person_id] = responsible_person.id
+  end
 
   def set_responsible_person
     @responsible_person = ResponsiblePerson.find(params[:id])

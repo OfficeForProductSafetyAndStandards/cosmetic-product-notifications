@@ -24,4 +24,11 @@ RSpec.describe ResponsiblePersonsController, type: :controller do
       expect(response).to render_template("responsible_persons/show")
     end
   end
+
+  describe "GET #products_page_redirect" do
+    it "redirects to responsible person path" do
+      get :products_page_redirect, params: { id: responsible_person.id }
+      expect(response).to redirect_to(responsible_person_notifications_url(responsible_person))
+    end
+  end
 end
