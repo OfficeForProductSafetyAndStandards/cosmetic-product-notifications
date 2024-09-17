@@ -4,7 +4,7 @@ module Types
 
     included do
       # Query for retrieving a specific CMR by its ID
-      field :cmr, CmrType, null: true, description: <<~DESC do
+      field :cmr, CmrType, null: true, camelize: false, description: <<~DESC do
         Retrieve a specific CMR by its ID.
 
         Example Query:
@@ -25,14 +25,17 @@ module Types
         argument :id, GraphQL::Types::ID, required: true, description: "The ID of the CMR to retrieve"
       end
 
-      # Cursor-based pagination for CMRs with a maximum limit of 100 records per page
-      field :cmrs, CmrType.connection_type, null: true, camelize: false, description: <<~DESC
-        Retrieve a paginated list of CMRs with a maximum of 100 records per page.
+      # Cursor-based pagination for CMRs with filtering by created_at and updated_at
+      field :cmrs, CmrType.connection_type, null: true, camelize: false, description: <<~DESC do
+        Retrieve a paginated list of CMRs with optional filters for created_at and updated_at timestamps.
+        A maximum of 100 records can be retrieved per page.
+
+        You can filter by either or both of the `created_after` and `updated_after` fields in the format `YYYY-MM-DD HH:MM`.
 
         Example Query:
         ```
         query {
-          cmrs(first: 10, after: "<cursor>") {
+          cmrs(created_after: "2024-08-15T13:00:00Z", updated_after: "2024-08-15T13:00:00Z", first: 10) {
             edges {
               node {
                 id
@@ -55,8 +58,12 @@ module Types
         }
         ```
       DESC
+        argument :created_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve CMRs created after this date in the format 'YYYY-MM-DD HH:MM'"
+        argument :updated_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve CMRs updated after this date in the format 'YYYY-MM-DD HH:MM'"
+      end
 
-      field :total_cmr_count, Integer, null: false, camelize: false, description: <<~DESC
+      # Query for retrieving the total number of CMRs available
+      field :total_cmr_count, Integer, null: false, camelize: false, description: <<~DESC do
         Retrieve the total number of CMRs available.
 
         Example Query:
@@ -66,29 +73,88 @@ module Types
         }
         ```
       DESC
+      end
     end
 
     # Method to return a specific CMR by ID
     def cmr(id:)
       Cmr.find(id)
     rescue ActiveRecord::RecordNotFound
-      raise Errors::SimpleError, "Couldn't find cmr with 'id'=#{id}"
+      raise Errors::SimpleError, "Couldn't find cmr with 'id' #{id}"
+    rescue StandardError => e
+      raise Errors::SimpleError, "An error occurred: #{e.message}"
     end
 
-    # Method to return all CMRs with pagination support and a max limit of 100 records
-    def cmrs(first: nil, last: nil, after: nil, before: nil)
+    # Method to return CMRs with optional filters for created_at and updated_at, along with pagination support
+    def cmrs(created_after: nil, updated_after: nil, first: nil, last: nil, after: nil, before: nil)
       max_limit = 100
-      _after = after
-      _before = before
 
-      first = first ? [first, max_limit].min : nil
-      last = last ? [last, max_limit].min : nil
+      first = validate_limit(first, max_limit)
+      last = validate_limit(last, max_limit)
 
-      Cmr.limit(first || last)
+      scope = Cmr.all
+
+      # Apply filters for created_at and updated_at
+      scope = scope.where("created_at >= ?", Time.zone.parse(created_after).utc) if created_after.present?
+      scope = scope.where("updated_at >= ?", Time.zone.parse(updated_after).utc) if updated_after.present?
+
+      scope = apply_pagination(scope, first: first, last: last, after: after, before: before)
+
+      scope.limit(first || last)
+    end
+
+    def cmrs_created_after(created_after:)
+      filter_cmrs_by_date(field: "created_at", date: created_after)
+    end
+
+    def cmrs_updated_after(updated_after:)
+      filter_cmrs_by_date(field: "updated_at", date: updated_after)
     end
 
     def total_cmr_count
       Cmr.count
     end
+
+    private
+
+      # Helper method to validate pagination limits
+      def validate_limit(limit, max_limit)
+        return nil if limit.nil?
+        [limit, max_limit].min
+      end
+
+      # Centralized pagination method
+      def apply_pagination(scope, first:, last:, after:, before:)
+        return scope if first.nil? && last.nil? # No pagination if both are nil
+
+        if after.present?
+          decoded_cursor = safe_decode_cursor(after)
+          scope = scope.where("id > ?", decoded_cursor)
+        end
+
+        if before.present?
+          decoded_cursor = safe_decode_cursor(before)
+          scope = scope.where("id < ?", decoded_cursor)
+        end
+
+        scope = scope.order(id: :asc) if first
+        scope = scope.order(id: :desc) if last
+
+        scope
+      end
+
+      # Refactored date filter method for clarity
+      def filter_cmrs_by_date(field:, date:)
+        Cmr.where("#{field} >= ?", date)
+      rescue ArgumentError
+        raise Errors::SimpleError, "Invalid date format"
+      end
+
+      # Decode cursor safely, handling errors if cursor is invalid
+      def safe_decode_cursor(cursor)
+        Base64.decode64(cursor)
+      rescue ArgumentError
+        raise Errors::SimpleError, "Invalid cursor format"
+      end
   end
 end

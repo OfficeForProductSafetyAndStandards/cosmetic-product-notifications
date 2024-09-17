@@ -4,7 +4,7 @@ module Types
 
     included do
       # Query for retrieving a specific component by its ID
-      field :component, ComponentType, null: false, description: <<~DESC do
+      field :component, ComponentType, null: false, camelize: false, description: <<~DESC do
         Retrieve a specific component by its ID.
 
         Example Query:
@@ -40,14 +40,17 @@ module Types
         argument :id, GraphQL::Types::ID, required: true, description: "The ID of the component to retrieve"
       end
 
-      # Add cursor-based pagination for components
-      field :components, ComponentType.connection_type, null: false, description: <<~DESC
-        Retrieve a paginated list of components.
+      # Add cursor-based pagination for components with filtering by created_at and updated_at
+      field :components, ComponentType.connection_type, null: false, camelize: false, description: <<~DESC do
+        Retrieve a paginated list of components with optional filters for created_at and updated_at timestamps.
+        A maximum of 100 records can be retrieved per page.
+
+        You can filter by either or both of the `created_after` and `updated_after` fields in the format `YYYY-MM-DD HH:MM`.
 
         Example Query:
         ```
         query {
-          components(first: 10, after: "<cursor>") {
+          components(created_after: "2024-08-15T13:00:00Z", updated_after: "2024-08-15T13:00:00Z", first: 10) {
             edges {
               node {
                 id
@@ -56,20 +59,6 @@ module Types
                 shades
                 notification_id
                 notification_type
-                frame_formulation
-                sub_sub_category
-                physical_form
-                special_applicator
-                acute_poisoning_info
-                other_special_applicator
-                contains_poisonous_ingredients
-                minimum_ph
-                maximum_ph
-                ph
-                exposure_condition
-                exposure_routes
-                routing_questions_answers
-                notification_type_given_as
                 created_at
                 updated_at
               }
@@ -85,8 +74,12 @@ module Types
         }
         ```
       DESC
+        argument :created_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve components created after this date in the format 'YYYY-MM-DD HH:MM'"
+        argument :updated_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve components updated after this date in the format 'YYYY-MM-DD HH:MM'"
+      end
 
-      field :total_components_count, Integer, null: false, camelize: false, description: <<~DESC
+      # Query for retrieving the total number of components available
+      field :total_components_count, Integer, null: false, camelize: false, description: <<~DESC do
         Retrieve the total number of components available.
 
         Example Query:
@@ -96,29 +89,88 @@ module Types
         }
         ```
       DESC
+      end
     end
 
     # Method to return a specific component by ID
     def component(id:)
       Component.find(id)
     rescue ActiveRecord::RecordNotFound
-      raise Errors::SimpleError, "Couldn't find component with 'id'=#{id}"
+      raise Errors::SimpleError, "Couldn't find component with 'id' #{id}"
+    rescue StandardError => e
+      raise Errors::SimpleError, "An error occurred: #{e.message}"
     end
 
-    # Method to return all components with pagination support and a max limit of 100 records
-    def components(first: nil, last: nil, after: nil, before: nil)
+    # Method to return components with optional filters for created_at and updated_at, along with pagination support
+    def components(created_after: nil, updated_after: nil, first: nil, last: nil, after: nil, before: nil)
       max_limit = 100
-      _after = after
-      _before = before
 
-      first = first ? [first, max_limit].min : nil
-      last = last ? [last, max_limit].min : nil
+      first = validate_limit(first, max_limit)
+      last = validate_limit(last, max_limit)
 
-      Component.limit(first || last)
+      scope = Component.all
+
+      # Apply filters for created_at and updated_at
+      scope = scope.where("created_at >= ?", Time.zone.parse(created_after).utc) if created_after.present?
+      scope = scope.where("updated_at >= ?", Time.zone.parse(updated_after).utc) if updated_after.present?
+
+      scope = apply_pagination(scope, first: first, last: last, after: after, before: before)
+
+      scope.limit(first || last)
+    end
+
+    def components_created_after(created_after:)
+      filtered_by_date(field: "created_at", date: created_after)
+    end
+
+    def components_updated_after(updated_after:)
+      filtered_by_date(field: "updated_at", date: updated_after)
     end
 
     def total_components_count
       Component.count
     end
+
+    private
+
+      # Validate the pagination limit, ensuring it does not exceed max_limit
+      def validate_limit(limit, max_limit)
+        return nil if limit.nil?
+        [limit, max_limit].min
+      end
+
+      # Pagination logic with error handling for invalid cursors
+      def apply_pagination(scope, first:, last:, after:, before:)
+        return scope if first.nil? && last.nil? # No pagination if both are nil
+
+        if after.present?
+          decoded_cursor = safe_decode_cursor(after)
+          scope = scope.where('id > ?', decoded_cursor)
+        end
+
+        if before.present?
+          decoded_cursor = safe_decode_cursor(before)
+          scope = scope.where('id < ?', decoded_cursor)
+        end
+
+        scope = scope.order(id: :asc) if first
+        scope = scope.order(id: :desc) if last
+
+        scope
+      end
+
+      # Decode cursor safely, handling errors if cursor is invalid
+      def safe_decode_cursor(cursor)
+        Base64.decode64(cursor)
+      rescue ArgumentError
+        raise Errors::SimpleError, "Invalid cursor format"
+      end
+
+      # Helper method to filter by date
+      def filtered_by_date(field:, date:)
+        Component.where("#{field} >= ?", date)
+      rescue ArgumentError
+        raise Errors::SimpleError, "Invalid date format"
+      end
   end
 end

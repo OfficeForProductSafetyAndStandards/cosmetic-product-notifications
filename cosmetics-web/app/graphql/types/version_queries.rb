@@ -26,14 +26,18 @@ module Types
         argument :id, GraphQL::Types::ID, required: true, description: "The ID of the version to retrieve"
       end
 
-      # Add cursor-based pagination for versions
-      field :versions, VersionType.connection_type, null: false, camelize: false, description: <<~DESC
-        Retrieve a paginated list of all versions.
+      # Add cursor-based pagination for versions with a maximum limit of 100 records per page
+      # This query now supports filtering by created_at and updated_at timestamps in 'YYYY-MM-DD HH:MM' format
+      field :versions, VersionType.connection_type, null: false, camelize: false, description: <<~DESC do
+        Retrieve a paginated list of versions with an option to filter by created_at and updated_at timestamps.
+        A maximum of 100 records can be retrieved per page.
+
+        You can filter by either or both of the `created_after` and `updated_after` fields in the format `YYYY-MM-DD HH:MM`.
 
         Example Query:
         ```
         query {
-          versions(first: 10, after: "<cursor>") {
+          versions(created_after: "2024-08-15T13:00:00Z", updated_after: "2024-08-15T13:00:00Z", first: 10) {
             edges {
               node {
                 id
@@ -57,8 +61,12 @@ module Types
         }
         ```
       DESC
+        argument :created_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve versions created after this date in the format 'YYYY-MM-DD HH:MM'"
+        argument :updated_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve versions updated after this date in the format 'YYYY-MM-DD HH:MM'"
+      end
 
-      field :total_versions_count, Integer, null: false, camelize: false, description: <<~DESC
+      # Query for retrieving the total number of versions available
+      field :total_versions_count, Integer, null: false, camelize: false, description: <<~DESC do
         Retrieve the total number of versions available.
 
         Example Query:
@@ -68,29 +76,75 @@ module Types
         }
         ```
       DESC
+      end
     end
 
     # Method to return a specific version by ID
     def version(id:)
       PaperTrail::Version.find(id)
     rescue ActiveRecord::RecordNotFound
-      raise Errors::SimpleError, "Couldn't find version with 'id'=#{id}"
+      raise Errors::SimpleError, "Couldn't find version with 'id' #{id}"
+    rescue StandardError => e
+      raise Errors::SimpleError, "An error occurred: #{e.message}"
     end
 
-    # Method to return all versions with pagination support and a max limit of 100 records
-    def versions(first: nil, last: nil, after: nil, before: nil)
+    # Method to return versions with optional filters for created_at and updated_at in 'YYYY-MM-DD HH:MM' format, along with pagination support
+    def versions(created_after: nil, updated_after: nil, first: nil, last: nil, after: nil, before: nil)
       max_limit = 100
-      _after = after
-      _before = before
 
-      first = first ? [first, max_limit].min : nil
-      last = last ? [last, max_limit].min : nil
+      first = validate_limit(first, max_limit)
+      last = validate_limit(last, max_limit)
 
-      PaperTrail::Version.limit(first || last)
+      scope = PaperTrail::Version.all
+
+      # Apply 'AND' condition if both filters are present
+      # Convert input strings to UTC time if they are present
+      scope = scope.where("created_at >= ?", Time.zone.parse(created_after).utc) if created_after.present?
+      scope = scope.where("updated_at >= ?", Time.zone.parse(updated_after).utc) if updated_after.present?
+
+
+      scope = apply_pagination(scope, first: first, last: last, after: after, before: before)
+
+      scope.limit(first || last)
     end
 
     def total_versions_count
       PaperTrail::Version.count
     end
+
+    private
+
+      # Validate the pagination limit, ensuring it does not exceed max_limit
+      def validate_limit(limit, max_limit)
+        return nil if limit.nil?
+        [limit, max_limit].min
+      end
+
+      # Pagination logic with error handling for invalid cursors
+      def apply_pagination(scope, first:, last:, after: nil, before: nil)
+        return scope if first.nil? && last.nil? # No pagination if both are nil
+
+        if after.present?
+          decoded_cursor = safe_decode_cursor(after)
+          scope = scope.where('id > ?', decoded_cursor)
+        end
+
+        if before.present?
+          decoded_cursor = safe_decode_cursor(before)
+          scope = scope.where('id < ?', decoded_cursor)
+        end
+
+        scope = scope.order(id: :asc) if first
+        scope = scope.order(id: :desc) if last
+
+        scope
+      end
+
+      # Decode cursor safely, handling errors if cursor is invalid
+      def safe_decode_cursor(cursor)
+        Base64.decode64(cursor)
+      rescue ArgumentError
+        raise Errors::SimpleError, "Invalid cursor format"
+      end
   end
 end
