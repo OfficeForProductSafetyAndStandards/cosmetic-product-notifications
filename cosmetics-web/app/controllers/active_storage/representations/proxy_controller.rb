@@ -10,6 +10,7 @@
 class ActiveStorage::Representations::ProxyController < ActiveStorage::Representations::BaseController
   include ActiveStorage::Streaming
   include ActiveStorageAccessProtectionConcern
+  include Rails.application.routes.url_helpers
 
   before_action :authorize_blob
 
