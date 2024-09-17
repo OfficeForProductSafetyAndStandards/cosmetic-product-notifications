@@ -2,7 +2,6 @@ module ActiveStorageAccessProtectionConcern
   extend ActiveSupport::Concern
   include Pundit::Authorization
   include DomainConcern
-  include Rails.application.routes.url_helpers # Include route helpers
 
   def pundit_user
     current_submit_user
