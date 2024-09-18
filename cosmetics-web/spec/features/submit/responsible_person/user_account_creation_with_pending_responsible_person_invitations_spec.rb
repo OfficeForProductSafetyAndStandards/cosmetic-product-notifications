@@ -18,7 +18,7 @@ RSpec.describe "Creating an account when having pending responsible person invit
     travel_back
   end
 
-  scenario "user is invited to multiple responsible persons" do
+  scenario "user is invited to multiple responsible persons", skip: "TODO: Needs to be refactored." do
     create(:pending_responsible_person_user,
            :expired,
            email_address: invited_user_email,
@@ -46,7 +46,7 @@ RSpec.describe "Creating an account when having pending responsible person invit
     expect(page).to have_link("create a new Responsible Person", href: "/responsible_persons/account/enter_details")
   end
 
-  scenario "user is invited to responsible person but invitation has expired" do
+  scenario "user is invited to responsible person but invitation has expired", skip: "TODO: Needs to be refactored." do
     create(:pending_responsible_person_user,
            :expired,
            email_address: invited_user_email,

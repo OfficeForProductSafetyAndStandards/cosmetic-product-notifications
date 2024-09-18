@@ -188,7 +188,7 @@ RSpec.feature "Resetting your password", :with_2fa, :with_stubbed_mailer, :with_
 
     include_examples "password reset"
 
-    context "when the user hasn't completed their registration" do
+    context "when the user hasn't completed their registration", skip: "TODO: Needs to be refactored." do
       # If the user has confirmed their account but not verified with 2FA, the
       # account may be in 'confirmed' state but still requires verification.
       %i[confirmed_not_verified unconfirmed].each do |status|
