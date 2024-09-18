@@ -1,5 +1,7 @@
 module Registration
   class NewAccountsController < SubmitApplicationController
+    before_action :redirect_if_create_an_account_disabled, only: %i[new create confirm]
+
     skip_before_action :authorize_user!
     skip_before_action :authenticate_user!
     skip_before_action :require_secondary_authentication
@@ -52,6 +54,12 @@ module Registration
 
     def new_account_form_params
       params.require(:registration_new_account_form).permit(:full_name, :email)
+    end
+
+    def redirect_if_create_an_account_disabled
+      unless Flipper.enabled?(:create_an_account)
+        redirect_to submit_root_path, alert: "Account creation is currently disabled."
+      end
     end
   end
 end

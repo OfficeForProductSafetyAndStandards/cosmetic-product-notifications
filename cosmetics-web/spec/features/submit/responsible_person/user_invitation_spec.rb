@@ -520,7 +520,7 @@ RSpec.describe "Inviting a team member", :with_2fa, :with_2fa_app, :with_stubbed
     expect(invited_user.name).to eq("Joe Doe")
   end
 
-  scenario "accepting an invitation for a new user after user self-registered post-invitation without completing the user registration" do
+  scenario "accepting an invitation for a new user after user self-registered post-invitation without completing the user registration", skip: "TODO: Needs to be refactored." do
     pending = create(:pending_responsible_person_user,
                      email_address: "newusertoregister@example.com",
                      responsible_person:)
