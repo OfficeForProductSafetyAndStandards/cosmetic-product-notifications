@@ -10,7 +10,7 @@ class ResponsiblePersons::AccountWizardController < SubmitApplicationController
   before_action :clear_session, if: -> { step == :overview }
   before_action :set_responsible_person, only: %i[show update]
   before_action :responsible_persons_details_form, if: -> { step == :enter_details }
-  before_action :store_responsible_person # , only: %i[update]
+  before_action :store_responsible_person, only: %i[update]
 
   # GET /responsible_persons/account/:step
   def show
