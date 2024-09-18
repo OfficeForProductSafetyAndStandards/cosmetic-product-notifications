@@ -21,7 +21,10 @@
         <span class="app-task-list__task-name govuk-!-font-weight-bold" id="new">
           Product details
         </span>
-        <%= if component.present? product_details_link(component) %>
+        <% byebug %>
+        <% if component.present? %>
+          <%= product_details_link(component) %>
+        <% end %>
       </li>
     <% end %>
   </ul>
