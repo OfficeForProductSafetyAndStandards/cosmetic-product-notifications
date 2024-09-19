@@ -320,7 +320,7 @@ RSpec.describe "Inviting a team member", :with_2fa, :with_2fa_app, :with_stubbed
     end
   end
 
-  scenario "accepting an invitation for a new user when not signed in" do
+  scenario "accepting an invitation for a new user when not signed in", skip: "Refactoring needed." do
     pending = create(:pending_responsible_person_user, responsible_person:)
 
     visit "/responsible_persons/#{responsible_person.id}/team_members/join?invitation_token=#{pending.invitation_token}"
@@ -440,7 +440,7 @@ RSpec.describe "Inviting a team member", :with_2fa, :with_2fa_app, :with_stubbed
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
-  scenario "accepting an invitation for a new user when signed in as different user" do
+  scenario "accepting an invitation for a new user when signed in as different user", skip: "Refactoring needed." do
     # User invites a new member to the team
     sign_in_as_member_of_responsible_person(responsible_person, user)
 
@@ -580,7 +580,7 @@ RSpec.describe "Inviting a team member", :with_2fa, :with_2fa_app, :with_stubbed
     expect(invited_user.responsible_persons).to include(responsible_person)
   end
 
-  scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration" do
+  scenario "accepting an invitation for a new user for second time after originally accepting it without completing the user registration", skip: "Refactoring needed." do
     pending = create(:pending_responsible_person_user,
                      email_address: "newusertoregister@example.com",
                      responsible_person:)

@@ -14,28 +14,29 @@
       <%= password_input @account_security_form, label: { text: "Create your password", classes: "govuk-label--m" },
                                                  hint: { text: "Your password must contain at least 8 characters" } %>
 
-      <% mobile_number_input_html = capture do %>
-        <%= form_input @account_security_form, :mobile_number, hint: { text: "We’ll send you a security code by text message" } %>
-      <% end %>
+      <% if Flipper.enabled?(:sms_on) %>
+        <% mobile_number_input_html = capture do %>
+          <%= form_input @account_security_form, :mobile_number, hint: { text: "We’ll send you a security code by text message" } %>
+        <% end %>
 
-      <% authenticartion_app_setup_html = capture do %>
-        <%= hidden_field_tag 'registration_account_security_form[secret_key]', @account_security_form.secret_key %>
-        <h2 class="govuk-heading-m">Set up your authenticator app</h2>
-        <p class="govuk-body">Use your authenticator app to scan the QR code below or manually enter the secret key into your authenticator app.</p>
-        <div class="govuk-grid-row">
-          <p class="govuk-grid-column-one-third"></p>
-          <div class="govuk-grid-column-one-third">
-            <%= image_tag @account_security_form.qr_code, alt: "Authentication App QR code." %>
+        <% authentication_app_setup_html = capture do %>
+          <%= hidden_field_tag 'registration_account_security_form[secret_key]', @account_security_form.secret_key %>
+          <h2 class="govuk-heading-m">Set up your authenticator app</h2>
+          <p class="govuk-body">Use your authenticator app to scan the QR code below or manually enter the secret key into your authenticator app.</p>
+          <div class="govuk-grid-row">
+            <p class="govuk-grid-column-one-third"></p>
+            <div class="govuk-grid-column-one-third">
+              <%= image_tag @account_security_form.qr_code, alt: "Authentication App QR code." %>
+            </div>
           </div>
-        </div>
-        <p class="govuk-body">Secret key: <b><%= @account_security_form.decorated_secret_key %></b></p>
-        <%= form_input @account_security_form,
-                       :app_authentication_code,
-                       label: { text: "Enter the access code" },
-                       hint: { text: "This is the 6 digit access code shown on your authenticator app." } %>
-      <% end %>
+          <p class="govuk-body">Secret key: <b><%= @account_security_form.decorated_secret_key %></b></p>
+          <%= form_input @account_security_form,
+                        :app_authentication_code,
+                        label: { text: "Enter the access code" },
+                        hint: { text: "This is the 6 digit access code shown on your authenticator app." } %>
+        <% end %>
 
-      <%= govukCheckboxes(
+        <%= govukCheckboxes(
             form: f,
             key: :secondary_authentication_methods,
             hint: { text: "Choose one or both options" },
@@ -48,7 +49,7 @@
               { id: "app_authentication",
                 key: :app_authentication,
                 text: "Authenticator app for smartphone or tablet",
-                conditional: { html: authenticartion_app_setup_html },
+                conditional: { html: authentication_app_setup_html },
                 disable_ghost: true,
                 checked: @account_security_form.app_authentication_selected? },
               { id: "sms_authentication",
@@ -59,6 +60,25 @@
                 checked: @account_security_form.sms_authentication_selected? }
             ],
           ) %>
+      <% else %>
+        <%= hidden_field_tag 'registration_account_security_form[secret_key]', @account_security_form.secret_key %>
+        <h2 class="govuk-heading-m">Set up your authenticator app</h2>
+        <p class="govuk-body">Use your authenticator app to scan the QR code below or manually enter the secret key into your authenticator app.</p>
+        <div class="govuk-grid-row">
+          <p class="govuk-grid-column-one-third"></p>
+          <div class="govuk-grid-column-one-third">
+            <%= image_tag @account_security_form.qr_code, alt: "Authentication App QR code." %>
+          </div>
+        </div>
+        <p class="govuk-body">Secret key: <b><%= @account_security_form.decorated_secret_key %></b></p>
+        <%= form_input @account_security_form,
+                      :app_authentication_code,
+                      label: { text: "Enter the access code" },
+                      hint: { text: "This is the 6 digit access code shown on your authenticator app." } %>
+
+        <%= hidden_field_tag 'registration_account_security_form[app_authentication]', '1' %>
+      <% end %>
+
 
       <%= govukButton(text: "Continue") %>
     <% end %>
