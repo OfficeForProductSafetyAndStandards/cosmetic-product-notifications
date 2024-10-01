@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
-  post "/graphql", to: "graphql#execute" if Flipper.enabled?(:graphql)
+  post "/graphql", to: "graphql#execute" if Flipper.enabled?(:graphql) || Rails.env.test?
 
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 

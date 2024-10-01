@@ -4,12 +4,10 @@ module Types
 
     # Coerce input coming from the GraphQL client
     def self.coerce_input(input_value, _context)
-      begin
-        # Parsing the input using Time.zone to maintain timezone awareness
-        Time.zone.parse(input_value)
-      rescue ArgumentError, TypeError
-        raise GraphQL::CoercionError, "#{input_value.inspect} is not a valid DateTime"
-      end
+      # Parsing the input using Time.zone to maintain timezone awareness
+      Time.zone.parse(input_value)
+    rescue ArgumentError, TypeError
+      raise GraphQL::CoercionError, "#{input_value.inspect} is not a valid DateTime"
     end
 
     # Coerce the result that will be sent to the GraphQL client
