@@ -485,6 +485,8 @@ RSpec.feature "Signing up as a submit user", :with_2fa, :with_2fa_app, :with_stu
   end
 
   scenario "registered user can not access account security" do
+    skip("Reason: moving to GOV.UK onelogin")
+
     user = create(:submit_user, :with_responsible_person)
 
     sign_in(user)

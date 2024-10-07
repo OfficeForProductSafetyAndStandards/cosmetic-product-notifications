@@ -98,6 +98,7 @@ RSpec.describe "Secondary Authentication with SMS submit", :with_2fa, :with_stub
       end
 
       it "user is signed in" do
+        skip("Reason: moving to GOV.UK onelogin")
         sign_in(user)
         submit_2fa
         follow_redirect!

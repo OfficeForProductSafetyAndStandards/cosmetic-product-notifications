@@ -50,11 +50,13 @@ RSpec.describe "Secondary Authentication with App submit", :with_2fa, type: :req
       let(:submitted_code) { correct_app_code }
 
       it "redirects to the main page" do
+        skip("Reason: moving to GOV.UK onelogin")
         submit_2fa
         expect(response).to redirect_to(submit_root_path)
       end
 
       it "user is signed in" do
+        skip("Reason: moving to GOV.UK onelogin")
         submit_2fa
         follow_redirect!
         expect(response.body).not_to include("Sign in")

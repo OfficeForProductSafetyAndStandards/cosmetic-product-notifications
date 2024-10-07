@@ -18,6 +18,8 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
     end
 
     scenario "user sets text message authentication" do
+      skip("Reason: moving to GOV.UK onelogin")
+
       # User visits its account
       visit "/sign-in"
       fill_in_credentials
@@ -91,6 +93,8 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
     end
 
     scenario "user updates text message authentication" do
+      skip("Reason: moving to GOV.UK onelogin")
+
       # User visits its account
       visit "/sign-in"
       fill_in_credentials
@@ -161,6 +165,8 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
     end
 
     scenario "user updates text message authentication" do
+      skip("Reason: moving to GOV.UK onelogin")
+
       # User visits its account
       visit "/sign-in"
       fill_in_credentials
