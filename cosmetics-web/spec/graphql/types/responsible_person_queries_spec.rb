@@ -11,7 +11,8 @@ RSpec.describe Types::ResponsiblePersonQueries, type: :request do
   end
 
   describe "responsible_person query" do
-    let(:responsible_person) { create(:responsible_person) }
+    # Update here to use the responsible_person_with_user factory
+    let(:responsible_person) { create(:responsible_person_with_user) }
 
     let(:query) do
       <<~GQL

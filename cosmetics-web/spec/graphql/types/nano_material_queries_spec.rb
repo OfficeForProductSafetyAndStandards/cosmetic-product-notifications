@@ -132,7 +132,6 @@ RSpec.describe Types::NanoMaterialQueries, type: :request do
 
     it "returns the total count of NanoMaterials" do
       response_json = perform_post_query({})
-      puts "Response JSON: #{response_json.inspect}" # Debug output
       data = response_json["data"]["total_nano_materials_count"]
       expect(data).to eq(nano_materials.size)
     end

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :search_history do
     query { "Example search query" }
-    results { "Some results" }
+    results { rand(1..100) }
     sort_by { "relevance" }
     created_at { Time.current }
     updated_at { Time.current }
