@@ -242,6 +242,8 @@ GEM
     govuk_notify_rails (3.0.0)
       notifications-ruby-client (~> 6.2)
       rails (>= 4.1.0)
+    graphiql-rails (1.10.1)
+      railties
     graphql (2.3.18)
       base64
       fiber-storage
@@ -660,6 +662,7 @@ DEPENDENCIES
   flipper-ui (~> 1.3)
   govuk-design-system-rails (~> 0.10.5)!
   govuk_notify_rails (~> 3.0)
+  graphiql-rails
   graphql (~> 2.3)
   hashie (~> 5.0)
   image_processing (~> 1.13)
