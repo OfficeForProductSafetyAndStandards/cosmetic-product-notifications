@@ -4,6 +4,10 @@ FactoryBot.define do
     poisonous { false }
     component
 
+    exact_concentration { 10.0 }
+    minimum_concentration { nil }
+    maximum_concentration { nil }
+
     factory :exact_ingredient do
       exact
     end
@@ -22,11 +26,14 @@ FactoryBot.define do
     end
 
     trait :exact do
-      exact_concentration { 10 }
+      exact_concentration { 10.0 }
+      minimum_concentration { nil }
+      maximum_concentration { nil }
       association :component, notification_type: "exact"
     end
 
     trait :range do
+      exact_concentration { nil }
       minimum_concentration { 75.0 }
       maximum_concentration { 100.0 }
       association :component, notification_type: "range"

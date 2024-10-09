@@ -9,6 +9,8 @@ def get_users(env_users)
 end
 
 ActiveRecord::Base.transaction do
+  ApiKey.create_with_generated_key(team: "Test Team")
+
   # Create Responsible Persons
   responsible_persons_data = [
     {
