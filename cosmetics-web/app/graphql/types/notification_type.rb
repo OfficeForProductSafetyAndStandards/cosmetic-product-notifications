@@ -7,7 +7,7 @@ module Types
     field :updated_at, Types::CustomDateTimeType, null: true, camelize: false
     field :import_country, String, null: true, camelize: false
     field :responsible_person_id, ID, null: true, camelize: false
-    # field :responsible_person, ResponsiblePersonType, null: true, camelize: false, description: "The associated responsible person"
+    field :responsible_person, ResponsiblePersonType, null: true, camelize: false, description: "The associated responsible person"
     field :reference_number, Integer, null: true, camelize: false
     field :cpnp_reference, String, null: true, camelize: false
     field :shades, String, null: true
