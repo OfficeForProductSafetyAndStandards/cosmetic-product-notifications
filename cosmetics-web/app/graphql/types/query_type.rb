@@ -3,6 +3,7 @@ module Types
     include CmrQueries
     include ComponentQueries
     include ContactPersonQueries
+    include DeletedNotificationQueries
     include IngredientQueries
     include ImageUploadQueries
     include NotificationQueries
