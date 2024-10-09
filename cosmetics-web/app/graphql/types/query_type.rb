@@ -4,5 +4,9 @@ module Types
     include ComponentQueries
     include IngredientQueries
     include NotificationQueries
+    include PendingResponsiblePersonUserQueries
+    include ResponsiblePersonQueries
+    include ResponsiblePersonUserQueries
+    include UserQueries
   end
 end
