@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :trigger_question do
-    trait :without_validations do
-      to_create { |instance| instance.save(validate: false) }
-    end
+    question { "What is your favorite color?" }
+    association :component
   end
 end
