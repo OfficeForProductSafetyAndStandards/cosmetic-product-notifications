@@ -11,6 +11,8 @@ module Types
     def self.coerce_result(ruby_value, _context)
       return nil if ruby_value.nil?
 
+      ruby_value = ruby_value.to_time if ruby_value.is_a?(Date)
+
       ruby_value.utc.iso8601
     end
   end

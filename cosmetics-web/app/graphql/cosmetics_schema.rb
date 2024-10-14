@@ -1,11 +1,16 @@
 class CosmeticsSchema < GraphQL::Schema
   query(Types::QueryType)
   use GraphQL::Dataloader
+
+  max_depth 5 # Max depth of queries
+
   def self.resolve_type(_abstract_type, _obj, _ctx)
     raise(GraphQL::RequiredImplementationMissingError)
   end
+
   max_query_string_tokens(5000)
   validate_max_errors(100)
+
   def self.id_from_object(object, _type_definition, _query_ctx)
     object.to_gid_param
   end
