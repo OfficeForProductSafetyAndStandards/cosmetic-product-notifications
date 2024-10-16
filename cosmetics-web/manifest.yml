@@ -2,7 +2,7 @@
 applications:
 - name: ((app-name))
   buildpacks:
-    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.9.1
+    - https://github.com/cloudfoundry/ruby-buildpack.git#v1.10.18
   routes:
     - route: ((search-host))
     - route: ((submit-host))
@@ -41,4 +41,4 @@ applications:
       health-check-type: process
       instances: ((worker-instances))
       memory: 2G
-      disk_quota: 2G
+      disk_quota: 2G1
