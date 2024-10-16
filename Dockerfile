@@ -25,9 +25,9 @@ RUN curl -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/$CH
   && chmod ugo+rx /usr/bin/chromedriver
 
 EXPOSE 3000
-WORKDIR /cosmetics-web
+WORKDIR /
 
-COPY ./cosmetics-web .
+COPY ./ .
 
 RUN yarn install
 RUN gem update --system '3.4.4'

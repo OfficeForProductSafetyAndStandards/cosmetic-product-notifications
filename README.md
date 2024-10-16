@@ -8,7 +8,7 @@ For enquiries, contact [opss.enquiries@businessandtrade.gov.uk](mailto:opss.enqu
 
 ## Getting started
 
-See [getting started](cosmetics-web/docs/getting_started.md) for instructions on setting up this application locally.
+See [getting started](docs/getting_started.md) for instructions on setting up this application locally.
 
 ## Technical documentation
 
@@ -40,19 +40,19 @@ User-uploaded files are saved to AWS S3 - ask someone on the team to invite you.
 
 ## Additional documentation
 
-* [Glossary of terms](cosmetics-web/docs/glossary.md)
-* [Frame formulations](cosmetics-web/docs/frame_formulations.md)
-* [ERDs](cosmetics-web/docs/erd.md)
-* [Users and roles](cosmetics-web/docs/users_and_roles.md)
-* [Secondary authentication](cosmetics-web/docs/secondary_authentication.md)
-* [Review apps](cosmetics-web/docs/review_apps.md)
-* [Code checks](cosmetics-web/docs/code_checks.md)
-* [Deployment](cosmetics-web/docs/deployment.md)
-* [Feature flags](cosmetics-web/docs/feature_flags.md)
-* [Maintenance](cosmetics-web/docs/maintenance.md)
-* [OpenSearch](cosmetics-web/docs/opensearch.md)
-* [Smoke tests](cosmetics-web/docs/smoke_tests.md)
-* [ActiveStorage notes](cosmetics-web/docs/active_storage_notes.md)
+* [Glossary of terms](docs/glossary.md)
+* [Frame formulations](docs/frame_formulations.md)
+* [ERDs](docs/erd.md)
+* [Users and roles](docs/users_and_roles.md)
+* [Secondary authentication](docs/secondary_authentication.md)
+* [Review apps](docs/review_apps.md)
+* [Code checks](docs/code_checks.md)
+* [Deployment](docs/deployment.md)
+* [Feature flags](docs/feature_flags.md)
+* [Maintenance](docs/maintenance.md)
+* [OpenSearch](docs/opensearch.md)
+* [Smoke tests](docs/smoke_tests.md)
+* [ActiveStorage notes](docs/active_storage_notes.md)
 
 ## Licence
 

@@ -128,7 +128,7 @@ Start by setting up the following credentials:
 
 Once all the credentials are created, the app can be deployed using:
 
-    SPACE=<<space>> ./cosmetics-web/deploy.sh
+    SPACE=<<space>> ./deploy.sh
 
 ### Cloud Foundry reference
 

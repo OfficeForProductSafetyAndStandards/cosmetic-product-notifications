@@ -19,7 +19,7 @@ DOMAIN=london.cloudapps.digital
 
 if [ -z "$MANIFEST_FILE" ]
 then
-  MANIFEST_FILE=./cosmetics-web/manifest.review.yml
+  MANIFEST_FILE=./manifest.review.yml
 fi
 
 if [ -z "$DB_NAME" ]
@@ -44,7 +44,7 @@ until cf service $DB_NAME > /tmp/db_exists && grep "create succeeded" /tmp/db_ex
 until cf service $REDIS_NAME > /tmp/redis_exists && grep "create succeeded" /tmp/redis_exists; do sleep 20; echo "Waiting for redis"; done
 
 # Copy files from infrastructure env
-cp -a ./infrastructure/env/. ./cosmetics-web/env/
+cp -a ./infrastructure/env/. ./env/
 
 if [ -z "$WEB_CONCURRENCY" ]
 then
@@ -67,4 +67,4 @@ cf push $APP -f $MANIFEST_FILE --app-start-timeout 180 --var cosmetics-instance-
 cf scale $APP --process worker -i 1
 
 # Remove the copied infrastructure env files to clean up
-rm -R cosmetics-web/env/
+rm -R env/

@@ -17,8 +17,8 @@ To start all the required dependencies, run `docker compose up db redis opensear
 
 Make a copy of the environment files for development and test:
 
-* `cp cosmetics-web/.env.development.example cosmetics-web/.env.development`
-* `cp cosmetics-web/.env.test.example cosmetics-web/.env.test`
+* `cp .env.development.example .env.development`
+* `cp .env.test.example .env.test`
 
 Run the usual Rails app setup steps:
 

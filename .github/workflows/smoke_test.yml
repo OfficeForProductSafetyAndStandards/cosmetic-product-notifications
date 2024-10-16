@@ -47,7 +47,7 @@ jobs:
         node-version: 18.13.x
     - uses: actions/cache@v4
       with:
-        path: cosmetics-web/vendor/bundle
+        path: vendor/bundle
         key: ${{ runner.OS }}-gems
         restore-keys: |
           ${{ runner.OS }}-gems
@@ -55,7 +55,7 @@ jobs:
           ${{ runner.OS }}-
     - uses: actions/cache@v4
       with:
-        path: cosmetics-web/node_modules
+        path: node_modules
         key: ${{ runner.OS }}-node
         restore-keys: |
           ${{ runner.OS }}-node
@@ -65,25 +65,21 @@ jobs:
       env:
         RAILS_ENV: test
       run: |
-        cd cosmetics-web
         gem install bundler -v 2.4.4
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Install JavaScript dependencies
       env:
         RAILS_ENV: test
       run: |
-        cd cosmetics-web
         npm install yarn -g
         yarn install
     - name: Prepare application database
       env:
         RAILS_ENV: test
       run: |
-        cd cosmetics-web
         bin/rails db:create db:schema:load
     - name: Prepare assets for tests
       run: |
-        cd cosmetics-web
         bin/rails test:prepare
     - name: Run Smoke Tests
       env:
@@ -99,7 +95,6 @@ jobs:
         SMOKE_PRODUCT_NAME: ${{secrets.SMOKE_PRODUCT_NAME}}
 
       run: |
-        cd cosmetics-web
         bundle exec rspec spec/smoke/search_smoke_test_spec.rb
     - uses: 8398a7/action-slack@v3
       with:

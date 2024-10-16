@@ -25,13 +25,13 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           BRANCH: main
         run: |
-          source cosmetics-web/deploy-github-functions.sh
+          source deploy-github-functions.sh
           gh_deploy_create staging
       - name: Initiate Staging deployment status
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: >
-          source cosmetics-web/deploy-github-functions.sh
+          source deploy-github-functions.sh
 
           # URL where the deployment progress can be tracked. Exported for
           future steps.
@@ -60,15 +60,15 @@ jobs:
           cf api api.london.cloud.service.gov.uk
           cf auth
           cf target -o 'beis-opss' -s $SPACE
-          chmod +x ./cosmetics-web/deploy.sh
-          ./cosmetics-web/deploy.sh
+          chmod +x ./deploy.sh
+          ./deploy.sh
           cf logout
       - name: Update Staging deployment status (success)
         if: success()
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: >
-          source cosmetics-web/deploy-github-functions.sh
+          source deploy-github-functions.sh
 
           environment_url=https://staging-submit.cosmetic-product-notifications.service.gov.uk/
 
@@ -78,7 +78,7 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
-          source cosmetics-web/deploy-github-functions.sh
+          source deploy-github-functions.sh
           gh_deploy_failure staging $LOG_URL
       # - name: Trigger automated test framework
       #   if: success()

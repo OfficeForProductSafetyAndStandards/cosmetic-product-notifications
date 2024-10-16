@@ -33,7 +33,7 @@ services:
     command: ["./bin/rails", "s", "-p", "3000", "-b", "0.0.0.0"]
     build:
       context: .
-      dockerfile: ./cosmetics-web/Dockerfile
+      dockerfile: ./Dockerfile
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows
       - ${PWD-.}/cosmetics-web:/cosmetics-web
@@ -61,7 +61,7 @@ services:
   cosmetics-worker:
     build:
       context: .
-      dockerfile: ./cosmetics-web/Dockerfile
+      dockerfile: ./Dockerfile
     command: bin/sidekiq -C config/sidekiq.yml
     volumes:
       # ${PWD-.} calls PWD on systems which have that variable, and . on others e.g. windows

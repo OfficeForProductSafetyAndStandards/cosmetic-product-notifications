@@ -2,7 +2,7 @@
 
 Review apps are created automatically via a GitHub Action for each PR and can be accessed via the PR page.
 
-However, they can also be created manually by running `REVIEW_INSTANCE_NAME=ticket-123 ./cosmetics-web/deploy-review.sh`,
+However, they can also be created manually by running `REVIEW_INSTANCE_NAME=ticket-123 ./deploy-review.sh`,
 where `ticket-123` is the desired name of the review app.
 
 This will create 3 URLs:
@@ -26,19 +26,19 @@ export SPACE=int
 export WEB_MAX_THREADS=8
 export WEB_CONCURRENCY=1
 export WORKER_MAX_THREADS=10
-export DB_VERSION=`cat cosmetics-web/db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
+export DB_VERSION=`cat db/schema.rb | grep 'ActiveRecord::Schema.define' | grep -o '[0-9_]\+'`
 export PR_NUMBER=local-test-1
 export REVIEW_INSTANCE_NAME=pr-$PR_NUMBER
 export DB_NAME=cosmetics-pr-db-$DB_VERSION
 export REDIS_NAME=cosmetics-review-redis-$PR_NUMBER
-./cosmetics-web/deploy-review.sh
+./deploy-review.sh
 ```
 
 ## Creating ad-hoc review apps
 
 Ad-hoc, standalone review apps can be created for purposes such as user research:
 
-`DB_NAME=cosmetics-db-2021_09_21_092542 REVIEW_INSTANCE_NAME=cosmetics-test REDIS_NAME=cosmetics-test-redis cosmetics-web/deploy-review.sh`
+`DB_NAME=cosmetics-db-2021_09_21_092542 REVIEW_INSTANCE_NAME=cosmetics-test REDIS_NAME=cosmetics-test-redis deploy-review.sh`
 
 * `DB_NAME` is the name of the database
 * `REVIEW_INSTANCE_NAME` is the name of the subdomain, eg, `REVIEW_INSTANCE_NAME=user-testing` will become `cosmetics-user-testing`

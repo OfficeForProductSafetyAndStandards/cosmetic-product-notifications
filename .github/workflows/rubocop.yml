@@ -14,23 +14,20 @@ jobs:
         ruby-version: 3.2.2
     - uses: actions/cache@v4
       with:
-        path: cosmetics-web/vendor/bundle
+        path: vendor/bundle
         key: ${{ runner.OS }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.OS }}-gems-
     - name: Install ruby gems
-      working-directory: cosmetics-web
       run: |
         gem install bundler -v 2.4.4 --no-doc
         bundle config path vendor/bundle
         bundle check || bundle install --jobs 4 --retry 3
     - name: Run rubocop
       run: |
-        cd cosmetics-web
         bundle exec rubocop
     - name: Run brakeman
       run: |
-        cd cosmetics-web
         bundle exec brakeman
   front_end:
     name: "Sass and JavaScript"
@@ -43,22 +40,19 @@ jobs:
         node-version: 18.13.x
     - uses: actions/cache@v4
       with:
-        path: cosmetics-web/node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('cosmetics-web/yarn.lock') }}
+        path: node_modules
+        key: ${{ runner.OS }}-build-${{ hashFiles('yarn.lock') }}
         restore-keys: |
           ${{ runner.OS }}-build-${{ env.cache-name }}-
           ${{ runner.OS }}-build-
           ${{ runner.OS }}-
     - name: Install npm dependencies
       run: |
-        cd cosmetics-web
         npm install yarn
         yarn install
     - name: Run JavaScript linter
       run: |
-        cd cosmetics-web
         yarn lint:js
     - name: Run SCSS linter
       run: |
-        cd cosmetics-web
         yarn lint:css

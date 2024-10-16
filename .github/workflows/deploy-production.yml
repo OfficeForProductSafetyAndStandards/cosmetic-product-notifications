@@ -25,14 +25,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: main
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
         gh_deploy_create pre-prod
 
     - name: Initiate Pre-Prod deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
 
         # URL where the deployment progress can be tracked. Exported for future steps.
         log_url=$(echo "https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amain+workflow%3ADeploy+Pre-Prod")
@@ -58,8 +58,8 @@ jobs:
         cf api api.london.cloud.service.gov.uk
         cf auth
         cf target -o 'beis-opss' -s $SPACE
-        chmod +x ./cosmetics-web/deploy.sh
-        ./cosmetics-web/deploy.sh
+        chmod +x ./deploy.sh
+        ./deploy.sh
         cf logout
 
     - name: Update Pre-Prod deployment status (success)
@@ -67,7 +67,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
         environment_url=https://pre-prod-submit.cosmetic-product-notifications.service.gov.uk/
         gh_deploy_success pre-prod $LOG_URL $environment_url
 
@@ -76,7 +76,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
         gh_deploy_failure pre-prod $LOG_URL
 
     - name: Create GitHub deployment for Production
@@ -84,14 +84,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: main
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
         gh_deploy_create production
 
     - name: Initiate Production deployment status
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
         gh_deploy_initiate production $LOG_URL
 
     - name: Deploy to production
@@ -112,7 +112,7 @@ jobs:
         cf api api.london.cloud.service.gov.uk
         cf auth
         cf target -o 'beis-opss' -s $SPACE
-        ./cosmetics-web/deploy.sh
+        ./deploy.sh
         cf logout
 
     - name: Update Production deployment status (success)
@@ -120,7 +120,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
         environment_url=https://submit.cosmetic-product-notifications.service.gov.uk/
         gh_deploy_success production $LOG_URL $environment_url
 
@@ -129,7 +129,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        source cosmetics-web/deploy-github-functions.sh
+        source deploy-github-functions.sh
         gh_deploy_failure production $LOG_URL
 
     - uses: actions/checkout@v4

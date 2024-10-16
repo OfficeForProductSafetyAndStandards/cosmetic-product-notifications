@@ -1,7 +1,6 @@
 version: 2
 updates:
   - package-ecosystem: "bundler"
-    directory: "/cosmetics-web"
     schedule:
       interval: "weekly"
     groups:
@@ -11,7 +10,6 @@ updates:
           - "patch"
     open-pull-requests-limit: 5
   - package-ecosystem: "npm"
-    directory: "/cosmetics-web"
     schedule:
       interval: "weekly"
     groups:
