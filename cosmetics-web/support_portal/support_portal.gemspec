@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   end
 
   # This should be kept in sync with the Ruby version used by the main app
-  spec.required_ruby_version = ">= 3.2.0"
+  spec.required_ruby_version = ">= 3.2.2"
 
   # Ensure any gems that are also used in the main app have the same version constraints
   # Run `bundle install` for both this engine and the main app when adding or changing gems
