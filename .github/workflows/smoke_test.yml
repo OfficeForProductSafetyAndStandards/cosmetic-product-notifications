@@ -44,7 +44,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
-        node-version: 18.13.x
+        node-version: 20.14.x
     - uses: actions/cache@v4
       with:
         path: cosmetics-web/vendor/bundle
