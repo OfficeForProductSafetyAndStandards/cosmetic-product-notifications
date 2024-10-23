@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "license": "MIT",
   "engines": {
-    "node": ">=20.14.0",
+    "node": ">=20.12.2",
     "yarn": "1.22.x"
   },
   "dependencies": {

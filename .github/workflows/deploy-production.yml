@@ -40,6 +40,11 @@ jobs:
 
         gh_deploy_initiate pre-prod $log_url
 
+    - name: Run Database Migrations for Pre-Prod
+      run: |
+        cd cosmetics-web
+        bin/rails db:migrate
+
     - name: Deploy to Pre-Prod
       env:
         SPACE: pre-prod
@@ -93,6 +98,11 @@ jobs:
       run: |
         source cosmetics-web/deploy-github-functions.sh
         gh_deploy_initiate production $LOG_URL
+
+    - name: Run Database Migrations for Production
+      run: |
+        cd cosmetics-web
+        bin/rails db:migrate
 
     - name: Deploy to production
       env:

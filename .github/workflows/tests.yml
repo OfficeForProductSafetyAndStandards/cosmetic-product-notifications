@@ -18,8 +18,6 @@ jobs:
     name: "RSpec"
     runs-on: ubuntu-latest
 
-    # Example for can be found here:
-    # https://github.com/actions/example-services/tree/master/.github/workflows
     services:
       postgres:
         image: postgres:13.6
@@ -57,7 +55,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
-        node-version: 20.14.x
+        node-version: 20.12.x
     - uses: actions/cache@v4
       with:
         path: cosmetics-web/vendor/bundle
@@ -84,14 +82,22 @@ jobs:
         cd cosmetics-web
         npm install yarn -g
         yarn install
+    
     - name: Prepare application database
       run: |
         cd cosmetics-web
         bin/rails db:create db:schema:load
+
+    - name: Run Database Migrations
+      run: |
+        cd cosmetics-web
+        bin/rails db:migrate
+
     - name: Prepare assets for tests
       run: |
         cd cosmetics-web
         bin/rails test:prepare
+
     - name: Run Tests
       env:
         TWO_FACTOR_AUTHENTICATION_ENABLED: false
@@ -99,9 +105,9 @@ jobs:
       run: |
         cd cosmetics-web
         bundle exec rspec ${{ matrix.rspec-group }}
+
     - name: Dump docker logs
       uses: jwalton/gh-docker-logs@v2
       if: always()
       with:
         images: 'opensearchproject/opensearch'
-
