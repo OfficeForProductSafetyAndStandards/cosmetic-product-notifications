@@ -21,7 +21,7 @@ jobs:
     - name: Install ruby gems
       working-directory: cosmetics-web
       run: |
-        gem install bundler -v 2.4.4 --no-doc
+        gem install bundler -v 2.5.22 --no-doc
         bundle config path vendor/bundle
         bundle check || bundle install --jobs 4 --retry 3
     - name: Run rubocop

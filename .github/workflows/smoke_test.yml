@@ -66,7 +66,7 @@ jobs:
         RAILS_ENV: test
       run: |
         cd cosmetics-web
-        gem install bundler -v 2.4.4
+        gem install bundler -v 2.5.22
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
     - name: Install JavaScript dependencies
       env:
