@@ -9,6 +9,16 @@ jobs:
   deploy:
     name: Deploy to Staging
     runs-on: ubuntu-latest
+    services:
+      opensearch:
+        image: opensearchproject/opensearch:latest
+        ports:
+          - 9200:9200
+        options: >-
+          --health-cmd="curl -sS localhost:9200 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     steps:
       - uses: actions/checkout@v4
 
@@ -16,7 +26,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.2'
-          bundler-cache: true  # Optional: Enables caching for Bundler
+          bundler-cache: true
 
       - name: Install cf client
         env:
@@ -38,7 +48,6 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           source cosmetics-web/deploy-github-functions.sh
-          # URL where the deployment progress can be tracked. Exported for future steps.
           log_url="https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amain+workflow%3ADeploy+Staging"
           echo "LOG_URL=$log_url" >> $GITHUB_ENV
           gh_deploy_initiate staging $log_url
