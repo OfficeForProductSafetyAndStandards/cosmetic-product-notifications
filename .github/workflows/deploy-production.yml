@@ -3,22 +3,17 @@ name: Deploy to Production
 on:
   release:
     types:
-      - released
+      - published
 
 jobs:
   deploy:
-    name: Deploy to Pre-Prod and Production
+    name: Deploy to Production
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
-
-      - name: Set up Ruby 3.2.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2.2'
-          bundler-cache: true  # Optional: Enables caching for Bundler
 
       - name: Install cf client
         env:
@@ -27,74 +22,9 @@ jobs:
           curl -A "" -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
           sudo cp /tmp/cf7 /usr/local/bin/cf
 
-      - name: Create GitHub deployment for Pre-Prod
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: main
-        run: |
-          source cosmetics-web/deploy-github-functions.sh
-          gh_deploy_create pre-prod
-
-      - name: Initiate Pre-Prod deployment status
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          source cosmetics-web/deploy-github-functions.sh
-          # URL where the deployment progress can be tracked. Exported for future steps.
-          log_url="https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amain+workflow%3ADeploy+Pre-Prod"
-          echo "LOG_URL=$log_url" >> $GITHUB_ENV
-          gh_deploy_initiate pre-prod $log_url
-
-      - name: Install Dependencies
-        working-directory: cosmetics-web
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Run Database Migrations for Pre-Prod
-        working-directory: cosmetics-web
-        run: bin/rails db:migrate
-
-      - name: Deploy to Pre-Prod
-        env:
-          SPACE: pre-prod
-          APP_NAME: cosmetics-web
-          SUBMIT_HOST: pre-prod-submit.cosmetic-product-notifications.service.gov.uk
-          SEARCH_HOST: pre-prod-search.cosmetic-product-notifications.service.gov.uk
-          SUPPORT_HOST: pre-prod-support.cosmetic-product-notifications.service.gov.uk
-          WEB_INSTANCES: 2
-          WEB_MAX_THREADS: 1
-          WORKER_MAX_THREADS: 10
-          WORKER_INSTANCES: 2
-          CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
-          CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
-          SENTRY_SERVICE_NAME: cosmetics-pre-prod-sentry-env
-        run: |
-          cf api api.london.cloud.service.gov.uk
-          cf auth
-          cf target -o 'beis-opss' -s $SPACE
-          chmod +x ./cosmetics-web/deploy.sh
-          ./cosmetics-web/deploy.sh
-          cf logout
-
-      - name: Update Pre-Prod deployment status (success)
-        if: success()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          source cosmetics-web/deploy-github-functions.sh
-          environment_url=https://pre-prod-submit.cosmetic-product-notifications.service.gov.uk/
-          gh_deploy_success pre-prod $LOG_URL $environment_url
-
-      - name: Update Pre-Prod deployment status (failure)
-        if: failure()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          source cosmetics-web/deploy-github-functions.sh
-          gh_deploy_failure pre-prod $LOG_URL
-
       - name: Create GitHub deployment for Production
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           BRANCH: main
         run: |
           source cosmetics-web/deploy-github-functions.sh
@@ -102,14 +32,12 @@ jobs:
 
       - name: Initiate Production deployment status
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           source cosmetics-web/deploy-github-functions.sh
-          gh_deploy_initiate production $LOG_URL
-
-      - name: Run Database Migrations for Production
-        working-directory: cosmetics-web
-        run: bin/rails db:migrate
+          log_url="https://github.com/$GITHUB_REPOSITORY/actions?query=branch%3Amain+workflow%3ADeploy+Production"
+          echo "LOG_URL=$log_url" >> $GITHUB_ENV
+          gh_deploy_initiate production $log_url
 
       - name: Deploy to Production
         env:
@@ -122,8 +50,8 @@ jobs:
           WEB_MAX_THREADS: 1
           WORKER_MAX_THREADS: 10
           WORKER_INSTANCES: 4
-          CF_USERNAME: ${{ secrets.PaaSUsernameProduction }}
-          CF_PASSWORD: ${{ secrets.PaaSPasswordProduction }}
+          CF_USERNAME: "${{ secrets.PaaSUsernameProduction }}"
+          CF_PASSWORD: "${{ secrets.PaaSPasswordProduction }}"
           SENTRY_SERVICE_NAME: cosmetics-sentry-env
         run: |
           cf api api.london.cloud.service.gov.uk
@@ -136,7 +64,7 @@ jobs:
       - name: Update Production deployment status (success)
         if: success()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           source cosmetics-web/deploy-github-functions.sh
           environment_url=https://submit.cosmetic-product-notifications.service.gov.uk/
@@ -145,7 +73,7 @@ jobs:
       - name: Update Production deployment status (failure)
         if: failure()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           source cosmetics-web/deploy-github-functions.sh
           gh_deploy_failure production $LOG_URL
