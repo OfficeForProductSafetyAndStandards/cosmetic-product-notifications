@@ -93,11 +93,16 @@ module Types
       max_limit = 100
       first = validate_limit(first, max_limit)
       last = validate_limit(last, max_limit)
+
       scope = Component.all
       scope = scope.where("created_at >= ?", Time.zone.parse(created_after).utc) if created_after.present?
       scope = scope.where("updated_at >= ?", Time.zone.parse(updated_after).utc) if updated_after.present?
       scope = apply_pagination(scope, first:, last:, after:, before:)
-      scope.limit(first || last)
+
+      scope.map do |component|
+        component.shades ||= []
+        component
+      end
     end
 
     def total_components_count

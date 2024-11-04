@@ -12,6 +12,7 @@ module Types
       return nil if ruby_value.nil?
 
       ruby_value = ruby_value.to_time if ruby_value.is_a?(Date)
+      ruby_value = ruby_value.to_time if ruby_value.is_a?(DateTime) && !ruby_value.respond_to?(:utc)
 
       ruby_value.utc.iso8601
     end
