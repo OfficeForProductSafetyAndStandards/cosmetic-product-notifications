@@ -37,7 +37,7 @@ gem "paper_trail", "~> 15.2"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "pundit", "~> 2.3"
-gem "rails", ">= 7.1.0", "< 7.2.0"
+gem "rails", ">= 7.1.0", "< 7.3.0"
 gem "redis", "~> 5.2"
 gem "request_store", "~> 1.6"
 gem "rest-client", "~> 2.1"
@@ -55,7 +55,7 @@ gem "sidekiq-status", "~> 3.0"
 gem "sprockets", "~> 4.2"
 gem "sprockets-rails", "~> 3.5", require: "sprockets/railtie"
 gem "strong_migrations", "~> 2.0"
-gem "webrick", "~> 1.8"
+gem "webrick", "~> 1.9"
 gem "wicked", "~> 2.0"
 
 # OSU Support Portal engine
@@ -96,4 +96,4 @@ end
 gem "database_cleaner-active_record"
 
 gem "graphiql-rails", group: :development
-gem "graphql", "~> 2.3"
+gem "graphql", "~> 2.4"
