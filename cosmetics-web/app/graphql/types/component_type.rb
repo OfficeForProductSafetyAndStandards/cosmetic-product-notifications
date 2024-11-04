@@ -2,7 +2,7 @@ module Types
   class ComponentType < Types::BaseObject
     field :id, ID, null: true
     field :state, String, null: true
-    field :shades, [String], null: true
+    field :shades, [String], null: false
     field :created_at, Types::CustomDateTimeType, null: true, camelize: false
     field :updated_at, Types::CustomDateTimeType, null: true, camelize: false
     field :notification_id, ID, null: true, camelize: false
