@@ -9,6 +9,7 @@ module Types
     field :created_at, Types::CustomDateTimeType, null: true, camelize: false
     field :updated_at, Types::CustomDateTimeType, null: true, camelize: false
     field :component_id, ID, null: true, camelize: false
+    field :component, ComponentType, null: false, description: "The associated component"
     field :used_for_multiple_shades, Boolean, null: true, camelize: false
     field :minimum_concentration, Float, null: true, camelize: false
     field :maximum_concentration, Float, null: true, camelize: false
