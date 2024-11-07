@@ -6,7 +6,7 @@ Devise.setup do |config|
   config.maximum_attempts = if Rails.env.test?
                               2
                             else
-                              ENV.fetch("LOCK_MAXIMUM_ATTEMPTS", 10).to_i
+                              ENV.fetch("LOCK_MAXIMUM_ATTEMPTS", 5).to_i
                             end
 
   config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
