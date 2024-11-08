@@ -24,7 +24,6 @@ applications:
     - opss-log-drain
     - antivirus-auth-env
     - cosmetics-aws-env
-    - cosmetics-auth-env
     - cosmetics-health-env
     - cosmetics-rails-env
     - cosmetics-review-apps-sentry-env

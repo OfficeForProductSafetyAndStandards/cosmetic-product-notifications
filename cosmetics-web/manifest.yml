@@ -18,7 +18,6 @@ applications:
     - cosmetics-queue-v6
     - opss-log-drain
     - cosmetics-aws-env
-    - cosmetics-auth-env
     - cosmetics-health-env
     - cosmetics-rails-env
     - ((sentry-service-name))
