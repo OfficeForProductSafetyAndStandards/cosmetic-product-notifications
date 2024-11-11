@@ -82,7 +82,9 @@ module Types
       end
     end
     def component(id:)
-      Component.find(id)
+      component = Component.find(id)
+      component.shades ||= []
+      component
     rescue ActiveRecord::RecordNotFound
       raise Errors::SimpleError, "Couldn't find component with 'id' #{id}"
     rescue StandardError => e
