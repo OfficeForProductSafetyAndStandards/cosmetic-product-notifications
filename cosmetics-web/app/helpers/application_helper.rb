@@ -48,7 +48,7 @@ module ApplicationHelper
   end
 
   def wrap_summary_address(address_array)
-    address_array.join("<span class=\"govuk-visually-hidden\">,</span><br />").html_safe
+    sanitize(address_array.join('<span class="govuk-visually-hidden">,</span><br />'), tags: %w[span br], attributes: %w[class])
   end
 
   def error_class(search_form, attribute, part)
