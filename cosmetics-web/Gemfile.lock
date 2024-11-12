@@ -128,7 +128,7 @@ GEM
     backport (1.2.0)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    benchmark (0.3.0)
+    benchmark (0.4.0)
     bigdecimal (3.1.8)
     brakeman (6.2.2)
       racc
@@ -160,6 +160,9 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    cronex (0.15.0)
+      tzinfo
+      unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
     database_cleaner-active_record (2.2.0)
@@ -534,7 +537,7 @@ GEM
       tilt
     scout_apm (5.4.0)
       parser
-    securerandom (0.3.1)
+    securerandom (0.3.2)
     selenium-webdriver (4.26.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -555,10 +558,11 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
-    sidekiq-cron (1.12.0)
-      fugit (~> 1.8)
+    sidekiq-cron (2.0.0)
+      cronex (>= 0.13.0)
+      fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
-      sidekiq (>= 6)
+      sidekiq (>= 6.5.0)
     sidekiq-status (3.0.3)
       chronic_duration
       sidekiq (>= 6.0, < 8)
@@ -609,6 +613,7 @@ GEM
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unicode (0.4.4.5)
     unicode-display_width (2.6.0)
     uri (0.13.1)
     view_component (3.16.0)
@@ -710,7 +715,7 @@ DEPENDENCIES
   sentry-ruby (~> 5.17)
   sentry-sidekiq (~> 5.17)
   sidekiq (~> 7.3)
-  sidekiq-cron (~> 1.12)
+  sidekiq-cron (~> 2.0)
   sidekiq-status (~> 3.0)
   simplecov
   simplecov-console
