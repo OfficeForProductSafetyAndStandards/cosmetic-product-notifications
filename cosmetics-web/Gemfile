@@ -33,7 +33,7 @@ gem "net-imap", require: false # Needed for running Rails 6 with ruby 3.1
 gem "net-pop", require: false # Needed for running Rails 6 with ruby 3.1
 gem "net-smtp", require: false # Needed for running Rails 6 with ruby 3.1
 gem "okcomputer", "~> 1.18.4"
-gem "paper_trail", "~> 15.2"
+gem "paper_trail", "~> 16.0"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "pundit", "~> 2.3"
