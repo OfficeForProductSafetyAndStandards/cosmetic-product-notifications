@@ -7,7 +7,7 @@
     "yarn": "1.22.x"
   },
   "dependencies": {
-    "@rails/activestorage": "7.2.200",
+    "@rails/activestorage": "8.0.0",
     "accessible-autocomplete": "3.0.1",
     "css-loader": "^7.1.2",
     "esbuild": "^0.24.0",
