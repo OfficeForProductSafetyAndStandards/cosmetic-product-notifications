@@ -6,7 +6,7 @@ gem "kaminari" # Must be loaded before ElasticSearch gems
 
 gem "aasm", "~> 5.5"
 gem "after_commit_everywhere", "~> 1.4"
-gem "aws-sdk-s3", "~> 1.169"
+gem "aws-sdk-s3", "~> 1.170"
 gem "cf-app-utils", "~> 0.6"
 gem "cssbundling-rails", "~> 1.4"
 gem "devise", "~> 4.9"
@@ -54,7 +54,7 @@ gem "sidekiq-cron", "~> 2.0"
 gem "sidekiq-status", "~> 3.0"
 gem "sprockets", "~> 4.2"
 gem "sprockets-rails", "~> 3.5", require: "sprockets/railtie"
-gem "strong_migrations", "~> 2.0"
+gem "strong_migrations", "~> 2.1"
 gem "webrick", "~> 1.9"
 gem "wicked", "~> 2.0"
 
