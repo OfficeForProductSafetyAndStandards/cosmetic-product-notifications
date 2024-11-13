@@ -115,7 +115,7 @@ $top-border: solid 2px govuk-colour("mid-grey");
   list-style: none;
 
   // line down the side of a step
-  &:after {
+  &::after {
     @include step-nav-vertical-line;
     @include step-nav-line-position;
     top: govuk-spacing(3);
@@ -125,7 +125,7 @@ $top-border: solid 2px govuk-colour("mid-grey");
     @include govuk-media-query($from: tablet) {
       padding-left: govuk-spacing(9);
 
-      &:after {
+      &::after {
         @include step-nav-line-position-large;
         top: govuk-spacing(6);
       }
@@ -135,7 +135,7 @@ $top-border: solid 2px govuk-colour("mid-grey");
 
 .app-step-nav__step:last-child {
   // little dash at the bottom of the line
-  &:before {
+  &::before {
     content: "";
     position: absolute;
     z-index: 6;
@@ -147,24 +147,24 @@ $top-border: solid 2px govuk-colour("mid-grey");
     border-bottom: solid $stroke-width govuk-colour("mid-grey");
   }
 
-  &:after {
+  &::after {
     height: -webkit-calc(100% - #{govuk-spacing(3)}); // fallback for iphone 4
     height: calc(100% - #{govuk-spacing(3)});
   }
 
-  .app-step-nav__help:after {
+  .app-step-nav__help::after {
     height: 100%;
   }
 
   .app-step-nav--large & {
     @include govuk-media-query($from: tablet) {
-      &:before {
+      &::before {
         margin-left: $number-circle-size-large / 4;
         width: $number-circle-size-large / 2;
         border-width: $stroke-width-large;
       }
 
-      &:after {
+      &::after {
         height: calc(100% - #{govuk-spacing(6)});
       }
     }
@@ -172,10 +172,10 @@ $top-border: solid 2px govuk-colour("mid-grey");
 }
 
 .app-step-nav__step--active {
-  &:last-child:before,
+  &:last-child::before,
   .app-step-nav__circle--number,
-  &:after,
-  .app-step-nav__help:after {
+  &::after,
+  .app-step-nav__help::after {
     border-color: govuk-colour("black");
   }
 }
@@ -354,13 +354,13 @@ $top-border: solid 2px govuk-colour("mid-grey");
   margin-left: $links-margin;
   list-style: disc;
 
-  .app-step-nav__list-item--active:before {
+  .app-step-nav__list-item--active::before {
     left: -(govuk-spacing(6) + govuk-spacing(3)) - $links-margin;
   }
 
   .app-step-nav--large & {
     @include govuk-media-query($from: tablet) {
-      .app-step-nav__list-item--active:before {
+      .app-step-nav__list-item--active::before {
         left: -(govuk-spacing(9)) - $links-margin;
       }
     }
@@ -383,7 +383,7 @@ $top-border: solid 2px govuk-colour("mid-grey");
 .app-step-nav__list-item--active {
   position: relative;
 
-  &:before {
+  &::before {
     box-sizing: border-box;
     content: "";
     position: absolute;
@@ -399,7 +399,7 @@ $top-border: solid 2px govuk-colour("mid-grey");
 
   .app-step-nav--large & {
     @include govuk-media-query($from: tablet) {
-      &:before {
+      &::before {
         left: -(govuk-spacing(9));
         margin-left: ($number-circle-size-large / 2);
         height: $stroke-width-large;
@@ -417,7 +417,7 @@ $top-border: solid 2px govuk-colour("mid-grey");
   font-weight: normal;
   color: govuk-colour("dark-grey");
 
-  &:before {
+  &::before {
     content: " \2013\00a0"; // dash followed by &nbsp;
   }
 }

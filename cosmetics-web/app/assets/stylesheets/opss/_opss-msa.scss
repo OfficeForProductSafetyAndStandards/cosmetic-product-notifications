@@ -28,7 +28,7 @@
   width: 100%;
   display: block;
 
-  &:after {
+  &::after {
     content: "";
     display: block;
     clear: both;
@@ -64,7 +64,7 @@
         padding-top: 0; // mobile
       }
 
-      &:before {
+      &::before {
         content: "-";
         position: relative;
         @include govuk-font($size: 24);
@@ -103,7 +103,7 @@
           padding-top: govuk-spacing(2);
         }
 
-        &.opss-top-nav__item--active:after {
+        &.opss-top-nav__item--active::after {
           content: "";
           position: absolute;
           bottom: 0;
@@ -113,7 +113,7 @@
           background-color: $govuk-link-colour;
         }
 
-        &:before {
+        &::before {
           content: none !important;
         }
 
@@ -147,7 +147,7 @@ header.govuk-header + .opss-std-row.opss-std-row--borders {
 .opss-minor-nav {
   display: block;
   width: 100%;
-  padding: (govuk-spacing(2) - 2) 0 govuk-spacing(2) 0;
+  padding: (govuk-spacing(2) - 2) 0 govuk-spacing(2);
 
   #main-content & {
     margin-top: - govuk-spacing(4);

@@ -186,7 +186,7 @@ ul.opss-radio-list {
   }
 }
 
-.govuk-character-count__message:after {
+.govuk-character-count__message::after {
   content: ".";
 }
 
@@ -248,7 +248,7 @@ ul.opss-radio-list {
     padding: govuk-spacing(4) govuk-spacing(2) govuk-spacing(1) govuk-spacing(4);
   }
 
-  label:before {
+  label::before {
     background: govuk-colour("white");
   }
 }

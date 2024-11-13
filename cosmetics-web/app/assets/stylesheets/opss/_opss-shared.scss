@@ -251,7 +251,7 @@ body.js-enabled .opss-nojs-hide {
   // A CSS FOR ICON ON MOBILE - REQUIRES DESKTOP ONLY CSS TO SNAP IN FULL SIZE DIMS. And update HTML to figcaption
   position: relative;
   padding: 2px;
-  margin: 0 0 govuk-spacing(2) 0;
+  margin: 0 0 govuk-spacing(2);
   vertical-align: top;
   background: govuk-colour("mid-grey");
   width: 50px;
@@ -306,7 +306,7 @@ body.js-enabled .opss-nojs-hide {
     }
   }
 
-  .opss-right-box-arrow:after {
+  .opss-right-box-arrow::after {
     left: 100%;
     top: 50%;
     border: solid transparent;
@@ -478,7 +478,7 @@ samp {
     padding-bottom: 0;
     @include opss-font-size($s: 16px, $l: 1.2);
 
-    &:before {
+    &::before {
       content: "—";
       margin-left: - govuk-spacing(4);
       color: $govuk-secondary-text-colour;
@@ -615,12 +615,12 @@ ul.opss-left-nav {
       @include opss-font-size($s: 16px, $l: 1.25);
       padding-left: govuk-spacing(3);
 
-      &:before {
+      &::before {
         border-width: 5px 0 7px 9px;
       }
     }
 
-    &[open] > summary:before {
+    &[open] > summary::before {
       border-width: 10px 6px 0 !important;
     }
 
@@ -702,7 +702,7 @@ section.govuk-grid-column-three-quarters div.govuk-grid-column-one-third > figur
 dl.opss-summary-list-aside {
   counter-reset: img;
 
-  dt:before {
+  dt::before {
     counter-increment: img;
     content: counter(img) ". ";
   }
@@ -1044,8 +1044,8 @@ dd dl.opss-nested-definition-list {
 @include govuk-media-query($from: tablet) {
   .opss-grouping {
     border: 1px solid $govuk-border-colour;
-    padding: 0 govuk-spacing(4) govuk-spacing(2) govuk-spacing(4);
-    margin: govuk-spacing(5) 0 0 0;
+    padding: 0 govuk-spacing(4) govuk-spacing(2);
+    margin: govuk-spacing(5) 0 0;
 
     // not all style options to match GDS styles are added - you may need to add more when required: e.g, opss-grouping__legend--l
     .opss-grouping__heading-l,
@@ -1243,7 +1243,7 @@ dd dl.opss-nested-definition-list {
     text-align: right;
   }
 
-  tbody td:nth-child(4):first-letter {
+  tbody td:nth-child(4)::first-letter {
     text-transform: uppercase;
   }
 
