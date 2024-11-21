@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_13_132144) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_20_172548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -382,7 +382,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_132144) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "invitation_token"
     t.datetime "invited_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.string "role"
     t.citext "new_email"
     t.string "new_email_confirmation_token"
     t.datetime "new_email_confirmation_token_expires_at", precision: nil
@@ -396,6 +395,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_132144) do
     t.string "secondary_authentication_recovery_codes", default: [], array: true
     t.string "secondary_authentication_recovery_codes_used", default: [], array: true
     t.datetime "deactivated_at", precision: nil
+    t.string "legacy_role"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["name"], name: "index_users_on_name"

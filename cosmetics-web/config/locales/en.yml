@@ -1,24 +1,3 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
   activerecord:
     attributes:
@@ -202,6 +181,13 @@ en:
               inclusion: "Select yes if the NPIS needs to know about this ingredient"
             used_for_multiple_shades:
               inclusion: "Select yes if the ingredient is used for different shades"
+  roles:
+    opss_enforcement: "OPSS Enforcement"
+    opss_science: "OPSS Science"
+    opss_general: "OPSS General"
+    opss_imt: "OPSS Incident Management Team (IMT)"
+    trading_standards: "Trading Standards"
+    poison_centre: "National Poisons Information Service (NPIS)"
   activemodel:
     attributes:
       registration/account_security_form:

@@ -2,6 +2,36 @@ module Privileges
   module SearchConcern
     include AbstractConcern
 
+    ### Roles and User Type Checks ###
+    def poison_centre_user?
+      has_role?(:poison_centre)
+    end
+
+    def opss_general_user?
+      has_role?(:opss_general)
+    end
+
+    def opss_enforcement_user?
+      has_role?(:opss_enforcement)
+    end
+
+    def opss_imt_user?
+      has_role?(:opss_imt)
+    end
+
+    def opss_science_user?
+      has_role?(:opss_science)
+    end
+
+    def trading_standards_user?
+      has_role?(:trading_standards)
+    end
+
+    def opss_user?
+      opss_general_user? || opss_enforcement_user? || opss_imt_user? || opss_science_user?
+    end
+
+    ### Privilege Checks ###
     def can_view_product_ingredients?
       poison_centre_user? || opss_enforcement_user? || opss_imt_user? || opss_science_user?
     end
@@ -11,7 +41,7 @@ module Privileges
     end
 
     def can_search_for_ingredients?
-      !opss_general?
+      !opss_general_user?
     end
 
     def can_view_nanomaterial_notification_files?
@@ -26,34 +56,7 @@ module Privileges
       trading_standards_user? || opss_enforcement_user? || opss_imt_user?
     end
 
-    def poison_centre_user?
-      poison_centre?
-    end
-
-    def opss_user?
-      opss_general? || opss_enforcement? || opss_imt? || opss_science?
-    end
-
-    def opss_general_user?
-      opss_general?
-    end
-
-    def opss_enforcement_user?
-      opss_enforcement?
-    end
-
-    def opss_imt_user?
-      opss_imt?
-    end
-
-    def opss_science_user?
-      opss_science?
-    end
-
-    def trading_standards_user?
-      trading_standards?
-    end
-
+    ### Ingredient Viewing Permissions ###
     def can_view_product_ingredients_with_percentages?
       poison_centre_user? || opss_enforcement_user? || opss_imt_user?
     end

@@ -693,7 +693,7 @@ DEPENDENCIES
   pry
   pry-byebug
   puma (~> 6.5)
-  pundit (~> 2.3)
+  pundit
   rails (>= 7.1.0, < 7.2.0)
   rails-controller-testing
   rails-erd
