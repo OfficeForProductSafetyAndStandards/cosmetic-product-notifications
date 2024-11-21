@@ -10,14 +10,7 @@ module SupportPortal
     end
 
     def role_type(role)
-      {
-        "opss_enforcement" => "OPSS Enforcement",
-        "opss_science" => "OPSS Science",
-        "opss_general" => "OPSS General",
-        "opss_imt" => "OPSS Incident Management Team (IMT)",
-        "trading_standards" => "Trading Standards",
-        "poison_centre" => "National Poisons Information Service (NPIS)",
-      }[role]
+      I18n.t("roles.#{role}", default: role.to_s.humanize)
     end
 
     def role_radios

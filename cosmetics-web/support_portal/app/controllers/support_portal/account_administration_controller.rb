@@ -105,12 +105,17 @@ module SupportPortal
 
     # PATCH/PUT /:id/update-role
     def update_role
-      existing_role = @user.role
+      existing_roles = @user.roles.map(&:name)
 
-      return redirect_to account_administration_path if existing_role == params[:search_user][:role]
+      new_role = params[:search_user][:role]
+      return redirect_to account_administration_path if existing_roles.include?(new_role)
 
-      if @user.update(update_role_params)
-        redirect_to account_administration_path, notice: "The account role type has been updated from #{helpers.role_type(existing_role)} to #{helpers.role_type(params[:search_user][:role])}"
+      @user.roles.clear
+
+      @user.add_role(new_role)
+
+      if @user.save
+        redirect_to account_administration_path, notice: "The account role type has been updated from #{helpers.role_type(existing_roles.first)} to #{helpers.role_type(new_role)}"
       else
         render :edit_role
       end

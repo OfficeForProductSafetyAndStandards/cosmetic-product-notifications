@@ -17,15 +17,16 @@ class InviteSupportUser
 private
 
   def email_taken_by_other_user_type?
-    SubmitUser.where(email:).or(SearchUser.where(email:)).count.positive?
+    SubmitUser.where(email: email).or(SearchUser.where(email: email)).exists?
   end
 
   def create_user
-    SupportUser.find_or_create_by!(email:) do |user|
+    SupportUser.find_or_create_by!(email: email) do |user|
       user.name = name
       user.skip_password_validation = true
-      user.role = :opss_general # All support users also have the OPSS General role for the search service
       user.invite = true
+      user.save!
+      user.add_role(:opss_general)
     end
   end
 
@@ -44,7 +45,6 @@ private
   end
 
   def email
-    # User emails are forced to lower case when saved, so we must compare case insensitively
     context.email&.downcase
   end
 end
