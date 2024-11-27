@@ -103,7 +103,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       click_link("Your account")
 
       # User attempts to update the mobile number for 2FA with text message
-      expect(page).to have_summary_item(key: "Text message", value: " +4915123456789")
+      expect(page).to have_summary_item(key: "Text message", value: "+447500000000")
       force_2fa_for_mobile_number_change
       click_on "Change text message"
 
