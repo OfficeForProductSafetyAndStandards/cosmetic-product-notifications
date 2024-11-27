@@ -11,7 +11,7 @@ FactoryBot.define do
       last_totp_at { 1_432_703_530 }
       last_recovery_code_at { nil }
       totp_secret_key { ROTP::Base32.random }
-      mobile_number { "07500 000 000" }
+      mobile_number { "+447500000000" }
       mobile_number_verified { true }
       direct_otp_sent_at { Time.zone.now }
       direct_otp { "12345" }
@@ -37,7 +37,7 @@ FactoryBot.define do
 
     trait :with_sms_secondary_authentication do
       last_recovery_code_at { nil }
-      mobile_number { "07500 000 000" }
+      mobile_number { "+15555555555" }
       mobile_number_verified { true }
       direct_otp_sent_at { Time.zone.now }
       direct_otp { "12345" }

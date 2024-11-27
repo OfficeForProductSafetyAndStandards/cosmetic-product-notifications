@@ -28,11 +28,10 @@ class SendSubmitSms
     sanitized_number = sanitize_number(number)
     phone = Phonelib.parse(sanitized_number)
     return phone.e164 if phone.valid?
-
-    nil
+    phone.e164 if phone.valid?
   end
 
   def self.sanitize_number(number)
-    number.gsub(/[^0-9+]/, "").sub(/\A\+{2,}/, "+")
+    number.strip.gsub(/[^0-9+]/, "").sub(/\A\+{2,}/, "+")
   end
 end
