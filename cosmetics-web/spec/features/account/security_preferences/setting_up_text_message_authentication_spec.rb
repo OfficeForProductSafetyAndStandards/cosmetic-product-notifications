@@ -138,12 +138,13 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
 
       # User sets a correct mobile number and provides the right password
+      new_mobile_number = "+447500000001"
       expect(page).to have_css("h1", text: "Change your mobile number")
       fill_in "Password", with: user.password
-      fill_in "Mobile number", with: "+447500000000"
+      fill_in "Mobile number", with: new_mobile_number
       click_on "Continue"
 
-      # User needs to confirm its new mobile number through a SMS
+      # User needs to confirm its new mobile number through an SMS
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
       click_on "Continue"
@@ -151,7 +152,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Mobile number changed successfully/)
-      expect(page).to have_summary_item(key: "Text message", value: "+447500000000")
+      expect(page).to have_summary_item(key: "Text message", value: new_mobile_number)
     end
   end
 
@@ -211,12 +212,13 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
 
       # User sets a correct mobile number and provides the right password
+      new_mobile_number = "+447500000002"
       expect(page).to have_css("h1", text: "Change your mobile number")
       fill_in "Password", with: user.password
-      fill_in "Mobile number", with: "+447500000000"
+      fill_in "Mobile number", with: new_mobile_number
       click_on "Continue"
 
-      # User needs to confirm its new mobile number through a SMS
+      # User needs to confirm its new mobile number through an SMS
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
       click_on "Continue"
@@ -224,7 +226,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Mobile number changed successfully/)
-      expect(page).to have_summary_item(key: "Text message", value: "+447500000000")
+      expect(page).to have_summary_item(key: "Text message", value: new_mobile_number)
     end
   end
 end
