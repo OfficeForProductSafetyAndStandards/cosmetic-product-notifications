@@ -688,7 +688,7 @@ DEPENDENCIES
   okcomputer (~> 1.18.4)
   paper_trail (~> 16.0)
   pg (~> 1.5)
-  phonelib (~> 0.7)
+  phonelib (~> 0.10)
   pry
   pry-byebug
   puma (~> 6.5)
