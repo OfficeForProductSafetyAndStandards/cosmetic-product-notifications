@@ -26,13 +26,28 @@ class SendSubmitSms
 
   def self.validate_and_format_number(number)
     sanitized_number = sanitize_number(number)
-    phone = Phonelib.parse(sanitized_number)
-    return phone.e164 if phone.valid?
 
-    phone.e164 if phone.valid?
+    if sanitized_number.start_with?("+")
+      phone = Phonelib.parse(sanitized_number)
+      return phone.e164 if phone.valid?
+    else
+      inferred_number = infer_country_code(sanitized_number)
+      if inferred_number
+        phone = Phonelib.parse(inferred_number)
+        return phone.e164 if phone.valid?
+      end
+    end
+
+    nil
   end
 
   def self.sanitize_number(number)
     number.strip.gsub(/[^0-9+]/, "").sub(/\A\+{2,}/, "+")
+  end
+
+  def self.infer_country_code(number)
+    if number.start_with?("00")
+      "+#{number[2..]}"
+    end
   end
 end
