@@ -26,23 +26,33 @@ class SendSubmitSms
 
   def self.validate_and_format_number(number)
     sanitized_number = sanitize_number(number)
-
-    if sanitized_number.start_with?("+")
-      phone = Phonelib.parse(sanitized_number)
+    return nil unless sanitized_number
+  
+    phone = Phonelib.parse(sanitized_number)
+    return phone.e164 if phone.valid?
+  
+    inferred_number = infer_country_code(sanitized_number)
+    if inferred_number
+      phone = Phonelib.parse(inferred_number)
       return phone.e164 if phone.valid?
-    else
-      inferred_number = infer_country_code(sanitized_number)
-      if inferred_number
-        phone = Phonelib.parse(inferred_number)
-        return phone.e164 if phone.valid?
-      end
     end
-
+  
     nil
   end
 
   def self.sanitize_number(number)
-    number.strip.gsub(/[^0-9+]/, "").sub(/\A\+{2,}/, "+")
+    sanitized_number = number.strip
+  
+    # Remove spaces, hyphens, and parentheses
+    sanitized_number = sanitized_number.gsub(/[\s\-\(\)]/, '')
+  
+    # Remove the optional '0' after the UK country code '+44'
+    sanitized_number = sanitized_number.sub(/\A(\+44)0/, '\1')
+  
+    # Ensure the sanitized number contains only digits and an optional leading '+'
+    return nil unless sanitized_number.match?(/\A\+?\d+\z/)
+  
+    sanitized_number
   end
 
   def self.infer_country_code(number)
