@@ -48,6 +48,8 @@ class SendSubmitSms
   def self.infer_country_code(number)
     if number.start_with?("00")
       "+#{number[2..]}"
+    elsif number.start_with?("0")
+      "+44#{number[1..]}"
     end
   end
 end
