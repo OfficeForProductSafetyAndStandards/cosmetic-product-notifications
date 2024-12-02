@@ -49,16 +49,16 @@ RSpec.describe SendSubmitSms, :with_stubbed_notify do
     end
 
     context "with valid foreign numbers with country codes" do
-      it "validates and formats '+15551234567' (USA) correctly" do
-        number = "+15551234567"
+      it "validates and formats '+12025550123' (USA) correctly" do
+        number = "+12025550123"
         result = SendSubmitSms.validate_and_format_number(number)
-        expect(result).to eq("+15551234567")
+        expect(result).to eq("+12025550123")
       end
 
-      it "validates and formats '0015551234567' (USA) correctly" do
-        number = "0015551234567"
+      it "validates and formats '0012025550123' (USA) correctly" do
+        number = "0012025550123"
         result = SendSubmitSms.validate_and_format_number(number)
-        expect(result).to eq("+15551234567")
+        expect(result).to eq("+12025550123")
       end
 
       it "validates and formats '+33123456789' (France) correctly" do
@@ -74,9 +74,9 @@ RSpec.describe SendSubmitSms, :with_stubbed_notify do
       end
 
       it "validates and formats '+1 (555) 123-4567' (USA) correctly" do
-        number = "+1 (555) 123-4567"
+        number = "+1 (202) 555-0123"
         result = SendSubmitSms.validate_and_format_number(number)
-        expect(result).to eq("+15551234567")
+        expect(result).to eq("+12025550123")
       end
     end
 
@@ -126,9 +126,9 @@ RSpec.describe SendSubmitSms, :with_stubbed_notify do
         { input: "00447123456789", expected: "+447123456789" },
         { input: "+44 7123 456 789", expected: "+447123456789" },
         { input: "+44 (0)7123456789", expected: "+447123456789" },
-        { input: "+15551234567", expected: "+15551234567" },
-        { input: "0015551234567", expected: "+15551234567" },
-        { input: "+1 (555) 123-4567", expected: "+15551234567" },
+        { input: "+12025550123", expected: "+12025550123" },
+        { input: "0012025550123", expected: "+12025550123" },
+        { input: "+1 (202) 555-0123", expected: "+12025550123" },
         { input: "+33123456789", expected: "+33123456789" },
         { input: "0033123456789", expected: "+33123456789" }
       ]
