@@ -80,16 +80,16 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
   def show
     case step
     when :select_nanomaterials
-      return jump_to_step(:number_of_shades) if @component.notification.nano_materials.blank?
+      jump_to_step(:number_of_shades) if @component.notification.nano_materials.blank?
     when :add_shades
       @component.shades = ["", ""] if @component.shades.blank?
     when :add_cmrs
       create_required_cmrs
     when :after_select_nanomaterials_routing
       if @component.nano_materials.present?
-        return render_next_step(@component)
+        render_next_step(@component)
       else
-        return jump_to_step(:number_of_shades)
+        jump_to_step(:number_of_shades)
       end
     when :add_ingredient_exact_concentration, :add_ingredient_range_concentration, :add_ingredient_npis_needs_to_know
       create_required_ingredients
@@ -98,13 +98,14 @@ class ResponsiblePersons::Notifications::Components::BuildController < SubmitApp
     when :want_to_add_another_ingredient
       @success_banner = ActiveModel::Type::Boolean.new.cast(params[:success_banner])
     when :select_ph_option
-      return jump_to_step(:completed) unless @component.ph_required?
+      jump_to_step(:completed) unless @component.ph_required?
     when :completed
       @component.complete!
-      return render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
+      @continue_path = continue_path
+      render template: "responsible_persons/notifications/task_completed"
+    else
+      render_wizard
     end
-
-    render_wizard
   end
 
   def update

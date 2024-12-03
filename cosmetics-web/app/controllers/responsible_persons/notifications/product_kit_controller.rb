@@ -20,7 +20,8 @@ class ResponsiblePersons::Notifications::ProductKitController < SubmitApplicatio
     case step
     when :completed
       @notification.update_state(NotificationStateConcern::READY_FOR_COMPONENTS) if @notification.details_complete?
-      render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
+      @continue_path = continue_path
+      render template: "responsible_persons/notifications/task_completed"
     else
       render_wizard
     end

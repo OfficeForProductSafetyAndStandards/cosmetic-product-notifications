@@ -57,24 +57,25 @@ module  ResponsiblePersons::Notifications::Nanomaterials
         @purposes_form = PurposesForm.new(purposes: @nano_material.purposes)
       when :after_select_purposes_routing
         if @nano_material.non_standard? && @nano_material.purposes.one?
-          return jump_to_step(:non_standard_nanomaterial_notified)
+          jump_to_step(:non_standard_nanomaterial_notified)
         else
-          return jump_to_step(:add_nanomaterial_name)
+          jump_to_step(:add_nanomaterial_name)
         end
       when :after_standard_nanomaterial_routing
         if @nano_material.non_standard?
-          return jump_to_step(:non_standard_nanomaterial_notified)
+          jump_to_step(:non_standard_nanomaterial_notified)
         else
-          return jump_to_step(:completed)
+          jump_to_step(:completed)
         end
       when :select_notified_nanomaterial
         set_nanomaterial_notifications
       when :completed
         @notification.reload.try_to_complete_nanomaterials!
-        return render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
+        @continue_path = continue_path
+        render template: "responsible_persons/notifications/task_completed"
+      else
+        render_wizard
       end
-
-      render_wizard
     end
 
     def update
