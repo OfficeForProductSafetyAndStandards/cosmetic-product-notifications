@@ -22,13 +22,7 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
 
-  if Rails.env.test? || begin
-    Flipper.enabled?(:graphql)
-  rescue StandardError
-    false
-  end
-    post "/graphql", to: "graphql#execute"
-  end
+  post "/graphql", to: "graphql#execute"
 
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 

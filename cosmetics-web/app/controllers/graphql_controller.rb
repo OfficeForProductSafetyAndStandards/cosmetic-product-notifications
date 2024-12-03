@@ -7,6 +7,7 @@ class GraphqlController < ApplicationController
   skip_before_action :require_secondary_authentication
   skip_before_action :authorize_user!
   before_action :auth_api_key!
+  before_action :ensure_graphql_enabled
 
   def execute
     Rails.logger.debug "GraphQL request parameters: #{params.to_json}"
@@ -63,5 +64,17 @@ private
     unless @current_api_key
       render json: { error: "Unauthorized" }, status: :unauthorized
     end
+  end
+
+  def ensure_graphql_enabled
+    return if Rails.env.test? || feature_flag_enabled?
+
+    render json: { error: "GraphQL is disabled" }, status: :forbidden
+  end
+
+  def feature_flag_enabled?
+    Flipper.enabled?(:graphql)
+  rescue StandardError
+    false
   end
 end

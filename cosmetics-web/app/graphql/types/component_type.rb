@@ -23,6 +23,6 @@ module Types
     field :exposure_routes, [String], null: true, camelize: false
     field :routing_questions_answers, GraphQL::Types::JSON, null: true, camelize: false
     field :notification_type_given_as, String, null: true, camelize: false
-    field :ingredients, [Types::IngredientType], null: true, description: "**New!** Example of a new field"
+    field :ingredients, [Types::IngredientType], null: true
   end
 end

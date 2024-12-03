@@ -34,11 +34,18 @@ module Types
         A maximum of 100 records can be retrieved per page.
 
         You can filter by either or both of the `created_after` and `updated_after` fields in the format `YYYY-MM-DD HH:MM`.
+        Results can be sorted using the `order_by` argument, and you can specify a starting point with `from_id`.
 
         Example Query:
         ```
         query {
-          responsible_person_users(created_after: "2024-08-15T13:00:00Z", updated_after: "2024-08-15T13:00:00Z", first: 10) {
+          responsible_person_users(
+            created_after: "2024-08-15T13:00:00Z",
+            updated_after: "2024-08-15T13:00:00Z",
+            order_by: { field: "created_at", direction: "desc" },
+            first: 10,
+            from_id: 1
+          ) {
             edges {
               node {
                 id
@@ -68,6 +75,8 @@ module Types
       DESC
         argument :created_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve responsible person users created after this date in the format 'YYYY-MM-DD HH:MM'"
         argument :updated_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve responsible person users updated after this date in the format 'YYYY-MM-DD HH:MM'"
+        argument :order_by, Types::OrderByInputType, required: false, camelize: false, description: "Sort results by a specified field and direction"
+        argument :from_id, GraphQL::Types::ID, required: false, camelize: false, description: "Retrieve responsible person users starting from a specific ID"
       end
 
       field :total_responsible_person_users_count, Integer, null: false, camelize: false, description: <<~DESC do
@@ -91,7 +100,7 @@ module Types
       raise Errors::SimpleError, "An error occurred: #{e.message}"
     end
 
-    def responsible_person_users(created_after: nil, updated_after: nil, first: nil, last: nil, after: nil, before: nil)
+    def responsible_person_users(created_after: nil, updated_after: nil, first: nil, last: nil, after: nil, before: nil, order_by: nil, from_id: nil)
       max_limit = 100
 
       first = validate_limit(first, max_limit)
@@ -99,9 +108,22 @@ module Types
 
       scope = ResponsiblePersonUser.all
 
+      # Apply filters for created_at and updated_at
       scope = scope.where("created_at >= ?", Time.zone.parse(created_after).utc) if created_after.present?
       scope = scope.where("updated_at >= ?", Time.zone.parse(updated_after).utc) if updated_after.present?
+      scope = scope.where("id > ?", from_id) if from_id.present?
 
+      # Apply sorting
+      if order_by.present?
+        field = order_by[:field]
+        direction = order_by[:direction]&.downcase == "desc" ? :desc : :asc
+        scope = scope.order(field => direction, id: direction) # Secondary sort by ID for stability
+      else
+        # Default sorting
+        scope = scope.order(created_at: :asc, id: :asc)
+      end
+
+      # Apply pagination
       scope = apply_pagination(scope, first:, last:, after:, before:)
 
       scope.limit(first || last)
@@ -119,7 +141,7 @@ module Types
       [limit, max_limit].min
     end
 
-    def apply_pagination(scope, first:, last:, after: nil, before: nil)
+    def apply_pagination(scope, first:, last:, after:, before:)
       return scope if first.nil? && last.nil?
 
       if after.present?
@@ -131,9 +153,6 @@ module Types
         decoded_cursor = safe_decode_cursor(before)
         scope = scope.where("id < ?", decoded_cursor)
       end
-
-      scope = scope.order(id: :asc) if first
-      scope = scope.order(id: :desc) if last
 
       scope
     end
