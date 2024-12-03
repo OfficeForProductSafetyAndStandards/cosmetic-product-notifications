@@ -60,6 +60,38 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
         expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
       end
     end
+    
+    context "when step is :completed" do
+      before do
+        notification.components.destroy_all
+      end
+
+      it "does not raise an error when notification has no components" do
+        expect {
+          get(:show, params: params.merge(id: :completed))
+        }.not_to raise_error
+      end
+
+      it "redirects to new component path when notification has no components" do
+        get(:show, params: params.merge(id: :completed))
+        expect(response).to render_template("responsible_persons/notifications/task_completed")
+        expect(assigns(:continue_path)).to eq(
+          new_responsible_person_notification_component_path(responsible_person, notification)
+        )
+      end
+
+      context "when notification has components" do
+        let!(:component) { create(:component, notification:) }
+
+        it "redirects to the component build path" do
+          get(:show, params: params.merge(id: :completed))
+          expect(response).to render_template("responsible_persons/notifications/task_completed")
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_component_build_path(responsible_person, notification, component)
+          )
+        end
+      end
+    end
   end
 
   describe "POST #update" do
