@@ -41,7 +41,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       expect(page).to have_css("h1", text: "Set your mobile number")
       # Update gets rejected when the password is wrong
       fill_in "Password", with: "wrongPassword"
-      fill_in "Mobile number", with: "07234234234"
+      fill_in "Mobile number", with: "+447500000000"
       click_on "Continue"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -65,7 +65,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
 
       # User sets a correct mobile number and provides the right password
       fill_in "Password", with: user.password
-      fill_in "Mobile number", with: "07234234234"
+      fill_in "Mobile number", with: "+447500000000"
       click_on "Continue"
 
       # User needs to confirm its new mobile number through a SMS
@@ -76,7 +76,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Mobile number set successfully/)
-      expect(page).to have_summary_item(key: "Text message", value: "07234234234")
+      expect(page).to have_summary_item(key: "Text message", value: "+447500000000")
 
       # Confirm SMS is now an available option for 2FA
       force_2fa_for_mobile_number_change
@@ -103,7 +103,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       click_link("Your account")
 
       # User attempts to update the mobile number for 2FA with text message
-      expect(page).to have_summary_item(key: "Text message", value: "07500 000 000")
+      expect(page).to have_summary_item(key: "Text message", value: "+447500000000")
       force_2fa_for_mobile_number_change
       click_on "Change text message"
 
@@ -115,7 +115,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       expect(page).to have_css("h1", text: "Change your mobile number")
       # Update gets rejected when the password is wrong
       fill_in "Password", with: "wrongPassword"
-      fill_in "Mobile number", with: "07234234234"
+      fill_in "Mobile number", with: "+447500000000"
       click_on "Continue"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -138,12 +138,13 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
 
       # User sets a correct mobile number and provides the right password
+      new_mobile_number = "+447500000001"
       expect(page).to have_css("h1", text: "Change your mobile number")
       fill_in "Password", with: user.password
-      fill_in "Mobile number", with: "07234234234"
+      fill_in "Mobile number", with: new_mobile_number
       click_on "Continue"
 
-      # User needs to confirm its new mobile number through a SMS
+      # User needs to confirm its new mobile number through an SMS
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
       click_on "Continue"
@@ -151,7 +152,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Mobile number changed successfully/)
-      expect(page).to have_summary_item(key: "Text message", value: "07234234234")
+      expect(page).to have_summary_item(key: "Text message", value: new_mobile_number)
     end
   end
 
@@ -175,7 +176,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       click_link("Your account")
 
       # User attempts to update the mobile number for 2FA with text message
-      expect(page).to have_summary_item(key: "Text message", value: "07500 000 000")
+      expect(page).to have_summary_item(key: "Text message", value: "+447500000000")
       force_2fa_for_mobile_number_change
       click_on "Change text message"
 
@@ -188,7 +189,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       expect(page).to have_css("h1", text: "Change your mobile number")
       # Update gets rejected when the password is wrong
       fill_in "Password", with: "wrongPassword"
-      fill_in "Mobile number", with: "07234234234"
+      fill_in "Mobile number", with: "+447500000000"
       click_on "Continue"
 
       expect(page).to have_css("h2#error-summary-title", text: "There is a problem")
@@ -211,12 +212,13 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       expect(page).to have_link("Enter a mobile number, like 07700 900 982 or +44 7700 900 982", href: "#new_mobile_number")
 
       # User sets a correct mobile number and provides the right password
+      new_mobile_number = "+447500000002"
       expect(page).to have_css("h1", text: "Change your mobile number")
       fill_in "Password", with: user.password
-      fill_in "Mobile number", with: "07234234234"
+      fill_in "Mobile number", with: new_mobile_number
       click_on "Continue"
 
-      # User needs to confirm its new mobile number through a SMS
+      # User needs to confirm its new mobile number through an SMS
       expect(page).to have_css("h1", text: "Check your phone")
       fill_in "Enter security code", with: "#{otp_code} "
       click_on "Continue"
@@ -224,7 +226,7 @@ RSpec.feature "Setting up text message authentication", :with_2fa, :with_2fa_app
       # 2FA method successfully updated
       expect_to_be_on_my_account_page
       expect(page).to have_text(/Mobile number changed successfully/)
-      expect(page).to have_summary_item(key: "Text message", value: "07234234234")
+      expect(page).to have_summary_item(key: "Text message", value: new_mobile_number)
     end
   end
 end

@@ -1,3 +1,5 @@
+require "phonelib"
+
 class SendSubmitSms
   TEMPLATES = {
     otp_code: "9eaabc3a-9eb5-453f-bbbf-624e0cb544f5",
@@ -10,10 +12,54 @@ class SendSubmitSms
   end
 
   def self.otp_code(mobile_number:, code:)
-    new.client.send_sms(
-      phone_number: mobile_number,
-      template_id: TEMPLATES[:otp_code],
-      personalisation: { code: },
-    )
+    valid_number = validate_and_format_number(mobile_number)
+    if valid_number
+      new.client.send_sms(
+        phone_number: valid_number,
+        template_id: TEMPLATES[:otp_code],
+        personalisation: { code: },
+      )
+    else
+      raise ArgumentError, "Invalid mobile number provided: #{mobile_number}"
+    end
+  end
+
+  def self.validate_and_format_number(number)
+    sanitized_number = sanitize_number(number)
+    return nil unless sanitized_number
+
+    phone = Phonelib.parse(sanitized_number)
+    return phone.e164 if phone.valid?
+
+    inferred_number = infer_country_code(sanitized_number)
+    if inferred_number
+      phone = Phonelib.parse(inferred_number)
+      return phone.e164 if phone.valid?
+    end
+
+    nil
+  end
+
+  def self.sanitize_number(number)
+    sanitized_number = number.strip
+
+    # Remove spaces, hyphens, and parentheses
+    sanitized_number = sanitized_number.gsub(/[\s\-()]/, "")
+
+    # Remove the optional '0' after the UK country code '+44'
+    sanitized_number = sanitized_number.sub(/\A(\+44)0/, '\1')
+
+    # Ensure the sanitized number contains only digits and an optional leading '+'
+    return nil unless sanitized_number.match?(/\A\+?\d+\z/)
+
+    sanitized_number
+  end
+
+  def self.infer_country_code(number)
+    if number.start_with?("00")
+      "+#{number[2..]}"
+    elsif number.start_with?("0")
+      "+44#{number[1..]}"
+    end
   end
 end
