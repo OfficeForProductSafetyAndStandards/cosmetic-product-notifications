@@ -63,11 +63,28 @@ private
 
   def continue_path
     if @notification.nano_materials.present?
-      new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, @notification.nano_materials.first)
+      new_responsible_person_notification_nanomaterial_build_path(
+        @notification.responsible_person,
+        @notification,
+        @notification.nano_materials.first,
+      )
     elsif @notification.multi_component?
-      new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification)
+      new_responsible_person_notification_product_kit_path(
+        @notification.responsible_person,
+        @notification,
+      )
+    elsif @notification.components.any?
+      new_responsible_person_notification_component_build_path(
+        @notification.responsible_person,
+        @notification,
+        @notification.components.first,
+      )
     else
-      new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+      # Redirect to the path where a new component can be added
+      new_responsible_person_notification_component_path(
+        @notification.responsible_person,
+        @notification,
+      )
     end
   end
 
@@ -178,11 +195,15 @@ private
     when 0
       {}
     when 1
-      { single_or_multi_component: ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm::SINGLE,
-        components_count: count }
+      {
+        single_or_multi_component: ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm::SINGLE,
+        components_count: count,
+      }
     else
-      { single_or_multi_component: ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm::MULTI,
-        components_count: count }
+      {
+        single_or_multi_component: ResponsiblePersons::Notifications::Product::SingleOrMultiComponentForm::MULTI,
+        components_count: count,
+      }
     end
   end
 
