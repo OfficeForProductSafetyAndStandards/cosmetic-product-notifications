@@ -26,6 +26,7 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     case step
     when :completed
       @notification.set_state_on_product_wizard_completed!
+      @continue_path = continue_path
       render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
     when :add_product_image
       @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?

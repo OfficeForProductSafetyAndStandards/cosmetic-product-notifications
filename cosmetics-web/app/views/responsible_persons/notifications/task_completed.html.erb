@@ -25,7 +25,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-button-group">
-      <%= govukButton(text: "Continue", href: continue_path) %>
+      <%= govukButton(text: "Continue", href: @continue_path) %>
       <%= govukButton(text: "Go to the task list page", href: responsible_person_notification_draft_path(@notification.responsible_person, @notification), classes: "govuk-button--secondary") %>
     </div>
   </div>

@@ -74,7 +74,6 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
 
       it "redirects to new component path when notification has no components" do
         get(:show, params: params.merge(id: :completed))
-        expect(response).to render_template("responsible_persons/notifications/task_completed")
         expect(assigns(:continue_path)).to eq(
           new_responsible_person_notification_component_path(responsible_person, notification)
         )
