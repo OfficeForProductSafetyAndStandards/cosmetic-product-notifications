@@ -15,10 +15,13 @@ jobs:
 
       - name: Install cf client
         env:
-          CF_CLI_VERSION: v7
+          CF_CLI_VERSION: '7.7.15'
         run: |
-          curl -A "" -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}&source=github" -o cf-cli.tgz
+          tar -xzf cf-cli.tgz -C /tmp
           sudo cp /tmp/cf7 /usr/local/bin/cf
+          sudo chmod +x /usr/local/bin/cf
+          cf --version  # Verify installation
 
       - name: Create GitHub deployment for Staging
         env:
@@ -53,7 +56,7 @@ jobs:
           SENTRY_SERVICE_NAME: cosmetics-staging-sentry-env
         run: |
           cf api api.london.cloud.service.gov.uk
-          cf auth
+          cf auth "$CF_USERNAME" "$CF_PASSWORD"  # Added credentials
           cf target -o 'beis-opss' -s $SPACE
           chmod +x ./cosmetics-web/deploy.sh
           ./cosmetics-web/deploy.sh
