@@ -15,12 +15,15 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
-      - name: Install cf client
-        env:
-          CF_CLI_VERSION: v7
-        run: |
-          curl -A "" -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
-          sudo cp /tmp/cf7 /usr/local/bin/cf
+      - name: Set up Cloud Foundry
+        uses: cloudfoundry/cf-action@v2
+        with:
+          cf_api: api.london.cloud.service.gov.uk
+          cf_username: "${{ secrets.PaaSUsernameProduction }}"
+          cf_password: "${{ secrets.PaaSPasswordProduction }}"
+          cf_organization: 'beis-opss'
+          cf_space: prod
+          cf_version: '7.7.15'
 
       - name: Create GitHub deployment for Production
         env:
@@ -50,12 +53,8 @@ jobs:
           WEB_MAX_THREADS: 1
           WORKER_MAX_THREADS: 10
           WORKER_INSTANCES: 4
-          CF_USERNAME: "${{ secrets.PaaSUsernameProduction }}"
-          CF_PASSWORD: "${{ secrets.PaaSPasswordProduction }}"
           SENTRY_SERVICE_NAME: cosmetics-sentry-env
         run: |
-          cf api api.london.cloud.service.gov.uk
-          cf auth
           cf target -o 'beis-opss' -s $SPACE
           chmod +x ./cosmetics-web/deploy.sh
           ./cosmetics-web/deploy.sh
