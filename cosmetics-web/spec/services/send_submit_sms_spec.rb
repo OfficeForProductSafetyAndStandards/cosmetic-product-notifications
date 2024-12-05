@@ -15,6 +15,11 @@ RSpec.describe SendSubmitSms, :with_stubbed_notify do
       { input: "+44 7123 456 789", expected: "+447123456789", description: "UK mobile number with spaces" },
       { input: "+44 (0)7123456789", expected: "+447123456789", description: "UK mobile number with optional zero" },
 
+      # Numbers with internal plus signs
+      { input: "00+44+7922574123", expected: "+447922574123", description: "Number with internal plus signs and leading '00'" },
+      { input: "0044+7922574123", expected: "+447922574123", description: "Number with internal plus sign after country code" },
+      { input: "44+ 7922574123", expected: "+447922574123", description: "Number starting with '44' and internal plus sign" },
+
       # Foreign numbers
       { input: "+12024561111", expected: "+12024561111", description: "US number with '+' country code" },
       { input: "0012024561111", expected: "+12024561111", description: "US number with '00' country code" },
