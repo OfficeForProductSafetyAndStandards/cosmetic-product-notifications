@@ -43,8 +43,14 @@ class SendSubmitSms
   def self.sanitize_number(number)
     sanitized_number = number.strip
 
-    # Remove spaces, hyphens, and parentheses
-    sanitized_number = sanitized_number.gsub(/[\s\-()]/, "")
+    # Remove spaces, hyphens, parentheses, and all '+' signs
+    sanitized_number = sanitized_number.gsub(/[\s\-()+]/, "")
+
+    # Replace leading '00' with '+'
+    sanitized_number = sanitized_number.sub(/\A00/, "+")
+
+    # Add '+' if the number starts with '44' and doesn't start with '+'
+    sanitized_number = "+#{sanitized_number}" if sanitized_number.start_with?("44") && !sanitized_number.start_with?("+")
 
     # Remove the optional '0' after the UK country code '+44'
     sanitized_number = sanitized_number.sub(/\A(\+44)0/, '\1')
