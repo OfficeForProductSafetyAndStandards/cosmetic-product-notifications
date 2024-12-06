@@ -15,15 +15,23 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
-      - name: Set up Cloud Foundry
-        uses: cloudfoundry/cf-action@v2
-        with:
-          cf_api: api.london.cloud.service.gov.uk
-          cf_username: "${{ secrets.PaaSUsernameProduction }}"
-          cf_password: "${{ secrets.PaaSPasswordProduction }}"
-          cf_organization: 'beis-opss'
-          cf_space: prod
-          cf_version: '7.7.15'
+      - name: Install cf client
+        env:
+          CF_CLI_VERSION: '7.7.15'
+        run: |
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}&source=github" -o cf-cli.tgz
+          tar -xzf cf-cli.tgz -C /tmp
+          sudo cp /tmp/cf7 /usr/local/bin/cf
+          sudo chmod +x /usr/local/bin/cf
+          cf --version  # Verify installation
+
+      - name: Log in to Cloud Foundry
+        env:
+          CF_USERNAME: "${{ secrets.PaaSUsernameProduction }}"
+          CF_PASSWORD: "${{ secrets.PaaSPasswordProduction }}"
+        run: |
+          cf api api.london.cloud.service.gov.uk
+          cf auth "$CF_USERNAME" "$CF_PASSWORD"
 
       - name: Create GitHub deployment for Production
         env:
