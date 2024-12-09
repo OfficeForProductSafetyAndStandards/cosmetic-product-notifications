@@ -26,7 +26,8 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     case step
     when :completed
       @notification.set_state_on_product_wizard_completed!
-      render template: "responsible_persons/notifications/task_completed", locals: { continue_path: }
+      @continue_path = continue_path
+      render template: "responsible_persons/notifications/task_completed", locals: { continue_path: continue_path }
     when :add_product_image
       @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?
       render_wizard
@@ -67,7 +68,8 @@ private
     elsif @notification.multi_component?
       new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification)
     else
-      new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, @notification.components.first)
+      component = @notification.components.first_or_create!
+      new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component)
     end
   end
 
