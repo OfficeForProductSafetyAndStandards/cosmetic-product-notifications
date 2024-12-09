@@ -110,27 +110,27 @@ FactoryBot.define do
       end
 
       factory :poison_centre_user do
-        after(:create) { |user| user.add_role(:poison_centre) }
+        after(:build) { |user| user.add_role(:poison_centre) }
       end
 
       factory :opss_general_user do
-        after(:create) { |user| user.add_role(:opss_general) }
+        after(:build) { |user| user.add_role(:opss_general) }
       end
 
       factory :opss_enforcement_user do
-        after(:create) { |user| user.add_role(:opss_enforcement) }
+        after(:build) { |user| user.add_role(:opss_enforcement) }
       end
 
       factory :opss_imt_user do
-        after(:create) { |user| user.add_role(:opss_imt) }
+        after(:build) { |user| user.add_role(:opss_imt) }
       end
 
       factory :opss_science_user do
-        after(:create) { |user| user.add_role(:opss_science) }
+        after(:build) { |user| user.add_role(:opss_science) }
       end
 
       factory :trading_standards_user do
-        after(:create) { |user| user.add_role(:trading_standards) }
+        after(:build) { |user| user.add_role(:trading_standards) }
       end
 
       trait :registration_incomplete do
