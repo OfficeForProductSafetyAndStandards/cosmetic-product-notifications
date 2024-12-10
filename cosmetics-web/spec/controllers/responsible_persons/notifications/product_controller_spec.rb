@@ -75,9 +75,11 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
           expect(response).to render_template("responsible_persons/notifications/task_completed")
         end
 
-        it "assigns correct continue path" do
+        it "sets correct continue path" do
           get(:show, params: params_with_completed)
-          expect(assigns(:continue_path)).to eq(new_responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material))
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material),
+          )
         end
       end
 
@@ -93,9 +95,11 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
           expect(response).to render_template("responsible_persons/notifications/task_completed")
         end
 
-        it "assigns correct continue path" do
+        it "sets correct continue path" do
           get(:show, params: params_with_completed)
-          expect(assigns(:continue_path)).to eq(new_responsible_person_notification_product_kit_path(responsible_person, notification))
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_product_kit_path(responsible_person, notification),
+          )
         end
       end
 
@@ -115,10 +119,12 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
           expect(response).to render_template("responsible_persons/notifications/task_completed")
         end
 
-        it "assigns correct continue path" do
+        it "sets correct continue path" do
           get(:show, params: params_with_completed)
           component = notification.components.first
-          expect(assigns(:continue_path)).to eq(new_responsible_person_notification_component_build_path(responsible_person, notification, component))
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_component_build_path(responsible_person, notification, component),
+          )
         end
       end
 
@@ -130,9 +136,11 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
           expect(response).to render_template("responsible_persons/notifications/task_completed")
         end
 
-        it "assigns correct continue path" do
+        it "sets correct continue path" do
           get(:show, params: params_with_completed)
-          expect(assigns(:continue_path)).to eq(new_responsible_person_notification_component_build_path(responsible_person, notification, component))
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_component_build_path(responsible_person, notification, component),
+          )
         end
       end
     end
