@@ -52,12 +52,96 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
     end
 
     context "when the notification is already submitted" do
-      subject(:request) { get(:show, params: params.merge({ id: "add_internal_reference" })) }
-
       let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
-        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+        get(:show, params: params.merge({ id: "add_internal_reference" }))
+        expect(response).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+      end
+    end
+
+    context "when on the completed step" do
+      let(:params_with_completed) { params.merge(id: :completed) }
+
+      context "when notification has nanomaterials" do
+        let(:nano_material) { create(:nano_material, notification: notification) }
+
+        before do
+          notification.nano_materials << nano_material
+        end
+
+        it "renders task completed template" do
+          get(:show, params: params_with_completed)
+          expect(response).to render_template("responsible_persons/notifications/task_completed")
+        end
+
+        it "sets correct continue path" do
+          get(:show, params: params_with_completed)
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_nanomaterial_build_path(responsible_person, notification, nano_material),
+          )
+        end
+      end
+
+      context "when notification is multi-component" do
+        before do
+          notification.components.destroy_all
+          notification.update_column(:state, "ready_for_components")
+          create_list(:component, 2, notification: notification)
+        end
+
+        it "renders task completed template" do
+          get(:show, params: params_with_completed)
+          expect(response).to render_template("responsible_persons/notifications/task_completed")
+        end
+
+        it "sets correct continue path" do
+          get(:show, params: params_with_completed)
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_product_kit_path(responsible_person, notification),
+          )
+        end
+      end
+
+      context "when notification is single component with no components yet" do
+        before do
+          allow(notification).to receive(:multi_component?).and_return(false)
+        end
+
+        it "creates a component" do
+          expect {
+            get(:show, params: params_with_completed)
+          }.to change(Component, :count).by(1)
+        end
+
+        it "renders task completed template" do
+          get(:show, params: params_with_completed)
+          expect(response).to render_template("responsible_persons/notifications/task_completed")
+        end
+
+        it "sets correct continue path" do
+          get(:show, params: params_with_completed)
+          component = notification.components.first
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_component_build_path(responsible_person, notification, component),
+          )
+        end
+      end
+
+      context "when notification already has a component" do
+        let!(:component) { create(:component, notification: notification) }
+
+        it "renders task completed template" do
+          get(:show, params: params_with_completed)
+          expect(response).to render_template("responsible_persons/notifications/task_completed")
+        end
+
+        it "sets correct continue path" do
+          get(:show, params: params_with_completed)
+          expect(assigns(:continue_path)).to eq(
+            new_responsible_person_notification_component_build_path(responsible_person, notification, component),
+          )
+        end
       end
     end
   end
@@ -75,7 +159,6 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
 
     it "creates a component if single_or_multi_component set to single" do
       post(:update, params: params.merge(id: :single_or_multi_component, single_or_multi_component_form: { single_or_multi_component: "single" }))
-      Notification.find(notification.id).components
       expect(Notification.find(notification.id).components).to have(1).item
     end
 
@@ -139,12 +222,11 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
     end
 
     context "when the notification is already submitted" do
-      subject(:request) { post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" })) }
-
       let(:notification) { create(:registered_notification, responsible_person:) }
 
       it "redirects to the notifications page" do
-        expect(request).to redirect_to(responsible_person_notification_path(responsible_person, notification))
+        post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
+        expect(response).to redirect_to(responsible_person_notification_path(responsible_person, notification))
       end
     end
   end
