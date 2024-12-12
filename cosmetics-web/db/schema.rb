@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_11_220956) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_11_232346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -312,6 +312,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_11_220956) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
   create_table "search_histories", force: :cascade do |t|
     t.string "query"
     t.integer "results"
@@ -398,6 +408,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_11_220956) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.bigint "role_id", null: false
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", unique: true
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.bigint "item_id", null: false
@@ -425,4 +443,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_11_220956) do
   add_foreign_key "responsible_person_users", "responsible_persons"
   add_foreign_key "trigger_question_elements", "trigger_questions"
   add_foreign_key "trigger_questions", "components"
+  add_foreign_key "users_roles", "roles"
+  add_foreign_key "users_roles", "users"
 end
