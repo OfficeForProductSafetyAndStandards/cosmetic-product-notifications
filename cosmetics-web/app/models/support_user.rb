@@ -10,14 +10,14 @@ class SupportUser < User
   # Only the `opss_general` role is currently used for all
   # support users, but this enum allows the search service
   # privileges to be checked correctly.
-  enum role: {
-    poison_centre: "poison_centre",
-    opss_general: "opss_general",
-    opss_enforcement: "opss_enforcement",
-    opss_imt: "opss_imt",
-    opss_science: "opss_science",
-    trading_standards: "trading_standards",
-  }
+  # enum role: {
+  #   poison_centre: "poison_centre",
+  #   opss_general: "opss_general",
+  #   opss_enforcement: "opss_enforcement",
+  #   opss_imt: "opss_imt",
+  #   opss_science: "opss_science",
+  #   trading_standards: "trading_standards",
+  # }
 
   validates :email,
             email: {
