@@ -20,6 +20,13 @@ module SupportPortal
       "city": "Address",
     }.freeze
 
+    BUSINESS_TYPES = {
+      "limited_company": "Limited Company",
+      "sole_trader": "Sole Trader",
+      "partnership": "Partnership",
+      "other": "Other",
+    }.freeze
+
     USER_ACTIONS = {
       "role": "role change",
       "deactivated_at_set": "deactivation",
@@ -64,21 +71,39 @@ module SupportPortal
       "RP (#{action.item.name}) #{RESPONSIBLE_PERSON_ACTIONS[change.to_sym]} change"
     end
 
+    def responsible_person_business_type(type)
+      return "" if type.blank?
+
+      BUSINESS_TYPES[type.to_sym] || type.titleize
+    end
+
     def display_responsible_person_action_details(object_changes)
       object_changes = object_changes.except("updated_at")
       account_type_change = object_changes.keys.first == "account_type"
       address_change = %w[address_line_1 address_line_2 city county postal_code].include?(object_changes.keys.first)
-      # Display address changes in a logical order
-      changes = address_change ? object_changes.values_at("address_line_1", "address_line_2", "city", "county", "postal_code") : object_changes.values
+
+      changes = if address_change
+                  %w[address_line_1 address_line_2 city county postal_code].map { |key|
+                    object_changes[key]
+                  }.compact
+                else
+                  object_changes.values
+                end
 
       if account_type_change
         changes.map { |change|
+          next unless change.is_a?(Array) && change.size == 2
+
           "Change from: #{responsible_person_business_type(change[0])}<br>To: #{responsible_person_business_type(change[1])}"
-        }.join("<br>")
+        }.compact.join("<br>")
       else
         changes.map { |change|
-          "Change from: #{change[0].presence || '<em>Empty</em>'}<br>To: #{change[1].presence || '<em>Empty</em>'}"
-        }.join("<br>")
+          next unless change.is_a?(Array) && change.size == 2
+
+          from_value = change[0].presence || "<em>Empty</em>"
+          to_value = change[1].presence || "<em>Empty</em>"
+          "Change from: #{from_value}<br>To: #{to_value}"
+        }.compact.join("<br>")
       end
     end
 
