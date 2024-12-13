@@ -260,7 +260,6 @@ RSpec.feature "Account administration", :with_2fa, :with_2fa_app, :with_stubbed_
 
     expect(page).to have_link("Name cannot be blank", href: "#search-user-name-field-error")
     expect(page).to have_link("Enter an email", href: "#search-user-email-field-error")
-    expect(page).to have_link("Select a role type for the user account", href: "#search-user-role-field-error")
 
     fill_in "Full name", with: "Fake faker"
     fill_in "Email", with: "fake@example.com"

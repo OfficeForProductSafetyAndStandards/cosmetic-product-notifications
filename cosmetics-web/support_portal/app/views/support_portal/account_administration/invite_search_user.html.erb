@@ -6,12 +6,22 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @user, url: create_search_user_account_administration_index_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
-      <% if @errors %><h1 class="govuk-heading-l"><%= yield :page_title %></h1><% end %>
-      <p class="govuk-body">Inviting a search user will allow them to search new and existing cosmetic product notifications.</p>
+
+      <% if @errors %>
+        <h1 class="govuk-heading-l"><%= yield :page_title %></h1>
+      <% end %>
+
+      <p class="govuk-body">
+        Inviting a search user will allow them to search new and existing cosmetic product notifications.
+      </p>
+
       <%= f.govuk_text_field :name, label: { text: "Full name" } %>
       <%= f.govuk_email_field :email, label: { text: "Email address" } %>
+
       <%= govuk_details(summary_text: "Help with role types") do %>
-        <p class="govuk-body">In order to assign the correct role type for a search user account, some guidance around each role type and the permissions associated with each role type is listed here:</p>
+        <p class="govuk-body">
+          In order to assign the correct role type for a search user account, some guidance around each role type and the permissions associated with each role type is listed here:
+        </p>
         <ul class="govuk-list govuk-list--bullet">
           <li>
             <strong>OPSS Enforcement / OPSS Incident Management Team (IMT)</strong>
@@ -48,7 +58,11 @@
           </li>
         </ul>
       <% end %>
-      <%= f.govuk_collection_radio_buttons :role, role_radios, :id, :name, legend: { text: "Role type" }, hint: { text: "This will inform what actions and permissions the new user will have attached to their account." } %>
+
+      <%= f.govuk_collection_radio_buttons :role, role_radios, :id, :name,
+        legend: { text: "Select a role type for the user account" },
+        hint: { text: "This will inform what actions and permissions the new user will have attached to their account." } %>
+
       <%= f.govuk_submit "Send invitation" do %>
         <%= govuk_button_link_to "Cancel", account_administration_index_path, secondary: true %>
       <% end %>
