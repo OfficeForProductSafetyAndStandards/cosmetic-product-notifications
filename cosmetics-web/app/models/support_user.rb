@@ -7,18 +7,6 @@ class SupportUser < User
 
   attribute :skip_password_validation, :boolean, default: false
 
-  # Only the `opss_general` role is currently used for all
-  # support users, but this enum allows the search service
-  # privileges to be checked correctly.
-  # enum role: {
-  #   poison_centre: "poison_centre",
-  #   opss_general: "opss_general",
-  #   opss_enforcement: "opss_enforcement",
-  #   opss_imt: "opss_imt",
-  #   opss_science: "opss_science",
-  #   trading_standards: "trading_standards",
-  # }
-
   validates :email,
             email: {
               message: :invalid,
@@ -38,7 +26,7 @@ class SupportUser < User
   end
 
   def opss?
-    role&.match?(/opss_/)
+    has_role?(:opss_general) || has_role?(:opss_enforcement) || has_role?(:opss_imt) || has_role?(:opss_science)
   end
 
 private
