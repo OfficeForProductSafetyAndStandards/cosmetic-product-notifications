@@ -24,7 +24,7 @@ RSpec.describe "User account page", type: :request do
       expect(response.body).to have_tag("div", with: { class: "govuk-summary-list__row" }) do
         with_tag("dt", text: optional_spaces("Text message"), with: { class: "govuk-summary-list__key" })
         with_tag("dd", text: optional_spaces(user.mobile_number), with: { class: "govuk-summary-list__value" })
-        with_tag("dd.govuk-summary-list__actions a", optional_spaces("Change text message"))
+        with_tag("dd.govuk-summary-list__actions a", text: optional_spaces("Change text message"))
       end
     end
 
@@ -82,6 +82,10 @@ RSpec.describe "User account page", type: :request do
       get "/my_account"
     end
 
+    it "has correct role assigned" do
+      expect(user).to have_role(:poison_centre), "Expected user to have role :poison_centre, but roles were: #{user.roles.pluck(:name)}"
+    end
+
     include_examples "can change name and security"
     include_examples "can't change email"
     include_examples "can't download nanomaterials"
@@ -93,6 +97,10 @@ RSpec.describe "User account page", type: :request do
     before do
       sign_in_as_opss_general_user(user:)
       get "/my_account"
+    end
+
+    it "has correct role assigned" do
+      expect(user).to have_role(:opss_general), "Expected user to have role :opss_general, but roles were: #{user.roles.pluck(:name)}"
     end
 
     include_examples "can change name and security"
@@ -108,6 +116,10 @@ RSpec.describe "User account page", type: :request do
       get "/my_account"
     end
 
+    it "has correct role assigned" do
+      expect(user).to have_role(:opss_enforcement), "Expected user to have role :opss_enforcement, but roles were: #{user.roles.pluck(:name)}"
+    end
+
     include_examples "can change name and security"
     include_examples "can't change email"
     include_examples "can't download nanomaterials"
@@ -121,6 +133,10 @@ RSpec.describe "User account page", type: :request do
       get "/my_account"
     end
 
+    it "has correct role assigned" do
+      expect(user).to have_role(:opss_imt), "Expected user to have role :opss_imt, but roles were: #{user.roles.pluck(:name)}"
+    end
+
     include_examples "can change name and security"
     include_examples "can't change email"
     include_examples "can't download nanomaterials"
@@ -132,6 +148,10 @@ RSpec.describe "User account page", type: :request do
     before do
       sign_in_as_opss_science_user(user:)
       get "/my_account"
+    end
+
+    it "has correct role assigned" do
+      expect(user).to have_role(:opss_science), "Expected user to have role :opss_science, but roles were: #{user.roles.pluck(:name)}"
     end
 
     include_examples "can change name and security"
@@ -172,6 +192,10 @@ RSpec.describe "User account page", type: :request do
     before do
       sign_in_as_trading_standards_user(user:)
       get "/my_account"
+    end
+
+    it "has correct role assigned" do
+      expect(user).to have_role(:trading_standards), "Expected user to have role :trading_standards, but roles were: #{user.roles.pluck(:name)}"
     end
 
     include_examples "can change name and security"

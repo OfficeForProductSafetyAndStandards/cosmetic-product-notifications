@@ -5,7 +5,7 @@ RSpec.describe OneOff::SearchUserBulkInviter, :with_stubbed_mailer do
 
   let(:file) { "spec/fixtures/bulk_inviter/users.csv" }
 
-  it "creates correct amount of users" do
+  it "creates the correct number of users" do
     expect {
       bulk_inviter.call
     }.to change(SearchUser, :count).by(2)
@@ -21,15 +21,24 @@ RSpec.describe OneOff::SearchUserBulkInviter, :with_stubbed_mailer do
     expect(SearchUser.pluck(:email)).to contain_exactly("user@example.com", "user.one@example.com")
   end
 
+  it "assigns the correct role to the created users" do
+    bulk_inviter.call
+    SearchUser.all.find_each do |user|
+      expect(user.has_role?(:opss_general)).to be true
+    end
+  end
+
   it "sends invitation emails for the users" do
     bulk_inviter.call
     expect(delivered_emails.map(&:recipient))
       .to contain_exactly("user@example.com", "user.one@example.com")
   end
 
-  context "when one of the emails already belongs to an user" do
+  context "when one of the emails already belongs to a user" do
     before do
-      create(:search_user, email: "user@example.com") # This email is listed in the fixture
+      create(:search_user, email: "user@example.com").tap do |user|
+        user.add_role(:opss_general)
+      end
     end
 
     it "does not create a new user for this email" do
