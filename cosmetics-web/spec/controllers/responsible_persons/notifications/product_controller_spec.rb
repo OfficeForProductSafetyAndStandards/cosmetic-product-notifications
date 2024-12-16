@@ -1,10 +1,12 @@
 require "rails_helper"
 
 RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubbed_antivirus, type: :controller do
+  let(:user) { create(:submit_user) }
   let(:responsible_person) { create(:responsible_person, :with_a_contact_person) }
   let(:notification) { create(:notification, responsible_person:) }
   let(:image_file) { fixture_file_upload("testImage.png", "image/png") }
   let(:text_file) { fixture_file_upload("testText.txt", "application/text") }
+  let(:request_env) { { "warden" => warden } }
 
   let(:params) do
     {
@@ -13,12 +15,48 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
     }
   end
 
+  let(:warden) do
+    instance_double(Warden::Proxy).tap do |warden|
+      allow(warden).to receive_messages(authenticate!: user, authenticate?: true, authenticated?: true, user: user, session: {})
+    end
+  end
+
   before do
-    sign_in_as_member_of_responsible_person(responsible_person)
+    request.env["warden"] = warden
+    allow(controller).to receive_messages(
+      warden: warden,
+      submit_domain?: true,
+      user_signed_in?: true,
+      current_user: user,
+    )
+    allow(user).to receive(:account_security_completed?).and_return(true)
+
+    responsible_person.add_user(user) unless user.responsible_persons.include?(responsible_person)
+    session[:current_responsible_person_id] = responsible_person.id
   end
 
   after do
-    sign_out(:submit_user)
+    request.env["warden"] = nil
+  end
+
+  shared_context "when counting database queries" do
+    def count_relevant_queries(&block)
+      queries = []
+      callback = lambda { |*, payload|
+        unless payload[:name] == "SCHEMA" || payload[:sql].match?(/\A\s*BEGIN|\A\s*COMMIT|\A\s*ROLLBACK/)
+          queries << payload[:sql]
+        end
+      }
+
+      ActiveSupport::Notifications.subscribed(callback, "sql.active_record", &block)
+
+      queries.reject do |sql|
+        sql.include?("users") ||
+          sql.include?("responsible_person_users") ||
+          sql.include?("contact_persons") ||
+          (sql.include?("responsible_persons") && !sql.include?("notifications"))
+      end
+    end
   end
 
   describe "GET #new" do
@@ -62,6 +100,33 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
 
     context "when on the completed step" do
       let(:params_with_completed) { params.merge(id: :completed) }
+
+      describe "performance" do
+        include_context "when counting database queries"
+
+        def perform_show_request
+          get(:show, params: params_with_completed)
+        end
+
+        let!(:queries) do
+          perform_show_request
+          ActiveRecord::Base.connection.clear_query_cache
+          count_relevant_queries { perform_show_request }
+        end
+
+        it "executes limited number of queries" do
+          expect(queries.length).to be_between(1, 3),
+                                    "Expected 1-3 queries but got #{queries.length}:\n#{queries.join("\n")}"
+        end
+
+        it "includes notification query" do
+          expect(queries).to include(a_string_matching(/SELECT.*FROM "notifications"/))
+        end
+
+        it "includes component or nanomaterial query" do
+          expect(queries).to include(a_string_matching(/SELECT.*FROM "(nano_materials|components)"/))
+        end
+      end
 
       context "when notification has nanomaterials" do
         let(:nano_material) { create(:nano_material, notification: notification) }
@@ -147,6 +212,33 @@ RSpec.describe ResponsiblePersons::Notifications::ProductController, :with_stubb
   end
 
   describe "POST #update" do
+    describe "performance" do
+      include_context "when counting database queries"
+
+      def perform_update_request
+        post(:update, params: params.merge(
+          id: :add_product_name,
+          notification: { product_name: "Super Shampoo" },
+        ))
+      end
+
+      let!(:queries) do
+        notification.update_column(:product_name, "Old Name")
+        perform_update_request
+        ActiveRecord::Base.connection.clear_query_cache
+        count_relevant_queries { perform_update_request }
+      end
+
+      it "executes limited number of queries" do
+        expect(queries.length).to be_between(1, 3),
+                                  "Expected 1-3 queries but got #{queries.length}:\n#{queries.join("\n")}"
+      end
+
+      it "includes notification update query" do
+        expect(queries).to include(a_string_matching(/UPDATE.*notifications/i))
+      end
+    end
+
     it "assigns the correct notification" do
       post(:update, params: params.merge(id: :add_product_name, notification: { product_name: "Super Shampoo" }))
       expect(assigns(:notification)).to eq(notification)

@@ -18,7 +18,8 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     add_product_image: :single_or_multi_component,
   }.freeze
 
-  before_action :set_notification
+  before_action :set_notification_and_authorize
+  before_action :check_notification_submitted
   before_action :contains_nanomaterials_form, if: -> { step == :contains_nanomaterials }
   before_action :single_or_multi_component_form, if: -> { step == :single_or_multi_component }
 
@@ -27,7 +28,7 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
     when :completed
       @notification.set_state_on_product_wizard_completed!
       @continue_path = continue_path
-      render template: "responsible_persons/notifications/task_completed", locals: { continue_path: continue_path }
+      render template: "responsible_persons/notifications/task_completed", locals: { continue_path: @continue_path }
     when :add_product_image
       @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?
       render_wizard
@@ -48,10 +49,20 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
       @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?
       update_add_product_image_step
     else
-      if @notification.update_with_context(notification_params, step)
-        render_next_step @notification
+      if notification_params.key?(:product_name)
+        success = @notification.update_column(:product_name, notification_params[:product_name])
+        success ? render_next_step(@notification) : rerender_current_step
+      elsif notification_params.key?(:under_three_years)
+        success = @notification.update_column(:under_three_years, notification_params[:under_three_years])
+        success ? render_next_step(@notification) : rerender_current_step
       else
-        rerender_current_step
+        @notification.transaction do
+          if @notification.update_with_context(notification_params, step)
+            render_next_step @notification
+          else
+            rerender_current_step
+          end
+        end
       end
     end
   end
@@ -62,65 +73,118 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
 
 private
 
+  def set_notification_and_authorize
+    base_query = Notification
+      .select("notifications.*, responsible_persons.id as responsible_person_id, responsible_persons.name as responsible_person_name")
+      .joins(:responsible_person)
+
+    base_query = case step
+                 when :contains_nanomaterials, :completed
+                   base_query.includes(:nano_materials, :components)
+                 when :single_or_multi_component
+                   base_query.includes(:components)
+                 else
+                   base_query
+                 end
+
+    @notification = base_query.find_by!(reference_number: params[:notification_reference_number])
+
+    @responsible_person = @notification.responsible_person
+
+    session_key = "authorized_for_notification_#{@notification.id}"
+    unless session[session_key]
+      authorized = ResponsiblePersonUser.exists?(
+        user_id: current_user.id,
+        responsible_person_id: @notification.responsible_person_id,
+      )
+      raise Pundit::NotAuthorizedError unless authorized
+
+      session[session_key] = true
+    end
+  end
+
+  def check_notification_submitted
+    return unless @notification.state == "notification_complete" && @notification.notification_complete_at.present?
+
+    redirect_to responsible_person_notification_path(@notification.responsible_person, @notification)
+  end
+
   def continue_path
-    if @notification.nano_materials.present?
-      new_responsible_person_notification_nanomaterial_build_path(@notification.responsible_person, @notification, @notification.nano_materials.first)
-    elsif @notification.multi_component?
-      new_responsible_person_notification_product_kit_path(@notification.responsible_person, @notification)
+    @continue_path ||= if @notification.nano_materials.any?
+                         new_responsible_person_notification_nanomaterial_build_path(@responsible_person, @notification, @notification.nano_materials.first)
+                       elsif @notification.multi_component?
+                         new_responsible_person_notification_product_kit_path(@responsible_person, @notification)
+                       else
+                         component = @notification.components.first || @notification.components.create!
+                         new_responsible_person_notification_component_build_path(@responsible_person, @notification, component)
+                       end
+  end
+
+  def update_with_context_and_render
+    if @notification.update_with_context(notification_params, step)
+      render_next_step @notification
     else
-      component = @notification.components.first_or_create!
-      new_responsible_person_notification_component_build_path(@notification.responsible_person, @notification, component)
+      rerender_current_step
     end
   end
 
   def update_add_internal_reference
     case params.dig(:notification, :add_internal_reference)
     when "yes"
-      model.save_routing_answer(step, "yes")
-      if @notification.update_with_context(notification_params, step)
-        render_next_step @notification
-      else
-        rerender_current_step
+      @notification.transaction do
+        model.save_routing_answer(step, "yes")
+        if @notification.update_with_context(notification_params, step)
+          render_next_step @notification
+        else
+          rerender_current_step
+        end
       end
     when "no"
-      model.save_routing_answer(step, "no")
-      @notification.industry_reference = nil
-      render_next_step @notification
+      @notification.transaction do
+        model.save_routing_answer(step, "no")
+        @notification.update_column(:industry_reference, nil)
+        render_next_step @notification
+      end
     else
       @notification.errors.add :add_internal_reference, "Select yes to add an internal reference"
       rerender_current_step
     end
   end
 
-  # Run this step only when notification doesn't already have nanomaterials
   def update_contains_nanomaterials
-    return render_next_step @notification if @notification.nano_materials.any?
+    return render_next_step @notification if @notification.nano_materials.loaded? ? @notification.nano_materials.any? : @notification.nano_materials.exists?
 
     form = contains_nanomaterials_form
     return rerender_current_step unless form.valid?
 
-    model.save_routing_answer(step, form.contains_nanomaterials)
-    @notification.make_ready_for_nanomaterials!(form.nanomaterials_count.to_i)
-    render_next_step @notification
+    @notification.transaction do
+      model.save_routing_answer(step, form.contains_nanomaterials)
+      @notification.make_ready_for_nanomaterials!(form.nanomaterials_count.to_i)
+      render_next_step @notification
+    end
   end
 
-  # Run this step only when notifications does not have multiple components
   def update_single_or_multi_component_step
     return render_next_step @notification if @notification.multi_component?
 
     form = single_or_multi_component_form
     return rerender_current_step unless form.valid?
 
-    @notification.make_single_ready_for_components!(form.components_count.to_i)
-    render_next_step @notification
+    @notification.transaction do
+      @notification.make_single_ready_for_components!(form.components_count.to_i)
+      render_next_step @notification
+    end
   end
 
   def update_add_product_image_step
     if params[:image_upload].present?
-      params[:image_upload].each { |img| @notification.add_image(img) }
-      return rerender_current_step if @notification.errors.present?
+      @notification.transaction do
+        params[:image_upload].each { |img| @notification.add_image(img) }
+        return rerender_current_step if @notification.errors.present?
 
-      @notification.save
+        @notification.save!
+      end
+
       if params[:back_to_edit] == "true"
         redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
       elsif params[:after_save] == "upload_another"
@@ -129,16 +193,20 @@ private
         render_next_step @notification
       end
     elsif @notification.image_uploads.present?
-      if params[:back_to_edit] == "true"
-        redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      elsif params[:after_save] == "upload_another"
-        rerender_current_step
-      else
-        render_next_step @notification
-      end
+      handle_existing_image_uploads
     else
       @notification.errors.add :image_uploads, "Select an image"
       rerender_current_step
+    end
+  end
+
+  def handle_existing_image_uploads
+    if params[:back_to_edit] == "true"
+      redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
+    elsif params[:after_save] == "upload_another"
+      rerender_current_step
+    else
+      render_next_step @notification
     end
   end
 

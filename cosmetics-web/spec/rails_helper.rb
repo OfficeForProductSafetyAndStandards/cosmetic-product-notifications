@@ -8,7 +8,6 @@ require "policy_helpers"
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
-# Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 # Add additional requires below this line. Rails is not loaded until this point!
 require "rspec/rails"
@@ -81,6 +80,7 @@ RSpec.configure do |config|
   config.include Matchers
   config.include ResponsiblePersonHelpers
   config.include ActionDispatch::TestProcess::FixtureFile
+  config.include DatabaseQueryCounter
 
   # Reset search indexes before each test if using a search service like Elasticsearch
   config.before do
