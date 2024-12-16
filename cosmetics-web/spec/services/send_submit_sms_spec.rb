@@ -26,6 +26,9 @@ RSpec.describe SendSubmitSms, :with_stubbed_notify do
       { input: "+1 (202) 456-1111", expected: "+12024561111", description: "US number with formatting" },
       { input: "+33123456789", expected: "+33123456789", description: "French number with '+' country code" },
       { input: "0033123456789", expected: "+33123456789", description: "French number with '00' country code" },
+
+      # UK mobile numbers without leading zero
+      { input: "7436672784", expected: "+447436672784", description: "UK mobile number without leading zero" },
     ]
   end
 
