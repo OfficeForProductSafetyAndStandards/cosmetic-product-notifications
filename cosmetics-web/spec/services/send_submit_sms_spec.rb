@@ -39,6 +39,9 @@ RSpec.describe SendSubmitSms, :with_stubbed_notify do
       { input: "+99123456789", description: "invalid country code" },
       { input: "abcdefg", description: "alphabetic characters" },
       { input: "+44!7123*456%789", description: "special characters" },
+      { input: nil, description: "nil value" },
+      { input: "", description: "empty string" },
+      { input: "  ", description: "whitespace only" },
     ]
   end
 

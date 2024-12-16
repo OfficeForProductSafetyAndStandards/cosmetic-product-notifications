@@ -41,6 +41,8 @@ class SendSubmitSms
   end
 
   def self.sanitize_number(number)
+    return nil if number.blank?
+
     sanitized_number = number.strip
 
     # Remove spaces, hyphens, parentheses, and all '+' signs
