@@ -49,6 +49,11 @@ class SendSubmitSms
     # Replace leading '00' with '+'
     sanitized_number = sanitized_number.sub(/\A00/, "+")
 
+    # Add '+44' if the number starts with '7' or '07' (UK mobile numbers)
+    if sanitized_number.match?(/\A0?7\d{9}\z/)
+      sanitized_number = sanitized_number.sub(/\A0?/, "+44")
+    end
+
     # Add '+' if the number starts with '44' and doesn't start with '+'
     sanitized_number = "+#{sanitized_number}" if sanitized_number.start_with?("44") && !sanitized_number.start_with?("+")
 
