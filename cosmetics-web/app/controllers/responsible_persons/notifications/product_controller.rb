@@ -50,11 +50,21 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
       update_add_product_image_step
     else
       if notification_params.key?(:product_name)
-        success = @notification.update_column(:product_name, notification_params[:product_name])
-        success ? render_next_step(@notification) : rerender_current_step
+        column_updated = @notification.update_column(:product_name, notification_params[:product_name])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:product_name, "could not be updated")
+          rerender_current_step
+        end
       elsif notification_params.key?(:under_three_years)
-        success = @notification.update_column(:under_three_years, notification_params[:under_three_years])
-        success ? render_next_step(@notification) : rerender_current_step
+        column_updated = @notification.update_column(:under_three_years, notification_params[:under_three_years])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:under_three_years, "could not be updated")
+          rerender_current_step
+        end
       else
         @notification.transaction do
           if @notification.update_with_context(notification_params, step)
@@ -258,5 +268,9 @@ private
 
   def model
     @notification
+  end
+
+  def rerender_current_step
+    render step
   end
 end
