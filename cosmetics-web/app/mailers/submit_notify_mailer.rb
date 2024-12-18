@@ -56,7 +56,7 @@ class SubmitNotifyMailer < NotifyMailer
     set_reference("Send confirmation code")
 
     set_personalisation(
-      name: user.name,
+      name: user.name.presence || "",
       verify_email_url: registration_confirm_submit_user_url(confirmation_token: user.confirmation_token, host: @host),
     )
 
