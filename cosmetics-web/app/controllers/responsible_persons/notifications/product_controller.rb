@@ -85,33 +85,7 @@ private
 
   def set_notification_and_authorize
     base_query = Notification
-      .select(
-        :id,
-        :reference_number,
-        :product_name,
-        :state,
-        :notification_complete_at,
-        :responsible_person_id,
-        :industry_reference,
-        :under_three_years,
-        :components_are_mixed,
-        :previous_state,
-        :routing_questions_answers,
-        :cpnp_reference,
-        :source_notification_id,
-        :archive_reason,
-        :import_country,
-        :shades,
-        :cpnp_notification_date,
-        :was_notified_before_eu_exit,
-        :still_on_the_market,
-        :ph_min_value,
-        :ph_max_value,
-        :csv_cache,
-        :deleted_at,
-        "responsible_persons.id as responsible_person_id",
-        "responsible_persons.name as responsible_person_name",
-      )
+      .select(selected_notification_columns)
       .joins(:responsible_person)
 
     base_query = case step
@@ -298,5 +272,35 @@ private
 
   def rerender_current_step
     render step
+  end
+
+  def selected_notification_columns
+    [
+      :id,
+      :reference_number,
+      :product_name,
+      :state,
+      :notification_complete_at,
+      :responsible_person_id,
+      :industry_reference,
+      :under_three_years,
+      :components_are_mixed,
+      :previous_state,
+      :routing_questions_answers,
+      :cpnp_reference,
+      :source_notification_id,
+      :archive_reason,
+      :import_country,
+      :shades,
+      :cpnp_notification_date,
+      :was_notified_before_eu_exit,
+      :still_on_the_market,
+      :ph_min_value,
+      :ph_max_value,
+      :csv_cache,
+      :deleted_at,
+      Arel.sql("responsible_persons.id as responsible_person_id"),
+      Arel.sql("responsible_persons.name as responsible_person_name")
+    ]
   end
 end
