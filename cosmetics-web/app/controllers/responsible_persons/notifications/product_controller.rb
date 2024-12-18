@@ -85,7 +85,7 @@ private
 
   def set_notification_and_authorize
     base_query = Notification
-      .select(selected_notification_columns)
+      .select(selected_notification_columns + responsible_person_columns)
       .joins(:responsible_person)
 
     base_query = case step
@@ -298,7 +298,12 @@ private
       :ph_min_value,
       :ph_max_value,
       :csv_cache,
-      :deleted_at,
+      :deleted_at
+    ]
+  end
+
+  def responsible_person_columns
+    [
       Arel.sql("responsible_persons.id as responsible_person_id"),
       Arel.sql("responsible_persons.name as responsible_person_name")
     ]
