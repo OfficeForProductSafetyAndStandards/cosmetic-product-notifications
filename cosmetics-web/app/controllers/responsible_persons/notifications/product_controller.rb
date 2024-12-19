@@ -243,13 +243,7 @@ private
         @notification.save!
       end
 
-      if params[:back_to_edit] == "true"
-        redirect_to edit_responsible_person_notification_path(@notification.responsible_person, @notification)
-      elsif params[:after_save] == "upload_another"
-        rerender_current_step
-      else
-        render_next_step @notification
-      end
+      handle_existing_image_uploads
     elsif @notification.image_uploads.present?
       handle_existing_image_uploads
     else
