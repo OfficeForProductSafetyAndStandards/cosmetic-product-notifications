@@ -65,6 +65,54 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
           @notification.errors.add(:under_three_years, "could not be updated")
           rerender_current_step
         end
+      elsif notification_params.key?(:industry_reference) && step != :add_internal_reference
+        column_updated = @notification.update_column(:industry_reference, notification_params[:industry_reference])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:industry_reference, "could not be updated")
+          rerender_current_step
+        end
+      elsif notification_params.key?(:still_on_the_market)
+        column_updated = @notification.update_column(:still_on_the_market, notification_params[:still_on_the_market])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:still_on_the_market, "could not be updated")
+          rerender_current_step
+        end
+      elsif notification_params.key?(:shades)
+        column_updated = @notification.update_column(:shades, notification_params[:shades])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:shades, "could not be updated")
+          rerender_current_step
+        end
+      elsif notification_params.key?(:import_country)
+        column_updated = @notification.update_column(:import_country, notification_params[:import_country])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:import_country, "could not be updated")
+          rerender_current_step
+        end
+      elsif notification_params.key?(:cpnp_notification_date)
+        column_updated = @notification.update_column(:cpnp_notification_date, notification_params[:cpnp_notification_date])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:cpnp_notification_date, "could not be updated")
+          rerender_current_step
+        end
+      elsif notification_params.key?(:was_notified_before_eu_exit)
+        column_updated = @notification.update_column(:was_notified_before_eu_exit, notification_params[:was_notified_before_eu_exit])
+        if column_updated
+          render_next_step(@notification)
+        else
+          @notification.errors.add(:was_notified_before_eu_exit, "could not be updated")
+          rerender_current_step
+        end
       else
         @notification.transaction do
           if @notification.update_with_context(notification_params, step)
@@ -226,6 +274,11 @@ private
         :product_name,
         :industry_reference,
         :under_three_years,
+        :still_on_the_market,
+        :shades,
+        :import_country,
+        :cpnp_notification_date,
+        :was_notified_before_eu_exit,
         image_uploads_attributes: [file: []],
       )
   end
