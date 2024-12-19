@@ -49,79 +49,7 @@ class ResponsiblePersons::Notifications::ProductController < SubmitApplicationCo
       @clone_image_job = NotificationCloner::JobTracker.new(@notification.id) if @notification.cloned?
       update_add_product_image_step
     else
-      if notification_params.key?(:product_name)
-        column_updated = @notification.update_column(:product_name, notification_params[:product_name])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:product_name, "could not be updated")
-          rerender_current_step
-        end
-      elsif notification_params.key?(:under_three_years)
-        column_updated = @notification.update_column(:under_three_years, notification_params[:under_three_years])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:under_three_years, "could not be updated")
-          rerender_current_step
-        end
-      elsif notification_params.key?(:industry_reference) && step != :add_internal_reference
-        column_updated = @notification.update_column(:industry_reference, notification_params[:industry_reference])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:industry_reference, "could not be updated")
-          rerender_current_step
-        end
-      elsif notification_params.key?(:still_on_the_market)
-        column_updated = @notification.update_column(:still_on_the_market, notification_params[:still_on_the_market])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:still_on_the_market, "could not be updated")
-          rerender_current_step
-        end
-      elsif notification_params.key?(:shades)
-        column_updated = @notification.update_column(:shades, notification_params[:shades])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:shades, "could not be updated")
-          rerender_current_step
-        end
-      elsif notification_params.key?(:import_country)
-        column_updated = @notification.update_column(:import_country, notification_params[:import_country])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:import_country, "could not be updated")
-          rerender_current_step
-        end
-      elsif notification_params.key?(:cpnp_notification_date)
-        column_updated = @notification.update_column(:cpnp_notification_date, notification_params[:cpnp_notification_date])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:cpnp_notification_date, "could not be updated")
-          rerender_current_step
-        end
-      elsif notification_params.key?(:was_notified_before_eu_exit)
-        column_updated = @notification.update_column(:was_notified_before_eu_exit, notification_params[:was_notified_before_eu_exit])
-        if column_updated
-          render_next_step(@notification)
-        else
-          @notification.errors.add(:was_notified_before_eu_exit, "could not be updated")
-          rerender_current_step
-        end
-      else
-        @notification.transaction do
-          if @notification.update_with_context(notification_params, step)
-            render_next_step @notification
-          else
-            rerender_current_step
-          end
-        end
-      end
+      update_column_or_fallback
     end
   end
 
@@ -236,13 +164,10 @@ private
 
   def update_add_product_image_step
     if params[:image_upload].present?
-      @notification.transaction do
-        params[:image_upload].each { |img| @notification.add_image(img) }
-        return rerender_current_step if @notification.errors.present?
+      params[:image_upload].each { |img| @notification.add_image(img) }
+      return rerender_current_step if @notification.errors.present?
 
-        @notification.save!
-      end
-
+      @notification.save!
       handle_existing_image_uploads
     elsif @notification.image_uploads.present?
       handle_existing_image_uploads
@@ -354,5 +279,43 @@ private
       Arel.sql("responsible_persons.id as responsible_person_id"),
       Arel.sql("responsible_persons.name as responsible_person_name"),
     ]
+  end
+
+  def update_column_or_fallback
+    direct_update_columns = {
+      product_name: true,
+      under_three_years: true,
+      industry_reference: ->(params) { step != :add_internal_reference },
+      still_on_the_market: true,
+      shades: true,
+      import_country: true,
+      cpnp_notification_date: true,
+      was_notified_before_eu_exit: true
+    }
+
+    direct_update_columns.each do |column, condition|
+      next unless notification_params.key?(column)
+      next unless condition.is_a?(Proc) ? condition.call(notification_params) : condition
+
+      return perform_direct_column_update(column)
+    end
+
+    @notification.transaction do
+      if @notification.update_with_context(notification_params, step)
+        render_next_step @notification
+      else
+        rerender_current_step
+      end
+    end
+  end
+
+  def perform_direct_column_update(column)
+    column_updated = @notification.update_column(column, notification_params[column])
+    if column_updated
+      render_next_step(@notification)
+    else
+      @notification.errors.add(column, "could not be updated")
+      rerender_current_step
+    end
   end
 end
