@@ -10,7 +10,7 @@
     "@rails/activestorage": "8.0.100",
     "accessible-autocomplete": "3.0.1",
     "css-loader": "^7.1.2",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.24.2",
     "file-loader": "^6.2.0",
     "govuk-country-and-territory-autocomplete": "2.0.0",
     "govuk-frontend": "5.7.1",
