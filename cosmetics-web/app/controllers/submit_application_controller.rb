@@ -24,6 +24,8 @@ private
   end
 
   def authorize_user!
-    redirect_to invalid_account_path if current_user && !current_user.is_a?(SubmitUser)
+    redirect_to invalid_account_path if current_user &&
+      !(current_user.is_a?(SubmitUser) ||
+        current_user.has_role?(:submit_user))
   end
 end

@@ -180,7 +180,7 @@ RSpec.feature "Account administration", :with_2fa, :with_2fa_app, :with_stubbed_
     choose "OPSS Incident Management Team (IMT)"
     click_on "Save changes"
 
-    expect(page).to have_css("div.govuk-notification-banner", text: "The account role type has been updated from OPSS General to OPSS Incident Management Team (IMT)")
+    expect(page).to have_css("div.govuk-notification-banner", text: "The account role type has been updated from Search user to OPSS Incident Management Team (IMT)")
   end
 
   scenario "Removing a Responsible Person from an account" do

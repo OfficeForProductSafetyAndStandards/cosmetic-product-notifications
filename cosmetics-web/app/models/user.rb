@@ -22,15 +22,6 @@ class User < ApplicationRecord
 
   attr_encrypted :totp_secret_key
 
-  # enum role: {
-  #   poison_centre: "poison_centre",
-  #   opss_science: "opss_science",
-  #   opss_general: "opss_general",
-  #   opss_enforcement: "opss_enforcement",
-  #   trading_standards: "trading_standards",
-  #   opss_imt: "opss_imt",
-  # }
-
   validates :email, presence: true
   validate  :email_not_pending_change_for_other_user
   validates :new_email, email: { message: :invalid, allow_nil: true }
@@ -107,11 +98,11 @@ class User < ApplicationRecord
            confirmed_at: nil)
 
     # Support users don't get an email
-    if reactivated && is_a?(SearchUser)
+    if reactivated && search_user?
       send_reactivate_account_instructions
-    elsif is_a?(SearchUser)
+    elsif search_user?
       send_reset_account_instructions
-    elsif is_a?(SubmitUser)
+    elsif submit_user?
       resend_confirmation_instructions
     end
   end
@@ -160,6 +151,18 @@ class User < ApplicationRecord
   # Use the `email` when targeting feature flags
   def flipper_id
     email
+  end
+
+  def submit_user?
+    is_a?(SubmitUser)
+  end
+
+  def search_user?
+    is_a?(SearchUser) || has_role?(:search_user)
+  end
+
+  def support_user?
+    is_a?(SupportUser) || has_role?(:support_user?)
   end
 
 private

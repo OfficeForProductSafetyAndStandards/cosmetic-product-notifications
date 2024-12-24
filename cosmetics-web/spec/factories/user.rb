@@ -74,6 +74,10 @@ FactoryBot.define do
 
     # SubmitUser Factory
     factory :submit_user, class: "SubmitUser", parent: :user do
+      after(:build) do |user|
+        user.add_role(:submit_user)
+      end
+
       confirmed_at { 1.hour.ago }
 
       trait :with_responsible_person do
@@ -102,6 +106,10 @@ FactoryBot.define do
 
     # SearchUser Factory
     factory :search_user, class: "SearchUser", parent: :user do
+      after(:build) do |user|
+        user.add_role(:search_user)
+      end
+
       invitation_token { Devise.friendly_token }
       invited_at { Time.zone.now }
 
@@ -143,6 +151,10 @@ FactoryBot.define do
 
     # SupportUser Factory
     factory :support_user, class: "SupportUser", parent: :user do
+      after(:build) do |user|
+        user.add_role(:support_user)
+      end
+
       sequence(:email) { |n| "john.doe#{n}@example.gov.uk" }
       invitation_token { Devise.friendly_token }
       invited_at { Time.zone.now }

@@ -1,9 +1,9 @@
-<% if current_user.is_a?(SearchUser) %>
+<% if current_user.search_user? %>
 Search cosmetic product notifications
 =====================================
 
 <%= search_root_url %>
-<% elsif current_user.is_a?(SupportUser) %>
+<% elsif current_user.support_user? %>
 OSU Support Portal
 ==================
 

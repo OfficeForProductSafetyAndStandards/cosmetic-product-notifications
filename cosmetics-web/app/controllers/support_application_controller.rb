@@ -8,6 +8,8 @@ private
   end
 
   def authorize_user!
-    redirect_to invalid_account_path if current_user && !current_user.is_a?(SupportUser)
+    redirect_to invalid_account_path if current_user &&
+      !(current_user.is_a?(SupportUser) ||
+        current_user.has_role?(:support_user))
   end
 end
