@@ -38,10 +38,13 @@ module Types
       end
 
       field :notifications, NotificationType.connection_type, null: false, camelize: false, description: <<~DESC do
-        Retrieve a paginated list of notifications with optional filters for created_at and updated_at timestamps.
+        Retrieve a paginated list of notifications with optional filters for created_at, updated_at, and state.
         A maximum of 100 records can be retrieved per page.
 
-        You can filter by either or both of the `created_after` and `updated_after` fields in the format `YYYY-MM-DD HH:MM`.
+        You can filter by any or all of the following:
+        - `created_after` (format: `YYYY-MM-DD HH:MM`)
+        - `updated_after` (format: `YYYY-MM-DD HH:MM`)
+        - `state` (exact match on state column)
         Results can be sorted using the `order_by` argument, and you can specify a starting point with `from_id`.
 
         Example Query:
@@ -50,6 +53,7 @@ module Types
           notifications(
             created_after: "2024-08-15T13:00:00Z",
             updated_after: "2024-08-15T13:00:00Z",
+            state: "draft",
             order_by: { field: "created_at", direction: "desc" },
             first: 10,
             from_id: 1
@@ -93,6 +97,7 @@ module Types
         argument :updated_after, GraphQL::Types::String, required: false, camelize: false, description: "Retrieve notifications updated after this date in the format 'YYYY-MM-DD HH:MM'"
         argument :order_by, Types::OrderByInputType, required: false, camelize: false, description: "Sort results by a specified field and direction"
         argument :from_id, GraphQL::Types::ID, required: false, camelize: false, description: "Retrieve notifications starting from a specific ID"
+        argument :state, GraphQL::Types::String, required: false, camelize: false, description: "Filter notifications by their state" # NEW ARGUMENT HERE
       end
 
       field :total_notification_count, Integer, null: false, camelize: false, description: <<~DESC do
@@ -116,7 +121,7 @@ module Types
       raise Errors::SimpleError, "An error occurred: #{e.message}"
     end
 
-    def notifications(created_after: nil, updated_after: nil, first: nil, last: nil, after: nil, before: nil, order_by: nil, from_id: nil)
+    def notifications(created_after: nil, updated_after: nil, state: nil, first: nil, last: nil, after: nil, before: nil, order_by: nil, from_id: nil)
       max_limit = 100
 
       first = validate_limit(first, max_limit)
@@ -128,6 +133,7 @@ module Types
       scope = scope.where("created_at >= ?", Time.zone.parse(created_after).utc) if created_after.present?
       scope = scope.where("updated_at >= ?", Time.zone.parse(updated_after).utc) if updated_after.present?
       scope = scope.where("id > ?", from_id) if from_id.present?
+      scope = scope.where(state:) if state.present? # APPLY STATE FILTER
 
       # Apply sorting
       if order_by.present?

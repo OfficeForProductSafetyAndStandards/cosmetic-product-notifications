@@ -44,12 +44,11 @@ RSpec.describe Types::NotificationQueries, type: :request do
 
     def query_notification_and_extract_data(id)
       response_json = perform_post_query(query, { id: })
-      response_json["data"]["notification"]
+      response_json.dig("data", "notification")
     end
 
     it "returns a Notification by ID" do
       data = query_notification_and_extract_data(notification.id)
-      expect(data).to have_key("id")
       expect(data["id"]).to eq(notification.id.to_s)
     end
 
@@ -87,13 +86,16 @@ RSpec.describe Types::NotificationQueries, type: :request do
   end
 
   describe "notifications query" do
-    let!(:recent_notification) { create(:notification, created_at: "2024-08-10", updated_at: "2024-08-15") }
-    let(:older_notification) { create(:notification, created_at: "2024-08-01", updated_at: "2024-08-05") }
-
+    let(:recent_notification) { create(:notification, created_at: "2024-08-10", updated_at: "2024-08-15") }
     let(:query) do
       <<~GQL
-        query($created_after: String, $updated_after: String, $first: Int) {
-          notifications(created_after: $created_after, updated_after: $updated_after, first: $first) {
+        query($created_after: String, $updated_after: String, $state: String, $first: Int) {
+          notifications(
+            created_after: $created_after,
+            updated_after: $updated_after,
+            state: $state,
+            first: $first
+          ) {
             edges {
               node {
                 id
@@ -129,13 +131,25 @@ RSpec.describe Types::NotificationQueries, type: :request do
         }
       GQL
     end
+    let(:older_notification) { create(:notification, created_at: "2024-08-01", updated_at: "2024-08-05") }
 
-    def query_notifications(created_after: nil, updated_after: nil, first: nil)
-      perform_post_query(query, { created_after:, updated_after:, first: })
+    before do
+      recent_notification
+      older_notification
     end
 
-    it "returns the total number of Notifications" do
+    def query_notifications(created_after: nil, updated_after: nil, first: nil, state: nil)
+      perform_post_query(query, {
+        created_after:,
+        updated_after:,
+        first:,
+        state:,
+      })
+    end
+
+    it "returns the total number of Notifications (filtered by created_after)" do
       response_json = query_notifications(created_after: "2024-08-05T00:00:00Z", first: 10)
+      # Only recent_notification is created after 2024-08-05
       expect(response_json.dig("data", "notifications", "edges").size).to eq(1)
     end
 
@@ -166,6 +180,23 @@ RSpec.describe Types::NotificationQueries, type: :request do
       response_json = query_notifications(created_after: "2024-08-05T00:00:00Z", first: 10)
       page_info = response_json.dig("data", "notifications", "pageInfo")
       expect(page_info["endCursor"]).not_to be_nil
+    end
+
+    context "when filtering by state" do
+      let(:components_complete_notification) { create(:notification, state: "components_complete") }
+      let(:ready_for_components_notification) { create(:notification, state: "ready_for_components") }
+
+      before do
+        components_complete_notification
+        ready_for_components_notification
+      end
+
+      it "returns only notifications matching the specified state" do
+        edges = query_notifications(state: "components_complete", first: 10)
+                  .dig("data", "notifications", "edges")
+        expect(edges.size).to eq(1)
+        expect(edges.first["node"]).to include("id" => components_complete_notification.id.to_s, "state" => "components_complete")
+      end
     end
   end
 
