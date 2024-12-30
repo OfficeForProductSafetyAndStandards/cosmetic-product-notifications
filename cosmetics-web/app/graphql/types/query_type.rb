@@ -19,5 +19,6 @@ module Types
     include TriggerQuestionQueries
     include TriggerQuestionElementQueries
     include UserQueries
+    include VersionQueries
   end
 end
