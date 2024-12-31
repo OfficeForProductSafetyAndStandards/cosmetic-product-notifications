@@ -43,6 +43,8 @@ class User < ApplicationRecord
   validates :name, presence: true, unless: -> { invite }
   validates :name, length: { maximum: NAME_MAX_LENGTH }, user_name_format: true, if: :name_changed?
 
+  validates :onelogin_id, uniqueness: true, allow_nil: true
+
   with_options if: :account_security_completed do
     validate :secondary_authentication_methods_presence
     validate :secondary_authentication_methods_allowed, if: -> { secondary_authentication_methods&.any? }

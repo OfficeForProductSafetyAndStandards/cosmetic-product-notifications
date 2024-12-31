@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
 
+  draw :auth_routes
+
   mount GovukDesignSystem::Engine => "/", as: "govuk_design_system_engine"
 
   get "/sign_up", to: redirect("/")

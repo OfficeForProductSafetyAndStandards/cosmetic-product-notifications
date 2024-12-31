@@ -99,3 +99,5 @@ gem "graphiql-rails", group: :development
 gem "graphql", "~> 2.4"
 gem "pundit"
 gem "rolify"
+gem "omniauth"
+gem "omniauth_openid_connect"
