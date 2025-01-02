@@ -158,7 +158,7 @@ module Types
 
     # Total count of all versions
     def total_versions_count
-      Version.count
+      PaperTrail::Version.count
     end
 
   private
