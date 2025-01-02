@@ -325,9 +325,9 @@ class Notification < ApplicationRecord
 private
 
   def all_required_attributes_must_be_set
-    mandatory_attributes = mandatory_attributes(state)
+    mandatory_attributes = mandatory_attributes(state) || []
 
-    changed.each do |attribute|
+    (changed || []).each do |attribute|
       if mandatory_attributes.include?(attribute) && self[attribute].blank?
         if attribute == "product_name"
           errors.add attribute, "Enter the product name"
