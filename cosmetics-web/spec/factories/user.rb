@@ -72,7 +72,8 @@ FactoryBot.define do
       deactivated_at { Time.zone.now }
     end
 
-    factory :submit_user, class: "SubmitUser" do
+    # SubmitUser Factory
+    factory :submit_user, class: "SubmitUser", parent: :user do
       confirmed_at { 1.hour.ago }
 
       trait :with_responsible_person do
@@ -99,8 +100,8 @@ FactoryBot.define do
       end
     end
 
-    factory :search_user, class: "SearchUser" do
-      role {}
+    # SearchUser Factory
+    factory :search_user, class: "SearchUser", parent: :user do
       invitation_token { Devise.friendly_token }
       invited_at { Time.zone.now }
 
@@ -109,27 +110,27 @@ FactoryBot.define do
       end
 
       factory :poison_centre_user do
-        role { :poison_centre }
+        after(:build) { |user| user.add_role(:poison_centre) }
       end
 
       factory :opss_general_user do
-        role { :opss_general }
+        after(:build) { |user| user.add_role(:opss_general) }
       end
 
       factory :opss_enforcement_user do
-        role { :opss_enforcement }
+        after(:build) { |user| user.add_role(:opss_enforcement) }
       end
 
       factory :opss_imt_user do
-        role { :opss_imt }
+        after(:build) { |user| user.add_role(:opss_imt) }
       end
 
       factory :opss_science_user do
-        role { :opss_science }
+        after(:build) { |user| user.add_role(:opss_science) }
       end
 
       factory :trading_standards_user do
-        role { :trading_standards }
+        after(:build) { |user| user.add_role(:trading_standards) }
       end
 
       trait :registration_incomplete do
@@ -140,7 +141,8 @@ FactoryBot.define do
       end
     end
 
-    factory :support_user, class: "SupportUser" do
+    # SupportUser Factory
+    factory :support_user, class: "SupportUser", parent: :user do
       sequence(:email) { |n| "john.doe#{n}@example.gov.uk" }
       invitation_token { Devise.friendly_token }
       invited_at { Time.zone.now }

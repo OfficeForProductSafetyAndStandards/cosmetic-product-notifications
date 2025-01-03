@@ -8,7 +8,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
       expect { inviter.call }.not_to change(SearchUser, :count)
     end
 
-    it "sends invitation email for the user" do
+    it "sends an invitation email for the user" do
       inviter.call
       expect(delivered_emails.size).to eq 1
       expect(delivered_emails.last.recipient).to eq user.email
@@ -38,15 +38,15 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
       }.to change { user.invited_at.round }.and not_change(user, :invitation_token)
     end
 
-    it "does not change the user role when the inviter is called for a different role" do
-      user.update_column(:role, inviter.role == "opss_general" ? "poison_centre" : "opss_general")
+    it "does not change the user's roles when inviter is called with a different role" do
+      user.add_role(:poison_centre)
       expect {
         inviter.call
         user.reload
-      }.not_to change(user, :role)
+      }.not_to(change { user.roles.pluck(:name) })
     end
 
-    context "when user has already set its account security" do
+    context "when user has already set their account security" do
       before do
         user.update_columns(account_security_completed: true, invited_at: 1.week.ago)
       end
@@ -97,7 +97,7 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
       .to raise_error(Interactor::Failure)
   end
 
-  context "when an user is provided" do
+  context "when a user is provided" do
     subject(:inviter) { described_class.new(name: "John Doe", role: "opss_general", user:) }
 
     let(:user) do
@@ -120,20 +120,26 @@ RSpec.describe InviteSearchUser, :with_stubbed_mailer do
       include_examples "existing user"
     end
 
-    it "does create a new user" do
+    it "creates a new user" do
       expect { inviter.call }.to change(SearchUser, :count).by(1)
+    end
+
+    it "assigns the correct role to the new user" do
+      inviter.call
+      user = SearchUser.last
+      expect(user.has_role?(:opss_general)).to be true
     end
 
     it "sets an invitation token and timestamp for the new user" do
       freeze_time do
         inviter.call
-        user = User.last
+        user = SearchUser.last
         expect(user.invitation_token).not_to be_nil
         expect(user.invited_at).to eq Time.zone.now
       end
     end
 
-    it "sends invitation email for the created user with the given email" do
+    it "sends an invitation email for the created user with the given email" do
       inviter.call
       expect(delivered_emails.size).to eq 1
       expect(delivered_emails.last.recipient).to eq "inviteduser@example.com"
