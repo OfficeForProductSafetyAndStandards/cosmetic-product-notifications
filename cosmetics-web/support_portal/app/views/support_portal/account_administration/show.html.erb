@@ -29,7 +29,7 @@
         if @user.type == "SearchUser"
           summary_list.with_row do |row|
             row.with_key(text: "Role type")
-            row.with_value(text: role_type(@user.role))
+            row.with_value(text: @user.roles.map { |role| role_type(role.name) }.join(", "))
             row.with_action(text: "Change", href: edit_role_account_administration_path(@user, q: params[:q]), visually_hidden_text: "role type")
           end
         end

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  rolify
+
   NAME_MAX_LENGTH = 50
   NEW_EMAIL_TOKEN_VALID_FOR = 600 # 10 minutes
   SECONDARY_AUTHENTICATION_METHODS = %w[app sms].freeze
@@ -20,14 +22,14 @@ class User < ApplicationRecord
 
   attr_encrypted :totp_secret_key
 
-  enum role: {
-    poison_centre: "poison_centre",
-    opss_science: "opss_science",
-    opss_general: "opss_general",
-    opss_enforcement: "opss_enforcement",
-    trading_standards: "trading_standards",
-    opss_imt: "opss_imt",
-  }
+  # enum role: {
+  #   poison_centre: "poison_centre",
+  #   opss_science: "opss_science",
+  #   opss_general: "opss_general",
+  #   opss_enforcement: "opss_enforcement",
+  #   trading_standards: "trading_standards",
+  #   opss_imt: "opss_imt",
+  # }
 
   validates :email, presence: true
   validate  :email_not_pending_change_for_other_user

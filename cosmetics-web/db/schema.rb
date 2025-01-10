@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_23_082523) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_12_140016) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -312,6 +312,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_082523) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
   create_table "search_histories", force: :cascade do |t|
     t.string "query"
     t.integer "results"
@@ -372,7 +382,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_082523) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "invitation_token"
     t.datetime "invited_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.string "role"
     t.citext "new_email"
     t.string "new_email_confirmation_token"
     t.datetime "new_email_confirmation_token_expires_at", precision: nil
@@ -386,6 +395,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_082523) do
     t.string "secondary_authentication_recovery_codes", default: [], array: true
     t.string "secondary_authentication_recovery_codes_used", default: [], array: true
     t.datetime "deactivated_at", precision: nil
+    t.string "legacy_role"
+    t.string "legacy_type"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["name"], name: "index_users_on_name"
@@ -394,6 +405,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_082523) do
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
     t.index ["type"], name: "index_users_on_type"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.bigint "role_id", null: false
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", unique: true
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
   create_table "versions", force: :cascade do |t|
@@ -423,4 +442,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_082523) do
   add_foreign_key "responsible_person_users", "responsible_persons"
   add_foreign_key "trigger_question_elements", "trigger_questions"
   add_foreign_key "trigger_questions", "components"
+  add_foreign_key "users_roles", "roles"
+  add_foreign_key "users_roles", "users"
 end

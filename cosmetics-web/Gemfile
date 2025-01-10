@@ -37,7 +37,6 @@ gem "paper_trail", "~> 16.0"
 gem "pg", "~> 1.5"
 gem "phonelib", "~> 0.10"
 gem "puma", "~> 6.5"
-gem "pundit", "~> 2.3"
 gem "rails", ">= 7.1.0", "< 7.2.0"
 gem "redis", "~> 5.2"
 gem "request_store", "~> 1.6"
@@ -98,3 +97,5 @@ gem "database_cleaner-active_record"
 
 gem "graphiql-rails", group: :development
 gem "graphql", "~> 2.4"
+gem "pundit"
+gem "rolify"
