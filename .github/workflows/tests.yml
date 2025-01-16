@@ -82,6 +82,9 @@ jobs:
         cd cosmetics-web
         npm install yarn -g
         yarn install
+
+    - name: Install ImageMagick
+      run: sudo apt-get update && sudo apt-get install -y imagemagick
     
     - name: Prepare application database
       run: |
