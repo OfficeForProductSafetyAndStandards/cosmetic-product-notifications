@@ -77,12 +77,16 @@ jobs:
         cd cosmetics-web
         gem install bundler -v 2.5.22
         bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+  
     - name: Install JavaScript dependencies
       run: |
         cd cosmetics-web
         npm install yarn -g
         yarn install
-    
+
+    - name: Install ImageMagick
+      run: sudo apt-get update && sudo apt-get install -y imagemagick
+
     - name: Prepare application database
       run: |
         cd cosmetics-web
