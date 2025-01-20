@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  rolify
   NAME_MAX_LENGTH = 50
   NEW_EMAIL_TOKEN_VALID_FOR = 600 # 10 minutes
   SECONDARY_AUTHENTICATION_METHODS = %w[app sms].freeze

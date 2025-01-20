@@ -455,6 +455,7 @@ GEM
     reverse_markdown (2.1.1)
       nokogiri
     rexml (3.3.9)
+    rolify (6.0.1)
     rotp (6.3.0)
     rqrcode (2.2.0)
       chunky_png (~> 1.0)
@@ -700,6 +701,7 @@ DEPENDENCIES
   redis (~> 5.2)
   request_store (~> 1.6)
   rest-client (~> 2.1)
+  rolify
   rotp (~> 6.2)
   rqrcode (~> 2.1)
   rspec-collection_matchers
