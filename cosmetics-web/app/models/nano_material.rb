@@ -83,7 +83,7 @@ class NanoMaterial < ApplicationRecord
   end
 
   def toxicology_required?
-    non_standard? && (confirm_toxicology_notified == NOT_SURE || confirm_toxicology_notified == NO)
+    non_standard? && [NOT_SURE, NO].include?(confirm_toxicology_notified)
   end
 
   def conforms_to_restrictions?
