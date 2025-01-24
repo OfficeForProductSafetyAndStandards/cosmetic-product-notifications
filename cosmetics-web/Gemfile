@@ -99,3 +99,5 @@ gem "database_cleaner-active_record"
 gem "graphiql-rails", group: :development
 gem "graphql", "~> 2.4"
 gem "rolify"
+
+gem "nokogiri", "1.17.2"
