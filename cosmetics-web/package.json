@@ -22,7 +22,7 @@
     "sass": "^1.83.4",
     "sass-loader": "^16.0.4",
     "standard": "17.1.2",
-    "stylelint": "16.13.2",
+    "stylelint": "16.14.1",
     "stylelint-config-gds": "2.0.0"
   },
   "scripts": {
