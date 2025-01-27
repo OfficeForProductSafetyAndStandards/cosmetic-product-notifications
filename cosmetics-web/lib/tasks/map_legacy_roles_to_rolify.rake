@@ -12,16 +12,20 @@ namespace :map_legacy_roles_to_rolify do
           user.add_role(:search_user)
         when "support_user"
           user.add_role(:support_user)
+        else
+          Rails.logger.warn "User #{user.id} has an unknown or missing legacy_type: #{user.legacy_type}"
         end
 
-        user.update!(legacy_type_migrated: true)
+        user.update_columns(legacy_type_migrated: true)
         Rails.logger.info "Migrated legacy_type for User #{user.id}: #{user.legacy_type}"
       end
 
       if !user.legacy_role_migrated && user.legacy_role.present?
         user.add_role(user.legacy_role.to_sym)
-        user.update!(legacy_role_migrated: true)
+        user.update_columns(legacy_role_migrated: true)
         Rails.logger.info "Migrated legacy_role for User #{user.id}: #{user.legacy_role}"
+      elsif user.legacy_role.blank?
+        Rails.logger.warn "User #{user.id} has no legacy_role."
       end
     rescue StandardError => e
       Rails.logger.error "Failed to process User #{user.id}: #{e.message}"
