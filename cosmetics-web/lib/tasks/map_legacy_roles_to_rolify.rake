@@ -20,12 +20,15 @@ namespace :map_legacy_roles_to_rolify do
         Rails.logger.info "Migrated legacy_type for User #{user.id}: #{user.legacy_type}"
       end
 
-      if !user.legacy_role_migrated && user.legacy_role.present?
-        user.add_role(user.legacy_role.to_sym)
+      unless user.legacy_role_migrated
+        if user.legacy_role.present?
+          user.add_role(user.legacy_role.to_sym)
+          Rails.logger.info "Migrated legacy_role for User #{user.id}: #{user.legacy_role}"
+        else
+          Rails.logger.info "User #{user.id} has no legacy_role; marking as migrated."
+        end
+
         user.update_columns(legacy_role_migrated: true)
-        Rails.logger.info "Migrated legacy_role for User #{user.id}: #{user.legacy_role}"
-      elsif user.legacy_role.blank?
-        Rails.logger.warn "User #{user.id} has no legacy_role."
       end
     rescue StandardError => e
       Rails.logger.error "Failed to process User #{user.id}: #{e.message}"
