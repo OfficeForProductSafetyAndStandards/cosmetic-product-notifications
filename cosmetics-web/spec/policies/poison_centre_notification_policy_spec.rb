@@ -6,7 +6,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   let(:notification) { build_stubbed(:notification) }
 
   context "with a poison centre user" do
-    let(:user) { build_stubbed(:poison_centre_user) }
+    let(:user) { create(:poison_centre_user) }
 
     it { is_expected.to permit(:index) }
     it { is_expected.to permit(:show) }
@@ -19,7 +19,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   end
 
   context "with an OPSS General user" do
-    let(:user) { build_stubbed(:opss_general_user) }
+    let(:user) { create(:opss_general_user) }
 
     it { is_expected.to permit(:index) }
     it { is_expected.to permit(:show) }
@@ -32,7 +32,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   end
 
   context "with an OPSS Enforcement user" do
-    let(:user) { build_stubbed(:opss_enforcement_user) }
+    let(:user) { create(:opss_enforcement_user) }
 
     it { is_expected.to permit(:index) }
     it { is_expected.to permit(:show) }
@@ -45,7 +45,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   end
 
   context "with an OPSS IMT user" do
-    let(:user) { build_stubbed(:opss_imt_user) }
+    let(:user) { create(:opss_imt_user) }
 
     it { is_expected.to permit(:index) }
     it { is_expected.to permit(:show) }
@@ -58,7 +58,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   end
 
   context "with a Trading Standards user" do
-    let(:user) { build_stubbed(:trading_standards_user) }
+    let(:user) { create(:trading_standards_user) }
 
     it { is_expected.to permit(:index) }
     it { is_expected.to permit(:show) }
@@ -71,7 +71,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   end
 
   context "with an OPSS Science user" do
-    let(:user) { build_stubbed(:opss_science_user) }
+    let(:user) { create(:opss_science_user) }
 
     it { is_expected.to permit(:index) }
     it { is_expected.to permit(:show) }
@@ -84,7 +84,7 @@ RSpec.describe PoisonCentreNotificationPolicy, type: :policy do
   end
 
   context "with neither a poison centre/OPSS General/OPSS Enforcement/OPSS IMT/OPSS Science/Trading Standards user" do
-    let(:user) { build_stubbed(:search_user) }
+    let(:user) { create(:search_user) }
 
     it { is_expected.not_to permit(:index) }
     it { is_expected.not_to permit(:show) }

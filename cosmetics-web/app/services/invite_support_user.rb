@@ -21,11 +21,12 @@ private
   end
 
   def create_user
-    SupportUser.find_or_create_by!(email:) do |user|
+    SupportUser.find_or_create_by!(email: email) do |user|
       user.name = name
       user.skip_password_validation = true
-      user.role = :opss_general # All support users also have the OPSS General role for the search service
       user.invite = true
+      user.save!
+      user.add_role(:opss_general)
     end
   end
 

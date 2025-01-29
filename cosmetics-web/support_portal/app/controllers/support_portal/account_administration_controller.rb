@@ -17,7 +17,7 @@ module SupportPortal
 
       users = if @search_query
                 ::User.where("name ILIKE ?", "%#{@search_query}%").or(::User.where("email ILIKE ?", "%#{@search_query}%"))
-                  .where(type: %w[SubmitUser SearchUser]).select(:id, :name, :email, :type).order(name: :asc).order(created_at: :desc)
+                     .where(type: %w[SubmitUser SearchUser]).select(:id, :name, :email, :type).order(name: :asc).order(created_at: :desc)
               else
                 ::User.where(type: %w[SubmitUser SearchUser]).select(:id, :name, :email, :type).order(name: :asc).order(created_at: :desc)
               end
@@ -75,7 +75,7 @@ module SupportPortal
 
     # GET /:id/deactivate-account
     def deactivate_account
-      return redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated? # rubocop:disable Style/RedundantReturn
+      redirect_to account_administration_path unless @user.is_a?(::SearchUser) && !@user.deactivated?
     end
 
     # PATCH/PUT /:id/deactivate
@@ -105,12 +105,16 @@ module SupportPortal
 
     # PATCH/PUT /:id/update-role
     def update_role
-      existing_role = @user.role
+      existing_roles = @user.roles.map(&:name)
 
-      return redirect_to account_administration_path if existing_role == params[:search_user][:role]
+      new_role = params[:search_user][:role]
+      return redirect_to account_administration_path if existing_roles.include?(new_role)
 
-      if @user.update(update_role_params)
-        redirect_to account_administration_path, notice: "The account role type has been updated from #{helpers.role_type(existing_role)} to #{helpers.role_type(params[:search_user][:role])}"
+      @user.roles.clear
+      @user.add_role(new_role)
+
+      if @user.save
+        redirect_to account_administration_path, notice: "The account role type has been updated from #{helpers.role_type(existing_roles.first)} to #{helpers.role_type(new_role)}"
       else
         render :edit_role
       end
@@ -121,17 +125,13 @@ module SupportPortal
 
     # GET /:id/delete-responsible-person-user/:responsible_person_user_id/confirm
     def delete_responsible_person_user_confirm
-      # If there is only 1 user then it is the current user and we shouldn't remove their
-      # access, otherwise the Responsible Person will be orphaned.
       @allow_removal = @responsible_person.responsible_person_users.count > 1
     end
 
     # DELETE /:id/delete-responsible-person-user/:responsible_person_user_id
     def delete_responsible_person_user
       @user.responsible_person_users.find(params[:responsible_person_user_id]).destroy
-
       ::SupportNotifyMailer.removed_from_responsible_person_email(@user, @responsible_person.name).deliver_later
-
       redirect_to edit_responsible_persons_account_administration_path(@user, q: params[:q]), notice: "#{@user.name} has been removed from #{@responsible_person.name}"
     end
 
@@ -142,10 +142,15 @@ module SupportPortal
 
     # PATCH/PUT /create-search-user
     def create_search_user
-      @user = ::SearchUser.new(invite_search_user_params.merge(skip_password_validation: true, validate_role: true))
+      @user = ::SearchUser.new(invite_search_user_params.merge(skip_password_validation: true))
+
+      if params[:search_user][:role].present?
+        @user.add_role(params[:search_user][:role])
+      end
 
       if @user.valid?
-        ::InviteSearchUser.call(invite_search_user_params)
+        # Pass the role to the service if it needs it:
+        ::InviteSearchUser.call(invite_search_user_params.merge(role: params[:search_user][:role]))
         redirect_to invite_search_user_account_administration_index_path, notice: "New search user account invitation sent"
       else
         render :invite_search_user
@@ -162,14 +167,14 @@ module SupportPortal
       return unless @user.is_a?(::SubmitUser)
 
       @responsible_persons = @user.responsible_persons
-        .select("responsible_persons.id AS id", "responsible_persons.name AS name", "responsible_person_users.id AS responsible_person_user_id")
-        .order(name: :asc)
+                                  .select("responsible_persons.id AS id", "responsible_persons.name AS name", "responsible_person_users.id AS responsible_person_user_id")
+                                  .order(name: :asc)
     end
 
     def set_responsible_person
       @responsible_person = @user.responsible_persons.where(responsible_person_users: { id: params[:responsible_person_user_id] })
-        .select("responsible_persons.id AS id", "responsible_persons.name AS name", "responsible_person_users.id AS responsible_person_user_id")
-        .first!
+                                                     .select("responsible_persons.id AS id", "responsible_persons.name AS name", "responsible_person_users.id AS responsible_person_user_id")
+                                                     .first!
     end
 
     def user_type_param(user)
@@ -189,12 +194,9 @@ module SupportPortal
       params.require(user_type_param(user)).permit(:email)
     end
 
-    def update_role_params
-      params.require(:search_user).permit(:role)
-    end
-
+    # No longer permitting role here
     def invite_search_user_params
-      params.require(:search_user).permit(:name, :email, :role)
+      params.require(:search_user).permit(:name, :email)
     end
   end
 end

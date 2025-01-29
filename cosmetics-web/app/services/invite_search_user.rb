@@ -18,15 +18,16 @@ class InviteSearchUser
 private
 
   def email_taken_by_other_user_type?
-    SubmitUser.where(email:).or(SupportUser.where(email:)).count.positive?
+    SubmitUser.where(email: email).or(SupportUser.where(email: email)).exists?
   end
 
   def create_user
-    SearchUser.find_or_create_by!(email:) do |user|
+    SearchUser.find_or_create_by!(email: email) do |user|
       user.name = name
       user.skip_password_validation = true
-      user.role = role
       user.invite = true
+      user.save!
+      user.add_role(role)
     end
   end
 
@@ -43,7 +44,6 @@ private
   end
 
   def email
-    # User emails are forced to lower case when saved, so we must compare case insensitively
     context.email&.downcase
   end
 end
