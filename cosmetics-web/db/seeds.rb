@@ -1,9 +1,7 @@
-# This file seeds the database with default values.
-
-# Return if ResponsiblePerson records exist
 return if ResponsiblePerson.count.positive?
 
-# Method to extract users from environment variable
+SEARCH_USER_ROLES = %w[poison_centre opss_science opss_general opss_enforcement trading_standards opss_imt].freeze
+
 def get_users(env_users)
   env_users.to_s.split(";")
 end
@@ -11,7 +9,6 @@ end
 ActiveRecord::Base.transaction do
   ApiKey.create_with_generated_key(team: "Test Team")
 
-  # Create Responsible Persons
   responsible_persons_data = [
     {
       account_type: "individual",
@@ -36,7 +33,6 @@ ActiveRecord::Base.transaction do
   responsible_persons = ResponsiblePerson.create!(responsible_persons_data)
 
   responsible_persons.each do |rp|
-    # Create Contact Persons
     ContactPerson.create!(
       name: "John Doe",
       email_address: "example@example.org",
@@ -45,45 +41,9 @@ ActiveRecord::Base.transaction do
     )
   end
 
-  # Create Search User
-  SearchUser.create!(
-    id: "8718d008-da2d-4975-8cbf-4502afb5f4b6",
-    mobile_number: "07700 900000",
-    mobile_number_verified: true,
-    name: "John Doe",
-    has_accepted_declaration: true,
-    email: "search@example.org",
-    password: "testpassword",
-    failed_attempts: 0,
-    second_factor_attempts_count: 0,
-    secondary_authentication_operation: "secondary_authentication",
-    role: "poison_centre",
-    account_security_completed: true,
-    secondary_authentication_methods: %w[sms],
-    skip_password_validation: false,
-  )
-
-  # Create Support User
-  random_string = SecureRandom.hex(5)
-  SupportUser.create!(
-    id: "a52323a4-6ab1-4de8-af48-9b298a52c6c0",
-    mobile_number: "07700 900000",
-    mobile_number_verified: true,
-    name: "John Doe",
-    has_accepted_declaration: true,
-    email: "support_#{random_string}@example.gov.uk",
-    password: "testpassword",
-    failed_attempts: 0,
-    second_factor_attempts_count: 0,
-    secondary_authentication_operation: "secondary_authentication",
-    account_security_completed: true,
-    secondary_authentication_methods: %w[sms],
-    skip_password_validation: false,
-  )
-
-  # Ensure at least one SubmitUser exists
   submit_user = SubmitUser.first_or_create!(
     email: "submit@example.com",
+    corrected_email: "submit@example.com",
     name: "Submit User",
     account_security_completed: true,
     password: "testpassword",
@@ -93,9 +53,78 @@ ActiveRecord::Base.transaction do
     has_accepted_declaration: true,
     confirmed_at: Time.zone.now,
     unique_session_id: Devise.friendly_token,
+    legacy_role: nil,
+    legacy_type: "SubmitUser",
+    role: nil,
   )
 
-  # Create Notifications
+  get_users(ENV["SEED_USERS"]).each do |user|
+    name, email = user.split(":")
+    email_user, email_domain = email.split("@")
+
+    corrected_email = email_user.split("+").first + "@#{email_domain}"
+
+    submit_user_params = {
+      email: email,
+      corrected_email: corrected_email,
+      name: name,
+      account_security_completed: true,
+      password: "testpassword",
+      secondary_authentication_methods: %w[sms],
+      mobile_number: "07700 900000",
+      mobile_number_verified: true,
+      has_accepted_declaration: true,
+      confirmed_at: Time.zone.now,
+      unique_session_id: Devise.friendly_token,
+      legacy_role: nil,
+      legacy_type: "SubmitUser",
+      role: nil,
+    }
+
+    submit_user = SubmitUser.create!(submit_user_params)
+    submit_user.responsible_persons << responsible_persons.first
+
+    support_user_params = {
+      email: "#{email_user}+support@#{email_domain}",
+      corrected_email: corrected_email,
+      name: name,
+      account_security_completed: true,
+      password: "testpassword",
+      secondary_authentication_methods: %w[sms],
+      mobile_number: "07700 900000",
+      mobile_number_verified: true,
+      has_accepted_declaration: true,
+      confirmed_at: Time.zone.now,
+      unique_session_id: Devise.friendly_token,
+      legacy_role: "opss_general",
+      legacy_type: "SupportUser",
+      role: "opss_general",
+    }
+    support_user = SupportUser.create!(support_user_params)
+    support_user.add_role(:opss_general)
+
+    SEARCH_USER_ROLES.each do |role|
+      search_user_params = {
+        email: "#{email_user}+search_#{role}@#{email_domain}",
+        corrected_email: corrected_email,
+        name: name,
+        account_security_completed: true,
+        password: "testpassword",
+        secondary_authentication_methods: %w[sms],
+        mobile_number: "07700 900000",
+        mobile_number_verified: true,
+        has_accepted_declaration: true,
+        confirmed_at: Time.zone.now,
+        unique_session_id: Devise.friendly_token,
+        legacy_role: role,
+        legacy_type: "SearchUser",
+        role: role,
+      }
+      role_user = SearchUser.create!(search_user_params)
+      role_user.add_role(role.to_sym)
+    end
+  end
+
   keywords = %w[cream luxury premium]
   category_names = %i[skin hair nail oral]
   categories = %i[face_care_products_other_than_face_mask shampoo nail_varnish_nail_makeup toothpaste]
@@ -114,7 +143,6 @@ ActiveRecord::Base.transaction do
 
       notification = Notification.create!(notification_attributes)
 
-      # Create Components
       component_attributes = {
         state: "component_complete",
         notification_id: notification.id,
@@ -140,77 +168,6 @@ ActiveRecord::Base.transaction do
     end
   end
 
-  # Create Users from environment variable
-  get_users(ENV["SEED_USERS"]).each do |user|
-    name, email = user.split(":")
-    email_user, email_domain = email.split("@")
-
-    submit_user_params = {
-      email:,
-      name:,
-      account_security_completed: true,
-      password: "testpassword",
-      secondary_authentication_methods: %w[sms],
-      mobile_number: "07700 900000",
-      mobile_number_verified: true,
-      has_accepted_declaration: true,
-      confirmed_at: Time.zone.now,
-      unique_session_id: Devise.friendly_token,
-    }
-
-    submit_user = SubmitUser.create!(submit_user_params)
-    submit_user.responsible_persons << responsible_persons.first
-
-    support_user_params = {
-      email: "#{email_user}+support@#{email_domain}",
-      name:,
-      role: :opss_general,
-      account_security_completed: true,
-      password: "testpassword",
-      secondary_authentication_methods: %w[sms],
-      mobile_number: "07700 900000",
-      mobile_number_verified: true,
-      has_accepted_declaration: true,
-      confirmed_at: Time.zone.now,
-      unique_session_id: Devise.friendly_token,
-    }
-    SupportUser.create!(support_user_params)
-
-    search_user_params = {
-      email: "#{email_user}+search@#{email_domain}",
-      name:,
-      role: :opss_general,
-      account_security_completed: true,
-      password: "testpassword",
-      secondary_authentication_methods: %w[sms],
-      mobile_number: "07700 900000",
-      mobile_number_verified: true,
-      has_accepted_declaration: true,
-      confirmed_at: Time.zone.now,
-      unique_session_id: Devise.friendly_token,
-    }
-    SearchUser.create!(search_user_params)
-
-    roles = SearchUser.roles.keys
-    roles.each do |role|
-      search_user_params = {
-        email: "#{email_user}+search_#{role}@#{email_domain}",
-        name:,
-        role: role.to_sym,
-        account_security_completed: true,
-        password: "testpassword",
-        secondary_authentication_methods: %w[sms],
-        mobile_number: "07700 900000",
-        mobile_number_verified: true,
-        has_accepted_declaration: true,
-        confirmed_at: Time.zone.now,
-        unique_session_id: Devise.friendly_token,
-      }
-      SearchUser.create!(search_user_params)
-    end
-  end
-
-  # Create Nanomaterial Notifications
   30.times do |i|
     NanomaterialNotification.create!(
       name: "Nanomaterial #{i + 1}",
@@ -221,6 +178,6 @@ ActiveRecord::Base.transaction do
       submitted_at: (Time.zone.now.to_date - i.days),
     ).file.attach(io: File.open("spec/fixtures/files/testPdf.pdf"), filename: "testPdf.pdf", content_type: "application/pdf")
   end
-end
 
-ReindexOpensearchJob.new.perform
+  ReindexOpensearchJob.new.perform
+end
