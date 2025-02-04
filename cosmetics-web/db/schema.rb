@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_27_132029) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_04_131130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -382,7 +382,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_27_132029) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "invitation_token"
     t.datetime "invited_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.string "role"
     t.citext "new_email"
     t.string "new_email_confirmation_token"
     t.datetime "new_email_confirmation_token_expires_at", precision: nil

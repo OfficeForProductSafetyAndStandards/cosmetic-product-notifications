@@ -55,7 +55,6 @@ ActiveRecord::Base.transaction do
     unique_session_id: Devise.friendly_token,
     legacy_role: nil,
     legacy_type: "SubmitUser",
-    role: nil,
   )
 
   get_users(ENV["SEED_USERS"]).each do |user|
@@ -78,7 +77,6 @@ ActiveRecord::Base.transaction do
       unique_session_id: Devise.friendly_token,
       legacy_role: nil,
       legacy_type: "SubmitUser",
-      role: nil,
     }
 
     submit_user = SubmitUser.create!(submit_user_params)
@@ -98,7 +96,6 @@ ActiveRecord::Base.transaction do
       unique_session_id: Devise.friendly_token,
       legacy_role: "opss_general",
       legacy_type: "SupportUser",
-      role: "opss_general",
     }
     support_user = SupportUser.create!(support_user_params)
     support_user.add_role(:opss_general)
@@ -118,7 +115,6 @@ ActiveRecord::Base.transaction do
         unique_session_id: Devise.friendly_token,
         legacy_role: role,
         legacy_type: "SearchUser",
-        role: role,
       }
       role_user = SearchUser.create!(search_user_params)
       role_user.add_role(role.to_sym)
