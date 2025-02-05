@@ -20,6 +20,6 @@ class ErrorsController < ApplicationController
 
   def invalid_account
     template = search_domain? ? :wrong_service_for_submit_user : :wrong_service_for_search_user
-    render template, status: :forbidden, formats: [:html], locals: { user_role: current_user&.role }
+    render template, status: :forbidden, formats: [:html], locals: { user_role: current_user&.roles&.any? }
   end
 end

@@ -41,7 +41,7 @@ module ActiveStorageAccessProtectionConcern
   end
 
   def allow_access_search_user
-    return false unless current_search_user&.role
+    return false unless current_search_user&.roles&.any?
 
     if current_search_user.has_role?(:opss_general)
       return  @blob.attachments.first&.record_type == "ImageUpload"
@@ -51,7 +51,7 @@ module ActiveStorageAccessProtectionConcern
   end
 
   def allow_access_support_user
-    return false unless current_support_user&.role
+    return false unless current_support_user&.roles&.any?
 
     if current_support_user.has_role?(:opss_general)
       return  @blob.attachments.first&.record_type == "ImageUpload"
