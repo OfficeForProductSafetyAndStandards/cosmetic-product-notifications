@@ -14,9 +14,12 @@ module Registration
 
       corrected_email = LegacyData.remove_plus_part(email)
 
-      if (user = SubmitUser.where(email: email).or(SubmitUser.where(new_email: email)).first)
+      user = SubmitUser.where(email: email).or(SubmitUser.where(new_email: email)).first
+
+      if user
+        user.add_role(:submit_user) unless user.has_role?(:submit_user)
         send_link(user)
-        true
+        user
       else
         user = SubmitUser.new(
           name: full_name,
@@ -64,6 +67,3 @@ module LegacyData
     [local, domain].join("@")
   end
 end
-
-## Roles TODO: This is where we can save the new role, and add the user to the submit_user role
-## Upon transition to OneLogin this can go.
