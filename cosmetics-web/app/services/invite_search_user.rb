@@ -22,12 +22,11 @@ private
   end
 
   def create_user
-    SearchUser.find_or_create_by!(email: email) do |user|
-      user.name = name
-      user.skip_password_validation = true
-      user.invite = true
-      user.save!
-      user.add_role(role)
+    SearchUser.find_or_create_by!(email: email) do |new_user|
+      new_user.name = name
+      new_user.skip_password_validation = true
+      new_user.invite = true
+      new_user.add_role(role)
     end
   end
 
