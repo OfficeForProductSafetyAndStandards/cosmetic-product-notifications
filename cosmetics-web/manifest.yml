@@ -40,4 +40,4 @@ applications:
       health-check-type: process
       instances: ((worker-instances))
       memory: 2G
-      disk_quota: 2G
+      disk_quota: 4G
