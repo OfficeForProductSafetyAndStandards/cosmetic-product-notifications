@@ -280,6 +280,10 @@ Rails.application.routes.draw do
     get :accessibility_statement_search, path: "accessibility-statement-search"
   end
 
+  namespace :pingdom do
+    get "ping", to: "check#pingdom", constraints: { format: :xml }
+  end
+
   resource :cookie_form, only: [:create]
 
   get "frame_formulations", to: "frame_formulations#index"
