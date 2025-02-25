@@ -55,7 +55,7 @@ RSpec.describe Searchable, type: :model do
       it "sets the model alias pointing to the index" do
         travel_to execution_time
         import
-        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)).to eq(
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name).body).to eq(
           { new_index_name => { "aliases" => { "dummies" => {} } } },
         )
       end
@@ -337,7 +337,7 @@ RSpec.describe Searchable, type: :model do
 
     it "sets the model alias pointing to the index" do
       dummy_class.create_aliased_index!
-      expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)).to eq(
+      expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name).body).to eq(
         { expected_index => { "aliases" => { "dummies" => {} } } },
       )
     end
@@ -396,7 +396,7 @@ RSpec.describe Searchable, type: :model do
 
       it "associates the given index index with the model alias" do
         dummy_class.alias_index!("dummies_version")
-        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)).to eq(
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name).body).to eq(
           { "dummies_version" => { "aliases" => { "dummies" => {} } } },
         )
       end
@@ -414,7 +414,7 @@ RSpec.describe Searchable, type: :model do
     context "when given a non existing index" do
       it "raises an error" do
         expect { dummy_class.alias_index!("dummies_version") }
-          .to raise_error Elasticsearch::Transport::Transport::Errors::NotFound
+          .to raise_error Elastic::Transport::Transport::Errors::NotFound
       end
     end
   end
@@ -461,14 +461,14 @@ RSpec.describe Searchable, type: :model do
 
       it "removes one index from the model alias and adds the other" do
         expect { dummy_class.swap_index_alias!(from: current_index, to: new_index) }.to change {
-          dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)
+          dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name).body
         }.from({ current_index => { "aliases" => { "dummies" => {} } } })
         .to({ new_index => { "aliases" => { "dummies" => {} } } })
       end
 
       it "defaults to the current index when not 'from' index is given" do
         expect { dummy_class.swap_index_alias!(to: new_index) }.to change {
-          dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name)
+          dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name).body
         }.from({ current_index => { "aliases" => { "dummies" => {} } } })
         .to({ new_index => { "aliases" => { "dummies" => {} } } })
       end
@@ -491,7 +491,7 @@ RSpec.describe Searchable, type: :model do
 
       it "adds the new index to the model alias" do
         dummy_class.swap_index_alias!(from: current_index, to: new_index)
-        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name))
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name).body)
           .to eq({ new_index => { "aliases" => { "dummies" => {} } } })
       end
 
@@ -508,7 +508,7 @@ RSpec.describe Searchable, type: :model do
     context "when there is no other index or alias" do
       it "adds the new index to the model alias" do
         dummy_class.swap_index_alias!(from: nil, to: new_index)
-        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name))
+        expect(dummy_class.__elasticsearch__.client.indices.get_alias(name: dummy_class.index_name).body)
           .to eq({ new_index => { "aliases" => { "dummies" => {} } } })
       end
 

@@ -179,7 +179,7 @@ GEM
       warden (~> 1.2.3)
     devise-security (0.18.0)
       devise (>= 4.3.0)
-    diff-lcs (1.5.1)
+    diff-lcs (1.6.0)
     docile (1.4.1)
     domain_name (0.6.20240107)
     dotenv (3.1.7)
@@ -187,37 +187,45 @@ GEM
       dotenv (= 3.1.7)
       railties (>= 6.1)
     drb (2.2.1)
-    elasticsearch (7.17.10)
-      elasticsearch-api (= 7.17.10)
-      elasticsearch-transport (= 7.17.10)
-    elasticsearch-api (7.17.10)
+    elastic-transport (8.4.0)
+      faraday (< 3)
       multi_json
-    elasticsearch-model (7.2.1)
+    elasticsearch (8.17.1)
+      elastic-transport (~> 8.3)
+      elasticsearch-api (= 8.17.1)
+    elasticsearch-api (8.17.1)
+      multi_json
+    elasticsearch-model (8.0.0)
       activesupport (> 3)
-      elasticsearch (~> 7)
+      elasticsearch (~> 8)
       hashie
     elasticsearch-rails (8.0.0)
-    elasticsearch-transport (7.17.10)
-      faraday (>= 1, < 3)
-      multi_json
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
-    factory_bot (6.5.0)
-      activesupport (>= 5.0.0)
+    factory_bot (6.5.1)
+      activesupport (>= 6.1.0)
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.11.0)
-      faraday-net_http (>= 2.0, < 3.4)
+    faraday (2.12.2)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
       logger
-    faraday-net_http (3.3.0)
-      net-http
+    faraday-net_http (3.4.0)
+      net-http (>= 0.5.0)
+    ffi (1.17.1-aarch64-linux-gnu)
+    ffi (1.17.1-aarch64-linux-musl)
+    ffi (1.17.1-arm-linux-gnu)
+    ffi (1.17.1-arm-linux-musl)
     ffi (1.17.1-arm64-darwin)
+    ffi (1.17.1-x86-linux-gnu)
+    ffi (1.17.1-x86-linux-musl)
     ffi (1.17.1-x86_64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
+    ffi (1.17.1-x86_64-linux-musl)
     fiber-storage (1.0.0)
     flipper (1.3.3)
       concurrent-ruby (< 2)
@@ -259,7 +267,7 @@ GEM
     html-attributes-utils (1.0.2)
       activesupport (>= 6.1.4.4)
     http-accept (1.7.0)
-    http-cookie (1.0.7)
+    http-cookie (1.0.8)
       domain_name (~> 0.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -279,11 +287,11 @@ GEM
     jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.9.1)
+    json (2.10.1)
     json_tagged_logger (0.8.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
-    jwt (2.9.0)
+    jwt (2.10.1)
       base64
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -302,9 +310,10 @@ GEM
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
     language_server-protocol (3.17.0.4)
-    launchy (3.0.1)
+    launchy (3.1.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
+      logger (~> 1.6)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -325,9 +334,10 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     method_source (1.1.0)
-    mime-types (3.5.2)
+    mime-types (3.6.0)
+      logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0903)
+    mime-types-data (3.2025.0220)
     mini_magick (5.2.0)
       benchmark
       logger
@@ -335,7 +345,7 @@ GEM
     minitest (5.25.4)
     multi_json (1.15.0)
     mutex_m (0.3.0)
-    net-http (0.4.1)
+    net-http (0.6.0)
       uri
     net-imap (0.5.6)
       date
@@ -348,7 +358,13 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.4)
+    nokogiri (1.17.2-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.17.2-arm-linux)
+      racc (~> 1.4)
     nokogiri (1.17.2-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.17.2-x86-linux)
       racc (~> 1.4)
     nokogiri (1.17.2-x86_64-darwin)
       racc (~> 1.4)
@@ -637,7 +653,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (0.13.1)
+    uri (1.0.2)
     view_component (3.21.0)
       activesupport (>= 5.2.0, < 8.1)
       concurrent-ruby (~> 1.0)
@@ -650,7 +666,8 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.9.1)
     websocket (1.2.11)
-    websocket-driver (0.7.6)
+    websocket-driver (0.7.7)
+      base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     wicked (2.0.0)
@@ -661,13 +678,20 @@ GEM
     zeitwerk (2.7.2)
 
 PLATFORMS
-  arm64-darwin-21
-  arm64-darwin-22
-  arm64-darwin-23
-  arm64-darwin-24
-  x86_64-darwin-21
-  x86_64-darwin-22
+  aarch64-linux
+  aarch64-linux-gnu
+  aarch64-linux-musl
+  arm-linux
+  arm-linux-gnu
+  arm-linux-musl
+  arm64-darwin
+  x86-linux
+  x86-linux-gnu
+  x86-linux-musl
+  x86_64-darwin
   x86_64-linux
+  x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
   aasm (~> 5.5)
@@ -682,7 +706,7 @@ DEPENDENCIES
   devise (~> 4.9)
   devise-security (~> 0.18)
   dotenv-rails
-  elasticsearch (= 7.17.10)
+  elasticsearch
   elasticsearch-model
   elasticsearch-rails
   factory_bot_rails
@@ -760,4 +784,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.5.22
+   2.5.23
