@@ -14,6 +14,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
+require_relative "../lib/formatters/asim_formatter"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -51,6 +52,23 @@ module Cosmetics
     config.action_mailer.deliver_later_queue_name = "cosmetics-mailers"
 
     config.exceptions_app = routes
+
+    # Enable ASIM logging if ENABLE_ASIM_LOGGER is set to 'true'
+    if ENV["ENABLE_ASIM_LOGGER"] == "true"
+      config.lograge.enabled = true
+      config.lograge.formatter = Formatters::AsimFormatter.new
+      config.logger = ActiveSupport::TaggedLogging.new(Logger.new($stdout))
+      config.log_tags = JsonTaggedLogger::LogTagsConfig.generate(
+        :request_id,
+        :remote_ip,
+        JsonTaggedLogger::TagFromSession.get(:user_id),
+        :user_agent,
+      )
+    else
+      # normal development logging configuration
+      config.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new($stdout))
+    end
+
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
 
     config.antivirus_url = ENV.fetch("ANTIVIRUS_URL", "http://localhost:3006/safe")
