@@ -8,6 +8,16 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Reduce logging noise in tests
+  config.log_level = :warn
+  config.active_support.report_deprecations = false
+
+  # Disable request logging in tests
+  config.middleware.delete Rails::Rack::Logger
+  config.active_storage.service = :test
+  config.logger = Logger.new(nil)
+  config.active_support.deprecation = :silence
+
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
