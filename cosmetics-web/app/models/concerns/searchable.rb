@@ -75,7 +75,7 @@ module Searchable
     result = __elasticsearch__.delete_document
 
     opensearch_log "#{self.class} with id=#{id} deleted from index with result #{result}"
-  rescue Elasticsearch::Transport::Transport::Errors::NotFound
+  rescue Elastic::Transport::Transport::Errors::NotFound
     opensearch_log "Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
   end
 
