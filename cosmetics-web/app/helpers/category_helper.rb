@@ -124,6 +124,8 @@ module CategoryHelper
   end
 
   def get_sub_categories(category)
+    return [] if category.nil?
+
     Component.get_parent_of_categories.select { |_key, value| value == category.to_sym }.keys
   end
 
