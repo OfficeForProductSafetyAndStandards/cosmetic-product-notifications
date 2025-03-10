@@ -11,9 +11,7 @@ module FileAntivirusConcern
     end
   end
 
-  def attachment_name_for_antivirus
-    self.class.attachment_name_for_antivirus
-  end
+  delegate :attachment_name_for_antivirus, to: :class
 
   def file_exists?
     send(attachment_name_for_antivirus).attachment.present?

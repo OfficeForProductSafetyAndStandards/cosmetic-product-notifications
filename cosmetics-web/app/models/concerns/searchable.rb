@@ -79,9 +79,7 @@ module Searchable
     opensearch_log "Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
   end
 
-  def opensearch_log(msg)
-    self.class.opensearch_log(msg)
-  end
+  delegate :opensearch_log, to: :class
 
   class_methods do
     def full_search(query)
