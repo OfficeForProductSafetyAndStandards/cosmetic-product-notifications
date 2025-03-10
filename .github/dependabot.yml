@@ -4,8 +4,6 @@ updates:
     directory: "/cosmetics-web"
     schedule:
       interval: "weekly"
-    ignore:
-      - dependency-name: "nokogiri"
     groups:
       dependencies:
         update-types:
