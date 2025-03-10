@@ -1,4 +1,4 @@
 repository: scpn
 builder:
   name: paketobuildpacks/builder-jammy-base
-  version: 0.4.240
+  version: 0.4.378
