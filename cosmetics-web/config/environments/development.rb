@@ -2,9 +2,9 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.hosts << ENV["SEARCH_HOST"]
-  config.hosts << ENV["SUBMIT_HOST"]
-  config.hosts << ENV["SUPPORT_HOST"]
+  config.hosts << ENV.fetch("SEARCH_HOST", 'localhost')
+  config.hosts << ENV.fetch("SUBMIT_HOST", 'localhost')
+  config.hosts << ENV.fetch("SUPPORT_HOST", 'localhost')
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
@@ -74,11 +74,11 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  config.action_controller.default_url_options = { host: ENV.fetch["SUBMIT_HOST", "blah"], port: ENV.fetch("PORT", "3000") }
+  config.action_controller.default_url_options = { host: ENV.fetch("SUBMIT_HOST", "blah"), port: ENV.fetch("PORT", "3000") }
 
-  config.action_mailer.default_url_options = { host: ENV.fetch["SUBMIT_HOST", "blah"], port: ENV.fetch("PORT", "3000") }
+  config.action_mailer.default_url_options = { host: ENV.fetch("SUBMIT_HOST", "blah"), port: ENV.fetch("PORT", "3000") }
 
   if ENV["DIRECT_UPLOAD_DOMAIN"]
-    config.action_controller.default_url_options = { host: ENV.fetch["DIRECT_UPLOAD_DOMAIN"], port: ENV.fetch("PORT", "3000") }
+    config.action_controller.default_url_options = { host: ENV["DIRECT_UPLOAD_DOMAIN"], port: ENV.fetch("PORT", "3000") }
   end
 end
