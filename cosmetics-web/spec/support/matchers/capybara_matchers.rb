@@ -1,14 +1,14 @@
 module PageMatchers
   def have_h1(text)
-    have_selector("h1", text:, exact_text: text.is_a?(String) ? true : nil)
+    have_selector("h1", text:, exact_text: text.is_a?(String) || nil)
   end
 
   def have_h2(text)
-    have_selector("h2", text:, exact_text: text.is_a?(String) ? true : nil)
+    have_selector("h2", text:, exact_text: text.is_a?(String) || nil)
   end
 
   def have_h3(text)
-    have_selector("h3", text:, exact_text: text.is_a?(String) ? true : nil)
+    have_selector("h3", text:, exact_text: text.is_a?(String) || nil)
   end
 
   def have_notification_banner(text)
