@@ -91,12 +91,12 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.action_controller.default_url_options = {
-    host: ENV["SUBMIT_HOST"],
+    host: ENV.fetch("SUBMIT_HOST", "cosmetics-submit"),
     protocol: "https",
   }
 
   config.action_mailer.default_url_options = {
-    host: ENV["SUBMIT_HOST"],
+    host: ENV.fetch("SUBMIT_HOST", "cosmetics-submit"),
     protocol: "https",
   }
 
