@@ -5,6 +5,4 @@ set -e
 
 # Add commands below to run as part of the build phase
 
-
-cp -R .git ./cosmetics-web
-cd cosmetics-web
+cp -R ./cosmetics-web/* .
