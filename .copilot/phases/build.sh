@@ -5,4 +5,4 @@ set -e
 
 # Add commands below to run as part of the build phase
 
-cp -R ./cosmetics-web/* .
+cp -r ./cosmetics-web/* .
