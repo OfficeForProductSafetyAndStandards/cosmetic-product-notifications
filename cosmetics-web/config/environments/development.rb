@@ -74,9 +74,9 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  config.action_controller.default_url_options = { host: ENV.fetch("SUBMIT_HOST", "blah"), port: ENV.fetch("PORT", "3000") }
+  config.action_controller.default_url_options = { host: ENV.fetch("SUBMIT_HOST", "localhost"), port: ENV.fetch("PORT", "3000") }
 
-  config.action_mailer.default_url_options = { host: ENV.fetch("SUBMIT_HOST", "blah"), port: ENV.fetch("PORT", "3000") }
+  config.action_mailer.default_url_options = { host: ENV.fetch("SUBMIT_HOST", "localhost"), port: ENV.fetch("PORT", "3000") }
 
   if ENV["DIRECT_UPLOAD_DOMAIN"]
     config.action_controller.default_url_options = { host: ENV["DIRECT_UPLOAD_DOMAIN"], port: ENV.fetch("PORT", "3000") }
