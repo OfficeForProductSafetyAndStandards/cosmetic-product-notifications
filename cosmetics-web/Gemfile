@@ -99,7 +99,7 @@ gem "graphiql-rails", group: :development
 gem "graphql", "~> 2.4"
 gem "rolify"
 
-gem "nokogiri", platforms: :ruby
+gem "nokogiri", force_ruby_platform: true
 
 # Log formatting
 gem "json_tagged_logger"
