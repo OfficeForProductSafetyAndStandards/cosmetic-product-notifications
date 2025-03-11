@@ -28,6 +28,7 @@
   "scripts": {
     "lint:css": "yarn stylelint 'app/assets/stylesheets/**/*.(s)?css'",
     "lint:js": "yarn standard",
+    "start": "echo start",
     "build": "esbuild app/javascript/application.js --target=es2016 --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --quiet-deps --no-source-map --load-path=node_modules"
   },
