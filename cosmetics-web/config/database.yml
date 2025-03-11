@@ -9,18 +9,18 @@ default: &default
 development:
   <<: *default
   database: cosmetics_development
-  url: <%= ENV.fetch('DATABASE_URL', 'blah') %>
+  url: <%= ENV['DATABASE_URL'] %>
 
 test:
   <<: *default
   database: cosmetics_test
   host: localhost
-  url: <%= ENV.fetch('DATABASE_URL', 'blah') %>
+  url: <%= ENV['TEST_DATABASE_URL'] || ENV['DATABASE_URL'] %>
 
 production:
   <<: *default
   database: cosmetics_prod
-  url: <%= ENV.fetch('DATABASE_URL', 'blah') %>
+  url: <%= ENV.fetch('DATABASE_URL', 'cosmetics_database') %>
   connect_timeout: 2
   variables:
     statement_timeout: <%= ENV["STATEMENT_TIMEOUT"] || "15000ms" %>
