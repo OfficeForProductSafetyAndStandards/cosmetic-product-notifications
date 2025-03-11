@@ -9,16 +9,18 @@ default: &default
 development:
   <<: *default
   database: cosmetics_development
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV.fetch('DATABASE_URL', 'blah') %>
 
 test:
   <<: *default
   database: cosmetics_test
   host: localhost
-  url: <%= ENV['TEST_DATABASE_URL'] || ENV['DATABASE_URL'] %>
+  url: <%= ENV.fetch('DATABASE_URL', 'blah') %>
 
 production:
-  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_label("postgres")["uri"] %>
+  <<: *default
+  database: cosmetics_prod
+  url: <%= ENV.fetch('DATABASE_URL', 'blah') %>
   connect_timeout: 2
   variables:
     statement_timeout: <%= ENV["STATEMENT_TIMEOUT"] || "15000ms" %>
