@@ -5,8 +5,6 @@ set -e
 
 # Add commands below to run inside the container after all the other buildpacks have been applied
 
-rm ./config/application.yml
-
 cp -r /workspace/db/ /workspace/db-copy/
 
 rm -rf /workspace/tmp
