@@ -6,14 +6,14 @@
 <% end %>
 
 <%
-  purposes_links = @nano_material.purposes.map do |purpose_name|
+  purposes_links = @nano_material.purposes&.map do |purpose_name|
     purpose = NanoMaterialPurposes.find(purpose_name)
     link_to("Annex #{purpose.annex_number} list of #{purpose.display_name.pluralize}",
-             purpose.link,
-             class: "govuk-link govuk-link--no-visited-state",
-             target: "_blank",
-             rel: "noopener")
-  end
+    purpose.link,
+    class: "govuk-link govuk-link--no-visited-state",
+    target: "_blank",
+    rel: "noopener")
+  end || []
 %>
 <% input_hint = capture do %>
     <p>This is the International Nomenclature for Cosmetic Ingredients name.</p>
