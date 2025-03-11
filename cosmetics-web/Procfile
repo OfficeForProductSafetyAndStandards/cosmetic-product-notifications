@@ -1,4 +1,4 @@
-web: cp -r /workspace/db-copy/* /workspace/db/ && bin/rails server
+web: cp -r /workspace/db-copy/* /workspace/db/ && bundle exec rails assets:precompile && bin/rails server
 jobs: bin/sidekiq
 js: yarn build --watch
 css: yarn build:css --watch
