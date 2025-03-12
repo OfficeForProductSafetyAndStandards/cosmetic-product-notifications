@@ -258,7 +258,7 @@ GEM
       rails (>= 4.1.0)
     graphiql-rails (1.10.4)
       railties
-    graphql (2.4.11)
+    graphql (2.4.13)
       base64
       fiber-storage
       logger
