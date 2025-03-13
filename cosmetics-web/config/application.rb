@@ -95,7 +95,5 @@ module Cosmetics
     # Use SHA1 for key generator to avoid errors when decrypting secrets generated prior to Rails 7 (new default is SHA256)
     config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
 
-    # load lib files
-    config.autoload_lib(ignore: %w(assets tasks active_model constraints formatters))
   end
 end
