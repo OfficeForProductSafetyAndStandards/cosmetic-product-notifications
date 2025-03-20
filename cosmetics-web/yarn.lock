@@ -1748,10 +1748,10 @@
     "core-js" "3.2.1"
     "openregister-picker-engine" "^1.2.1"
 
-"govuk-frontend@5.8.0":
-  "integrity" "sha512-6l3f/YhDUCWjpmSW3CL95Hg8B+ZLzTf2WYo25ZtCs2Lb8UIzxxxFI8LxG7Ey/z04UuPhUunqFhTwSkQyJ69XbQ=="
-  "resolved" "https://registry.npmjs.org/govuk-frontend/-/govuk-frontend-5.8.0.tgz"
-  "version" "5.8.0"
+"govuk-frontend@5.9.0":
+  "integrity" "sha512-8NzmyoDtRFYyHs413DfNPR8Zo6qw6Q02Mruxml/Yfy+EueaOI/JZ4gVM8d0pqzJmTiMcJuHhvxqYEgBRmqeoyA=="
+  "resolved" "https://registry.npmjs.org/govuk-frontend/-/govuk-frontend-5.9.0.tgz"
+  "version" "5.9.0"
 
 "graceful-fs@^4.1.15", "graceful-fs@^4.1.2", "graceful-fs@^4.2.11", "graceful-fs@^4.2.4":
   "integrity" "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ=="
