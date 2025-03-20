@@ -1508,7 +1508,7 @@
   dependencies:
     "reusify" "^1.0.4"
 
-"file-entry-cache@^10.0.6":
+"file-entry-cache@^10.0.7":
   "integrity" "sha512-txsf5fu3anp2ff3+gOJJzRImtrtm/oa9tYLN0iTuINZ++EyVR/nRrg2fKYwvG/pXDofcrvvb0scEbX3NyW/COw=="
   "resolved" "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-10.0.7.tgz"
   "version" "10.0.7"
@@ -1748,10 +1748,10 @@
     "core-js" "3.2.1"
     "openregister-picker-engine" "^1.2.1"
 
-"govuk-frontend@5.8.0":
-  "integrity" "sha512-6l3f/YhDUCWjpmSW3CL95Hg8B+ZLzTf2WYo25ZtCs2Lb8UIzxxxFI8LxG7Ey/z04UuPhUunqFhTwSkQyJ69XbQ=="
-  "resolved" "https://registry.npmjs.org/govuk-frontend/-/govuk-frontend-5.8.0.tgz"
-  "version" "5.8.0"
+"govuk-frontend@5.9.0":
+  "integrity" "sha512-8NzmyoDtRFYyHs413DfNPR8Zo6qw6Q02Mruxml/Yfy+EueaOI/JZ4gVM8d0pqzJmTiMcJuHhvxqYEgBRmqeoyA=="
+  "resolved" "https://registry.npmjs.org/govuk-frontend/-/govuk-frontend-5.9.0.tgz"
+  "version" "5.9.0"
 
 "graceful-fs@^4.1.15", "graceful-fs@^4.1.2", "graceful-fs@^4.2.11", "graceful-fs@^4.2.4":
   "integrity" "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ=="
@@ -3495,10 +3495,10 @@
     "postcss-selector-parser" "^6.1.2"
     "postcss-value-parser" "^4.2.0"
 
-"stylelint@^16.0.2", "stylelint@^16.1.0", "stylelint@^16.3.1", "stylelint@^16.6.1", "stylelint@16.15.0":
-  "integrity" "sha512-OK6Rs7EPdcdmjqiDycadZY4fw3f5/TC1X6/tGjnF3OosbwCeNs7nG+79MCAtjEg7ckwqTJTsku08e0Rmaz5nUw=="
-  "resolved" "https://registry.npmjs.org/stylelint/-/stylelint-16.15.0.tgz"
-  "version" "16.15.0"
+"stylelint@^16.0.2", "stylelint@^16.1.0", "stylelint@^16.3.1", "stylelint@^16.6.1", "stylelint@16.16.0":
+  "integrity" "sha512-40X5UOb/0CEFnZVEHyN260HlSSUxPES+arrUphOumGWgXERHfwCD0kNBVILgQSij8iliYVwlc0V7M5bcLP9vPg=="
+  "resolved" "https://registry.npmjs.org/stylelint/-/stylelint-16.16.0.tgz"
+  "version" "16.16.0"
   dependencies:
     "@csstools/css-parser-algorithms" "^3.0.4"
     "@csstools/css-tokenizer" "^3.0.3"
@@ -3513,7 +3513,7 @@
     "debug" "^4.3.7"
     "fast-glob" "^3.3.3"
     "fastest-levenshtein" "^1.0.16"
-    "file-entry-cache" "^10.0.6"
+    "file-entry-cache" "^10.0.7"
     "global-modules" "^2.0.0"
     "globby" "^11.1.0"
     "globjoin" "^0.1.4"
