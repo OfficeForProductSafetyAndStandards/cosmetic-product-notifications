@@ -193,10 +193,10 @@
     "@parcel/watcher-win32-ia32" "2.4.1"
     "@parcel/watcher-win32-x64" "2.4.1"
 
-"@rails/activestorage@8.0.100":
-  "integrity" "sha512-/fIFav9RFFzQKK3a91O2OOdnHxPx+mBIR6wZDxeH9bcbDf2dZqhVcr5DGRJuhkF8U7C3s0tYvYafscmkBNRlHQ=="
-  "resolved" "https://registry.npmjs.org/@rails/activestorage/-/activestorage-8.0.100.tgz"
-  "version" "8.0.100"
+"@rails/activestorage@8.0.200":
+  "integrity" "sha512-V7GnZXsAMPDWVOBv4/XpHwj5sOw5bWjidWCuUbK3Zx1xt2pOfFaeJDUG7fEWb1MwP4aW1oVVlGkJBdXVyvru0A=="
+  "resolved" "https://registry.npmjs.org/@rails/activestorage/-/activestorage-8.0.200.tgz"
+  "version" "8.0.200"
   dependencies:
     "spark-md5" "^3.0.1"
 
