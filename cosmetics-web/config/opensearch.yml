@@ -11,4 +11,4 @@ test:
   <<: *default
 
 production:
-  :url: <%= ENV["OPENSEACH_URL"] %>
+  :url: <%= CredentialsResolver.opensearch_url %>
