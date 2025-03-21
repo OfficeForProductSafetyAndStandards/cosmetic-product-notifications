@@ -1,23 +1,24 @@
-# Elasticsearch::Model.client = Elasticsearch::Client.new(Rails.application.config_for(:opensearch))
-# # bypasses the recently introduced version check to allow ES gems to connect to an Opensearch 1 server
-# Elasticsearch::Model.client.instance_variable_set("@verified", true)
-
 require 'cgi'
 require 'json'
 require 'uri'
 
-if Rails.env.production?
+def opensearch_url
   if ENV['COPILOT_ENVIRONMENT_NAME'] # DBT Platform
-    kwargs = { url: URI::parse(CGI.unescape(ENV.fetch('OPENSEARCH_URL'))) }
-  elsif ENV['VCAP_SERVICES'] # Govt PaaS / Cloud Foundry Platform
-    kwargs = { url: JSON.parse(ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"]) }
+    URI::parse(CGI.unescape(ENV.fetch('OPENSEARCH_URL')))
   else
-    raise Exception, 'Platform type not identified'
+    # Fallback to the original logic
+    ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"]
   end
-else
-  kwargs = { host: 'http://localhost:9200' }
 end
 
-Elasticsearch::Model.client = Elasticsearch::Client.new(kwargs)
+def get_opensearch_config
+  if Rails.env.production?
+    { url: opensearch_url, transport_options: { request: { timeout: 5 } } }
+  else
+    { host: 'http://localhost:9200' }
+  end
+end
+
+Elasticsearch::Model.client = Elasticsearch::Client.new(get_opensearch_config)
 # bypasses the recently introduced version check to allow ES gems to connect to an Opensearch 1 server
 Elasticsearch::Model.client.instance_variable_set("@verified", true)
