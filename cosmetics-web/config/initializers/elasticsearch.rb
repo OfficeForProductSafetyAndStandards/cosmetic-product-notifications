@@ -10,7 +10,7 @@ if Rails.env.production?
   if ENV['COPILOT_ENVIRONMENT_NAME'] # DBT Platform
     url = { url: URI::parse(CGI.unescape(ENV.fetch('OPENSEARCH_URL'))) }
   elsif ENV['VCAP_SERVICES'] # Govt PaaS / Cloud Foundry Platform
-    url = { url: JSON.parse(ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"] }
+    url = { url: JSON.parse(ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"]) }
   else
     raise Exception, 'Platform type not identified'
   end
@@ -19,4 +19,4 @@ else
 end
 
 
-Elasticsearch::Model.client = Elasticsearch::Client.new(url: url, transport_options: { request: { timeout: 5 })
+Elasticsearch::Model.client = Elasticsearch::Client.new(url: url, transport_options: { request: { timeout: 5 } })
