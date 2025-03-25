@@ -39,6 +39,8 @@ module Cosmetics
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
+    config.eager_load_paths += %W[#{config.root}/lib]
+
     # vips 8.6+ is the minimum required version to use vips as an variant
     # processor
     # Because GOV.UK PaaS is currently tied to Ubuntu 18, there is no apt
