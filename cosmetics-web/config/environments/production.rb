@@ -101,23 +101,30 @@ Rails.application.configure do
     protocol: "https",
   }
 
-  # Database connection setup (GOV PaaS)
+  # Connection setup (GOV PaaS)
   if ENV["VCAP_SERVICES"]
+    ENV["OPENSEARCH_URL"] = CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"]
     ENV["DATABASE_URL"] = CF::App::Credentials.find_by_service_label("postgres")["uri"]
   end
 
-  # Database connection setup (DBT Platform)
-  if ENV["COPILOT_ENVIRONMENT_NAME"] && ENV["DATABASE_CREDENTIALS"]
-    database_credentials = JSON.parse(ENV["DATABASE_CREDENTIALS"])
+  # Connection setup (DBT Platform)
+  if ENV["COPILOT_ENVIRONMENT_NAME"]
+    if ENV["OPENSEARCH_ENDPOINT"]
+      ENV["OPENSEARCH_URL"] = URI::parse(CGI.unescape(ENV.fetch('OPENSEARCH_ENDPOINT')))
+    end
 
-    engine = database_credentials["engine"]
-    username = database_credentials["username"]
-    password = database_credentials["password"]
-    host = database_credentials["host"]
-    port = database_credentials["port"]
-    dbname = database_credentials["dbname"]
+    if ENV["DATABASE_CREDENTIALS"]
+      database_credentials = JSON.parse(ENV["DATABASE_CREDENTIALS"])
 
-    ENV["DATABASE_URL"] = "#{engine}://#{username}:#{password}@#{host}:#{port}/#{dbname}"
+      engine = database_credentials["engine"]
+      username = database_credentials["username"]
+      password = database_credentials["password"]
+      host = database_credentials["host"]
+      port = database_credentials["port"]
+      dbname = database_credentials["dbname"]
+
+      ENV["DATABASE_URL"] = "#{engine}://#{username}:#{password}@#{host}:#{port}/#{dbname}"
+    end
   end
 
   console do
