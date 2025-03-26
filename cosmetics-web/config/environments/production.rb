@@ -114,7 +114,7 @@ Rails.application.configure do
   # Connection setup (DBT Platform)
   if ENV["COPILOT_ENVIRONMENT_NAME"]
     if ENV["OPENSEARCH_URL"]
-      ENV["OPENSEARCH_URL"] = URI::parse(CGI.unescape(ENV["OPENSEARCH_URL"]))
+      ENV["OPENSEARCH_URL"] = URI.parse(CGI.unescape(ENV["OPENSEARCH_URL"]))
     end
 
     if ENV["DATABASE_CREDENTIALS"]
