@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require "cf-app-utils"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -99,6 +100,25 @@ Rails.application.configure do
     host: ENV["SUBMIT_HOST"],
     protocol: "https",
   }
+
+  # Database connection setup (GOV PaaS)
+  if ENV['VCAP_SERVICES']
+    ENV['DATABASE_URL'] = CF::App::Credentials.find_by_service_label("postgres")["uri"]
+  end
+
+  # Database connection setup (DBT Platform)
+  if ENV['COPILOT_ENVIRONMENT_NAME'] && ENV['DATABASE_CREDENTIALS']
+    database_credentials = JSON.parse(ENV['DATABASE_CREDENTIALS'])
+
+    engine = database_credentials['engine']
+    username = database_credentials['username']
+    password = database_credentials['password']
+    host = database_credentials['host']
+    port = database_credentials['port']
+    dbname = database_credentials['dbname']
+
+    ENV['DATABASE_URL'] = "#{engine}://#{username}:#{password}@#{host}:#{port}/#{dbname}"
+  end
 
   console do
     ARGV.push "-r", root.join("lib/console.rb")
