@@ -15,7 +15,7 @@ RSpec.describe Pingdom::CheckController, type: :controller do
       end
 
       it "renders the correct XML structure" do
-        expected_xml = "<pingdom_http_custom_check><status>OK</status></pingdom_http_custom_check>"
+        expected_xml = "<pingdom_http_custom_check><status>OK</status><response_time>500</response_time></pingdom_http_custom_check>"
         expect(response.body.strip).to eq(expected_xml.strip)
       end
     end
