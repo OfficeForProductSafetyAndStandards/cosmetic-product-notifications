@@ -100,6 +100,20 @@ Rails.application.configure do
     protocol: "https",
   }
 
+  # Database connection setup (DBT Platform)
+  if ENV['COPILOT_ENVIRONMENT_NAME'] && ENV['DATABASE_CREDENTIALS']
+    database_credentials = JSON.parse(ENV['DATABASE_CREDENTIALS'])
+
+    engine = database_credentials['engine']
+    username = database_credentials['username']
+    password = database_credentials['password']
+    host = database_credentials['host']
+    port = database_credentials['port']
+    dbname = database_credentials['dbname']
+
+    ENV['DATABASE_URL'] = "#{engine}://#{username}:#{password}@#{host}:#{port}/#{dbname}"
+  end
+
   console do
     ARGV.push "-r", root.join("lib/console.rb")
   end

@@ -18,7 +18,7 @@ test:
   url: <%= ENV['TEST_DATABASE_URL'] || ENV['DATABASE_URL'] %>
 
 production:
-  url: <%= ENV["VCAP_SERVICES"] && CF::App::Credentials.find_by_service_label("postgres")["uri"] %>
+  url: <%= ENV['DATABASE_URL'] %>
   connect_timeout: 2
   variables:
     statement_timeout: <%= ENV["STATEMENT_TIMEOUT"] || "15000ms" %>
