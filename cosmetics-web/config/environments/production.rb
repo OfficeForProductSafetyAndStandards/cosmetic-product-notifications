@@ -102,22 +102,22 @@ Rails.application.configure do
   }
 
   # Database connection setup (GOV PaaS)
-  if ENV['VCAP_SERVICES']
-    ENV['DATABASE_URL'] = CF::App::Credentials.find_by_service_label("postgres")["uri"]
+  if ENV["VCAP_SERVICES"]
+    ENV["DATABASE_URL"] = CF::App::Credentials.find_by_service_label("postgres")["uri"]
   end
 
   # Database connection setup (DBT Platform)
-  if ENV['COPILOT_ENVIRONMENT_NAME'] && ENV['DATABASE_CREDENTIALS']
-    database_credentials = JSON.parse(ENV['DATABASE_CREDENTIALS'])
+  if ENV["COPILOT_ENVIRONMENT_NAME"] && ENV["DATABASE_CREDENTIALS"]
+    database_credentials = JSON.parse(ENV["DATABASE_CREDENTIALS"])
 
-    engine = database_credentials['engine']
-    username = database_credentials['username']
-    password = database_credentials['password']
-    host = database_credentials['host']
-    port = database_credentials['port']
-    dbname = database_credentials['dbname']
+    engine = database_credentials["engine"]
+    username = database_credentials["username"]
+    password = database_credentials["password"]
+    host = database_credentials["host"]
+    port = database_credentials["port"]
+    dbname = database_credentials["dbname"]
 
-    ENV['DATABASE_URL'] = "#{engine}://#{username}:#{password}@#{host}:#{port}/#{dbname}"
+    ENV["DATABASE_URL"] = "#{engine}://#{username}:#{password}@#{host}:#{port}/#{dbname}"
   end
 
   console do
