@@ -44,10 +44,19 @@ RSpec.describe AcceptAndSubmitValidator, :with_stubbed_antivirus do
   end
 
   describe "image still being processed" do
-    let(:with_stubbed_antivirus_result) { nil }
     let(:image_upload) { create(:image_upload, notification:) }
 
+    # Create an image that's not yet been scanned
+    before do
+      # Make sure the file is attached but has no metadata
+      image_upload.file.blob.metadata = {}
+      image_upload.file.blob.save!
+
+      notification.reload.valid?(:accept_and_submit)
+    end
+
     it "complains about image" do
+      expect(image_upload.pending_antivirus_check?).to be true
       expect(notification.errors.messages_for(:image_uploads)).to eq(["Image #{image_upload.filename} is pending virus scan"])
     end
   end
