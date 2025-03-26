@@ -108,12 +108,13 @@ Rails.application.configure do
   if ENV["VCAP_SERVICES"]
     ENV["OPENSEARCH_URL"] = CF::App::Credentials.find_by_service_name("cosmetics-opensearch-1")["uri"]
     ENV["DATABASE_URL"] = CF::App::Credentials.find_by_service_label("postgres")["uri"]
+    ENV["REDIS_URL"] = CF::App::Credentials.find_by_service_label("redis")["uri"]
   end
 
   # Connection setup (DBT Platform)
   if ENV["COPILOT_ENVIRONMENT_NAME"]
-    if ENV["OPENSEARCH_ENDPOINT"]
-      ENV["OPENSEARCH_URL"] = URI::parse(CGI.unescape(ENV.fetch('OPENSEARCH_ENDPOINT')))
+    if ENV["OPENSEARCH_URL"]
+      ENV["OPENSEARCH_URL"] = URI::parse(CGI.unescape(ENV["OPENSEARCH_URL"]))
     end
 
     if ENV["DATABASE_CREDENTIALS"]
