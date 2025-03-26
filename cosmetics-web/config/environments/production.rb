@@ -1,5 +1,8 @@
 require "active_support/core_ext/integer/time"
 require "cf-app-utils"
+require "cgi"
+require "json"
+require "uri"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
