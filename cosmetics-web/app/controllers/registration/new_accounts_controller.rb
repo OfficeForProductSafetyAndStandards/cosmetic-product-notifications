@@ -1,5 +1,7 @@
 module Registration
   class NewAccountsController < SubmitApplicationController
+    invisible_captcha only: [:create], honeypot: :subtitle, on_spam: :spam_callback
+
     skip_before_action :authorize_user!
     skip_before_action :authenticate_user!
     skip_before_action :require_secondary_authentication
