@@ -26,7 +26,6 @@ applications:
     - cosmetics-flipper-env
     - cosmetics-puma-env
     - cosmetics-scout-env
-    - antivirus-auth-env
     - cosmetics-support-portal-env
     - cosmetics-devise-env
   path: .
