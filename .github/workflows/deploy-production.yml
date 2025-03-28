@@ -63,7 +63,7 @@ jobs:
           WORKER_INSTANCES: 4
           SENTRY_SERVICE_NAME: cosmetics-sentry-env
         run: |
-          sed -i '' 's/      - cosmetics-puma-env/      - cosmetics-puma-env\n      - antivirus-auth-env/g' manifest.yml
+          sed -i '' 's/      - cosmetics-puma-env/      - cosmetics-puma-env\n      - antivirus-auth-env/g' ./cosmetics-web/manifest.yml
           cf target -o 'beis-opss' -s $SPACE
           chmod +x ./cosmetics-web/deploy.sh
           ./cosmetics-web/deploy.sh
