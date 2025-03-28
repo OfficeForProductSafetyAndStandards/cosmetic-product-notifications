@@ -154,19 +154,21 @@
     <%= govukSummaryList(
           classes: "govuk-!-margin-bottom-9",
           rows: [
-            {
-              key: { text: "Text message" },
-              value: { text: current_user.mobile_number },
-              actions: {
-                items: [
-                  {
-                    href: new_secondary_authentication_sms_setup_path,
-                    text: current_user.sms_authentication_set? ? "Change" : "Add",
-                    visuallyHiddenText: "text message"
-                  }
-                ]
+            if current_user.sms_authentication_set?
+              {
+                key: { text: "Text message" },
+                value: { text: current_user.mobile_number },
+                actions: {
+                  items: [
+                    {
+                      href: new_secondary_authentication_sms_setup_path,
+                      text: "Change",
+                      visuallyHiddenText: "text message"
+                    }
+                  ]
+                }
               }
-            },
+            end,
             {
               key: { text: "Authenticator app" },
               value: { text: ("Authenticator app is set" if current_user.app_authentication_set?) },
@@ -192,7 +194,7 @@
                 ]
               }
             },
-          ]
+          ].compact
         ) %>
 
     <% if support_domain? %>
