@@ -104,5 +104,3 @@ gem "nokogiri", force_ruby_platform: true
 # Log formatting
 gem "json_tagged_logger"
 gem "lograge"
-
-gem "invisible_captcha"
