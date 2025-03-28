@@ -9,7 +9,11 @@
     <h1 class="govuk-heading-l"><%= title %></h1>
 
     <%= form_for(@new_account_form, url: registration_create_submit_user_path, html: { novalidate: true }, method: :post) do |f| %>
-      <%= invisible_captcha %>
+      <div style="display: none;">
+        <label for="subtitle">Leave this field empty</label>
+        <input type="text" name="subtitle" id="subtitle" value="">
+      </div>
+
       <%= form_input @new_account_form, :full_name %>
       <%= email_input @new_account_form %>
 
