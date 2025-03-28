@@ -3,14 +3,14 @@ module SecondaryAuthentication
     class SetupController < ApplicationController
       def new
         @user = current_user
-        return redirect_to(root_path) unless @user
+        return redirect_to(root_path) unless @user && @user.sms_authentication_set?
 
         @form = SetupForm.new(mobile_number: @user.mobile_number, user: @user)
       end
 
       def create
         @user = current_user
-        return render("errors/forbidden", status: :forbidden) unless @user
+        return render("errors/forbidden", status: :forbidden) unless @user && @user.sms_authentication_set?
 
         previously_set = @user.mobile_number.present?
 
