@@ -10,7 +10,7 @@
     "@rails/activestorage": "8.0.200",
     "accessible-autocomplete": "3.0.1",
     "css-loader": "^7.1.2",
-    "esbuild": "^0.25.1",
+    "esbuild": "^0.25.2",
     "file-loader": "^6.2.0",
     "govuk-country-and-territory-autocomplete": "2.0.0",
     "govuk-frontend": "5.9.0",
@@ -22,7 +22,7 @@
     "sass": "^1.86.0",
     "sass-loader": "^16.0.5",
     "standard": "17.1.2",
-    "stylelint": "16.16.0",
+    "stylelint": "16.17.0",
     "stylelint-config-gds": "2.0.0"
   },
   "scripts": {
