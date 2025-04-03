@@ -11,7 +11,10 @@ module SecondaryAuthentication
       return redirect_to(root_path) unless user_id && sms_authentication_available?
 
       @form = Sms::AuthForm.new(user_id:)
-      @form.secondary_authentication.generate_and_send_code(current_operation)
+
+      if @form.secondary_authentication.otp_resend_allowed? || @form.secondary_authentication.otp_expired? || @form.secondary_authentication.direct_otp.blank?
+        @form.secondary_authentication.generate_and_send_code(current_operation)
+      end
     end
 
     def create

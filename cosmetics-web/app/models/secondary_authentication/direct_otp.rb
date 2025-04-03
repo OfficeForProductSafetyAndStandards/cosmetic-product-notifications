@@ -5,7 +5,8 @@ module SecondaryAuthentication
     OTP_LENGTH = 5
     MAX_ATTEMPTS = Rails.configuration.two_factor_attempts
     MAX_ATTEMPTS_COOLDOWN = 3600 # 1 hour
-    OTP_EXPIRY_SECONDS = 300
+    OTP_RESEND_SECONDS = 60 # 1 min
+    OTP_EXPIRY_SECONDS = 300 # 5 mins
     WHITELISTED_OTP_CODE = Rails.configuration.whitelisted_direct_otp_code
 
     attr_accessor :user
@@ -17,6 +18,10 @@ module SecondaryAuthentication
     def generate_and_send_code(operation)
       generate_code(operation)
       send_secondary_authentication_code
+    end
+
+    def otp_resend_allowed?
+      user.direct_otp_sent_at && (user.direct_otp_sent_at + OTP_RESEND_SECONDS) < Time.zone.now
     end
 
     def otp_expired?

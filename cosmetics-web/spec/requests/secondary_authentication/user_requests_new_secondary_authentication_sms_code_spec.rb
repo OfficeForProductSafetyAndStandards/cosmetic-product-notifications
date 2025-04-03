@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# rubocop:disable RSpec/ExampleLength
 RSpec.describe "User requests new secondary authentication sms code", :with_2fa, :with_stubbed_notify, type: :request do
   let(:user_session) { {} }
 
@@ -75,29 +76,68 @@ RSpec.describe "User requests new secondary authentication sms code", :with_2fa,
     end
 
     RSpec.shared_examples "resend code" do
-      it "generates a new secondary authentication code for the user" do
-        expect {
+      context "when more than 1 minute has passed since the last SMS" do
+        it "generates a new secondary authentication code for the user" do
+          travel_to(2.minutes.from_now) do
+            expect {
+              request_code
+              follow_redirect!
+              user.reload
+            }.to change(user, :direct_otp)
+          end
+        end
+
+        it "sends the code to the user by sms" do
+          travel_to(2.minutes.from_now) do
+            request_code
+            follow_redirect!
+
+            perform_enqueued_jobs
+
+            expect(notify_stub).to have_received(:send_sms).with(
+              hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
+            )
+          end
+        end
+
+        it "redirects the user to the secondary authentication page" do
+          travel_to(2.minutes.from_now) do
+            request_code
+
+            expect(response).to redirect_to(new_secondary_authentication_sms_path)
+          end
+        end
+      end
+
+      context "when less than 1 minute has passed since the last SMS" do
+        before do
+          user.update!(direct_otp_sent_at: Time.zone.now)
+        end
+
+        it "does not generate a new secondary authentication code for the user" do
+          expect {
+            request_code
+            follow_redirect!
+            user.reload
+          }.not_to change(user, :direct_otp)
+        end
+
+        it "does not send the code to the user by sms" do
           request_code
           follow_redirect!
-          user.reload
-        }.to change(user, :direct_otp)
-      end
 
-      it "sends the code to the user by sms" do
-        request_code
-        follow_redirect!
+          perform_enqueued_jobs
 
-        perform_enqueued_jobs
+          expect(notify_stub).not_to have_received(:send_sms).with(
+            hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
+          )
+        end
 
-        expect(notify_stub).to have_received(:send_sms).with(
-          hash_including(phone_number: user.mobile_number, personalisation: { code: user.reload.direct_otp }),
-        )
-      end
+        it "redirects the user to the secondary authentication page" do
+          request_code
 
-      it "redirects the user to the secondary authentication page" do
-        request_code
-
-        expect(response).to redirect_to(new_secondary_authentication_sms_path)
+          expect(response).to redirect_to(new_secondary_authentication_sms_path)
+        end
       end
     end
 
@@ -152,11 +192,13 @@ RSpec.describe "User requests new secondary authentication sms code", :with_2fa,
         let(:mobile_number) { "+447510000000" }
 
         it "generates a new secondary authentication code for the user" do
-          expect {
-            request_code
-            follow_redirect!
-            user.reload
-          }.to change(user, :direct_otp)
+          travel_to(2.minutes.from_now) do
+            expect {
+              request_code
+              follow_redirect!
+              user.reload
+            }.to change(user, :direct_otp)
+          end
         end
 
         it "updates the user mobile number" do
@@ -170,14 +212,16 @@ RSpec.describe "User requests new secondary authentication sms code", :with_2fa,
         end
 
         it "sends the code to the user by sms" do
-          request_code
-          follow_redirect!
+          travel_to(2.minutes.from_now) do
+            request_code
+            follow_redirect!
 
-          perform_enqueued_jobs
+            perform_enqueued_jobs
 
-          expect(notify_stub).to have_received(:send_sms).with(
-            hash_including(phone_number: mobile_number, personalisation: { code: user.reload.direct_otp }),
-          )
+            expect(notify_stub).to have_received(:send_sms).with(
+              hash_including(phone_number: mobile_number, personalisation: { code: user.reload.direct_otp }),
+            )
+          end
         end
 
         it "redirects the user to the secondary authentication page" do
@@ -245,3 +289,4 @@ RSpec.describe "User requests new secondary authentication sms code", :with_2fa,
     end
   end
 end
+# rubocop:enable RSpec/ExampleLength
