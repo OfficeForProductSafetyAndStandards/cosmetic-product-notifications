@@ -309,16 +309,43 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
         expect_to_be_on_secondary_authentication_sms_page
 
+        travel_to(2.minutes.from_now) do
+          click_link "Not received a text message?"
+
+          expect_to_be_on_resend_secondary_authentication_page
+
+          click_button "Resend security code"
+
+          expect_user_to_have_received_sms_code("54321")
+
+          expect_to_be_on_secondary_authentication_sms_page
+          complete_secondary_authentication_sms_with(otp_code)
+
+          expect(page).to have_css("h1", text: "Responsible Person Declaration")
+          expect(page).to have_button "Sign out"
+        end
+      end
+
+      scenario "user signs in with the correct secondary authentication code after requesting a second code too soon" do
+        allow(SecureRandom).to receive(:random_number).and_return(12_345, 54_321)
+
+        visit "/sign-in"
+        fill_in_credentials
+
+        expect_user_to_have_received_sms_code("12345")
+
+        expect_to_be_on_secondary_authentication_sms_page
+
         click_link "Not received a text message?"
 
         expect_to_be_on_resend_secondary_authentication_page
 
         click_button "Resend security code"
 
-        expect_user_to_have_received_sms_code("54321")
+        expect_user_not_to_have_received_sms_code("54321")
 
         expect_to_be_on_secondary_authentication_sms_page
-        complete_secondary_authentication_sms_with(otp_code)
+        complete_secondary_authentication_sms_with("12345")
 
         expect(page).to have_css("h1", text: "Responsible Person Declaration")
         expect(page).to have_button "Sign out"
@@ -609,19 +636,21 @@ RSpec.feature "Signing in as a user", :with_2fa, :with_stubbed_mailer, :with_stu
 
         expect_to_be_on_secondary_authentication_sms_page
 
-        click_link "Not received a text message?"
+        travel_to(2.minutes.from_now) do
+          click_link "Not received a text message?"
 
-        expect_to_be_on_resend_secondary_authentication_page
+          expect_to_be_on_resend_secondary_authentication_page
 
-        click_button "Resend security code"
+          click_button "Resend security code"
 
-        expect_user_to_have_received_sms_code("54321")
+          expect_user_to_have_received_sms_code("54321")
 
-        expect_to_be_on_secondary_authentication_sms_page
-        complete_secondary_authentication_sms_with(otp_code)
+          expect_to_be_on_secondary_authentication_sms_page
+          complete_secondary_authentication_sms_with(otp_code)
 
-        expect(page).to have_css("h1", text: "Cosmetic products search")
-        expect(page).to have_button("Sign out")
+          expect(page).to have_css("h1", text: "Cosmetic products search")
+          expect(page).to have_button("Sign out")
+        end
       end
 
       context "when using wrong credentials over and over again" do

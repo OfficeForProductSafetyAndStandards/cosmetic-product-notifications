@@ -34,6 +34,15 @@ def expect_user_to_have_received_sms_code(code, current_user = nil)
   ).once
 end
 
+def expect_user_not_to_have_received_sms_code(code, current_user = nil)
+  if current_user.nil?
+    current_user = user
+  end
+  expect(notify_stub).not_to have_received(:send_sms).with(
+    hash_including(phone_number: current_user.mobile_number, personalisation: { code: }),
+  )
+end
+
 def complete_secondary_authentication_sms_with(security_code)
   fill_in "Enter security code", with: security_code
   click_on "Continue"
