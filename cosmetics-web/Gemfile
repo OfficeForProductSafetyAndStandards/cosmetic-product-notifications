@@ -54,7 +54,7 @@ gem "sidekiq-cron", "~> 2.2"
 gem "sidekiq-status", "~> 3.0"
 gem "sprockets", "~> 4.2"
 gem "sprockets-rails", "~> 3.5", require: "sprockets/railtie"
-gem "strong_migrations", "~> 2.2"
+gem "strong_migrations", "~> 2.3"
 gem "webrick", "~> 1.9"
 gem "wicked", "~> 2.0"
 
@@ -96,7 +96,7 @@ end
 gem "database_cleaner-active_record"
 
 gem "graphiql-rails", group: :development
-gem "graphql", "~> 2.4"
+gem "graphql", "~> 2.5"
 gem "rolify"
 
 gem "nokogiri", force_ruby_platform: true
