@@ -117,15 +117,15 @@ module SupportPortal
     end
 
     def display_user_action_details(action)
-      change = action.object_changes.except("updated_at").keys.first
+      change_key = action.object_changes.except("updated_at").keys.first
       changes = action.object_changes.except("updated_at").values
 
-      if change == "deactivated_at"
-        change += action.object_changes.except("updated_at")[change].last.nil? ? "_unset" : "_set"
-        "#{action.whodunnit} #{USER_ACTIONS_PAST_TENSE[change.to_sym]} user #{action.object['email']}"
+      if change_key == "deactivated_at"
+        change_key += action.object_changes.except("updated_at")[change_key].last.nil? ? "_unset" : "_set"
+        "#{action.whodunnit} #{USER_ACTIONS_PAST_TENSE[change_key.to_sym]} user #{action.object['email']}"
       else
-        changes.map { |change|
-          "Change from: #{role_type(change[0])}<br>To: #{role_type(change[1])}"
+        changes.map { |change_values|
+          "Change from: #{role_type(change_values[0])}<br>To: #{role_type(change_values[1])}"
         }.join("<br>")
       end
     end
