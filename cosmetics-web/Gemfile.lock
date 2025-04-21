@@ -157,7 +157,7 @@ GEM
     chunky_png (1.4.0)
     coderay (1.1.3)
     concurrent-ruby (1.3.5)
-    connection_pool (2.5.0)
+    connection_pool (2.5.1)
     crack (1.0.0)
       bigdecimal
       rexml
@@ -183,9 +183,9 @@ GEM
     diff-lcs (1.6.1)
     docile (1.4.1)
     domain_name (0.6.20240107)
-    dotenv (3.1.7)
-    dotenv-rails (3.1.7)
-      dotenv (= 3.1.7)
+    dotenv (3.1.8)
+    dotenv-rails (3.1.8)
+      dotenv (= 3.1.8)
       railties (>= 6.1)
     drb (2.2.1)
     elastic-transport (8.4.0)
@@ -227,7 +227,7 @@ GEM
     ffi (1.17.1-x86_64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
     ffi (1.17.1-x86_64-linux-musl)
-    fiber-storage (1.0.0)
+    fiber-storage (1.0.1)
     flipper (1.3.4)
       concurrent-ruby (< 2)
     flipper-active_record (1.3.4)
@@ -259,7 +259,7 @@ GEM
       rails (>= 4.1.0)
     graphiql-rails (1.10.4)
       railties
-    graphql (2.5.1)
+    graphql (2.5.4)
       base64
       fiber-storage
       logger
@@ -277,7 +277,7 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     interactor (3.1.2)
     io-console (0.8.0)
-    irb (1.15.1)
+    irb (1.15.2)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
@@ -361,7 +361,7 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.4)
-    nokogiri (1.18.7)
+    nokogiri (1.18.8)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (6.2.0)
@@ -375,8 +375,8 @@ GEM
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
-    parallel (1.26.3)
-    parser (3.3.7.4)
+    parallel (1.27.0)
+    parser (3.3.8.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
@@ -401,7 +401,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.12)
+    rack (3.1.13)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -458,14 +458,14 @@ GEM
       ffi (~> 1.0)
     rbs (3.9.2)
       logger
-    rdoc (6.12.0)
+    rdoc (6.13.1)
       psych (>= 4.0.0)
     redis (5.4.0)
       redis-client (>= 0.22.0)
     redis-client (0.24.0)
       connection_pool
     regexp_parser (2.10.0)
-    reline (0.6.0)
+    reline (0.6.1)
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
@@ -512,7 +512,7 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.2)
-    rubocop (1.75.1)
+    rubocop (1.75.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -520,7 +520,7 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.43.0, < 2.0)
+      rubocop-ast (>= 1.44.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.44.0)
@@ -529,8 +529,8 @@ GEM
     rubocop-capybara (2.22.1)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
-    rubocop-govuk (5.1.3)
-      rubocop (= 1.75.1)
+    rubocop-govuk (5.1.4)
+      rubocop (= 1.75.2)
       rubocop-ast (= 1.44.0)
       rubocop-capybara (= 2.22.1)
       rubocop-rails (= 2.31.0)
@@ -570,7 +570,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scout_apm (5.6.2)
+    scout_apm (5.6.4)
       parser
     securerandom (0.4.1)
     selenium-webdriver (4.31.0)
@@ -613,7 +613,7 @@ GEM
     simplecov-html (0.13.1)
     simplecov-lcov (0.8.0)
     simplecov_json_formatter (0.1.4)
-    solargraph (0.53.4)
+    solargraph (0.54.0)
       backport (~> 1.2)
       benchmark
       bundler (~> 2.0)
@@ -635,14 +635,15 @@ GEM
     solargraph-rails (1.1.0)
       activesupport
       solargraph
-    sprockets (4.2.1)
+    sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
+      logger
       rack (>= 2.2.4, < 4)
     sprockets-rails (3.5.2)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    stringio (3.1.5)
+    stringio (3.1.7)
     strong_migrations (2.3.0)
       activerecord (>= 7)
     terminal-table (4.0.0)
