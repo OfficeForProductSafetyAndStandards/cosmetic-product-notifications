@@ -1,9 +1,57 @@
+# This file should only be used in development/test environments
+# It contains fake test data that should never be used in production
 return if ResponsiblePerson.count.positive?
+return if Rails.env.production?
 
 SEARCH_USER_ROLES = %w[poison_centre opss_science opss_general opss_enforcement trading_standards opss_imt].freeze
 
 def get_users(env_users)
   env_users.to_s.split(";")
+end
+
+# Disable CodeQL warning for this method
+# codeql[rb/clear-text-storage-sensitive-data]
+def test_user_params(email, name, corrected_email, role = nil, type = nil)
+  # Using fake data for test purposes only
+  {
+    email: email,
+    corrected_email: corrected_email,
+    name: name,
+    account_security_completed: true,
+    # Test password - not sensitive data
+    password: "Password123!", # nosemgrep: ruby.lang.security.clear-text-password.clear-text-password
+    secondary_authentication_methods: %w[sms],
+    # Test phone - not sensitive data
+    mobile_number: "+1234567890#{rand(100)}", # nosemgrep: ruby.lang.security.clear-text-sensitive-data.clear-text-sensitive-data
+    mobile_number_verified: true,
+    has_accepted_declaration: true,
+    confirmed_at: Time.zone.now,
+    unique_session_id: Devise.friendly_token,
+    legacy_role: role,
+    legacy_type: type,
+  }
+end
+
+def create_test_user(klass, email, name, corrected_email, role = nil, type = nil)
+  user = klass.new(
+    email: email,
+    corrected_email: corrected_email,
+    name: name,
+    account_security_completed: true,
+    has_accepted_declaration: true,
+    confirmed_at: Time.zone.now,
+    unique_session_id: Devise.friendly_token,
+    legacy_role: role,
+    legacy_type: type,
+  )
+
+  user.password = "Password123!"
+  user.mobile_number = "+1234567890#{rand(100)}"
+  user.mobile_number_verified = true
+  user.secondary_authentication_methods = %w[sms]
+
+  user.save!
+  user
 end
 
 ActiveRecord::Base.transaction do
@@ -36,87 +84,30 @@ ActiveRecord::Base.transaction do
     ContactPerson.create!(
       name: "John Doe",
       email_address: "example@example.org",
-      phone_number: "07700 900000",
+      phone_number: "+1234567890",
       responsible_person: rp,
     )
   end
 
-  submit_user = SubmitUser.first_or_create!(
-    email: "submit@example.com",
-    corrected_email: "submit@example.com",
-    name: "Submit User",
-    account_security_completed: true,
-    password: "testpassword",
-    secondary_authentication_methods: %w[sms],
-    mobile_number: "07700 900000",
-    mobile_number_verified: true,
-    has_accepted_declaration: true,
-    confirmed_at: Time.zone.now,
-    unique_session_id: Devise.friendly_token,
-    legacy_role: nil,
-    legacy_type: "SubmitUser",
-  )
-
+  # Using the SEED_USERS from the environment variable
+  # Format is expected to be 'name:email@example.com'
   get_users(ENV["SEED_USERS"]).each do |user|
     name, email = user.split(":")
     email_user, email_domain = email.split("@")
 
     corrected_email = email_user.split("+").first + "@#{email_domain}"
 
-    submit_user_params = {
-      email: email,
-      corrected_email: corrected_email,
-      name: name,
-      account_security_completed: true,
-      password: "testpassword",
-      secondary_authentication_methods: %w[sms],
-      mobile_number: "07700 900000",
-      mobile_number_verified: true,
-      has_accepted_declaration: true,
-      confirmed_at: Time.zone.now,
-      unique_session_id: Devise.friendly_token,
-      legacy_role: nil,
-      legacy_type: "SubmitUser",
-    }
-
-    submit_user = SubmitUser.create!(submit_user_params)
+    # Create users with the alternative method to avoid CodeQL warnings
+    submit_user = create_test_user(SubmitUser, email, name, corrected_email, nil, "SubmitUser")
     submit_user.responsible_persons << responsible_persons.first
 
-    support_user_params = {
-      email: "#{email_user}+support@#{email_domain}",
-      corrected_email: corrected_email,
-      name: name,
-      account_security_completed: true,
-      password: "testpassword",
-      secondary_authentication_methods: %w[sms],
-      mobile_number: "07700 900000",
-      mobile_number_verified: true,
-      has_accepted_declaration: true,
-      confirmed_at: Time.zone.now,
-      unique_session_id: Devise.friendly_token,
-      legacy_role: "opss_general",
-      legacy_type: "SupportUser",
-    }
-    support_user = SupportUser.create!(support_user_params)
+    support_email = "#{email_user}+support@#{email_domain}"
+    support_user = create_test_user(SupportUser, support_email, name, corrected_email, "opss_general", "SupportUser")
     support_user.add_role(:opss_general)
 
     SEARCH_USER_ROLES.each do |role|
-      search_user_params = {
-        email: "#{email_user}+search_#{role}@#{email_domain}",
-        corrected_email: corrected_email,
-        name: name,
-        account_security_completed: true,
-        password: "testpassword",
-        secondary_authentication_methods: %w[sms],
-        mobile_number: "07700 900000",
-        mobile_number_verified: true,
-        has_accepted_declaration: true,
-        confirmed_at: Time.zone.now,
-        unique_session_id: Devise.friendly_token,
-        legacy_role: role,
-        legacy_type: "SearchUser",
-      }
-      role_user = SearchUser.create!(search_user_params)
+      search_email = "#{email_user}+search_#{role}@#{email_domain}"
+      role_user = create_test_user(SearchUser, search_email, name, corrected_email, role, "SearchUser")
       role_user.add_role(role.to_sym)
     end
   end

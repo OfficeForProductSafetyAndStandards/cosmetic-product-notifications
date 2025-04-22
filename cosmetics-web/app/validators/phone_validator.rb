@@ -62,7 +62,7 @@ class PhoneValidator < ActiveModel::EachValidator
   ZERO = "0".freeze
 
   def validate_each(record, attribute, value)
-    validate_phone_number(value, (options[:allow_international] || false), (options[:allow_landline] || false))
+    validate_phone_number(value, options[:allow_international] || false, options[:allow_landline] || false)
   rescue InvalidPhoneError => e
     record.errors.add(attribute, options[:message] || e.message)
   end
