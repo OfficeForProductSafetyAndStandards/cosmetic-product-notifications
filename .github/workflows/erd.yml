@@ -1,10 +1,12 @@
 name: Generate ERD
-
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 env:
   DATABASE_URL: postgres://postgres@localhost:5432
