@@ -1,6 +1,8 @@
 name: Tests
-
 on: [push]
+
+permissions:
+  contents: read
 
 env:
   SEARCH_HOST: search
