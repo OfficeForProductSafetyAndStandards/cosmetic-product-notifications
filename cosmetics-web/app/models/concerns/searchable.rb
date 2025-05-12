@@ -59,24 +59,68 @@ module Searchable
     end
   end
 
-  def index_document
-    result = __elasticsearch__.index_document
+  # Maximum document size allowed to be indexed (1MB)
+  # This is well below the circuit breaker limit to prevent errors
+  def maximum_document_size_bytes
+    1.megabyte
+  end
 
-    opensearch_log "#{self.class} with id=#{id} indexed with result #{result}"
+  # Check if a document is too large to be indexed
+  # Returns true if document can be indexed, false if too large
+  def check_document_size
+    doc_json = as_indexed_json.to_json
+    doc_size = doc_json.bytesize
+
+    if doc_size > maximum_document_size_bytes
+      opensearch_log "#{self.class} with id=#{id} is too large to index (#{doc_size} bytes, max is #{maximum_document_size_bytes})"
+      return false
+    end
+
+    true
+  end
+
+  def index_document
+    return false unless check_document_size
+
+    begin
+      result = __elasticsearch__.index_document
+      opensearch_log "#{self.class} with id=#{id} indexed with result #{result}"
+      true
+    rescue Elastic::Transport::Transport::Errors::TooManyRequests => e
+      opensearch_log "#{self.class} with id=#{id} failed to index: circuit breaker exception - #{e.message}"
+      false
+    rescue StandardError => e
+      opensearch_log "#{self.class} with id=#{id} failed to index: #{e.class} - #{e.message}"
+      false
+    end
   end
 
   def update_document
-    result = __elasticsearch__.update_document
+    return false unless check_document_size
 
-    opensearch_log "#{self.class} with id=#{id} updated with result #{result}"
+    begin
+      result = __elasticsearch__.update_document
+      opensearch_log "#{self.class} with id=#{id} updated with result #{result}"
+      true
+    rescue Elastic::Transport::Transport::Errors::TooManyRequests => e
+      opensearch_log "#{self.class} with id=#{id} failed to update: circuit breaker exception - #{e.message}"
+      false
+    rescue StandardError => e
+      opensearch_log "#{self.class} with id=#{id} failed to update: #{e.class} - #{e.message}"
+      false
+    end
   end
 
   def delete_document_from_index
     result = __elasticsearch__.delete_document
-
     opensearch_log "#{self.class} with id=#{id} deleted from index with result #{result}"
+    true
   rescue Elastic::Transport::Transport::Errors::NotFound
     opensearch_log "Failed to delete #{self.class} with id=#{id}. Reason: Not found in index"
+    false
+  rescue StandardError => e
+    opensearch_log "Failed to delete #{self.class} with id=#{id}. Reason: #{e.class} - #{e.message}"
+    false
   end
 
   delegate :opensearch_log, to: :class
@@ -95,10 +139,13 @@ module Searchable
 
     # Wraps the Elasticsearch::Model.import method to ensure that set aliases to new index when forcing a new index to
     # be created during the import.
-    def import_to_opensearch(index: nil, force: false)
+    def import_to_opensearch(index: nil, force: false, batch_size: nil)
       index = set_index_to_import_to(index:, force:)
 
-      import(index:, scope: "opensearch", refresh: true).tap do |errors_count|
+      import_options = { index:, scope: "opensearch", refresh: true }
+      import_options[:batch_size] = batch_size if batch_size.present?
+
+      import(**import_options).tap do |errors_count|
         if errors_count.zero?
           opensearch_log "Imported #{index_docs_count(index)} records for #{name} to Opensearch #{index} index"
         else
