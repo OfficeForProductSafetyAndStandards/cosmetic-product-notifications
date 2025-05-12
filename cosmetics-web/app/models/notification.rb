@@ -138,18 +138,33 @@ class Notification < ApplicationRecord
   def as_indexed_json(*)
     as_json(
       only: %i[product_name notification_complete_at reference_number industry_reference state],
-      methods: %i[reference_number_for_display searchable_ingredients],
+      methods: %i[reference_number_for_display],
       include: {
         responsible_person: {
-          only: %i[id name address_line_1 address_line_2 city county postal_code],
+          only: %i[id name postal_code],
         },
         components: {
-          methods: %i[display_sub_category display_sub_sub_category display_root_category],
+          methods: %i[display_root_category],
+          only: %i[id name],
         },
       },
-    )
+    ).merge({
+      searchable_ingredients: searchable_ingredients_summary,
+    })
   end
 
+  def searchable_ingredients_summary
+    # Limit to max 50 ingredients to prevent large documents
+    ingredients = []
+    components.each do |c|
+      # Only include the first 50 ingredients per component
+      ingredients << c.ingredients.limit(50).pluck(:inci_name)
+    end
+
+    ingredients.flatten.take(100).join(",")
+  end
+
+  # Original method kept for reference but no longer used in indexing
   def searchable_ingredients
     ingredients = []
     components.each do |c|

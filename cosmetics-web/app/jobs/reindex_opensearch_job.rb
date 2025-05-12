@@ -12,8 +12,13 @@
 #   * Deletes the previous index.
 class ReindexOpensearchJob < ApplicationJob
   LOCK_NAME = "reindex_notifications".freeze
+  BATCH_SIZE = 50
 
   def perform
+    # Set longer timeouts for bulk operations
+    original_timeout = Elasticsearch::Model.client.transport.options[:timeout]
+    Elasticsearch::Model.client.transport.options[:timeout] = 120 # Set timeout to 120 seconds
+
     PostgresDistributedLock.try_with_lock(LOCK_NAME) do
       ActiveRecord::Base.descendants.each do |model|
         next unless model.respond_to?(:__elasticsearch__) && !model.superclass.respond_to?(:__elasticsearch__)
@@ -22,7 +27,7 @@ class ReindexOpensearchJob < ApplicationJob
         new_index = model.create_index!
 
         log(model, "Reindexing Opensearch #{model} from #{current_index} index to #{new_index} index")
-        errors_count = model.import_to_opensearch(index: new_index)
+        errors_count = model.import_to_opensearch(index: new_index, batch_size: BATCH_SIZE)
 
         if errors_count.zero?
           model.swap_index_alias!(to: new_index)
@@ -34,6 +39,12 @@ class ReindexOpensearchJob < ApplicationJob
         end
       end
     end
+  rescue StandardError => e
+    Sidekiq.logger.error "ReindexOpensearchJob failed: #{e.class} - #{e.message}"
+    raise e # Re-raise to ensure job is marked as failed
+  ensure
+    # Reset timeout to original value
+    Elasticsearch::Model.client.transport.options[:timeout] = original_timeout if original_timeout
   end
 
 private
