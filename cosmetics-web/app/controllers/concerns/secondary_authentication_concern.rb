@@ -9,7 +9,7 @@ module SecondaryAuthenticationConcern
 
   def require_secondary_authentication(redirect_to: request.fullpath)
     user = secondary_authentication_user
-    return unless user && Rails.configuration.secondary_authentication_enabled
+    return unless user && Rails.configuration.secondary_authentication_enabled && FeatureFlags.two_factor_authentication_enabled?
 
     if !user.account_security_completed?
       if submit_domain?

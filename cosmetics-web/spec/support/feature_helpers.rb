@@ -60,37 +60,55 @@ def complete_secondary_authentication_recovery_code(recovery_code = nil)
 end
 
 def select_secondary_authentication_sms
-  expect(page).to have_css("h1", text: "How do you want to get an access code?")
-  choose "Text message"
-  click_on "Continue"
+  # Skip expectation if 2FA is disabled
+  if Flipper.enabled?(:two_factor_authentication)
+    expect(page).to have_css("h1", text: "How do you want to get an access code?")
+    choose "Text message"
+    click_on "Continue"
+  end
 end
 
 def select_secondary_authentication_app
-  expect(page).to have_css("h1", text: "How do you want to get an access code?")
-  choose "Authenticator app for smartphone or tablet"
-  click_on "Continue"
+  # Skip expectation if 2FA is disabled
+  if Flipper.enabled?(:two_factor_authentication)
+    expect(page).to have_css("h1", text: "How do you want to get an access code?")
+    choose "Authenticator app for smartphone or tablet"
+    click_on "Continue"
+  end
 end
 
 def select_secondary_authentication_recovery_code
-  expect(page).to have_css("h1", text: "How do you want to get an access code?")
-  choose "Authenticator app for smartphone or tablet"
-  click_on "Continue"
-  click_on "Use recovery code"
+  # Skip expectation if 2FA is disabled
+  if Flipper.enabled?(:two_factor_authentication)
+    expect(page).to have_css("h1", text: "How do you want to get an access code?")
+    choose "Authenticator app for smartphone or tablet"
+    click_on "Continue"
+    click_on "Use recovery code"
+  end
 end
 
 def expect_to_be_on_secondary_authentication_method_selection_page
-  expect(page).to have_current_path("/two-factor/method")
-  expect(page).to have_css("h1", text: "How do you want to get an access code?")
+  # Skip expectation if 2FA is disabled
+  if Flipper.enabled?(:two_factor_authentication)
+    expect(page).to have_current_path("/two-factor/method")
+    expect(page).to have_css("h1", text: "How do you want to get an access code?")
+  end
 end
 
 def expect_to_be_on_secondary_authentication_sms_page
-  expect(page).to have_current_path("/two-factor/sms")
-  expect(page).to have_h1("Check your phone")
+  # Skip expectation if 2FA is disabled
+  if Flipper.enabled?(:two_factor_authentication)
+    expect(page).to have_current_path("/two-factor/sms")
+    expect(page).to have_h1("Check your phone")
+  end
 end
 
 def expect_to_be_on_secondary_authentication_app_page
-  expect(page).to have_current_path("/two-factor/app")
-  expect(page).to have_h1("Enter the access code")
+  # Skip expectation if 2FA is disabled
+  if Flipper.enabled?(:two_factor_authentication)
+    expect(page).to have_current_path("/two-factor/app")
+    expect(page).to have_h1("Enter the access code")
+  end
 end
 
 def expect_to_be_on_resend_secondary_authentication_page
