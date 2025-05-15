@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_04_131130) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_15_144752) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -93,9 +92,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_04_131130) do
     t.float "minimum_ph"
     t.float "maximum_ph"
     t.text "ph"
+    t.jsonb "routing_questions_answers"
     t.string "exposure_condition"
     t.string "exposure_routes", array: true
-    t.jsonb "routing_questions_answers"
     t.string "notification_type_given_as"
     t.index ["notification_id"], name: "index_components_on_notification_id"
   end
@@ -240,11 +239,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_04_131130) do
     t.integer "reference_number"
     t.string "cpnp_reference"
     t.string "shades"
-    t.datetime "cpnp_notification_date", precision: nil
     t.string "industry_reference"
+    t.datetime "cpnp_notification_date", precision: nil
+    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "under_three_years"
     t.boolean "still_on_the_market"
-    t.boolean "was_notified_before_eu_exit", default: false
     t.boolean "components_are_mixed"
     t.decimal "ph_min_value"
     t.decimal "ph_max_value"
@@ -296,7 +295,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_04_131130) do
     t.bigint "responsible_person_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.uuid "user_id", default: -> { "public.gen_random_uuid()" }
+    t.uuid "user_id", default: -> { "gen_random_uuid()" }
     t.index ["responsible_person_id"], name: "index_responsible_person_users_on_responsible_person_id"
   end
 
@@ -350,7 +349,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_04_131130) do
     t.index ["component_id"], name: "index_trigger_questions_on_component_id"
   end
 
-  create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "mobile_number"
     t.boolean "mobile_number_verified", default: false, null: false
     t.string "name"
