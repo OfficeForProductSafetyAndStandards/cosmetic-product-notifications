@@ -518,8 +518,8 @@ RSpec.describe "Nanomaterial notifications", :with_stubbed_antivirus, type: :req
         let(:file) { Rack::Test::UploadedFile.new("spec/fixtures/files/testPdf.pdf", "application/pdf", true) }
         let(:params) { { nanomaterial_notification: { file: } } }
 
-        it "redirects to the Check your answers page" do
-          expect(response).to redirect_to("/nanomaterials/#{nanomaterial_notification.id}/review")
+        it "shows a message about antivirus scanning" do
+          expect(response.body).to include("The file has not yet been checked for viruses - click Continue for an update")
         end
       end
 
