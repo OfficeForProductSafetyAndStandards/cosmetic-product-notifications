@@ -81,7 +81,18 @@ module NotificationStateConcern
 
           success do
             update(notification_complete_at: Time.zone.now)
-            index_document
+
+            # Try to index but continue even if indexing fails
+            begin
+              indexing_result = index_document
+
+              unless indexing_result
+                Rails.logger.warn "[Opensearch] Failed to index notification #{id}, but continuing with notification submission"
+              end
+            rescue StandardError => e
+              Rails.logger.error "[Opensearch] Error during notification #{id} indexing: #{e.class} - #{e.message}"
+            end
+
             cache_notification_for_csv!
           end
         end

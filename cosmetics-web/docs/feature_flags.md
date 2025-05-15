@@ -18,3 +18,25 @@ It is password protected everywhere except for local development.
 
 To check a feature flag is enabled, use `Flipper.enabled?(:billing)` where `:billing` is the
 name of the feature flag.
+
+## Available feature flags
+
+### two_factor_authentication
+
+Controls whether two-factor authentication (2FA) is required for users.
+
+When disabled, users can log in without 2FA even if they have set it up. This is useful for
+load testing and migration testing.
+
+You can enable/disable this feature flag through the Flipper UI at `/flipper` or via the Rails console:
+
+```ruby
+# To enable 2FA
+Flipper.enable(:two_factor_authentication)
+
+# To disable 2FA
+Flipper.disable(:two_factor_authentication)
+
+# To check status
+Flipper.enabled?(:two_factor_authentication)
+```

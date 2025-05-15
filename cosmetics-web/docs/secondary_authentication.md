@@ -41,3 +41,36 @@ method.
 
 Once all recovery codes have been used, the user can no longer sign in using a
 recovery code and must contact support to receive new ones.
+
+## Disabling 2FA for Testing
+
+Two-factor authentication can be enabled or disabled using Flipper feature flags to facilitate load testing or other test scenarios.
+
+### Using Rails Console
+
+You can toggle 2FA directly in the Rails console:
+
+```ruby
+# Start a Rails console
+rails c
+
+# To disable 2FA
+Flipper.disable(:two_factor_authentication)
+
+# To enable 2FA
+Flipper.enable(:two_factor_authentication)
+
+# To check if 2FA is enabled
+Flipper.enabled?(:two_factor_authentication)
+=> true/false
+
+# To check via FeatureFlags helper
+FeatureFlags.two_factor_authentication_enabled?
+=> true/false
+```
+
+You can also use the Flipper UI at `/flipper` to enable or disable the feature.
+
+This provides a quick way to toggle the feature during development or testing sessions.
+
+See [Feature flags](feature_flags.md) for more information.

@@ -1,23 +1,32 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  # Skip CSRF protection for GraphQL requests
-  skip_before_action :verify_authenticity_token
+  protect_from_forgery with: :exception, unless: -> { api_request? }
+
   skip_before_action :authenticate_user!
   skip_before_action :require_secondary_authentication
   skip_before_action :authorize_user!
+
+  before_action :ensure_json_request
   before_action :auth_api_key!
   before_action :ensure_graphql_enabled
 
   def execute
     Rails.logger.debug "GraphQL request parameters: #{params.to_json}"
+
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    context = {
-      current_user:,
-    }
-    result = CosmeticsSchema.execute(query, variables:, context:, operation_name:)
+
+    context = { current_user: }
+
+    result = CosmeticsSchema.execute(
+      query,
+      variables: variables,
+      context: context,
+      operation_name: operation_name,
+    )
+
     Rails.logger.debug "GraphQL response result: #{result.to_json}"
     render json: result
   rescue StandardError => e
@@ -25,6 +34,18 @@ class GraphqlController < ApplicationController
   end
 
 private
+
+  def api_request?
+    request.headers["X-API-KEY"].present?
+  end
+
+  def ensure_json_request
+    return true if Rails.env.test?
+
+    return if request.format.json? || request.content_type == "application/json"
+
+    render json: { error: "JSON requests only" }, status: :unsupported_media_type
+  end
 
   def introspection_query?
     query_string = params[:query] || request.raw_post
@@ -61,9 +82,15 @@ private
   def auth_api_key!
     api_key = request.headers["X-API-KEY"]
     @current_api_key = ApiKey.find_by(key: api_key)
+
     unless @current_api_key
-      render json: { error: "Unauthorized" }, status: :unauthorized
+      render json: { error: "Unauthorized: Invalid API key" }, status: :unauthorized
+      return false
     end
+
+    @current_user = @current_api_key.user if @current_api_key.respond_to?(:user) && @current_api_key.user
+
+    true
   end
 
   def ensure_graphql_enabled

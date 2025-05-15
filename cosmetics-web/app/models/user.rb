@@ -46,7 +46,7 @@ class User < ApplicationRecord
   end
 
   def mobile_number_verified?
-    if Rails.configuration.secondary_authentication_enabled
+    if Rails.configuration.secondary_authentication_enabled && FeatureFlags.two_factor_authentication_enabled?
       super
     else
       true

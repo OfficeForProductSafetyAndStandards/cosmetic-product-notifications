@@ -87,7 +87,7 @@ class NanoMaterial < ApplicationRecord
   end
 
   def conforms_to_restrictions?
-    (confirm_restrictions != NO && confirm_usage != NO) && !toxicology_required_or_empty?
+    confirm_restrictions != NO && confirm_usage != NO && !toxicology_required_or_empty?
   end
 
   def name

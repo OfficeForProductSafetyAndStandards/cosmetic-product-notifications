@@ -4,6 +4,9 @@ on:
     - cron: "5 * * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   SEARCH_HOST: search
   SUBMIT_HOST: submit

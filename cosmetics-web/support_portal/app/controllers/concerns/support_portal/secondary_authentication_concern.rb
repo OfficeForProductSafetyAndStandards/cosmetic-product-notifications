@@ -10,7 +10,7 @@ module SupportPortal
 
     def require_secondary_authentication(redirect_to: request.fullpath)
       user = secondary_authentication_user
-      return unless user && Rails.configuration.secondary_authentication_enabled
+      return unless user && Rails.configuration.secondary_authentication_enabled && FeatureFlags.two_factor_authentication_enabled?
 
       if !user.account_security_completed?
         redirect_to main_app.complete_registration_support_user_path(user, invitation: user.invitation_token)
@@ -38,7 +38,7 @@ module SupportPortal
 
     def reenforce_secondary_authentication(redirect_to: request.fullpath)
       user = secondary_authentication_user
-      return unless user && Rails.configuration.secondary_authentication_enabled
+      return unless user && Rails.configuration.secondary_authentication_enabled && FeatureFlags.two_factor_authentication_enabled?
 
       return if secondary_authentication_present_in_session? && get_secondary_authentication_time > 30.seconds.ago
 

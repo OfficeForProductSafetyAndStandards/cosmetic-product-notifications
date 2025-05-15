@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: read
+  deployments: write
 
 jobs:
   deploy:
