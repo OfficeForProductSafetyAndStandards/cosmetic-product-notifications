@@ -54,8 +54,8 @@
 
       <% label_text = @nanomaterial_notification.file.attached? ? "Upload a replacement file" : "Upload a file" %>
 
-      <% if @nanomaterial_notification.errors.full_messages_for(:file).any? %>
-        <% error_message = {text: @nanomaterial_notification.errors.full_messages_for(:file).first} %>
+      <% if @nanomaterial_notification.errors.full_messages_for(:file).any? || @file_upload_error.present? %>
+        <% error_message = { text: @file_upload_error || @nanomaterial_notification.errors.full_messages_for(:file).first } %>
       <% end %>
 
       <%= govukFileUpload(

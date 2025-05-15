@@ -113,10 +113,19 @@ class NanomaterialNotificationsController < SubmitApplicationController
     end
 
     if @nanomaterial_notification.save(context: :upload_file)
-      redirect_to review_nanomaterial_path(@nanomaterial_notification)
-    else
-      render "upload_file"
+      if @nanomaterial_notification.passed_antivirus_check?
+        # File has been checked for viruses and is safe
+        return redirect_to review_nanomaterial_path(@nanomaterial_notification)
+      elsif @nanomaterial_notification.failed_antivirus_check?
+        # File has been checked for viruses and is infected
+        @file_upload_error = "The file is infected with a virus and will be deleted - please upload another file"
+      else
+        # File has not yet been checked for viruses
+        @file_upload_error = "The file has not yet been checked for viruses - click Continue for an update"
+      end
     end
+
+    render "upload_file"
   end
 
   def review; end
