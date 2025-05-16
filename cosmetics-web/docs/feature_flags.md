@@ -25,8 +25,11 @@ name of the feature flag.
 
 Controls whether two-factor authentication (2FA) is required for users.
 
+When enabled, users must use 2FA when logging in if they have set it up.
 When disabled, users can log in without 2FA even if they have set it up. This is useful for
 load testing and migration testing.
+
+By default, 2FA is enabled (the secure option).
 
 You can enable/disable this feature flag through the Flipper UI at `/flipper` or via the Rails console:
 

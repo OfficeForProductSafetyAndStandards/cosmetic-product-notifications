@@ -53,6 +53,9 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     attach_file "Upload a file", Rails.root.join("spec/fixtures/files/testPdf.pdf")
     click_button "Continue"
 
+    expect(page).to have_selector("#nanomaterial_notification_file-error", text: "The file has not yet been checked for viruses - click Continue for an update")
+    click_button "Continue"
+
     expect(page).to have_selector("h1", text: "Check your answers")
     click_button "Accept and send"
 
@@ -95,6 +98,9 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     attach_file "Upload a file", Rails.root.join("spec/fixtures/files/testPdf.pdf")
     click_button "Continue"
 
+    expect(page).to have_selector("#nanomaterial_notification_file-error", text: "The file has not yet been checked for viruses - click Continue for an update")
+    click_button "Continue"
+
     expect(page).to have_selector("h1", text: "Check your answers")
     click_button "Accept and send"
 
@@ -116,5 +122,27 @@ RSpec.describe "Nanomaterial notifications", type: :feature do
     expect(page).to have_summary_item(key: "Review period end", value: "1 August 2017")
     expect(page).to have_summary_item(key: "UK nanomaterial number", value: last_notification.ukn)
     expect(page).to have_selector("dd.govuk-summary-list__value", text: "testPdf.pdf (PDF, 11.6 KB)")
+  end
+
+  scenario "submitting a nanomaterial that has not been notified to the EU with an infected file", :with_stubbed_antivirus_returning_false do
+    visit "/responsible_persons/#{responsible_person.id}/nanomaterials"
+
+    click_link "Add a nanomaterial"
+
+    fill_in "What is the name of the nanomaterial?", with: "My nanomaterial"
+    click_button "Continue"
+
+    expect(page).to have_selector("h1", text: "Was the EU notified about My nanomaterial on CPNP before 1 January 2021?")
+    choose "No"
+    click_button "Continue"
+
+    expect(page).to have_selector("h1", text: "Upload details about the nanomaterial")
+    attach_file "Upload a file", Rails.root.join("spec/fixtures/files/testPdf.pdf")
+    click_button "Continue"
+
+    expect(page).to have_selector("#nanomaterial_notification_file-error", text: "The file has not yet been checked for viruses - click Continue for an update")
+    click_button "Continue"
+
+    expect(page).to have_selector("#nanomaterial_notification_file-error", text: "The file is infected with a virus and will be deleted - please upload another file")
   end
 end

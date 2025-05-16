@@ -46,7 +46,7 @@ recovery code and must contact support to receive new ones.
 
 Two-factor authentication can be enabled or disabled using Flipper feature flags to facilitate load testing or other test scenarios.
 
-### Using Rails Console
+By default, 2FA is enabled (the secure option).
 
 You can toggle 2FA directly in the Rails console:
 
@@ -54,11 +54,11 @@ You can toggle 2FA directly in the Rails console:
 # Start a Rails console
 rails c
 
-# To disable 2FA
-Flipper.disable(:two_factor_authentication)
-
 # To enable 2FA
 Flipper.enable(:two_factor_authentication)
+
+# To disable 2FA
+Flipper.disable(:two_factor_authentication)
 
 # To check if 2FA is enabled
 Flipper.enabled?(:two_factor_authentication)
