@@ -72,7 +72,7 @@ Rails.application.routes.draw do
   end
 
   # Support service
-  constraints DomainInclusionConstraint.new(ENV.fetch("SUPPORT_HOST")) do
+  constraints DomainInclusionConstraint.new(ENV.fetch("SUPPORT_HOST", "cosmetics-support")) do
     # Authentication is handled by the main app since most functionality is shared
     devise_for :support_users,
                path: "",
@@ -95,7 +95,7 @@ Rails.application.routes.draw do
   end
 
   # Search service
-  constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST")) do
+  constraints DomainInclusionConstraint.new(ENV.fetch("SEARCH_HOST", "cosmetics-search")) do
     devise_for :search_users,
                path: "",
                path_names: { sign_up: "sign-up", sign_in: "sign-in", sign_out: "sign-out" },
@@ -138,7 +138,7 @@ Rails.application.routes.draw do
   end
 
   # Submit service
-  constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST"), ENV.fetch("SUPPORT_HOST")) do
+  constraints DomainExclusionConstraint.new(ENV.fetch("SEARCH_HOST", "cosmetics-search"), ENV.fetch("SUPPORT_HOST", "cosmetics-support")) do
     devise_for :submit_users,
                path: "",
                path_names: { sign_in: "sign-in", sign_out: "sign-out" },
